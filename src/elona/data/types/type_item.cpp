@@ -16,7 +16,7 @@ const constexpr char* data::DatabaseTraits<ItemDB>::type_id;
 
 ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_OPT_OR(image, int, 0);
     DATA_OPT_OR(value, int, 0);
     DATA_OPT_OR(weight, int, 0);
@@ -63,7 +63,7 @@ ItemData ItemDB::convert(const lua::ConfigTable& data, const std::string& id)
 
     return ItemData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         image,
         value,
         weight,

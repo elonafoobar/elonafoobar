@@ -37,7 +37,7 @@ CharacterData CharacterDB::convert(
     const lua::ConfigTable& data,
     const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_OPT_OR(ai_act_sub_freq, int, 0);
     DATA_OPT_OR(ai_calm, int, 0);
     DATA_OPT_OR(ai_dist, int, 0);
@@ -117,7 +117,7 @@ CharacterData CharacterDB::convert(
 
     return CharacterData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         normal_actions,
         special_actions,
         ai_act_sub_freq,

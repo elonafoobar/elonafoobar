@@ -459,7 +459,7 @@ int calc_accuracy(
                 rangedist =
                     clamp(dist(attacker.position, target.position) - 1, 0, 9);
                 const auto effective_range =
-                    calc_effective_range(the_item_db[weapon->id]->legacy_id);
+                    calc_effective_range(the_item_db[weapon->id]->integer_id);
                 accuracy = accuracy * effective_range[rangedist] / 100;
             }
         }
@@ -690,14 +690,14 @@ int calcattackdmg(
                      attacker.get_skill(152).level * 2)) /
                     45;
         }
-        pierce = calc_rate_to_pierce(the_item_db[weapon->id]->legacy_id);
+        pierce = calc_rate_to_pierce(the_item_db[weapon->id]->integer_id);
     }
     if (attackrange)
     {
         if (mode == AttackDamageCalculationMode::actual_damage)
         {
             const auto effective_range =
-                calc_effective_range(the_item_db[weapon->id]->legacy_id);
+                calc_effective_range(the_item_db[weapon->id]->integer_id);
             dmgmulti = dmgmulti * effective_range[rangedist] / 100;
         }
     }
@@ -969,7 +969,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     }
     if (item->has_charges)
     {
-        item_db_get_charge_level(item, the_item_db[item->id]->legacy_id);
+        item_db_get_charge_level(item, the_item_db[item->id]->integer_id);
         if (item->charges < 0)
         {
             ret = ret / 10;

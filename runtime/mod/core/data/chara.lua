@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.chara",
    {
       bug = {
-         legacy_id = 0,
+         integer_id = 0,
          item_type = 3,
          tags = {},
          level = 1,
@@ -23,7 +23,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       user = {
-         legacy_id = 343,
+         integer_id = 343,
          item_type = 6,
          tags = {},
          level = 1,
@@ -46,7 +46,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       shopkeeper = {
-         legacy_id = 1,
+         integer_id = 1,
          item_type = 3,
          tags = { "man" },
          level = 35,
@@ -71,7 +71,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       caravan_master = {
-         legacy_id = 353,
+         integer_id = 353,
          item_type = 3,
          tags = { "man" },
          level = 22,
@@ -94,7 +94,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       bartender = {
-         legacy_id = 70,
+         integer_id = 70,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -119,7 +119,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       informer = {
-         legacy_id = 69,
+         integer_id = 69,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -144,7 +144,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       arena_master = {
-         legacy_id = 73,
+         integer_id = 73,
          item_type = 3,
          tags = { "man" },
          level = 40,
@@ -169,7 +169,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       healer = {
-         legacy_id = 74,
+         integer_id = 74,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -195,7 +195,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.holy_one",
       },
       nun = {
-         legacy_id = 206,
+         integer_id = 206,
          item_type = 3,
          tags = { "man" },
          level = 50,
@@ -221,7 +221,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.holy_one",
       },
       elder = {
-         legacy_id = 38,
+         integer_id = 38,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -246,7 +246,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       trainer = {
-         legacy_id = 40,
+         integer_id = 40,
          item_type = 3,
          tags = { "man" },
          level = 40,
@@ -271,7 +271,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       guild_trainer = {
-         legacy_id = 333,
+         integer_id = 333,
          item_type = 3,
          tags = { "man" },
          level = 69,
@@ -296,7 +296,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       guard_port_kapul = {
-         legacy_id = 76,
+         integer_id = 76,
          item_type = 3,
          tags = { "man" },
          level = 40,
@@ -321,7 +321,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.guard",
       },
       guard = {
-         legacy_id = 77,
+         integer_id = 77,
          item_type = 3,
          tags = { "man" },
          level = 40,
@@ -346,7 +346,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.guard",
       },
       palmian_elite_soldier = {
-         legacy_id = 204,
+         integer_id = 204,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -371,7 +371,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       zeome = {
-         legacy_id = 2,
+         integer_id = 2,
          item_type = 3,
          tags = { "man" },
          level = 55,
@@ -400,7 +400,7 @@ ELONA.data:add(
          dialog_id = "core.zeome",
       },
       at = {
-         legacy_id = 37,
+         integer_id = 37,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -425,7 +425,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.at",
       },
       orphe = {
-         legacy_id = 23,
+         integer_id = 23,
          item_type = 3,
          tags = { "man", "god" },
          level = 20,
@@ -452,7 +452,7 @@ ELONA.data:add(
          dialog_id = "core.orphe",
       },
       mad_scientist = {
-         legacy_id = 26,
+         integer_id = 26,
          item_type = 3,
          tags = { "man" },
          level = 6,
@@ -476,7 +476,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       isca = {
-         legacy_id = 27,
+         integer_id = 27,
          item_type = 3,
          tags = { "man", "god" },
          level = 42,
@@ -500,7 +500,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       whom_dwell_in_the_vanity = {
-         legacy_id = 28,
+         integer_id = 28,
          item_type = 3,
          tags = { "man" },
          level = 78,
@@ -527,7 +527,7 @@ ELONA.data:add(
          dialog_id = "core.whom_dwell_in_the_vanity"
       },
       loyter = {
-         legacy_id = 29,
+         integer_id = 29,
          item_type = 3,
          tags = { "man" },
          level = 50,
@@ -553,7 +553,7 @@ ELONA.data:add(
          dialog_id = "core.loyter",
       },
       vesda = {
-         legacy_id = 140,
+         integer_id = 140,
          item_type = 5,
          tags = { "dragon" },
          level = 25,
@@ -581,7 +581,7 @@ ELONA.data:add(
          drops = { "core.vesda" },
       },
       miches = {
-         legacy_id = 30,
+         integer_id = 30,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -607,7 +607,7 @@ ELONA.data:add(
          dialog_id = "core.miches",
       },
       shena = {
-         legacy_id = 31,
+         integer_id = 31,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -633,7 +633,7 @@ ELONA.data:add(
          dialog_id = "core.shena",
       },
       the_leopard_warrior = {
-         legacy_id = 351,
+         integer_id = 351,
          item_type = 3,
          tags = { "man" },
          level = 130,
@@ -662,7 +662,7 @@ ELONA.data:add(
          drops = { "core.the_leopard_warrior" },
       },
       silvia = {
-         legacy_id = 352,
+         integer_id = 352,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -687,7 +687,7 @@ ELONA.data:add(
          drops = { "core.the_leopard_warrior" },
       },
       dungeon_cleaner = {
-         legacy_id = 32,
+         integer_id = 32,
          item_type = 3,
          tags = {},
          level = 20,
@@ -711,7 +711,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       larnneire = {
-         legacy_id = 33,
+         integer_id = 33,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -739,7 +739,7 @@ ELONA.data:add(
          dialog_id = "core.larnneire",
       },
       lomias = {
-         legacy_id = 34,
+         integer_id = 34,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -771,7 +771,7 @@ ELONA.data:add(
          dialog_id = "core.lomias",
       },
       slan = {
-         legacy_id = 139,
+         integer_id = 139,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -797,7 +797,7 @@ ELONA.data:add(
          dialog_id = "core.slan",
       },
       karam = {
-         legacy_id = 146,
+         integer_id = 146,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -823,7 +823,7 @@ ELONA.data:add(
          dialog_id = "core.karam",
       },
       erystia = {
-         legacy_id = 142,
+         integer_id = 142,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -849,7 +849,7 @@ ELONA.data:add(
          dialog_id = "core.erystia",
       },
       issizzle = {
-         legacy_id = 141,
+         integer_id = 141,
          item_type = 6,
          tags = { "undead", "god" },
          level = 28,
@@ -874,7 +874,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.insanity",
       },
       wynan = {
-         legacy_id = 143,
+         integer_id = 143,
          item_type = 3,
          tags = {},
          level = 25,
@@ -898,7 +898,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       quruiza = {
-         legacy_id = 144,
+         integer_id = 144,
          item_type = 6,
          tags = {},
          level = 24,
@@ -925,7 +925,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       corgon = {
-         legacy_id = 145,
+         integer_id = 145,
          item_type = 5,
          tags = {},
          level = 16,
@@ -950,7 +950,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       lulwy = {
-         legacy_id = 306,
+         integer_id = 306,
          item_type = 6,
          tags = { "god" },
          level = 350,
@@ -974,7 +974,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       ehekatl = {
-         legacy_id = 331,
+         integer_id = 331,
          item_type = 6,
          tags = { "god" },
          level = 350,
@@ -998,7 +998,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       god_inside_ehekatl = {
-         legacy_id = 336,
+         integer_id = 336,
          item_type = 6,
          tags = { "god" },
          level = 1200,
@@ -1024,7 +1024,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       opatos = {
-         legacy_id = 338,
+         integer_id = 338,
          item_type = 6,
          tags = { "god" },
          level = 350,
@@ -1050,7 +1050,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       kumiromi = {
-         legacy_id = 339,
+         integer_id = 339,
          item_type = 6,
          tags = { "god" },
          level = 350,
@@ -1076,7 +1076,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mani = {
-         legacy_id = 342,
+         integer_id = 342,
          item_type = 6,
          tags = { "god" },
          level = 350,
@@ -1102,7 +1102,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       _test = {
-         legacy_id = 340,
+         integer_id = 340,
          item_type = 6,
          tags = {},
          level = 1200,
@@ -1128,7 +1128,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       putit = {
-         legacy_id = 3,
+         integer_id = 3,
          item_type = 1,
          tags = { "slime" },
          level = 1,
@@ -1155,7 +1155,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.putit",
       },
       red_putit = {
-         legacy_id = 4,
+         integer_id = 4,
          item_type = 1,
          tags = { "fire", "slime" },
          level = 4,
@@ -1182,7 +1182,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.putit",
       },
       slime = {
-         legacy_id = 169,
+         integer_id = 169,
          item_type = 1,
          tags = { "slime" },
          level = 10,
@@ -1210,7 +1210,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       acid_slime = {
-         legacy_id = 194,
+         integer_id = 194,
          item_type = 1,
          tags = { "slime" },
          level = 16,
@@ -1240,7 +1240,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       bubble = {
-         legacy_id = 286,
+         integer_id = 286,
          item_type = 1,
          tags = { "slime" },
          level = 9,
@@ -1266,7 +1266,7 @@ ELONA.data:add(
          flags = { "splits" },
       },
       blue_bubble = {
-         legacy_id = 285,
+         integer_id = 285,
          item_type = 1,
          tags = { "slime" },
          level = 22,
@@ -1293,7 +1293,7 @@ ELONA.data:add(
          flags = { "splits" },
       },
       mass_monster = {
-         legacy_id = 287,
+         integer_id = 287,
          item_type = 1,
          tags = {},
          level = 20,
@@ -1315,7 +1315,7 @@ ELONA.data:add(
          flags = { "splits" },
       },
       cube = {
-         legacy_id = 327,
+         integer_id = 327,
          item_type = 1,
          tags = {},
          level = 52,
@@ -1337,7 +1337,7 @@ ELONA.data:add(
          flags = { "splits2", "is_immune_to_elemental_damage" },
       },
       rabbit = {
-         legacy_id = 5,
+         integer_id = 5,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -1358,7 +1358,7 @@ ELONA.data:add(
          drops = { "core.rabbit" },
       },
       snail = {
-         legacy_id = 6,
+         integer_id = 6,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -1379,7 +1379,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       fallen_soldier = {
-         legacy_id = 7,
+         integer_id = 7,
          item_type = 0,
          tags = { "man" },
          level = 3,
@@ -1402,7 +1402,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mercenary = {
-         legacy_id = 8,
+         integer_id = 8,
          item_type = 0,
          tags = { "man" },
          level = 4,
@@ -1426,7 +1426,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       beggar = {
-         legacy_id = 9,
+         integer_id = 9,
          item_type = 0,
          tags = { "man" },
          level = 2,
@@ -1452,7 +1452,7 @@ ELONA.data:add(
          flags = { "drops_gold" },
       },
       farmer = {
-         legacy_id = 269,
+         integer_id = 269,
          item_type = 0,
          tags = { "man" },
          level = 5,
@@ -1477,7 +1477,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       cleaner = {
-         legacy_id = 320,
+         integer_id = 320,
          item_type = 0,
          tags = { "man" },
          level = 32,
@@ -1503,7 +1503,7 @@ ELONA.data:add(
          coefficient = 100,
       },
       miner = {
-         legacy_id = 273,
+         integer_id = 273,
          item_type = 0,
          tags = { "man" },
          level = 5,
@@ -1528,7 +1528,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       bard = {
-         legacy_id = 326,
+         integer_id = 326,
          item_type = 0,
          tags = { "man" },
          level = 16,
@@ -1552,7 +1552,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       sister = {
-         legacy_id = 270,
+         integer_id = 270,
          item_type = 0,
          tags = { "man" },
          level = 5,
@@ -1577,7 +1577,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       holy_beast = {
-         legacy_id = 349,
+         integer_id = 349,
          item_type = 0,
          tags = { "man", "god" },
          level = 12,
@@ -1600,7 +1600,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       part_time_worker = {
-         legacy_id = 348,
+         integer_id = 348,
          item_type = 0,
          tags = { "man" },
          level = 35,
@@ -1625,7 +1625,7 @@ ELONA.data:add(
          dialog_id = "core.part_time_worker",
       },
       fanatic = {
-         legacy_id = 347,
+         integer_id = 347,
          item_type = 0,
          tags = { "man" },
          level = 5,
@@ -1652,7 +1652,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       rogue = {
-         legacy_id = 271,
+         integer_id = 271,
          item_type = 0,
          tags = { "man" },
          level = 8,
@@ -1678,7 +1678,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       prostitute = {
-         legacy_id = 335,
+         integer_id = 335,
          item_type = 0,
          tags = { "man" },
          level = 8,
@@ -1703,7 +1703,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       prisoner = {
-         legacy_id = 337,
+         integer_id = 337,
          item_type = 0,
          tags = { "man" },
          level = 3,
@@ -1728,7 +1728,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       artist = {
-         legacy_id = 272,
+         integer_id = 272,
          item_type = 0,
          tags = { "man" },
          level = 6,
@@ -1753,7 +1753,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       noble = {
-         legacy_id = 274,
+         integer_id = 274,
          item_type = 0,
          tags = { "man" },
          level = 10,
@@ -1778,7 +1778,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mage_guild_member = {
-         legacy_id = 289,
+         integer_id = 289,
          item_type = 3,
          tags = { "man" },
          level = 26,
@@ -1803,7 +1803,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       thief_guild_member = {
-         legacy_id = 293,
+         integer_id = 293,
          item_type = 3,
          tags = { "man" },
          level = 26,
@@ -1828,7 +1828,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       fighter_guild_member = {
-         legacy_id = 295,
+         integer_id = 295,
          item_type = 3,
          tags = { "man" },
          level = 26,
@@ -1853,7 +1853,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       town_child = {
-         legacy_id = 35,
+         integer_id = 35,
          item_type = 0,
          tags = { "man" },
          level = 1,
@@ -1878,7 +1878,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       old_person = {
-         legacy_id = 36,
+         integer_id = 36,
          item_type = 0,
          tags = { "man" },
          level = 1,
@@ -1903,7 +1903,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       punk = {
-         legacy_id = 174,
+         integer_id = 174,
          item_type = 0,
          tags = { "man", "sf" },
          level = 1,
@@ -1927,7 +1927,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       wild_sheep = {
-         legacy_id = 10,
+         integer_id = 10,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -1947,7 +1947,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       flying_frog = {
-         legacy_id = 11,
+         integer_id = 11,
          item_type = 1,
          tags = { "wild" },
          level = 2,
@@ -1968,7 +1968,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       gangster = {
-         legacy_id = 12,
+         integer_id = 12,
          item_type = 3,
          tags = { "man" },
          level = 3,
@@ -1992,7 +1992,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       kobold = {
-         legacy_id = 13,
+         integer_id = 13,
          item_type = 3,
          tags = {},
          level = 3,
@@ -2013,7 +2013,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       yeek = {
-         legacy_id = 236,
+         integer_id = 236,
          item_type = 3,
          tags = { "yeek" },
          level = 2,
@@ -2032,7 +2032,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       yeek_warrior = {
-         legacy_id = 238,
+         integer_id = 238,
          item_type = 3,
          tags = { "yeek" },
          level = 6,
@@ -2052,7 +2052,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       yeek_archer = {
-         legacy_id = 241,
+         integer_id = 241,
          item_type = 3,
          tags = { "yeek" },
          level = 4,
@@ -2073,7 +2073,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       master_yeek = {
-         legacy_id = 240,
+         integer_id = 240,
          item_type = 3,
          tags = { "yeek" },
          level = 9,
@@ -2094,7 +2094,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       kamikaze_yeek = {
-         legacy_id = 237,
+         integer_id = 237,
          item_type = 3,
          tags = { "yeek" },
          level = 6,
@@ -2115,7 +2115,7 @@ ELONA.data:add(
          flags = { "explodes" },
       },
       kamikaze_samurai = {
-         legacy_id = 244,
+         integer_id = 244,
          item_type = 3,
          tags = {},
          level = 18,
@@ -2138,7 +2138,7 @@ ELONA.data:add(
          flags = { "explodes" },
       },
       bomb_rock = {
-         legacy_id = 245,
+         integer_id = 245,
          item_type = 1,
          tags = {},
          level = 25,
@@ -2161,7 +2161,7 @@ ELONA.data:add(
          flags = { "explodes" },
       },
       hard_gay = {
-         legacy_id = 321,
+         integer_id = 321,
          item_type = 3,
          tags = {},
          level = 10,
@@ -2185,7 +2185,7 @@ ELONA.data:add(
          flags = { "explodes" },
       },
       rodlob = {
-         legacy_id = 242,
+         integer_id = 242,
          item_type = 3,
          tags = { "yeek" },
          level = 14,
@@ -2210,7 +2210,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       hot_spring_maniac = {
-         legacy_id = 239,
+         integer_id = 239,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2234,7 +2234,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       centipede = {
-         legacy_id = 14,
+         integer_id = 14,
          item_type = 2,
          tags = {},
          level = 4,
@@ -2254,7 +2254,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       mushroom = {
-         legacy_id = 15,
+         integer_id = 15,
          item_type = 2,
          tags = {},
          level = 4,
@@ -2273,7 +2273,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       spore_mushroom = {
-         legacy_id = 283,
+         integer_id = 283,
          item_type = 2,
          tags = {},
          level = 8,
@@ -2295,7 +2295,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.poisonous",
       },
       chaos_mushroom = {
-         legacy_id = 284,
+         integer_id = 284,
          item_type = 2,
          tags = {},
          level = 21,
@@ -2317,7 +2317,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       citizen = {
-         legacy_id = 16,
+         integer_id = 16,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2342,7 +2342,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       citizen2 = {
-         legacy_id = 39,
+         integer_id = 39,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2367,7 +2367,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       citizen_of_cyber_dome = {
-         legacy_id = 171,
+         integer_id = 171,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2392,7 +2392,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       citizen_of_cyber_dome2 = {
-         legacy_id = 172,
+         integer_id = 172,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2417,7 +2417,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       sales_person = {
-         legacy_id = 173,
+         integer_id = 173,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -2442,7 +2442,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       sailor = {
-         legacy_id = 71,
+         integer_id = 71,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2467,7 +2467,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       captain = {
-         legacy_id = 72,
+         integer_id = 72,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2492,7 +2492,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       stersha = {
-         legacy_id = 79,
+         integer_id = 79,
          item_type = 3,
          tags = { "man" },
          level = 25,
@@ -2518,7 +2518,7 @@ ELONA.data:add(
          dialog_id = "core.stersha",
       },
       xabi = {
-         legacy_id = 80,
+         integer_id = 80,
          item_type = 3,
          tags = { "man" },
          level = 35,
@@ -2544,7 +2544,7 @@ ELONA.data:add(
          dialog_id = "core.xabi",
       },
       orc = {
-         legacy_id = 17,
+         integer_id = 17,
          item_type = 3,
          tags = {},
          level = 5,
@@ -2564,7 +2564,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       lizard_man = {
-         legacy_id = 281,
+         integer_id = 281,
          item_type = 3,
          tags = { "dragon" },
          level = 7,
@@ -2585,7 +2585,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       minotaur = {
-         legacy_id = 282,
+         integer_id = 282,
          item_type = 3,
          tags = { "mino" },
          level = 18,
@@ -2605,7 +2605,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       minotaur_magician = {
-         legacy_id = 296,
+         integer_id = 296,
          item_type = 3,
          tags = { "mino" },
          level = 22,
@@ -2627,7 +2627,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       minotaur_boxer = {
-         legacy_id = 298,
+         integer_id = 298,
          item_type = 3,
          tags = { "mino" },
          level = 23,
@@ -2649,7 +2649,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       minotaur_king = {
-         legacy_id = 299,
+         integer_id = 299,
          item_type = 3,
          tags = { "mino" },
          level = 25,
@@ -2671,7 +2671,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       ungaga = {
-         legacy_id = 300,
+         integer_id = 300,
          item_type = 3,
          tags = { "mino" },
          level = 31,
@@ -2696,7 +2696,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       troll = {
-         legacy_id = 251,
+         integer_id = 251,
          item_type = 3,
          tags = {},
          level = 14,
@@ -2719,7 +2719,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.troll",
       },
       warrior_of_elea = {
-         legacy_id = 18,
+         integer_id = 18,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2741,7 +2741,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       wizard_of_elea = {
-         legacy_id = 24,
+         integer_id = 24,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2765,7 +2765,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       asura = {
-         legacy_id = 309,
+         integer_id = 309,
          item_type = 3,
          tags = { "god" },
          level = 12,
@@ -2786,7 +2786,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mitra = {
-         legacy_id = 310,
+         integer_id = 310,
          item_type = 3,
          tags = { "god" },
          level = 26,
@@ -2808,7 +2808,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       varuna = {
-         legacy_id = 311,
+         integer_id = 311,
          item_type = 3,
          tags = { "god" },
          level = 37,
@@ -2830,7 +2830,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       wizard = {
-         legacy_id = 41,
+         integer_id = 41,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2855,7 +2855,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       warrior = {
-         legacy_id = 75,
+         integer_id = 75,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -2879,7 +2879,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mandrake = {
-         legacy_id = 19,
+         integer_id = 19,
          item_type = 2,
          tags = {},
          level = 5,
@@ -2899,7 +2899,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.mandrake",
       },
       beetle = {
-         legacy_id = 22,
+         integer_id = 22,
          item_type = 2,
          tags = {},
          level = 5,
@@ -2920,7 +2920,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.beetle",
       },
       orc_warrior = {
-         legacy_id = 20,
+         integer_id = 20,
          item_type = 3,
          tags = {},
          level = 10,
@@ -2940,7 +2940,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       goda = {
-         legacy_id = 25,
+         integer_id = 25,
          item_type = 3,
          tags = {},
          level = 25,
@@ -2963,7 +2963,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       zombie = {
-         legacy_id = 21,
+         integer_id = 21,
          item_type = 3,
          tags = { "undead" },
          level = 8,
@@ -2985,7 +2985,7 @@ ELONA.data:add(
          drops = { "core.zombie" },
       },
       bat = {
-         legacy_id = 42,
+         integer_id = 42,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -3005,7 +3005,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       vampire_bat = {
-         legacy_id = 43,
+         integer_id = 43,
          item_type = 1,
          tags = { "wild" },
          level = 10,
@@ -3030,7 +3030,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       dragon_bat = {
-         legacy_id = 44,
+         integer_id = 44,
          item_type = 1,
          tags = { "wild", "fire", "dragon" },
          level = 30,
@@ -3052,7 +3052,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       fire_ent = {
-         legacy_id = 45,
+         integer_id = 45,
          item_type = 1,
          tags = { "fire" },
          level = 15,
@@ -3079,7 +3079,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.fire_ent",
       },
       ice_ent = {
-         legacy_id = 46,
+         integer_id = 46,
          item_type = 1,
          tags = {},
          level = 15,
@@ -3106,7 +3106,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.ice_ent",
       },
       lich = {
-         legacy_id = 47,
+         integer_id = 47,
          item_type = 6,
          tags = { "undead" },
          level = 20,
@@ -3128,7 +3128,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       master_lich = {
-         legacy_id = 48,
+         integer_id = 48,
          item_type = 6,
          tags = { "undead" },
          level = 30,
@@ -3151,7 +3151,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       demi_lich = {
-         legacy_id = 49,
+         integer_id = 49,
          item_type = 6,
          tags = { "undead" },
          level = 45,
@@ -3174,7 +3174,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       executioner = {
-         legacy_id = 307,
+         integer_id = 307,
          item_type = 6,
          tags = { "undead" },
          level = 18,
@@ -3200,7 +3200,7 @@ ELONA.data:add(
          drops = { "core.executioner" },
       },
       messenger_of_death = {
-         legacy_id = 308,
+         integer_id = 308,
          item_type = 6,
          tags = { "undead" },
          level = 35,
@@ -3226,7 +3226,7 @@ ELONA.data:add(
          drops = { "core.executioner" },
       },
       hound = {
-         legacy_id = 50,
+         integer_id = 50,
          item_type = 1,
          tags = { "wild" },
          level = 5,
@@ -3249,7 +3249,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       fire_hound = {
-         legacy_id = 51,
+         integer_id = 51,
          item_type = 1,
          tags = { "wild", "fire" },
          level = 10,
@@ -3276,7 +3276,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       ice_hound = {
-         legacy_id = 52,
+         integer_id = 52,
          item_type = 1,
          tags = { "wild" },
          level = 10,
@@ -3303,7 +3303,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       lightning_hound = {
-         legacy_id = 53,
+         integer_id = 53,
          item_type = 1,
          tags = { "wild" },
          level = 12,
@@ -3329,7 +3329,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       dark_hound = {
-         legacy_id = 54,
+         integer_id = 54,
          item_type = 1,
          tags = { "wild" },
          level = 12,
@@ -3355,7 +3355,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       illusion_hound = {
-         legacy_id = 55,
+         integer_id = 55,
          item_type = 1,
          tags = { "wild" },
          level = 18,
@@ -3381,7 +3381,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       nerve_hound = {
-         legacy_id = 56,
+         integer_id = 56,
          item_type = 1,
          tags = { "wild" },
          level = 18,
@@ -3407,7 +3407,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       poison_hound = {
-         legacy_id = 57,
+         integer_id = 57,
          item_type = 1,
          tags = { "wild" },
          level = 15,
@@ -3433,7 +3433,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       sound_hound = {
-         legacy_id = 58,
+         integer_id = 58,
          item_type = 1,
          tags = { "wild" },
          level = 22,
@@ -3459,7 +3459,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       nether_hound = {
-         legacy_id = 59,
+         integer_id = 59,
          item_type = 1,
          tags = { "wild" },
          level = 25,
@@ -3485,7 +3485,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       chaos_hound = {
-         legacy_id = 60,
+         integer_id = 60,
          item_type = 1,
          tags = { "wild" },
          level = 30,
@@ -3511,7 +3511,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       giant_squirrel = {
-         legacy_id = 61,
+         integer_id = 61,
          item_type = 1,
          tags = { "wild" },
          level = 4,
@@ -3534,7 +3534,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.calm",
       },
       killer_squirrel = {
-         legacy_id = 62,
+         integer_id = 62,
          item_type = 1,
          tags = { "wild" },
          level = 10,
@@ -3557,7 +3557,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.calm",
       },
       grudge = {
-         legacy_id = 63,
+         integer_id = 63,
          item_type = 3,
          tags = { "undead" },
          level = 7,
@@ -3579,7 +3579,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.grudge",
       },
       hungry_demon = {
-         legacy_id = 64,
+         integer_id = 64,
          item_type = 3,
          tags = { "undead" },
          level = 3,
@@ -3601,7 +3601,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.grudge",
       },
       hungry_sea_lion = {
-         legacy_id = 312,
+         integer_id = 312,
          item_type = 3,
          tags = {},
          level = 8,
@@ -3624,7 +3624,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       super_hungry_sea_lion = {
-         legacy_id = 313,
+         integer_id = 313,
          item_type = 3,
          tags = {},
          level = 19,
@@ -3648,7 +3648,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       electric_cloud = {
-         legacy_id = 65,
+         integer_id = 65,
          item_type = 1,
          tags = {},
          level = 12,
@@ -3673,7 +3673,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.electric_cloud",
       },
       chaos_cloud = {
-         legacy_id = 66,
+         integer_id = 66,
          item_type = 1,
          tags = {},
          level = 30,
@@ -3699,7 +3699,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.chaos_cloud",
       },
       floating_eye = {
-         legacy_id = 67,
+         integer_id = 67,
          item_type = 1,
          tags = {},
          level = 2,
@@ -3725,7 +3725,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.floating_eye",
       },
       chaos_eye = {
-         legacy_id = 315,
+         integer_id = 315,
          item_type = 1,
          tags = {},
          level = 14,
@@ -3754,7 +3754,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.chaos_eye",
       },
       mad_gaze = {
-         legacy_id = 316,
+         integer_id = 316,
          item_type = 1,
          tags = {},
          level = 7,
@@ -3783,7 +3783,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.mad_gaze",
       },
       death_gaze = {
-         legacy_id = 314,
+         integer_id = 314,
          item_type = 1,
          tags = {},
          level = 29,
@@ -3813,7 +3813,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.floating_eye",
       },
       wyvern = {
-         legacy_id = 68,
+         integer_id = 68,
          item_type = 4,
          tags = { "dragon" },
          level = 20,
@@ -3838,7 +3838,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       puppet = {
-         legacy_id = 78,
+         integer_id = 78,
          item_type = 3,
          tags = {},
          level = 15,
@@ -3860,7 +3860,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       wasp = {
-         legacy_id = 81,
+         integer_id = 81,
          item_type = 2,
          tags = {},
          level = 5,
@@ -3881,7 +3881,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       red_wasp = {
-         legacy_id = 82,
+         integer_id = 82,
          item_type = 2,
          tags = { "fire" },
          level = 10,
@@ -3903,7 +3903,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       cyclops = {
-         legacy_id = 83,
+         integer_id = 83,
          item_type = 3,
          tags = {},
          level = 22,
@@ -3925,7 +3925,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cyclops",
       },
       titan = {
-         legacy_id = 84,
+         integer_id = 84,
          item_type = 3,
          tags = {},
          level = 40,
@@ -3949,7 +3949,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.titan",
       },
       imp = {
-         legacy_id = 85,
+         integer_id = 85,
          item_type = 3,
          tags = { "fire" },
          level = 7,
@@ -3973,7 +3973,7 @@ ELONA.data:add(
          drops = { "core.imp" },
       },
       nether_imp = {
-         legacy_id = 86,
+         integer_id = 86,
          item_type = 3,
          tags = { "god" },
          level = 16,
@@ -3997,7 +3997,7 @@ ELONA.data:add(
          drops = { "core.imp" },
       },
       chaos_imp = {
-         legacy_id = 87,
+         integer_id = 87,
          item_type = 3,
          tags = {},
          level = 27,
@@ -4021,7 +4021,7 @@ ELONA.data:add(
          drops = { "core.imp" },
       },
       hand_of_the_dead = {
-         legacy_id = 88,
+         integer_id = 88,
          item_type = 3,
          tags = { "undead" },
          level = 4,
@@ -4043,7 +4043,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.hand",
       },
       hand_of_the_chaos = {
-         legacy_id = 89,
+         integer_id = 89,
          item_type = 3,
          tags = { "undead" },
          level = 11,
@@ -4066,7 +4066,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.hand",
       },
       hand_of_the_murderer = {
-         legacy_id = 90,
+         integer_id = 90,
          item_type = 3,
          tags = { "undead" },
          level = 15,
@@ -4090,7 +4090,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.hand",
       },
       ghost = {
-         legacy_id = 91,
+         integer_id = 91,
          item_type = 3,
          tags = { "undead" },
          level = 5,
@@ -4113,7 +4113,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.ghost",
       },
       nymph = {
-         legacy_id = 92,
+         integer_id = 92,
          item_type = 3,
          tags = { "undead" },
          level = 13,
@@ -4140,7 +4140,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.nymph",
       },
       man_eater_flower = {
-         legacy_id = 93,
+         integer_id = 93,
          item_type = 2,
          tags = {},
          level = 8,
@@ -4161,7 +4161,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       chaos_flower = {
-         legacy_id = 94,
+         integer_id = 94,
          item_type = 2,
          tags = {},
          level = 19,
@@ -4183,7 +4183,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       cobra = {
-         legacy_id = 95,
+         integer_id = 95,
          item_type = 1,
          tags = { "wild" },
          level = 10,
@@ -4205,7 +4205,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       king_cobra = {
-         legacy_id = 96,
+         integer_id = 96,
          item_type = 1,
          tags = { "wild" },
          level = 18,
@@ -4227,7 +4227,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       fire_drake = {
-         legacy_id = 97,
+         integer_id = 97,
          item_type = 4,
          tags = { "fire", "dragon" },
          level = 16,
@@ -4251,7 +4251,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       ice_drake = {
-         legacy_id = 98,
+         integer_id = 98,
          item_type = 4,
          tags = { "dragon" },
          level = 16,
@@ -4274,7 +4274,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       lesser_mummy = {
-         legacy_id = 99,
+         integer_id = 99,
          item_type = 3,
          tags = { "undead" },
          level = 7,
@@ -4297,7 +4297,7 @@ ELONA.data:add(
          drops = { "core.mummy" },
       },
       mummy = {
-         legacy_id = 100,
+         integer_id = 100,
          item_type = 3,
          tags = { "undead" },
          level = 14,
@@ -4321,7 +4321,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       greater_mummy = {
-         legacy_id = 101,
+         integer_id = 101,
          item_type = 3,
          tags = { "undead" },
          level = 22,
@@ -4345,7 +4345,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       tuwen = {
-         legacy_id = 257,
+         integer_id = 257,
          item_type = 3,
          tags = { "undead" },
          level = 28,
@@ -4372,7 +4372,7 @@ ELONA.data:add(
          drops = { "core.tuwen" }
       },
       ancient_coffin = {
-         legacy_id = 254,
+         integer_id = 254,
          item_type = 3,
          tags = { "undead" },
          level = 19,
@@ -4394,7 +4394,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.rotten_one",
       },
       goblin = {
-         legacy_id = 102,
+         integer_id = 102,
          item_type = 3,
          tags = {},
          level = 2,
@@ -4414,7 +4414,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       goblin_warrior = {
-         legacy_id = 103,
+         integer_id = 103,
          item_type = 3,
          tags = {},
          level = 6,
@@ -4435,7 +4435,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       goblin_shaman = {
-         legacy_id = 104,
+         integer_id = 104,
          item_type = 3,
          tags = {},
          level = 8,
@@ -4458,7 +4458,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       goblin_wizard = {
-         legacy_id = 105,
+         integer_id = 105,
          item_type = 3,
          tags = {},
          level = 10,
@@ -4479,7 +4479,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       red_baptist = {
-         legacy_id = 106,
+         integer_id = 106,
          item_type = 3,
          tags = { "undead", "fire" },
          level = 12,
@@ -4506,7 +4506,7 @@ ELONA.data:add(
          flags = { "is_immune_to_fear" },
       },
       blue_baptist = {
-         legacy_id = 107,
+         integer_id = 107,
          item_type = 3,
          tags = { "undead" },
          level = 12,
@@ -4533,7 +4533,7 @@ ELONA.data:add(
          flags = { "is_immune_to_fear" },
       },
       brown_bear = {
-         legacy_id = 108,
+         integer_id = 108,
          item_type = 1,
          tags = { "wild" },
          level = 4,
@@ -4554,7 +4554,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       grizzly = {
-         legacy_id = 109,
+         integer_id = 109,
          item_type = 1,
          tags = { "wild" },
          level = 10,
@@ -4575,7 +4575,7 @@ ELONA.data:add(
          flags = { "is_quick_tempered" },
       },
       mammoth = {
-         legacy_id = 344,
+         integer_id = 344,
          item_type = 1,
          tags = { "wild" },
          level = 28,
@@ -4596,7 +4596,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.mammoth",
       },
       living_armor = {
-         legacy_id = 110,
+         integer_id = 110,
          item_type = 3,
          tags = { "undead" },
          level = 15,
@@ -4618,7 +4618,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       steel_mass = {
-         legacy_id = 111,
+         integer_id = 111,
          item_type = 3,
          tags = { "undead" },
          level = 25,
@@ -4641,7 +4641,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       golden_armor = {
-         legacy_id = 112,
+         integer_id = 112,
          item_type = 3,
          tags = { "undead" },
          level = 35,
@@ -4664,7 +4664,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       death_armor = {
-         legacy_id = 113,
+         integer_id = 113,
          item_type = 3,
          tags = {},
          level = 45,
@@ -4688,7 +4688,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       medusa = {
-         legacy_id = 114,
+         integer_id = 114,
          item_type = 3,
          tags = { "god" },
          level = 22,
@@ -4708,7 +4708,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       euryale = {
-         legacy_id = 115,
+         integer_id = 115,
          item_type = 3,
          tags = { "god" },
          level = 33,
@@ -4729,7 +4729,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       stheno = {
-         legacy_id = 116,
+         integer_id = 116,
          item_type = 3,
          tags = { "god" },
          level = 44,
@@ -4750,7 +4750,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       cupid_of_love = {
-         legacy_id = 117,
+         integer_id = 117,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -4774,7 +4774,7 @@ ELONA.data:add(
          drops = { "core.cupid_of_love" },
       },
       lesser_phantom = {
-         legacy_id = 118,
+         integer_id = 118,
          item_type = 3,
          tags = { "undead" },
          level = 9,
@@ -4796,7 +4796,7 @@ ELONA.data:add(
          flags = { "is_floating", "is_immune_to_fear" },
       },
       tyrannosaurus = {
-         legacy_id = 248,
+         integer_id = 248,
          item_type = 1,
          tags = { "dragon" },
          level = 30,
@@ -4816,7 +4816,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       harpy = {
-         legacy_id = 119,
+         integer_id = 119,
          item_type = 3,
          tags = {},
          level = 13,
@@ -4835,7 +4835,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       green_dragon = {
-         legacy_id = 120,
+         integer_id = 120,
          item_type = 5,
          tags = { "dragon" },
          level = 32,
@@ -4857,7 +4857,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       red_dragon = {
-         legacy_id = 121,
+         integer_id = 121,
          item_type = 5,
          tags = { "fire", "dragon" },
          level = 40,
@@ -4882,7 +4882,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       white_dragon = {
-         legacy_id = 122,
+         integer_id = 122,
          item_type = 5,
          tags = { "dragon" },
          level = 40,
@@ -4906,7 +4906,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       elec_dragon = {
-         legacy_id = 123,
+         integer_id = 123,
          item_type = 5,
          tags = { "dragon" },
          level = 40,
@@ -4931,7 +4931,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       nether_dragon = {
-         legacy_id = 124,
+         integer_id = 124,
          item_type = 5,
          tags = { "undead", "dragon" },
          level = 45,
@@ -4956,7 +4956,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       chaos_dragon = {
-         legacy_id = 125,
+         integer_id = 125,
          item_type = 5,
          tags = { "dragon" },
          level = 50,
@@ -4981,7 +4981,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       cerberus = {
-         legacy_id = 126,
+         integer_id = 126,
          item_type = 4,
          tags = { "fire" },
          level = 23,
@@ -5005,7 +5005,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       scorpion = {
-         legacy_id = 255,
+         integer_id = 255,
          item_type = 2,
          tags = { "wild" },
          level = 4,
@@ -5030,7 +5030,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       king_scorpion = {
-         legacy_id = 256,
+         integer_id = 256,
          item_type = 2,
          tags = { "wild" },
          level = 24,
@@ -5056,7 +5056,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       spider = {
-         legacy_id = 127,
+         integer_id = 127,
          item_type = 2,
          tags = { "wild" },
          level = 3,
@@ -5080,7 +5080,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       black_widow = {
-         legacy_id = 128,
+         integer_id = 128,
          item_type = 2,
          tags = { "wild" },
          level = 11,
@@ -5107,7 +5107,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       paralyzer = {
-         legacy_id = 129,
+         integer_id = 129,
          item_type = 2,
          tags = { "wild" },
          level = 21,
@@ -5134,7 +5134,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       tarantula = {
-         legacy_id = 130,
+         integer_id = 130,
          item_type = 2,
          tags = { "wild" },
          level = 15,
@@ -5161,7 +5161,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cobra",
       },
       blood_spider = {
-         legacy_id = 131,
+         integer_id = 131,
          item_type = 2,
          tags = { "undead" },
          level = 28,
@@ -5187,7 +5187,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       wooden_golem = {
-         legacy_id = 132,
+         integer_id = 132,
          item_type = 3,
          tags = {},
          level = 13,
@@ -5210,7 +5210,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       stone_golem = {
-         legacy_id = 133,
+         integer_id = 133,
          item_type = 3,
          tags = { "fire" },
          level = 19,
@@ -5232,7 +5232,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       steel_golem = {
-         legacy_id = 134,
+         integer_id = 134,
          item_type = 3,
          tags = { "fire" },
          level = 25,
@@ -5256,7 +5256,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       golden_golem = {
-         legacy_id = 135,
+         integer_id = 135,
          item_type = 3,
          tags = {},
          level = 30,
@@ -5280,7 +5280,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       mithril_golem = {
-         legacy_id = 136,
+         integer_id = 136,
          item_type = 3,
          tags = {},
          level = 35,
@@ -5304,7 +5304,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       sky_golem = {
-         legacy_id = 137,
+         integer_id = 137,
          item_type = 3,
          tags = {},
          level = 40,
@@ -5328,7 +5328,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       adamantium_golem = {
-         legacy_id = 138,
+         integer_id = 138,
          item_type = 3,
          tags = {},
          level = 50,
@@ -5352,7 +5352,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       fire_crab = {
-         legacy_id = 147,
+         integer_id = 147,
          item_type = 2,
          tags = { "fire" },
          level = 16,
@@ -5376,7 +5376,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.fire_crab",
       },
       fire_centipede = {
-         legacy_id = 148,
+         integer_id = 148,
          item_type = 2,
          tags = { "fire" },
          level = 18,
@@ -5401,7 +5401,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.fire_centipede",
       },
       cultist_of_fire = {
-         legacy_id = 149,
+         integer_id = 149,
          item_type = 3,
          tags = { "fire" },
          level = 20,
@@ -5427,7 +5427,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       skeleton_warrior = {
-         legacy_id = 150,
+         integer_id = 150,
          item_type = 3,
          tags = { "undead" },
          level = 12,
@@ -5448,7 +5448,7 @@ ELONA.data:add(
          flags = { "is_immune_to_fear" },
       },
       skeleton_berserker = {
-         legacy_id = 151,
+         integer_id = 151,
          item_type = 3,
          tags = { "undead" },
          level = 20,
@@ -5471,7 +5471,7 @@ ELONA.data:add(
          flags = { "is_immune_to_fear" },
       },
       missionary_of_darkness = {
-         legacy_id = 152,
+         integer_id = 152,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -5494,7 +5494,7 @@ ELONA.data:add(
          flags = { "is_immune_to_fear" },
       },
       pawn = {
-         legacy_id = 153,
+         integer_id = 153,
          item_type = 3,
          tags = { "pawn" },
          level = 12,
@@ -5515,7 +5515,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       rook = {
-         legacy_id = 154,
+         integer_id = 154,
          item_type = 3,
          tags = { "pawn" },
          level = 16,
@@ -5537,7 +5537,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       bishop = {
-         legacy_id = 155,
+         integer_id = 155,
          item_type = 3,
          tags = { "pawn" },
          level = 18,
@@ -5560,7 +5560,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       knight = {
-         legacy_id = 156,
+         integer_id = 156,
          item_type = 3,
          tags = { "pawn" },
          level = 18,
@@ -5583,7 +5583,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       queen = {
-         legacy_id = 157,
+         integer_id = 157,
          item_type = 3,
          tags = {},
          level = 22,
@@ -5606,7 +5606,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       king = {
-         legacy_id = 158,
+         integer_id = 158,
          item_type = 3,
          tags = {},
          level = 22,
@@ -5629,7 +5629,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       mercenary_warrior = {
-         legacy_id = 159,
+         integer_id = 159,
          item_type = 3,
          tags = { "man", "shopguard" },
          level = 20,
@@ -5652,7 +5652,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mercenary_archer = {
-         legacy_id = 160,
+         integer_id = 160,
          item_type = 3,
          tags = { "man", "shopguard" },
          level = 20,
@@ -5675,7 +5675,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       mercenary_wizard = {
-         legacy_id = 161,
+         integer_id = 161,
          item_type = 3,
          tags = { "man", "shopguard" },
          level = 20,
@@ -5698,7 +5698,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       rogue_boss = {
-         legacy_id = 302,
+         integer_id = 302,
          item_type = 3,
          tags = { "man", "rogue" },
          level = 12,
@@ -5728,7 +5728,7 @@ ELONA.data:add(
          dialog_id = "core.rogue_boss",
       },
       rogue_warrior = {
-         legacy_id = 303,
+         integer_id = 303,
          item_type = 3,
          tags = { "man", "rogue" },
          level = 10,
@@ -5753,7 +5753,7 @@ ELONA.data:add(
          drops = { "core.rogue" },
       },
       rogue_archer = {
-         legacy_id = 304,
+         integer_id = 304,
          item_type = 3,
          tags = { "man", "rogue" },
          level = 10,
@@ -5777,7 +5777,7 @@ ELONA.data:add(
          drops = { "core.rogue" },
       },
       rogue_wizard = {
-         legacy_id = 305,
+         integer_id = 305,
          item_type = 3,
          tags = { "man", "rogue" },
          level = 10,
@@ -5802,7 +5802,7 @@ ELONA.data:add(
          drops = { "core.rogue" },
       },
       yerles_machine_infantry = {
-         legacy_id = 162,
+         integer_id = 162,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -5824,7 +5824,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       yerles_elite_machine_infantry = {
-         legacy_id = 234,
+         integer_id = 234,
          item_type = 3,
          tags = { "man" },
          level = 22,
@@ -5847,7 +5847,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       gilbert = {
-         legacy_id = 231,
+         integer_id = 231,
          item_type = 3,
          tags = { "man" },
          level = 45,
@@ -5873,7 +5873,7 @@ ELONA.data:add(
          dialog_id = "core.gilbert",
       },
       yerles_self_propelled_gun = {
-         legacy_id = 232,
+         integer_id = 232,
          item_type = 3,
          tags = {},
          level = 17,
@@ -5894,7 +5894,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       juere_infantry = {
-         legacy_id = 233,
+         integer_id = 233,
          item_type = 3,
          tags = { "man" },
          level = 7,
@@ -5916,7 +5916,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       juere_swordman = {
-         legacy_id = 235,
+         integer_id = 235,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -5939,7 +5939,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       rock_thrower = {
-         legacy_id = 163,
+         integer_id = 163,
          item_type = 3,
          tags = { "man" },
          level = 9,
@@ -5961,7 +5961,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       cat = {
-         legacy_id = 164,
+         integer_id = 164,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 4,
@@ -5984,7 +5984,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cat",
       },
       silver_cat = {
-         legacy_id = 246,
+         integer_id = 246,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 3,
@@ -6007,7 +6007,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cat",
       },
       stray_cat = {
-         legacy_id = 332,
+         integer_id = 332,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 9,
@@ -6031,7 +6031,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.cat",
       },
       lion = {
-         legacy_id = 229,
+         integer_id = 229,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 18,
@@ -6054,7 +6054,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       cacy = {
-         legacy_id = 230,
+         integer_id = 230,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 25,
@@ -6078,7 +6078,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       carbuncle = {
-         legacy_id = 228,
+         integer_id = 228,
          item_type = 1,
          tags = { "wild", "cat" },
          level = 20,
@@ -6101,7 +6101,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       dog = {
-         legacy_id = 165,
+         integer_id = 165,
          item_type = 1,
          tags = { "wild" },
          level = 4,
@@ -6123,7 +6123,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       poppy = {
-         legacy_id = 225,
+         integer_id = 225,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -6147,7 +6147,7 @@ ELONA.data:add(
          dialog_id = "core.poppy",
       },
       rilian = {
-         legacy_id = 226,
+         integer_id = 226,
          item_type = 3,
          tags = { "man" },
          level = 4,
@@ -6171,7 +6171,7 @@ ELONA.data:add(
          dialog_id = "core.rilian",
       },
       tam = {
-         legacy_id = 227,
+         integer_id = 227,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -6196,7 +6196,7 @@ ELONA.data:add(
          dialog_id = "core.tam",
       },
       little_girl = {
-         legacy_id = 166,
+         integer_id = 166,
          item_type = 3,
          tags = { "man" },
          level = 4,
@@ -6220,7 +6220,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       rat = {
-         legacy_id = 167,
+         integer_id = 167,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -6241,7 +6241,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       hermit_crab = {
-         legacy_id = 168,
+         integer_id = 168,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -6263,7 +6263,7 @@ ELONA.data:add(
          drops = { "core.hermit_crab" },
       },
       public_performer = {
-         legacy_id = 170,
+         integer_id = 170,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -6286,7 +6286,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       frisia = {
-         legacy_id = 175,
+         integer_id = 175,
          item_type = 3,
          tags = { "god" },
          level = 80,
@@ -6309,7 +6309,7 @@ ELONA.data:add(
          drops = { "core.god_boss" },
       },
       younger_sister = {
-         legacy_id = 176,
+         integer_id = 176,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -6333,7 +6333,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       younger_sister_of_mansion = {
-         legacy_id = 249,
+         integer_id = 249,
          item_type = 3,
          tags = { "man" },
          level = 50,
@@ -6358,7 +6358,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       younger_cat_sister = {
-         legacy_id = 210,
+         integer_id = 210,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -6380,7 +6380,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       young_lady = {
-         legacy_id = 211,
+         integer_id = 211,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -6406,7 +6406,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       utima = {
-         legacy_id = 177,
+         integer_id = 177,
          item_type = 3,
          tags = { "god" },
          level = 80,
@@ -6435,7 +6435,7 @@ ELONA.data:add(
          drops = { "core.god_boss" },
       },
       azzrssil = {
-         legacy_id = 178,
+         integer_id = 178,
          item_type = 6,
          tags = { "undead", "god" },
          level = 80,
@@ -6463,7 +6463,7 @@ ELONA.data:add(
          drops = { "core.god_boss" },
       },
       master_of_pet_arena = {
-         legacy_id = 179,
+         integer_id = 179,
          item_type = 3,
          tags = { "man" },
          level = 35,
@@ -6484,7 +6484,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       garok = {
-         legacy_id = 208,
+         integer_id = 208,
          item_type = 3,
          tags = { "man" },
          level = 45,
@@ -6509,7 +6509,7 @@ ELONA.data:add(
          dialog_id = "core.garok",
       },
       miral = {
-         legacy_id = 209,
+         integer_id = 209,
          item_type = 3,
          tags = { "man" },
          level = 45,
@@ -6534,7 +6534,7 @@ ELONA.data:add(
          dialog_id = "core.miral",
       },
       twintail = {
-         legacy_id = 180,
+         integer_id = 180,
          item_type = 1,
          tags = {},
          level = 1,
@@ -6556,7 +6556,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       silver_wolf = {
-         legacy_id = 181,
+         integer_id = 181,
          item_type = 1,
          tags = { "god" },
          level = 10,
@@ -6577,7 +6577,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       nurse = {
-         legacy_id = 182,
+         integer_id = 182,
          item_type = 3,
          tags = { "man" },
          level = 8,
@@ -6601,7 +6601,7 @@ ELONA.data:add(
          flags = { "is_suitable_for_mount" },
       },
       rich_person = {
-         legacy_id = 183,
+         integer_id = 183,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -6626,7 +6626,7 @@ ELONA.data:add(
          drops = { "core.rich_person" },
       },
       noble_child = {
-         legacy_id = 184,
+         integer_id = 184,
          item_type = 3,
          tags = { "man" },
          level = 9,
@@ -6651,7 +6651,7 @@ ELONA.data:add(
          drops = { "core.noble_child" },
       },
       tourist = {
-         legacy_id = 185,
+         integer_id = 185,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -6677,7 +6677,7 @@ ELONA.data:add(
          drops = { "core.tourist" },
       },
       festival_tourist = {
-         legacy_id = 350,
+         integer_id = 350,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -6703,7 +6703,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       blade = {
-         legacy_id = 186,
+         integer_id = 186,
          item_type = 3,
          tags = {},
          level = 5,
@@ -6725,7 +6725,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       blade_alpha = {
-         legacy_id = 187,
+         integer_id = 187,
          item_type = 3,
          tags = {},
          level = 13,
@@ -6749,7 +6749,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       blade_omega = {
-         legacy_id = 188,
+         integer_id = 188,
          item_type = 3,
          tags = {},
          level = 30,
@@ -6773,7 +6773,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       kaneda_bike = {
-         legacy_id = 345,
+         integer_id = 345,
          item_type = 3,
          tags = {},
          level = 22,
@@ -6799,7 +6799,7 @@ ELONA.data:add(
          dialog_id = "core.kaneda_bike",
       },
       cub = {
-         legacy_id = 346,
+         integer_id = 346,
          item_type = 3,
          tags = {},
          level = 8,
@@ -6823,7 +6823,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       mine_dog = {
-         legacy_id = 341,
+         integer_id = 341,
          item_type = 3,
          tags = {},
          level = 15,
@@ -6847,7 +6847,7 @@ ELONA.data:add(
          drops = { "core.mine_dog" },
       },
       iron_maiden = {
-         legacy_id = 258,
+         integer_id = 258,
          item_type = 3,
          tags = {},
          level = 25,
@@ -6871,7 +6871,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       deformed_eye = {
-         legacy_id = 189,
+         integer_id = 189,
          item_type = 3,
          tags = { "undead" },
          level = 8,
@@ -6895,7 +6895,7 @@ ELONA.data:add(
          drops = { "core.deformed_eye" },
       },
       impure_eye = {
-         legacy_id = 190,
+         integer_id = 190,
          item_type = 3,
          tags = { "undead" },
          level = 19,
@@ -6920,7 +6920,7 @@ ELONA.data:add(
          drops = { "core.deformed_eye" },
       },
       wisp = {
-         legacy_id = 191,
+         integer_id = 191,
          item_type = 3,
          tags = { "undead", "ether" },
          level = 14,
@@ -6945,7 +6945,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.ether",
       },
       hedgehog = {
-         legacy_id = 192,
+         integer_id = 192,
          item_type = 1,
          tags = { "wild" },
          level = 5,
@@ -6966,7 +6966,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       shining_hedgehog = {
-         legacy_id = 193,
+         integer_id = 193,
          item_type = 1,
          tags = { "wild", "ether" },
          level = 15,
@@ -6989,7 +6989,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.ether",
       },
       chicken = {
-         legacy_id = 195,
+         integer_id = 195,
          item_type = 1,
          tags = { "wild" },
          level = 1,
@@ -7009,7 +7009,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       pumpkin = {
-         legacy_id = 196,
+         integer_id = 196,
          item_type = 2,
          tags = { "undead" },
          level = 7,
@@ -7032,7 +7032,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.pumpkin",
       },
       puppy = {
-         legacy_id = 201,
+         integer_id = 201,
          item_type = 2,
          tags = { "undead" },
          level = 5,
@@ -7057,7 +7057,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.pumpkin",
       },
       greater_pumpkin = {
-         legacy_id = 197,
+         integer_id = 197,
          item_type = 2,
          tags = { "undead" },
          level = 18,
@@ -7082,7 +7082,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.greater_pumpkin",
       },
       halloween_nightmare = {
-         legacy_id = 198,
+         integer_id = 198,
          item_type = 2,
          tags = { "undead" },
          level = 30,
@@ -7107,7 +7107,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.halloween_nightmare",
       },
       stalker = {
-         legacy_id = 199,
+         integer_id = 199,
          item_type = 3,
          tags = { "undead" },
          level = 12,
@@ -7130,7 +7130,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.stalker",
       },
       shadow_stalker = {
-         legacy_id = 200,
+         integer_id = 200,
          item_type = 3,
          tags = { "undead" },
          level = 26,
@@ -7154,7 +7154,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.stalker",
       },
       ebon = {
-         legacy_id = 202,
+         integer_id = 202,
          item_type = 3,
          tags = {},
          level = 80,
@@ -7181,7 +7181,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       moyer = {
-         legacy_id = 203,
+         integer_id = 203,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -7205,7 +7205,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       maid = {
-         legacy_id = 205,
+         integer_id = 205,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -7229,7 +7229,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       ebon2 = {
-         legacy_id = 207,
+         integer_id = 207,
          item_type = 3,
          tags = { "god" },
          level = 30,
@@ -7257,7 +7257,7 @@ ELONA.data:add(
       },
       -- "Has" the same name as "Stersha" in "EN", but is named "実験台" in "JP".
       test_subject = {
-         legacy_id = 212,
+         integer_id = 212,
          item_type = 3,
          tags = {},
          level = 1,
@@ -7282,7 +7282,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       gwen = {
-         legacy_id = 213,
+         integer_id = 213,
          item_type = 3,
          tags = { "man" },
          level = 1,
@@ -7307,7 +7307,7 @@ ELONA.data:add(
          drops = { "core.gwen" },
       },
       pael = {
-         legacy_id = 221,
+         integer_id = 221,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -7333,7 +7333,7 @@ ELONA.data:add(
          dialog_id = "core.pael",
       },
       lily = {
-         legacy_id = 222,
+         integer_id = 222,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -7359,7 +7359,7 @@ ELONA.data:add(
          dialog_id = "core.lily",
       },
       raphael = {
-         legacy_id = 223,
+         integer_id = 223,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -7385,7 +7385,7 @@ ELONA.data:add(
          dialog_id = "core.raphael",
       },
       ainc = {
-         legacy_id = 224,
+         integer_id = 224,
          item_type = 3,
          tags = { "man" },
          level = 7,
@@ -7411,7 +7411,7 @@ ELONA.data:add(
          dialog_id = "core.ainc",
       },
       arnord = {
-         legacy_id = 243,
+         integer_id = 243,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -7437,7 +7437,7 @@ ELONA.data:add(
          dialog_id = "core.arnord",
       },
       mia = {
-         legacy_id = 247,
+         integer_id = 247,
          item_type = 3,
          tags = { "man" },
          level = 4,
@@ -7462,7 +7462,7 @@ ELONA.data:add(
          dialog_id = "core.mia",
       },
       renton = {
-         legacy_id = 252,
+         integer_id = 252,
          item_type = 3,
          tags = { "man" },
          level = 45,
@@ -7488,7 +7488,7 @@ ELONA.data:add(
          dialog_id = "core.renton",
       },
       marks = {
-         legacy_id = 253,
+         integer_id = 253,
          item_type = 3,
          tags = { "man" },
          level = 25,
@@ -7515,7 +7515,7 @@ ELONA.data:add(
          dialog_id = "core.marks",
       },
       noel = {
-         legacy_id = 259,
+         integer_id = 259,
          item_type = 3,
          tags = { "man" },
          level = 20,
@@ -7542,7 +7542,7 @@ ELONA.data:add(
          dialog_id = "core.noel",
       },
       conery = {
-         legacy_id = 301,
+         integer_id = 301,
          item_type = 3,
          tags = { "man" },
          level = 38,
@@ -7570,7 +7570,7 @@ ELONA.data:add(
          dialog_id = "core.conery",
       },
       thief = {
-         legacy_id = 214,
+         integer_id = 214,
          item_type = 3,
          tags = { "man" },
          level = 2,
@@ -7593,7 +7593,7 @@ ELONA.data:add(
          flags = { "drops_gold" },
       },
       robber = {
-         legacy_id = 215,
+         integer_id = 215,
          item_type = 3,
          tags = { "man" },
          level = 5,
@@ -7618,7 +7618,7 @@ ELONA.data:add(
          flags = { "drops_gold" },
       },
       master_thief = {
-         legacy_id = 217,
+         integer_id = 217,
          item_type = 3,
          tags = { "man" },
          level = 35,
@@ -7643,7 +7643,7 @@ ELONA.data:add(
          flags = { "drops_gold" },
       },
       great_race_of_yith = {
-         legacy_id = 216,
+         integer_id = 216,
          item_type = 1,
          tags = {},
          level = 50,
@@ -7668,7 +7668,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.yith",
       },
       shub_niggurath = {
-         legacy_id = 218,
+         integer_id = 218,
          item_type = 1,
          tags = {},
          level = 45,
@@ -7695,7 +7695,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.yith",
       },
       gagu = {
-         legacy_id = 219,
+         integer_id = 219,
          item_type = 3,
          tags = {},
          level = 38,
@@ -7718,7 +7718,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.yith",
       },
       spiral_king = {
-         legacy_id = 220,
+         integer_id = 220,
          item_type = 3,
          tags = { "god" },
          level = 65,
@@ -7745,7 +7745,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.yith",
       },
       fairy = {
-         legacy_id = 250,
+         integer_id = 250,
          item_type = 3,
          tags = {},
          level = 13,
@@ -7767,7 +7767,7 @@ ELONA.data:add(
          drops = { "core.fairy" },
       },
       black_cat = {
-         legacy_id = 260,
+         integer_id = 260,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7793,7 +7793,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       cute_fairy = {
-         legacy_id = 261,
+         integer_id = 261,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7819,7 +7819,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       android = {
-         legacy_id = 262,
+         integer_id = 262,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7844,7 +7844,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       black_angel = {
-         legacy_id = 263,
+         integer_id = 263,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7871,7 +7871,7 @@ ELONA.data:add(
          flags = { "is_floating", "is_suitable_for_mount" },
       },
       exile = {
-         legacy_id = 264,
+         integer_id = 264,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7895,7 +7895,7 @@ ELONA.data:add(
          flags = { "is_floating", "can_cast_rapid_magic" },
       },
       golden_knight = {
-         legacy_id = 265,
+         integer_id = 265,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7922,7 +7922,7 @@ ELONA.data:add(
          flags = { "is_floating" },
       },
       defender = {
-         legacy_id = 266,
+         integer_id = 266,
          item_type = 3,
          tags = { "god" },
          level = 8,
@@ -7949,7 +7949,7 @@ ELONA.data:add(
          flags = { "is_floating", "has_lay_hand" },
       },
       lame_horse = {
-         legacy_id = 267,
+         integer_id = 267,
          item_type = 1,
          tags = { "wild", "horse" },
          level = 1,
@@ -7973,7 +7973,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.horse",
       },
       wild_horse = {
-         legacy_id = 276,
+         integer_id = 276,
          item_type = 1,
          tags = { "wild", "horse" },
          level = 4,
@@ -7998,7 +7998,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.horse",
       },
       noyel_horse = {
-         legacy_id = 275,
+         integer_id = 275,
          item_type = 1,
          tags = { "wild", "horse" },
          level = 10,
@@ -8023,7 +8023,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.horse",
       },
       yowyn_horse = {
-         legacy_id = 268,
+         integer_id = 268,
          item_type = 1,
          tags = { "wild", "horse" },
          level = 15,
@@ -8048,7 +8048,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.horse",
       },
       wild_horse2 = {
-         legacy_id = 277,
+         integer_id = 277,
          item_type = 1,
          tags = { "wild", "horse" },
          level = 20,
@@ -8073,7 +8073,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.horse",
       },
       mutant = {
-         legacy_id = 278,
+         integer_id = 278,
          item_type = 3,
          tags = {},
          level = 6,
@@ -8095,7 +8095,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       icolle = {
-         legacy_id = 279,
+         integer_id = 279,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -8121,7 +8121,7 @@ ELONA.data:add(
          dialog_id = "core.icolle",
       },
       balzak = {
-         legacy_id = 280,
+         integer_id = 280,
          item_type = 3,
          tags = { "man" },
          level = 10,
@@ -8146,7 +8146,7 @@ ELONA.data:add(
          dialog_id = "core.balzak",
       },
       revlus = {
-         legacy_id = 288,
+         integer_id = 288,
          item_type = 3,
          tags = { "man" },
          level = 55,
@@ -8172,7 +8172,7 @@ ELONA.data:add(
          flags = { "is_floating", "can_cast_rapid_magic" },
       },
       lexus = {
-         legacy_id = 290,
+         integer_id = 290,
          item_type = 3,
          tags = { "man" },
          level = 38,
@@ -8199,7 +8199,7 @@ ELONA.data:add(
          dialog_id = "core.lexus",
       },
       sin = {
-         legacy_id = 292,
+         integer_id = 292,
          item_type = 3,
          tags = { "man" },
          level = 55,
@@ -8223,7 +8223,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       abyss = {
-         legacy_id = 294,
+         integer_id = 294,
          item_type = 3,
          tags = { "man" },
          level = 38,
@@ -8249,7 +8249,7 @@ ELONA.data:add(
          dialog_id = "core.abyss",
       },
       fray = {
-         legacy_id = 291,
+         integer_id = 291,
          item_type = 3,
          tags = { "man" },
          level = 55,
@@ -8273,7 +8273,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       doria = {
-         legacy_id = 297,
+         integer_id = 297,
          item_type = 3,
          tags = { "man" },
          level = 38,
@@ -8299,7 +8299,7 @@ ELONA.data:add(
          dialog_id = "core.doria",
       },
       silver_eyed_witch = {
-         legacy_id = 317,
+         integer_id = 317,
          item_type = 3,
          tags = {},
          level = 28,
@@ -8326,7 +8326,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       big_daddy = {
-         legacy_id = 318,
+         integer_id = 318,
          item_type = 3,
          tags = {},
          level = 30,
@@ -8356,7 +8356,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.iron",
       },
       little_sister = {
-         legacy_id = 319,
+         integer_id = 319,
          item_type = 3,
          tags = {},
          level = 1,
@@ -8380,7 +8380,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       strange_scientist = {
-         legacy_id = 322,
+         integer_id = 322,
          item_type = 3,
          tags = { "man" },
          level = 15,
@@ -8405,7 +8405,7 @@ ELONA.data:add(
          dialog_id = "core.strange_scientist",
       },
       mysterious_producer = {
-         legacy_id = 334,
+         integer_id = 334,
          item_type = 3,
          tags = { "man" },
          level = 7,
@@ -8429,7 +8429,7 @@ ELONA.data:add(
          coefficient = 400,
       },
       shade = {
-         legacy_id = 323,
+         integer_id = 323,
          item_type = 3,
          tags = { "undead" },
          level = 12,
@@ -8452,7 +8452,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.ghost",
       },
       quickling = {
-         legacy_id = 324,
+         integer_id = 324,
          item_type = 3,
          tags = {},
          level = 10,
@@ -8474,7 +8474,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.quickling",
       },
       quickling_archer = {
-         legacy_id = 325,
+         integer_id = 325,
          item_type = 3,
          tags = {},
          level = 17,
@@ -8498,7 +8498,7 @@ ELONA.data:add(
          corpse_eating_callback = "core.EatingEffects.quickling",
       },
       silver_bell = {
-         legacy_id = 328,
+         integer_id = 328,
          item_type = 1,
          tags = {},
          level = 3,
@@ -8522,7 +8522,7 @@ ELONA.data:add(
          drops = { "core.silver_bell" },
       },
       gold_bell = {
-         legacy_id = 329,
+         integer_id = 329,
          item_type = 1,
          tags = {},
          level = 1,
@@ -8547,7 +8547,7 @@ ELONA.data:add(
          drops = { "core.gold_bell" },
       },
       alien = {
-         legacy_id = 330,
+         integer_id = 330,
          item_type = 1,
          tags = { "dragon" },
          level = 19,

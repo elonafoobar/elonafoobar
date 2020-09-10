@@ -54,10 +54,10 @@ optional<ConfigTable> get_data(
 
 optional<ConfigTable> get_data(
     data::PrototypeId prototype_id,
-    int legacy_instance_id)
+    int integer_instance_id)
 {
-    if (auto id = lua->get_data_manager().get().by_legacy(
-            prototype_id, legacy_instance_id))
+    if (auto id = lua->get_data_manager().get().by_integer(
+            prototype_id, integer_instance_id))
     {
         return get_data(prototype_id, *id);
     }

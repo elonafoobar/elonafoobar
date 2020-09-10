@@ -13,15 +13,15 @@
 namespace elona
 {
 
-void fish_get(int legacy_fish_id)
+void fish_get(int integer_fish_id)
 {
     flt();
     if (const auto item =
-            itemcreate_player_inv(the_fish_db[legacy_fish_id]->item_id, 0))
+            itemcreate_player_inv(the_fish_db[integer_fish_id]->item_id, 0))
     {
-        item->subname = legacy_fish_id;
-        item->value = the_fish_db[legacy_fish_id]->value;
-        item->weight = the_fish_db[legacy_fish_id]->weight;
+        item->subname = integer_fish_id;
+        item->value = the_fish_db[integer_fish_id]->value;
+        item->weight = the_fish_db[integer_fish_id]->weight;
         txt(i18n::s.get("core.activity.fishing.get", item.unwrap()));
         inv_stack(g_inv.pc(), item.unwrap(), true);
     }
@@ -44,7 +44,7 @@ int fish_select_at_random(int bait)
         {
             continue;
         }
-        sampler.add(fish.legacy_id, fish.rarity);
+        sampler.add(fish.integer_id, fish.rarity);
     }
 
     return sampler.get().value_or(1);

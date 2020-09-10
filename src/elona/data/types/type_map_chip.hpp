@@ -49,7 +49,7 @@ enum class ChipEffect : int
 struct MapChip
 {
     data::InstanceId id;
-    int legacy_id{};
+    int integer_id{};
     int atlas{};
     data::FullyQualifiedId key{};
     Extent source{};

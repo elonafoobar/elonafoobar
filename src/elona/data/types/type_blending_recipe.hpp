@@ -11,7 +11,7 @@ namespace elona
 struct BlendingRecipeData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     int type;
     int required_turns;
     int required_hours;

@@ -15,7 +15,8 @@ int get_card_info(int card_id, CardInfo& card_info)
     {
         card_name = *card_name_opt;
     }
-    else if (const auto chara_id = the_character_db.get_id_from_legacy(card_id))
+    else if (
+        const auto chara_id = the_character_db.get_id_from_integer(card_id))
     {
         card_name = the_character_db.get_text(*chara_id, "name");
     }

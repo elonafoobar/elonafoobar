@@ -33,7 +33,7 @@ TEST_CASE("test registering item", "[Lua: Data]")
     auto data = db["item.putitoro"];
 
     REQUIRE(data);
-    REQUIRE(data->legacy_id == 9999);
+    REQUIRE(data->integer_id == 9999);
     REQUIRE(data->image == 695);
     REQUIRE(data->value == 2000);
     REQUIRE(data->weight == 200);

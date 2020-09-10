@@ -55,7 +55,7 @@ local function receive_reward()
 end
 
 local function quota_args()
-   local id = Data.get_id_by_legacy("core.chara", World.data.fighters_guild_target)
+   local id = Data.get_id_by_integer("core.chara", World.data.fighters_guild_target)
    local name = I18N.get_data_text("core.chara", id, "name")
    return {World.data.fighters_guild_quota, name}
 end

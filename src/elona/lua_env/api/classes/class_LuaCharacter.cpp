@@ -274,7 +274,7 @@ sol::optional<LuaAbility> LuaCharacter_get_skill(
         return sol::nullopt;
     }
 
-    return LuaAbility(data->legacy_id, self.obj_id);
+    return LuaAbility(data->integer_id, self.obj_id);
 }
 
 
@@ -300,7 +300,7 @@ void LuaCharacter_gain_skill_stock(
         return;
     }
     elona::chara_gain_skill(
-        self, data->legacy_id, initial_level, initial_stock);
+        self, data->integer_id, initial_level, initial_stock);
 }
 
 
@@ -333,7 +333,7 @@ void LuaCharacter_gain_skill_exp(
     {
         return;
     }
-    elona::chara_gain_fixed_skill_exp(self, data->legacy_id, amount);
+    elona::chara_gain_fixed_skill_exp(self, data->integer_id, amount);
 }
 
 
@@ -607,11 +607,11 @@ void bind(sol::state& lua)
     LuaCharacter.set("index", sol::readonly(&Character::index));
 
     /**
-     * @luadoc index field legacy_id
+     * @luadoc index field integer_id
      *
-     * [R] The legacy ID of this character.
+     * [R] The integer ID of this character.
      */
-    LuaCharacter.set("legacy_id", sol::readonly(&Character::id));
+    LuaCharacter.set("integer_id", sol::readonly(&Character::id));
 
     /**
      * @luadoc name field string

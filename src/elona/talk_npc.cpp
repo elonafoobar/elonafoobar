@@ -2172,7 +2172,7 @@ TalkResult talk_npc(Character& speaker)
                     deliver = cnt;
                     for (const auto& item : g_inv.pc())
                     {
-                        if (the_item_db[item->id]->legacy_id == p)
+                        if (the_item_db[item->id]->integer_id == p)
                         {
                             item_to_deliver = item;
                             break;
@@ -2208,7 +2208,7 @@ TalkResult talk_npc(Character& speaker)
                 }
                 if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
                 {
-                    if (the_item_db[item->id]->legacy_id ==
+                    if (the_item_db[item->id]->integer_id ==
                         quest_data[rq].target_item_id)
                     {
                         item_to_supply = item;

@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.chara",
    {
       spiral_putit = {
-         legacy_id = 9999,
+         integer_id = 9999,
          item_type = 2,
          tags = {"slime", "ether"},
          level = 2,

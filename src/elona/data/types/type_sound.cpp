@@ -12,7 +12,7 @@ const constexpr char* data::DatabaseTraits<SoundDB>::type_id;
 
 SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_REQ(file, std::string);
     DATA_OPT_OR(volume, int, 128);
 
@@ -25,7 +25,7 @@ SoundData SoundDB::convert(const lua::ConfigTable& data, const std::string& id)
 
     return SoundData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         sound_file,
         volume,
     };

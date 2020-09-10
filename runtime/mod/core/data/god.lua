@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.god",
    {
       mani = {
-         legacy_id = 1,
+         integer_id = 1,
          offerings = {
             "core.corpse",
 
@@ -23,7 +23,7 @@ ELONA.data:add(
          },
       },
       lulwy = {
-         legacy_id = 2,
+         integer_id = 2,
          offerings = {
             "core.corpse",
 
@@ -34,7 +34,7 @@ ELONA.data:add(
          },
       },
       itzpalt = {
-         legacy_id = 3,
+         integer_id = 3,
          offerings = {
             "core.corpse",
 
@@ -43,7 +43,7 @@ ELONA.data:add(
          },
       },
       ehekatl = {
-         legacy_id = 4,
+         integer_id = 4,
          offerings = {
             "core.corpse",
 
@@ -62,7 +62,7 @@ ELONA.data:add(
          },
       },
       opatos = {
-         legacy_id = 5,
+         integer_id = 5,
          offerings = {
             "core.corpse",
 
@@ -78,7 +78,7 @@ ELONA.data:add(
          },
       },
       jure = {
-         legacy_id = 6,
+         integer_id = 6,
          offerings = {
             "core.corpse",
 
@@ -94,7 +94,7 @@ ELONA.data:add(
          },
       },
       kumiromi = {
-         legacy_id = 7,
+         integer_id = 7,
          offerings = {
             "core.corpse",
 

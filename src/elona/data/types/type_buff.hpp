@@ -12,7 +12,7 @@ namespace elona
 struct BuffData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     sol::table self;
     BuffType type;
     lua::WrappedFunction duration;

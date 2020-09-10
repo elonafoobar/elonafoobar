@@ -176,7 +176,7 @@ void initialize_adata()
             continue;
         }
 
-        const auto map_id = map.legacy_id;
+        const auto map_id = map.integer_id;
         auto& area = area_data[map_id];
 
         area.id = map_id;
@@ -201,7 +201,7 @@ void initialize_adata()
             area.appearance = map.appearance;
             area.tile_set = map.tile_set;
             area.tile_type = map.tile_type;
-            area.outer_map = outer_map->legacy_id;
+            area.outer_map = outer_map->integer_id;
         }
     }
 }
@@ -213,7 +213,7 @@ void area_generate_from_mapdef(
     int x,
     int y)
 {
-    area.id = map.legacy_id;
+    area.id = map.integer_id;
     area.appearance = map.appearance;
     area.is_indoor = map.is_indoor;
     area.position.x = x;

@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.ability",
    {
       attribute_life = {
-         legacy_id = 2,
+         integer_id = 2,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -11,7 +11,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_mana = {
-         legacy_id = 3,
+         integer_id = 3,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -19,7 +19,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_strength = {
-         legacy_id = 10,
+         integer_id = 10,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -27,7 +27,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_constitution = {
-         legacy_id = 11,
+         integer_id = 11,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -35,7 +35,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_dexterity = {
-         legacy_id = 12,
+         integer_id = 12,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -43,7 +43,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_perception = {
-         legacy_id = 13,
+         integer_id = 13,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -51,7 +51,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_learning = {
-         legacy_id = 14,
+         integer_id = 14,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -59,7 +59,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_will = {
-         legacy_id = 15,
+         integer_id = 15,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -67,7 +67,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_magic = {
-         legacy_id = 16,
+         integer_id = 16,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -75,7 +75,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_charisma = {
-         legacy_id = 17,
+         integer_id = 17,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -83,7 +83,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_speed = {
-         legacy_id = 18,
+         integer_id = 18,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -91,7 +91,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       attribute_luck = {
-         legacy_id = 19,
+         integer_id = 19,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -99,7 +99,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       long_sword = {
-         legacy_id = 100,
+         integer_id = 100,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -107,7 +107,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       short_sword = {
-         legacy_id = 101,
+         integer_id = 101,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -115,7 +115,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       axe = {
-         legacy_id = 102,
+         integer_id = 102,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -123,7 +123,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       blunt = {
-         legacy_id = 103,
+         integer_id = 103,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -131,7 +131,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       polearm = {
-         legacy_id = 104,
+         integer_id = 104,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -139,7 +139,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       stave = {
-         legacy_id = 105,
+         integer_id = 105,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -147,7 +147,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       scythe = {
-         legacy_id = 107,
+         integer_id = 107,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -155,7 +155,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       bow = {
-         legacy_id = 108,
+         integer_id = 108,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -163,7 +163,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       crossbow = {
-         legacy_id = 109,
+         integer_id = 109,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -171,7 +171,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       firearm = {
-         legacy_id = 110,
+         integer_id = 110,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -179,7 +179,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       throwing = {
-         legacy_id = 111,
+         integer_id = 111,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -187,7 +187,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       martial_arts = {
-         legacy_id = 106,
+         integer_id = 106,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -195,7 +195,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       shield = {
-         legacy_id = 168,
+         integer_id = 168,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -203,7 +203,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       evasion = {
-         legacy_id = 173,
+         integer_id = 173,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -211,7 +211,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       dual_wield = {
-         legacy_id = 166,
+         integer_id = 166,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -219,7 +219,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       two_hand = {
-         legacy_id = 167,
+         integer_id = 167,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -227,7 +227,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_fire = {
-         legacy_id = 50,
+         integer_id = 50,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -235,7 +235,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_cold = {
-         legacy_id = 51,
+         integer_id = 51,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -243,7 +243,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_lightning = {
-         legacy_id = 52,
+         integer_id = 52,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -251,7 +251,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_darkness = {
-         legacy_id = 53,
+         integer_id = 53,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -259,7 +259,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_mind = {
-         legacy_id = 54,
+         integer_id = 54,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -267,7 +267,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_nether = {
-         legacy_id = 56,
+         integer_id = 56,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -275,7 +275,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_poison = {
-         legacy_id = 55,
+         integer_id = 55,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -283,7 +283,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_sound = {
-         legacy_id = 57,
+         integer_id = 57,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -291,7 +291,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_chaos = {
-         legacy_id = 59,
+         integer_id = 59,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -299,7 +299,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_nerve = {
-         legacy_id = 58,
+         integer_id = 58,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -307,7 +307,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_magic = {
-         legacy_id = 60,
+         integer_id = 60,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -315,7 +315,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       element_cut = {
-         legacy_id = 61,
+         integer_id = 61,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,
@@ -323,7 +323,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       weight_lifting = {
-         legacy_id = 153,
+         integer_id = 153,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -331,7 +331,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       tactics = {
-         legacy_id = 152,
+         integer_id = 152,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 0,
@@ -339,7 +339,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       marksman = {
-         legacy_id = 189,
+         integer_id = 189,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -347,7 +347,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       healing = {
-         legacy_id = 154,
+         integer_id = 154,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -355,7 +355,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       mining = {
-         legacy_id = 163,
+         integer_id = 163,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -363,7 +363,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       carpentry = {
-         legacy_id = 176,
+         integer_id = 176,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -371,7 +371,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       heavy_armor = {
-         legacy_id = 169,
+         integer_id = 169,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -379,7 +379,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       medium_armor = {
-         legacy_id = 170,
+         integer_id = 170,
          related_basic_attribute = 11,
          ability_type = 0,
          cost = 0,
@@ -387,7 +387,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       light_armor = {
-         legacy_id = 171,
+         integer_id = 171,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -395,7 +395,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       lock_picking = {
-         legacy_id = 158,
+         integer_id = 158,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -403,7 +403,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       disarm_trap = {
-         legacy_id = 175,
+         integer_id = 175,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -411,7 +411,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       tailoring = {
-         legacy_id = 177,
+         integer_id = 177,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -419,7 +419,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       jeweler = {
-         legacy_id = 179,
+         integer_id = 179,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 0,
@@ -427,7 +427,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       pickpocket = {
-         legacy_id = 300,
+         integer_id = 300,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 20,
@@ -435,7 +435,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       stealth = {
-         legacy_id = 157,
+         integer_id = 157,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -443,7 +443,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       detection = {
-         legacy_id = 159,
+         integer_id = 159,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -451,7 +451,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       sense_quality = {
-         legacy_id = 162,
+         integer_id = 162,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -459,7 +459,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_mind = {
-         legacy_id = 186,
+         integer_id = 186,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -467,7 +467,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       fishing = {
-         legacy_id = 185,
+         integer_id = 185,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 5,
@@ -475,7 +475,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       greater_evasion = {
-         legacy_id = 187,
+         integer_id = 187,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 0,
@@ -483,7 +483,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       anatomy = {
-         legacy_id = 161,
+         integer_id = 161,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -491,7 +491,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       literacy = {
-         legacy_id = 150,
+         integer_id = 150,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -499,7 +499,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       memorization = {
-         legacy_id = 165,
+         integer_id = 165,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -507,7 +507,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       alchemy = {
-         legacy_id = 178,
+         integer_id = 178,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -515,7 +515,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       gardening = {
-         legacy_id = 180,
+         integer_id = 180,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -523,7 +523,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       gene_engineer = {
-         legacy_id = 151,
+         integer_id = 151,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 0,
@@ -531,7 +531,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       cooking = {
-         legacy_id = 184,
+         integer_id = 184,
          related_basic_attribute = 14,
          ability_type = 0,
          cost = 15,
@@ -539,7 +539,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       meditation = {
-         legacy_id = 155,
+         integer_id = 155,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 0,
@@ -547,7 +547,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       magic_device = {
-         legacy_id = 174,
+         integer_id = 174,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 0,
@@ -555,7 +555,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       casting = {
-         legacy_id = 172,
+         integer_id = 172,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 0,
@@ -563,7 +563,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       control_magic = {
-         legacy_id = 188,
+         integer_id = 188,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 0,
@@ -571,7 +571,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       magic_capacity = {
-         legacy_id = 164,
+         integer_id = 164,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 0,
@@ -579,7 +579,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       faith = {
-         legacy_id = 181,
+         integer_id = 181,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 0,
@@ -587,7 +587,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       traveling = {
-         legacy_id = 182,
+         integer_id = 182,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 0,
@@ -595,7 +595,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       riding = {
-         legacy_id = 301,
+         integer_id = 301,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 20,
@@ -603,7 +603,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       negotiation = {
-         legacy_id = 156,
+         integer_id = 156,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 0,
@@ -611,7 +611,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       investing = {
-         legacy_id = 160,
+         integer_id = 160,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 0,
@@ -619,7 +619,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       performer = {
-         legacy_id = 183,
+         integer_id = 183,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 25,
@@ -627,7 +627,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       heal_light = {
-         legacy_id = 400,
+         integer_id = 400,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 6,
@@ -635,7 +635,7 @@ ELONA.data:add(
          difficulty = 80,
       },
       heal_critical = {
-         legacy_id = 401,
+         integer_id = 401,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 15,
@@ -643,7 +643,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       cure_of_eris = {
-         legacy_id = 402,
+         integer_id = 402,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 35,
@@ -651,7 +651,7 @@ ELONA.data:add(
          difficulty = 800,
       },
       cure_of_jure = {
-         legacy_id = 403,
+         integer_id = 403,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 80,
@@ -659,7 +659,7 @@ ELONA.data:add(
          difficulty = 1300,
       },
       healing_touch = {
-         legacy_id = 405,
+         integer_id = 405,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 20,
@@ -667,7 +667,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       holy_light = {
-         legacy_id = 406,
+         integer_id = 406,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 15,
@@ -675,7 +675,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       vanquish_hex = {
-         legacy_id = 407,
+         integer_id = 407,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 35,
@@ -683,7 +683,7 @@ ELONA.data:add(
          difficulty = 850,
       },
       teleport_other = {
-         legacy_id = 409,
+         integer_id = 409,
          related_basic_attribute = 16,
          ability_type = 5,
          cost = 10,
@@ -691,7 +691,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       teleport = {
-         legacy_id = 408,
+         integer_id = 408,
          related_basic_attribute = 16,
          ability_type = 5,
          cost = 10,
@@ -699,7 +699,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       short_teleport = {
-         legacy_id = 410,
+         integer_id = 410,
          related_basic_attribute = 16,
          ability_type = 5,
          cost = 8,
@@ -707,7 +707,7 @@ ELONA.data:add(
          difficulty = 120,
       },
       identify = {
-         legacy_id = 411,
+         integer_id = 411,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 28,
@@ -715,7 +715,7 @@ ELONA.data:add(
          difficulty = 800,
       },
       uncurse = {
-         legacy_id = 412,
+         integer_id = 412,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 35,
@@ -723,7 +723,7 @@ ELONA.data:add(
          difficulty = 700,
       },
       oracle = {
-         legacy_id = 413,
+         integer_id = 413,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 150,
@@ -731,7 +731,7 @@ ELONA.data:add(
          difficulty = 1500,
       },
       magic_dart = {
-         legacy_id = 414,
+         integer_id = 414,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 5,
@@ -739,7 +739,7 @@ ELONA.data:add(
          difficulty = 110,
       },
       nether_arrow = {
-         legacy_id = 415,
+         integer_id = 415,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 8,
@@ -747,7 +747,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       chaos_eye = {
-         legacy_id = 417,
+         integer_id = 417,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 10,
@@ -755,7 +755,7 @@ ELONA.data:add(
          difficulty = 650,
       },
       nerve_arrow = {
-         legacy_id = 416,
+         integer_id = 416,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 10,
@@ -763,7 +763,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       dark_eye = {
-         legacy_id = 418,
+         integer_id = 418,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 10,
@@ -771,7 +771,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       crystal_spear = {
-         legacy_id = 459,
+         integer_id = 459,
          related_basic_attribute = 16,
          ability_type = 2,
          cost = 24,
@@ -779,7 +779,7 @@ ELONA.data:add(
          difficulty = 950,
       },
       ice_bolt = {
-         legacy_id = 419,
+         integer_id = 419,
          related_basic_attribute = 16,
          ability_type = 1,
          cost = 10,
@@ -787,7 +787,7 @@ ELONA.data:add(
          difficulty = 220,
       },
       fire_bolt = {
-         legacy_id = 420,
+         integer_id = 420,
          related_basic_attribute = 16,
          ability_type = 1,
          cost = 10,
@@ -795,7 +795,7 @@ ELONA.data:add(
          difficulty = 220,
       },
       lightning_bolt = {
-         legacy_id = 421,
+         integer_id = 421,
          related_basic_attribute = 16,
          ability_type = 1,
          cost = 10,
@@ -803,7 +803,7 @@ ELONA.data:add(
          difficulty = 220,
       },
       darkness_bolt = {
-         legacy_id = 422,
+         integer_id = 422,
          related_basic_attribute = 16,
          ability_type = 1,
          cost = 12,
@@ -811,7 +811,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       mind_bolt = {
-         legacy_id = 423,
+         integer_id = 423,
          related_basic_attribute = 16,
          ability_type = 1,
          cost = 12,
@@ -819,7 +819,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       suicide_attack = {
-         legacy_id = 644,
+         integer_id = 644,
          related_basic_attribute = 11,
          ability_type = 3,
          cost = 16,
@@ -827,7 +827,7 @@ ELONA.data:add(
          difficulty = 450,
       },
       ice_ball = {
-         legacy_id = 431,
+         integer_id = 431,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 16,
@@ -835,7 +835,7 @@ ELONA.data:add(
          difficulty = 450,
       },
       fire_ball = {
-         legacy_id = 432,
+         integer_id = 432,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 16,
@@ -843,7 +843,7 @@ ELONA.data:add(
          difficulty = 450,
       },
       chaos_ball = {
-         legacy_id = 433,
+         integer_id = 433,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 20,
@@ -851,7 +851,7 @@ ELONA.data:add(
          difficulty = 1000,
       },
       raging_roar = {
-         legacy_id = 434,
+         integer_id = 434,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 18,
@@ -859,7 +859,7 @@ ELONA.data:add(
          difficulty = 700,
       },
       magic_storm = {
-         legacy_id = 460,
+         integer_id = 460,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 40,
@@ -867,7 +867,7 @@ ELONA.data:add(
          difficulty = 1400,
       },
       healing_rain = {
-         legacy_id = 404,
+         integer_id = 404,
          related_basic_attribute = 15,
          ability_type = 3,
          cost = 38,
@@ -875,7 +875,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       rain_of_sanity = {
-         legacy_id = 637,
+         integer_id = 637,
          related_basic_attribute = 15,
          ability_type = 3,
          cost = 50,
@@ -883,7 +883,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       gravity = {
-         legacy_id = 466,
+         integer_id = 466,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 24,
@@ -891,7 +891,7 @@ ELONA.data:add(
          difficulty = 750,
       },
       summon_monsters = {
-         legacy_id = 424,
+         integer_id = 424,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -899,7 +899,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_wild = {
-         legacy_id = 425,
+         integer_id = 425,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -907,7 +907,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_fire = {
-         legacy_id = 642,
+         integer_id = 642,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -915,7 +915,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_pawn = {
-         legacy_id = 641,
+         integer_id = 641,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -923,7 +923,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_cats = {
-         legacy_id = 639,
+         integer_id = 639,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -931,7 +931,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_yeek = {
-         legacy_id = 640,
+         integer_id = 640,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -939,7 +939,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       summon_sister = {
-         legacy_id = 643,
+         integer_id = 643,
          related_basic_attribute = 16,
          ability_type = 7,
          cost = 15,
@@ -947,7 +947,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       dominate = {
-         legacy_id = 435,
+         integer_id = 435,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 125,
@@ -955,7 +955,7 @@ ELONA.data:add(
          difficulty = 2000,
       },
       web = {
-         legacy_id = 436,
+         integer_id = 436,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 10,
@@ -963,7 +963,7 @@ ELONA.data:add(
          difficulty = 150,
       },
       mist_of_darkness = {
-         legacy_id = 437,
+         integer_id = 437,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 12,
@@ -971,7 +971,7 @@ ELONA.data:add(
          difficulty = 320,
       },
       wall_creation = {
-         legacy_id = 438,
+         integer_id = 438,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 20,
@@ -979,7 +979,7 @@ ELONA.data:add(
          difficulty = 250,
       },
       door_creation = {
-         legacy_id = 457,
+         integer_id = 457,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 15,
@@ -987,7 +987,7 @@ ELONA.data:add(
          difficulty = 200,
       },
       acid_ground = {
-         legacy_id = 455,
+         integer_id = 455,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 18,
@@ -995,7 +995,7 @@ ELONA.data:add(
          difficulty = 480,
       },
       ether_ground = {
-         legacy_id = 634,
+         integer_id = 634,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 18,
@@ -1003,7 +1003,7 @@ ELONA.data:add(
          difficulty = 480,
       },
       fire_wall = {
-         legacy_id = 456,
+         integer_id = 456,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 24,
@@ -1011,7 +1011,7 @@ ELONA.data:add(
          difficulty = 640,
       },
       curse = {
-         legacy_id = 645,
+         integer_id = 645,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 10,
@@ -1019,7 +1019,7 @@ ELONA.data:add(
          difficulty = 100,
       },
       ["return"] = {
-         legacy_id = 428,
+         integer_id = 428,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 28,
@@ -1027,7 +1027,7 @@ ELONA.data:add(
          difficulty = 550,
       },
       four_dimensional_pocket = {
-         legacy_id = 463,
+         integer_id = 463,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 60,
@@ -1035,7 +1035,7 @@ ELONA.data:add(
          difficulty = 750,
       },
       magic_map = {
-         legacy_id = 429,
+         integer_id = 429,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 30,
@@ -1043,7 +1043,7 @@ ELONA.data:add(
          difficulty = 450,
       },
       wizards_harvest = {
-         legacy_id = 464,
+         integer_id = 464,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 45,
@@ -1051,7 +1051,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       sense_object = {
-         legacy_id = 430,
+         integer_id = 430,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 22,
@@ -1059,7 +1059,7 @@ ELONA.data:add(
          difficulty = 250,
       },
       restore_body = {
-         legacy_id = 439,
+         integer_id = 439,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 18,
@@ -1067,7 +1067,7 @@ ELONA.data:add(
          difficulty = 250,
       },
       restore_spirit = {
-         legacy_id = 440,
+         integer_id = 440,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 18,
@@ -1075,7 +1075,7 @@ ELONA.data:add(
          difficulty = 250,
       },
       resurrection = {
-         legacy_id = 461,
+         integer_id = 461,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 60,
@@ -1083,7 +1083,7 @@ ELONA.data:add(
          difficulty = 1650,
       },
       wish = {
-         legacy_id = 441,
+         integer_id = 441,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 580,
@@ -1091,7 +1091,7 @@ ELONA.data:add(
          difficulty = 5250,
       },
       meteor = {
-         legacy_id = 465,
+         integer_id = 465,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 220,
@@ -1099,7 +1099,7 @@ ELONA.data:add(
          difficulty = 1450,
       },
       mutation = {
-         legacy_id = 454,
+         integer_id = 454,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 70,
@@ -1107,7 +1107,7 @@ ELONA.data:add(
          difficulty = 2250,
       },
       holy_shield = {
-         legacy_id = 442,
+         integer_id = 442,
          related_basic_attribute = 15,
          ability_type = 1001,
          cost = 8,
@@ -1115,7 +1115,7 @@ ELONA.data:add(
          difficulty = 150,
       },
       mist_of_silence = {
-         legacy_id = 443,
+         integer_id = 443,
          related_basic_attribute = 13,
          ability_type = 1002,
          cost = 24,
@@ -1123,7 +1123,7 @@ ELONA.data:add(
          difficulty = 620,
       },
       regeneration = {
-         legacy_id = 444,
+         integer_id = 444,
          related_basic_attribute = 15,
          ability_type = 1003,
          cost = 16,
@@ -1131,7 +1131,7 @@ ELONA.data:add(
          difficulty = 400,
       },
       elemental_shield = {
-         legacy_id = 445,
+         integer_id = 445,
          related_basic_attribute = 15,
          ability_type = 1004,
          cost = 14,
@@ -1139,7 +1139,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       speed = {
-         legacy_id = 446,
+         integer_id = 446,
          related_basic_attribute = 15,
          ability_type = 1005,
          cost = 28,
@@ -1147,7 +1147,7 @@ ELONA.data:add(
          difficulty = 1050,
       },
       slow = {
-         legacy_id = 447,
+         integer_id = 447,
          related_basic_attribute = 16,
          ability_type = 1006,
          cost = 10,
@@ -1155,7 +1155,7 @@ ELONA.data:add(
          difficulty = 450,
       },
       hero = {
-         legacy_id = 448,
+         integer_id = 448,
          related_basic_attribute = 15,
          ability_type = 1007,
          cost = 12,
@@ -1163,7 +1163,7 @@ ELONA.data:add(
          difficulty = 80,
       },
       mist_of_frailness = {
-         legacy_id = 449,
+         integer_id = 449,
          related_basic_attribute = 16,
          ability_type = 1008,
          cost = 8,
@@ -1171,7 +1171,7 @@ ELONA.data:add(
          difficulty = 300,
       },
       element_scar = {
-         legacy_id = 450,
+         integer_id = 450,
          related_basic_attribute = 16,
          ability_type = 1009,
          cost = 15,
@@ -1179,7 +1179,7 @@ ELONA.data:add(
          difficulty = 600,
       },
       holy_veil = {
-         legacy_id = 451,
+         integer_id = 451,
          related_basic_attribute = 15,
          ability_type = 1010,
          cost = 20,
@@ -1187,7 +1187,7 @@ ELONA.data:add(
          difficulty = 900,
       },
       nightmare = {
-         legacy_id = 452,
+         integer_id = 452,
          related_basic_attribute = 13,
          ability_type = 1011,
          cost = 15,
@@ -1195,7 +1195,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       divine_wisdom = {
-         legacy_id = 453,
+         integer_id = 453,
          related_basic_attribute = 14,
          ability_type = 1012,
          cost = 22,
@@ -1203,7 +1203,7 @@ ELONA.data:add(
          difficulty = 350,
       },
       incognito = {
-         legacy_id = 458,
+         integer_id = 458,
          related_basic_attribute = 13,
          ability_type = 1015,
          cost = 38,
@@ -1211,7 +1211,7 @@ ELONA.data:add(
          difficulty = 250,
       },
       contingency = {
-         legacy_id = 462,
+         integer_id = 462,
          related_basic_attribute = 15,
          ability_type = 1018,
          cost = 25,
@@ -1219,7 +1219,7 @@ ELONA.data:add(
          difficulty = 1250,
       },
       boost = {
-         legacy_id = 647,
+         integer_id = 647,
          related_basic_attribute = 15,
          ability_type = 1017,
          cost = 50,
@@ -1227,7 +1227,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       death_word = {
-         legacy_id = 646,
+         integer_id = 646,
          related_basic_attribute = 15,
          ability_type = 1016,
          cost = 15,
@@ -1235,7 +1235,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       punishment = {
-         legacy_id = 622,
+         integer_id = 622,
          related_basic_attribute = 15,
          ability_type = 1013,
          cost = 15,
@@ -1243,7 +1243,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       lulwys_trick = {
-         legacy_id = 625,
+         integer_id = 625,
          related_basic_attribute = 12,
          ability_type = 1014,
          cost = 20,
@@ -1251,7 +1251,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       harvest_mana = {
-         legacy_id = 621,
+         integer_id = 621,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 10,
@@ -1259,7 +1259,7 @@ ELONA.data:add(
          difficulty = 700,
       },
       drain_blood = {
-         legacy_id = 601,
+         integer_id = 601,
          related_basic_attribute = 12,
          ability_type = 6,
          cost = 7,
@@ -1267,7 +1267,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       power_breath = {
-         legacy_id = 612,
+         integer_id = 612,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1275,7 +1275,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       fire_breath = {
-         legacy_id = 602,
+         integer_id = 602,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 12,
@@ -1283,7 +1283,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       cold_breath = {
-         legacy_id = 603,
+         integer_id = 603,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1291,7 +1291,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       lightning_breath = {
-         legacy_id = 604,
+         integer_id = 604,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1299,7 +1299,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       chaos_breath = {
-         legacy_id = 606,
+         integer_id = 606,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1307,7 +1307,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       poison_breath = {
-         legacy_id = 610,
+         integer_id = 610,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1315,7 +1315,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       nether_breath = {
-         legacy_id = 608,
+         integer_id = 608,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1323,7 +1323,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       sound_breath = {
-         legacy_id = 607,
+         integer_id = 607,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1331,7 +1331,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       darkness_breath = {
-         legacy_id = 605,
+         integer_id = 605,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1339,7 +1339,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       mind_breath = {
-         legacy_id = 611,
+         integer_id = 611,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1347,7 +1347,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       nerve_breath = {
-         legacy_id = 609,
+         integer_id = 609,
          related_basic_attribute = 11,
          ability_type = 8,
          cost = 10,
@@ -1355,7 +1355,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       shadow_step = {
-         legacy_id = 619,
+         integer_id = 619,
          related_basic_attribute = 15,
          ability_type = 5,
          cost = 10,
@@ -1363,7 +1363,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       dimensional_move = {
-         legacy_id = 627,
+         integer_id = 627,
          related_basic_attribute = 15,
          ability_type = 5,
          cost = 15,
@@ -1371,7 +1371,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       draw_shadow = {
-         legacy_id = 620,
+         integer_id = 620,
          related_basic_attribute = 15,
          ability_type = 5,
          cost = 10,
@@ -1379,7 +1379,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       prayer_of_jure = {
-         legacy_id = 623,
+         integer_id = 623,
          related_basic_attribute = 15,
          ability_type = 4,
          cost = 30,
@@ -1387,7 +1387,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       absorb_magic = {
-         legacy_id = 624,
+         integer_id = 624,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 25,
@@ -1395,7 +1395,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       pregnant = {
-         legacy_id = 654,
+         integer_id = 654,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 15,
@@ -1403,7 +1403,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_weakness = {
-         legacy_id = 613,
+         integer_id = 613,
          related_basic_attribute = 16,
          ability_type = 6,
          cost = 10,
@@ -1411,7 +1411,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_hunger = {
-         legacy_id = 614,
+         integer_id = 614,
          related_basic_attribute = 16,
          ability_type = 6,
          cost = 10,
@@ -1419,7 +1419,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_poison = {
-         legacy_id = 615,
+         integer_id = 615,
          related_basic_attribute = 12,
          ability_type = 6,
          cost = 10,
@@ -1427,7 +1427,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_nerve = {
-         legacy_id = 616,
+         integer_id = 616,
          related_basic_attribute = 12,
          ability_type = 6,
          cost = 10,
@@ -1435,7 +1435,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_fear = {
-         legacy_id = 617,
+         integer_id = 617,
          related_basic_attribute = 15,
          ability_type = 6,
          cost = 10,
@@ -1443,7 +1443,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       touch_of_sleep = {
-         legacy_id = 618,
+         integer_id = 618,
          related_basic_attribute = 15,
          ability_type = 6,
          cost = 10,
@@ -1451,7 +1451,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       suspicious_hand = {
-         legacy_id = 635,
+         integer_id = 635,
          related_basic_attribute = 12,
          ability_type = 5,
          cost = 10,
@@ -1459,7 +1459,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       scavenge = {
-         legacy_id = 651,
+         integer_id = 651,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 10,
@@ -1467,7 +1467,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       decapitation = {
-         legacy_id = 658,
+         integer_id = 658,
          related_basic_attribute = 12,
          ability_type = 0,
          cost = 10,
@@ -1475,7 +1475,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       manis_disassembly = {
-         legacy_id = 660,
+         integer_id = 660,
          related_basic_attribute = 15,
          ability_type = 6,
          cost = 10,
@@ -1483,7 +1483,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_mutation = {
-         legacy_id = 632,
+         integer_id = 632,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 10,
@@ -1491,7 +1491,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_ether = {
-         legacy_id = 633,
+         integer_id = 633,
          related_basic_attribute = 15,
          ability_type = 0,
          cost = 10,
@@ -1499,7 +1499,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_insanity = {
-         legacy_id = 636,
+         integer_id = 636,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 10,
@@ -1507,7 +1507,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_dimness = {
-         legacy_id = 638,
+         integer_id = 638,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 10,
@@ -1515,7 +1515,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       eye_of_mana = {
-         legacy_id = 652,
+         integer_id = 652,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 10,
@@ -1523,7 +1523,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       insult = {
-         legacy_id = 648,
+         integer_id = 648,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 10,
@@ -1531,7 +1531,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       vanish = {
-         legacy_id = 653,
+         integer_id = 653,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 10,
@@ -1539,7 +1539,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       distant_attack = {
-         legacy_id = 649,
+         integer_id = 649,
          related_basic_attribute = 10,
          ability_type = 10,
          cost = 10,
@@ -1547,7 +1547,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       distant_attack_2 = {
-         legacy_id = 650,
+         integer_id = 650,
          related_basic_attribute = 10,
          ability_type = 10,
          cost = 10,
@@ -1555,7 +1555,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       change = {
-         legacy_id = 628,
+         integer_id = 628,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 10,
@@ -1563,7 +1563,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       draw_charge = {
-         legacy_id = 629,
+         integer_id = 629,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 1,
@@ -1571,7 +1571,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       fill_charge = {
-         legacy_id = 630,
+         integer_id = 630,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 10,
@@ -1579,7 +1579,7 @@ ELONA.data:add(
          difficulty = 0,
       },
       swarm = {
-         legacy_id = 631,
+         integer_id = 631,
          related_basic_attribute = 10,
          ability_type = 0,
          cost = 5,
@@ -1587,7 +1587,7 @@ ELONA.data:add(
          difficulty = 220,
       },
       cheer = {
-         legacy_id = 656,
+         integer_id = 656,
          related_basic_attribute = 17,
          ability_type = 0,
          cost = 28,
@@ -1595,7 +1595,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       mewmewmew = {
-         legacy_id = 657,
+         integer_id = 657,
          related_basic_attribute = 19,
          ability_type = 0,
          cost = 1,
@@ -1603,7 +1603,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       mirror = {
-         legacy_id = 626,
+         integer_id = 626,
          related_basic_attribute = 13,
          ability_type = 0,
          cost = 30,
@@ -1611,7 +1611,7 @@ ELONA.data:add(
          difficulty = 500,
       },
       grenade = {
-         legacy_id = 655,
+         integer_id = 655,
          related_basic_attribute = 16,
          ability_type = 3,
          cost = 18,
@@ -1619,7 +1619,7 @@ ELONA.data:add(
          difficulty = 700,
       },
       drop_mine = {
-         legacy_id = 659,
+         integer_id = 659,
          related_basic_attribute = 16,
          ability_type = 0,
          cost = 15,

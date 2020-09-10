@@ -94,7 +94,7 @@ function DataRegistry:define_prototype(proto_id, ...)
    self._prototypes[proto_id] = schema
 
    self._instance_storages[proto_id] = {}
-   self._by_legacy_id_tables[proto_id] = {}
+   self._by_integer_id_tables[proto_id] = {}
    self._by_index_tables[proto_id] = {}
 end
 
@@ -135,7 +135,7 @@ function DataRegistry:add(proto_id, instances)
 
       local instance_storage = self._instance_storages[proto_id]
       local by_index_table = self._by_index_tables[proto_id]
-      local by_legacy_id_table = self._by_legacy_id_tables[proto_id]
+      local by_integer_id_table = self._by_integer_id_tables[proto_id]
 
       if instance_storage[inst_id] then
          error("duplicate instance definition: "..fqid)
@@ -152,11 +152,11 @@ function DataRegistry:add(proto_id, instances)
       instance.proto_id = proto_id
       instance.ext = {}
 
-      if instance.legacy_id then
-         if xtype(instance.legacy_id) ~= "integer" then
-            error(fqid..": 'legacy_id' must be an integer")
+      if instance.integer_id then
+         if xtype(instance.integer_id) ~= "integer" then
+            error(fqid..": 'integer_id' must be an integer")
          end
-         by_legacy_id_table[instance.legacy_id] = instance
+         by_integer_id_table[instance.integer_id] = instance
       end
 
       by_index_table[#by_index_table+1] = instance
@@ -191,7 +191,7 @@ function Data.new_registry()
       -- environments.
       _prototypes = {},
       _instance_storages = {},
-      _by_legacy_id_tables = {},
+      _by_integer_id_tables = {},
       _by_index_tables = {},
       __index = DataRegistry,
    }

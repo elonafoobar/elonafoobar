@@ -17,7 +17,7 @@ ItemChipData ItemChipDB::convert(
     const std::string& id)
 
 {
-    DATA_LEGACY_ID();
+    DATA_INTEGER_ID();
     DATA_OPT_OR(tall, bool, false);
     DATA_OPT_OR(offset_y, int, 0);
     DATA_OPT_OR(stack_height, int, 8);
@@ -65,7 +65,7 @@ ItemChipData ItemChipDB::convert(
 
     return ItemChipData{
         data::InstanceId{id},
-        legacy_id,
+        integer_id,
         Extent{x, y, width, height, frame_width},
         ItemChip{
             data::make_fqid(

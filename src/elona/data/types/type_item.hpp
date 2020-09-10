@@ -19,7 +19,7 @@ using I18NKey = std::string;
 struct ItemData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     int image;
     int value;
     int weight;

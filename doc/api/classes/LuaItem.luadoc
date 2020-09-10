@@ -10,8 +10,8 @@ function remove() end
 --  @function change_material
 function change_material(material_id) end
 
---- [R] The legacy ID of this item.
---  @tfield num legacy_id
+--- [R] The integer ID of this item.
+--  @tfield num integer_id
 
 --- [RW] The item's position.
 --  @tfield num position

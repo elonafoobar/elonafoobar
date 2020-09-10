@@ -4,36 +4,36 @@ ELONA.data:add(
    {
       -- TODO
       _heavy = {
-         legacy_id = 1000,
+         integer_id = 1000,
       },
       -- TODO
       _light = {
-         legacy_id = 1001,
+         integer_id = 1001,
       },
 
       vegetable_seed = {
-         legacy_id = 36,
+         integer_id = 36,
       },
       fruit_seed = {
-         legacy_id = 37,
+         integer_id = 37,
       },
       herb_seed = {
-         legacy_id = 38,
+         integer_id = 38,
       },
       unknown_plant_seed = {
-         legacy_id = 39,
+         integer_id = 39,
       },
       artifact_seed = {
-         legacy_id = 40,
+         integer_id = 40,
       },
       gem_seed = {
-         legacy_id = 41,
+         integer_id = 41,
       },
       magical_plant_seed = {
-         legacy_id = 42,
+         integer_id = 42,
       },
       sand = {
-         legacy_id = 0,
+         integer_id = 0,
          weight = 10,
          value = 80,
          hit_bonus = -5,
@@ -43,7 +43,7 @@ ELONA.data:add(
          dice_y = 100,
       },
       raw = {
-         legacy_id = 35,
+         integer_id = 35,
          weight = 100,
          value = 50,
          hit_bonus = -5,
@@ -54,7 +54,7 @@ ELONA.data:add(
          tint = 0,
       },
       wood = {
-         legacy_id = 43,
+         integer_id = 43,
          weight = 150,
          value = 50,
          hit_bonus = -5,
@@ -65,7 +65,7 @@ ELONA.data:add(
          tint = 0,
       },
       lead = {
-         legacy_id = 34,
+         integer_id = 34,
          weight = 300,
          value = 50,
          hit_bonus = 3,
@@ -77,7 +77,7 @@ ELONA.data:add(
          fireproof = true,
       },
       bronze = {
-         legacy_id = 12,
+         integer_id = 12,
          weight = 200,
          value = 70,
          hit_bonus = 2,
@@ -91,7 +91,7 @@ ELONA.data:add(
          },
       },
       mica = {
-         legacy_id = 21,
+         integer_id = 21,
          weight = 40,
          value = 150,
          hit_bonus = 10,
@@ -105,7 +105,7 @@ ELONA.data:add(
          },
       },
       coral = {
-         legacy_id = 33,
+         integer_id = 33,
          weight = 180,
          value = 240,
          hit_bonus = 7,
@@ -119,7 +119,7 @@ ELONA.data:add(
          },
       },
       iron = {
-         legacy_id = 10,
+         integer_id = 10,
          weight = 280,
          value = 190,
          hit_bonus = 8,
@@ -134,7 +134,7 @@ ELONA.data:add(
          acidproof = true,
       },
       silver = {
-         legacy_id = 25,
+         integer_id = 25,
          weight = 230,
          value = 250,
          hit_bonus = 10,
@@ -149,7 +149,7 @@ ELONA.data:add(
          acidproof = true,
       },
       glass = {
-         legacy_id = 5,
+         integer_id = 5,
          weight = 180,
          value = 150,
          hit_bonus = 19,
@@ -164,7 +164,7 @@ ELONA.data:add(
          acidproof = true,
       },
       obsidian = {
-         legacy_id = 20,
+         integer_id = 20,
          weight = 160,
          value = 350,
          hit_bonus = 16,
@@ -178,7 +178,7 @@ ELONA.data:add(
          },
       },
       steel = {
-         legacy_id = 9,
+         integer_id = 9,
          weight = 270,
          value = 280,
          hit_bonus = 12,
@@ -190,7 +190,7 @@ ELONA.data:add(
          acidproof = true,
       },
       platinum = {
-         legacy_id = 26,
+         integer_id = 26,
          weight = 260,
          value = 350,
          hit_bonus = 16,
@@ -205,7 +205,7 @@ ELONA.data:add(
          acidproof = true,
       },
       pearl = {
-         legacy_id = 22,
+         integer_id = 22,
          weight = 240,
          value = 400,
          hit_bonus = 18,
@@ -219,7 +219,7 @@ ELONA.data:add(
          },
       },
       mithril = {
-         legacy_id = 7,
+         integer_id = 7,
          weight = 240,
          value = 750,
          hit_bonus = 20,
@@ -235,7 +235,7 @@ ELONA.data:add(
          acidproof = true,
       },
       chrome = {
-         legacy_id = 30,
+         integer_id = 30,
          weight = 320,
          value = 500,
          hit_bonus = 15,
@@ -246,7 +246,7 @@ ELONA.data:add(
          tint = 0,
       },
       crystal = {
-         legacy_id = 11,
+         integer_id = 11,
          weight = 200,
          value = 800,
          hit_bonus = 19,
@@ -260,7 +260,7 @@ ELONA.data:add(
          },
       },
       emerald = {
-         legacy_id = 23,
+         integer_id = 23,
          weight = 240,
          value = 1050,
          hit_bonus = 22,
@@ -274,7 +274,7 @@ ELONA.data:add(
          },
       },
       adamantium = {
-         legacy_id = 31,
+         integer_id = 31,
          weight = 360,
          value = 1150,
          hit_bonus = 11,
@@ -290,7 +290,7 @@ ELONA.data:add(
          acidproof = true,
       },
       titanium = {
-         legacy_id = 29,
+         integer_id = 29,
          weight = 200,
          value = 750,
          hit_bonus = 21,
@@ -305,7 +305,7 @@ ELONA.data:add(
          acidproof = true,
       },
       diamond = {
-         legacy_id = 13,
+         integer_id = 13,
          weight = 330,
          value = 1100,
          hit_bonus = 19,
@@ -319,7 +319,7 @@ ELONA.data:add(
          },
       },
       rubynus = {
-         legacy_id = 15,
+         integer_id = 15,
          weight = 250,
          value = 1000,
          hit_bonus = 38,
@@ -335,7 +335,7 @@ ELONA.data:add(
          acidproof = true,
       },
       ether = {
-         legacy_id = 8,
+         integer_id = 8,
          weight = 80,
          value = 1200,
          hit_bonus = 8,
@@ -351,7 +351,7 @@ ELONA.data:add(
          acidproof = true,
       },
       cloth = {
-         legacy_id = 3,
+         integer_id = 3,
          weight = 20,
          value = 30,
          hit_bonus = 6,
@@ -362,7 +362,7 @@ ELONA.data:add(
          tint = 10,
       },
       silk = {
-         legacy_id = 2,
+         integer_id = 2,
          weight = 40,
          value = 190,
          hit_bonus = 9,
@@ -376,7 +376,7 @@ ELONA.data:add(
          },
       },
       paper = {
-         legacy_id = 16,
+         integer_id = 16,
          weight = 10,
          value = 20,
          hit_bonus = 15,
@@ -390,7 +390,7 @@ ELONA.data:add(
          },
       },
       bone = {
-         legacy_id = 18,
+         integer_id = 18,
          weight = 120,
          value = 300,
          hit_bonus = 10,
@@ -405,7 +405,7 @@ ELONA.data:add(
          acidproof = true,
       },
       leather = {
-         legacy_id = 1,
+         integer_id = 1,
          weight = 100,
          value = 150,
          hit_bonus = 12,
@@ -416,7 +416,7 @@ ELONA.data:add(
          tint = 6,
       },
       scale = {
-         legacy_id = 4,
+         integer_id = 4,
          weight = 180,
          value = 250,
          hit_bonus = 14,
@@ -430,7 +430,7 @@ ELONA.data:add(
          },
       },
       chain = {
-         legacy_id = 19,
+         integer_id = 19,
          weight = 200,
          value = 300,
          hit_bonus = 11,
@@ -445,7 +445,7 @@ ELONA.data:add(
          acidproof = true,
       },
       zylon = {
-         legacy_id = 27,
+         integer_id = 27,
          weight = 50,
          value = 500,
          hit_bonus = 5,
@@ -459,7 +459,7 @@ ELONA.data:add(
          },
       },
       gold = {
-         legacy_id = 32,
+         integer_id = 32,
          weight = 300,
          value = 800,
          hit_bonus = 13,
@@ -474,7 +474,7 @@ ELONA.data:add(
          acidproof = true,
       },
       spirit_cloth = {
-         legacy_id = 14,
+         integer_id = 14,
          weight = 40,
          value = 750,
          hit_bonus = 3,
@@ -489,7 +489,7 @@ ELONA.data:add(
          fireproof = true,
       },
       dragon_scale = {
-         legacy_id = 24,
+         integer_id = 24,
          weight = 220,
          value = 800,
          hit_bonus = 25,
@@ -506,7 +506,7 @@ ELONA.data:add(
          acidproof = true,
       },
       dawn_cloth = {
-         legacy_id = 17,
+         integer_id = 17,
          weight = 45,
          value = 850,
          hit_bonus = 10,
@@ -520,7 +520,7 @@ ELONA.data:add(
          },
       },
       griffon_scale = {
-         legacy_id = 28,
+         integer_id = 28,
          weight = 70,
          value = 1000,
          hit_bonus = 16,

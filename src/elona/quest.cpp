@@ -658,7 +658,7 @@ int quest_generate()
             if (const auto item = itemcreate_chara_inv(cdata[n], 0, 0))
             {
                 i(0) = n;
-                i(1) = the_item_db[item->id]->legacy_id;
+                i(1) = the_item_db[item->id]->integer_id;
                 item->is_quest_target = true;
                 break;
             }

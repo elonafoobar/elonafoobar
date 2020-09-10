@@ -1390,7 +1390,7 @@ optional<TurnResult> pc_turn_advance_time()
         if (item && the_item_db[item->id]->category == ItemCategory::potion)
         {
             item_db_on_drink(
-                cdata.player(), item, the_item_db[item->id]->legacy_id);
+                cdata.player(), item, the_item_db[item->id]->integer_id);
         }
     }
     if (trait(214) != 0 && rnd(250) == 0 &&

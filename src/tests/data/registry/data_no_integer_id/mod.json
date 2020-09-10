@@ -1,6 +1,6 @@
 {
-  id: "data_no_legacy_id",
-  name: "data no legacy id",
+  id: "data_no_integer_id",
+  name: "data no integer id",
   author: "KI",
   version: "0.1.0",
   license: "MIT",

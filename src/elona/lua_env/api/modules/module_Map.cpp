@@ -51,14 +51,14 @@ int Map_height()
 
 
 /**
- * @luadoc legacy_id
+ * @luadoc integer_id
  *
- * Returns the current map's legacy ID.
+ * Returns the current map's integer ID.
  *
- * @treturn[1] num the current map's legacy ID
+ * @treturn[1] num the current map's integer ID
  * @treturn[2] nil
  */
-int Map_legacy_id()
+int Map_integer_id()
 {
     return area_data[game_data.current_map].id;
 }
@@ -75,10 +75,10 @@ int Map_legacy_id()
  */
 sol::optional<std::string> Map_id()
 {
-    auto legacy_id = Map_legacy_id();
+    auto integer_id = Map_integer_id();
 
-    auto id = the_mapdef_db.get_id_from_legacy(legacy_id);
-    if (!legacy_id)
+    auto id = the_mapdef_db.get_id_from_integer(integer_id);
+    if (!integer_id)
     {
         return sol::nullopt;
     }
@@ -580,21 +580,21 @@ void Map_travel_to_with_level(const std::string& map_id, int level)
 
         if (outer_map)
         {
-            game_data.previous_map2 = outer_map->legacy_id;
+            game_data.previous_map2 = outer_map->integer_id;
             game_data.previous_dungeon_level = 1;
             game_data.pc_x_in_world_map = map.outer_map_position.x;
             game_data.pc_y_in_world_map = map.outer_map_position.y;
-            game_data.destination_outer_map = outer_map->legacy_id;
+            game_data.destination_outer_map = outer_map->integer_id;
         }
     }
     else
     {
-        game_data.previous_map2 = map.legacy_id;
+        game_data.previous_map2 = map.integer_id;
         game_data.previous_dungeon_level = 1;
-        game_data.destination_outer_map = map.legacy_id;
+        game_data.destination_outer_map = map.integer_id;
     }
 
-    map_prepare_for_travel(map.legacy_id, level);
+    map_prepare_for_travel(map.integer_id, level);
     exit_map();
     initialize_map();
 }
@@ -615,7 +615,7 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("width", Map_width);
     ELONA_LUA_API_BIND_FUNCTION("height", Map_height);
     ELONA_LUA_API_BIND_FUNCTION("id", Map_id);
-    ELONA_LUA_API_BIND_FUNCTION("legacy_id", Map_legacy_id);
+    ELONA_LUA_API_BIND_FUNCTION("integer_id", Map_integer_id);
     ELONA_LUA_API_BIND_FUNCTION("instance_id", Map_instance_id);
     ELONA_LUA_API_BIND_FUNCTION("is_overworld", Map_is_overworld);
     ELONA_LUA_API_BIND_FUNCTION("current_dungeon_level", Map_current_dungeon_level);

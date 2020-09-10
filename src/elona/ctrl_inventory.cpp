@@ -305,12 +305,12 @@ void make_item_list(
             }
 
             // compatibility?
-            if (the_item_db[item->id]->legacy_id >= maxitemid ||
-                the_item_db[item->id]->legacy_id < 0)
+            if (the_item_db[item->id]->integer_id >= maxitemid ||
+                the_item_db[item->id]->integer_id < 0)
             {
                 dialog(i18n::s.get(
                     "core.ui.inv.common.invalid",
-                    the_item_db[item->id]->legacy_id));
+                    the_item_db[item->id]->integer_id));
                 item->remove();
                 item->id = "core.none";
                 continue;
@@ -697,7 +697,7 @@ void make_item_list(
 
             // ソート情報
             list(1, listmax) =
-                reftype * 1000 + the_item_db[item->id]->legacy_id;
+                reftype * 1000 + the_item_db[item->id]->integer_id;
             if (item->id == "core.disc")
             {
                 list(1, listmax) += item->param1 + 900;
@@ -909,7 +909,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
         {
             p = list(0, cnt);
-            if (the_item_db[g_inv[p]->id]->legacy_id == invsc)
+            if (the_item_db[g_inv[p]->id]->integer_id == invsc)
             {
                 f = 1;
                 if (g_inv[p]->has_charges)
@@ -924,7 +924,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         }
         if (f == 0)
         {
-            if (itemfind(g_inv.pc(), *the_item_db.get_id_from_legacy(invsc)))
+            if (itemfind(g_inv.pc(), *the_item_db.get_id_from_integer(invsc)))
             {
                 Message::instance().linebreak();
                 txt(i18n::s.get("core.action.cannot_do_in_global"));
@@ -1226,7 +1226,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         for (int cnt = 0; cnt < 20; ++cnt)
         {
             if (game_data.skill_shortcuts.at(cnt) ==
-                the_item_db[g_inv[p]->id]->legacy_id + invctrl * 10000)
+                the_item_db[g_inv[p]->id]->integer_id + invctrl * 10000)
             {
                 s +=
                     u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -1808,7 +1808,7 @@ OnEnterResult on_enter_give(
                 f = 0;
             }
             // scroll of teleport/treasure map/deeds
-            switch (the_item_db[selected_item->id]->legacy_id)
+            switch (the_item_db[selected_item->id]->integer_id)
             {
             case 16:
             case 245:
@@ -2633,7 +2633,7 @@ optional<MenuResult> on_cancel(bool dropcontinue)
 bool on_assign_shortcut(const std::string& action, int shortcut)
 {
     snd("core.ok1");
-    p = the_item_db[g_inv[list(0, pagesize * page + cs)]->id]->legacy_id +
+    p = the_item_db[g_inv[list(0, pagesize * page + cs)]->id]->integer_id +
         invctrl * 10000;
     if (game_data.skill_shortcuts.at(shortcut) == p)
     {

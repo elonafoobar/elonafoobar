@@ -30,11 +30,11 @@ function get(prototype_id, data_id) end
 --  @function get_table
 function get_table(prototype_id) end
 
---- Get new ID by legacy ID.
+--- Get new ID by integer ID.
 --
 --  @tparam string prototype_id a namespaced prototype ID.
---  @tparam num legacy_data_id a legacy data ID.
+--  @tparam num integer_data_id an integer data ID.
 --  @treturn[1] string the corresponding new ID.
 --  @treturn[2] nil if not found.
---  @function get_id_by_legacy
-function get_id_by_legacy(prototype_id, legacy_data_id) end
+--  @function get_id_by_integer
+function get_id_by_integer(prototype_id, integer_data_id) end

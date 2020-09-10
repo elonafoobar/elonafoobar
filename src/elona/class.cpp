@@ -26,7 +26,7 @@ void class_init_chara(Character& chara, data::InstanceId class_id)
     {
         if (const auto ability_data = the_ability_db[pair.first])
         {
-            chara_init_skill(chara, ability_data->legacy_id, pair.second);
+            chara_init_skill(chara, ability_data->integer_id, pair.second);
         }
         else
         {

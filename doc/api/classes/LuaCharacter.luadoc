@@ -184,8 +184,8 @@ function get_ailment(ailment) end
 --- [R] The index of this character in the global characters array.
 --  @tfield num index
 
---- [R] The legacy ID of this character.
---  @tfield legacy_id index
+--- [R] The integer ID of this character.
+--  @tfield integer_id index
 
 --- [R] The character's proper name without any qualifiers.
 --  @tfield string name

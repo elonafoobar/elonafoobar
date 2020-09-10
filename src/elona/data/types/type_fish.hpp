@@ -9,7 +9,7 @@ namespace elona
 struct FishData
 {
     data::InstanceId id;
-    int legacy_id;
+    int integer_id;
     bool no_generate;
     int rank;
     int rarity;

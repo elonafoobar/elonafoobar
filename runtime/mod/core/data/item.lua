@@ -3,7 +3,7 @@ ELONA.data:add(
    "core.item",
    {
       bug = {
-         legacy_id = 0,
+         integer_id = 0,
          image = 33,
          value = 1,
          weight = 1,
@@ -35,7 +35,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bug",
       },
       long_sword = {
-         legacy_id = 1,
+         integer_id = 1,
          image = 405,
          value = 500,
          weight = 1500,
@@ -68,7 +68,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.long_sword",
       },
       dagger = {
-         legacy_id = 2,
+         integer_id = 2,
          image = 400,
          value = 500,
          weight = 600,
@@ -101,7 +101,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dagger",
       },
       hand_axe = {
-         legacy_id = 3,
+         integer_id = 3,
          image = 499,
          value = 500,
          weight = 900,
@@ -134,7 +134,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.hand_axe",
       },
       club = {
-         legacy_id = 4,
+         integer_id = 4,
          image = 427,
          value = 500,
          weight = 1000,
@@ -167,7 +167,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.club",
       },
       magic_hat = {
-         legacy_id = 5,
+         integer_id = 5,
          image = 477,
          value = 1400,
          weight = 600,
@@ -200,7 +200,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.magic_hat",
       },
       fairy_hat = {
-         legacy_id = 6,
+         integer_id = 6,
          image = 478,
          value = 7200,
          weight = 400,
@@ -233,7 +233,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fairy_hat",
       },
       breastplate = {
-         legacy_id = 7,
+         integer_id = 7,
          image = 396,
          value = 600,
          weight = 4500,
@@ -266,7 +266,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.breastplate",
       },
       robe = {
-         legacy_id = 8,
+         integer_id = 8,
          image = 408,
          value = 450,
          weight = 800,
@@ -299,7 +299,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.robe",
       },
       decorated_gloves = {
-         legacy_id = 9,
+         integer_id = 9,
          image = 449,
          value = 1400,
          weight = 700,
@@ -332,7 +332,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorated_gloves",
       },
       thick_gauntlets = {
-         legacy_id = 10,
+         integer_id = 10,
          image = 450,
          value = 400,
          weight = 1100,
@@ -365,7 +365,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.thick_gauntlets",
       },
       heavy_boots = {
-         legacy_id = 11,
+         integer_id = 11,
          image = 418,
          value = 480,
          weight = 950,
@@ -398,7 +398,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.heavy_boots",
       },
       composite_boots = {
-         legacy_id = 12,
+         integer_id = 12,
          image = 460,
          value = 2200,
          weight = 720,
@@ -431,7 +431,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_boots",
       },
       decorative_ring = {
-         legacy_id = 13,
+         integer_id = 13,
          image = 407,
          value = 450,
          weight = 50,
@@ -464,7 +464,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorative_ring",
       },
       scroll_of_identify = {
-         legacy_id = 14,
+         integer_id = 14,
          image = 470,
          value = 480,
          weight = 20,
@@ -497,7 +497,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_identify",
       },
       scroll_of_oracle = {
-         legacy_id = 15,
+         integer_id = 15,
          image = 470,
          value = 12000,
          weight = 20,
@@ -530,7 +530,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_oracle",
       },
       scroll_of_teleportation = {
-         legacy_id = 16,
+         integer_id = 16,
          image = 470,
          value = 200,
          weight = 20,
@@ -563,7 +563,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_teleportation",
       },
       scroll_of_incognito = {
-         legacy_id = 17,
+         integer_id = 17,
          image = 470,
          value = 3500,
          weight = 20,
@@ -596,7 +596,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_incognito",
       },
       rod_of_identify = {
-         legacy_id = 18,
+         integer_id = 18,
          image = 471,
          value = 1080,
          weight = 800,
@@ -629,7 +629,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_identify",
       },
       rod_of_teleportation = {
-         legacy_id = 19,
+         integer_id = 19,
          image = 471,
          value = 840,
          weight = 800,
@@ -662,7 +662,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_teleportation",
       },
       spellbook_of_teleportation = {
-         legacy_id = 20,
+         integer_id = 20,
          image = 429,
          value = 3200,
          weight = 380,
@@ -695,7 +695,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_teleportation",
       },
       spellbook_of_identify = {
-         legacy_id = 21,
+         integer_id = 21,
          image = 429,
          value = 5600,
          weight = 380,
@@ -728,7 +728,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_identify",
       },
       spellbook_of_uncurse = {
-         legacy_id = 22,
+         integer_id = 22,
          image = 429,
          value = 6400,
          weight = 380,
@@ -761,7 +761,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_uncurse",
       },
       book_a = {
-         legacy_id = 23,
+         integer_id = 23,
          image = 333,
          value = 100,
          weight = 80,
@@ -793,7 +793,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.book_a",
       },
       book_b = {
-         legacy_id = 24,
+         integer_id = 24,
          image = 333,
          value = 500,
          weight = 80,
@@ -825,7 +825,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.book_b",
       },
       bugged_book = {
-         legacy_id = 25,
+         integer_id = 25,
          image = 333,
          value = 100,
          weight = 80,
@@ -857,7 +857,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bugged_book",
       },
       bottle_of_dirty_water = {
-         legacy_id = 26,
+         integer_id = 26,
          image = 354,
          value = 100,
          weight = 120,
@@ -889,7 +889,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_dirty_water",
       },
       potion_of_blindness = {
-         legacy_id = 27,
+         integer_id = 27,
          image = 354,
          value = 20,
          weight = 120,
@@ -922,7 +922,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_blindness",
       },
       potion_of_confusion = {
-         legacy_id = 28,
+         integer_id = 28,
          image = 354,
          value = 30,
          weight = 120,
@@ -955,7 +955,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_confusion",
       },
       potion_of_paralysis = {
-         legacy_id = 29,
+         integer_id = 29,
          image = 354,
          value = 40,
          weight = 120,
@@ -988,7 +988,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_paralysis",
       },
       sleeping_drug = {
-         legacy_id = 30,
+         integer_id = 30,
          image = 354,
          value = 120,
          weight = 120,
@@ -1021,7 +1021,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sleeping_drug",
       },
       crim_ale = {
-         legacy_id = 31,
+         integer_id = 31,
          image = 354,
          value = 280,
          weight = 50,
@@ -1053,7 +1053,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.crim_ale",
       },
       spellbook_of_ice_bolt = {
-         legacy_id = 32,
+         integer_id = 32,
          image = 429,
          value = 3800,
          weight = 380,
@@ -1086,7 +1086,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_ice_bolt",
       },
       spellbook_of_fire_bolt = {
-         legacy_id = 33,
+         integer_id = 33,
          image = 429,
          value = 3800,
          weight = 380,
@@ -1119,7 +1119,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_fire_bolt",
       },
       spellbook_of_lightning_bolt = {
-         legacy_id = 34,
+         integer_id = 34,
          image = 429,
          value = 3800,
          weight = 380,
@@ -1152,7 +1152,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_lightning_bolt",
       },
       earth_crystal = {
-         legacy_id = 35,
+         integer_id = 35,
          image = 211,
          value = 450,
          weight = 1600,
@@ -1185,7 +1185,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.earth_crystal",
       },
       mana_crystal = {
-         legacy_id = 36,
+         integer_id = 36,
          image = 211,
          value = 470,
          weight = 900,
@@ -1218,7 +1218,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mana_crystal",
       },
       sun_crystal = {
-         legacy_id = 37,
+         integer_id = 37,
          image = 211,
          value = 450,
          weight = 1200,
@@ -1251,7 +1251,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sun_crystal",
       },
       gold_bar = {
-         legacy_id = 38,
+         integer_id = 38,
          image = 33,
          value = 2000,
          weight = 1100,
@@ -1283,7 +1283,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gold_bar",
       },
       raw_ore_of_rubynus = {
-         legacy_id = 39,
+         integer_id = 39,
          image = 212,
          value = 1400,
          weight = 240,
@@ -1316,7 +1316,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.raw_ore_of_rubynus",
       },
       raw_ore_of_mica = {
-         legacy_id = 40,
+         integer_id = 40,
          image = 212,
          value = 720,
          weight = 70,
@@ -1348,7 +1348,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.raw_ore_of_mica",
       },
       raw_ore_of_emerald = {
-         legacy_id = 41,
+         integer_id = 41,
          image = 213,
          value = 2450,
          weight = 380,
@@ -1381,7 +1381,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.raw_ore_of_emerald",
       },
       raw_ore_of_diamond = {
-         legacy_id = 42,
+         integer_id = 42,
          image = 213,
          value = 4200,
          weight = 320,
@@ -1414,7 +1414,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.raw_ore_of_diamond",
       },
       wood_piece = {
-         legacy_id = 43,
+         integer_id = 43,
          image = 239,
          value = 10,
          weight = 120,
@@ -1446,7 +1446,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wood_piece",
       },
       junk_stone = {
-         legacy_id = 44,
+         integer_id = 44,
          image = 238,
          value = 10,
          weight = 450,
@@ -1478,7 +1478,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.junk_stone",
       },
       garbage = {
-         legacy_id = 45,
+         integer_id = 45,
          image = 240,
          value = 8,
          weight = 80,
@@ -1510,7 +1510,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.garbage",
       },
       broken_vase = {
-         legacy_id = 46,
+         integer_id = 46,
          image = 241,
          value = 6,
          weight = 800,
@@ -1542,7 +1542,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.broken_vase",
       },
       washing = {
-         legacy_id = 47,
+         integer_id = 47,
          image = 204,
          value = 140,
          weight = 250,
@@ -1574,7 +1574,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.washing",
       },
       bonfire = {
-         legacy_id = 48,
+         integer_id = 48,
          image = 242,
          value = 170,
          weight = 3200,
@@ -1606,7 +1606,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bonfire",
       },
       flag = {
-         legacy_id = 49,
+         integer_id = 49,
          image = 243,
          value = 130,
          weight = 1400,
@@ -1638,7 +1638,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.flag",
       },
       broken_sword = {
-         legacy_id = 50,
+         integer_id = 50,
          image = 244,
          value = 10,
          weight = 1050,
@@ -1670,7 +1670,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.broken_sword",
       },
       bone_fragment = {
-         legacy_id = 51,
+         integer_id = 51,
          image = 245,
          value = 10,
          weight = 80,
@@ -1702,7 +1702,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bone_fragment",
       },
       skeleton = {
-         legacy_id = 52,
+         integer_id = 52,
          image = 246,
          value = 10,
          weight = 80,
@@ -1734,7 +1734,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.skeleton",
       },
       tombstone = {
-         legacy_id = 53,
+         integer_id = 53,
          image = 247,
          value = 10,
          weight = 12000,
@@ -1766,7 +1766,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tombstone",
       },
       gold_piece = {
-         legacy_id = 54,
+         integer_id = 54,
          image = 433,
          value = 1,
          weight = 0,
@@ -1798,7 +1798,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gold_piece",
       },
       platinum_coin = {
-         legacy_id = 55,
+         integer_id = 55,
          image = 437,
          value = 1,
          weight = 1,
@@ -1830,7 +1830,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.platinum_coin",
       },
       diablo = {
-         legacy_id = 56,
+         integer_id = 56,
          image = 405,
          value = 40000,
          weight = 2200,
@@ -1864,7 +1864,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.diablo",
       },
       zantetsu = {
-         legacy_id = 57,
+         integer_id = 57,
          image = 501,
          value = 40000,
          weight = 1400,
@@ -1898,7 +1898,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.zantetsu",
       },
       long_bow = {
-         legacy_id = 58,
+         integer_id = 58,
          image = 404,
          value = 500,
          weight = 1200,
@@ -1931,7 +1931,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.long_bow",
       },
       knight_shield = {
-         legacy_id = 59,
+         integer_id = 59,
          image = 411,
          value = 4800,
          weight = 2200,
@@ -1964,7 +1964,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.knight_shield",
       },
       pistol = {
-         legacy_id = 60,
+         integer_id = 60,
          image = 419,
          value = 500,
          weight = 800,
@@ -1997,7 +1997,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pistol",
       },
       arrow = {
-         legacy_id = 61,
+         integer_id = 61,
          image = 412,
          value = 150,
          weight = 1200,
@@ -2030,7 +2030,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.arrow",
       },
       bullet = {
-         legacy_id = 62,
+         integer_id = 62,
          image = 420,
          value = 150,
          weight = 2400,
@@ -2063,7 +2063,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bullet",
       },
       scythe_of_void = {
-         legacy_id = 63,
+         integer_id = 63,
          image = 421,
          value = 50000,
          weight = 9000,
@@ -2097,7 +2097,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scythe_of_void",
       },
       mournblade = {
-         legacy_id = 64,
+         integer_id = 64,
          image = 405,
          value = 60000,
          weight = 4000,
@@ -2131,7 +2131,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mournblade",
       },
       light_cloak = {
-         legacy_id = 65,
+         integer_id = 65,
          image = 422,
          value = 250,
          weight = 700,
@@ -2164,7 +2164,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.light_cloak",
       },
       girdle = {
-         legacy_id = 66,
+         integer_id = 66,
          image = 423,
          value = 300,
          weight = 900,
@@ -2197,7 +2197,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.girdle",
       },
       decorative_amulet = {
-         legacy_id = 67,
+         integer_id = 67,
          image = 398,
          value = 200,
          weight = 50,
@@ -2230,7 +2230,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorative_amulet",
       },
       potion_of_cure_minor_wound = {
-         legacy_id = 68,
+         integer_id = 68,
          image = 354,
          value = 150,
          weight = 120,
@@ -2263,7 +2263,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_cure_minor_wound",
       },
       potion_of_cure_major_wound = {
-         legacy_id = 69,
+         integer_id = 69,
          image = 354,
          value = 300,
          weight = 120,
@@ -2296,7 +2296,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_cure_major_wound",
       },
       potion_of_cure_critical_wound = {
-         legacy_id = 70,
+         integer_id = 70,
          image = 354,
          value = 1280,
          weight = 120,
@@ -2329,7 +2329,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_cure_critical_wound",
       },
       potion_of_healing = {
-         legacy_id = 71,
+         integer_id = 71,
          image = 354,
          value = 3000,
          weight = 120,
@@ -2362,7 +2362,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_healing",
       },
       potion_of_healer = {
-         legacy_id = 72,
+         integer_id = 72,
          image = 354,
          value = 5000,
          weight = 120,
@@ -2395,7 +2395,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_healer",
       },
       ragnarok = {
-         legacy_id = 73,
+         integer_id = 73,
          image = 405,
          value = 20000,
          weight = 4200,
@@ -2429,7 +2429,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ragnarok",
       },
       potion_of_healer_odina = {
-         legacy_id = 74,
+         integer_id = 74,
          image = 354,
          value = 7500,
          weight = 120,
@@ -2462,7 +2462,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_healer_odina",
       },
       potion_of_healer_eris = {
-         legacy_id = 75,
+         integer_id = 75,
          image = 354,
          value = 10000,
          weight = 120,
@@ -2495,7 +2495,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_healer_eris",
       },
       potion_of_healer_jure = {
-         legacy_id = 76,
+         integer_id = 76,
          image = 354,
          value = 15000,
          weight = 120,
@@ -2528,7 +2528,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_healer_jure",
       },
       round_chair = {
-         legacy_id = 77,
+         integer_id = 77,
          image = 237,
          value = 80,
          weight = 900,
@@ -2560,7 +2560,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.round_chair",
       },
       bookshelf = {
-         legacy_id = 78,
+         integer_id = 78,
          image = 235,
          value = 1800,
          weight = 10200,
@@ -2592,7 +2592,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bookshelf",
       },
       luxury_drawer = {
-         legacy_id = 79,
+         integer_id = 79,
          image = 234,
          value = 6400,
          weight = 8900,
@@ -2624,7 +2624,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.luxury_drawer",
       },
       boring_bed = {
-         legacy_id = 80,
+         integer_id = 80,
          image = 66,
          value = 1400,
          weight = 15000,
@@ -2657,7 +2657,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.boring_bed",
       },
       rag_doll = {
-         legacy_id = 81,
+         integer_id = 81,
          image = 67,
          value = 240,
          weight = 350,
@@ -2690,7 +2690,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rag_doll",
       },
       toy = {
-         legacy_id = 82,
+         integer_id = 82,
          image = 68,
          value = 320,
          weight = 320,
@@ -2723,7 +2723,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.toy",
       },
       modern_table = {
-         legacy_id = 83,
+         integer_id = 83,
          image = 69,
          value = 2400,
          weight = 6800,
@@ -2756,7 +2756,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.modern_table",
       },
       dining_table = {
-         legacy_id = 84,
+         integer_id = 84,
          image = 70,
          value = 3800,
          weight = 7000,
@@ -2789,7 +2789,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dining_table",
       },
       armor = {
-         legacy_id = 85,
+         integer_id = 85,
          image = 73,
          value = 1600,
          weight = 8400,
@@ -2822,7 +2822,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.armor",
       },
       lot_of_goods = {
-         legacy_id = 86,
+         integer_id = 86,
          image = 74,
          value = 450,
          weight = 800,
@@ -2855,7 +2855,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lot_of_goods",
       },
       lot_of_accessories = {
-         legacy_id = 87,
+         integer_id = 87,
          image = 75,
          value = 720,
          weight = 750,
@@ -2888,7 +2888,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lot_of_accessories",
       },
       grand_piano = {
-         legacy_id = 88,
+         integer_id = 88,
          image = 76,
          value = 15000,
          weight = 45000,
@@ -2920,7 +2920,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.grand_piano",
       },
       bar_table_alpha = {
-         legacy_id = 89,
+         integer_id = 89,
          image = 78,
          value = 1200,
          weight = 7900,
@@ -2953,7 +2953,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bar_table_alpha",
       },
       bar_table_beta = {
-         legacy_id = 90,
+         integer_id = 90,
          image = 80,
          value = 1200,
          weight = 7900,
@@ -2986,7 +2986,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bar_table_beta",
       },
       barrel = {
-         legacy_id = 91,
+         integer_id = 91,
          image = 72,
          value = 180,
          weight = 3400,
@@ -3018,7 +3018,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.barrel",
       },
       modern_chair = {
-         legacy_id = 92,
+         integer_id = 92,
          image = 84,
          value = 750,
          weight = 1100,
@@ -3051,7 +3051,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.modern_chair",
       },
       pick = {
-         legacy_id = 93,
+         integer_id = 93,
          image = 85,
          value = 160,
          weight = 1200,
@@ -3084,7 +3084,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pick",
       },
       lantern = {
-         legacy_id = 94,
+         integer_id = 94,
          image = 86,
          value = 120,
          weight = 400,
@@ -3117,7 +3117,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lantern",
       },
       decorative_armor = {
-         legacy_id = 95,
+         integer_id = 95,
          image = 87,
          value = 4200,
          weight = 3800,
@@ -3150,7 +3150,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorative_armor",
       },
       anvil = {
-         legacy_id = 96,
+         integer_id = 96,
          image = 88,
          value = 3500,
          weight = 9500,
@@ -3183,7 +3183,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.anvil",
       },
       closed_pot = {
-         legacy_id = 97,
+         integer_id = 97,
          image = 89,
          value = 140,
          weight = 420,
@@ -3216,7 +3216,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.closed_pot",
       },
       open_pot = {
-         legacy_id = 98,
+         integer_id = 98,
          image = 90,
          value = 120,
          weight = 540,
@@ -3249,7 +3249,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.open_pot",
       },
       academic_table = {
-         legacy_id = 99,
+         integer_id = 99,
          image = 91,
          value = 1050,
          weight = 4200,
@@ -3282,7 +3282,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.academic_table",
       },
       rack_of_potions = {
-         legacy_id = 100,
+         integer_id = 100,
          image = 580,
          value = 3800,
          weight = 80,
@@ -3314,7 +3314,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rack_of_potions",
       },
       square_chair = {
-         legacy_id = 101,
+         integer_id = 101,
          image = 93,
          value = 360,
          weight = 1200,
@@ -3347,7 +3347,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.square_chair",
       },
       cheap_chair = {
-         legacy_id = 102,
+         integer_id = 102,
          image = 94,
          value = 120,
          weight = 6800,
@@ -3380,7 +3380,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cheap_chair",
       },
       cupboard = {
-         legacy_id = 103,
+         integer_id = 103,
          image = 95,
          value = 2400,
          weight = 7300,
@@ -3412,7 +3412,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cupboard",
       },
       barn = {
-         legacy_id = 104,
+         integer_id = 104,
          image = 96,
          value = 750,
          weight = 8200,
@@ -3444,7 +3444,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.barn",
       },
       neat_shelf = {
-         legacy_id = 105,
+         integer_id = 105,
          image = 97,
          value = 1800,
          weight = 7600,
@@ -3476,7 +3476,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.neat_shelf",
       },
       closet = {
-         legacy_id = 106,
+         integer_id = 106,
          image = 98,
          value = 1500,
          weight = 6800,
@@ -3509,7 +3509,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.closet",
       },
       variety_of_tools = {
-         legacy_id = 107,
+         integer_id = 107,
          image = 99,
          value = 1050,
          weight = 750,
@@ -3541,7 +3541,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.variety_of_tools",
       },
       variety_of_goods = {
-         legacy_id = 108,
+         integer_id = 108,
          image = 100,
          value = 1300,
          weight = 820,
@@ -3573,7 +3573,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.variety_of_goods",
       },
       well = {
-         legacy_id = 109,
+         integer_id = 109,
          image = 101,
          value = 1800,
          weight = 350000,
@@ -3605,7 +3605,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.well",
       },
       variety_of_clothes = {
-         legacy_id = 110,
+         integer_id = 110,
          image = 102,
          value = 1800,
          weight = 950,
@@ -3638,7 +3638,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.variety_of_clothes",
       },
       furnace = {
-         legacy_id = 111,
+         integer_id = 111,
          image = 103,
          value = 4400,
          weight = 45800,
@@ -3670,7 +3670,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.furnace",
       },
       oven = {
-         legacy_id = 112,
+         integer_id = 112,
          image = 104,
          value = 8500,
          weight = 14000,
@@ -3702,7 +3702,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.oven",
       },
       sign = {
-         legacy_id = 113,
+         integer_id = 113,
          image = 105,
          value = 100,
          weight = 3200,
@@ -3734,7 +3734,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sign",
       },
       crossroad_sign = {
-         legacy_id = 114,
+         integer_id = 114,
          image = 106,
          value = 120,
          weight = 3500,
@@ -3766,7 +3766,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.crossroad_sign",
       },
       board = {
-         legacy_id = 115,
+         integer_id = 115,
          image = 381,
          value = 240,
          weight = 9500,
@@ -3798,7 +3798,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.board",
       },
       spellbook_of_minor_teleportation = {
-         legacy_id = 116,
+         integer_id = 116,
          image = 429,
          value = 2400,
          weight = 380,
@@ -3831,7 +3831,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_minor_teleportation",
       },
       empty_basket = {
-         legacy_id = 117,
+         integer_id = 117,
          image = 109,
          value = 20,
          weight = 80,
@@ -3864,7 +3864,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.empty_basket",
       },
       spellbook_of_summon_monsters = {
-         legacy_id = 118,
+         integer_id = 118,
          image = 429,
          value = 6000,
          weight = 380,
@@ -3897,7 +3897,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_summon_monsters",
       },
       rod_of_cure_minor_wound = {
-         legacy_id = 119,
+         integer_id = 119,
          image = 471,
          value = 650,
          weight = 800,
@@ -3930,7 +3930,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_cure_minor_wound",
       },
       rod_of_magic_missile = {
-         legacy_id = 120,
+         integer_id = 120,
          image = 471,
          value = 800,
          weight = 800,
@@ -3963,7 +3963,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_magic_missile",
       },
       rod_of_summon_monsters = {
-         legacy_id = 121,
+         integer_id = 121,
          image = 471,
          value = 700,
          weight = 800,
@@ -3996,7 +3996,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_summon_monsters",
       },
       rod_of_ice_bolt = {
-         legacy_id = 122,
+         integer_id = 122,
          image = 471,
          value = 1460,
          weight = 800,
@@ -4029,7 +4029,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_ice_bolt",
       },
       rod_of_fire_bolt = {
-         legacy_id = 123,
+         integer_id = 123,
          image = 471,
          value = 1600,
          weight = 800,
@@ -4062,7 +4062,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_fire_bolt",
       },
       show_case_of_breads = {
-         legacy_id = 124,
+         integer_id = 124,
          image = 116,
          value = 1400,
          weight = 7800,
@@ -4094,7 +4094,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.show_case_of_breads",
       },
       rod_of_heal = {
-         legacy_id = 125,
+         integer_id = 125,
          image = 471,
          value = 4800,
          weight = 800,
@@ -4127,7 +4127,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_heal",
       },
       beaker = {
-         legacy_id = 126,
+         integer_id = 126,
          image = 118,
          value = 80,
          weight = 210,
@@ -4160,7 +4160,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.beaker",
       },
       alchemy_kit = {
-         legacy_id = 127,
+         integer_id = 127,
          image = 119,
          value = 1960,
          weight = 900,
@@ -4193,7 +4193,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.alchemy_kit",
       },
       pentagram = {
-         legacy_id = 128,
+         integer_id = 128,
          image = 120,
          value = 3500,
          weight = 1840,
@@ -4226,7 +4226,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pentagram",
       },
       small_foliage_plant = {
-         legacy_id = 129,
+         integer_id = 129,
          image = 121,
          value = 850,
          weight = 420,
@@ -4259,7 +4259,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.small_foliage_plant",
       },
       rose = {
-         legacy_id = 130,
+         integer_id = 130,
          image = 122,
          value = 1050,
          weight = 400,
@@ -4292,7 +4292,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rose",
       },
       large_foliage_plant = {
-         legacy_id = 131,
+         integer_id = 131,
          image = 123,
          value = 1800,
          weight = 380,
@@ -4325,7 +4325,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.large_foliage_plant",
       },
       sage = {
-         legacy_id = 132,
+         integer_id = 132,
          image = 124,
          value = 650,
          weight = 320,
@@ -4358,7 +4358,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sage",
       },
       gazania = {
-         legacy_id = 133,
+         integer_id = 133,
          image = 125,
          value = 750,
          weight = 350,
@@ -4391,7 +4391,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gazania",
       },
       nerine = {
-         legacy_id = 134,
+         integer_id = 134,
          image = 126,
          value = 880,
          weight = 400,
@@ -4424,7 +4424,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.nerine",
       },
       anemos = {
-         legacy_id = 135,
+         integer_id = 135,
          image = 127,
          value = 920,
          weight = 300,
@@ -4457,7 +4457,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.anemos",
       },
       foxtail_grass = {
-         legacy_id = 136,
+         integer_id = 136,
          image = 128,
          value = 1500,
          weight = 240,
@@ -4490,7 +4490,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.foxtail_grass",
       },
       carnation = {
-         legacy_id = 137,
+         integer_id = 137,
          image = 129,
          value = 780,
          weight = 250,
@@ -4523,7 +4523,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.carnation",
       },
       pillar_ornamented_with_plants = {
-         legacy_id = 138,
+         integer_id = 138,
          image = 525,
          value = 3400,
          weight = 32000,
@@ -4555,7 +4555,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pillar_ornamented_with_plants",
       },
       pillar_ornamented_with_flowers = {
-         legacy_id = 139,
+         integer_id = 139,
          image = 526,
          value = 3900,
          weight = 32000,
@@ -4587,7 +4587,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pillar_ornamented_with_flowers",
       },
       canvas = {
-         legacy_id = 140,
+         integer_id = 140,
          image = 132,
          value = 830,
          weight = 1100,
@@ -4620,7 +4620,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.canvas",
       },
       map = {
-         legacy_id = 141,
+         integer_id = 141,
          image = 133,
          value = 450,
          weight = 240,
@@ -4653,7 +4653,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.map",
       },
       food_maker = {
-         legacy_id = 142,
+         integer_id = 142,
          image = 523,
          value = 7800,
          weight = 17400,
@@ -4685,7 +4685,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.food_maker",
       },
       bundle_of_bows = {
-         legacy_id = 143,
+         integer_id = 143,
          image = 135,
          value = 240,
          weight = 1500,
@@ -4717,7 +4717,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bundle_of_bows",
       },
       bundle_of_weapons = {
-         legacy_id = 144,
+         integer_id = 144,
          image = 136,
          value = 940,
          weight = 2400,
@@ -4750,7 +4750,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bundle_of_weapons",
       },
       decorated_cloth = {
-         legacy_id = 145,
+         integer_id = 145,
          image = 137,
          value = 1400,
          weight = 860,
@@ -4783,7 +4783,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorated_cloth",
       },
       decorated_armor = {
-         legacy_id = 146,
+         integer_id = 146,
          image = 138,
          value = 1900,
          weight = 4400,
@@ -4816,7 +4816,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorated_armor",
       },
       statue_of_armor = {
-         legacy_id = 147,
+         integer_id = 147,
          image = 139,
          value = 3600,
          weight = 7500,
@@ -4849,7 +4849,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_armor",
       },
       disorderly_book = {
-         legacy_id = 148,
+         integer_id = 148,
          image = 140,
          value = 240,
          weight = 830,
@@ -4881,7 +4881,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.disorderly_book",
       },
       lot_of_books = {
-         legacy_id = 149,
+         integer_id = 149,
          image = 141,
          value = 320,
          weight = 940,
@@ -4913,7 +4913,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lot_of_books",
       },
       craft_rack = {
-         legacy_id = 150,
+         integer_id = 150,
          image = 142,
          value = 4500,
          weight = 8700,
@@ -4946,7 +4946,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.craft_rack",
       },
       craft_book_shelf = {
-         legacy_id = 151,
+         integer_id = 151,
          image = 143,
          value = 4400,
          weight = 8600,
@@ -4979,7 +4979,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.craft_book_shelf",
       },
       lot_of_alcohols = {
-         legacy_id = 152,
+         integer_id = 152,
          image = 144,
          value = 350,
          weight = 320,
@@ -5012,7 +5012,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lot_of_alcohols",
       },
       kitchen = {
-         legacy_id = 153,
+         integer_id = 153,
          image = 145,
          value = 1200,
          weight = 14000,
@@ -5045,7 +5045,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kitchen",
       },
       washstand = {
-         legacy_id = 154,
+         integer_id = 154,
          image = 146,
          value = 1100,
          weight = 15000,
@@ -5078,7 +5078,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.washstand",
       },
       kitchen_oven = {
-         legacy_id = 155,
+         integer_id = 155,
          image = 147,
          value = 1500,
          weight = 14000,
@@ -5111,7 +5111,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kitchen_oven",
       },
       narrow_dining_table = {
-         legacy_id = 156,
+         integer_id = 156,
          image = 148,
          value = 1200,
          weight = 9700,
@@ -5143,7 +5143,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.narrow_dining_table",
       },
       elegant_table = {
-         legacy_id = 157,
+         integer_id = 157,
          image = 149,
          value = 3500,
          weight = 8600,
@@ -5176,7 +5176,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.elegant_table",
       },
       gorgeous_candlestick = {
-         legacy_id = 158,
+         integer_id = 158,
          image = 150,
          value = 800,
          weight = 860,
@@ -5208,7 +5208,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gorgeous_candlestick",
       },
       simple_shelf = {
-         legacy_id = 159,
+         integer_id = 159,
          image = 151,
          value = 1200,
          weight = 11000,
@@ -5241,7 +5241,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.simple_shelf",
       },
       sewing_kit = {
-         legacy_id = 160,
+         integer_id = 160,
          image = 152,
          value = 780,
          weight = 500,
@@ -5274,7 +5274,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sewing_kit",
       },
       carpenters_tool = {
-         legacy_id = 161,
+         integer_id = 161,
          image = 153,
          value = 1250,
          weight = 500,
@@ -5307,7 +5307,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.carpenters_tool",
       },
       messy_cloth = {
-         legacy_id = 162,
+         integer_id = 162,
          image = 154,
          value = 430,
          weight = 1200,
@@ -5340,7 +5340,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.messy_cloth",
       },
       silk_cloth = {
-         legacy_id = 163,
+         integer_id = 163,
          image = 155,
          value = 1400,
          weight = 340,
@@ -5373,7 +5373,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.silk_cloth",
       },
       collapsed_grave = {
-         legacy_id = 164,
+         integer_id = 164,
          image = 156,
          value = 1800,
          weight = 400000,
@@ -5405,7 +5405,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.collapsed_grave",
       },
       crumbled_grave = {
-         legacy_id = 165,
+         integer_id = 165,
          image = 157,
          value = 1700,
          weight = 400000,
@@ -5437,7 +5437,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.crumbled_grave",
       },
       grave_ornamented_with_flowers = {
-         legacy_id = 166,
+         integer_id = 166,
          image = 158,
          value = 3250,
          weight = 650000,
@@ -5469,7 +5469,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.grave_ornamented_with_flowers",
       },
       brand_new_grave = {
-         legacy_id = 167,
+         integer_id = 167,
          image = 159,
          value = 2500,
          weight = 650000,
@@ -5501,7 +5501,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.brand_new_grave",
       },
       solemn_tomb = {
-         legacy_id = 168,
+         integer_id = 168,
          image = 160,
          value = 4400,
          weight = 650000,
@@ -5533,7 +5533,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.solemn_tomb",
       },
       ancient_tomb = {
-         legacy_id = 169,
+         integer_id = 169,
          image = 161,
          value = 6500,
          weight = 650000,
@@ -5565,7 +5565,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ancient_tomb",
       },
       old_grave = {
-         legacy_id = 170,
+         integer_id = 170,
          image = 162,
          value = 2400,
          weight = 650000,
@@ -5597,7 +5597,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.old_grave",
       },
       altar = {
-         legacy_id = 171,
+         integer_id = 171,
          image = 163,
          value = 1500,
          weight = 500000,
@@ -5629,7 +5629,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.altar",
       },
       ceremony_altar = {
-         legacy_id = 172,
+         integer_id = 172,
          image = 163,
          value = 1600,
          weight = 500000,
@@ -5661,7 +5661,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ceremony_altar",
       },
       fountain = {
-         legacy_id = 173,
+         integer_id = 173,
          image = 355,
          value = 2400,
          weight = 600000,
@@ -5693,7 +5693,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fountain",
       },
       bunk_bed = {
-         legacy_id = 174,
+         integer_id = 174,
          image = 166,
          value = 2200,
          weight = 12400,
@@ -5725,7 +5725,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bunk_bed",
       },
       rod_of_lightning_bolt = {
-         legacy_id = 175,
+         integer_id = 175,
          image = 471,
          value = 1900,
          weight = 800,
@@ -5758,7 +5758,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_lightning_bolt",
       },
       rod_of_slow = {
-         legacy_id = 176,
+         integer_id = 176,
          image = 471,
          value = 1500,
          weight = 800,
@@ -5791,7 +5791,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_slow",
       },
       quwapana = {
-         legacy_id = 177,
+         integer_id = 177,
          image = 169,
          value = 80,
          weight = 160,
@@ -5824,7 +5824,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.quwapana",
       },
       aloe = {
-         legacy_id = 178,
+         integer_id = 178,
          image = 170,
          value = 70,
          weight = 170,
@@ -5857,7 +5857,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.aloe",
       },
       edible_wild_plant = {
-         legacy_id = 179,
+         integer_id = 179,
          image = 171,
          value = 60,
          weight = 100,
@@ -5890,7 +5890,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.edible_wild_plant",
       },
       apple = {
-         legacy_id = 180,
+         integer_id = 180,
          image = 172,
          value = 180,
          weight = 720,
@@ -5923,7 +5923,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.apple",
       },
       grape = {
-         legacy_id = 181,
+         integer_id = 181,
          image = 173,
          value = 220,
          weight = 510,
@@ -5956,7 +5956,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.grape",
       },
       kiwi = {
-         legacy_id = 182,
+         integer_id = 182,
          image = 174,
          value = 190,
          weight = 440,
@@ -5989,7 +5989,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kiwi",
       },
       cherry = {
-         legacy_id = 183,
+         integer_id = 183,
          image = 175,
          value = 170,
          weight = 220,
@@ -6022,7 +6022,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cherry",
       },
       guava = {
-         legacy_id = 184,
+         integer_id = 184,
          image = 176,
          value = 80,
          weight = 620,
@@ -6055,7 +6055,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.guava",
       },
       carrot = {
-         legacy_id = 185,
+         integer_id = 185,
          image = 177,
          value = 40,
          weight = 420,
@@ -6088,7 +6088,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.carrot",
       },
       radish = {
-         legacy_id = 186,
+         integer_id = 186,
          image = 178,
          value = 50,
          weight = 950,
@@ -6121,7 +6121,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.radish",
       },
       sweet_potato = {
-         legacy_id = 187,
+         integer_id = 187,
          image = 179,
          value = 40,
          weight = 790,
@@ -6153,7 +6153,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sweet_potato",
       },
       lettuce = {
-         legacy_id = 188,
+         integer_id = 188,
          image = 180,
          value = 50,
          weight = 650,
@@ -6186,7 +6186,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lettuce",
       },
       stack_of_dishes = {
-         legacy_id = 189,
+         integer_id = 189,
          image = 181,
          value = 120,
          weight = 450,
@@ -6218,7 +6218,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stack_of_dishes",
       },
       imo = {
-         legacy_id = 190,
+         integer_id = 190,
          image = 182,
          value = 70,
          weight = 650,
@@ -6250,7 +6250,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.imo",
       },
       api_nut = {
-         legacy_id = 191,
+         integer_id = 191,
          image = 183,
          value = 80,
          weight = 40,
@@ -6282,7 +6282,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.api_nut",
       },
       strawberry = {
-         legacy_id = 192,
+         integer_id = 192,
          image = 184,
          value = 260,
          weight = 720,
@@ -6315,7 +6315,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.strawberry",
       },
       healthy_leaf = {
-         legacy_id = 193,
+         integer_id = 193,
          image = 185,
          value = 240,
          weight = 90,
@@ -6347,7 +6347,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.healthy_leaf",
       },
       rainbow_fruit = {
-         legacy_id = 194,
+         integer_id = 194,
          image = 186,
          value = 220,
          weight = 1070,
@@ -6380,7 +6380,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rainbow_fruit",
       },
       qucche = {
-         legacy_id = 195,
+         integer_id = 195,
          image = 187,
          value = 100,
          weight = 560,
@@ -6413,7 +6413,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.qucche",
       },
       tangerine = {
-         legacy_id = 196,
+         integer_id = 196,
          image = 188,
          value = 130,
          weight = 880,
@@ -6446,7 +6446,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tangerine",
       },
       lemon = {
-         legacy_id = 197,
+         integer_id = 197,
          image = 189,
          value = 240,
          weight = 440,
@@ -6479,7 +6479,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lemon",
       },
       green_pea = {
-         legacy_id = 198,
+         integer_id = 198,
          image = 164,
          value = 260,
          weight = 360,
@@ -6512,7 +6512,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.green_pea",
       },
       cbocchi = {
-         legacy_id = 199,
+         integer_id = 199,
          image = 191,
          value = 80,
          weight = 970,
@@ -6545,7 +6545,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cbocchi",
       },
       melon = {
-         legacy_id = 200,
+         integer_id = 200,
          image = 192,
          value = 30,
          weight = 840,
@@ -6578,7 +6578,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.melon",
       },
       leccho = {
-         legacy_id = 201,
+         integer_id = 201,
          image = 193,
          value = 70,
          weight = 550,
@@ -6611,7 +6611,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.leccho",
       },
       rod_of_magic_mapping = {
-         legacy_id = 202,
+         integer_id = 202,
          image = 471,
          value = 3250,
          weight = 800,
@@ -6644,7 +6644,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_magic_mapping",
       },
       rod_of_cure = {
-         legacy_id = 203,
+         integer_id = 203,
          image = 471,
          value = 2600,
          weight = 800,
@@ -6677,7 +6677,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_cure",
       },
       corpse = {
-         legacy_id = 204,
+         integer_id = 204,
          image = 196,
          value = 80,
          weight = 2000,
@@ -6710,7 +6710,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.corpse",
       },
       bottle_of_whisky = {
-         legacy_id = 205,
+         integer_id = 205,
          image = 210,
          value = 180,
          weight = 50,
@@ -6742,7 +6742,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_whisky",
       },
       ether_dagger = {
-         legacy_id = 206,
+         integer_id = 206,
          image = 400,
          value = 60000,
          weight = 600,
@@ -6776,7 +6776,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ether_dagger",
       },
       bow_of_vindale = {
-         legacy_id = 207,
+         integer_id = 207,
          image = 404,
          value = 60000,
          weight = 1200,
@@ -6810,7 +6810,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bow_of_vindale",
       },
       worthless_fake_gold_bar = {
-         legacy_id = 208,
+         integer_id = 208,
          image = 33,
          value = 1,
          weight = 1,
@@ -6842,7 +6842,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.worthless_fake_gold_bar",
       },
       scroll_of_uncurse = {
-         legacy_id = 209,
+         integer_id = 209,
          image = 470,
          value = 1050,
          weight = 20,
@@ -6875,7 +6875,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_uncurse",
       },
       stone = {
-         legacy_id = 210,
+         integer_id = 210,
          image = 424,
          value = 180,
          weight = 2000,
@@ -6908,7 +6908,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stone",
       },
       sickle = {
-         legacy_id = 211,
+         integer_id = 211,
          image = 421,
          value = 500,
          weight = 1400,
@@ -6941,7 +6941,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sickle",
       },
       staff = {
-         legacy_id = 212,
+         integer_id = 212,
          image = 425,
          value = 500,
          weight = 900,
@@ -6974,7 +6974,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.staff",
       },
       spear = {
-         legacy_id = 213,
+         integer_id = 213,
          image = 401,
          value = 500,
          weight = 2500,
@@ -7007,7 +7007,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spear",
       },
       ore_piece = {
-         legacy_id = 214,
+         integer_id = 214,
          image = 209,
          value = 180,
          weight = 12000,
@@ -7040,7 +7040,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ore_piece",
       },
       lot_of_empty_bottles = {
-         legacy_id = 215,
+         integer_id = 215,
          image = 208,
          value = 10,
          weight = 220,
@@ -7073,7 +7073,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lot_of_empty_bottles",
       },
       basket = {
-         legacy_id = 216,
+         integer_id = 216,
          image = 207,
          value = 40,
          weight = 80,
@@ -7106,7 +7106,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.basket",
       },
       empty_bowl = {
-         legacy_id = 217,
+         integer_id = 217,
          image = 206,
          value = 25,
          weight = 90,
@@ -7139,7 +7139,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.empty_bowl",
       },
       bowl = {
-         legacy_id = 218,
+         integer_id = 218,
          image = 203,
          value = 30,
          weight = 80,
@@ -7172,7 +7172,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bowl",
       },
       tight_rope = {
-         legacy_id = 219,
+         integer_id = 219,
          image = 202,
          value = 180,
          weight = 340,
@@ -7205,7 +7205,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tight_rope",
       },
       dead_fish = {
-         legacy_id = 220,
+         integer_id = 220,
          image = 201,
          value = 4,
          weight = 50,
@@ -7237,7 +7237,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dead_fish",
       },
       straw = {
-         legacy_id = 221,
+         integer_id = 221,
          image = 200,
          value = 7,
          weight = 70,
@@ -7269,7 +7269,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.straw",
       },
       animal_bone = {
-         legacy_id = 222,
+         integer_id = 222,
          image = 199,
          value = 8,
          weight = 40,
@@ -7301,7 +7301,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.animal_bone",
       },
       pot = {
-         legacy_id = 223,
+         integer_id = 223,
          image = 198,
          value = 150,
          weight = 15000,
@@ -7333,7 +7333,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pot",
       },
       katana = {
-         legacy_id = 224,
+         integer_id = 224,
          image = 431,
          value = 500,
          weight = 1200,
@@ -7366,7 +7366,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.katana",
       },
       scimitar = {
-         legacy_id = 225,
+         integer_id = 225,
          image = 502,
          value = 500,
          weight = 900,
@@ -7399,7 +7399,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scimitar",
       },
       battle_axe = {
-         legacy_id = 226,
+         integer_id = 226,
          image = 500,
          value = 500,
          weight = 3700,
@@ -7432,7 +7432,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.battle_axe",
       },
       hammer = {
-         legacy_id = 227,
+         integer_id = 227,
          image = 504,
          value = 500,
          weight = 4200,
@@ -7465,7 +7465,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.hammer",
       },
       trident = {
-         legacy_id = 228,
+         integer_id = 228,
          image = 494,
          value = 500,
          weight = 1800,
@@ -7498,7 +7498,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.trident",
       },
       long_staff = {
-         legacy_id = 229,
+         integer_id = 229,
          image = 505,
          value = 500,
          weight = 800,
@@ -7531,7 +7531,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.long_staff",
       },
       short_bow = {
-         legacy_id = 230,
+         integer_id = 230,
          image = 404,
          value = 500,
          weight = 800,
@@ -7564,7 +7564,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.short_bow",
       },
       machine_gun = {
-         legacy_id = 231,
+         integer_id = 231,
          image = 547,
          value = 500,
          weight = 1800,
@@ -7597,7 +7597,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.machine_gun",
       },
       claymore = {
-         legacy_id = 232,
+         integer_id = 232,
          image = 503,
          value = 500,
          weight = 4000,
@@ -7630,7 +7630,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.claymore",
       },
       ration = {
-         legacy_id = 233,
+         integer_id = 233,
          image = 233,
          value = 280,
          weight = 400,
@@ -7662,7 +7662,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ration",
       },
       bardiche = {
-         legacy_id = 234,
+         integer_id = 234,
          image = 399,
          value = 500,
          weight = 3500,
@@ -7695,7 +7695,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bardiche",
       },
       halberd = {
-         legacy_id = 235,
+         integer_id = 235,
          image = 426,
          value = 500,
          weight = 3800,
@@ -7728,7 +7728,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.halberd",
       },
       scroll_of_return = {
-         legacy_id = 236,
+         integer_id = 236,
          image = 470,
          value = 750,
          weight = 20,
@@ -7761,7 +7761,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_return",
       },
       figurine_of_warrior = {
-         legacy_id = 237,
+         integer_id = 237,
          image = 222,
          value = 2000,
          weight = 240,
@@ -7794,7 +7794,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.figurine_of_warrior",
       },
       figurine_of_sword = {
-         legacy_id = 238,
+         integer_id = 238,
          image = 221,
          value = 2000,
          weight = 240,
@@ -7827,7 +7827,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.figurine_of_sword",
       },
       bejeweled_chest = {
-         legacy_id = 239,
+         integer_id = 239,
          image = 220,
          value = 3000,
          weight = 3000,
@@ -7860,7 +7860,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bejeweled_chest",
       },
       chest = {
-         legacy_id = 240,
+         integer_id = 240,
          image = 220,
          value = 1200,
          weight = 300000,
@@ -7893,7 +7893,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.chest",
       },
       safe = {
-         legacy_id = 241,
+         integer_id = 241,
          image = 197,
          value = 1000,
          weight = 300000,
@@ -7926,7 +7926,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.safe",
       },
       scroll_of_magical_map = {
-         legacy_id = 242,
+         integer_id = 242,
          image = 470,
          value = 480,
          weight = 20,
@@ -7959,7 +7959,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_magical_map",
       },
       scroll_of_gain_attribute = {
-         legacy_id = 243,
+         integer_id = 243,
          image = 470,
          value = 240000,
          weight = 20,
@@ -7992,7 +7992,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_gain_attribute",
       },
       scroll_of_wonder = {
-         legacy_id = 244,
+         integer_id = 244,
          image = 470,
          value = 8000,
          weight = 20,
@@ -8025,7 +8025,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_wonder",
       },
       scroll_of_minor_teleportation = {
-         legacy_id = 245,
+         integer_id = 245,
          image = 470,
          value = 200,
          weight = 20,
@@ -8058,7 +8058,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_minor_teleportation",
       },
       spellbook_of_magic_mapping = {
-         legacy_id = 246,
+         integer_id = 246,
          image = 429,
          value = 8500,
          weight = 380,
@@ -8091,7 +8091,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_magic_mapping",
       },
       spellbook_of_oracle = {
-         legacy_id = 247,
+         integer_id = 247,
          image = 429,
          value = 25000,
          weight = 380,
@@ -8124,7 +8124,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_oracle",
       },
       spellbook_of_return = {
-         legacy_id = 248,
+         integer_id = 248,
          image = 429,
          value = 8900,
          weight = 380,
@@ -8157,7 +8157,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_return",
       },
       spellbook_of_cure_minor_wound = {
-         legacy_id = 249,
+         integer_id = 249,
          image = 429,
          value = 4500,
          weight = 380,
@@ -8190,7 +8190,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_cure_minor_wound",
       },
       spellbook_of_cure_critical_wound = {
-         legacy_id = 250,
+         integer_id = 250,
          image = 429,
          value = 9000,
          weight = 380,
@@ -8223,7 +8223,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_cure_critical_wound",
       },
       spellbook_of_cure_eris = {
-         legacy_id = 251,
+         integer_id = 251,
          image = 429,
          value = 15000,
          weight = 380,
@@ -8256,7 +8256,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_cure_eris",
       },
       spellbook_of_cure_jure = {
-         legacy_id = 252,
+         integer_id = 252,
          image = 429,
          value = 35000,
          weight = 380,
@@ -8289,7 +8289,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_cure_jure",
       },
       bottle_of_beer = {
-         legacy_id = 253,
+         integer_id = 253,
          image = 223,
          value = 280,
          weight = 50,
@@ -8321,7 +8321,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_beer",
       },
       horn = {
-         legacy_id = 254,
+         integer_id = 254,
          image = 224,
          value = 2500,
          weight = 6500,
@@ -8353,7 +8353,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.horn",
       },
       campfire = {
-         legacy_id = 255,
+         integer_id = 255,
          image = 349,
          value = 1860,
          weight = 12000,
@@ -8385,7 +8385,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.campfire",
       },
       portable_cooking_tool = {
-         legacy_id = 256,
+         integer_id = 256,
          image = 226,
          value = 1860,
          weight = 1200,
@@ -8417,7 +8417,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.portable_cooking_tool",
       },
       spellbook_of_magic_arrow = {
-         legacy_id = 257,
+         integer_id = 257,
          image = 429,
          value = 2500,
          weight = 380,
@@ -8450,7 +8450,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_magic_arrow",
       },
       stick_bread = {
-         legacy_id = 258,
+         integer_id = 258,
          image = 117,
          value = 280,
          weight = 350,
@@ -8482,7 +8482,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stick_bread",
       },
       raw_noodle = {
-         legacy_id = 259,
+         integer_id = 259,
          image = 233,
          value = 280,
          weight = 400,
@@ -8515,7 +8515,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.raw_noodle",
       },
       sack_of_flour = {
-         legacy_id = 260,
+         integer_id = 260,
          image = 233,
          value = 280,
          weight = 800,
@@ -8547,7 +8547,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sack_of_flour",
       },
       bomb_fish = {
-         legacy_id = 261,
+         integer_id = 261,
          image = 201,
          value = 280,
          weight = 350,
@@ -8580,7 +8580,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bomb_fish",
       },
       poison = {
-         legacy_id = 262,
+         integer_id = 262,
          image = 354,
          value = 120,
          weight = 120,
@@ -8613,7 +8613,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.poison",
       },
       spellbook_of_nether_eye = {
-         legacy_id = 263,
+         integer_id = 263,
          image = 429,
          value = 7200,
          weight = 380,
@@ -8646,7 +8646,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_nether_eye",
       },
       spellbook_of_chaos_eye = {
-         legacy_id = 264,
+         integer_id = 264,
          image = 429,
          value = 9600,
          weight = 380,
@@ -8679,7 +8679,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_chaos_eye",
       },
       spellbook_of_nerve_eye = {
-         legacy_id = 265,
+         integer_id = 265,
          image = 429,
          value = 6400,
          weight = 380,
@@ -8712,7 +8712,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_nerve_eye",
       },
       wakizashi = {
-         legacy_id = 266,
+         integer_id = 266,
          image = 432,
          value = 500,
          weight = 700,
@@ -8745,7 +8745,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wakizashi",
       },
       spellbook_of_darkness_beam = {
-         legacy_id = 267,
+         integer_id = 267,
          image = 429,
          value = 4500,
          weight = 380,
@@ -8778,7 +8778,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_darkness_beam",
       },
       spellbook_of_illusion_beam = {
-         legacy_id = 268,
+         integer_id = 268,
          image = 429,
          value = 5500,
          weight = 380,
@@ -8811,7 +8811,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_illusion_beam",
       },
       spellbook_of_ice_ball = {
-         legacy_id = 269,
+         integer_id = 269,
          image = 429,
          value = 5400,
          weight = 380,
@@ -8844,7 +8844,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_ice_ball",
       },
       spellbook_of_fire_ball = {
-         legacy_id = 270,
+         integer_id = 270,
          image = 429,
          value = 5400,
          weight = 380,
@@ -8877,7 +8877,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_fire_ball",
       },
       spellbook_of_sound_ball = {
-         legacy_id = 271,
+         integer_id = 271,
          image = 429,
          value = 8400,
          weight = 380,
@@ -8910,7 +8910,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_sound_ball",
       },
       spellbook_of_chaos_ball = {
-         legacy_id = 272,
+         integer_id = 272,
          image = 429,
          value = 12000,
          weight = 380,
@@ -8943,7 +8943,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_chaos_ball",
       },
       fire_wood = {
-         legacy_id = 273,
+         integer_id = 273,
          image = 231,
          value = 10,
          weight = 1500,
@@ -8976,7 +8976,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fire_wood",
       },
       scarecrow = {
-         legacy_id = 274,
+         integer_id = 274,
          image = 232,
          value = 10,
          weight = 4800,
@@ -9009,7 +9009,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scarecrow",
       },
       broom = {
-         legacy_id = 275,
+         integer_id = 275,
          image = 248,
          value = 100,
          weight = 800,
@@ -9041,7 +9041,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.broom",
       },
       long_pillar = {
-         legacy_id = 276,
+         integer_id = 276,
          image = 524,
          value = 2600,
          weight = 350000,
@@ -9073,7 +9073,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.long_pillar",
       },
       broken_pillar = {
-         legacy_id = 277,
+         integer_id = 277,
          image = 82,
          value = 1300,
          weight = 300000,
@@ -9105,7 +9105,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.broken_pillar",
       },
       street_lamp = {
-         legacy_id = 278,
+         integer_id = 278,
          image = 585,
          value = 1200,
          weight = 300000,
@@ -9137,7 +9137,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.street_lamp",
       },
       water_tub = {
-         legacy_id = 279,
+         integer_id = 279,
          image = 249,
          value = 380,
          weight = 300000,
@@ -9169,7 +9169,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.water_tub",
       },
       comfortable_table = {
-         legacy_id = 280,
+         integer_id = 280,
          image = 250,
          value = 1800,
          weight = 9800,
@@ -9201,7 +9201,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.comfortable_table",
       },
       inner_tube = {
-         legacy_id = 281,
+         integer_id = 281,
          image = 251,
          value = 380,
          weight = 1500,
@@ -9233,7 +9233,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.inner_tube",
       },
       mysterious_map = {
-         legacy_id = 282,
+         integer_id = 282,
          image = 252,
          value = 380,
          weight = 180,
@@ -9265,7 +9265,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mysterious_map",
       },
       suitcase = {
-         legacy_id = 283,
+         integer_id = 283,
          image = 253,
          value = 380,
          weight = 1200,
@@ -9297,7 +9297,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.suitcase",
       },
       wallet = {
-         legacy_id = 284,
+         integer_id = 284,
          image = 254,
          value = 380,
          weight = 250,
@@ -9329,7 +9329,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wallet",
       },
       potion_of_restore_body = {
-         legacy_id = 285,
+         integer_id = 285,
          image = 354,
          value = 280,
          weight = 120,
@@ -9362,7 +9362,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_restore_body",
       },
       potion_of_restore_spirit = {
-         legacy_id = 286,
+         integer_id = 286,
          image = 354,
          value = 280,
          weight = 120,
@@ -9395,7 +9395,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_restore_spirit",
       },
       potion_of_potential = {
-         legacy_id = 287,
+         integer_id = 287,
          image = 354,
          value = 50000,
          weight = 120,
@@ -9428,7 +9428,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_potential",
       },
       scroll_of_curse = {
-         legacy_id = 288,
+         integer_id = 288,
          image = 470,
          value = 150,
          weight = 20,
@@ -9461,7 +9461,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_curse",
       },
       spellbook_of_wishing = {
-         legacy_id = 289,
+         integer_id = 289,
          image = 429,
          value = 40000,
          weight = 380,
@@ -9494,7 +9494,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_wishing",
       },
       rod_of_wishing = {
-         legacy_id = 290,
+         integer_id = 290,
          image = 471,
          value = 300000,
          weight = 800,
@@ -9527,7 +9527,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_wishing",
       },
       well_kept_armor = {
-         legacy_id = 291,
+         integer_id = 291,
          image = 255,
          value = 1500,
          weight = 12000,
@@ -9559,7 +9559,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.well_kept_armor",
       },
       rack_of_goods = {
-         legacy_id = 292,
+         integer_id = 292,
          image = 256,
          value = 1800,
          weight = 6800,
@@ -9591,7 +9591,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rack_of_goods",
       },
       rack_of_accessories = {
-         legacy_id = 293,
+         integer_id = 293,
          image = 257,
          value = 2000,
          weight = 7500,
@@ -9623,7 +9623,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rack_of_accessories",
       },
       towel = {
-         legacy_id = 294,
+         integer_id = 294,
          image = 258,
          value = 320,
          weight = 1080,
@@ -9655,7 +9655,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.towel",
       },
       ragged_table = {
-         legacy_id = 295,
+         integer_id = 295,
          image = 259,
          value = 890,
          weight = 4500,
@@ -9687,7 +9687,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ragged_table",
       },
       cabinet = {
-         legacy_id = 296,
+         integer_id = 296,
          image = 260,
          value = 2400,
          weight = 15000,
@@ -9719,7 +9719,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cabinet",
       },
       luxury_bed = {
-         legacy_id = 297,
+         integer_id = 297,
          image = 261,
          value = 4500,
          weight = 17500,
@@ -9751,7 +9751,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.luxury_bed",
       },
       vase = {
-         legacy_id = 298,
+         integer_id = 298,
          image = 262,
          value = 2000,
          weight = 2400,
@@ -9783,7 +9783,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.vase",
       },
       high_grade_dresser = {
-         legacy_id = 299,
+         integer_id = 299,
          image = 263,
          value = 5500,
          weight = 9000,
@@ -9815,7 +9815,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.high_grade_dresser",
       },
       neat_bar_table = {
-         legacy_id = 300,
+         integer_id = 300,
          image = 264,
          value = 1900,
          weight = 8500,
@@ -9847,7 +9847,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.neat_bar_table",
       },
       large_bouquet = {
-         legacy_id = 301,
+         integer_id = 301,
          image = 265,
          value = 240,
          weight = 1400,
@@ -9879,7 +9879,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.large_bouquet",
       },
       chest_of_clothes = {
-         legacy_id = 302,
+         integer_id = 302,
          image = 266,
          value = 1500,
          weight = 6800,
@@ -9911,7 +9911,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.chest_of_clothes",
       },
       giant_bed = {
-         legacy_id = 303,
+         integer_id = 303,
          image = 267,
          value = 3800,
          weight = 15000,
@@ -9943,7 +9943,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.giant_bed",
       },
       plain_bed = {
-         legacy_id = 304,
+         integer_id = 304,
          image = 268,
          value = 1200,
          weight = 13000,
@@ -9975,7 +9975,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.plain_bed",
       },
       coffin = {
-         legacy_id = 305,
+         integer_id = 305,
          image = 269,
          value = 2400,
          weight = 8900,
@@ -10007,7 +10007,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.coffin",
       },
       food_processor = {
-         legacy_id = 306,
+         integer_id = 306,
          image = 270,
          value = 5200,
          weight = 34000,
@@ -10039,7 +10039,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.food_processor",
       },
       soft_bed = {
-         legacy_id = 307,
+         integer_id = 307,
          image = 271,
          value = 2200,
          weight = 12000,
@@ -10071,7 +10071,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.soft_bed",
       },
       cheap_rack = {
-         legacy_id = 308,
+         integer_id = 308,
          image = 272,
          value = 1200,
          weight = 9000,
@@ -10103,7 +10103,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cheap_rack",
       },
       dresser = {
-         legacy_id = 309,
+         integer_id = 309,
          image = 273,
          value = 2400,
          weight = 8000,
@@ -10135,7 +10135,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dresser",
       },
       clean_bed = {
-         legacy_id = 310,
+         integer_id = 310,
          image = 274,
          value = 1500,
          weight = 9500,
@@ -10167,7 +10167,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.clean_bed",
       },
       bathtub = {
-         legacy_id = 311,
+         integer_id = 311,
          image = 275,
          value = 4800,
          weight = 28000,
@@ -10199,7 +10199,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bathtub",
       },
       pachisuro_machine = {
-         legacy_id = 312,
+         integer_id = 312,
          image = 276,
          value = 2800,
          weight = 14000,
@@ -10231,7 +10231,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pachisuro_machine",
       },
       casino_table = {
-         legacy_id = 313,
+         integer_id = 313,
          image = 277,
          value = 2800,
          weight = 24000,
@@ -10263,7 +10263,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.casino_table",
       },
       slot_machine = {
-         legacy_id = 314,
+         integer_id = 314,
          image = 278,
          value = 2000,
          weight = 12000,
@@ -10295,7 +10295,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.slot_machine",
       },
       darts_board = {
-         legacy_id = 315,
+         integer_id = 315,
          image = 279,
          value = 1800,
          weight = 8900,
@@ -10327,7 +10327,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.darts_board",
       },
       big_foliage_plant = {
-         legacy_id = 316,
+         integer_id = 316,
          image = 280,
          value = 3200,
          weight = 1200,
@@ -10359,7 +10359,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.big_foliage_plant",
       },
       old_shelf = {
-         legacy_id = 317,
+         integer_id = 317,
          image = 281,
          value = 890,
          weight = 7600,
@@ -10391,7 +10391,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.old_shelf",
       },
       old_bookshelf = {
-         legacy_id = 318,
+         integer_id = 318,
          image = 282,
          value = 1020,
          weight = 8900,
@@ -10423,7 +10423,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.old_bookshelf",
       },
       cheap_bed = {
-         legacy_id = 319,
+         integer_id = 319,
          image = 283,
          value = 880,
          weight = 2800,
@@ -10455,7 +10455,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cheap_bed",
       },
       cheap_table = {
-         legacy_id = 320,
+         integer_id = 320,
          image = 284,
          value = 900,
          weight = 6800,
@@ -10487,7 +10487,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cheap_table",
       },
       neat_rack = {
-         legacy_id = 321,
+         integer_id = 321,
          image = 285,
          value = 1480,
          weight = 8800,
@@ -10519,7 +10519,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.neat_rack",
       },
       simple_dresser = {
-         legacy_id = 322,
+         integer_id = 322,
          image = 286,
          value = 2200,
          weight = 12000,
@@ -10551,7 +10551,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.simple_dresser",
       },
       big_cupboard = {
-         legacy_id = 323,
+         integer_id = 323,
          image = 586,
          value = 2800,
          weight = 8900,
@@ -10583,7 +10583,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.big_cupboard",
       },
       sacred_altar = {
-         legacy_id = 324,
+         integer_id = 324,
          image = 288,
          value = 1500,
          weight = 15000,
@@ -10615,7 +10615,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sacred_altar",
       },
       comfortable_bed = {
-         legacy_id = 325,
+         integer_id = 325,
          image = 289,
          value = 2800,
          weight = 10000,
@@ -10647,7 +10647,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.comfortable_bed",
       },
       simple_rack = {
-         legacy_id = 326,
+         integer_id = 326,
          image = 290,
          value = 1400,
          weight = 8900,
@@ -10679,7 +10679,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.simple_rack",
       },
       wide_chair = {
-         legacy_id = 327,
+         integer_id = 327,
          image = 291,
          value = 600,
          weight = 6400,
@@ -10711,7 +10711,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wide_chair",
       },
       upright_piano = {
-         legacy_id = 328,
+         integer_id = 328,
          image = 292,
          value = 4600,
          weight = 29000,
@@ -10743,7 +10743,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.upright_piano",
       },
       statue_of_cross = {
-         legacy_id = 329,
+         integer_id = 329,
          image = 293,
          value = 1500,
          weight = 15600,
@@ -10775,7 +10775,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_cross",
       },
       stump = {
-         legacy_id = 330,
+         integer_id = 330,
          image = 294,
          value = 250,
          weight = 3500,
@@ -10807,7 +10807,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stump",
       },
       dress = {
-         legacy_id = 331,
+         integer_id = 331,
          image = 295,
          value = 1440,
          weight = 1050,
@@ -10839,7 +10839,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dress",
       },
       table = {
-         legacy_id = 332,
+         integer_id = 332,
          image = 296,
          value = 1200,
          weight = 4900,
@@ -10871,7 +10871,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.table",
       },
       cargo_travelers_food = {
-         legacy_id = 333,
+         integer_id = 333,
          image = 297,
          value = 40,
          weight = -2000,
@@ -10903,7 +10903,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_travelers_food",
       },
       throne = {
-         legacy_id = 334,
+         integer_id = 334,
          image = 579,
          value = 6800,
          weight = 35000,
@@ -10935,7 +10935,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.throne",
       },
       golden_pedestal = {
-         legacy_id = 335,
+         integer_id = 335,
          image = 299,
          value = 1200,
          weight = 15000,
@@ -10967,7 +10967,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.golden_pedestal",
       },
       statue_of_money = {
-         legacy_id = 336,
+         integer_id = 336,
          image = 300,
          value = 3200,
          weight = 21000,
@@ -10999,7 +10999,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_money",
       },
       remains_skin = {
-         legacy_id = 337,
+         integer_id = 337,
          image = 301,
          value = 100,
          weight = 1500,
@@ -11031,7 +11031,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.remains_skin",
       },
       remains_blood = {
-         legacy_id = 338,
+         integer_id = 338,
          image = 302,
          value = 100,
          weight = 1500,
@@ -11063,7 +11063,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.remains_blood",
       },
       remains_eye = {
-         legacy_id = 339,
+         integer_id = 339,
          image = 303,
          value = 100,
          weight = 1500,
@@ -11095,7 +11095,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.remains_eye",
       },
       remains_heart = {
-         legacy_id = 340,
+         integer_id = 340,
          image = 304,
          value = 100,
          weight = 1500,
@@ -11127,7 +11127,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.remains_heart",
       },
       remains_bone = {
-         legacy_id = 341,
+         integer_id = 341,
          image = 305,
          value = 100,
          weight = 1500,
@@ -11159,7 +11159,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.remains_bone",
       },
       fishing_pole = {
-         legacy_id = 342,
+         integer_id = 342,
          image = 306,
          value = 1200,
          weight = 2400,
@@ -11191,7 +11191,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fishing_pole",
       },
       rune = {
-         legacy_id = 343,
+         integer_id = 343,
          image = 307,
          value = 780,
          weight = 500,
@@ -11223,7 +11223,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rune",
       },
       deed = {
-         legacy_id = 344,
+         integer_id = 344,
          image = 308,
          value = 50000,
          weight = 500,
@@ -11256,7 +11256,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed",
       },
       moonfish = {
-         legacy_id = 345,
+         integer_id = 345,
          image = 309,
          value = 900,
          weight = 800,
@@ -11289,7 +11289,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.moonfish",
       },
       sardine = {
-         legacy_id = 346,
+         integer_id = 346,
          image = 310,
          value = 1200,
          weight = 1250,
@@ -11322,7 +11322,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sardine",
       },
       flatfish = {
-         legacy_id = 347,
+         integer_id = 347,
          image = 311,
          value = 700,
          weight = 900,
@@ -11355,7 +11355,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.flatfish",
       },
       manboo = {
-         legacy_id = 348,
+         integer_id = 348,
          image = 312,
          value = 1500,
          weight = 2400,
@@ -11388,7 +11388,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.manboo",
       },
       seabream = {
-         legacy_id = 349,
+         integer_id = 349,
          image = 313,
          value = 150,
          weight = 800,
@@ -11421,7 +11421,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.seabream",
       },
       salmon = {
-         legacy_id = 350,
+         integer_id = 350,
          image = 314,
          value = 170,
          weight = 600,
@@ -11454,7 +11454,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.salmon",
       },
       globefish = {
-         legacy_id = 351,
+         integer_id = 351,
          image = 315,
          value = 320,
          weight = 550,
@@ -11487,7 +11487,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.globefish",
       },
       tuna = {
-         legacy_id = 352,
+         integer_id = 352,
          image = 316,
          value = 640,
          weight = 700,
@@ -11520,7 +11520,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tuna",
       },
       cutlassfish = {
-         legacy_id = 353,
+         integer_id = 353,
          image = 317,
          value = 620,
          weight = 600,
@@ -11553,7 +11553,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cutlassfish",
       },
       sandborer = {
-         legacy_id = 354,
+         integer_id = 354,
          image = 318,
          value = 380,
          weight = 450,
@@ -11586,7 +11586,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sandborer",
       },
       gloves_of_vesda = {
-         legacy_id = 355,
+         integer_id = 355,
          image = 414,
          value = 40000,
          weight = 1200,
@@ -11620,7 +11620,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gloves_of_vesda",
       },
       blood_moon = {
-         legacy_id = 356,
+         integer_id = 356,
          image = 427,
          value = 30000,
          weight = 1800,
@@ -11654,7 +11654,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.blood_moon",
       },
       ring_of_steel_dragon = {
-         legacy_id = 357,
+         integer_id = 357,
          image = 407,
          value = 30000,
          weight = 1200,
@@ -11687,7 +11687,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ring_of_steel_dragon",
       },
       staff_of_insanity = {
-         legacy_id = 358,
+         integer_id = 358,
          image = 425,
          value = 30000,
          weight = 2500,
@@ -11720,7 +11720,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.staff_of_insanity",
       },
       rankis = {
-         legacy_id = 359,
+         integer_id = 359,
          image = 426,
          value = 30000,
          weight = 2000,
@@ -11754,7 +11754,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rankis",
       },
       palmia_pride = {
-         legacy_id = 360,
+         integer_id = 360,
          image = 407,
          value = 30000,
          weight = 500,
@@ -11787,7 +11787,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.palmia_pride",
       },
       shopkeepers_trunk = {
-         legacy_id = 361,
+         integer_id = 361,
          image = 253,
          value = 380,
          weight = 1200,
@@ -11819,7 +11819,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shopkeepers_trunk",
       },
       scroll_of_greater_identify = {
-         legacy_id = 362,
+         integer_id = 362,
          image = 470,
          value = 3500,
          weight = 20,
@@ -11852,7 +11852,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_greater_identify",
       },
       scroll_of_vanish_curse = {
-         legacy_id = 363,
+         integer_id = 363,
          image = 470,
          value = 4400,
          weight = 20,
@@ -11885,7 +11885,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_vanish_curse",
       },
       potion_of_defender = {
-         legacy_id = 364,
+         integer_id = 364,
          image = 354,
          value = 150,
          weight = 120,
@@ -11918,7 +11918,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_defender",
       },
       spellbook_of_holy_shield = {
-         legacy_id = 365,
+         integer_id = 365,
          image = 429,
          value = 2800,
          weight = 380,
@@ -11951,7 +11951,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_holy_shield",
       },
       rod_of_silence = {
-         legacy_id = 366,
+         integer_id = 366,
          image = 471,
          value = 1080,
          weight = 800,
@@ -11984,7 +11984,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_silence",
       },
       spellbook_of_silence = {
-         legacy_id = 367,
+         integer_id = 367,
          image = 429,
          value = 8400,
          weight = 380,
@@ -12017,7 +12017,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_silence",
       },
       potion_of_silence = {
-         legacy_id = 368,
+         integer_id = 368,
          image = 354,
          value = 40,
          weight = 120,
@@ -12050,7 +12050,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_silence",
       },
       spellbook_of_regeneration = {
-         legacy_id = 369,
+         integer_id = 369,
          image = 429,
          value = 4400,
          weight = 380,
@@ -12083,7 +12083,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_regeneration",
       },
       potion_of_troll_blood = {
-         legacy_id = 370,
+         integer_id = 370,
          image = 354,
          value = 800,
          weight = 120,
@@ -12116,7 +12116,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_troll_blood",
       },
       spellbook_of_resistance = {
-         legacy_id = 371,
+         integer_id = 371,
          image = 429,
          value = 7500,
          weight = 380,
@@ -12149,7 +12149,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_resistance",
       },
       potion_of_resistance = {
-         legacy_id = 372,
+         integer_id = 372,
          image = 354,
          value = 700,
          weight = 120,
@@ -12182,7 +12182,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_resistance",
       },
       spellbook_of_speed = {
-         legacy_id = 373,
+         integer_id = 373,
          image = 429,
          value = 12000,
          weight = 380,
@@ -12215,7 +12215,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_speed",
       },
       spellbook_of_slow = {
-         legacy_id = 374,
+         integer_id = 374,
          image = 429,
          value = 4800,
          weight = 380,
@@ -12248,7 +12248,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_slow",
       },
       potion_of_speed = {
-         legacy_id = 375,
+         integer_id = 375,
          image = 354,
          value = 850,
          weight = 120,
@@ -12281,7 +12281,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_speed",
       },
       potion_of_slow = {
-         legacy_id = 376,
+         integer_id = 376,
          image = 354,
          value = 30,
          weight = 120,
@@ -12314,7 +12314,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_slow",
       },
       rod_of_speed = {
-         legacy_id = 377,
+         integer_id = 377,
          image = 471,
          value = 4200,
          weight = 800,
@@ -12347,7 +12347,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_speed",
       },
       spellbook_of_hero = {
-         legacy_id = 378,
+         integer_id = 378,
          image = 429,
          value = 2600,
          weight = 380,
@@ -12380,7 +12380,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_hero",
       },
       potion_of_hero = {
-         legacy_id = 379,
+         integer_id = 379,
          image = 354,
          value = 450,
          weight = 120,
@@ -12413,7 +12413,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_hero",
       },
       spellbook_of_weakness = {
-         legacy_id = 380,
+         integer_id = 380,
          image = 429,
          value = 2500,
          weight = 380,
@@ -12446,7 +12446,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_weakness",
       },
       spellbook_of_elemental_scar = {
-         legacy_id = 381,
+         integer_id = 381,
          image = 429,
          value = 6400,
          weight = 380,
@@ -12479,7 +12479,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_elemental_scar",
       },
       potion_of_weakness = {
-         legacy_id = 382,
+         integer_id = 382,
          image = 354,
          value = 30,
          weight = 120,
@@ -12512,7 +12512,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_weakness",
       },
       spellbook_of_holy_veil = {
-         legacy_id = 383,
+         integer_id = 383,
          image = 429,
          value = 11000,
          weight = 380,
@@ -12545,7 +12545,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_holy_veil",
       },
       scroll_of_holy_veil = {
-         legacy_id = 384,
+         integer_id = 384,
          image = 470,
          value = 1500,
          weight = 20,
@@ -12578,7 +12578,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_holy_veil",
       },
       rod_of_holy_light = {
-         legacy_id = 385,
+         integer_id = 385,
          image = 471,
          value = 3600,
          weight = 800,
@@ -12611,7 +12611,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_holy_light",
       },
       spellbook_of_holy_light = {
-         legacy_id = 386,
+         integer_id = 386,
          image = 429,
          value = 3500,
          weight = 380,
@@ -12644,7 +12644,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_holy_light",
       },
       spellbook_of_holy_rain = {
-         legacy_id = 387,
+         integer_id = 387,
          image = 429,
          value = 9800,
          weight = 380,
@@ -12677,7 +12677,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_holy_rain",
       },
       scroll_of_holy_light = {
-         legacy_id = 388,
+         integer_id = 388,
          image = 470,
          value = 350,
          weight = 20,
@@ -12710,7 +12710,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_holy_light",
       },
       scroll_of_holy_rain = {
-         legacy_id = 389,
+         integer_id = 389,
          image = 470,
          value = 1400,
          weight = 20,
@@ -12743,7 +12743,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_holy_rain",
       },
       scroll_of_mana = {
-         legacy_id = 390,
+         integer_id = 390,
          image = 470,
          value = 2400,
          weight = 20,
@@ -12776,7 +12776,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_mana",
       },
       rod_of_mana = {
-         legacy_id = 391,
+         integer_id = 391,
          image = 471,
          value = 4100,
          weight = 800,
@@ -12809,7 +12809,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_mana",
       },
       bottle_of_sulfuric = {
-         legacy_id = 392,
+         integer_id = 392,
          image = 223,
          value = 800,
          weight = 50,
@@ -12841,7 +12841,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_sulfuric",
       },
       gem_cutter = {
-         legacy_id = 393,
+         integer_id = 393,
          image = 319,
          value = 2000,
          weight = 500,
@@ -12874,7 +12874,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gem_cutter",
       },
       material_box = {
-         legacy_id = 394,
+         integer_id = 394,
          image = 438,
          value = 500,
          weight = 1200,
@@ -12906,7 +12906,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.material_box",
       },
       scroll_of_gain_material = {
-         legacy_id = 395,
+         integer_id = 395,
          image = 470,
          value = 3800,
          weight = 20,
@@ -12939,7 +12939,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_gain_material",
       },
       spellbook_of_nightmare = {
-         legacy_id = 396,
+         integer_id = 396,
          image = 429,
          value = 3400,
          weight = 380,
@@ -12972,7 +12972,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_nightmare",
       },
       spellbook_of_knowledge = {
-         legacy_id = 397,
+         integer_id = 397,
          image = 429,
          value = 3800,
          weight = 380,
@@ -13005,7 +13005,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_knowledge",
       },
       scroll_of_knowledge = {
-         legacy_id = 398,
+         integer_id = 398,
          image = 470,
          value = 1800,
          weight = 20,
@@ -13038,7 +13038,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_knowledge",
       },
       cargo_rag_doll = {
-         legacy_id = 399,
+         integer_id = 399,
          image = 67,
          value = 700,
          weight = -6500,
@@ -13070,7 +13070,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_rag_doll",
       },
       cargo_barrel = {
-         legacy_id = 400,
+         integer_id = 400,
          image = 72,
          value = 420,
          weight = -10000,
@@ -13102,7 +13102,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_barrel",
       },
       cargo_piano = {
-         legacy_id = 401,
+         integer_id = 401,
          image = 292,
          value = 4000,
          weight = -50000,
@@ -13134,7 +13134,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_piano",
       },
       cargo_rope = {
-         legacy_id = 402,
+         integer_id = 402,
          image = 202,
          value = 550,
          weight = -4800,
@@ -13166,7 +13166,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_rope",
       },
       cargo_coffin = {
-         legacy_id = 403,
+         integer_id = 403,
          image = 269,
          value = 2200,
          weight = -12000,
@@ -13198,7 +13198,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_coffin",
       },
       cargo_manboo = {
-         legacy_id = 404,
+         integer_id = 404,
          image = 312,
          value = 800,
          weight = -10000,
@@ -13230,7 +13230,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_manboo",
       },
       cargo_grave = {
-         legacy_id = 405,
+         integer_id = 405,
          image = 161,
          value = 2800,
          weight = -48000,
@@ -13262,7 +13262,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_grave",
       },
       cargo_tuna_fish = {
-         legacy_id = 406,
+         integer_id = 406,
          image = 316,
          value = 350,
          weight = -7500,
@@ -13294,7 +13294,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_tuna_fish",
       },
       cargo_whisky = {
-         legacy_id = 407,
+         integer_id = 407,
          image = 208,
          value = 1400,
          weight = -16000,
@@ -13326,7 +13326,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_whisky",
       },
       cargo_noble_toy = {
-         legacy_id = 408,
+         integer_id = 408,
          image = 68,
          value = 1200,
          weight = -32000,
@@ -13358,7 +13358,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_noble_toy",
       },
       cargo_inner_tube = {
-         legacy_id = 409,
+         integer_id = 409,
          image = 251,
          value = 340,
          weight = -1500,
@@ -13390,7 +13390,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_inner_tube",
       },
       spellbook_of_detect_objects = {
-         legacy_id = 410,
+         integer_id = 410,
          image = 429,
          value = 4000,
          weight = 380,
@@ -13423,7 +13423,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_detect_objects",
       },
       scroll_of_detect_objects = {
-         legacy_id = 411,
+         integer_id = 411,
          image = 470,
          value = 350,
          weight = 20,
@@ -13456,7 +13456,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_detect_objects",
       },
       rod_of_uncurse = {
-         legacy_id = 412,
+         integer_id = 412,
          image = 471,
          value = 3800,
          weight = 800,
@@ -13489,7 +13489,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_uncurse",
       },
       red_treasure_machine = {
-         legacy_id = 413,
+         integer_id = 413,
          image = 320,
          value = 15000,
          weight = 140000,
@@ -13521,7 +13521,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.red_treasure_machine",
       },
       blue_treasure_machine = {
-         legacy_id = 414,
+         integer_id = 414,
          image = 321,
          value = 30000,
          weight = 140000,
@@ -13553,7 +13553,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.blue_treasure_machine",
       },
       treasure_ball = {
-         legacy_id = 415,
+         integer_id = 415,
          image = 322,
          value = 4000,
          weight = 500,
@@ -13585,7 +13585,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.treasure_ball",
       },
       rare_treasure_ball = {
-         legacy_id = 416,
+         integer_id = 416,
          image = 322,
          value = 12000,
          weight = 500,
@@ -13617,7 +13617,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rare_treasure_ball",
       },
       vegetable_seed = {
-         legacy_id = 417,
+         integer_id = 417,
          image = 323,
          value = 240,
          weight = 40,
@@ -13651,7 +13651,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.vegetable_seed",
       },
       fruit_seed = {
-         legacy_id = 418,
+         integer_id = 418,
          image = 323,
          value = 280,
          weight = 40,
@@ -13685,7 +13685,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fruit_seed",
       },
       herb_seed = {
-         legacy_id = 419,
+         integer_id = 419,
          image = 323,
          value = 1800,
          weight = 40,
@@ -13719,7 +13719,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.herb_seed",
       },
       unknown_seed = {
-         legacy_id = 420,
+         integer_id = 420,
          image = 323,
          value = 2500,
          weight = 40,
@@ -13753,7 +13753,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.unknown_seed",
       },
       artifact_seed = {
-         legacy_id = 421,
+         integer_id = 421,
          image = 323,
          value = 120000,
          weight = 40,
@@ -13787,7 +13787,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.artifact_seed",
       },
       morgia = {
-         legacy_id = 422,
+         integer_id = 422,
          image = 170,
          value = 1050,
          weight = 250,
@@ -13819,7 +13819,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.morgia",
       },
       mareilon = {
-         legacy_id = 423,
+         integer_id = 423,
          image = 170,
          value = 800,
          weight = 210,
@@ -13851,7 +13851,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mareilon",
       },
       spenseweed = {
-         legacy_id = 424,
+         integer_id = 424,
          image = 170,
          value = 900,
          weight = 220,
@@ -13883,7 +13883,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spenseweed",
       },
       curaria = {
-         legacy_id = 425,
+         integer_id = 425,
          image = 170,
          value = 680,
          weight = 260,
@@ -13915,7 +13915,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.curaria",
       },
       alraunia = {
-         legacy_id = 426,
+         integer_id = 426,
          image = 170,
          value = 1200,
          weight = 120,
@@ -13947,7 +13947,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.alraunia",
       },
       stomafillia = {
-         legacy_id = 427,
+         integer_id = 427,
          image = 170,
          value = 800,
          weight = 480,
@@ -13979,7 +13979,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stomafillia",
       },
       sleeping_bag = {
-         legacy_id = 428,
+         integer_id = 428,
          image = 324,
          value = 800,
          weight = 2400,
@@ -14011,7 +14011,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sleeping_bag",
       },
       potion_of_weaken_resistance = {
-         legacy_id = 429,
+         integer_id = 429,
          image = 354,
          value = 150,
          weight = 120,
@@ -14044,7 +14044,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_weaken_resistance",
       },
       scroll_of_growth = {
-         legacy_id = 430,
+         integer_id = 430,
          image = 470,
          value = 15000,
          weight = 20,
@@ -14077,7 +14077,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_growth",
       },
       scroll_of_faith = {
-         legacy_id = 431,
+         integer_id = 431,
          image = 470,
          value = 12000,
          weight = 20,
@@ -14110,7 +14110,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_faith",
       },
       potion_of_mutation = {
-         legacy_id = 432,
+         integer_id = 432,
          image = 354,
          value = 5000,
          weight = 120,
@@ -14143,7 +14143,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_mutation",
       },
       potion_of_cure_mutation = {
-         legacy_id = 433,
+         integer_id = 433,
          image = 354,
          value = 4000,
          weight = 120,
@@ -14176,7 +14176,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_cure_mutation",
       },
       spellbook_of_mutation = {
-         legacy_id = 434,
+         integer_id = 434,
          image = 429,
          value = 20000,
          weight = 380,
@@ -14209,7 +14209,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_mutation",
       },
       banded_mail = {
-         legacy_id = 435,
+         integer_id = 435,
          image = 409,
          value = 1500,
          weight = 6500,
@@ -14242,7 +14242,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.banded_mail",
       },
       plate_mail = {
-         legacy_id = 436,
+         integer_id = 436,
          image = 410,
          value = 12500,
          weight = 7500,
@@ -14275,7 +14275,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.plate_mail",
       },
       ring_mail = {
-         legacy_id = 437,
+         integer_id = 437,
          image = 440,
          value = 2400,
          weight = 5000,
@@ -14308,7 +14308,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ring_mail",
       },
       composite_mail = {
-         legacy_id = 438,
+         integer_id = 438,
          image = 441,
          value = 4500,
          weight = 5500,
@@ -14341,7 +14341,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_mail",
       },
       chain_mail = {
-         legacy_id = 439,
+         integer_id = 439,
          image = 442,
          value = 8000,
          weight = 5200,
@@ -14374,7 +14374,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.chain_mail",
       },
       pope_robe = {
-         legacy_id = 440,
+         integer_id = 440,
          image = 443,
          value = 9500,
          weight = 1200,
@@ -14407,7 +14407,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pope_robe",
       },
       light_mail = {
-         legacy_id = 441,
+         integer_id = 441,
          image = 444,
          value = 1200,
          weight = 1800,
@@ -14440,7 +14440,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.light_mail",
       },
       coat = {
-         legacy_id = 442,
+         integer_id = 442,
          image = 445,
          value = 2000,
          weight = 1500,
@@ -14473,7 +14473,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.coat",
       },
       breast_plate = {
-         legacy_id = 443,
+         integer_id = 443,
          image = 446,
          value = 5500,
          weight = 2800,
@@ -14506,7 +14506,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.breast_plate",
       },
       bulletproof_jacket = {
-         legacy_id = 444,
+         integer_id = 444,
          image = 447,
          value = 7200,
          weight = 1600,
@@ -14539,7 +14539,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bulletproof_jacket",
       },
       gloves = {
-         legacy_id = 445,
+         integer_id = 445,
          image = 448,
          value = 800,
          weight = 450,
@@ -14572,7 +14572,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gloves",
       },
       plate_gauntlets = {
-         legacy_id = 446,
+         integer_id = 446,
          image = 414,
          value = 1800,
          weight = 1800,
@@ -14605,7 +14605,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.plate_gauntlets",
       },
       light_gloves = {
-         legacy_id = 447,
+         integer_id = 447,
          image = 451,
          value = 280,
          weight = 200,
@@ -14638,7 +14638,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.light_gloves",
       },
       composite_gauntlets = {
-         legacy_id = 448,
+         integer_id = 448,
          image = 452,
          value = 950,
          weight = 1300,
@@ -14671,7 +14671,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_gauntlets",
       },
       small_shield = {
-         legacy_id = 449,
+         integer_id = 449,
          image = 453,
          value = 500,
          weight = 1200,
@@ -14704,7 +14704,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.small_shield",
       },
       round_shield = {
-         legacy_id = 450,
+         integer_id = 450,
          image = 454,
          value = 1200,
          weight = 1500,
@@ -14737,7 +14737,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.round_shield",
       },
       shield = {
-         legacy_id = 451,
+         integer_id = 451,
          image = 455,
          value = 2500,
          weight = 1000,
@@ -14770,7 +14770,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shield",
       },
       large_shield = {
-         legacy_id = 452,
+         integer_id = 452,
          image = 456,
          value = 7500,
          weight = 1400,
@@ -14803,7 +14803,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.large_shield",
       },
       kite_shield = {
-         legacy_id = 453,
+         integer_id = 453,
          image = 457,
          value = 10000,
          weight = 3500,
@@ -14836,7 +14836,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kite_shield",
       },
       tower_shield = {
-         legacy_id = 454,
+         integer_id = 454,
          image = 458,
          value = 18000,
          weight = 2400,
@@ -14869,7 +14869,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tower_shield",
       },
       shoes = {
-         legacy_id = 455,
+         integer_id = 455,
          image = 473,
          value = 260,
          weight = 250,
@@ -14902,7 +14902,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shoes",
       },
       boots = {
-         legacy_id = 456,
+         integer_id = 456,
          image = 473,
          value = 1500,
          weight = 450,
@@ -14935,7 +14935,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.boots",
       },
       tight_boots = {
-         legacy_id = 457,
+         integer_id = 457,
          image = 459,
          value = 3500,
          weight = 650,
@@ -14968,7 +14968,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tight_boots",
       },
       armored_boots = {
-         legacy_id = 458,
+         integer_id = 458,
          image = 461,
          value = 4800,
          weight = 1400,
@@ -15001,7 +15001,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.armored_boots",
       },
       composite_girdle = {
-         legacy_id = 459,
+         integer_id = 459,
          image = 474,
          value = 2400,
          weight = 650,
@@ -15034,7 +15034,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_girdle",
       },
       plate_girdle = {
-         legacy_id = 460,
+         integer_id = 460,
          image = 474,
          value = 3900,
          weight = 1400,
@@ -15067,7 +15067,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.plate_girdle",
       },
       armored_cloak = {
-         legacy_id = 461,
+         integer_id = 461,
          image = 475,
          value = 1400,
          weight = 1800,
@@ -15100,7 +15100,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.armored_cloak",
       },
       cloak = {
-         legacy_id = 462,
+         integer_id = 462,
          image = 476,
          value = 3500,
          weight = 1500,
@@ -15133,7 +15133,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cloak",
       },
       feather_hat = {
-         legacy_id = 463,
+         integer_id = 463,
          image = 413,
          value = 400,
          weight = 500,
@@ -15166,7 +15166,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.feather_hat",
       },
       heavy_helm = {
-         legacy_id = 464,
+         integer_id = 464,
          image = 481,
          value = 4800,
          weight = 2400,
@@ -15199,7 +15199,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.heavy_helm",
       },
       knight_helm = {
-         legacy_id = 465,
+         integer_id = 465,
          image = 480,
          value = 2200,
          weight = 2000,
@@ -15232,7 +15232,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.knight_helm",
       },
       helm = {
-         legacy_id = 466,
+         integer_id = 466,
          image = 479,
          value = 600,
          weight = 1600,
@@ -15265,7 +15265,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.helm",
       },
       composite_helm = {
-         legacy_id = 467,
+         integer_id = 467,
          image = 482,
          value = 9600,
          weight = 1800,
@@ -15298,7 +15298,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_helm",
       },
       peridot = {
-         legacy_id = 468,
+         integer_id = 468,
          image = 488,
          value = 4400,
          weight = 50,
@@ -15331,7 +15331,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.peridot",
       },
       talisman = {
-         legacy_id = 469,
+         integer_id = 469,
          image = 487,
          value = 4400,
          weight = 50,
@@ -15364,7 +15364,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.talisman",
       },
       neck_guard = {
-         legacy_id = 470,
+         integer_id = 470,
          image = 486,
          value = 2200,
          weight = 50,
@@ -15397,7 +15397,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.neck_guard",
       },
       charm = {
-         legacy_id = 471,
+         integer_id = 471,
          image = 485,
          value = 2000,
          weight = 50,
@@ -15430,7 +15430,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.charm",
       },
       bejeweled_amulet = {
-         legacy_id = 472,
+         integer_id = 472,
          image = 484,
          value = 1800,
          weight = 50,
@@ -15463,7 +15463,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bejeweled_amulet",
       },
       engagement_amulet = {
-         legacy_id = 473,
+         integer_id = 473,
          image = 483,
          value = 5000,
          weight = 50,
@@ -15496,7 +15496,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.engagement_amulet",
       },
       composite_ring = {
-         legacy_id = 474,
+         integer_id = 474,
          image = 492,
          value = 450,
          weight = 50,
@@ -15529,7 +15529,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.composite_ring",
       },
       armored_ring = {
-         legacy_id = 475,
+         integer_id = 475,
          image = 491,
          value = 450,
          weight = 50,
@@ -15562,7 +15562,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.armored_ring",
       },
       ring = {
-         legacy_id = 476,
+         integer_id = 476,
          image = 490,
          value = 450,
          weight = 50,
@@ -15595,7 +15595,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ring",
       },
       engagement_ring = {
-         legacy_id = 477,
+         integer_id = 477,
          image = 489,
          value = 5200,
          weight = 50,
@@ -15628,7 +15628,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.engagement_ring",
       },
       stethoscope = {
-         legacy_id = 478,
+         integer_id = 478,
          image = 493,
          value = 1200,
          weight = 250,
@@ -15660,7 +15660,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stethoscope",
       },
       scroll_of_ally = {
-         legacy_id = 479,
+         integer_id = 479,
          image = 470,
          value = 9000,
          weight = 20,
@@ -15693,7 +15693,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_ally",
       },
       rod_of_domination = {
-         legacy_id = 480,
+         integer_id = 480,
          image = 471,
          value = 16000,
          weight = 800,
@@ -15726,7 +15726,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_domination",
       },
       spellbook_of_domination = {
-         legacy_id = 481,
+         integer_id = 481,
          image = 429,
          value = 28000,
          weight = 380,
@@ -15759,7 +15759,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_domination",
       },
       crossbow = {
-         legacy_id = 482,
+         integer_id = 482,
          image = 498,
          value = 500,
          weight = 2800,
@@ -15792,7 +15792,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.crossbow",
       },
       bolt = {
-         legacy_id = 483,
+         integer_id = 483,
          image = 412,
          value = 150,
          weight = 3500,
@@ -15825,7 +15825,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bolt",
       },
       spellbook_of_web = {
-         legacy_id = 484,
+         integer_id = 484,
          image = 429,
          value = 4500,
          weight = 380,
@@ -15858,7 +15858,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_web",
       },
       rod_of_web = {
-         legacy_id = 485,
+         integer_id = 485,
          image = 471,
          value = 3500,
          weight = 800,
@@ -15891,7 +15891,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_web",
       },
       machine = {
-         legacy_id = 486,
+         integer_id = 486,
          image = 507,
          value = 3600,
          weight = 150000,
@@ -15923,7 +15923,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.machine",
       },
       computer = {
-         legacy_id = 487,
+         integer_id = 487,
          image = 508,
          value = 4400,
          weight = 45000,
@@ -15955,7 +15955,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.computer",
       },
       training_machine = {
-         legacy_id = 488,
+         integer_id = 488,
          image = 506,
          value = 2400,
          weight = 120000,
@@ -15987,7 +15987,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.training_machine",
       },
       camera = {
-         legacy_id = 489,
+         integer_id = 489,
          image = 509,
          value = 1600,
          weight = 1500,
@@ -16019,7 +16019,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.camera",
       },
       microwave_oven = {
-         legacy_id = 490,
+         integer_id = 490,
          image = 510,
          value = 3200,
          weight = 150000,
@@ -16051,7 +16051,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.microwave_oven",
       },
       server = {
-         legacy_id = 491,
+         integer_id = 491,
          image = 511,
          value = 2400,
          weight = 95000,
@@ -16083,7 +16083,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.server",
       },
       storage = {
-         legacy_id = 492,
+         integer_id = 492,
          image = 512,
          value = 3100,
          weight = 14000,
@@ -16115,7 +16115,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.storage",
       },
       trash_can = {
-         legacy_id = 493,
+         integer_id = 493,
          image = 513,
          value = 1000,
          weight = 8000,
@@ -16147,7 +16147,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.trash_can",
       },
       chip = {
-         legacy_id = 494,
+         integer_id = 494,
          image = 515,
          value = 1200,
          weight = 800,
@@ -16179,7 +16179,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.chip",
       },
       blank_disc = {
-         legacy_id = 495,
+         integer_id = 495,
          image = 516,
          value = 1000,
          weight = 500,
@@ -16211,7 +16211,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.blank_disc",
       },
       shot_gun = {
-         legacy_id = 496,
+         integer_id = 496,
          image = 514,
          value = 800,
          weight = 1500,
@@ -16244,7 +16244,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shot_gun",
       },
       pop_corn = {
-         legacy_id = 497,
+         integer_id = 497,
          image = 517,
          value = 440,
          weight = 200,
@@ -16276,7 +16276,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pop_corn",
       },
       fried_potato = {
-         legacy_id = 498,
+         integer_id = 498,
          image = 518,
          value = 350,
          weight = 180,
@@ -16308,7 +16308,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fried_potato",
       },
       cyber_snack = {
-         legacy_id = 499,
+         integer_id = 499,
          image = 519,
          value = 750,
          weight = 500,
@@ -16340,7 +16340,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cyber_snack",
       },
       scroll_of_inferior_material = {
-         legacy_id = 500,
+         integer_id = 500,
          image = 470,
          value = 600,
          weight = 20,
@@ -16373,7 +16373,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_inferior_material",
       },
       scroll_of_change_material = {
-         legacy_id = 501,
+         integer_id = 501,
          image = 470,
          value = 5000,
          weight = 20,
@@ -16406,7 +16406,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_change_material",
       },
       scroll_of_superior_material = {
-         legacy_id = 502,
+         integer_id = 502,
          image = 470,
          value = 20000,
          weight = 20,
@@ -16439,7 +16439,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_superior_material",
       },
       figurine = {
-         legacy_id = 503,
+         integer_id = 503,
          image = 531,
          value = 1000,
          weight = 2500,
@@ -16471,7 +16471,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.figurine",
       },
       card = {
-         legacy_id = 504,
+         integer_id = 504,
          image = 528,
          value = 500,
          weight = 200,
@@ -16503,7 +16503,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.card",
       },
       little_sisters_diary = {
-         legacy_id = 505,
+         integer_id = 505,
          image = 429,
          value = 8000,
          weight = 380,
@@ -16536,7 +16536,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.little_sisters_diary",
       },
       scroll_of_enchant_weapon = {
-         legacy_id = 506,
+         integer_id = 506,
          image = 470,
          value = 8000,
          weight = 20,
@@ -16569,7 +16569,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_enchant_weapon",
       },
       scroll_of_greater_enchant_weapon = {
-         legacy_id = 507,
+         integer_id = 507,
          image = 470,
          value = 14000,
          weight = 20,
@@ -16602,7 +16602,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_greater_enchant_weapon",
       },
       scroll_of_enchant_armor = {
-         legacy_id = 508,
+         integer_id = 508,
          image = 470,
          value = 8000,
          weight = 20,
@@ -16635,7 +16635,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_enchant_armor",
       },
       scroll_of_greater_enchant_armor = {
-         legacy_id = 509,
+         integer_id = 509,
          image = 470,
          value = 14000,
          weight = 20,
@@ -16668,7 +16668,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_greater_enchant_armor",
       },
       heir_trunk = {
-         legacy_id = 510,
+         integer_id = 510,
          image = 253,
          value = 4500,
          weight = 20000,
@@ -16700,7 +16700,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.heir_trunk",
       },
       deed_of_heirship = {
-         legacy_id = 511,
+         integer_id = 511,
          image = 308,
          value = 10000,
          weight = 500,
@@ -16732,7 +16732,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_heirship",
       },
       laser_gun = {
-         legacy_id = 512,
+         integer_id = 512,
          image = 520,
          value = 1500,
          weight = 1200,
@@ -16765,7 +16765,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.laser_gun",
       },
       energy_cell = {
-         legacy_id = 513,
+         integer_id = 513,
          image = 521,
          value = 150,
          weight = 800,
@@ -16798,7 +16798,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.energy_cell",
       },
       rail_gun = {
-         legacy_id = 514,
+         integer_id = 514,
          image = 520,
          value = 60000,
          weight = 8500,
@@ -16831,7 +16831,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rail_gun",
       },
       scroll_of_recharge = {
-         legacy_id = 515,
+         integer_id = 515,
          image = 470,
          value = 2500,
          weight = 20,
@@ -16864,7 +16864,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_recharge",
       },
       bottle_of_water = {
-         legacy_id = 516,
+         integer_id = 516,
          image = 354,
          value = 280,
          weight = 50,
@@ -16896,7 +16896,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_water",
       },
       rod_of_change_creature = {
-         legacy_id = 517,
+         integer_id = 517,
          image = 471,
          value = 4500,
          weight = 800,
@@ -16929,7 +16929,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_change_creature",
       },
       rod_of_alchemy = {
-         legacy_id = 518,
+         integer_id = 518,
          image = 471,
          value = 6000,
          weight = 800,
@@ -16962,7 +16962,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_alchemy",
       },
       bottle_of_dye = {
-         legacy_id = 519,
+         integer_id = 519,
          image = 354,
          value = 500,
          weight = 120,
@@ -16995,7 +16995,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_dye",
       },
       wing = {
-         legacy_id = 520,
+         integer_id = 520,
          image = 522,
          value = 4500,
          weight = 500,
@@ -17028,7 +17028,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wing",
       },
       deed_of_museum = {
-         legacy_id = 521,
+         integer_id = 521,
          image = 308,
          value = 140000,
          weight = 500,
@@ -17061,7 +17061,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_museum",
       },
       deed_of_shop = {
-         legacy_id = 522,
+         integer_id = 522,
          image = 308,
          value = 200000,
          weight = 500,
@@ -17094,7 +17094,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_shop",
       },
       tree_of_beech = {
-         legacy_id = 523,
+         integer_id = 523,
          image = 527,
          value = 700,
          weight = 45000,
@@ -17126,7 +17126,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_beech",
       },
       tree_of_cedar = {
-         legacy_id = 524,
+         integer_id = 524,
          image = 593,
          value = 500,
          weight = 38000,
@@ -17158,7 +17158,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_cedar",
       },
       tree_of_fruitless = {
-         legacy_id = 525,
+         integer_id = 525,
          image = 592,
          value = 500,
          weight = 35000,
@@ -17190,7 +17190,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_fruitless",
       },
       tree_of_fruits = {
-         legacy_id = 526,
+         integer_id = 526,
          image = 591,
          value = 2000,
          weight = 42000,
@@ -17222,7 +17222,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_fruits",
       },
       dead_tree = {
-         legacy_id = 527,
+         integer_id = 527,
          image = 590,
          value = 500,
          weight = 20000,
@@ -17254,7 +17254,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dead_tree",
       },
       tree_of_zelkova = {
-         legacy_id = 528,
+         integer_id = 528,
          image = 589,
          value = 800,
          weight = 28000,
@@ -17286,7 +17286,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_zelkova",
       },
       tree_of_palm = {
-         legacy_id = 529,
+         integer_id = 529,
          image = 588,
          value = 1000,
          weight = 39000,
@@ -17318,7 +17318,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_palm",
       },
       tree_of_ash = {
-         legacy_id = 530,
+         integer_id = 530,
          image = 587,
          value = 900,
          weight = 28000,
@@ -17350,7 +17350,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_ash",
       },
       furnance = {
-         legacy_id = 531,
+         integer_id = 531,
          image = 583,
          value = 8500,
          weight = 68000,
@@ -17382,7 +17382,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.furnance",
       },
       fireplace = {
-         legacy_id = 532,
+         integer_id = 532,
          image = 584,
          value = 9400,
          weight = 45000,
@@ -17414,7 +17414,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fireplace",
       },
       stove = {
-         legacy_id = 533,
+         integer_id = 533,
          image = 581,
          value = 7500,
          weight = 85000,
@@ -17446,7 +17446,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stove",
       },
       giant_foliage_plant = {
-         legacy_id = 534,
+         integer_id = 534,
          image = 582,
          value = 4500,
          weight = 15000,
@@ -17478,7 +17478,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.giant_foliage_plant",
       },
       big_table = {
-         legacy_id = 535,
+         integer_id = 535,
          image = 83,
          value = 2400,
          weight = 5800,
@@ -17510,7 +17510,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.big_table",
       },
       painting_of_madam = {
-         legacy_id = 536,
+         integer_id = 536,
          image = 81,
          value = 8500,
          weight = 2000,
@@ -17542,7 +17542,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.painting_of_madam",
       },
       painting_of_landscape = {
-         legacy_id = 537,
+         integer_id = 537,
          image = 92,
          value = 8200,
          weight = 500,
@@ -17574,7 +17574,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.painting_of_landscape",
       },
       painting_of_sunflower = {
-         legacy_id = 538,
+         integer_id = 538,
          image = 131,
          value = 12000,
          weight = 450,
@@ -17606,7 +17606,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.painting_of_sunflower",
       },
       statue_of_cat = {
-         legacy_id = 539,
+         integer_id = 539,
          image = 578,
          value = 25000,
          weight = 48000,
@@ -17638,7 +17638,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_cat",
       },
       black_crystal = {
-         legacy_id = 540,
+         integer_id = 540,
          image = 130,
          value = 7000,
          weight = 2500,
@@ -17670,7 +17670,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.black_crystal",
       },
       snow_man = {
-         legacy_id = 541,
+         integer_id = 541,
          image = 134,
          value = 200,
          weight = 8500,
@@ -17702,7 +17702,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.snow_man",
       },
       deed_of_farm = {
-         legacy_id = 542,
+         integer_id = 542,
          image = 308,
          value = 45000,
          weight = 500,
@@ -17735,7 +17735,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_farm",
       },
       deed_of_storage_house = {
-         legacy_id = 543,
+         integer_id = 543,
          image = 308,
          value = 10000,
          weight = 500,
@@ -17768,7 +17768,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_storage_house",
       },
       disc = {
-         legacy_id = 544,
+         integer_id = 544,
          image = 516,
          value = 1000,
          weight = 500,
@@ -17801,7 +17801,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.disc",
       },
       rod_of_wall_creation = {
-         legacy_id = 545,
+         integer_id = 545,
          image = 471,
          value = 4000,
          weight = 800,
@@ -17834,7 +17834,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_wall_creation",
       },
       spellbook_of_wall_creation = {
-         legacy_id = 546,
+         integer_id = 546,
          image = 429,
          value = 6800,
          weight = 380,
@@ -17867,7 +17867,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_wall_creation",
       },
       salary_chest = {
-         legacy_id = 547,
+         integer_id = 547,
          image = 325,
          value = 6400,
          weight = 20000,
@@ -17899,7 +17899,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.salary_chest",
       },
       spellbook_of_healing_rain = {
-         legacy_id = 548,
+         integer_id = 548,
          image = 429,
          value = 9500,
          weight = 380,
@@ -17932,7 +17932,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_healing_rain",
       },
       scroll_of_healing_rain = {
-         legacy_id = 549,
+         integer_id = 549,
          image = 470,
          value = 3500,
          weight = 20,
@@ -17965,7 +17965,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_healing_rain",
       },
       spellbook_of_healing_hands = {
-         legacy_id = 550,
+         integer_id = 550,
          image = 429,
          value = 5800,
          weight = 380,
@@ -17998,7 +17998,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_healing_hands",
       },
       rod_of_healing_hands = {
-         legacy_id = 551,
+         integer_id = 551,
          image = 471,
          value = 5600,
          weight = 800,
@@ -18031,7 +18031,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_healing_hands",
       },
       feather = {
-         legacy_id = 552,
+         integer_id = 552,
          image = 326,
          value = 18000,
          weight = 500,
@@ -18064,7 +18064,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.feather",
       },
       gem_seed = {
-         legacy_id = 553,
+         integer_id = 553,
          image = 323,
          value = 4500,
          weight = 40,
@@ -18098,7 +18098,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gem_seed",
       },
       magical_seed = {
-         legacy_id = 554,
+         integer_id = 554,
          image = 323,
          value = 3500,
          weight = 40,
@@ -18132,7 +18132,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.magical_seed",
       },
       shelter = {
-         legacy_id = 555,
+         integer_id = 555,
          image = 330,
          value = 6500,
          weight = 12500,
@@ -18164,7 +18164,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shelter",
       },
       seven_league_boots = {
-         legacy_id = 556,
+         integer_id = 556,
          image = 460,
          value = 24000,
          weight = 300,
@@ -18197,7 +18197,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.seven_league_boots",
       },
       vindale_cloak = {
-         legacy_id = 557,
+         integer_id = 557,
          image = 422,
          value = 18000,
          weight = 400,
@@ -18230,7 +18230,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.vindale_cloak",
       },
       aurora_ring = {
-         legacy_id = 558,
+         integer_id = 558,
          image = 489,
          value = 17000,
          weight = 50,
@@ -18263,7 +18263,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.aurora_ring",
       },
       potion_of_cure_corruption = {
-         legacy_id = 559,
+         integer_id = 559,
          image = 354,
          value = 100000,
          weight = 120,
@@ -18296,7 +18296,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_cure_corruption",
       },
       masters_delivery_chest = {
-         legacy_id = 560,
+         integer_id = 560,
          image = 331,
          value = 380,
          weight = 20000,
@@ -18328,7 +18328,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.masters_delivery_chest",
       },
       shop_strongbox = {
-         legacy_id = 561,
+         integer_id = 561,
          image = 197,
          value = 7200,
          weight = 20000,
@@ -18360,7 +18360,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shop_strongbox",
       },
       register = {
-         legacy_id = 562,
+         integer_id = 562,
          image = 332,
          value = 1500,
          weight = 20000,
@@ -18392,7 +18392,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.register",
       },
       textbook = {
-         legacy_id = 563,
+         integer_id = 563,
          image = 334,
          value = 4800,
          weight = 80,
@@ -18424,7 +18424,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.textbook",
       },
       spellbook_of_acid_ground = {
-         legacy_id = 564,
+         integer_id = 564,
          image = 429,
          value = 7500,
          weight = 380,
@@ -18457,7 +18457,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_acid_ground",
       },
       rod_of_acid_ground = {
-         legacy_id = 565,
+         integer_id = 565,
          image = 471,
          value = 4400,
          weight = 800,
@@ -18490,7 +18490,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_acid_ground",
       },
       acidproof_liquid = {
-         legacy_id = 566,
+         integer_id = 566,
          image = 354,
          value = 1900,
          weight = 120,
@@ -18523,7 +18523,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.acidproof_liquid",
       },
       fireproof_blanket = {
-         legacy_id = 567,
+         integer_id = 567,
          image = 335,
          value = 2400,
          weight = 800,
@@ -18556,7 +18556,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fireproof_blanket",
       },
       coldproof_blanket = {
-         legacy_id = 568,
+         integer_id = 568,
          image = 335,
          value = 2400,
          weight = 800,
@@ -18589,7 +18589,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.coldproof_blanket",
       },
       spellbook_of_fire_wall = {
-         legacy_id = 569,
+         integer_id = 569,
          image = 429,
          value = 5800,
          weight = 380,
@@ -18622,7 +18622,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_fire_wall",
       },
       rod_of_fire_wall = {
-         legacy_id = 570,
+         integer_id = 570,
          image = 471,
          value = 3800,
          weight = 800,
@@ -18655,7 +18655,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_fire_wall",
       },
       jerky = {
-         legacy_id = 571,
+         integer_id = 571,
          image = 337,
          value = 640,
          weight = 450,
@@ -18687,7 +18687,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.jerky",
       },
       deed_of_ranch = {
-         legacy_id = 572,
+         integer_id = 572,
          image = 308,
          value = 80000,
          weight = 500,
@@ -18720,7 +18720,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_ranch",
       },
       egg = {
-         legacy_id = 573,
+         integer_id = 573,
          image = 338,
          value = 500,
          weight = 300,
@@ -18752,7 +18752,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.egg",
       },
       bottle_of_milk = {
-         legacy_id = 574,
+         integer_id = 574,
          image = 339,
          value = 1000,
          weight = 300,
@@ -18784,7 +18784,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_milk",
       },
       shit = {
-         legacy_id = 575,
+         integer_id = 575,
          image = 340,
          value = 25,
          weight = 80,
@@ -18816,7 +18816,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shit",
       },
       playback_disc = {
-         legacy_id = 576,
+         integer_id = 576,
          image = 516,
          value = 1000,
          weight = 500,
@@ -18849,7 +18849,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.playback_disc",
       },
       molotov = {
-         legacy_id = 577,
+         integer_id = 577,
          image = 223,
          value = 400,
          weight = 50,
@@ -18882,7 +18882,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.molotov",
       },
       kitty_bank = {
-         legacy_id = 578,
+         integer_id = 578,
          image = 348,
          value = 1400,
          weight = 500,
@@ -18914,7 +18914,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kitty_bank",
       },
       freezer = {
-         legacy_id = 579,
+         integer_id = 579,
          image = 577,
          value = 3800,
          weight = 15000,
@@ -18946,7 +18946,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.freezer",
       },
       modern_rack = {
-         legacy_id = 580,
+         integer_id = 580,
          image = 236,
          value = 1600,
          weight = 10200,
@@ -18978,7 +18978,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.modern_rack",
       },
       rod_of_make_door = {
-         legacy_id = 581,
+         integer_id = 581,
          image = 471,
          value = 2000,
          weight = 800,
@@ -19011,7 +19011,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rod_of_make_door",
       },
       spellbook_of_make_door = {
-         legacy_id = 582,
+         integer_id = 582,
          image = 429,
          value = 2000,
          weight = 380,
@@ -19044,7 +19044,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_make_door",
       },
       torch = {
-         legacy_id = 583,
+         integer_id = 583,
          image = 352,
          value = 200,
          weight = 150,
@@ -19076,7 +19076,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.torch",
       },
       candle = {
-         legacy_id = 584,
+         integer_id = 584,
          image = 353,
          value = 1500,
          weight = 200,
@@ -19109,7 +19109,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.candle",
       },
       fancy_lamp = {
-         legacy_id = 585,
+         integer_id = 585,
          image = 364,
          value = 4500,
          weight = 1500,
@@ -19141,7 +19141,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fancy_lamp",
       },
       modern_lamp_a = {
-         legacy_id = 586,
+         integer_id = 586,
          image = 576,
          value = 7200,
          weight = 250000,
@@ -19173,7 +19173,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.modern_lamp_a",
       },
       handful_of_snow = {
-         legacy_id = 587,
+         integer_id = 587,
          image = 365,
          value = 10,
          weight = 50,
@@ -19205,7 +19205,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.handful_of_snow",
       },
       tree_of_naked = {
-         legacy_id = 588,
+         integer_id = 588,
          image = 575,
          value = 500,
          weight = 14000,
@@ -19237,7 +19237,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_naked",
       },
       tree_of_fir = {
-         legacy_id = 589,
+         integer_id = 589,
          image = 574,
          value = 1800,
          weight = 28000,
@@ -19269,7 +19269,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tree_of_fir",
       },
       snow_scarecrow = {
-         legacy_id = 590,
+         integer_id = 590,
          image = 367,
          value = 10,
          weight = 4800,
@@ -19302,7 +19302,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.snow_scarecrow",
       },
       mini_snow_man = {
-         legacy_id = 591,
+         integer_id = 591,
          image = 366,
          value = 400,
          weight = 8500,
@@ -19334,7 +19334,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mini_snow_man",
       },
       snow_barrel = {
-         legacy_id = 592,
+         integer_id = 592,
          image = 368,
          value = 180,
          weight = 3400,
@@ -19366,7 +19366,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.snow_barrel",
       },
       modern_lamp_b = {
-         legacy_id = 593,
+         integer_id = 593,
          image = 573,
          value = 7200,
          weight = 250000,
@@ -19398,7 +19398,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.modern_lamp_b",
       },
       statue_of_holy_cross = {
-         legacy_id = 594,
+         integer_id = 594,
          image = 572,
          value = 18000,
          weight = 12000,
@@ -19430,7 +19430,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_holy_cross",
       },
       pillar = {
-         legacy_id = 595,
+         integer_id = 595,
          image = 571,
          value = 2500,
          weight = 16000,
@@ -19462,7 +19462,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pillar",
       },
       stained_glass_window = {
-         legacy_id = 596,
+         integer_id = 596,
          image = 369,
          value = 1800,
          weight = 4800,
@@ -19494,7 +19494,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stained_glass_window",
       },
       cargo_christmas_tree = {
-         legacy_id = 597,
+         integer_id = 597,
          image = 570,
          value = 3500,
          weight = -60000,
@@ -19526,7 +19526,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_christmas_tree",
       },
       cargo_snow_man = {
-         legacy_id = 598,
+         integer_id = 598,
          image = 134,
          value = 1200,
          weight = -11000,
@@ -19558,7 +19558,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_snow_man",
       },
       christmas_tree = {
-         legacy_id = 599,
+         integer_id = 599,
          image = 570,
          value = 4800,
          weight = 35000,
@@ -19590,7 +19590,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.christmas_tree",
       },
       giants_shackle = {
-         legacy_id = 600,
+         integer_id = 600,
          image = 370,
          value = 1800,
          weight = 150000,
@@ -19622,7 +19622,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.giants_shackle",
       },
       empty_bottle = {
-         legacy_id = 601,
+         integer_id = 601,
          image = 371,
          value = 100,
          weight = 120,
@@ -19654,7 +19654,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.empty_bottle",
       },
       holy_well = {
-         legacy_id = 602,
+         integer_id = 602,
          image = 372,
          value = 185000,
          weight = 350000,
@@ -19686,7 +19686,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.holy_well",
       },
       presidents_chair = {
-         legacy_id = 603,
+         integer_id = 603,
          image = 373,
          value = 12000,
          weight = 2400,
@@ -19718,7 +19718,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.presidents_chair",
       },
       green_plant = {
-         legacy_id = 604,
+         integer_id = 604,
          image = 374,
          value = 400,
          weight = 800,
@@ -19750,7 +19750,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.green_plant",
       },
       money_tree = {
-         legacy_id = 605,
+         integer_id = 605,
          image = 375,
          value = 2200,
          weight = 1200,
@@ -19782,7 +19782,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.money_tree",
       },
       barbecue_set = {
-         legacy_id = 606,
+         integer_id = 606,
          image = 376,
          value = 9500,
          weight = 8250,
@@ -19814,7 +19814,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.barbecue_set",
       },
       giant_cactus = {
-         legacy_id = 607,
+         integer_id = 607,
          image = 377,
          value = 2600,
          weight = 4200,
@@ -19846,7 +19846,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.giant_cactus",
       },
       square_window = {
-         legacy_id = 608,
+         integer_id = 608,
          image = 378,
          value = 500,
          weight = 1500,
@@ -19878,7 +19878,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.square_window",
       },
       window = {
-         legacy_id = 609,
+         integer_id = 609,
          image = 379,
          value = 700,
          weight = 1600,
@@ -19910,7 +19910,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.window",
       },
       triangle_plant = {
-         legacy_id = 610,
+         integer_id = 610,
          image = 380,
          value = 1500,
          weight = 5600,
@@ -19942,7 +19942,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.triangle_plant",
       },
       house_board = {
-         legacy_id = 611,
+         integer_id = 611,
          image = 107,
          value = 3500,
          weight = 1200,
@@ -19974,7 +19974,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.house_board",
       },
       nice_window = {
-         legacy_id = 612,
+         integer_id = 612,
          image = 382,
          value = 1000,
          weight = 2000,
@@ -20006,7 +20006,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.nice_window",
       },
       kings_bed = {
-         legacy_id = 613,
+         integer_id = 613,
          image = 569,
          value = 35000,
          weight = 24000,
@@ -20038,7 +20038,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kings_bed",
       },
       flower_arch = {
-         legacy_id = 614,
+         integer_id = 614,
          image = 568,
          value = 2000,
          weight = 8000,
@@ -20070,7 +20070,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.flower_arch",
       },
       bill = {
-         legacy_id = 615,
+         integer_id = 615,
          image = 383,
          value = 100,
          weight = 100,
@@ -20102,7 +20102,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bill",
       },
       tax_masters_tax_box = {
-         legacy_id = 616,
+         integer_id = 616,
          image = 384,
          value = 14500,
          weight = 6500,
@@ -20134,7 +20134,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tax_masters_tax_box",
       },
       bait = {
-         legacy_id = 617,
+         integer_id = 617,
          image = 569,
          value = 1000,
          weight = 250,
@@ -20166,7 +20166,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bait",
       },
       fish_a = {
-         legacy_id = 618,
+         integer_id = 618,
          image = 310,
          value = 1200,
          weight = 1250,
@@ -20199,7 +20199,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fish_a",
       },
       fish_b = {
-         legacy_id = 619,
+         integer_id = 619,
          image = 310,
          value = 1200,
          weight = 1250,
@@ -20231,7 +20231,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fish_b",
       },
       love_potion = {
-         legacy_id = 620,
+         integer_id = 620,
          image = 354,
          value = 4500,
          weight = 50,
@@ -20263,7 +20263,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.love_potion",
       },
       treasure_map = {
-         legacy_id = 621,
+         integer_id = 621,
          image = 252,
          value = 10000,
          weight = 20,
@@ -20295,7 +20295,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.treasure_map",
       },
       small_medal = {
-         legacy_id = 622,
+         integer_id = 622,
          image = 165,
          value = 1,
          weight = 1,
@@ -20327,7 +20327,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.small_medal",
       },
       cat_sisters_diary = {
-         legacy_id = 623,
+         integer_id = 623,
          image = 429,
          value = 15000,
          weight = 380,
@@ -20360,7 +20360,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cat_sisters_diary",
       },
       girls_diary = {
-         legacy_id = 624,
+         integer_id = 624,
          image = 429,
          value = 10000,
          weight = 380,
@@ -20393,7 +20393,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.girls_diary",
       },
       shrine_gate = {
-         legacy_id = 625,
+         integer_id = 625,
          image = 627,
          value = 7500,
          weight = 8000,
@@ -20425,7 +20425,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shrine_gate",
       },
       bottle_of_hermes_blood = {
-         legacy_id = 626,
+         integer_id = 626,
          image = 354,
          value = 50000,
          weight = 120,
@@ -20458,7 +20458,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_hermes_blood",
       },
       sages_helm = {
-         legacy_id = 627,
+         integer_id = 627,
          image = 480,
          value = 40000,
          weight = 1500,
@@ -20492,7 +20492,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sages_helm",
       },
       spellbook_of_incognito = {
-         legacy_id = 628,
+         integer_id = 628,
          image = 429,
          value = 7000,
          weight = 380,
@@ -20525,7 +20525,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_incognito",
       },
       disguise_set = {
-         legacy_id = 629,
+         integer_id = 629,
          image = 628,
          value = 7200,
          weight = 3500,
@@ -20557,7 +20557,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.disguise_set",
       },
       material_kit = {
-         legacy_id = 630,
+         integer_id = 630,
          image = 629,
          value = 2500,
          weight = 5000,
@@ -20589,7 +20589,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.material_kit",
       },
       moon_gate = {
-         legacy_id = 631,
+         integer_id = 631,
          image = 566,
          value = 50,
          weight = 5000000,
@@ -20621,7 +20621,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.moon_gate",
       },
       flying_scroll = {
-         legacy_id = 632,
+         integer_id = 632,
          image = 470,
          value = 40000,
          weight = 5,
@@ -20654,7 +20654,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.flying_scroll",
       },
       panty = {
-         legacy_id = 633,
+         integer_id = 633,
          image = 630,
          value = 25000,
          weight = 500,
@@ -20687,7 +20687,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.panty",
       },
       leash = {
-         legacy_id = 634,
+         integer_id = 634,
          image = 631,
          value = 1200,
          weight = 1200,
@@ -20719,7 +20719,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.leash",
       },
       mine = {
-         legacy_id = 635,
+         integer_id = 635,
          image = 632,
          value = 7500,
          weight = 9800,
@@ -20751,7 +20751,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mine",
       },
       lockpick = {
-         legacy_id = 636,
+         integer_id = 636,
          image = 634,
          value = 800,
          weight = 400,
@@ -20783,7 +20783,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lockpick",
       },
       skeleton_key = {
-         legacy_id = 637,
+         integer_id = 637,
          image = 633,
          value = 150000,
          weight = 400,
@@ -20815,7 +20815,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.skeleton_key",
       },
       scroll_of_escape = {
-         legacy_id = 638,
+         integer_id = 638,
          image = 470,
          value = 450,
          weight = 20,
@@ -20848,7 +20848,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_escape",
       },
       happy_apple = {
-         legacy_id = 639,
+         integer_id = 639,
          image = 172,
          value = 100000,
          weight = 720,
@@ -20881,7 +20881,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.happy_apple",
       },
       unicorn_horn = {
-         legacy_id = 640,
+         integer_id = 640,
          image = 635,
          value = 8000,
          weight = 2000,
@@ -20913,7 +20913,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.unicorn_horn",
       },
       cooler_box = {
-         legacy_id = 641,
+         integer_id = 641,
          image = 636,
          value = 7500,
          weight = 2500,
@@ -20945,7 +20945,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cooler_box",
       },
       rice_barrel = {
-         legacy_id = 642,
+         integer_id = 642,
          image = 637,
          value = 500,
          weight = 4800,
@@ -20977,7 +20977,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rice_barrel",
       },
       eastern_bed = {
-         legacy_id = 643,
+         integer_id = 643,
          image = 638,
          value = 2500,
          weight = 2000,
@@ -21009,7 +21009,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.eastern_bed",
       },
       decorated_window = {
-         legacy_id = 644,
+         integer_id = 644,
          image = 639,
          value = 2400,
          weight = 2000,
@@ -21041,7 +21041,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.decorated_window",
       },
       king_drawer = {
-         legacy_id = 645,
+         integer_id = 645,
          image = 640,
          value = 9500,
          weight = 11000,
@@ -21073,7 +21073,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.king_drawer",
       },
       menu_board = {
-         legacy_id = 646,
+         integer_id = 646,
          image = 641,
          value = 1800,
          weight = 4500,
@@ -21105,7 +21105,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.menu_board",
       },
       black_board = {
-         legacy_id = 647,
+         integer_id = 647,
          image = 642,
          value = 5000,
          weight = 7800,
@@ -21137,7 +21137,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.black_board",
       },
       sofa = {
-         legacy_id = 648,
+         integer_id = 648,
          image = 643,
          value = 2500,
          weight = 5000,
@@ -21170,7 +21170,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sofa",
       },
       flowerbed = {
-         legacy_id = 649,
+         integer_id = 649,
          image = 644,
          value = 1500,
          weight = 4000,
@@ -21203,7 +21203,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.flowerbed",
       },
       toilet = {
-         legacy_id = 650,
+         integer_id = 650,
          image = 645,
          value = 1000,
          weight = 12000,
@@ -21236,7 +21236,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.toilet",
       },
       craft_cupboard = {
-         legacy_id = 651,
+         integer_id = 651,
          image = 646,
          value = 4800,
          weight = 8400,
@@ -21268,7 +21268,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.craft_cupboard",
       },
       sink = {
-         legacy_id = 652,
+         integer_id = 652,
          image = 647,
          value = 3500,
          weight = 15000,
@@ -21300,7 +21300,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sink",
       },
       junk = {
-         legacy_id = 653,
+         integer_id = 653,
          image = 648,
          value = 600,
          weight = 150000,
@@ -21332,7 +21332,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.junk",
       },
       double_bed = {
-         legacy_id = 654,
+         integer_id = 654,
          image = 261,
          value = 7500,
          weight = 16000,
@@ -21365,7 +21365,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.double_bed",
       },
       hero_cheese = {
-         legacy_id = 655,
+         integer_id = 655,
          image = 168,
          value = 100000,
          weight = 500,
@@ -21398,7 +21398,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.hero_cheese",
       },
       eastern_lamp = {
-         legacy_id = 656,
+         integer_id = 656,
          image = 650,
          value = 3000,
          weight = 7900,
@@ -21430,7 +21430,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.eastern_lamp",
       },
       eastern_window = {
-         legacy_id = 657,
+         integer_id = 657,
          image = 651,
          value = 3500,
          weight = 1200,
@@ -21462,7 +21462,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.eastern_window",
       },
       chochin = {
-         legacy_id = 658,
+         integer_id = 658,
          image = 652,
          value = 2500,
          weight = 500,
@@ -21494,7 +21494,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.chochin",
       },
       partition = {
-         legacy_id = 659,
+         integer_id = 659,
          image = 653,
          value = 1000,
          weight = 1000,
@@ -21527,7 +21527,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.partition",
       },
       spellbook_of_darkness_arrow = {
-         legacy_id = 660,
+         integer_id = 660,
          image = 429,
          value = 3500,
          weight = 380,
@@ -21560,7 +21560,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_darkness_arrow",
       },
       dal_i_thalion = {
-         legacy_id = 661,
+         integer_id = 661,
          image = 459,
          value = 25000,
          weight = 650,
@@ -21594,7 +21594,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dal_i_thalion",
       },
       magic_fruit = {
-         legacy_id = 662,
+         integer_id = 662,
          image = 189,
          value = 100000,
          weight = 440,
@@ -21627,7 +21627,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.magic_fruit",
       },
       monster_heart = {
-         legacy_id = 663,
+         integer_id = 663,
          image = 654,
          value = 25000,
          weight = 2500,
@@ -21659,7 +21659,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.monster_heart",
       },
       speed_ring = {
-         legacy_id = 664,
+         integer_id = 664,
          image = 489,
          value = 50000,
          weight = 50,
@@ -21692,7 +21692,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.speed_ring",
       },
       statue_of_opatos = {
-         legacy_id = 665,
+         integer_id = 665,
          image = 680,
          value = 100000,
          weight = 15000,
@@ -21724,7 +21724,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_opatos",
       },
       statue_of_lulwy = {
-         legacy_id = 666,
+         integer_id = 666,
          image = 692,
          value = 100000,
          weight = 14000,
@@ -21756,7 +21756,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_lulwy",
       },
       sisters_love_fueled_lunch = {
-         legacy_id = 667,
+         integer_id = 667,
          image = 391,
          value = 900,
          weight = 500,
@@ -21788,7 +21788,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sisters_love_fueled_lunch",
       },
       book_of_rachel = {
-         legacy_id = 668,
+         integer_id = 668,
          image = 333,
          value = 4000,
          weight = 80,
@@ -21820,7 +21820,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.book_of_rachel",
       },
       cargo_art = {
-         legacy_id = 669,
+         integer_id = 669,
          image = 92,
          value = 3800,
          weight = -35000,
@@ -21852,7 +21852,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_art",
       },
       cargo_canvas = {
-         legacy_id = 670,
+         integer_id = 670,
          image = 132,
          value = 750,
          weight = -7000,
@@ -21884,7 +21884,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.cargo_canvas",
       },
       nuclear_bomb = {
-         legacy_id = 671,
+         integer_id = 671,
          image = 632,
          value = 10000,
          weight = 120000,
@@ -21916,7 +21916,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.nuclear_bomb",
       },
       secret_treasure = {
-         legacy_id = 672,
+         integer_id = 672,
          image = 656,
          value = 5000,
          weight = 1000,
@@ -21948,7 +21948,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.secret_treasure",
       },
       wind_bow = {
-         legacy_id = 673,
+         integer_id = 673,
          image = 404,
          value = 35000,
          weight = 800,
@@ -21982,7 +21982,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.wind_bow",
       },
       winchester_premium = {
-         legacy_id = 674,
+         integer_id = 674,
          image = 514,
          value = 35000,
          weight = 2800,
@@ -22016,7 +22016,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.winchester_premium",
       },
       kumiromi_scythe = {
-         legacy_id = 675,
+         integer_id = 675,
          image = 421,
          value = 35000,
          weight = 850,
@@ -22050,7 +22050,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kumiromi_scythe",
       },
       elemental_staff = {
-         legacy_id = 676,
+         integer_id = 676,
          image = 425,
          value = 35000,
          weight = 900,
@@ -22084,7 +22084,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.elemental_staff",
       },
       holy_lance = {
-         legacy_id = 677,
+         integer_id = 677,
          image = 415,
          value = 35000,
          weight = 4400,
@@ -22117,7 +22117,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.holy_lance",
       },
       lucky_dagger = {
-         legacy_id = 678,
+         integer_id = 678,
          image = 400,
          value = 35000,
          weight = 400,
@@ -22151,7 +22151,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lucky_dagger",
       },
       gaia_hammer = {
-         legacy_id = 679,
+         integer_id = 679,
          image = 504,
          value = 35000,
          weight = 6500,
@@ -22185,7 +22185,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gaia_hammer",
       },
       lulwys_gem_stone_of_god_speed = {
-         legacy_id = 680,
+         integer_id = 680,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -22218,7 +22218,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lulwys_gem_stone_of_god_speed",
       },
       jures_gem_stone_of_holy_rain = {
-         legacy_id = 681,
+         integer_id = 681,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -22251,7 +22251,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.jures_gem_stone_of_holy_rain",
       },
       kumiromis_gem_stone_of_rejuvenation = {
-         legacy_id = 682,
+         integer_id = 682,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -22284,7 +22284,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kumiromis_gem_stone_of_rejuvenation",
       },
       gem_stone_of_mani = {
-         legacy_id = 683,
+         integer_id = 683,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -22317,7 +22317,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gem_stone_of_mani",
       },
       gene_machine = {
-         legacy_id = 684,
+         integer_id = 684,
          image = 691,
          value = 20000,
          weight = 25000,
@@ -22349,7 +22349,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gene_machine",
       },
       monster_ball = {
-         legacy_id = 685,
+         integer_id = 685,
          image = 658,
          value = 4500,
          weight = 1400,
@@ -22381,7 +22381,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.monster_ball",
       },
       statue_of_jure = {
-         legacy_id = 686,
+         integer_id = 686,
          image = 690,
          value = 100000,
          weight = 12000,
@@ -22413,7 +22413,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_jure",
       },
       ancient_book = {
-         legacy_id = 687,
+         integer_id = 687,
          image = 429,
          value = 2000,
          weight = 380,
@@ -22445,7 +22445,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.ancient_book",
       },
       iron_maiden = {
-         legacy_id = 688,
+         integer_id = 688,
          image = 689,
          value = 7500,
          weight = 26000,
@@ -22477,7 +22477,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.iron_maiden",
       },
       guillotine = {
-         legacy_id = 689,
+         integer_id = 689,
          image = 688,
          value = 5000,
          weight = 22000,
@@ -22509,7 +22509,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.guillotine",
       },
       pan_flute = {
-         legacy_id = 690,
+         integer_id = 690,
          image = 392,
          value = 4500,
          weight = 18000,
@@ -22541,7 +22541,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pan_flute",
       },
       lute = {
-         legacy_id = 691,
+         integer_id = 691,
          image = 393,
          value = 3800,
          weight = 8500,
@@ -22573,7 +22573,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lute",
       },
       harmonica = {
-         legacy_id = 692,
+         integer_id = 692,
          image = 394,
          value = 1500,
          weight = 850,
@@ -22605,7 +22605,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.harmonica",
       },
       harp = {
-         legacy_id = 693,
+         integer_id = 693,
          image = 395,
          value = 7500,
          weight = 30000,
@@ -22637,7 +22637,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.harp",
       },
       eastern_partition = {
-         legacy_id = 694,
+         integer_id = 694,
          image = 659,
          value = 2000,
          weight = 1200,
@@ -22669,7 +22669,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.eastern_partition",
       },
       axe_of_destruction = {
-         legacy_id = 695,
+         integer_id = 695,
          image = 399,
          value = 50000,
          weight = 14000,
@@ -22703,7 +22703,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.axe_of_destruction",
       },
       spellbook_of_magic_ball = {
-         legacy_id = 696,
+         integer_id = 696,
          image = 429,
          value = 14200,
          weight = 380,
@@ -22736,7 +22736,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_magic_ball",
       },
       spellbook_of_magic_laser = {
-         legacy_id = 697,
+         integer_id = 697,
          image = 429,
          value = 12500,
          weight = 380,
@@ -22769,7 +22769,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_magic_laser",
       },
       potion_of_salt_solution = {
-         legacy_id = 698,
+         integer_id = 698,
          image = 365,
          value = 10,
          weight = 50,
@@ -22801,7 +22801,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_salt_solution",
       },
       little_ball = {
-         legacy_id = 699,
+         integer_id = 699,
          image = 658,
          value = 10,
          weight = 3000,
@@ -22834,7 +22834,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.little_ball",
       },
       town_book = {
-         legacy_id = 700,
+         integer_id = 700,
          image = 532,
          value = 750,
          weight = 20,
@@ -22866,7 +22866,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.town_book",
       },
       deck = {
-         legacy_id = 701,
+         integer_id = 701,
          image = 533,
          value = 2200,
          weight = 20,
@@ -22898,7 +22898,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deck",
       },
       rabbits_tail = {
-         legacy_id = 702,
+         integer_id = 702,
          image = 301,
          value = 10000,
          weight = 150,
@@ -22931,7 +22931,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.rabbits_tail",
       },
       whistle = {
-         legacy_id = 703,
+         integer_id = 703,
          image = 534,
          value = 1400,
          weight = 20,
@@ -22963,7 +22963,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.whistle",
       },
       vomit = {
-         legacy_id = 704,
+         integer_id = 704,
          image = 535,
          value = 400,
          weight = 100,
@@ -22995,7 +22995,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.vomit",
       },
       beggars_pendant = {
-         legacy_id = 705,
+         integer_id = 705,
          image = 486,
          value = 50,
          weight = 250,
@@ -23028,7 +23028,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.beggars_pendant",
       },
       potion_of_descent = {
-         legacy_id = 706,
+         integer_id = 706,
          image = 354,
          value = 4500,
          weight = 120,
@@ -23061,7 +23061,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_descent",
       },
       stradivarius = {
-         legacy_id = 707,
+         integer_id = 707,
          image = 699,
          value = 35000,
          weight = 4500,
@@ -23093,7 +23093,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.stradivarius",
       },
       book_of_resurrection = {
-         legacy_id = 708,
+         integer_id = 708,
          image = 429,
          value = 6000,
          weight = 380,
@@ -23126,7 +23126,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.book_of_resurrection",
       },
       scroll_of_contingency = {
-         legacy_id = 709,
+         integer_id = 709,
          image = 470,
          value = 3500,
          weight = 20,
@@ -23159,7 +23159,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_contingency",
       },
       spellbook_of_contingency = {
-         legacy_id = 710,
+         integer_id = 710,
          image = 429,
          value = 8500,
          weight = 380,
@@ -23192,7 +23192,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_contingency",
       },
       potion_of_evolution = {
-         legacy_id = 711,
+         integer_id = 711,
          image = 354,
          value = 12000,
          weight = 120,
@@ -23225,7 +23225,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.potion_of_evolution",
       },
       deed_of_dungeon = {
-         legacy_id = 712,
+         integer_id = 712,
          image = 308,
          value = 500000,
          weight = 500,
@@ -23258,7 +23258,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deed_of_dungeon",
       },
       shuriken = {
-         legacy_id = 713,
+         integer_id = 713,
          image = 536,
          value = 750,
          weight = 400,
@@ -23291,7 +23291,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shuriken",
       },
       grenade = {
-         legacy_id = 714,
+         integer_id = 714,
          image = 537,
          value = 550,
          weight = 850,
@@ -23324,7 +23324,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.grenade",
       },
       secret_experience_of_kumiromi = {
-         legacy_id = 715,
+         integer_id = 715,
          image = 657,
          value = 6800,
          weight = 1200,
@@ -23357,7 +23357,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.secret_experience_of_kumiromi",
       },
       vanilla_rock = {
-         legacy_id = 716,
+         integer_id = 716,
          image = 424,
          value = 9500,
          weight = 7500,
@@ -23390,7 +23390,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.vanilla_rock",
       },
       secret_experience_of_lomias = {
-         legacy_id = 717,
+         integer_id = 717,
          image = 657,
          value = 6800,
          weight = 1200,
@@ -23423,7 +23423,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.secret_experience_of_lomias",
       },
       shenas_panty = {
-         legacy_id = 718,
+         integer_id = 718,
          image = 630,
          value = 94000,
          weight = 250,
@@ -23457,7 +23457,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shenas_panty",
       },
       claymore_unique = {
-         legacy_id = 719,
+         integer_id = 719,
          image = 698,
          value = 45000,
          weight = 6500,
@@ -23490,7 +23490,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.claymore_unique",
       },
       happy_bed = {
-         legacy_id = 720,
+         integer_id = 720,
          image = 261,
          value = 25000,
          weight = 31000,
@@ -23523,7 +23523,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.happy_bed",
       },
       statue_of_ehekatl = {
-         legacy_id = 721,
+         integer_id = 721,
          image = 687,
          value = 100000,
          weight = 12000,
@@ -23555,7 +23555,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_ehekatl",
       },
       arbalest = {
-         legacy_id = 722,
+         integer_id = 722,
          image = 486,
          value = 9500,
          weight = 400,
@@ -23589,7 +23589,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.arbalest",
       },
       twin_edge = {
-         legacy_id = 723,
+         integer_id = 723,
          image = 486,
          value = 9500,
          weight = 400,
@@ -23623,7 +23623,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.twin_edge",
       },
       music_ticket = {
-         legacy_id = 724,
+         integer_id = 724,
          image = 538,
          value = 1,
          weight = 1,
@@ -23655,7 +23655,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.music_ticket",
       },
       kill_kill_piano = {
-         legacy_id = 725,
+         integer_id = 725,
          image = 76,
          value = 25000,
          weight = 75000,
@@ -23689,7 +23689,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kill_kill_piano",
       },
       alud = {
-         legacy_id = 726,
+         integer_id = 726,
          image = 393,
          value = 7500,
          weight = 2850,
@@ -23723,7 +23723,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.alud",
       },
       shield_of_thorn = {
-         legacy_id = 727,
+         integer_id = 727,
          image = 453,
          value = 17500,
          weight = 950,
@@ -23757,7 +23757,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.shield_of_thorn",
       },
       crimson_plate = {
-         legacy_id = 728,
+         integer_id = 728,
          image = 474,
          value = 15000,
          weight = 1250,
@@ -23791,7 +23791,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.crimson_plate",
       },
       gift = {
-         legacy_id = 729,
+         integer_id = 729,
          image = 391,
          value = 2500,
          weight = 1000,
@@ -23823,7 +23823,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.gift",
       },
       token_of_friendship = {
-         legacy_id = 730,
+         integer_id = 730,
          image = 538,
          value = 1,
          weight = 1,
@@ -23855,7 +23855,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.token_of_friendship",
       },
       spellbook_of_4_dimensional_pocket = {
-         legacy_id = 731,
+         integer_id = 731,
          image = 429,
          value = 8500,
          weight = 380,
@@ -23888,7 +23888,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_4_dimensional_pocket",
       },
       spellbook_of_harvest = {
-         legacy_id = 732,
+         integer_id = 732,
          image = 429,
          value = 4000,
          weight = 380,
@@ -23921,7 +23921,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.spellbook_of_harvest",
       },
       sand_bag = {
-         legacy_id = 733,
+         integer_id = 733,
          image = 563,
          value = 4800,
          weight = 8500,
@@ -23953,7 +23953,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sand_bag",
       },
       small_gamble_chest = {
-         legacy_id = 734,
+         integer_id = 734,
          image = 220,
          value = 1200,
          weight = 3400,
@@ -23985,7 +23985,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.small_gamble_chest",
       },
       scythe = {
-         legacy_id = 735,
+         integer_id = 735,
          image = 421,
          value = 500,
          weight = 4000,
@@ -24018,7 +24018,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scythe",
       },
       fireproof_liquid = {
-         legacy_id = 736,
+         integer_id = 736,
          image = 354,
          value = 1500,
          weight = 120,
@@ -24051,7 +24051,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fireproof_liquid",
       },
       scroll_of_name = {
-         legacy_id = 737,
+         integer_id = 737,
          image = 470,
          value = 7500,
          weight = 20,
@@ -24084,7 +24084,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.scroll_of_name",
       },
       fortune_cookie = {
-         legacy_id = 738,
+         integer_id = 738,
          image = 539,
          value = 250,
          weight = 50,
@@ -24116,7 +24116,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fortune_cookie",
       },
       frisias_tail = {
-         legacy_id = 739,
+         integer_id = 739,
          image = 425,
          value = 30000,
          weight = 376500,
@@ -24149,7 +24149,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.frisias_tail",
       },
       unknown_shell = {
-         legacy_id = 740,
+         integer_id = 740,
          image = 488,
          value = 1200,
          weight = 150,
@@ -24183,7 +24183,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.unknown_shell",
       },
       hiryu_to = {
-         legacy_id = 741,
+         integer_id = 741,
          image = 501,
          value = 40000,
          weight = 2500,
@@ -24217,7 +24217,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.hiryu_to",
       },
       license_of_the_void_explorer = {
-         legacy_id = 742,
+         integer_id = 742,
          image = 308,
          value = 15000,
          weight = 500,
@@ -24249,7 +24249,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.license_of_the_void_explorer",
       },
       plank_of_carneades = {
-         legacy_id = 743,
+         integer_id = 743,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -24282,7 +24282,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.plank_of_carneades",
       },
       schrodingers_cat = {
-         legacy_id = 744,
+         integer_id = 744,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -24315,7 +24315,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.schrodingers_cat",
       },
       heart = {
-         legacy_id = 745,
+         integer_id = 745,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -24348,7 +24348,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.heart",
       },
       tamers_whip = {
-         legacy_id = 746,
+         integer_id = 746,
          image = 657,
          value = 50000,
          weight = 1200,
@@ -24381,7 +24381,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tamers_whip",
       },
       book_of_bokonon = {
-         legacy_id = 747,
+         integer_id = 747,
          image = 333,
          value = 4000,
          weight = 80,
@@ -24413,7 +24413,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.book_of_bokonon",
       },
       summoning_crystal = {
-         legacy_id = 748,
+         integer_id = 748,
          image = 662,
          value = 4500,
          weight = 7500,
@@ -24445,7 +24445,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.summoning_crystal",
       },
       statue_of_creator = {
-         legacy_id = 749,
+         integer_id = 749,
          image = 686,
          value = 50,
          weight = 15000,
@@ -24477,7 +24477,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_creator",
       },
       upstairs = {
-         legacy_id = 750,
+         integer_id = 750,
          image = 665,
          value = 150000,
          weight = 7500,
@@ -24509,7 +24509,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.upstairs",
       },
       downstairs = {
-         legacy_id = 751,
+         integer_id = 751,
          image = 664,
          value = 150000,
          weight = 7500,
@@ -24541,7 +24541,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.downstairs",
       },
       new_years_gift = {
-         legacy_id = 752,
+         integer_id = 752,
          image = 666,
          value = 1650,
          weight = 80,
@@ -24573,7 +24573,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.new_years_gift",
       },
       kotatsu = {
-         legacy_id = 753,
+         integer_id = 753,
          image = 667,
          value = 7800,
          weight = 9800,
@@ -24606,7 +24606,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kotatsu",
       },
       daruma = {
-         legacy_id = 754,
+         integer_id = 754,
          image = 668,
          value = 3200,
          weight = 720,
@@ -24638,7 +24638,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.daruma",
       },
       kagami_mochi = {
-         legacy_id = 755,
+         integer_id = 755,
          image = 669,
          value = 2500,
          weight = 800,
@@ -24670,7 +24670,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kagami_mochi",
       },
       mochi = {
-         legacy_id = 756,
+         integer_id = 756,
          image = 670,
          value = 800,
          weight = 350,
@@ -24702,7 +24702,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mochi",
       },
       five_horned_helm = {
-         legacy_id = 757,
+         integer_id = 757,
          image = 480,
          value = 15000,
          weight = 2400,
@@ -24736,7 +24736,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.five_horned_helm",
       },
       mauser_c96_custom = {
-         legacy_id = 758,
+         integer_id = 758,
          image = 419,
          value = 25000,
          weight = 950,
@@ -24770,7 +24770,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.mauser_c96_custom",
       },
       lightsabre = {
-         legacy_id = 759,
+         integer_id = 759,
          image = 671,
          value = 4800,
          weight = 600,
@@ -24804,7 +24804,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.lightsabre",
       },
       garoks_hammer = {
-         legacy_id = 760,
+         integer_id = 760,
          image = 629,
          value = 75000,
          weight = 5000,
@@ -24836,7 +24836,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.garoks_hammer",
       },
       goulds_piano = {
-         legacy_id = 761,
+         integer_id = 761,
          image = 76,
          value = 35000,
          weight = 45000,
@@ -24869,7 +24869,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.goulds_piano",
       },
       festival_wreath = {
-         legacy_id = 762,
+         integer_id = 762,
          image = 672,
          value = 760,
          weight = 280,
@@ -24901,7 +24901,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.festival_wreath",
       },
       pedestal = {
-         legacy_id = 763,
+         integer_id = 763,
          image = 673,
          value = 3600,
          weight = 85000,
@@ -24934,7 +24934,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pedestal",
       },
       counter = {
-         legacy_id = 764,
+         integer_id = 764,
          image = 674,
          value = 1200,
          weight = 9900,
@@ -24966,7 +24966,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.counter",
       },
       red_stall = {
-         legacy_id = 765,
+         integer_id = 765,
          image = 685,
          value = 3800,
          weight = 48500,
@@ -24998,7 +24998,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.red_stall",
       },
       blue_stall = {
-         legacy_id = 766,
+         integer_id = 766,
          image = 684,
          value = 3800,
          weight = 48500,
@@ -25030,7 +25030,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.blue_stall",
       },
       jures_body_pillow = {
-         legacy_id = 767,
+         integer_id = 767,
          image = 675,
          value = 250,
          weight = 800,
@@ -25062,7 +25062,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.jures_body_pillow",
       },
       new_years_decoration = {
-         legacy_id = 768,
+         integer_id = 768,
          image = 676,
          value = 400,
          weight = 150,
@@ -25094,7 +25094,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.new_years_decoration",
       },
       miniature_tree = {
-         legacy_id = 769,
+         integer_id = 769,
          image = 677,
          value = 1650,
          weight = 530,
@@ -25126,7 +25126,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.miniature_tree",
       },
       bottle_of_soda = {
-         legacy_id = 770,
+         integer_id = 770,
          image = 678,
          value = 500,
          weight = 50,
@@ -25158,7 +25158,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_soda",
       },
       blue_capsule_drug = {
-         legacy_id = 771,
+         integer_id = 771,
          image = 679,
          value = 7500,
          weight = 100,
@@ -25190,7 +25190,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.blue_capsule_drug",
       },
       tomato = {
-         legacy_id = 772,
+         integer_id = 772,
          image = 540,
          value = 90,
          weight = 330,
@@ -25223,7 +25223,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.tomato",
       },
       large_bookshelf = {
-         legacy_id = 773,
+         integer_id = 773,
          image = 541,
          value = 2400,
          weight = 15000,
@@ -25255,7 +25255,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.large_bookshelf",
       },
       luxury_cabinet = {
-         legacy_id = 774,
+         integer_id = 774,
          image = 683,
          value = 7200,
          weight = 23800,
@@ -25287,7 +25287,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.luxury_cabinet",
       },
       special_steamed_meat_bun = {
-         legacy_id = 775,
+         integer_id = 775,
          image = 542,
          value = 160,
          weight = 250,
@@ -25319,7 +25319,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.special_steamed_meat_bun",
       },
       statue_of_kumiromi = {
-         legacy_id = 776,
+         integer_id = 776,
          image = 681,
          value = 100000,
          weight = 15000,
@@ -25351,7 +25351,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_kumiromi",
       },
       statue_of_mani = {
-         legacy_id = 777,
+         integer_id = 777,
          image = 682,
          value = 100000,
          weight = 15000,
@@ -25383,7 +25383,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.statue_of_mani",
       },
       luxury_sofa = {
-         legacy_id = 778,
+         integer_id = 778,
          image = 543,
          value = 4900,
          weight = 9000,
@@ -25416,7 +25416,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.luxury_sofa",
       },
       deer_head = {
-         legacy_id = 779,
+         integer_id = 779,
          image = 544,
          value = 16000,
          weight = 1800,
@@ -25448,7 +25448,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.deer_head",
       },
       fur_carpet = {
-         legacy_id = 780,
+         integer_id = 780,
          image = 545,
          value = 23000,
          weight = 4200,
@@ -25480,7 +25480,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.fur_carpet",
       },
       kitchen_knife = {
-         legacy_id = 781,
+         integer_id = 781,
          image = 546,
          value = 2400,
          weight = 400,
@@ -25513,7 +25513,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.kitchen_knife",
       },
       dish = {
-         legacy_id = 782,
+         integer_id = 782,
          image = 360,
          value = 100,
          weight = 150,
@@ -25545,7 +25545,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dish",
       },
       recipe = {
-         legacy_id = 783,
+         integer_id = 783,
          image = 550,
          value = 1000,
          weight = 50,
@@ -25577,7 +25577,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.recipe",
       },
       recipe_holder = {
-         legacy_id = 784,
+         integer_id = 784,
          image = 549,
          value = 2500,
          weight = 550,
@@ -25609,7 +25609,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.recipe_holder",
       },
       bottle_of_salt = {
-         legacy_id = 785,
+         integer_id = 785,
          image = 553,
          value = 80,
          weight = 80,
@@ -25641,7 +25641,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.bottle_of_salt",
       },
       sack_of_sugar = {
-         legacy_id = 786,
+         integer_id = 786,
          image = 551,
          value = 50,
          weight = 120,
@@ -25673,7 +25673,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.sack_of_sugar",
       },
       puff_puff_bread = {
-         legacy_id = 787,
+         integer_id = 787,
          image = 552,
          value = 350,
          weight = 350,
@@ -25705,7 +25705,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.puff_puff_bread",
       },
       skull_bow = {
-         legacy_id = 788,
+         integer_id = 788,
          image = 402,
          value = 2000,
          weight = 700,
@@ -25738,7 +25738,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.skull_bow",
       },
       pot_for_testing = {
-         legacy_id = 789,
+         integer_id = 789,
          image = 554,
          value = 1000,
          weight = 500,
@@ -25771,7 +25771,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.pot_for_testing",
       },
       frying_pan_for_testing = {
-         legacy_id = 790,
+         integer_id = 790,
          image = 555,
          value = 1000,
          weight = 500,
@@ -25804,7 +25804,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.frying_pan_for_testing",
       },
       dragon_slayer = {
-         legacy_id = 791,
+         integer_id = 791,
          image = 697,
          value = 72000,
          weight = 22500,
@@ -25837,7 +25837,7 @@ ELONA.data:add(
          locale_key_prefix = "core.item.dragon_slayer",
       },
       putitoro = {
-         legacy_id = 792,
+         integer_id = 792,
          image = 695,
          value = 2000,
          weight = 200,

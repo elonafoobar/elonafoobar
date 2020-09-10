@@ -1408,8 +1408,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         "core.buff", "apply", enc + 10, eater));
                 }
 
-                int legacy_id = 20 + (enc - 10);
-                auto buff_id = the_buff_db.get_id_from_legacy(legacy_id);
+                int integer_id = 20 + (enc - 10);
+                auto buff_id = the_buff_db.get_id_from_integer(integer_id);
                 assert(buff_id);
 
                 buff_add(

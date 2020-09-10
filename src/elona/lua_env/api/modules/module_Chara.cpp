@@ -168,7 +168,7 @@ Chara_create_from_id_xy(int x, int y, const std::string& id)
 {
     auto data = the_character_db.ensure(data::InstanceId{id});
 
-    if (const auto chara = elona::chara_create(-1, data.legacy_id, x, y))
+    if (const auto chara = elona::chara_create(-1, data.integer_id, x, y))
     {
         return lua::handle(*chara);
     }
@@ -265,7 +265,7 @@ int Chara_kill_count(const std::string& id)
     {
         return 0;
     }
-    return npcmemory(0, data->legacy_id);
+    return npcmemory(0, data->integer_id);
 }
 
 
@@ -300,7 +300,7 @@ sol::optional<LuaCharacterHandle> Chara_find(
 
     if (location_value == CharaFindLocation::allies)
     {
-        int result = chara_find_ally(data->legacy_id);
+        int result = chara_find_ally(data->integer_id);
 
         if (result == -1)
         {
