@@ -1,4 +1,5 @@
 local Chara = ELONA.require("core.Chara")
+local Enums = ELONA.require("core.Enums")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
 local Internal = ELONA.require("core.Internal")
@@ -74,7 +75,7 @@ return {
             function()
                GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
                local scroll = Item.create(Chara.player().position, "core.scroll_of_identify", 0)
-               scroll.identify_state = "completely"
+               scroll.identify_state = Enums.IdentifyState.completely
             end,
             {"tutorial.after_dig.dialog"},
          },
@@ -190,7 +191,7 @@ return {
          on_finish = function()
             local corpse = Item.create(Chara.player().position, "core.corpse", 0)
             corpse.subname = 9
-            corpse.identify_state = "completely"
+            corpse.identify_state = Enums.IdentifyState.completely
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 1)
          end
@@ -246,12 +247,12 @@ return {
          },
          on_finish = function()
             local item = Item.create(Chara.player().position, "core.long_bow", 0)
-            item.curse_state = "cursed"
+            item.curse_state = Enums.CurseState.cursed
             item = Item.create(Chara.player().position, "core.arrow", 0)
-            item.curse_state = "none"
+            item.curse_state = Enums.CurseState.none
             item = Item.create(Chara.player().position, "core.scroll_of_vanish_curse", 0)
-            item.identify_state = "completely"
-            item.curse_state = "blessed"
+            item.identify_state = Enums.IdentifyState.completely
+            item.curse_state = Enums.CurseState.blessed
             GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 5)
          end
@@ -272,7 +273,7 @@ return {
                putit:set_flag("is_not_attacked_by_enemy", true)
             end
             local item = Item.create(Chara.player().position, "core.potion_of_cure_minor_wound", 0)
-            item.identify_state = "completely"
+            item.identify_state = Enums.IdentifyState.completely
             Internal.set_quest_flag("tutorial", 6)
          end
       }

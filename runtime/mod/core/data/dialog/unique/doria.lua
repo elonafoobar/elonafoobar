@@ -1,12 +1,13 @@
 local Chara = ELONA.require("core.Chara")
 local Data = ELONA.require("core.Data")
-local Internal = ELONA.require("core.Internal")
-local Rand = ELONA.require("core.Rand")
+local Enums = ELONA.require("core.Enums")
 local GUI = ELONA.require("core.GUI")
-local math = math
 local I18N = ELONA.require("core.I18N")
+local Internal = ELONA.require("core.Internal")
 local Item = ELONA.require("core.Item")
+local Rand = ELONA.require("core.Rand")
 local World = ELONA.require("core.World")
+local math = math
 local table = table
 local string = string
 
@@ -45,7 +46,7 @@ end
 
 local function receive_reward()
    World.data.fighters_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = "good", flttypemajor = 10000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = Enums.Quality.good, flttypemajor = 10000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
    Item.create(Chara.player().position, "core.platinum_coin", math.clamp(4 - World.data.ranks[8] // 2500, 1, 4))
 

@@ -3,6 +3,7 @@ local Data = ELONA.require("core.Data")
 local I18N = ELONA.require("core.I18N")
 local Input = ELONA.require("core.Input")
 local Internal = ELONA.require("core.Internal")
+local Enums = ELONA.require("core.Enums")
 local table = table
 
 local function dialog_error(talk, msg, err)
@@ -60,7 +61,7 @@ local function query(talk, text, choices, default_choice)
       image = talk.speaker.image
    end
    local show_impress = true
-   if talk.speaker.quality == "special" and not Chara.is_ally(talk.speaker) then
+   if talk.speaker.quality == Enums.Quality.special and not Chara.is_ally(talk.speaker) then
       show_impress = false
    end
 

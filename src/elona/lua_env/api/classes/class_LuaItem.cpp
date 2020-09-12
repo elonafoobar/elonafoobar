@@ -277,13 +277,9 @@ void bind(sol::state& lua)
     LuaItem.set(
         "curse_state",
         sol::property(
-            [](const ItemRef& self) {
-                return LuaEnums::CurseStateTable.convert_to_string(
-                    self->curse_state);
-            },
-            [](const ItemRef& self, const EnumString& s) {
-                self->curse_state =
-                    LuaEnums::CurseStateTable.ensure_from_string(s);
+            [](const ItemRef& self) { return self->curse_state; },
+            [](const ItemRef& self, CurseState new_value) {
+                self->curse_state = new_value;
             }));
 
     /**
@@ -294,13 +290,9 @@ void bind(sol::state& lua)
     LuaItem.set(
         "identify_state",
         sol::property(
-            [](const ItemRef& self) {
-                return LuaEnums::IdentifyStateTable.convert_to_string(
-                    self->identify_state);
-            },
-            [](const ItemRef& self, const EnumString& s) {
-                self->identify_state =
-                    LuaEnums::IdentifyStateTable.ensure_from_string(s);
+            [](const ItemRef& self) { return self->identify_state; },
+            [](const ItemRef& self, IdentifyState new_value) {
+                self->identify_state = new_value;
             }));
 
     /**

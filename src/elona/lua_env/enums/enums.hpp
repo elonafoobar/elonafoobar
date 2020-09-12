@@ -45,12 +45,9 @@ namespace LuaEnums
 
 extern EnumMap<DamageSource> DamageSourceTable;
 extern EnumMap<ColorIndex> ColorIndexTable;
-extern EnumMap<CurseState> CurseStateTable;
-extern EnumMap<IdentifyState> IdentifyStateTable;
 extern EnumMap<StatusAilment> StatusAilmentTable;
 extern EnumMap<Element> ElementTable;
 extern EnumMap<TileKind> TileKindTable;
-extern EnumMap<Quality> QualityTable;
 extern EnumMap<BuffType> BuffTypeTable;
 extern EnumMap<mdata_t::MapType> MapTypeTable;
 extern EnumMap<int> MapEntranceTypeTable;

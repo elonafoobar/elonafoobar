@@ -94,41 +94,6 @@ EnumMap<ColorIndex> ColorIndexTable{
 };
 
 
-/**
- * @luadoc
- *
- * The curse state of an item.
- * @usage local item = Item.create(10, 10, "core.putitoro", 3)
- * item.curse_state = "Blessed"
- */
-EnumMap<CurseState> CurseStateTable{
-    "CurseState",
-    {
-        {"doomed", CurseState::doomed},
-        {"cursed", CurseState::cursed},
-        {"none", CurseState::none},
-        {"blessed", CurseState::blessed},
-    },
-};
-
-
-/**
- * @luadoc
- *
- * The identify state of an item.
- * @usage local item = Item.create(10, 10, "core.putitoro", 3)
- * item.identify_state = "Completely"
- */
-EnumMap<IdentifyState> IdentifyStateTable{
-    "IdentifyState",
-    {
-        {"unidentified", IdentifyState::unidentified},
-        {"partly", IdentifyState::partly},
-        {"almost", IdentifyState::almost},
-        {"completely", IdentifyState::completely},
-    },
-};
-
 
 /**
  * @luadoc
@@ -197,23 +162,6 @@ EnumMap<TileKind> TileKindTable{
     },
 };
 
-/**
- * @luadoc
- *
- * The quality of randomly generated equipment.
- */
-EnumMap<Quality> QualityTable{
-    "Quality",
-    {
-        {"none", Quality::none},
-        {"bad", Quality::bad},
-        {"good", Quality::good},
-        {"great", Quality::great},
-        {"miracle", Quality::miracle},
-        {"godly", Quality::godly},
-        {"special", Quality::special},
-    },
-};
 
 /**
  * @luadoc
