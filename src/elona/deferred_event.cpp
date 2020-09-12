@@ -12,6 +12,7 @@
 #include "draw.hpp"
 #include "enums.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -979,7 +980,7 @@ void eh_guest_visit(const DeferredEvent&)
         }
         OptionalItemRef chair;
         auto distance_to_guest_chair = 6;
-        for (const auto& item : *g_inv.ground())
+        for (const auto& item : *inv_map())
         {
             if (item->function != 44)
                 continue;

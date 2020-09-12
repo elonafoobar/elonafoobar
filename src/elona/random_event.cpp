@@ -99,14 +99,14 @@ optional<RandomEvent> generate_random_event_in_sleep()
     }
     if (rnd(250) == 0)
     {
-        if (g_inv.pc()->has_free_slot())
+        if (inv_player()->has_free_slot())
         {
             id = 19;
         }
     }
     if (rnd(10000) == 0)
     {
-        if (g_inv.pc()->has_free_slot())
+        if (inv_player()->has_free_slot())
         {
             id = 21;
         }

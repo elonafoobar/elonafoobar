@@ -447,7 +447,6 @@ public:
     ItemRef operator[](int index);
 
 
-    InventoryRef pc();
     InventoryRef ground();
     InventoryRef tmp();
     InventoryRef for_chara(const Character& chara);

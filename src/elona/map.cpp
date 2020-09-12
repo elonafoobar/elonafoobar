@@ -289,7 +289,7 @@ void map_reload(const std::string& map_filename)
 
     mef_clear_all();
 
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->own_state == OwnState::town)
         {
@@ -635,7 +635,7 @@ static void _clear_material_spots()
 
 static void _modify_items_on_regenerate()
 {
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         // Update tree of fruits.
         if (item->id == "core.tree_of_fruits")
@@ -751,7 +751,7 @@ static void _grow_plants()
 
 static void _proc_generate_bard_items(Character& chara)
 {
-    if (!itemfind(g_inv.for_chara(chara), 60005))
+    if (!itemfind(chara.inventory(), 60005))
     {
         if (rnd(150) == 0)
         {
@@ -800,7 +800,7 @@ static void _restock_character_inventories()
         {
             supply_new_equipment(cnt);
         }
-        if (rnd(2) == 0 && inv_count(g_inv.for_chara(cnt)) < 8)
+        if (rnd(2) == 0 && inv_count(cnt.inventory()) < 8)
         {
             _generate_bad_quality_item(cnt);
         }
@@ -879,7 +879,7 @@ void map_proc_regen_and_update()
 
 void map_reload_noyel()
 {
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->id == "core.shelter" || item->id == "core.giants_shackle")
         {
@@ -1446,7 +1446,7 @@ TurnResult exit_map()
                         mdata_t::MapId::the_void)
                     {
                         if (!itemfind(
-                                g_inv.pc(),
+                                inv_player(),
                                 "core.license_of_the_void_explorer"))
                         {
                             txt(i18n::s.get(
@@ -2091,7 +2091,7 @@ void map_global_proc_travel_events(Character& chara)
     }
     if (cdata.player().nutrition <= 5000)
     {
-        for (const auto& item : *g_inv.for_chara(chara))
+        for (const auto& item : *chara.inventory())
         {
             if (the_item_db[item->id]->category == ItemCategory::travelers_food)
             {

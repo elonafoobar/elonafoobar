@@ -26,6 +26,8 @@ namespace elona
 {
 
 struct Item;
+struct Inventory;
+using InventoryRef = Inventory*;
 
 
 
@@ -393,6 +395,8 @@ public:
     data::InstanceId race;
     data::InstanceId class_;
     std::string talk;
+
+    InventoryRef inventory();
 
 
 

@@ -282,13 +282,6 @@ ItemRef AllInventory::operator[](int index)
 
 
 
-InventoryRef AllInventory::pc()
-{
-    return &_inventories.front();
-}
-
-
-
 InventoryRef AllInventory::ground()
 {
     auto itr = _inventories.end();
@@ -370,12 +363,12 @@ OptionalItemRef item_find_internal(ItemFindLocation location_type, F predicate)
     switch (location_type)
     {
     case ItemFindLocation::player_inventory:
-        return inv_find_last_match(g_inv.pc(), predicate);
+        return inv_find_last_match(inv_player(), predicate);
     case ItemFindLocation::ground:
-        return inv_find_last_match(g_inv.ground(), predicate);
+        return inv_find_last_match(inv_map(), predicate);
     case ItemFindLocation::player_inventory_and_ground: {
-        const auto a = inv_find_last_match(g_inv.ground(), predicate);
-        const auto b = inv_find_last_match(g_inv.pc(), predicate);
+        const auto a = inv_find_last_match(inv_map(), predicate);
+        const auto b = inv_find_last_match(inv_player(), predicate);
         return b ? b : a;
     }
     default: assert(0); return nullptr;
@@ -456,7 +449,7 @@ OptionalItemRef itemfind(const InventoryRef& inv, int subcategory)
 
 OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 {
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->id == id && item->position() == pos)
         {
@@ -482,7 +475,7 @@ void cell_refresh(int x, int y)
         i = nullptr;
 
     size_t number_of_items = 0;
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->position() == Position{x, y})
         {
@@ -681,7 +674,7 @@ ItemRef item_separate(const ItemRef& stacked_item)
     auto slot_opt = inv_make_free_slot(stacked_item->inventory());
     if (!slot_opt)
     {
-        slot_opt = inv_make_free_slot(g_inv.ground());
+        slot_opt = inv_make_free_slot(inv_map());
         if (!slot_opt)
         {
             stacked_item->set_number(1);
@@ -1911,7 +1904,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     }
 
     OptionalItemRef burned_item;
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->position() == Position{x, y})
         {
@@ -1921,7 +1914,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     }
     if (burned_item)
     {
-        const auto burned = item_fire(g_inv.ground(), burned_item);
+        const auto burned = item_fire(inv_map(), burned_item);
         if (burned)
         {
             if (cell_data.at(x, y).mef_index_plus_one == 0)
@@ -2076,7 +2069,7 @@ void mapitem_cold(int x, int y)
         return;
     }
     OptionalItemRef destroyed_item;
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->position() == Position{x, y})
         {
@@ -2086,7 +2079,7 @@ void mapitem_cold(int x, int y)
     }
     if (destroyed_item)
     {
-        item_cold(g_inv.ground(), destroyed_item);
+        item_cold(inv_map(), destroyed_item);
     }
 }
 
@@ -2111,9 +2104,9 @@ void item_drop(
     lua_int num,
     bool building_shelter)
 {
-    const auto slot = inv_make_free_slot_force(g_inv.ground());
+    const auto slot = inv_make_free_slot_force(inv_map());
     const auto dropped_item =
-        item_separate(item_in_inventory, g_inv.ground(), slot, num);
+        item_separate(item_in_inventory, inv_map(), slot, num);
     dropped_item->set_position(cdata.player().position);
     itemturn(dropped_item);
 
@@ -2147,8 +2140,7 @@ void item_drop(
         }
     }
 
-    const auto stacked_item =
-        inv_stack(g_inv.ground(), dropped_item).stacked_item;
+    const auto stacked_item = inv_stack(inv_map(), dropped_item).stacked_item;
 
     refresh_burden_state();
     cell_refresh(stacked_item->position().x, stacked_item->position().y);
@@ -2245,7 +2237,7 @@ void auto_identify()
         return;
     }
 
-    for (const auto& item : *g_inv.pc())
+    for (const auto& item : *inv_player())
     {
         if (item->identify_state == IdentifyState::completely)
         {
@@ -2336,13 +2328,13 @@ ItemRef item_convert_artifact(
     }
 
     bool found = false;
-    for (const auto& chara : cdata.player_and_allies())
+    for (auto&& chara : cdata.player_and_allies())
     {
         if (chara.state() == Character::State::empty)
         {
             continue;
         }
-        for (const auto& item : *g_inv.for_chara(chara))
+        for (const auto& item : *chara.inventory())
         {
             if (item->id == artifact->id && item != artifact)
             {
@@ -2357,7 +2349,7 @@ ItemRef item_convert_artifact(
     }
     if (!found && !ignore_map_inventory)
     {
-        for (const auto& item : *g_inv.ground())
+        for (const auto& item : *inv_map())
         {
             if (item->id == artifact->id && item != artifact)
             {

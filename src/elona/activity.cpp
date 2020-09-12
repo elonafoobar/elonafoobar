@@ -1038,7 +1038,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
         in = steal_target->number();
     }
 
-    const auto slot_opt = inv_get_free_slot(g_inv.pc());
+    const auto slot_opt = inv_get_free_slot(inv_player());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
@@ -1055,7 +1055,8 @@ void activity_others_end_steal(const ItemRef& steal_target)
         chara_refresh(item_owner);
     }
 
-    const auto stolen_item = item_separate(steal_target, g_inv.pc(), slot, in);
+    const auto stolen_item =
+        item_separate(steal_target, inv_player(), slot, in);
     stolen_item->is_stolen = true;
     stolen_item->own_state = OwnState::none;
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));
@@ -1068,7 +1069,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
     }
     else
     {
-        inv_stack(g_inv.pc(), stolen_item, true);
+        inv_stack(inv_player(), stolen_item, true);
         sound_pick_up();
     }
     refresh_burden_state();
@@ -1124,7 +1125,7 @@ void activity_others_end_harvest(const ItemRef& crop)
     txt(i18n::s.get(
         "core.activity.harvest.finish", crop, cnvweight(crop->weight)));
     in = crop->number();
-    pick_up_item(g_inv.pc(), crop, none);
+    pick_up_item(inv_player(), crop, none);
 }
 
 
@@ -1872,7 +1873,7 @@ void spot_digging(Character& chara)
     txt(i18n::s.get("core.activity.dig_spot.finish"));
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        for (const auto& item : *g_inv.pc())
+        for (const auto& item : *inv_player())
         {
             if (item->id == "core.treasure_map" && item->param1 != 0 &&
                 item->param1 == cdata.player().position.x &&

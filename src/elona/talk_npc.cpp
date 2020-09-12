@@ -98,7 +98,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     p = 0;
-    for (const auto& item : *g_inv.pc())
+    for (const auto& item : *inv_player())
     {
         if (item->identify_state != IdentifyState::completely)
         {
@@ -117,12 +117,12 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (const auto& item : *g_inv.pc())
+        for (const auto& item : *inv_player())
         {
             if (item->identify_state != IdentifyState::completely)
             {
                 const auto result = item_identify(item, 250);
-                inv_stack(g_inv.pc(), item, true);
+                inv_stack(inv_player(), item, true);
                 ++p(1);
                 if (result >= IdentifyState::completely)
                 {
@@ -210,7 +210,7 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
 TalkResult talk_trade(Character& speaker)
 {
     invsubroutine = 1;
-    for (const auto& item : *g_inv.for_chara(speaker))
+    for (const auto& item : *speaker.inventory())
     {
         item->identify_state = IdentifyState::completely;
     }
@@ -453,7 +453,7 @@ TalkResult talk_quest_delivery(
     const ItemRef& item_to_deliver)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
-    const auto inv = g_inv.for_chara(speaker);
+    const auto inv = speaker.inventory();
     const auto slot = inv_make_free_slot_force(inv);
     const auto handed_over_item = item_separate(item_to_deliver, inv, slot, 1);
     chara_set_ai_item(speaker, handed_over_item);
@@ -469,7 +469,7 @@ TalkResult talk_quest_delivery(
 TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
-    const auto inv = g_inv.for_chara(speaker);
+    const auto inv = speaker.inventory();
     const auto slot = inv_make_free_slot_force(inv);
     const auto handed_over_item = item_separate(item_to_supply, inv, slot, 1);
     speaker.was_passed_item_by_you_just_now() = true;
@@ -506,10 +506,10 @@ TalkResult talk_shop_attack(Character& speaker)
 TalkResult talk_guard_return_item(Character& speaker)
 {
     listmax = 0;
-    auto wallet_opt = itemfind(g_inv.pc(), "core.wallet");
+    auto wallet_opt = itemfind(inv_player(), "core.wallet");
     if (!wallet_opt)
     {
-        wallet_opt = itemfind(g_inv.pc(), "core.suitcase");
+        wallet_opt = itemfind(inv_player(), "core.suitcase");
     }
     const auto wallet = wallet_opt.unwrap();
     wallet->modify_number(-1);
@@ -1675,7 +1675,7 @@ TalkResult talk_quest_giver(Character& speaker)
         }
         if (quest_data[rq].id == 1002)
         {
-            if (!g_inv.pc()->has_free_slot())
+            if (!inv_player()->has_free_slot())
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", speaker);
@@ -2082,12 +2082,12 @@ TalkResult talk_npc(Character& speaker)
                         cdata[rtval(cnt)]));
             }
         }
-        if (itemfind(g_inv.pc(), "core.wallet"))
+        if (itemfind(inv_player(), "core.wallet"))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_wallet"));
         }
-        else if (itemfind(g_inv.pc(), "core.suitcase"))
+        else if (itemfind(inv_player(), "core.suitcase"))
         {
             ELONA_APPEND_RESPONSE(
                 32, i18n::s.get("core.talk.npc.guard.choices.lost_suitcase"));
@@ -2172,7 +2172,7 @@ TalkResult talk_npc(Character& speaker)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (const auto& item : *g_inv.pc())
+                    for (const auto& item : *inv_player())
                     {
                         if (the_item_db[item->id]->integer_id == p)
                         {
@@ -2192,7 +2192,7 @@ TalkResult talk_npc(Character& speaker)
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            for (const auto& item : *g_inv.pc())
+            for (const auto& item : *inv_player())
             {
                 if (item->is_no_drop)
                 {

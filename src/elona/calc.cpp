@@ -10,6 +10,7 @@
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"
 #include "message.hpp"
@@ -1206,7 +1207,7 @@ int calc_ammo_reloading_cost(Character& owner, bool do_reload)
 {
     int cost{};
 
-    for (const auto& item : *g_inv.for_chara(owner))
+    for (const auto& item : *owner.inventory())
     {
         if (the_item_db[item->id]->category != ItemCategory::ammo)
             continue;
@@ -1263,7 +1264,7 @@ int calcidentifyvalue(int type)
     if (type == 1)
     {
         int need_to_identify{};
-        for (const auto& item : *g_inv.pc())
+        for (const auto& item : *inv_player())
         {
             if (item->identify_state != IdentifyState::completely)
             {

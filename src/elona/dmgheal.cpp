@@ -76,7 +76,7 @@ void dmgheal_death_by_backpack(Character& chara)
     OptionalItemRef heaviest_item;
     int heaviest_weight = 0;
 
-    for (const auto& item : *g_inv.for_chara(chara))
+    for (const auto& item : *chara.inventory())
     {
         if (item->weight > heaviest_weight)
         {
@@ -689,11 +689,11 @@ int damage_hp(
         }
         if ((element == 50 || damage_source == -9) && victim.wet == 0)
         {
-            item_fire(g_inv.for_chara(victim));
+            item_fire(victim.inventory());
         }
         if (element == 51)
         {
-            item_cold(g_inv.for_chara(victim));
+            item_cold(victim.inventory());
         }
         if (victim.sleep != 0)
         {
@@ -1425,7 +1425,7 @@ void character_drops_item(Character& victim)
         {
             return;
         }
-        for (const auto& item : *g_inv.for_chara(victim))
+        for (const auto& item : *victim.inventory())
         {
             if (map_data.refresh_type == 0)
             {
@@ -1543,11 +1543,11 @@ void character_drops_item(Character& victim)
             }
             item->set_position(victim.position);
             item->set_position(victim.position);
-            if (!inv_stack(g_inv.ground(), item).stacked)
+            if (!inv_stack(inv_map(), item).stacked)
             {
-                const auto slot = inv_make_free_slot_force(g_inv.ground());
+                const auto slot = inv_make_free_slot_force(inv_map());
                 const auto dropped_item =
-                    item_separate(item, g_inv.ground(), slot, item->number());
+                    item_separate(item, inv_map(), slot, item->number());
                 dropped_item->own_state = OwnState::lost;
             }
         }
@@ -1591,7 +1591,7 @@ void character_drops_item(Character& victim)
             return;
         }
     }
-    for (const auto& item : *g_inv.for_chara(victim))
+    for (const auto& item : *victim.inventory())
     {
         f = 0;
         if (victim.role == Role::user)
@@ -1665,10 +1665,10 @@ void character_drops_item(Character& victim)
         }
         item->set_position(victim.position);
         itemturn(item);
-        if (!inv_stack(g_inv.ground(), item).stacked)
+        if (!inv_stack(inv_map(), item).stacked)
         {
-            const auto slot = inv_make_free_slot_force(g_inv.ground());
-            item_separate(item, g_inv.ground(), slot, item->number());
+            const auto slot = inv_make_free_slot_force(inv_map());
+            item_separate(item, inv_map(), slot, item->number());
         }
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||

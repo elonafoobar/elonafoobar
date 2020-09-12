@@ -84,14 +84,14 @@ OptionalItemRef itemcreate_player_inv(int id, int number)
 
 OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number)
 {
-    return itemcreate(g_inv.for_chara(chara), id, -1, -1, number);
+    return itemcreate(chara.inventory(), id, -1, -1, number);
 }
 
 
 
 OptionalItemRef itemcreate_map_inv(int id, int x, int y, int number)
 {
-    return itemcreate(g_inv.ground(), id, x, y, number);
+    return itemcreate(inv_map(), id, x, y, number);
 }
 
 

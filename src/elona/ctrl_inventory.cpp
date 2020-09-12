@@ -268,16 +268,16 @@ void make_item_list(
             }
             else
             {
-                inv = g_inv.ground();
+                inv = inv_map();
             }
         }
         if (cnt == 1)
         {
-            inv = g_inv.pc();
+            inv = inv_player();
             if (invctrl == 20 || invctrl == 25)
             {
                 assert(inventory_owner);
-                inv = g_inv.for_chara(*inventory_owner);
+                inv = inventory_owner->inventory();
             }
             if (invctrl == 27)
             {
@@ -287,7 +287,7 @@ void make_item_list(
                 {
                     continue;
                 }
-                inv = g_inv.for_chara(cdata[target_chara_index]);
+                inv = cdata[target_chara_index].inventory();
             }
             if (exclude_character_items(invctrl(0)))
             {
@@ -924,7 +924,7 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
         }
         if (f == 0)
         {
-            if (itemfind(g_inv.pc(), *the_item_db.get_id_from_integer(invsc)))
+            if (itemfind(inv_player(), *the_item_db.get_id_from_integer(invsc)))
             {
                 Message::instance().linebreak();
                 txt(i18n::s.get("core.action.cannot_do_in_global"));
@@ -1327,7 +1327,7 @@ OnEnterResult on_enter_drop(
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (!g_inv.ground()->has_free_slot())
+    if (!inv_map()->has_free_slot())
     {
         txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
         snd("core.fail1");
@@ -1335,7 +1335,7 @@ OnEnterResult on_enter_drop(
     }
     if (map_data.max_item_count != 0)
     {
-        if (inv_count(g_inv.ground()) >= map_data.max_item_count)
+        if (inv_count(inv_map()) >= map_data.max_item_count)
         {
             if (the_item_db[selected_item->id]->category !=
                 ItemCategory::furniture)
@@ -1562,7 +1562,7 @@ OnEnterResult on_enter_external_inventory(
     }
     const auto destination_inventory =
         (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0)) ? g_inv.tmp()
-                                                              : g_inv.pc();
+                                                              : inv_player();
     int stat =
         pick_up_item(destination_inventory, selected_item, inventory_owner)
             .type;
@@ -1718,7 +1718,7 @@ OnEnterResult on_enter_give(
         snd("core.fail1");
         return OnEnterResult{2};
     }
-    const auto slot_opt = inv_get_free_slot(g_inv.for_chara(inventory_owner));
+    const auto slot_opt = inv_get_free_slot(inventory_owner.inventory());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.give.inventory_is_full", inventory_owner));
@@ -1753,8 +1753,7 @@ OnEnterResult on_enter_give(
     {
         p *= 5;
     }
-    if (inv_weight(g_inv.for_chara(inventory_owner)) + selected_item->weight >
-        p)
+    if (inv_weight(inventory_owner.inventory()) + selected_item->weight > p)
     {
         f = 1;
     }
@@ -1887,10 +1886,10 @@ OnEnterResult on_enter_give(
             selected_item->modify_number(-1);
             return OnEnterResult{1};
         }
-        const auto handed_over_item = item_separate(
-            selected_item, g_inv.for_chara(inventory_owner), slot, 1);
+        const auto handed_over_item =
+            item_separate(selected_item, inventory_owner.inventory(), slot, 1);
         const auto stacked_item =
-            inv_stack(g_inv.for_chara(inventory_owner), handed_over_item, true)
+            inv_stack(inventory_owner.inventory(), handed_over_item, true)
                 .stacked_item;
         chara_set_ai_item(inventory_owner, stacked_item);
         wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
@@ -1935,7 +1934,7 @@ OnEnterResult on_enter_identify(
     {
         txt(i18n::s.get("core.ui.inv.identify.fully", selected_item));
     }
-    inv_stack(g_inv.pc(), selected_item, true);
+    inv_stack(inv_player(), selected_item, true);
     refresh_burden_state();
     invsubroutine = 0;
     result.succeeded = true;
@@ -2070,7 +2069,7 @@ OnEnterResult on_enter_trade_target(
     {
         supply_new_equipment(inventory_owner);
     }
-    inv_make_free_slot_force(g_inv.for_chara(inventory_owner));
+    inv_make_free_slot_force(inventory_owner.inventory());
     chara_refresh(inventory_owner);
     refresh_burden_state();
     invsubroutine = 0;
@@ -2174,7 +2173,7 @@ OnEnterResult on_enter_receive(
     const ItemRef& selected_item,
     Character& inventory_owner)
 {
-    const auto slot_opt = inv_get_free_slot(g_inv.pc());
+    const auto slot_opt = inv_get_free_slot(inv_player());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
@@ -2233,9 +2232,9 @@ OnEnterResult on_enter_receive(
     else
     {
         const auto received_item =
-            item_separate(selected_item, g_inv.pc(), slot, in);
+            item_separate(selected_item, inv_player(), slot, in);
         const auto stacked_item =
-            inv_stack(g_inv.pc(), received_item, true).stacked_item;
+            inv_stack(inv_player(), received_item, true).stacked_item;
         item_convert_artifact(stacked_item);
     }
     wear_most_valuable_equipment_for_all_body_parts(inventory_owner);
@@ -2290,7 +2289,7 @@ OnEnterResult on_enter_steal(const ItemRef& selected_item, MenuResult& result)
 OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
 {
     Message::instance().linebreak();
-    const auto slot_opt = inv_get_free_slot(g_inv.pc());
+    const auto slot_opt = inv_get_free_slot(inv_player());
     if (!slot_opt)
     {
         txt(i18n::s.get("core.ui.inv.trade_medals.inventory_full"));
@@ -2317,10 +2316,10 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     assert(small_medals);
     small_medals->modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
-    const auto received_item = item_copy(selected_item, g_inv.pc(), slot);
+    const auto received_item = item_copy(selected_item, inv_player(), slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", received_item));
     const auto stacked_item =
-        inv_stack(g_inv.pc(), received_item, true).stacked_item;
+        inv_stack(inv_player(), received_item, true).stacked_item;
     item_convert_artifact(stacked_item, true);
     return OnEnterResult{1};
 }

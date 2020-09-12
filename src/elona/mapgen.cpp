@@ -7,6 +7,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -2926,7 +2927,7 @@ int initialize_quest_map_party()
             chara->original_relationship = -1;
         }
     }
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         item->own_state = OwnState::town;
     }
@@ -2975,7 +2976,7 @@ void initialize_quest_map_town()
             }
         }
     }
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         f = 0;
         if (item->id == "core.well" || item->id == "core.fountain")

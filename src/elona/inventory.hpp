@@ -9,6 +9,23 @@ namespace elona
 {
 
 /**
+ * Helper function to access the player character's inventory. It is equivalent
+ * to `cdata.player().inventory()`.
+ *
+ * @return The player character's inventory.
+ */
+InventoryRef inv_player();
+
+
+/**
+ * Helper function to access the current map's inventory.
+ *
+ * @return The current map's inventory.
+ */
+InventoryRef inv_map();
+
+
+/**
  * Calculate the sum of item weight excluding cargo goods.
  *
  * @param inv The inventory to calculate weight.

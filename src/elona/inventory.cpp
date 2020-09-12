@@ -38,6 +38,20 @@ bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 
 
 
+InventoryRef inv_player()
+{
+    return cdata.player().inventory();
+}
+
+
+
+InventoryRef inv_map()
+{
+    return g_inv.ground();
+}
+
+
+
 lua_int inv_weight(const InventoryRef& inv)
 {
     lua_int weight{};

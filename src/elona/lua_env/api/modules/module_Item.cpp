@@ -29,7 +29,7 @@ namespace elona::lua::api::modules::module_Item
  */
 int Item_count()
 {
-    return inv_count(g_inv.ground());
+    return inv_count(inv_map());
 }
 
 
@@ -99,7 +99,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
     }
     if (!inv)
     {
-        inv = g_inv.ground();
+        inv = inv_map();
     }
 
     // Random objlv

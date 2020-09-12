@@ -2,9 +2,12 @@
 
 #include "character.hpp"
 #include "elona.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -245,7 +248,7 @@ int cell_findspace(int base_x, int base_y, int range)
 int cell_count_exact_item_stacks(const Position& pos)
 {
     int ret{};
-    for (const auto& item : *g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->number() > 0 && item->position() == pos)
         {
@@ -267,7 +270,7 @@ OptionalItemRef cell_get_item_if_only_one(const Position& pos)
     else
     {
         const auto index = item_info_actual.item_indice()[0];
-        return g_inv.ground()->at(static_cast<InventorySlot>(index - 1));
+        return inv_map()->at(static_cast<InventorySlot>(index - 1));
     }
 }
 

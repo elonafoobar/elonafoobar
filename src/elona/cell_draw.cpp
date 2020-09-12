@@ -6,6 +6,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
@@ -1352,10 +1353,9 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 break;
 
             const auto item = item_index < 0
-                ? g_inv.ground()->at(
+                ? inv_map()->at(
                       static_cast<InventorySlot>(0)) /* TODO phantom ref */
-                : g_inv.ground()->at(
-                      static_cast<InventorySlot>(item_index - 1));
+                : inv_map()->at(static_cast<InventorySlot>(item_index - 1));
 
             if (!item)
             {

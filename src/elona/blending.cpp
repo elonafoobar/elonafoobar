@@ -205,7 +205,7 @@ bool find_blending_materials(int inventory, int recipe_id, int step)
     assert(inventory == -1 || inventory == 0);
 
     const auto check_pos = inventory == -1;
-    for (const auto& item : *(inventory == -1 ? g_inv.ground() : g_inv.pc()))
+    for (const auto& item : *(inventory == -1 ? inv_map() : inv_player()))
     {
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
@@ -225,7 +225,7 @@ int count_blending_materials(int inventory, int recipe_id, int step)
 
     const auto check_pos = inventory == -1;
     int ret = 0;
-    for (const auto& item : *(inventory == -1 ? g_inv.ground() : g_inv.pc()))
+    for (const auto& item : *(inventory == -1 ? inv_map() : inv_player()))
     {
         if (check_one_blending_material(item, recipe_id, step, check_pos))
         {
@@ -247,7 +247,7 @@ void collect_blending_materials(
     assert(inventory == -1 || inventory == 0);
 
     const auto check_pos = inventory == -1;
-    for (const auto& item : *(inventory == -1 ? g_inv.ground() : g_inv.pc()))
+    for (const auto& item : *(inventory == -1 ? inv_map() : inv_player()))
     {
         if (result.size() >= 500)
         {
@@ -1005,7 +1005,7 @@ void blending_proc_on_success_events()
     auto on_success_args = lua::create_table("materials", materials);
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
-    inv_stack(g_inv.pc(), item1);
+    inv_stack(inv_player(), item1);
     if (item1->body_part != 0)
     {
         create_pcpic(cdata.player());
