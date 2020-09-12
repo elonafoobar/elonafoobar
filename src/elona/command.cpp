@@ -1164,7 +1164,7 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
     if (throw_item->id == "core.monster_ball")
     {
         const auto slot = inv_make_free_slot_force(g_inv.ground());
-        const auto ball = item_separate(throw_item, slot, 1);
+        const auto ball = item_separate(throw_item, g_inv.ground(), slot, 1);
         ball->set_position({tlocx, tlocy});
         return do_throw_command_internal(thrower, ball);
     }
@@ -5442,7 +5442,7 @@ PickUpItemResult pick_up_item(
             return {0, nullptr};
         }
         const auto slot = *slot_opt;
-        picked_up_item = item_separate(item, slot, in);
+        picked_up_item = item_separate(item, inv, slot, in);
     }
     assert(picked_up_item);
 

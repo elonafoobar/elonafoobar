@@ -453,8 +453,9 @@ TalkResult talk_quest_delivery(
     const ItemRef& item_to_deliver)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_deliver));
-    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
-    const auto handed_over_item = item_separate(item_to_deliver, slot, 1);
+    const auto inv = g_inv.for_chara(speaker);
+    const auto slot = inv_make_free_slot_force(inv);
+    const auto handed_over_item = item_separate(item_to_deliver, inv, slot, 1);
     chara_set_ai_item(speaker, handed_over_item);
     rq = deliver;
     quest_set_data(speaker, 3);
@@ -468,8 +469,9 @@ TalkResult talk_quest_delivery(
 TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
-    const auto slot = inv_make_free_slot_force(g_inv.for_chara(speaker));
-    const auto handed_over_item = item_separate(item_to_supply, slot, 1);
+    const auto inv = g_inv.for_chara(speaker);
+    const auto slot = inv_make_free_slot_force(inv);
+    const auto handed_over_item = item_separate(item_to_supply, inv, slot, 1);
     speaker.was_passed_item_by_you_just_now() = true;
     chara_set_ai_item(speaker, handed_over_item);
     quest_set_data(speaker, 3);

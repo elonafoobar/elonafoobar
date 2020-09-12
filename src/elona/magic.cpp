@@ -2090,8 +2090,8 @@ bool _magic_645_1114(Character& subject, Character& target)
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            const auto item =
-                Inventory::at(inv_get_random_slot(g_inv.for_chara(target)));
+            const auto inv = g_inv.for_chara(target);
+            const auto item = inv->at(inv_get_random_slot(inv));
             if (!item)
             {
                 continue;

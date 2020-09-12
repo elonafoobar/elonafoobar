@@ -128,13 +128,6 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
 
 
 
-InventorySlot Item::inventory_slot() const noexcept
-{
-    return {inventory(), static_cast<size_t>(index())};
-}
-
-
-
 Inventory::Inventory(size_t inventory_size, int inventory_id)
     : _storage(inventory_size)
     , _inventory_id(inventory_id)
@@ -167,7 +160,7 @@ optional<InventorySlot> Inventory::get_free_slot()
     {
         if (!item)
         {
-            return InventorySlot{this, i};
+            return InventorySlot{i};
         }
         ++i;
     }
@@ -185,7 +178,6 @@ void Inventory::clear()
             item->_number = 0;
             item->obj_id = ObjId::nil();
             item->_inventory = nullptr;
-            item->_index = -1;
 
             item = nullptr;
         }
@@ -199,35 +191,31 @@ void Inventory::exchange(const ItemRef& a, const ItemRef& b)
     if (a == b)
         return;
 
-    const auto [inv_a, idx_a] = a->inventory_slot();
-    const auto [inv_b, idx_b] = b->inventory_slot();
+    const auto inv_a = a->inventory();
+    const auto slot_a = a->slot();
+    const auto inv_b = b->inventory();
+    const auto slot_b = b->slot();
 
-    std::swap(inv_a->_storage.at(idx_a), inv_b->_storage.at(idx_b));
+    std::swap(
+        inv_a->_storage.at(static_cast<size_t>(slot_a)),
+        inv_b->_storage.at(static_cast<size_t>(slot_b)));
     a->_inventory = inv_b;
     b->_inventory = inv_a;
-    a->_index = idx_b;
-    b->_index = idx_a;
+    a->_slot = slot_b;
+    b->_slot = slot_a;
     // TODO cell_refresh
 }
 
 
 
-const OptionalItemRef& Inventory::at(const InventorySlot& slot)
+ItemRef Inventory::create(InventorySlot slot)
 {
-    return slot.inventory->at(slot.index);
-}
+    assert(!at(slot));
 
-
-
-ItemRef Inventory::create(const InventorySlot& slot)
-{
-    assert(!Inventory::at(slot));
-
-    const auto [inv, idx] = slot;
     const auto new_item = eobject::Pool<Item>::instance().create();
-    new_item->_inventory = inv;
-    new_item->_index = idx;
-    inv->_storage.at(idx) = new_item;
+    new_item->_inventory = this;
+    new_item->_slot = slot;
+    _storage.at(static_cast<size_t>(slot)) = new_item;
 
     return new_item;
 }
@@ -250,7 +238,7 @@ void Inventory::move_all(Inventory& src, Inventory& dst)
         if (item)
         {
             item->_inventory = &dst;
-            item->_index = i;
+            item->_slot = static_cast<InventorySlot>(i);
             item->body_part = 0;
         }
         ++i;
@@ -289,7 +277,7 @@ ItemRef AllInventory::operator[](int index)
 {
     const auto inv_id = static_cast<int>(index >> 18) - 1;
     const auto idx = index - ((inv_id + 1) << 18);
-    return by_index(inv_id)->at(idx).unwrap();
+    return by_index(inv_id)->at(static_cast<InventorySlot>(idx)).unwrap();
 }
 
 
@@ -529,7 +517,7 @@ void cell_refresh(int x, int y)
         if (items[i])
         {
             // TODO phantom ref
-            item_indice_plus_one[i] = items[i]->index() + 1;
+            item_indice_plus_one[i] = static_cast<int>(items[i]->slot()) + 1;
         }
         else
         {
@@ -554,10 +542,13 @@ void itemturn(const ItemRef& item)
 
 
 
-ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number)
+ItemRef item_separate(
+    const ItemRef& item,
+    const InventoryRef& inv,
+    InventorySlot slot,
+    lua_int number)
 {
-    const auto dst = item_copy(item, slot);
+    const auto dst = item_copy(item, inv, slot);
     item->modify_number(-number);
     dst->set_number(number);
     return dst;
@@ -565,12 +556,13 @@ item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number)
 
 
 
-ItemRef item_copy(const ItemRef& item, const InventorySlot& slot)
+ItemRef
+item_copy(const ItemRef& item, const InventoryRef& inv, InventorySlot slot)
 {
-    assert(!Inventory::at(slot));
+    assert(!inv->at(slot));
     assert(item->number() != 0);
 
-    const auto dst = Inventory::create(slot);
+    const auto dst = inv->create(slot);
     Item::copy(*item.get_raw_ptr(), *dst.get_raw_ptr());
     dst->set_number(item->number());
     dst->on_create();
@@ -582,7 +574,7 @@ ItemRef item_copy(const ItemRef& item, const InventorySlot& slot)
 int Item::global_index() const noexcept
 {
     const auto inv_id = inventory()->inventory_id() + 1;
-    const auto idx = index();
+    const auto idx = static_cast<size_t>(slot());
     return (inv_id << 18) + idx;
 }
 
@@ -656,7 +648,7 @@ void Item::set_position(const Position& new_pos)
 
 void Item::on_create()
 {
-    const auto item_ref = inventory()->at(index()).unwrap();
+    const auto item_ref = inventory()->at(_slot).unwrap();
     obj_id = ObjId::generate();
     ItemIdTable::instance().add(item_ref);
     lua::lua->get_event_manager().trigger(
@@ -667,15 +659,14 @@ void Item::on_create()
 
 void Item::on_remove()
 {
-    const auto item_ref = inventory()->at(index()).unwrap();
+    const auto item_ref = inventory()->at(_slot).unwrap();
     lua::lua->get_event_manager().trigger(
         lua::ItemInstanceEvent("core.item_removed", item_ref));
     ItemIdTable::instance().remove(obj_id);
     obj_id = ObjId::nil();
 
-    inventory()->remove(index());
+    inventory()->remove(_slot);
     _inventory = nullptr;
-    _index = -1;
 }
 
 
@@ -699,8 +690,11 @@ ItemRef item_separate(const ItemRef& stacked_item)
         }
     }
     const auto slot = *slot_opt;
-    const auto dst =
-        item_separate(stacked_item, slot, stacked_item->number() - 1);
+    const auto dst = item_separate(
+        stacked_item,
+        stacked_item->inventory(),
+        slot,
+        stacked_item->number() - 1);
 
     if (item_is_on_ground(dst))
     {
@@ -2118,7 +2112,8 @@ void item_drop(
     bool building_shelter)
 {
     const auto slot = inv_make_free_slot_force(g_inv.ground());
-    const auto dropped_item = item_separate(item_in_inventory, slot, num);
+    const auto dropped_item =
+        item_separate(item_in_inventory, g_inv.ground(), slot, num);
     dropped_item->set_position(cdata.player().position);
     itemturn(dropped_item);
 

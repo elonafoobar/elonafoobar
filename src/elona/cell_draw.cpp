@@ -1352,8 +1352,10 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 break;
 
             const auto item = item_index < 0
-                ? g_inv.ground()->at(0) /* TODO phantom ref */
-                : g_inv.ground()->at(item_index - 1);
+                ? g_inv.ground()->at(
+                      static_cast<InventorySlot>(0)) /* TODO phantom ref */
+                : g_inv.ground()->at(
+                      static_cast<InventorySlot>(item_index - 1));
 
             if (!item)
             {

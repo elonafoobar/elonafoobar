@@ -268,7 +268,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         }
     }
 
-    const auto item = Inventory::create(empty_slot);
+    const auto item = inv->create(empty_slot);
     if (item_pos)
     {
         item->set_position(*item_pos);

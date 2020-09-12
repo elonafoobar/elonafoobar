@@ -106,7 +106,7 @@ InventorySlot inv_make_free_slot_force(const InventoryRef& inv)
     while (true)
     {
         const auto slot = inv_get_random_slot(inv);
-        const auto item = Inventory::at(slot).unwrap();
+        const auto item = inv->at(slot).unwrap();
         const auto owner_chara = owner.as_character();
         assert(owner_chara);
         if (item->body_part == 0)
@@ -184,7 +184,7 @@ InventorySlot inv_compress(const InventoryRef& inv)
 
     // Destroy 1 existing item forcely.
     const auto slot = inv_get_random_slot(inv);
-    Inventory::at(slot)->remove();
+    inv->at(slot)->remove();
 
     return slot;
 }
@@ -193,8 +193,7 @@ InventorySlot inv_compress(const InventoryRef& inv)
 
 InventorySlot inv_get_random_slot(const InventoryRef& inv)
 {
-    const auto index = rnd(inv->size());
-    return {inv, index};
+    return static_cast<InventorySlot>(rnd(inv->size()));
 }
 
 

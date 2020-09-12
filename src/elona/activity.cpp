@@ -1055,7 +1055,7 @@ void activity_others_end_steal(const ItemRef& steal_target)
         chara_refresh(item_owner);
     }
 
-    const auto stolen_item = item_separate(steal_target, slot, in);
+    const auto stolen_item = item_separate(steal_target, g_inv.pc(), slot, in);
     stolen_item->is_stolen = true;
     stolen_item->own_state = OwnState::none;
     txt(i18n::s.get("core.activity.steal.succeed", stolen_item));

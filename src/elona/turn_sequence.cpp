@@ -1386,7 +1386,7 @@ optional<TurnResult> pc_turn_advance_time()
     }
     if (trait(210) != 0 && rnd(5) == 0)
     {
-        const auto item = Inventory::at(inv_get_random_slot(g_inv.pc()));
+        const auto item = g_inv.pc()->at(inv_get_random_slot(g_inv.pc()));
         if (item && the_item_db[item->id]->category == ItemCategory::potion)
         {
             item_db_on_drink(

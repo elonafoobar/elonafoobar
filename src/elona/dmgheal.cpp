@@ -1547,7 +1547,7 @@ void character_drops_item(Character& victim)
             {
                 const auto slot = inv_make_free_slot_force(g_inv.ground());
                 const auto dropped_item =
-                    item_separate(item, slot, item->number());
+                    item_separate(item, g_inv.ground(), slot, item->number());
                 dropped_item->own_state = OwnState::lost;
             }
         }
@@ -1668,7 +1668,7 @@ void character_drops_item(Character& victim)
         if (!inv_stack(g_inv.ground(), item).stacked)
         {
             const auto slot = inv_make_free_slot_force(g_inv.ground());
-            item_separate(item, slot, item->number());
+            item_separate(item, g_inv.ground(), slot, item->number());
         }
     }
     if (victim.quality >= Quality::miracle || rnd(20) == 0 ||

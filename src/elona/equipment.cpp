@@ -321,8 +321,8 @@ void supply_new_equipment(Character& chara)
         f = 0;
         for (int _j = 0; _j < 4; ++_j)
         {
-            const auto item =
-                Inventory::at(inv_get_random_slot(g_inv.for_chara(chara)));
+            const auto inv = g_inv.for_chara(chara);
+            const auto item = inv->at(inv_get_random_slot(inv));
             if (!item)
             {
                 f = 1;

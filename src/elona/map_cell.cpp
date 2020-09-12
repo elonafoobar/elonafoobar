@@ -267,7 +267,7 @@ OptionalItemRef cell_get_item_if_only_one(const Position& pos)
     else
     {
         const auto index = item_info_actual.item_indice()[0];
-        return g_inv.ground()->at(index - 1);
+        return g_inv.ground()->at(static_cast<InventorySlot>(index - 1));
     }
 }
 

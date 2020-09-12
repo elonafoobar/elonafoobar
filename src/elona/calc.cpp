@@ -904,7 +904,8 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         else
         {
             ret = cdata.player().level / 5 *
-                    ((game_data.random_seed + item->index() * 31) %
+                    ((game_data.random_seed +
+                      static_cast<int>(item->slot()) * 31) %
                          cdata.player().level +
                      4) +
                 10;

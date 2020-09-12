@@ -46,10 +46,9 @@ struct Inventory;
 
 
 
-struct InventorySlot
+// strongly-typed index
+enum class InventorySlot : size_t
 {
-    Inventory* inventory;
-    size_t index;
 };
 
 
@@ -57,32 +56,27 @@ struct InventorySlot
 struct Item
 {
 private:
-    // Index of this item into the global cdata array.
-    // Used for communicating with legacy code that takes integer index
-    // arguments. New code should pass Item& instead. Not serialized; set on
-    // creation and load.
-    int _index = -1;
-
     Inventory* _inventory = nullptr;
+
+    InventorySlot _slot;
 
     friend Inventory;
 
 public:
     Item();
 
-    int index() const noexcept
+    InventorySlot slot() const noexcept
     {
-        return _index;
+        return _slot;
     }
 
+    // for integration with legacy code
     int global_index() const noexcept;
 
     Inventory* inventory() const noexcept
     {
         return _inventory;
     }
-
-    InventorySlot inventory_slot() const noexcept;
 
     ObjId obj_id;
 
@@ -192,11 +186,11 @@ public:
 
     static void copy(const Item& from, Item& to)
     {
-        const auto index_save = to._index;
         const auto inventory_save = to._inventory;
+        const auto slot_save = to._slot;
         to = from;
-        to._index = index_save;
         to._inventory = inventory_save;
+        to._slot = slot_save;
     }
 
 
@@ -279,14 +273,14 @@ public:
     Inventory(size_t inventory_size, int inventory_id);
 
 
-    const OptionalItemRef& at(size_t index)
+    const OptionalItemRef& at(InventorySlot slot)
     {
-        return _storage.at(index);
+        return _storage.at(static_cast<size_t>(slot));
     }
 
-    void remove(size_t index)
+    void remove(InventorySlot slot)
     {
-        _storage.at(index) = nullptr;
+        _storage.at(static_cast<size_t>(slot)) = nullptr;
     }
 
 
@@ -298,6 +292,9 @@ public:
     {
         return _storage.size();
     }
+
+
+    ItemRef create(InventorySlot slot);
 
 
     void clear();
@@ -316,11 +313,6 @@ public:
      * @param b the other item
      */
     static void exchange(const ItemRef& a, const ItemRef& b);
-
-
-    static const OptionalItemRef& at(const InventorySlot& slot);
-
-    static ItemRef create(const InventorySlot& slot);
 
 
     /**
@@ -485,13 +477,17 @@ void item_checkknown(const ItemRef& item);
 /**
  * TODO
  */
-ItemRef
-item_separate(const ItemRef& item, const InventorySlot& slot, lua_int number);
+ItemRef item_separate(
+    const ItemRef& item,
+    const InventoryRef& inv,
+    InventorySlot slot,
+    lua_int number);
 
 /**
  * TODO
  */
-ItemRef item_copy(const ItemRef& item, const InventorySlot& slot);
+ItemRef
+item_copy(const ItemRef& item, const InventoryRef& inv, InventorySlot slot);
 
 void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 

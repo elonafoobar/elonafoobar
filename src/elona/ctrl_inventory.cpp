@@ -1887,7 +1887,8 @@ OnEnterResult on_enter_give(
             selected_item->modify_number(-1);
             return OnEnterResult{1};
         }
-        const auto handed_over_item = item_separate(selected_item, slot, 1);
+        const auto handed_over_item = item_separate(
+            selected_item, g_inv.for_chara(inventory_owner), slot, 1);
         const auto stacked_item =
             inv_stack(g_inv.for_chara(inventory_owner), handed_over_item, true)
                 .stacked_item;
@@ -2231,7 +2232,8 @@ OnEnterResult on_enter_receive(
     }
     else
     {
-        const auto received_item = item_separate(selected_item, slot, in);
+        const auto received_item =
+            item_separate(selected_item, g_inv.pc(), slot, in);
         const auto stacked_item =
             inv_stack(g_inv.pc(), received_item, true).stacked_item;
         item_convert_artifact(stacked_item);
@@ -2315,7 +2317,7 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
     assert(small_medals);
     small_medals->modify_number(-calcmedalvalue(selected_item));
     snd("core.paygold1");
-    const auto received_item = item_copy(selected_item, slot);
+    const auto received_item = item_copy(selected_item, g_inv.pc(), slot);
     txt(i18n::s.get("core.ui.inv.trade_medals.you_receive", received_item));
     const auto stacked_item =
         inv_stack(g_inv.pc(), received_item, true).stacked_item;
