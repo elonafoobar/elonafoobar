@@ -1511,7 +1511,7 @@ void chara_delete(Character& chara)
 {
     chara.set_state(Character::State::empty);
 
-    for (const auto& item : g_inv.for_chara(chara))
+    for (const auto& item : *g_inv.for_chara(chara))
     {
         item->remove();
     }
@@ -1554,7 +1554,8 @@ void chara_relocate(
     }
 
     // Move all items in `source`'s inventory to `destination`'s.
-    Inventory::move_all(g_inv.for_chara(source), g_inv.for_chara(destination));
+    Inventory::move_all(
+        *g_inv.for_chara(source), *g_inv.for_chara(destination));
 
     // Clear some fields which should not be copied.
     source.ai_item = nullptr;
@@ -1777,7 +1778,7 @@ void initialize_pc_character()
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
     cdata.player().total_skill_bonus = 5 + trait(154);
-    for (const auto& item : g_inv.pc())
+    for (const auto& item : *g_inv.pc())
     {
         item->identify_state = IdentifyState::completely;
     }

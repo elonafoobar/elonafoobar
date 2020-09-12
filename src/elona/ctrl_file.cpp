@@ -1089,7 +1089,7 @@ void ctrl_file_tmp_inv_read(const fs::path& filename)
     (void)save_fs_exists(filename);
 
     load_internal(
-        path, [&](auto& ar) { inventory_deserialize(ar, g_inv.tmp()); });
+        path, [&](auto& ar) { inventory_deserialize(ar, *g_inv.tmp()); });
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_read(" << filename.to_u8string() << ") END";
@@ -1107,7 +1107,7 @@ void ctrl_file_tmp_inv_write(const fs::path& filename)
     (void)save_fs_exists(filename);
 
     save_internal(
-        path, [&](auto& ar) { inventory_serialize(ar, g_inv.tmp()); });
+        path, [&](auto& ar) { inventory_serialize(ar, *g_inv.tmp()); });
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_write(" << filename.to_u8string() << ") END";

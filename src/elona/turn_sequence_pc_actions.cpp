@@ -230,7 +230,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *g_inv.ground())
         {
             if (item->position() != cdata.player().position)
                 continue;

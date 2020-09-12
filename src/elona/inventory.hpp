@@ -14,7 +14,7 @@ namespace elona
  * @param inv The inventory to calculate weight.
  * @return The sum of item weight.
  */
-lua_int inv_weight(Inventory& inv);
+lua_int inv_weight(const InventoryRef& inv);
 
 
 /**
@@ -23,7 +23,7 @@ lua_int inv_weight(Inventory& inv);
  * @param inv The inventory to calculate weight.
  * @return The sum of cargo item's weight.
  */
-lua_int inv_cargo_weight(Inventory& inv);
+lua_int inv_cargo_weight(const InventoryRef& inv);
 
 
 /**
@@ -32,7 +32,7 @@ lua_int inv_cargo_weight(Inventory& inv);
  * @param inv The inventory to query.
  * @return The free slot.
  */
-optional<InventorySlot> inv_get_free_slot(Inventory& inv);
+optional<InventorySlot> inv_get_free_slot(const InventoryRef& inv);
 
 
 /**
@@ -43,7 +43,7 @@ optional<InventorySlot> inv_get_free_slot(Inventory& inv);
  * @param inv The inventory.
  * @return The free slot.
  */
-optional<InventorySlot> inv_make_free_slot(Inventory& inv);
+optional<InventorySlot> inv_make_free_slot(const InventoryRef& inv);
 
 
 /**
@@ -53,7 +53,7 @@ optional<InventorySlot> inv_make_free_slot(Inventory& inv);
  * @param inv The inventory.
  * @return The free slot.
  */
-InventorySlot inv_make_free_slot_force(Inventory& inv);
+InventorySlot inv_make_free_slot_force(const InventoryRef& inv);
 
 
 /**
@@ -62,7 +62,7 @@ InventorySlot inv_make_free_slot_force(Inventory& inv);
  * @param inv The inventory to count.
  * @return The number of items @a inv has.
  */
-int inv_count(Inventory& inv);
+lua_int inv_count(const InventoryRef& inv);
 
 
 /**
@@ -71,7 +71,7 @@ int inv_count(Inventory& inv);
  * @param inv The inventory to query.
  * @return @a inv's owner.
  */
-ItemOwner inv_get_owner(Inventory& inv);
+ItemOwner inv_get_owner(const InventoryRef& inv);
 
 
 /**
@@ -80,7 +80,7 @@ ItemOwner inv_get_owner(Inventory& inv);
  * @param inv The inventory to compress.
  * @return The free slot created by the compression.
  */
-InventorySlot inv_compress(Inventory& inv);
+InventorySlot inv_compress(const InventoryRef& inv);
 
 
 /**
@@ -89,7 +89,7 @@ InventorySlot inv_compress(Inventory& inv);
  * @param inv The inventory.
  * @return An item slot in @a inv.
  */
-InventorySlot inv_get_random_slot(Inventory& inv);
+InventorySlot inv_get_random_slot(const InventoryRef& inv);
 
 
 /**
@@ -104,9 +104,9 @@ template <
     typename F,
     std::enable_if_t<std::is_invocable_v<F, const ItemRef&>, std::nullptr_t> =
         nullptr>
-OptionalItemRef inv_find(Inventory& inv, F predicate)
+OptionalItemRef inv_find(const InventoryRef& inv, F predicate)
 {
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (predicate(item))
         {
@@ -128,11 +128,11 @@ OptionalItemRef inv_find(Inventory& inv, F predicate)
 template <
     typename F,
     std::enable_if_t<
-        std::is_invocable_v<F, const ItemRef&, Inventory&>,
+        std::is_invocable_v<F, const ItemRef&, const InventoryRef&>,
         std::nullptr_t> = nullptr>
-OptionalItemRef inv_find(Inventory& inv, F predicate)
+OptionalItemRef inv_find(const InventoryRef& inv, F predicate)
 {
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (predicate(item, inv))
         {
@@ -155,10 +155,10 @@ template <
     typename F,
     std::enable_if_t<std::is_invocable_v<F, const ItemRef&>, std::nullptr_t> =
         nullptr>
-OptionalItemRef inv_find_last_match(Inventory& inv, F predicate)
+OptionalItemRef inv_find_last_match(const InventoryRef& inv, F predicate)
 {
     OptionalItemRef result;
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (predicate(item))
         {
@@ -180,12 +180,12 @@ OptionalItemRef inv_find_last_match(Inventory& inv, F predicate)
 template <
     typename F,
     std::enable_if_t<
-        std::is_invocable_v<F, const ItemRef&, Inventory&>,
+        std::is_invocable_v<F, const ItemRef&, const InventoryRef&>,
         std::nullptr_t> = nullptr>
-OptionalItemRef inv_find_last_match(Inventory& inv, F predicate)
+OptionalItemRef inv_find_last_match(const InventoryRef& inv, F predicate)
 {
     OptionalItemRef result;
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (predicate(item, inv))
         {
@@ -211,7 +211,7 @@ struct InvStackResult
  * Try to stack @a inv with @a base_item.
  */
 InvStackResult inv_stack(
-    Inventory& inv,
+    const InventoryRef& inv,
     const ItemRef& base_item,
     bool show_message = false,
     optional<lua_int> number = none);

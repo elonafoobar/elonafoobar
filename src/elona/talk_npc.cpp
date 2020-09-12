@@ -98,7 +98,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         return TalkResult::talk_npc;
     }
     p = 0;
-    for (const auto& item : g_inv.pc())
+    for (const auto& item : *g_inv.pc())
     {
         if (item->identify_state != IdentifyState::completely)
         {
@@ -117,7 +117,7 @@ TalkResult talk_wizard_identify(Character& speaker, int chatval_)
         p(1) = 0;
         p(0) = 0;
         p(1) = 0;
-        for (const auto& item : g_inv.pc())
+        for (const auto& item : *g_inv.pc())
         {
             if (item->identify_state != IdentifyState::completely)
             {
@@ -210,7 +210,7 @@ TalkResult talk_healer_restore_attributes(Character& speaker)
 TalkResult talk_trade(Character& speaker)
 {
     invsubroutine = 1;
-    for (const auto& item : g_inv.for_chara(speaker))
+    for (const auto& item : *g_inv.for_chara(speaker))
     {
         item->identify_state = IdentifyState::completely;
     }
@@ -1673,7 +1673,7 @@ TalkResult talk_quest_giver(Character& speaker)
         }
         if (quest_data[rq].id == 1002)
         {
-            if (!g_inv.pc().has_free_slot())
+            if (!g_inv.pc()->has_free_slot())
             {
                 buff = i18n::s.get(
                     "core.talk.npc.quest_giver.about.backpack_full", speaker);
@@ -2170,7 +2170,7 @@ TalkResult talk_npc(Character& speaker)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
-                    for (const auto& item : g_inv.pc())
+                    for (const auto& item : *g_inv.pc())
                     {
                         if (the_item_db[item->id]->integer_id == p)
                         {
@@ -2190,7 +2190,7 @@ TalkResult talk_npc(Character& speaker)
             quest_data[rq].client_chara_type == 3 &&
             quest_data[rq].progress == 1)
         {
-            for (const auto& item : g_inv.pc())
+            for (const auto& item : *g_inv.pc())
             {
                 if (item->is_no_drop)
                 {

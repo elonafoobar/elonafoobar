@@ -2926,7 +2926,7 @@ int initialize_quest_map_party()
             chara->original_relationship = -1;
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         item->own_state = OwnState::town;
     }
@@ -2975,7 +2975,7 @@ void initialize_quest_map_town()
             }
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         f = 0;
         if (item->id == "core.well" || item->id == "core.fountain")

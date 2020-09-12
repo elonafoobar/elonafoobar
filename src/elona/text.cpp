@@ -2576,8 +2576,8 @@ std::string txtitemoncell(int x, int y)
             break;
 
         const auto item = item_index < 0
-            ? g_inv.ground().at(0) /* TODO phantom ref */
-            : g_inv.ground().at(item_index - 1);
+            ? g_inv.ground()->at(0) /* TODO phantom ref */
+            : g_inv.ground()->at(item_index - 1);
         if (first)
         {
             first = false;

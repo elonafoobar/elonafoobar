@@ -38,10 +38,10 @@ bool is_stackable_with(const ItemRef& item, const ItemRef& base_item)
 
 
 
-lua_int inv_weight(Inventory& inv)
+lua_int inv_weight(const InventoryRef& inv)
 {
     lua_int weight{};
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (item->weight >= 0)
         {
@@ -53,10 +53,10 @@ lua_int inv_weight(Inventory& inv)
 
 
 
-lua_int inv_cargo_weight(Inventory& inv)
+lua_int inv_cargo_weight(const InventoryRef& inv)
 {
     lua_int weight{};
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (item->weight < 0)
         {
@@ -68,14 +68,14 @@ lua_int inv_cargo_weight(Inventory& inv)
 
 
 
-optional<InventorySlot> inv_get_free_slot(Inventory& inv)
+optional<InventorySlot> inv_get_free_slot(const InventoryRef& inv)
 {
-    return inv.get_free_slot();
+    return inv->get_free_slot();
 }
 
 
 
-optional<InventorySlot> inv_make_free_slot(Inventory& inv)
+optional<InventorySlot> inv_make_free_slot(const InventoryRef& inv)
 {
     if (inv_get_owner(inv).is_map())
     {
@@ -89,7 +89,7 @@ optional<InventorySlot> inv_make_free_slot(Inventory& inv)
 
 
 
-InventorySlot inv_make_free_slot_force(Inventory& inv)
+InventorySlot inv_make_free_slot_force(const InventoryRef& inv)
 {
     if (const auto slot = inv_get_free_slot(inv))
     {
@@ -123,12 +123,11 @@ InventorySlot inv_make_free_slot_force(Inventory& inv)
 
 
 
-int inv_count(Inventory& inv)
+lua_int inv_count(const InventoryRef& inv)
 {
-    int n{};
-    for (const auto& _item : inv)
+    lua_int n{};
+    for ([[maybe_unused]] const auto& _i : *inv)
     {
-        (void)_item;
         ++n;
     }
     return n;
@@ -136,31 +135,31 @@ int inv_count(Inventory& inv)
 
 
 
-ItemOwner inv_get_owner(Inventory& inv)
+ItemOwner inv_get_owner(const InventoryRef& inv)
 {
-    if (inv.inventory_id() == -1)
+    if (inv->inventory_id() == -1)
     {
         return ItemOwner::map();
     }
-    else if (inv.inventory_id() == 255)
+    else if (inv->inventory_id() == 255)
     {
         return ItemOwner::temporary();
     }
     else
     {
-        return ItemOwner::character(cdata[inv.inventory_id()]);
+        return ItemOwner::character(cdata[inv->inventory_id()]);
     }
 }
 
 
 
-InventorySlot inv_compress(Inventory& inv)
+InventorySlot inv_compress(const InventoryRef& inv)
 {
     int number_of_deleted_items{};
     for (int i = 0; i < 100; ++i)
     {
         int threshold = 200 * (i * i + 1);
-        for (const auto& item : inv)
+        for (const auto& item : *inv)
         {
             if (!item->is_precious && item->value < threshold)
             {
@@ -178,7 +177,7 @@ InventorySlot inv_compress(Inventory& inv)
         }
     }
 
-    if (const auto free_slot = inv.get_free_slot())
+    if (const auto free_slot = inv->get_free_slot())
     {
         return *free_slot;
     }
@@ -192,16 +191,16 @@ InventorySlot inv_compress(Inventory& inv)
 
 
 
-InventorySlot inv_get_random_slot(Inventory& inv)
+InventorySlot inv_get_random_slot(const InventoryRef& inv)
 {
-    const auto index = rnd(inv.size());
-    return {&inv, index};
+    const auto index = rnd(inv->size());
+    return {inv, index};
 }
 
 
 
 InvStackResult inv_stack(
-    Inventory& inv,
+    const InventoryRef& inv,
     const ItemRef& base_item,
     bool show_message,
     optional<lua_int> number)
@@ -211,7 +210,7 @@ InvStackResult inv_stack(
         return {false, base_item};
     }
 
-    for (const auto& item : inv)
+    for (const auto& item : *inv)
     {
         if (item == base_item || item->id != base_item->id)
             continue;
@@ -243,7 +242,7 @@ void inv_open_tmp_inv(const fs::path& file_name)
     }
     else
     {
-        g_inv.tmp().clear();
+        g_inv.tmp()->clear();
     }
 }
 
@@ -252,21 +251,21 @@ void inv_open_tmp_inv(const fs::path& file_name)
 void inv_close_tmp_inv(const fs::path& file_name)
 {
     ctrl_file_tmp_inv_write(file_name);
-    g_inv.tmp().clear();
+    g_inv.tmp()->clear();
 }
 
 
 
 void inv_open_tmp_inv_no_physical_file()
 {
-    g_inv.tmp().clear();
+    g_inv.tmp()->clear();
 }
 
 
 
 void inv_close_tmp_inv_no_physical_file()
 {
-    g_inv.tmp().clear();
+    g_inv.tmp()->clear();
 }
 
 } // namespace elona

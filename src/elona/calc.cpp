@@ -1205,7 +1205,7 @@ int calc_ammo_reloading_cost(Character& owner, bool do_reload)
 {
     int cost{};
 
-    for (const auto& item : g_inv.for_chara(owner))
+    for (const auto& item : *g_inv.for_chara(owner))
     {
         if (the_item_db[item->id]->category != ItemCategory::ammo)
             continue;
@@ -1262,7 +1262,7 @@ int calcidentifyvalue(int type)
     if (type == 1)
     {
         int need_to_identify{};
-        for (const auto& item : g_inv.pc())
+        for (const auto& item : *g_inv.pc())
         {
             if (item->identify_state != IdentifyState::completely)
             {

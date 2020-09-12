@@ -406,7 +406,7 @@ TalkResult _talk_hv_adventurer_friendship(Character& speaker)
 
 void _adventurer_receive_souvenir()
 {
-    if (!g_inv.pc().has_free_slot())
+    if (!g_inv.pc()->has_free_slot())
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));

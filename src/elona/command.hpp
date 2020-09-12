@@ -10,6 +10,7 @@ namespace elona
 
 enum class TurnResult;
 struct Inventory;
+using InventoryRef = Inventory*;
 struct Item;
 struct Character;
 
@@ -64,7 +65,7 @@ struct PickUpItemResult
     OptionalItemRef picked_up_item;
 };
 PickUpItemResult pick_up_item(
-    Inventory& inv,
+    const InventoryRef& inv,
     const ItemRef& item,
     optional_ref<Character> shopkeeper,
     bool play_sound = true);

@@ -261,7 +261,7 @@ void chara_vomit(Character& chara)
     if (map_data.type != mdata_t::MapType::world_map)
     {
         auto p = 2;
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *g_inv.ground())
         {
             if (item->id == "core.vomit")
             {
@@ -1480,12 +1480,12 @@ void foods_get_rotten()
             continue;
         }
 
-        for (const auto& item : g_inv.for_chara(chara))
+        for (const auto& item : *g_inv.for_chara(chara))
         {
             _food_gets_rotten(chara.index, item);
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         _food_gets_rotten(-1, item);
     }

@@ -435,6 +435,10 @@ private:
 
 
 
+using InventoryRef = Inventory*;
+
+
+
 struct AllInventory
 {
 private:
@@ -451,11 +455,11 @@ public:
     ItemRef operator[](int index);
 
 
-    Inventory& pc();
-    Inventory& ground();
-    Inventory& tmp();
-    Inventory& for_chara(const Character& chara);
-    Inventory& by_index(int index);
+    InventoryRef pc();
+    InventoryRef ground();
+    InventoryRef tmp();
+    InventoryRef for_chara(const Character& chara);
+    InventoryRef by_index(int index);
 
     iterator_pair_type all();
     iterator_pair_type global();
@@ -493,8 +497,8 @@ void item_acid(const Character& owner, OptionalItemRef item = nullptr);
 
 void itemturn(const ItemRef& item);
 
-OptionalItemRef itemfind(Inventory& inv, data::InstanceId id);
-OptionalItemRef itemfind(Inventory& inv, int subcategory);
+OptionalItemRef itemfind(const InventoryRef& inv, data::InstanceId id);
+OptionalItemRef itemfind(const InventoryRef& inv, int subcategory);
 
 int itemusingfind(const ItemRef& item, bool disallow_pc = false);
 
@@ -524,9 +528,13 @@ ItemRef item_separate(const ItemRef& stacked_item);
 
 void item_dump_desc(const ItemRef&);
 
-bool item_fire(Inventory& inv, const OptionalItemRef& burned_item = nullptr);
+bool item_fire(
+    const InventoryRef& inv,
+    const OptionalItemRef& burned_item = nullptr);
 void mapitem_fire(optional_ref<Character> arsonist, int x, int y);
-bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item = nullptr);
+bool item_cold(
+    const InventoryRef& inv,
+    const OptionalItemRef& destroyed_item = nullptr);
 void mapitem_cold(int x, int y);
 
 

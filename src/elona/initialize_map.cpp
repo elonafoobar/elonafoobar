@@ -1395,7 +1395,7 @@ void migrate_old_save_v17()
             cell_data.at(x, y).item_info_memory.clear();
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         cell_refresh(item->position().x, item->position().y);
     }

@@ -289,43 +289,43 @@ ItemRef AllInventory::operator[](int index)
 {
     const auto inv_id = static_cast<int>(index >> 18) - 1;
     const auto idx = index - ((inv_id + 1) << 18);
-    return by_index(inv_id).at(idx).unwrap();
+    return by_index(inv_id)->at(idx).unwrap();
 }
 
 
 
-Inventory& AllInventory::pc()
+InventoryRef AllInventory::pc()
 {
-    return _inventories.front();
+    return &_inventories.front();
 }
 
 
 
-Inventory& AllInventory::ground()
+InventoryRef AllInventory::ground()
 {
     auto itr = _inventories.end();
     --itr;
     --itr;
-    return *itr;
+    return &*itr;
 }
 
 
 
-Inventory& AllInventory::tmp()
+InventoryRef AllInventory::tmp()
 {
-    return _inventories.back();
+    return &_inventories.back();
 }
 
 
 
-Inventory& AllInventory::for_chara(const Character& chara)
+InventoryRef AllInventory::for_chara(const Character& chara)
 {
-    return _inventories.at(chara.index);
+    return &_inventories.at(chara.index);
 }
 
 
 
-Inventory& AllInventory::by_index(int index)
+InventoryRef AllInventory::by_index(int index)
 {
     if (index == -1)
     {
@@ -450,14 +450,14 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
 
 
 
-OptionalItemRef itemfind(Inventory& inv, data::InstanceId id)
+OptionalItemRef itemfind(const InventoryRef& inv, data::InstanceId id)
 {
     return inv_find(inv, [&](const auto& item) { return item->id == id; });
 }
 
 
 
-OptionalItemRef itemfind(Inventory& inv, int subcategory)
+OptionalItemRef itemfind(const InventoryRef& inv, int subcategory)
 {
     return inv_find(inv, [&](const auto& item) {
         return the_item_db[item->id]->subcategory == subcategory;
@@ -468,7 +468,7 @@ OptionalItemRef itemfind(Inventory& inv, int subcategory)
 
 OptionalItemRef mapitemfind(const Position& pos, data::InstanceId id)
 {
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->id == id && item->position() == pos)
         {
@@ -494,7 +494,7 @@ void cell_refresh(int x, int y)
         i = nullptr;
 
     size_t number_of_items = 0;
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->position() == Position{x, y})
         {
@@ -608,7 +608,7 @@ void Item::set_number(lua_int new_number)
     if (_number == new_number)
         return;
 
-    auto inv_owner = inv_get_owner(*inventory());
+    auto inv_owner = inv_get_owner(inventory());
     const auto inv_owner_chara = inv_owner.as_character();
     const auto needs_cell_refresh =
         inv_owner.is_map() && (_number == 0 || new_number == 0);
@@ -687,7 +687,7 @@ ItemRef item_separate(const ItemRef& stacked_item)
         return stacked_item;
     }
 
-    auto slot_opt = inv_make_free_slot(*stacked_item->inventory());
+    auto slot_opt = inv_make_free_slot(stacked_item->inventory());
     if (!slot_opt)
     {
         slot_opt = inv_make_free_slot(g_inv.ground());
@@ -1718,7 +1718,7 @@ void item_acid(const Character& owner, OptionalItemRef item)
 
 
 
-bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
+bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
 {
     OptionalItemRef blanket;
     std::vector<ItemRef> list;
@@ -1735,7 +1735,7 @@ bool item_fire(Inventory& inv, const OptionalItemRef& burned_item)
         {
             return false;
         }
-        for (const auto& item : inv)
+        for (const auto& item : *inv)
         {
             if (item->id == "core.fireproof_blanket")
             {
@@ -1917,7 +1917,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
     }
 
     OptionalItemRef burned_item;
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->position() == Position{x, y})
         {
@@ -1947,7 +1947,7 @@ void mapitem_fire(optional_ref<Character> arsonist, int x, int y)
 
 
 
-bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
+bool item_cold(const InventoryRef& inv, const OptionalItemRef& destroyed_item)
 {
     OptionalItemRef blanket;
     std::vector<ItemRef> list;
@@ -1964,7 +1964,7 @@ bool item_cold(Inventory& inv, const OptionalItemRef& destroyed_item)
         {
             return false;
         }
-        for (const auto& item : inv)
+        for (const auto& item : *inv)
         {
             if (item->id == "core.coldproof_blanket")
             {
@@ -2082,7 +2082,7 @@ void mapitem_cold(int x, int y)
         return;
     }
     OptionalItemRef destroyed_item;
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->position() == Position{x, y})
         {
@@ -2100,7 +2100,7 @@ void mapitem_cold(int x, int y)
 
 ItemOwner item_get_owner(const ItemRef& item)
 {
-    return inv_get_owner(*item->inventory());
+    return inv_get_owner(item->inventory());
 }
 
 
@@ -2250,7 +2250,7 @@ void auto_identify()
         return;
     }
 
-    for (const auto& item : g_inv.pc())
+    for (const auto& item : *g_inv.pc())
     {
         if (item->identify_state == IdentifyState::completely)
         {
@@ -2347,7 +2347,7 @@ ItemRef item_convert_artifact(
         {
             continue;
         }
-        for (const auto& item : g_inv.for_chara(chara))
+        for (const auto& item : *g_inv.for_chara(chara))
         {
             if (item->id == artifact->id && item != artifact)
             {
@@ -2362,7 +2362,7 @@ ItemRef item_convert_artifact(
     }
     if (!found && !ignore_map_inventory)
     {
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *g_inv.ground())
         {
             if (item->id == artifact->id && item != artifact)
             {
@@ -2380,7 +2380,7 @@ ItemRef item_convert_artifact(
     const auto original_item_name = itemname(artifact);
     const auto artifact_id = artifact->id;
     const auto artifact_pos = artifact->position();
-    auto artifact_inv = artifact->inventory();
+    const auto artifact_inv = artifact->inventory();
 
     artifact->remove();
 
@@ -2389,7 +2389,7 @@ ItemRef item_convert_artifact(
         flt(the_item_db[artifact_id]->level, Quality::miracle);
         flttypeminor = the_item_db[artifact_id]->subcategory;
         if (const auto converted_item =
-                itemcreate(*artifact_inv, 0, artifact_pos, 0))
+                itemcreate(artifact_inv, 0, artifact_pos, 0))
         {
             if (converted_item->quality != Quality::special)
             {

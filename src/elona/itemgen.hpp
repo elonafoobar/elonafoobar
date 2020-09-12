@@ -11,6 +11,7 @@ namespace elona
 {
 
 struct Inventory;
+using InventoryRef = Inventory*;
 struct Item;
 struct Character;
 struct Position;
@@ -18,10 +19,13 @@ struct Position;
 
 
 OptionalItemRef
-itemcreate(Inventory& inv, int id, int x, int y, int number = 0);
+itemcreate(const InventoryRef& inv, int id, int x, int y, int number = 0);
 
-OptionalItemRef
-itemcreate(Inventory& inv, int id, const Position& pos, int number = 0);
+OptionalItemRef itemcreate(
+    const InventoryRef& inv,
+    int id,
+    const Position& pos,
+    int number = 0);
 
 OptionalItemRef itemcreate_player_inv(int id, int number = 0);
 

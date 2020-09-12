@@ -187,7 +187,7 @@ void remove_card_and_figure_from_heir_trunk()
 {
     if (invctrl == 22 && invctrl(1) == 1)
     {
-        for (const auto& item : g_inv.tmp())
+        for (const auto& item : *g_inv.tmp())
         {
             if (item->id == "core.card" || item->id == "core.figurine")
             {
@@ -264,20 +264,20 @@ void make_item_list(
             }
             if (refers_to_tmp_inventory(invctrl(0)))
             {
-                inv = &g_inv.tmp();
+                inv = g_inv.tmp();
             }
             else
             {
-                inv = &g_inv.ground();
+                inv = g_inv.ground();
             }
         }
         if (cnt == 1)
         {
-            inv = &g_inv.pc();
+            inv = g_inv.pc();
             if (invctrl == 20 || invctrl == 25)
             {
                 assert(inventory_owner);
-                inv = &g_inv.for_chara(*inventory_owner);
+                inv = g_inv.for_chara(*inventory_owner);
             }
             if (invctrl == 27)
             {
@@ -287,7 +287,7 @@ void make_item_list(
                 {
                     continue;
                 }
-                inv = &g_inv.for_chara(cdata[target_chara_index]);
+                inv = g_inv.for_chara(cdata[target_chara_index]);
             }
             if (exclude_character_items(invctrl(0)))
             {
@@ -1327,7 +1327,7 @@ OnEnterResult on_enter_drop(
         txt(i18n::s.get("core.ui.inv.common.set_as_no_drop"));
         return OnEnterResult{2};
     }
-    if (!g_inv.ground().has_free_slot())
+    if (!g_inv.ground()->has_free_slot())
     {
         txt(i18n::s.get("core.ui.inv.drop.cannot_anymore"));
         snd("core.fail1");
@@ -1560,7 +1560,7 @@ OnEnterResult on_enter_external_inventory(
             }
         }
     }
-    auto& destination_inventory =
+    const auto destination_inventory =
         (invctrl == 12 || (invctrl == 24 && invctrl(1) != 0)) ? g_inv.tmp()
                                                               : g_inv.pc();
     int stat =

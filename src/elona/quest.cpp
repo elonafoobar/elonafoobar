@@ -1109,7 +1109,7 @@ void quest_exit_map()
 {
     if (game_data.executing_immediate_quest_type == 1006)
     {
-        for (const auto& item : g_inv.pc())
+        for (const auto& item : *g_inv.pc())
         {
             if (item->own_state == OwnState::crop)
             {

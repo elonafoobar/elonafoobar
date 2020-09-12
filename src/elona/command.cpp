@@ -96,7 +96,7 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 void _search_for_crystal()
 {
     optional<int> d;
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->own_state != OwnState::town_special)
         {
@@ -1678,7 +1678,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (!g_inv.pc().has_free_slot())
+                if (!g_inv.pc()->has_free_slot())
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -3477,7 +3477,7 @@ TurnResult do_get_command()
                     .feats = 0;
                 return TurnResult::turn_end;
             }
-            if (!g_inv.pc().has_free_slot())
+            if (!g_inv.pc()->has_free_slot())
             {
                 txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 update_screen();
@@ -5263,7 +5263,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
 
 
 PickUpItemResult pick_up_item(
-    Inventory& inv,
+    const InventoryRef& inv,
     const ItemRef& item,
     optional_ref<Character> shopkeeper,
     bool play_sound)
@@ -5326,7 +5326,7 @@ PickUpItemResult pick_up_item(
             {
                 if (!cdata.player().activity)
                 {
-                    if (!g_inv.pc().has_free_slot())
+                    if (!g_inv.pc()->has_free_slot())
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
@@ -5362,7 +5362,7 @@ PickUpItemResult pick_up_item(
                 return {0, nullptr};
             }
         }
-        if (!inv.has_free_slot())
+        if (!inv->has_free_slot())
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, nullptr};
@@ -5573,7 +5573,7 @@ PickUpItemResult pick_up_item(
             if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
-                for (const auto& item_ : g_inv.ground())
+                for (const auto& item_ : *g_inv.ground())
                 {
                     if (item_->id == "core.campfire")
                     {
@@ -5826,7 +5826,7 @@ void proc_autopick()
         return;
 
 
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *g_inv.ground())
     {
         if (item->position() != cdata.player().position)
             continue;

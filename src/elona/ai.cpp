@@ -289,7 +289,7 @@ void _ally_sells_item(Character& chara)
     int sold_item_count = 0;
     int earned_money = 0;
 
-    for (const auto& item : g_inv.for_chara(chara))
+    for (const auto& item : *g_inv.for_chara(chara))
     {
         if (the_item_db[item->id]->category == ItemCategory::ore)
         {
@@ -421,7 +421,7 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to a snowman.
     if (rnd(12) == 0)
     {
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *g_inv.ground())
         {
             if (item->id == "core.snow_man" && item->position().x >= scx &&
                 item->position().x < scx + inf_screenw &&
