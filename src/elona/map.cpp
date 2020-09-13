@@ -217,8 +217,7 @@ ChipData chip_data;
     SERIALIZE(17, should_regenerate); \
     SERIALIZE(18, max_item_count); \
     SERIALIZE(19, regenerate_count); \
-    SERIALIZE(20, play_campfire_sound); \
-    SERIALIZE(21, mefs_loaded_flag);
+    SERIALIZE(20, play_campfire_sound);
 
 
 #define SERIALIZE MDATA_PACK

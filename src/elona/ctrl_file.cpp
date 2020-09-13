@@ -729,22 +729,8 @@ void ctrl_file_map_read()
 
     {
         const auto filepath = dir / fs::u8path(u8"mef_"s + mid + u8".s2");
-        if (map_data.mefs_loaded_flag == 0)
-        {
-            for (int y = 0; y < map_data.height; ++y)
-            {
-                for (int x = 0; x < map_data.width; ++x)
-                {
-                    cell_data.at(x, y).mef_index_plus_one = 0;
-                }
-            }
-            map_data.mefs_loaded_flag = 1;
-        }
-        else
-        {
-            (void)save_fs_exists(fs::u8path(u8"mef_"s + mid + u8".s2"));
-            load_v2(filepath, mef, 0, 9, 0, MEF_MAX);
-        }
+        (void)save_fs_exists(fs::u8path(u8"mef_"s + mid + u8".s2"));
+        load_v2(filepath, mef, 0, 9, 0, MEF_MAX);
     }
 
     arrayfile(true, u8"mdatan", dir / fs::u8path(u8"mdatan_"s + mid + u8".s2"));

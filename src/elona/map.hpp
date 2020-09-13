@@ -50,7 +50,6 @@ struct MapData
     int max_item_count{};
     int regenerate_count{};
     int play_campfire_sound{};
-    int mefs_loaded_flag{};
 
 
     /**
