@@ -62,7 +62,7 @@ sol::optional<ItemRef> LuaInventory_stack(
     sol::optional<bool> show_message)
 {
     const auto stack_result =
-        inv_stack(*self, item, show_message.value_or(false));
+        inv_stack(self, item, show_message.value_or(false));
     if (stack_result.stacked)
     {
         return stack_result.stacked_item;

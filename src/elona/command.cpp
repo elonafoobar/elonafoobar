@@ -96,7 +96,7 @@ bool any_of_characters_around_you(F predicate, bool ignore_pc = true)
 void _search_for_crystal()
 {
     optional<int> d;
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->own_state != OwnState::town_special)
         {
@@ -1163,8 +1163,8 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
 
     if (throw_item->id == "core.monster_ball")
     {
-        const auto slot = inv_make_free_slot_force(g_inv.ground());
-        const auto ball = item_separate(throw_item, slot, 1);
+        const auto slot = inv_make_free_slot_force(inv_map());
+        const auto ball = item_separate(throw_item, inv_map(), slot, 1);
         ball->set_position({tlocx, tlocy});
         return do_throw_command_internal(thrower, ball);
     }
@@ -1678,7 +1678,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                         "core.action.dip.result.natural_potion_drop"));
                     return TurnResult::turn_end;
                 }
-                if (!g_inv.pc().has_free_slot())
+                if (!inv_player()->has_free_slot())
                 {
                     txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                     return TurnResult::turn_end;
@@ -1705,7 +1705,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                     txt(i18n::s.get("core.action.dip.result.natural_potion"));
                     txt(i18n::s.get(
                         "core.action.dip.you_get", natural_potion.unwrap()));
-                    inv_stack(g_inv.pc(), natural_potion.unwrap(), true);
+                    inv_stack(inv_player(), natural_potion.unwrap(), true);
                 }
                 return TurnResult::turn_end;
             }
@@ -2763,7 +2763,7 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.deck.put_away"));
         break;
     case 38:
-        if (!itemfind(g_inv.pc(), "core.deck"))
+        if (!itemfind(inv_player(), "core.deck"))
         {
             txt(i18n::s.get("core.action.use.deck.no_deck"));
             update_screen();
@@ -2948,7 +2948,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             open_box(box);
         }
-        inv_stack(g_inv.pc(), box);
+        inv_stack(inv_player(), box);
     }
     screenupdate = -1;
     update_screen();
@@ -3477,7 +3477,7 @@ TurnResult do_get_command()
                     .feats = 0;
                 return TurnResult::turn_end;
             }
-            if (!g_inv.pc().has_free_slot())
+            if (!inv_player()->has_free_slot())
             {
                 txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
                 update_screen();
@@ -3541,7 +3541,7 @@ TurnResult do_get_command()
                 {
                     item->curse_state = CurseState::none;
                     item->identify_state = IdentifyState::completely;
-                    inv_stack(g_inv.pc(), item.unwrap(), true);
+                    inv_stack(inv_player(), item.unwrap(), true);
                 }
             }
             return TurnResult::turn_end;
@@ -3582,7 +3582,7 @@ TurnResult do_get_command()
     }
 
     in = item_opt->number();
-    int stat = pick_up_item(g_inv.pc(), item_opt.unwrap(), none).type;
+    int stat = pick_up_item(inv_player(), item_opt.unwrap(), none).type;
     if (stat == 1 || stat == -1)
     {
         return TurnResult::turn_end;
@@ -4274,7 +4274,7 @@ int decode_book(Character& reader, const ItemRef& book)
         book->param2 = 1;
         book->charges = 1;
         book->has_charges = false;
-        inv_stack(g_inv.pc(), book, true);
+        inv_stack(inv_player(), book, true);
     }
     else
     {
@@ -5263,7 +5263,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
 
 
 PickUpItemResult pick_up_item(
-    Inventory& inv,
+    const InventoryRef& inv,
     const ItemRef& item,
     optional_ref<Character> shopkeeper,
     bool play_sound)
@@ -5326,7 +5326,7 @@ PickUpItemResult pick_up_item(
             {
                 if (!cdata.player().activity)
                 {
-                    if (!g_inv.pc().has_free_slot())
+                    if (!inv_player()->has_free_slot())
                     {
                         txt(i18n::s.get(
                             "core.ui.inv.common.inventory_is_full"));
@@ -5362,7 +5362,7 @@ PickUpItemResult pick_up_item(
                 return {0, nullptr};
             }
         }
-        if (!inv.has_free_slot())
+        if (!inv->has_free_slot())
         {
             txt(i18n::s.get("core.action.pick_up.your_inventory_is_full"));
             return {0, nullptr};
@@ -5442,7 +5442,7 @@ PickUpItemResult pick_up_item(
             return {0, nullptr};
         }
         const auto slot = *slot_opt;
-        picked_up_item = item_separate(item, slot, in);
+        picked_up_item = item_separate(item, inv, slot, in);
     }
     assert(picked_up_item);
 
@@ -5573,7 +5573,7 @@ PickUpItemResult pick_up_item(
             if (map_data.play_campfire_sound == 1)
             {
                 f = 0;
-                for (const auto& item_ : g_inv.ground())
+                for (const auto& item_ : *inv_map())
                 {
                     if (item_->id == "core.campfire")
                     {
@@ -5647,7 +5647,7 @@ TurnResult do_bash(Character& chara)
             {
                 txt(i18n::s.get(
                     "core.action.bash.tree.falls_down", fruit.unwrap()));
-                inv_stack(g_inv.ground(), fruit.unwrap());
+                inv_stack(inv_map(), fruit.unwrap());
             }
             return TurnResult::turn_end;
         }
@@ -5826,7 +5826,7 @@ void proc_autopick()
         return;
 
 
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         if (item->position() != cdata.player().position)
             continue;
@@ -5863,7 +5863,7 @@ void proc_autopick()
             {
                 in = item->number();
                 const auto pick_up_item_result =
-                    pick_up_item(g_inv.pc(), item, none, !op.sound);
+                    pick_up_item(inv_player(), item, none, !op.sound);
                 if (pick_up_item_result.type != 1)
                 {
                     break;

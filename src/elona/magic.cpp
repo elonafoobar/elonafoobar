@@ -560,7 +560,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
 
     if (!subject.is_player())
     {
-        for (const auto& item : g_inv.for_chara(subject))
+        for (const auto& item : *subject.inventory())
         {
             if (item->skill == 183)
             {
@@ -651,7 +651,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
         txt(i18n::s.get("core.magic.fish.do_not_know"));
         return false;
     }
-    if (!g_inv.pc().has_free_slot())
+    if (!inv_player()->has_free_slot())
     {
         txt(i18n::s.get("core.ui.inv.common.inventory_is_full"));
         return false;
@@ -1153,7 +1153,7 @@ bool _magic_412(Character& subject, Character& target)
     }
     p(1) = 0;
     p(2) = 0;
-    for (const auto& item : g_inv.for_chara(target))
+    for (const auto& item : *target.inventory())
     {
         if (!is_cursed(item->curse_state))
         {
@@ -1182,7 +1182,7 @@ bool _magic_412(Character& subject, Character& target)
             {
                 ++p(1);
                 item->curse_state = CurseState::none;
-                inv_stack(g_inv.for_chara(target), item, true);
+                inv_stack(target.inventory(), item, true);
             }
             else
             {
@@ -2090,8 +2090,8 @@ bool _magic_645_1114(Character& subject, Character& target)
     {
         for (int _i = 0; _i < 200; ++_i)
         {
-            const auto item =
-                Inventory::at(inv_get_random_slot(g_inv.for_chara(target)));
+            const auto inv = target.inventory();
+            const auto item = inv->at(inv_get_random_slot(inv));
             if (!item)
             {
                 continue;
@@ -2127,7 +2127,7 @@ bool _magic_645_1114(Character& subject, Character& target)
         chara_refresh(target);
         snd("core.curse3");
         animeload(14, target);
-        inv_stack(g_inv.for_chara(target), cursed_item, true);
+        inv_stack(target.inventory(), cursed_item, true);
     }
     else
     {
@@ -2226,7 +2226,7 @@ bool _magic_435(Character& subject, Character& target)
     }
     f = 1;
     {
-        if (itemfind(g_inv.for_chara(subject), "core.monster_heart"))
+        if (itemfind(subject.inventory(), "core.monster_heart"))
         {
             efp = efp * 3 / 2;
         }
@@ -3400,7 +3400,7 @@ bool _magic_651(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.scavenge.apply", subject, target));
     }
     OptionalItemRef eat_item_opt;
-    for (const auto& item : g_inv.for_chara(target))
+    for (const auto& item : *target.inventory())
     {
         if (item->id == "core.fish_a")
         {
@@ -3410,7 +3410,7 @@ bool _magic_651(Character& subject, Character& target)
     }
     if (!eat_item_opt)
     {
-        for (const auto& item : g_inv.for_chara(target))
+        for (const auto& item : *target.inventory())
         {
             if (item->is_precious)
             {

@@ -20,7 +20,7 @@ namespace elona::lua::api::modules::module_Inventory
  */
 Inventory* Inventory_player()
 {
-    return &g_inv.pc();
+    return inv_player();
 }
 
 
@@ -35,7 +35,7 @@ Inventory* Inventory_player()
  */
 Inventory* Inventory_map()
 {
-    return &g_inv.ground();
+    return inv_map();
 }
 
 
@@ -43,7 +43,7 @@ Inventory* Inventory_map()
 // Undocumented because it is unstable API.
 Inventory* Inventory_tmp()
 {
-    return &g_inv.tmp();
+    return g_inv.tmp();
 }
 
 

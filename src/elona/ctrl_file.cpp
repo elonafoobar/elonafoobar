@@ -381,11 +381,12 @@ void inventory_deserialize(serialization::binary::IArchive& ar, Inventory& inv)
     const auto n = inv.size();
     for (size_t i = 0; i < n; ++i)
     {
+        const auto slot = static_cast<InventorySlot>(i);
         bool exists;
         ar(exists);
         if (exists)
         {
-            const auto item_ref = Inventory::create(InventorySlot{&inv, i});
+            const auto item_ref = inv.create(slot);
             auto& item = *item_ref.get_raw_ptr();
             ar(item);
             ItemIdTable::instance().add(item_ref);
@@ -400,11 +401,12 @@ void inventory_serialize(serialization::binary::OArchive& ar, Inventory& inv)
     const auto n = inv.size();
     for (size_t i = 0; i < n; ++i)
     {
-        bool exists = !!inv.at(i);
+        const auto slot = static_cast<InventorySlot>(i);
+        bool exists = !!inv.at(slot);
         ar(exists);
         if (exists)
         {
-            const auto item_ref = inv.at(i).unwrap();
+            const auto item_ref = inv.at(slot).unwrap();
             auto& item = *item_ref.get_raw_ptr();
             ar(item);
         }
@@ -1089,7 +1091,7 @@ void ctrl_file_tmp_inv_read(const fs::path& filename)
     (void)save_fs_exists(filename);
 
     load_internal(
-        path, [&](auto& ar) { inventory_deserialize(ar, g_inv.tmp()); });
+        path, [&](auto& ar) { inventory_deserialize(ar, *g_inv.tmp()); });
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_read(" << filename.to_u8string() << ") END";
@@ -1107,7 +1109,7 @@ void ctrl_file_tmp_inv_write(const fs::path& filename)
     (void)save_fs_exists(filename);
 
     save_internal(
-        path, [&](auto& ar) { inventory_serialize(ar, g_inv.tmp()); });
+        path, [&](auto& ar) { inventory_serialize(ar, *g_inv.tmp()); });
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_write(" << filename.to_u8string() << ") END";

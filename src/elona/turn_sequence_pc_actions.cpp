@@ -18,6 +18,7 @@
 #include "gdata.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "lua_env/console.hpp"
 #include "magic.hpp"
@@ -230,7 +231,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             action = "search";
         }
         p = 0;
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *inv_map())
         {
             if (item->position() != cdata.player().position)
                 continue;

@@ -11,6 +11,7 @@
 #include "enchantment.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "lua_env/interface.hpp"
 #include "map.hpp"
@@ -2576,8 +2577,9 @@ std::string txtitemoncell(int x, int y)
             break;
 
         const auto item = item_index < 0
-            ? g_inv.ground().at(0) /* TODO phantom ref */
-            : g_inv.ground().at(item_index - 1);
+            ? inv_map()->at(
+                  static_cast<InventorySlot>(0)) /* TODO phantom ref */
+            : inv_map()->at(static_cast<InventorySlot>(item_index - 1));
         if (first)
         {
             first = false;

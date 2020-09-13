@@ -12,6 +12,7 @@
 #include "dmgheal.hpp"
 #include "food.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -1109,7 +1110,7 @@ void quest_exit_map()
 {
     if (game_data.executing_immediate_quest_type == 1006)
     {
-        for (const auto& item : g_inv.pc())
+        for (const auto& item : *inv_player())
         {
             if (item->own_state == OwnState::crop)
             {

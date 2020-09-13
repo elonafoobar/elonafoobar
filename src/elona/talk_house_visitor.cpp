@@ -359,7 +359,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
 
 void _adventurer_receive_coin(Character& speaker)
 {
-    inv_make_free_slot_force(g_inv.ground());
+    inv_make_free_slot_force(inv_map());
 
     if (rnd(4))
     {
@@ -406,7 +406,7 @@ TalkResult _talk_hv_adventurer_friendship(Character& speaker)
 
 void _adventurer_receive_souvenir()
 {
-    if (!g_inv.pc().has_free_slot())
+    if (!inv_player()->has_free_slot())
     {
         txt(i18n::s.get(
             "core.talk.visitor.adventurer.souvenir.inventory_is_full"));
@@ -619,7 +619,7 @@ TalkResult _talk_hv_adventurer(Character& speaker)
     }
     if (speaker.impression >= 100 && !speaker.is_best_friend())
     {
-        inv_make_free_slot_force(g_inv.ground());
+        inv_make_free_slot_force(inv_map());
         _talk_hv_adventurer_best_friend(speaker);
         // NOTE: this dialog falls through.
     }

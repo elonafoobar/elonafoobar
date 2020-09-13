@@ -573,6 +573,13 @@ bool Character::is_map_local() const
 
 
 
+InventoryRef Character::inventory()
+{
+    return g_inv.for_chara(*this);
+}
+
+
+
 CData::CData()
     : storage(ELONA_MAX_CHARACTERS)
 {
@@ -1511,7 +1518,7 @@ void chara_delete(Character& chara)
 {
     chara.set_state(Character::State::empty);
 
-    for (const auto& item : g_inv.for_chara(chara))
+    for (const auto& item : *chara.inventory())
     {
         item->remove();
     }
@@ -1554,7 +1561,7 @@ void chara_relocate(
     }
 
     // Move all items in `source`'s inventory to `destination`'s.
-    Inventory::move_all(g_inv.for_chara(source), g_inv.for_chara(destination));
+    Inventory::move_all(*source.inventory(), *destination.inventory());
 
     // Clear some fields which should not be copied.
     source.ai_item = nullptr;
@@ -1777,7 +1784,7 @@ void initialize_pc_character()
     gain_race_feat();
     cdata.player().skill_bonus = 5 + trait(154);
     cdata.player().total_skill_bonus = 5 + trait(154);
-    for (const auto& item : g_inv.pc())
+    for (const auto& item : *inv_player())
     {
         item->identify_state = IdentifyState::completely;
     }
@@ -2061,13 +2068,13 @@ void chara_get_wet(Character& chara, int turns)
 void refresh_burden_state()
 {
     cdata.player().inventory_weight =
-        clamp(inv_weight(g_inv.pc()), 0, 20000000) *
+        clamp(inv_weight(inv_player()), 0, 20000000) *
         (100 - trait(201) * 10 + trait(205) * 20) / 100;
     cdata.player().max_inventory_weight =
         cdata.player().get_skill(10).level * 500 +
         cdata.player().get_skill(11).level * 250 +
         cdata.player().get_skill(153).level * 2000 + 45000;
-    game_data.cargo_weight = inv_cargo_weight(g_inv.pc());
+    game_data.cargo_weight = inv_cargo_weight(inv_player());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata.player().inventory_weight >

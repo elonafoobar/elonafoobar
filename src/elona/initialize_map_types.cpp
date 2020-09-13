@@ -7,6 +7,7 @@
 #include "deferred_event.hpp"
 #include "gdata.hpp"
 #include "i18n.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -1007,7 +1008,7 @@ static void _init_map_your_home()
                 cnt.initial_position.y = map_data.height / 2;
             }
             ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
-            for (const auto& item : g_inv.ground())
+            for (const auto& item : *inv_map())
             {
                 item->set_position({map_data.width / 2, map_data.height / 2});
                 cell_refresh(item->position().x, item->position().y);

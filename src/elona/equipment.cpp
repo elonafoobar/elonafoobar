@@ -242,7 +242,7 @@ void eqrandweaponmage()
 
 void wear_most_valuable_equipment_for_all_body_parts(Character& chara)
 {
-    for (const auto& item : g_inv.for_chara(chara))
+    for (const auto& item : *chara.inventory())
     {
         if (item->body_part != 0)
         {
@@ -321,8 +321,8 @@ void supply_new_equipment(Character& chara)
         f = 0;
         for (int _j = 0; _j < 4; ++_j)
         {
-            const auto item =
-                Inventory::at(inv_get_random_slot(g_inv.for_chara(chara)));
+            const auto inv = chara.inventory();
+            const auto item = inv->at(inv_get_random_slot(inv));
             if (!item)
             {
                 f = 1;
@@ -1375,7 +1375,7 @@ void unequip_item(Character& chara, size_t equipment_slot_index)
         return;
     }
     equipment_slot.equipment->body_part = 0;
-    inv_stack(g_inv.for_chara(chara), equipment_slot.equipment.unwrap());
+    inv_stack(chara.inventory(), equipment_slot.equipment.unwrap());
     equipment_slot.unequip();
 }
 

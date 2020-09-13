@@ -50,11 +50,12 @@ int calculate_original_value(const ItemRef& item)
 namespace elona
 {
 
-OptionalItemRef do_create_item(int, Inventory&, int, int);
+OptionalItemRef do_create_item(int, const InventoryRef&, int, int);
 
 
 
-OptionalItemRef itemcreate(Inventory& inv, int id, int x, int y, int number)
+OptionalItemRef
+itemcreate(const InventoryRef& inv, int id, int x, int y, int number)
 {
     if (flttypeminor != 0)
     {
@@ -67,7 +68,7 @@ OptionalItemRef itemcreate(Inventory& inv, int id, int x, int y, int number)
 
 
 OptionalItemRef
-itemcreate(Inventory& inv, int id, const Position& pos, int number)
+itemcreate(const InventoryRef& inv, int id, const Position& pos, int number)
 {
     return itemcreate(inv, id, pos.x, pos.y, number);
 }
@@ -83,14 +84,14 @@ OptionalItemRef itemcreate_player_inv(int id, int number)
 
 OptionalItemRef itemcreate_chara_inv(Character& chara, int id, int number)
 {
-    return itemcreate(g_inv.for_chara(chara), id, -1, -1, number);
+    return itemcreate(chara.inventory(), id, -1, -1, number);
 }
 
 
 
 OptionalItemRef itemcreate_map_inv(int id, int x, int y, int number)
 {
-    return itemcreate(g_inv.ground(), id, x, y, number);
+    return itemcreate(inv_map(), id, x, y, number);
 }
 
 
@@ -151,7 +152,7 @@ int get_random_item_id()
 
 
 
-bool upgrade_item_quality(Inventory& inv)
+bool upgrade_item_quality(const InventoryRef& inv)
 {
     const auto owner_chara = inv_get_owner(inv).as_character();
     if (owner_chara && !owner_chara->is_player())
@@ -162,7 +163,8 @@ bool upgrade_item_quality(Inventory& inv)
 
 
 
-OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
+OptionalItemRef
+do_create_item(int item_id, const InventoryRef& inv, int x, int y)
 {
     if (fixlv < Quality::godly && upgrade_item_quality(inv))
     {
@@ -266,7 +268,7 @@ OptionalItemRef do_create_item(int item_id, Inventory& inv, int x, int y)
         }
     }
 
-    const auto item = Inventory::create(empty_slot);
+    const auto item = inv->create(empty_slot);
     if (item_pos)
     {
         item->set_position(*item_pos);

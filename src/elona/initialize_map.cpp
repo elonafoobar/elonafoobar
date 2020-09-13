@@ -16,6 +16,7 @@
 #include "food.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
+#include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
@@ -1395,7 +1396,7 @@ void migrate_old_save_v17()
             cell_data.at(x, y).item_info_memory.clear();
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         cell_refresh(item->position().x, item->position().y);
     }

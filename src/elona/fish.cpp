@@ -23,7 +23,7 @@ void fish_get(int integer_fish_id)
         item->value = the_fish_db[integer_fish_id]->value;
         item->weight = the_fish_db[integer_fish_id]->weight;
         txt(i18n::s.get("core.activity.fishing.get", item.unwrap()));
-        inv_stack(g_inv.pc(), item.unwrap(), true);
+        inv_stack(inv_player(), item.unwrap(), true);
     }
 }
 

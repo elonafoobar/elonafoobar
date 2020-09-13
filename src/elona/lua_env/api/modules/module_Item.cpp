@@ -29,7 +29,7 @@ namespace elona::lua::api::modules::module_Item
  */
 int Item_count()
 {
-    return inv_count(g_inv.ground());
+    return inv_count(inv_map());
 }
 
 
@@ -73,7 +73,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
     // body for some reason.
 #ifndef ELONA_DOCGEN
     int id = 0;
-    Inventory* inv = nullptr;
+    InventoryRef inv{};
     int number = 0;
     objlv = 0;
     fixlv = Quality::none;
@@ -93,13 +93,13 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
         number = *it;
     }
 
-    if (auto it = args.get<sol::optional<Inventory*>>("inventory"))
+    if (auto it = args.get<sol::optional<InventoryRef>>("inventory"))
     {
         inv = *it;
     }
     if (!inv)
     {
-        inv = &g_inv.ground();
+        inv = inv_map();
     }
 
     // Random objlv
@@ -155,7 +155,7 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
         id = data.integer_id;
     }
 
-    if (const auto item = itemcreate(*inv, id, x, y, number))
+    if (const auto item = itemcreate(inv, id, x, y, number))
     {
         return item.unwrap();
     }

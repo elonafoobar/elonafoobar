@@ -261,7 +261,7 @@ void chara_vomit(Character& chara)
     if (map_data.type != mdata_t::MapType::world_map)
     {
         auto p = 2;
-        for (const auto& item : g_inv.ground())
+        for (const auto& item : *inv_map())
         {
             if (item->id == "core.vomit")
             {
@@ -444,7 +444,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     make_dish(food, dish_rank);
     txt(i18n::s.get("core.food.cook", item_name_prev, cook_tool, food));
-    inv_stack(g_inv.pc(), food, true);
+    inv_stack(inv_player(), food, true);
     const auto rank = food->param2;
     if (rank > 2)
     {
@@ -1480,12 +1480,12 @@ void foods_get_rotten()
             continue;
         }
 
-        for (const auto& item : g_inv.for_chara(chara))
+        for (const auto& item : *chara.inventory())
         {
             _food_gets_rotten(chara.index, item);
         }
     }
-    for (const auto& item : g_inv.ground())
+    for (const auto& item : *inv_map())
     {
         _food_gets_rotten(-1, item);
     }
