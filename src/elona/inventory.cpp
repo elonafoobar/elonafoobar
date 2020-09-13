@@ -140,8 +140,9 @@ InventorySlot inv_make_free_slot_force(const InventoryRef& inv)
 lua_int inv_count(const InventoryRef& inv)
 {
     lua_int n{};
-    for ([[maybe_unused]] const auto& _i : *inv)
+    for (const auto& _i : *inv)
     {
+        (void)_i;
         ++n;
     }
     return n;
