@@ -272,9 +272,8 @@ void CellData::load_tile_grid(const std::vector<int>& tile_grid)
 
 void map_reload(const std::string& map_filename)
 {
-    fmapfile =
-        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file_map_load_map_obj_files();
+    ctrl_file_map_load_map_obj_files(
+        filesystem::dirs::map() / fs::u8path(map_filename));
 
     for (int y = 0; y < map_data.height; ++y)
     {
@@ -2350,6 +2349,31 @@ void sense_map_feats_on_move(Character& chara)
             maybe_show_ex_help(5);
         }
     }
+}
+
+
+
+int dist_town()
+{
+    int distance = 1000;
+
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            cell_featread(x, y);
+            if (area_data[feat(2)].type == mdata_t::MapType::town)
+            {
+                int d = dist(cdata.player().position, x, y);
+                if (d < distance)
+                {
+                    distance = d;
+                }
+            }
+        }
+    }
+
+    return distance;
 }
 
 } // namespace elona

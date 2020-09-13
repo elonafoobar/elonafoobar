@@ -183,6 +183,18 @@ struct path
 
 
 
+    /**
+     * Returns *a new instance* with the given extension.
+     */
+    path replace_extension(const path& ext) const
+    {
+        auto tmp = inner();
+        tmp.replace_extension(ext);
+        return path(tmp);
+    }
+
+
+
     bool operator==(const path& other) const
     {
         return inner() == other.inner();

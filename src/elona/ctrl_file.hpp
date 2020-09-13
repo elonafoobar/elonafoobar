@@ -16,8 +16,8 @@ void ctrl_file_map_write();
 void ctrl_file_map_items_read(const fs::path& filename);
 void ctrl_file_map_items_write(const fs::path& filename);
 
-void ctrl_file_custom_map_read();
-void ctrl_file_map_load_map_obj_files();
+void ctrl_file_custom_map_read(const fs::path& filename_base);
+void ctrl_file_map_load_map_obj_files(const fs::path& filename_base);
 
 void ctrl_file_save_game_delete();
 void ctrl_file_temp_dir_delete();

@@ -165,7 +165,7 @@ void _reveal_map()
 
 void _init_map_visibility()
 {
-    map_setfog();
+    map_set_fog();
     if (map_should_reveal_fog())
     {
         _reveal_map();
@@ -1362,7 +1362,7 @@ int initialize_map_pregenerate()
         ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
         if (mode == 2)
         {
-            map_placeplayer();
+            map_place_player_and_allies();
         }
         return 1;
     }

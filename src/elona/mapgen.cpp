@@ -19,12 +19,680 @@
 
 
 
+namespace elona
+{
+
+// TODO
+extern elona_vector1<int> roomheight;
+extern elona_vector1<int> roomwidth;
+extern elona_vector1<int> roomx;
+extern elona_vector1<int> roomy;
+extern int cr;
+extern int roomsum;
+extern int tile_pot;
+
+} // namespace elona
+
+
+
 namespace
 {
+
+struct CellObjData
+{
+    int type;
+    int tile;
+};
+
+
+
+enum class Direction
+{
+    north = 0,
+    east = 1,
+    west = 2,
+    south = 3,
+};
+
+
 
 int tile_board;
 int tile_townboard;
 int tile_votebox;
+
+std::vector<CellObjData> cellobjdata;
+
+
+
+bool is_N_or_S(Direction d)
+{
+    return d == Direction::north || d == Direction::south;
+}
+
+
+
+bool is_E_or_W(Direction d)
+{
+    return d == Direction::east || d == Direction::west;
+}
+
+
+
+/// @a func takes (x, y) and returns nothing.
+template <typename F>
+void for_each_cell(F func)
+{
+    for (int y = 0; y < map_data.height; ++y)
+    {
+        for (int x = 0; x < map_data.width; ++x)
+        {
+            func(x, y);
+        }
+    }
+}
+
+
+
+void place_chara_on_entrance(Character& chara, int entrance_type)
+{
+    int x{};
+    int y{};
+
+    switch (entrance_type)
+    {
+    case 0:
+        // Debug map (ID: 499) does not have valid entrance type.
+        break;
+    case 1: // Upstairs
+        x = map_data.stair_up_pos % 1000;
+        y = map_data.stair_up_pos / 1000;
+        break;
+    case 2: // Downstairs
+        x = map_data.stair_down_pos % 1000;
+        y = map_data.stair_down_pos / 1000;
+        break;
+    case 3: // Direction
+        switch (game_data.player_next_move_direction)
+        {
+        case 0: // North
+            x = map_data.width / 2;
+            y = 1;
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                x = 5;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 25;
+                y = 1;
+            }
+            break;
+        case 1: // East
+            x = map_data.width - 2;
+            y = map_data.height / 2;
+            if (game_data.current_map == mdata_t::MapId::palmia)
+            {
+                y = 22;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 58;
+                y = 21;
+            }
+            break;
+        case 2: // West
+            x = 1;
+            y = map_data.height / 2;
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                y = 3;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 25;
+                y = 1;
+            }
+            break;
+        case 3: // South
+            x = map_data.width / 2;
+            y = map_data.height - 2;
+            if (game_data.current_map == mdata_t::MapId::palmia)
+            {
+                x = 30;
+            }
+            if (game_data.current_map == mdata_t::MapId::noyel)
+            {
+                x = 28;
+            }
+            if (game_data.current_map == mdata_t::MapId::lumiest)
+            {
+                x = 58;
+                y = 21;
+            }
+            break;
+        default: assert(0); break;
+        }
+
+        if (game_data.current_map == mdata_t::MapId::larna)
+        {
+            x = 1;
+            y = 14;
+        }
+        if (game_data.player_x_on_map_leave != -1)
+        {
+            x = game_data.player_x_on_map_leave;
+            y = game_data.player_y_on_map_leave;
+        }
+        break;
+    case 4: // Center
+        x = map_data.width / 2;
+        y = map_data.height / 2;
+        break;
+    case 5: // Random
+        x = rnd(map_data.width - 5) + 2;
+        y = rnd(map_data.height - 5) + 2;
+        break;
+    case 6: // World map
+        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
+        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
+        break;
+    case 7: // Custom
+        x = mapstartx;
+        y = mapstarty;
+        break;
+    case 8: // Bottom
+        x = map_data.width / 2;
+        y = map_data.height - 2;
+        break;
+    default: assert(0); break;
+    }
+
+    cxinit = x;
+    cyinit = y;
+    chara_place(chara);
+}
+
+
+
+void convert_tiles_at_random()
+{
+    for_each_cell([&](int x, int y) {
+        auto& chip = cell_data.at(x, y).chip_id_actual;
+
+        if (chip == 0)
+        {
+            chip = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+        }
+        else if (chip == 1)
+        {
+            chip = tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1));
+        }
+        else if (chip == 3)
+        {
+            chip = tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1));
+        }
+        else if (chip == 4)
+        {
+            chip = tile_default +
+                (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
+        }
+        else if (chip >= 100)
+        {
+            chip =
+                tile_tunnel + (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1));
+        }
+    });
+}
+
+
+
+bool can_dig_cell(int x, int y)
+{
+    if (x < 1 || map_data.width - 2 < x || y < 1 || map_data.height - 2 < y)
+    {
+        return false; // out of range
+    }
+    if (cell_data.at(x, y).chip_id_actual == 100)
+    {
+        return true;
+    }
+    return cell_data.at(x, y).chip_id_actual == 0;
+}
+
+
+
+void create_room_door(
+    Direction door_direction,
+    bool roomdoor_is_not_3,
+    int room_x,
+    int room_y,
+    int room_w,
+    int room_h)
+{
+    std::vector<int> door_positions(
+        is_N_or_S(door_direction) ? room_w - 2 : room_h - 2);
+    for (size_t i = 0; i < door_positions.size(); ++i)
+    {
+        door_positions[i] = static_cast<int>(i);
+    }
+    shuffle(door_positions);
+
+    for (const auto& door_pos : door_positions)
+    {
+        int x{};
+        int y{};
+        switch (door_direction)
+        {
+        case Direction::north:
+            x = door_pos + room_x + 1;
+            y = room_y;
+            break;
+        case Direction::east:
+            x = room_x + room_w - 1;
+            y = door_pos + room_y + 1;
+            break;
+        case Direction::west:
+            x = room_x;
+            y = door_pos + room_y + 1;
+            break;
+        case Direction::south:
+            x = door_pos + room_x + 1;
+            y = room_y + room_h - 1;
+            break;
+        }
+
+        bool can_create_door = true;
+        for (const auto& n : {-1, 1})
+        {
+            const auto dx = is_N_or_S(door_direction) ? x : x + n;
+            const auto dy = is_N_or_S(door_direction) ? y + n : y;
+            if (dx < 0 || map_data.width <= dx || dy < 0 ||
+                map_data.height <= dy)
+            {
+                can_create_door = false;
+                break;
+            }
+            if (cell_data.at(dx, dy).chip_id_actual == 1)
+            {
+                can_create_door = false;
+                break;
+            }
+        }
+        if (can_create_door)
+        {
+            cell_data.at(x, y).chip_id_actual = 3;
+            if (roomdoor_is_not_3)
+            {
+                const auto lock = rnd_capped(
+                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1);
+                cell_featset(x, y, tile_doorclosed, 21, lock);
+            }
+            break;
+        }
+    }
+}
+
+
+
+void place_upstairs_at_random_pos(int x, int y, int w, int h)
+{
+    map_place_upstairs(rnd(w - 2) + x + 1, rnd(h - 2) + y + 1);
+}
+
+
+
+void place_downstairs_at_random_pos(int x, int y, int w, int h)
+{
+    map_place_downstairs(rnd(w - 2) + x + 1, rnd(h - 2) + y + 1);
+}
+
+
+
+template <typename F>
+void _place_trap_web_or_barrel_internal(F put_object)
+{
+    for (int _i = 0; _i < 4; ++_i)
+    {
+        const int x = rnd(map_data.width - 5) + 2;
+        const int y = rnd(map_data.height - 5) + 2;
+        if ((chip_data.for_cell(x, y).effect & 4) == 0)
+        {
+            if (cell_data.at(x, y).feats == 0)
+            {
+                put_object(x, y);
+                return;
+            }
+        }
+    }
+}
+
+
+
+void place_trap()
+{
+    _place_trap_web_or_barrel_internal([&](int x, int y) {
+        const int trap_type = rnd(8);
+        if (game_data.current_dungeon_level <= 5)
+        {
+            if (trap_type == 1 || trap_type == 5 || trap_type == 6)
+            {
+                return;
+            }
+        }
+        if (game_data.current_dungeon_level <= 25)
+        {
+            if (trap_type == 7)
+            {
+                return;
+            }
+        }
+        cell_featset(x, y, 0, 14, trap_type);
+    });
+}
+
+
+
+void place_web(int power)
+{
+    _place_trap_web_or_barrel_internal(
+        [&](int x, int y) { mef_add(x, y, 1, 11, -1, power); });
+}
+
+
+
+void place_barrel()
+{
+    _place_trap_web_or_barrel_internal(
+        [&](int x, int y) { cell_featset(x, y, tile_pot, 30); });
+}
+
+
+
+void make_door()
+{
+    for (cr = 0; cr < roomsum; ++cr)
+    {
+        /*
+        A -------------- B
+        |................|
+        |.a dungeon room.|
+        |................|
+        D -------------- C
+
+        i in [  0,     W   ) => from A to B
+        i in [  W,    W+H  ) => from B to C
+        i in [ W+H,  2W+H  ) => from C to D
+        i in [ 2W+H, 2W+2H ) => from D to A
+        */
+        const int W = roomwidth(cr);
+        const int H = roomheight(cr);
+        for (int i = 0; i < (W + H) * 2; ++i)
+        {
+            const int k = i % (W + H);
+            int dx = k < W ? k : W - 1;
+            int dy = k < W ? 0 : k - W;
+            if (W + H <= i)
+            {
+                dx = W - 1 - dx;
+                dy = H - 1 - dy;
+            }
+
+            const int x = dx + roomx(cr);
+            const int y = dy + roomy(cr);
+            if (cell_data.at(x, y).chip_id_actual != 1)
+            {
+                const int lock = rnd_capped(
+                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1);
+                cell_featset(x, y, tile_doorclosed, 21, lock);
+            }
+        }
+    }
+}
+
+
+
+optional<int> _setup_map_generation_parameters()
+{
+    const auto& area = area_data[game_data.current_map];
+
+    int dungeon_type = 1;
+    if (rnd(30) == 0)
+    {
+        dungeon_type = 3;
+    }
+
+    if (area.type == mdata_t::MapType::dungeon)
+    {
+        dungeon_type = 2;
+        if (rnd(4) == 0)
+        {
+            dungeon_type = 1;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 10;
+        }
+        if (rnd(10) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 8;
+        }
+        if (rnd(20) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_forest)
+    {
+        dungeon_type = 2;
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 1;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 10;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 8;
+        }
+        if (rnd(20) == 0)
+        {
+            dungeon_type = 4;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_tower)
+    {
+        dungeon_type = 1;
+        if (rnd(5) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(10) == 0)
+        {
+            dungeon_type = 3;
+        }
+        if (rnd(25) == 0)
+        {
+            dungeon_type = 2;
+        }
+        if (rnd(40) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+    if (area.type == mdata_t::MapType::dungeon_castle)
+    {
+        dungeon_type = 1;
+        if (rnd(5) == 0)
+        {
+            dungeon_type = 4;
+        }
+        if (rnd(6) == 0)
+        {
+            dungeon_type = 5;
+        }
+        if (rnd(7) == 0)
+        {
+            dungeon_type = 2;
+        }
+        if (rnd(40) == 0)
+        {
+            map_data.tileset = 10;
+        }
+    }
+
+    if (area.id == mdata_t::MapId::lesimas)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 101;
+        if (rnd(20) == 0)
+        {
+            map_data.tileset = 10;
+        }
+        if (game_data.current_dungeon_level < 35)
+        {
+            map_data.tileset = 0;
+        }
+        if (game_data.current_dungeon_level < 20)
+        {
+            map_data.tileset = 100;
+        }
+        if (game_data.current_dungeon_level < 10)
+        {
+            map_data.tileset = 200;
+        }
+        if (game_data.current_dungeon_level < 5)
+        {
+            map_data.tileset = 0;
+        }
+        dungeon_type = 1;
+        for (int cnt = 0; cnt < 1; ++cnt)
+        {
+            if (game_data.current_dungeon_level == 1)
+            {
+                dungeon_type = 2;
+                break;
+            }
+            if (game_data.current_dungeon_level == 5)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 10)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level == 15)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 20)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level == 25)
+            {
+                dungeon_type = 5;
+                break;
+            }
+            if (game_data.current_dungeon_level == 30)
+            {
+                dungeon_type = 3;
+                break;
+            }
+            if (game_data.current_dungeon_level < 30)
+            {
+                if (rnd(4) == 0)
+                {
+                    dungeon_type = 2;
+                }
+            }
+            if (rnd(5) == 0)
+            {
+                dungeon_type = 4;
+            }
+            if (rnd(20) == 0)
+            {
+                dungeon_type = 8;
+            }
+            if (rnd(6) == 0)
+            {
+                dungeon_type = 10;
+            }
+        }
+    }
+    if (area.id == mdata_t::MapId::tower_of_fire)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 7;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::crypt_of_the_damned)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 0;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::ancient_castle)
+    {
+        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
+        map_data.tileset = 200;
+        dungeon_type = 1;
+    }
+    if (area.id == mdata_t::MapId::mountain_pass)
+    {
+        dungeon_type = 8;
+    }
+    if (area.id == mdata_t::MapId::puppy_cave)
+    {
+        dungeon_type = 10;
+    }
+    if (area.id == mdata_t::MapId::minotaurs_nest)
+    {
+        dungeon_type = 9;
+    }
+    if (area.id == mdata_t::MapId::quest)
+    {
+        if (game_data.executing_immediate_quest_type == 1001)
+        {
+            map_data.tileset = 300;
+            map_data.width = 28 + rnd(6);
+            map_data.height = 20 + rnd(6);
+            dungeon_type = 6;
+        }
+        if (game_data.executing_immediate_quest_type == 1009)
+        {
+            initialize_quest_map_party();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1006)
+        {
+            initialize_quest_map_crop();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1008)
+        {
+            initialize_quest_map_town();
+            return none;
+        }
+        if (game_data.executing_immediate_quest_type == 1010)
+        {
+            initialize_quest_map_town();
+            return none;
+        }
+    }
+
+    return dungeon_type;
+}
 
 } // namespace
 
@@ -33,7 +701,6 @@ int tile_votebox;
 namespace elona
 {
 
-elona_vector2<int> cellobjdata;
 int i_at_m68;
 int tx_at_m168 = 0;
 int ty_at_m168 = 0;
@@ -58,9 +725,6 @@ int rdroomsizemax = 0;
 int rdroomsizemin = 0;
 int rdroomupstair = 0;
 int rdroomdownstair = 0;
-int dx_at_m170 = 0;
-int dy_at_m170 = 0;
-int p_at_m170 = 0;
 int tmp_at_m172;
 int rdroomentrance = 0;
 elona_vector1<int> rdval;
@@ -72,6 +736,8 @@ int rx = 0;
 int rw = 0;
 int ry = 0;
 int rh = 0;
+
+
 
 void map_initialize()
 {
@@ -90,16 +756,13 @@ void map_initialize()
 }
 
 
-void initialize_cell_object_data()
+
+void map_init_cell_object_data()
 {
-    int tile_doorclosed2 = 0;
-    int tile_doorclosed3 = 0;
-    elona_vector1<std::string> cellobjname;
-    int maxobjid = 0;
+    const int tile_doorclosed2 = 728;
+    const int tile_doorclosed3 = 730;
     tile_trap = 234;
     tile_doorclosed = 726;
-    tile_doorclosed2 = 728;
-    tile_doorclosed3 = 730;
     tile_doorclosed4 = 733;
     tile_dooropen = 236;
     tile_downstairs = 231;
@@ -111,315 +774,101 @@ void initialize_cell_object_data()
     tile_board = 727;
     tile_votebox = 729;
     tile_townboard = 732;
-    DIM3(cellobjdata, 5, 50);
-    SDIM3(cellobjname, 20, 50);
-    maxobjid = 0;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 99;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    cellobjname(maxobjid) = u8"dummy"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 99;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    cellobjname(maxobjid) = u8"扉99"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed;
-    cellobjname(maxobjid) = u8"扉0"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 14;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 100;
-    cellobjdata(3, maxobjid) = 0;
-    cellobjname(maxobjid) = u8"罠"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 14;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 100;
-    cellobjdata(3, maxobjid) = 0;
-    cellobjname(maxobjid) = u8"罠"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 10;
-    cellobjdata(1, maxobjid) = tile_upstairs;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_upstairs;
-    cellobjname(maxobjid) = u8"昇り階段"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 11;
-    cellobjdata(1, maxobjid) = tile_downstairs;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_downstairs;
-    cellobjname(maxobjid) = u8"降り階段"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed2;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed2;
-    cellobjname(maxobjid) = u8"扉SF"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 23;
-    cellobjdata(1, maxobjid) = tile_board;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_board;
-    cellobjname(maxobjid) = u8"掲示板"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 31;
-    cellobjdata(1, maxobjid) = tile_votebox;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_votebox;
-    cellobjname(maxobjid) = u8"投票箱"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 32;
-    cellobjdata(1, maxobjid) = tile_trap;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = 0;
-    cellobjname(maxobjid) = u8"メダル"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed3;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed3;
-    cellobjname(maxobjid) = u8"扉JP"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 33;
-    cellobjdata(1, maxobjid) = tile_townboard;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_townboard;
-    cellobjname(maxobjid) = u8"街掲示板"s;
-    ++maxobjid;
-    cellobjdata(0, maxobjid) = 21;
-    cellobjdata(1, maxobjid) = tile_doorclosed4;
-    cellobjdata(2, maxobjid) = 0;
-    cellobjdata(3, maxobjid) = tile_doorclosed4;
-    cellobjname(maxobjid) = u8"扉JAIL"s;
-    ++maxobjid;
+
+    cellobjdata = {
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            21,
+            tile_doorclosed,
+        },
+        {
+            14,
+            0,
+        },
+        {
+            14,
+            0,
+        },
+        {
+            10,
+            tile_upstairs,
+        },
+        {
+            11,
+            tile_downstairs,
+        },
+        {
+            21,
+            tile_doorclosed2,
+        },
+        {
+            23,
+            tile_board,
+        },
+        {
+            31,
+            tile_votebox,
+        },
+        {
+            32,
+            0,
+        },
+        {
+            21,
+            tile_doorclosed3,
+        },
+        {
+            33,
+            tile_townboard,
+        },
+        {
+            21,
+            tile_doorclosed4,
+        },
+    };
 }
 
 
 
-void map_converttile()
-{
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            if (cell_data.at(x, y).chip_id_actual == 0)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_default +
-                    (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual >= 100)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_tunnel +
-                    (rnd(tile_tunnel(2)) == 0) * rnd(tile_tunnel(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 1)
-            {
-                cell_data.at(x, y).chip_id_actual =
-                    tile_wall + (rnd(tile_wall(2)) == 0) * rnd(tile_wall(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 3)
-            {
-                cell_data.at(x, y).chip_id_actual =
-                    tile_room + (rnd(tile_room(2)) == 0) * rnd(tile_room(1));
-                continue;
-            }
-            if (cell_data.at(x, y).chip_id_actual == 4)
-            {
-                cell_data.at(x, y).chip_id_actual = tile_default +
-                    (rnd(tile_default(2)) == 0) * rnd(tile_default(1));
-                continue;
-            }
-        }
-    }
-}
-
-
-int dist_town()
-{
-    int p_at_m165 = 0;
-    int y_at_m165 = 0;
-    int x_at_m165 = 0;
-    int i_at_m165 = 0;
-    p_at_m165 = 1000;
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y_at_m165 = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x_at_m165 = cnt;
-            cell_featread(x_at_m165, y_at_m165);
-            if (area_data[feat(2)].type == mdata_t::MapType::town)
-            {
-                i_at_m165 = dist(cdata.player().position, x_at_m165, y_at_m165);
-                if (i_at_m165 < p_at_m165)
-                {
-                    p_at_m165 = i_at_m165;
-                }
-            }
-        }
-    }
-    return p_at_m165;
-}
-
-
-
-void map_place_chara_on_entrance(Character& chara, int entrance_type)
-{
-    int x = 0;
-    int y = 0;
-    if (entrance_type == 1)
-    {
-        x = map_data.stair_up_pos % 1000;
-        y = map_data.stair_up_pos / 1000;
-    }
-    if (entrance_type == 2)
-    {
-        x = map_data.stair_down_pos % 1000;
-        y = map_data.stair_down_pos / 1000;
-    }
-    if (entrance_type == 3)
-    {
-        if (game_data.player_next_move_direction == 1)
-        {
-            x = map_data.width - 2;
-            y = map_data.height / 2;
-            if (game_data.current_map == mdata_t::MapId::palmia)
-            {
-                y = 22;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 58;
-                y = 21;
-            }
-        }
-        if (game_data.player_next_move_direction == 2)
-        {
-            x = 1;
-            y = map_data.height / 2;
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                y = 3;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 25;
-                y = 1;
-            }
-        }
-        if (game_data.player_next_move_direction == 3)
-        {
-            x = map_data.width / 2;
-            y = map_data.height - 2;
-            if (game_data.current_map == mdata_t::MapId::palmia)
-            {
-                x = 30;
-            }
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                x = 28;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 58;
-                y = 21;
-            }
-        }
-        if (game_data.player_next_move_direction == 0)
-        {
-            x = map_data.width / 2;
-            y = 1;
-            if (game_data.current_map == mdata_t::MapId::noyel)
-            {
-                x = 5;
-            }
-            if (game_data.current_map == mdata_t::MapId::lumiest)
-            {
-                x = 25;
-                y = 1;
-            }
-        }
-        if (game_data.current_map == mdata_t::MapId::larna)
-        {
-            x = 1;
-            y = 14;
-        }
-        if (game_data.player_x_on_map_leave != -1)
-        {
-            x = game_data.player_x_on_map_leave;
-            y = game_data.player_y_on_map_leave;
-        }
-    }
-    if (entrance_type == 4)
-    {
-        x = map_data.width / 2;
-        y = map_data.height / 2;
-    }
-    if (entrance_type == 8)
-    {
-        x = map_data.width / 2;
-        y = map_data.height - 2;
-    }
-    if (entrance_type == 5)
-    {
-        x = rnd(map_data.width - 5) + 2;
-        y = rnd(map_data.height - 5) + 2;
-    }
-    if (entrance_type == 6)
-    {
-        x = game_data.pc_x_in_world_map + rnd(chara.index / 5 + 1);
-        y = game_data.pc_y_in_world_map + rnd(chara.index / 5 + 1);
-    }
-    if (entrance_type == 7)
-    {
-        x = mapstartx;
-        y = mapstarty;
-    }
-    cxinit = x;
-    cyinit = y;
-    chara_place(chara);
-}
-
-
-
-void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
+void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type)
 {
     while (true)
     {
-        x = rnd(7) + 5;
-        y = rnd(6) + 6;
-        if (!is_enemy)
+        int x = rnd(7) + 5;
+        int y = rnd(6) + 6;
+        if (chara_type == ArenaCharaType::allies)
         {
             x += 8;
         }
         cxinit = x;
         cyinit = y;
         chara_place(chara);
-        if (!is_enemy)
+
+        if (chara_type == ArenaCharaType::allies)
         {
             if (chara.position.x >= 13 && chara.position.y >= 6 &&
                 chara.position.x < 20 && chara.position.y < 12)
             {
-                break;
+                return; // okay.
             }
         }
-        else if (
-            chara.position.x >= 5 && chara.position.y >= 6 &&
-            chara.position.x < 12 && chara.position.y < 12)
+        else
         {
-            break;
+            if (chara.position.x >= 5 && chara.position.y >= 6 &&
+                chara.position.x < 12 && chara.position.y < 12)
+            {
+                return; // okay.
+            }
         }
+
+        // Invalid position, reset the position and retry.
         cell_data.at(chara.position.x, chara.position.y).chara_index_plus_one =
             0;
     }
@@ -427,19 +876,18 @@ void map_place_chara_on_pet_arena(Character& chara, bool is_enemy)
 
 
 
-void map_placeplayer()
+void map_place_player_and_allies()
 {
     if (mode == 11)
-    {
-        return;
-    }
+        return; // during the first initialization of all towns
+
     camera = 0;
     for (auto&& chara : cdata.player_and_allies())
     {
         if (chara.state() != Character::State::alive)
-        {
             continue;
-        }
+
+        // Mount
         if (!chara.is_player())
         {
             if (game_data.mount == chara.index)
@@ -448,6 +896,7 @@ void map_placeplayer()
                 continue;
             }
         }
+        // Arena fighters
         if (game_data.current_map == mdata_t::MapId::pet_arena)
         {
             if (followerin(chara.index) == 1)
@@ -456,10 +905,11 @@ void map_placeplayer()
                 {
                     camera = chara.index;
                 }
-                map_place_chara_on_pet_arena(chara, false);
+                map_place_chara_on_pet_arena(chara, ArenaCharaType::allies);
                 continue;
             }
         }
+        // Pets staying in the current map (home, ranch, shop, etc.)
         if (chara.current_map == game_data.current_map)
         {
             if (!chara.is_player())
@@ -470,13 +920,15 @@ void map_placeplayer()
                 continue;
             }
         }
-        map_place_chara_on_entrance(chara, game_data.entrance_type);
+
+        // PC and pets following you
+        place_chara_on_entrance(chara, game_data.entrance_type);
     }
 }
 
 
 
-void map_randomtile(int tile_id, int density)
+void map_replace_random_tiles(int tile_id, int density)
 {
     const auto n = map_data.width * map_data.height * density / 100 + 1;
     for (int i = 0; i < n; ++i)
@@ -485,21 +937,6 @@ void map_randomtile(int tile_id, int density)
         const auto y = rnd(map_data.height);
         cell_data.at(x, y).chip_id_actual = tile_id;
     }
-}
-
-
-
-int map_digcheck(int x, int y)
-{
-    if (x < 1 || y < 1 || x > map_data.width - 2 || y > map_data.height - 2)
-    {
-        return 0;
-    }
-    if (cell_data.at(x, y).chip_id_actual == 100)
-    {
-        return 100;
-    }
-    return cell_data.at(x, y).chip_id_actual == 0;
 }
 
 
@@ -612,7 +1049,7 @@ void map_nextdir2(int x, int y)
     {
         if (dir2_at_m168 == 1)
         {
-            if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+            if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
             {
                 if (tx_at_m168 == x)
                 {
@@ -629,7 +1066,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 2)
         {
-            if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+            if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
             {
                 if (tx_at_m168 == x)
                 {
@@ -646,7 +1083,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 3)
         {
-            if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+            if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
             {
                 if (ty_at_m168 == y)
                 {
@@ -663,7 +1100,7 @@ void map_nextdir2(int x, int y)
         }
         if (dir2_at_m168 == 0)
         {
-            if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+            if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
             {
                 if (ty_at_m168 == y)
                 {
@@ -685,7 +1122,7 @@ void map_nextdir2(int x, int y)
         {
             if (ty_at_m168 > y)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 3;
@@ -693,7 +1130,7 @@ void map_nextdir2(int x, int y)
             }
             if (ty_at_m168 < y)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 0;
@@ -708,7 +1145,7 @@ void map_nextdir2(int x, int y)
         {
             if (tx_at_m168 > x)
             {
-                if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 1;
@@ -716,7 +1153,7 @@ void map_nextdir2(int x, int y)
             }
             if (tx_at_m168 < x)
             {
-                if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
                 {
                     dir2_at_m168 = dir_at_m168;
                     dir_at_m168 = 2;
@@ -777,7 +1214,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
         {
             ++dy_at_m168;
         }
-        if (map_digcheck(dx_at_m168, dy_at_m168))
+        if (can_dig_cell(dx_at_m168, dy_at_m168))
         {
             tx_at_m168 = dx_at_m168;
             ty_at_m168 = dy_at_m168;
@@ -792,7 +1229,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
         {
             if (dest_at_m168 == 1)
             {
-                if (map_digcheck(tx_at_m168 - 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 - 1, ty_at_m168))
                 {
                     dir_at_m168 = 1;
                     dest_at_m168 = -2;
@@ -800,7 +1237,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 2)
             {
-                if (map_digcheck(tx_at_m168 + 1, ty_at_m168))
+                if (can_dig_cell(tx_at_m168 + 1, ty_at_m168))
                 {
                     dir_at_m168 = 2;
                     dest_at_m168 = -2;
@@ -808,7 +1245,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 3)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 - 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 - 1))
                 {
                     dir_at_m168 = 3;
                     dest_at_m168 = -2;
@@ -816,7 +1253,7 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
             }
             if (dest_at_m168 == 0)
             {
-                if (map_digcheck(tx_at_m168, ty_at_m168 + 1))
+                if (can_dig_cell(tx_at_m168, ty_at_m168 + 1))
                 {
                     dir_at_m168 = 0;
                     dest_at_m168 = -2;
@@ -835,127 +1272,12 @@ int map_digtoentrance1(int x1, int y1, int x2, int y2)
 
 
 
-void map_setfog(int, int)
+void map_set_fog()
 {
-    for (int cnt = 0, cnt_end = (map_data.height); cnt < cnt_end; ++cnt)
-    {
-        y = cnt;
-        for (int cnt = 0, cnt_end = (map_data.width); cnt < cnt_end; ++cnt)
-        {
-            x = cnt;
-            cell_data.at(x, y).chip_id_memory =
-                tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
-        }
-    }
-}
-
-
-
-void rndshuffle(elona_vector1<int>& array)
-{
-    int p_at_m68 = 0;
-    int r_at_m68 = 0;
-    p_at_m68 = array.size();
-    for (int cnt = 0, cnt_end = (p_at_m68); cnt < cnt_end; ++cnt)
-    {
-        r_at_m68 = rnd(p_at_m68);
-        --p_at_m68;
-        i_at_m68 = array(r_at_m68);
-        array(r_at_m68) = array(p_at_m68);
-        array(p_at_m68) = i_at_m68;
-    }
-}
-
-
-
-void map_createroomdoor()
-{
-    elona_vector1<int> rddoorpos;
-    if (rdpos == 3 || rdpos == 0)
-    {
-        p = roomwidth(cr);
-    }
-    else
-    {
-        p = roomheight(cr);
-    }
-    DIM1(rddoorpos);
-    for (int cnt = 0, cnt_end = (p - 2); cnt < cnt_end; ++cnt)
-    {
-        rddoorpos(cnt) = cnt;
-    }
-    rndshuffle(rddoorpos);
-    for (int cnt = 0, cnt_end = (p - 2); cnt < cnt_end; ++cnt)
-    {
-        if (rdpos == 3)
-        {
-            x = rddoorpos(cnt) + roomx(cr) + 1;
-            y = roomy(cr) + roomheight(cr) - 1;
-            p(0) = 0;
-            p(1) = 0;
-            p(2) = -1;
-            p(3) = 1;
-        }
-        if (rdpos == 0)
-        {
-            x = rddoorpos(cnt) + roomx(cr) + 1;
-            y = roomy(cr);
-            p(0) = 0;
-            p(1) = 0;
-            p(2) = -1;
-            p(3) = 1;
-        }
-        if (rdpos == 1)
-        {
-            y = rddoorpos(cnt) + roomy(cr) + 1;
-            x = roomx(cr) + roomwidth(cr) - 1;
-            p(0) = -1;
-            p(1) = 1;
-            p(2) = 0;
-            p(3) = 0;
-        }
-        if (rdpos == 2)
-        {
-            y = rddoorpos(cnt) + roomy(cr) + 1;
-            x = roomx(cr);
-            p(0) = -1;
-            p(1) = 1;
-            p(2) = 0;
-            p(3) = 0;
-        }
-        f = 1;
-        for (int cnt = 0; cnt < 2; ++cnt)
-        {
-            dx = x + p(cnt);
-            dy = y + p((cnt + 2));
-            if ((dx >= 0 && dy >= 0 && dx < map_data.width &&
-                 dy < map_data.height) == 0)
-            {
-                f = 0;
-                break;
-            }
-            if (cell_data.at(dx, dy).chip_id_actual == 1)
-            {
-                f = 0;
-                break;
-            }
-        }
-        if (f == 1)
-        {
-            cell_data.at(x, y).chip_id_actual = 3;
-            if (roomdoor != 3)
-            {
-                cell_featset(
-                    x,
-                    y,
-                    tile_doorclosed,
-                    21,
-                    rnd_capped(
-                        std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
-            }
-            break;
-        }
-    }
+    for_each_cell([&](int x, int y) {
+        cell_data.at(x, y).chip_id_memory =
+            tile_fog + (rnd(tile_fog(2)) == 0) * rnd(tile_fog(1));
+    });
 }
 
 
@@ -1239,14 +1561,26 @@ int map_createroom(int type)
     }
     if (roomdoor == 1)
     {
-        map_createroomdoor();
+        create_room_door(
+            static_cast<Direction>(rdpos),
+            roomdoor != 3,
+            roomx(cr),
+            roomy(cr),
+            roomwidth(cr),
+            roomheight(cr));
     }
     if (roomdoor == 2 || roomdoor == 3)
     {
         for (int cnt = 0; cnt < 4; ++cnt)
         {
             rdpos = cnt;
-            map_createroomdoor();
+            create_room_door(
+                static_cast<Direction>(rdpos),
+                roomdoor != 3,
+                roomx(cr),
+                roomy(cr),
+                roomwidth(cr),
+                roomheight(cr));
         }
     }
     return 1;
@@ -1254,190 +1588,24 @@ int map_createroom(int type)
 
 
 
-int map_placeupstairs(int x, int y)
+void map_place_upstairs(int x, int y)
 {
-    int found_x;
-    int found_y;
-    if (x == 0)
-    {
-        found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
-        found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
-    }
-    else
-    {
-        found_x = x;
-        found_y = y;
-    }
-    cell_featset(found_x, found_y, tile_upstairs, 10);
-    map_data.stair_up_pos = found_y * 1000 + found_x;
+    cell_featset(x, y, tile_upstairs, 10);
+    map_data.stair_up_pos = y * 1000 + x;
     rdroomupstair = cr;
-    return 1;
 }
 
 
 
-int map_placedownstairs(int x, int y)
+void map_place_downstairs(int x, int y)
 {
-    int found_x;
-    int found_y;
+    if (area_data[game_data.current_map].deepest_level <=
+        game_data.current_dungeon_level)
+        return;
 
-    if (game_data.current_dungeon_level >=
-        area_data[game_data.current_map].deepest_level)
-    {
-        return 0;
-    }
-    if (x == 0)
-    {
-        found_x = rnd(roomwidth(cr) - 2) + roomx(cr) + 1;
-        found_y = rnd(roomheight(cr) - 2) + roomy(cr) + 1;
-    }
-    else
-    {
-        found_x = x;
-        found_y = y;
-    }
-    cell_featset(found_x, found_y, tile_downstairs, 11);
-    map_data.stair_down_pos = found_y * 1000 + found_x;
+    cell_featset(x, y, tile_downstairs, 11);
+    map_data.stair_down_pos = y * 1000 + x;
     rdroomdownstair = cr;
-    return 1;
-}
-
-
-
-int map_trap(int x, int y, int, int trap_type)
-{
-    int trap_at_m170 = 0;
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                if (trap_type == 0)
-                {
-                    trap_at_m170 = rnd(8);
-                }
-                else
-                {
-                    trap_at_m170 = trap_type;
-                }
-                if (game_data.current_dungeon_level <= 5)
-                {
-                    if (trap_at_m170 == 6)
-                    {
-                        return 0;
-                    }
-                    if (trap_at_m170 == 1)
-                    {
-                        return 0;
-                    }
-                    if (trap_at_m170 == 5)
-                    {
-                        return 0;
-                    }
-                }
-                if (game_data.current_dungeon_level <= 25)
-                {
-                    if (trap_at_m170 == 7)
-                    {
-                        return 0;
-                    }
-                }
-                cell_featset(dx_at_m170, dy_at_m170, 0, 14, trap_at_m170);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
-}
-
-
-
-int map_web(int x, int y, int power)
-{
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                mef_add(dx_at_m170, dy_at_m170, 1, 11, -1, power);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
-}
-
-
-
-int map_barrel(int x, int y)
-{
-    dx_at_m170 = x;
-    dy_at_m170 = y;
-    p_at_m170 = 0;
-
-    while (1)
-    {
-        if (p_at_m170 >= 3)
-        {
-            return 0;
-        }
-        if (x == 0)
-        {
-            dx_at_m170 = rnd(map_data.width - 5) + 2;
-            dy_at_m170 = rnd(map_data.height - 5) + 2;
-        }
-        else
-        {
-            dx_at_m170 = x;
-            dy_at_m170 = y;
-        }
-        if ((chip_data.for_cell(dx_at_m170, dy_at_m170).effect & 4) == 0)
-        {
-            if (cell_data.at(dx_at_m170, dy_at_m170).feats == 0)
-            {
-                cell_featset(dx_at_m170, dy_at_m170, tile_pot, 30);
-                return 1;
-            }
-        }
-        p_at_m170 += 1;
-    }
 }
 
 
@@ -1521,54 +1689,7 @@ int map_connectroom()
 
 
 
-void map_makedoor()
-{
-    for (cr = 0; cr < roomsum; ++cr)
-    {
-        tx = 0;
-        ty = 0;
-        for (int cnt = 0, cnt_end = (roomheight(cr) * 2 + roomwidth(cr) * 2);
-             cnt < cnt_end;
-             ++cnt)
-        {
-            if (tx == 0)
-            {
-                if (cnt != 0)
-                {
-                    --ty;
-                }
-            }
-            if (ty == roomheight(cr) - 1)
-            {
-                --tx;
-            }
-            if (tx == roomwidth(cr) - 1)
-            {
-                ++ty;
-            }
-            if (ty == 0)
-            {
-                ++tx;
-            }
-            dx = tx + roomx(cr);
-            dy = ty + roomy(cr);
-            if (cell_data.at(dx, dy).chip_id_actual == 1)
-            {
-                continue;
-            }
-            cell_featset(
-                dx,
-                dy,
-                tile_doorclosed,
-                21,
-                rnd_capped(
-                    std::abs(game_data.current_dungeon_level * 3 / 2) + 1));
-        }
-    }
-}
-
-
-void generate_debug_map()
+void map_generate_debug_map()
 {
     map_data.width = 50;
     map_data.height = 50;
@@ -1581,264 +1702,17 @@ void generate_debug_map()
     map_data.refresh_type = 1;
     map_initialize();
 
-    for (int y = 0; y < map_data.height; ++y)
-    {
-        for (int x = 0; x < map_data.width; ++x)
-        {
-            cell_data.at(x, y).chip_id_actual = 3;
-        }
-    }
+    for_each_cell([&](int x, int y) { cell_data.at(x, y).chip_id_actual = 3; });
 
     mdatan(0) = i18n::s.get_enum_property("core.map.unique", "name", 499);
-    map_converttile();
+    convert_tiles_at_random();
 
     mapstartx = 25;
     mapstarty = 25;
-    map_placeplayer();
+    map_place_player_and_allies();
 }
 
-static optional<int> _setup_map_generation_parameters()
-{
-    int rdtype = 1;
 
-    if (rnd(30) == 0)
-    {
-        rdtype = 3;
-    }
-    if (area_data[game_data.current_map].type == mdata_t::MapType::dungeon)
-    {
-        rdtype = 2;
-        if (rnd(4) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(10) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_forest)
-    {
-        rdtype = 2;
-        if (rnd(6) == 0)
-        {
-            rdtype = 1;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 10;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 8;
-        }
-        if (rnd(20) == 0)
-        {
-            rdtype = 4;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_tower)
-    {
-        rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(10) == 0)
-        {
-            rdtype = 3;
-        }
-        if (rnd(25) == 0)
-        {
-            rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].type ==
-        mdata_t::MapType::dungeon_castle)
-    {
-        rdtype = 1;
-        if (rnd(5) == 0)
-        {
-            rdtype = 4;
-        }
-        if (rnd(6) == 0)
-        {
-            rdtype = 5;
-        }
-        if (rnd(7) == 0)
-        {
-            rdtype = 2;
-        }
-        if (rnd(40) == 0)
-        {
-            map_data.tileset = 10;
-        }
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::lesimas)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 101;
-        if (rnd(20) == 0)
-        {
-            map_data.tileset = 10;
-        }
-        if (game_data.current_dungeon_level < 35)
-        {
-            map_data.tileset = 0;
-        }
-        if (game_data.current_dungeon_level < 20)
-        {
-            map_data.tileset = 100;
-        }
-        if (game_data.current_dungeon_level < 10)
-        {
-            map_data.tileset = 200;
-        }
-        if (game_data.current_dungeon_level < 5)
-        {
-            map_data.tileset = 0;
-        }
-        rdtype = 1;
-        for (int cnt = 0; cnt < 1; ++cnt)
-        {
-            if (game_data.current_dungeon_level == 1)
-            {
-                rdtype = 2;
-                break;
-            }
-            if (game_data.current_dungeon_level == 5)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 10)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level == 15)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 20)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level == 25)
-            {
-                rdtype = 5;
-                break;
-            }
-            if (game_data.current_dungeon_level == 30)
-            {
-                rdtype = 3;
-                break;
-            }
-            if (game_data.current_dungeon_level < 30)
-            {
-                if (rnd(4) == 0)
-                {
-                    rdtype = 2;
-                }
-            }
-            if (rnd(5) == 0)
-            {
-                rdtype = 4;
-            }
-            if (rnd(20) == 0)
-            {
-                rdtype = 8;
-            }
-            if (rnd(6) == 0)
-            {
-                rdtype = 10;
-            }
-        }
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::tower_of_fire)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 7;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id ==
-        mdata_t::MapId::crypt_of_the_damned)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 0;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ancient_castle)
-    {
-        map_data.max_crowd_density += game_data.current_dungeon_level / 2;
-        map_data.tileset = 200;
-        rdtype = 1;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::mountain_pass)
-    {
-        rdtype = 8;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::puppy_cave)
-    {
-        rdtype = 10;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::minotaurs_nest)
-    {
-        rdtype = 9;
-    }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::quest)
-    {
-        if (game_data.executing_immediate_quest_type == 1001)
-        {
-            map_data.tileset = 300;
-            map_data.width = 28 + rnd(6);
-            map_data.height = 20 + rnd(6);
-            rdtype = 6;
-        }
-        if (game_data.executing_immediate_quest_type == 1009)
-        {
-            initialize_quest_map_party();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1006)
-        {
-            initialize_quest_map_crop();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1008)
-        {
-            initialize_quest_map_town();
-            return none;
-        }
-        if (game_data.executing_immediate_quest_type == 1010)
-        {
-            initialize_quest_map_town();
-            return none;
-        }
-    }
-
-    return rdtype;
-}
 
 void generate_random_nefia()
 {
@@ -1925,8 +1799,8 @@ void generate_random_nefia()
             break;
         }
     }
-    map_converttile();
-    map_placeplayer();
+    convert_tiles_at_random();
+    map_place_player_and_allies();
     rdmonsterhouse = 0;
     rdcreaturepack = 0;
     for (int cnt = 0, cnt_end = (roomsum); cnt < cnt_end; ++cnt)
@@ -2054,7 +1928,7 @@ void generate_random_nefia()
          cnt < cnt_end;
          ++cnt)
     {
-        map_trap(0, 0, game_data.current_dungeon_level);
+        place_trap();
     }
     if (rnd(5) == 0)
     {
@@ -2065,7 +1939,7 @@ void generate_random_nefia()
         }
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            map_web(0, 0, game_data.current_dungeon_level * 10 + 100);
+            place_web(game_data.current_dungeon_level * 10 + 100);
         }
     }
     if (rnd(4) == 0)
@@ -2073,7 +1947,7 @@ void generate_random_nefia()
         p = clamp(rnd(map_data.width * map_data.height / 500 + 1) + 1, 3, 15);
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            map_barrel(0, 0);
+            place_barrel();
         }
     }
     if (map_data.refresh_type == 1)
@@ -2125,8 +1999,8 @@ void initialize_random_nefia_rdtype6()
         tile_room(0) = 45;
         tile_room(1) = 6;
     }
-    map_converttile();
-    map_placeplayer();
+    convert_tiles_at_random();
+    map_place_player_and_allies();
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
@@ -2169,14 +2043,14 @@ int initialize_quest_map_crop()
         }
     }
     mdatan(0) = i18n::s.get("core.map.quest.field");
-    map_randomtile(9, 10);
-    map_randomtile(10, 10);
-    map_randomtile(0, 30);
-    map_randomtile(1, 4);
-    map_randomtile(4, 2);
-    map_randomtile(3, 2);
-    map_randomtile(4, 2);
-    map_randomtile(5, 2);
+    map_replace_random_tiles(9, 10);
+    map_replace_random_tiles(10, 10);
+    map_replace_random_tiles(0, 30);
+    map_replace_random_tiles(1, 4);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(3, 2);
+    map_replace_random_tiles(4, 2);
+    map_replace_random_tiles(5, 2);
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         int w = rnd(5) + 5;
@@ -2237,7 +2111,7 @@ int initialize_quest_map_crop()
     game_data.entrance_type = 7;
     mapstartx = rnd(map_data.width / 3) + map_data.width / 3;
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
-    map_placeplayer();
+    map_place_player_and_allies();
     flt();
     if (const auto item = itemcreate_map_inv(
             560, cdata.player().position.x + 1, cdata.player().position.y, 0))
@@ -2286,7 +2160,8 @@ int initialize_random_nefia_rdtype1()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(1);
         if (stat == 0)
@@ -2294,7 +2169,8 @@ int initialize_random_nefia_rdtype1()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(1);
@@ -2306,7 +2182,7 @@ int initialize_random_nefia_rdtype1()
             return 0;
         }
     }
-    map_makedoor();
+    make_door();
     return 1;
 }
 
@@ -2336,7 +2212,8 @@ int initialize_random_nefia_rdtype4()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(2);
         if (stat == 0)
@@ -2344,7 +2221,8 @@ int initialize_random_nefia_rdtype4()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(2);
@@ -2403,7 +2281,8 @@ int initialize_random_nefia_rdtype5()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom(2);
         if (stat == 0)
@@ -2411,7 +2290,8 @@ int initialize_random_nefia_rdtype5()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(2);
@@ -2500,7 +2380,8 @@ int initialize_random_nefia_rdtype2()
     {
         return 0;
     }
-    map_placeupstairs();
+    place_upstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     {
         int stat = map_createroom();
         if (stat == 0)
@@ -2508,7 +2389,8 @@ int initialize_random_nefia_rdtype2()
             return 0;
         }
     }
-    map_placedownstairs();
+    place_downstairs_at_random_pos(
+        roomx(cr), roomy(cr), roomwidth(cr), roomheight(cr));
     for (int cnt = 0, cnt_end = (rdroomnum); cnt < cnt_end; ++cnt)
     {
         map_createroom(0);
@@ -2583,8 +2465,8 @@ int initialize_random_nefia_rdtype3()
         p = p(1);
         p(1) = p(2);
     }
-    map_placeupstairs(p, rnd(map_data.height - 4) + 2);
-    map_placedownstairs(p(1), rnd(map_data.height - 4) + 2);
+    map_place_upstairs(p, rnd(map_data.height - 4) + 2);
+    map_place_downstairs(p(1), rnd(map_data.height - 4) + 2);
     return 1;
 }
 
@@ -2621,7 +2503,7 @@ int initialize_quest_map_party()
     {
         map_createroom(4);
     }
-    map_converttile();
+    convert_tiles_at_random();
     for (int cnt = 0; cnt < 500; ++cnt)
     {
         dx = rnd(map_data.width - 5);
@@ -2826,7 +2708,7 @@ int initialize_quest_map_party()
     game_data.entrance_type = 7;
     mapstartx = rnd(map_data.width / 3) + map_data.width / 3;
     mapstarty = rnd(map_data.height / 3) + map_data.height / 3;
-    map_placeplayer();
+    map_place_player_and_allies();
     map_data.max_crowd_density = 0;
     for (int cnt = 0, cnt_end = (25 + rnd(10)); cnt < cnt_end; ++cnt)
     {
@@ -2940,11 +2822,11 @@ void initialize_quest_map_town()
 {
     map_data.max_crowd_density = 0;
     map_data.indoors_flag = 2;
-    map_initcustom(map_get_custom_map_name(game_data.previous_map2));
+    map_init_static_map(map_get_custom_map_name(game_data.previous_map2));
     mdatan(0) = i18n::s.get("core.map.quest.urban_area");
     randomize();
     game_data.entrance_type = 5;
-    map_placeplayer();
+    map_place_player_and_allies();
     map_data.user_map_flag = 0;
     if (game_data.executing_immediate_quest_type == 1008)
     {
@@ -3070,7 +2952,7 @@ void initialize_random_nefia_rdtype8()
         y = rnd(15);
         if (cell_data.at(x, y).chip_id_actual == 100)
         {
-            map_placeupstairs(x, y);
+            map_place_upstairs(x, y);
             break;
         }
     }
@@ -3080,7 +2962,7 @@ void initialize_random_nefia_rdtype8()
         y = map_data.height - rnd(15) - 1;
         if (cell_data.at(x, y).chip_id_actual == 100)
         {
-            map_placedownstairs(x, y);
+            map_place_downstairs(x, y);
             break;
         }
     }
@@ -3312,8 +3194,8 @@ void mapgen_dig_maze()
                 continue;
             }
         }
-        map_placeupstairs(x, y);
-        map_placedownstairs(dx, dy);
+        map_place_upstairs(x, y);
+        map_place_downstairs(dx, dy);
         break;
     }
 }
@@ -3742,62 +3624,70 @@ void initialize_home_mdata()
     }
 }
 
-void map_initcustom(const std::string& map_filename)
+
+
+void map_init_static_map(const std::string& map_filename)
 {
-    fmapfile =
-        (filesystem::dirs::map() / fs::u8path(map_filename)).to_u8string();
-    ctrl_file_custom_map_read();
+    ctrl_file_custom_map_read(
+        filesystem::dirs::map() / fs::u8path(map_filename));
+
     map_tileset(map_data.tileset);
+
     nooracle = 1;
-    for (int cnt = 0; cnt < 400; ++cnt)
+    for (int i = 0; i < 400; ++i)
     {
-        if (cmapdata(0, cnt) == 0)
-        {
+        const int id = cmapdata(0, i);
+        const int x = cmapdata(1, i);
+        const int y = cmapdata(2, i);
+        const int ex_info = cmapdata(3, i);
+        const int type = cmapdata(4, i);
+
+        if (id == 0)
             continue;
-        }
-        if (cmapdata(4, cnt) == 0)
+
+        switch (type)
         {
+        case 0:
             flt();
-            if (const auto item = itemcreate_map_inv(
-                    cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt), 0))
+            if (const auto item = itemcreate_map_inv(id, x, y, 0))
             {
-                item->own_state = static_cast<OwnState>(cmapdata(3, cnt));
+                item->own_state = static_cast<OwnState>(ex_info);
             }
-        }
-        if (cmapdata(4, cnt) == 1)
-        {
+            break;
+        case 1:
             flt();
-            chara_create(
-                -1, cmapdata(0, cnt), cmapdata(1, cnt), cmapdata(2, cnt));
-        }
-        if (cmapdata(4, cnt) == 2)
-        {
+            chara_create(-1, id, x, y);
+            break;
+        case 2: {
+            const auto& obj_data = cellobjdata[id];
             if (mapupdate)
             {
-                if (cellobjdata(0, cmapdata(0, cnt)) == 32)
+                if (obj_data.type == 32)
                 {
                     continue;
                 }
             }
             cell_featset(
-                cmapdata(1, cnt),
-                cmapdata(2, cnt),
-                cellobjdata(3, cmapdata(0, cnt)),
-                cellobjdata(0, cmapdata(0, cnt)),
-                cmapdata(3, cnt) % 1000,
-                cmapdata(3, cnt) / 1000);
-            if (cellobjdata(0, cmapdata(0, cnt)) == 10)
+                x,
+                y,
+                obj_data.tile,
+                obj_data.type,
+                ex_info % 1000,
+                ex_info / 1000);
+            if (obj_data.type == 10)
             {
-                map_data.stair_up_pos =
-                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                map_data.stair_up_pos = y * 1000 + x;
             }
-            if (cellobjdata(0, cmapdata(0, cnt)) == 11)
+            if (obj_data.type == 11)
             {
-                map_data.stair_down_pos =
-                    cmapdata(2, cnt) * 1000 + cmapdata(1, cnt);
+                map_data.stair_down_pos = y * 1000 + x;
             }
+            break;
+        }
+        default: assert(0); break;
         }
     }
+
     nooracle = 0;
     map_data.user_map_flag = 1;
 }

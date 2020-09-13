@@ -354,7 +354,7 @@ void initialize_elona()
     initialize_all_chips();
     initialize_building_data();
     initialize_adata();
-    initialize_cell_object_data();
+    map_init_cell_object_data();
     load_random_title_table();
     load_random_name_table();
     game_data.random_seed = 1 + rnd(2000000000);

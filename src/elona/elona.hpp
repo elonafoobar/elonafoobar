@@ -605,7 +605,6 @@ using namespace elona;
 
 
 
-#define DIM1(a) (a).clear()
 #define DIM2(a, b) (a).allocate_and_clear(b)
 #define DIM3(a, b, c) (a).allocate_and_clear(b, c)
 #define DIM4(a, b, c, d) (a).allocate_and_clear(b, c, d)

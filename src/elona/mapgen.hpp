@@ -12,21 +12,34 @@ struct Character;
 
 
 void map_initialize();
-void map_initcustom(const std::string&);
+void map_init_static_map(const std::string&);
 void map_tileset(int = 0);
-void map_converttile();
-void map_createroomdoor();
-void map_makedoor();
 void map_nextdir1(int = 0, int = 0);
 void map_nextdir2(int = 0, int = 0);
-void map_place_chara_on_pet_arena(Character& chara, bool is_enemy);
-void map_place_chara_on_entrance(Character& chara, int entrance_type);
-int dist_town();
-void map_placeplayer();
-void map_randomtile(int = 0, int = 0);
-void map_setfog(int = 0, int = 0);
 
-void generate_debug_map();
+
+enum class ArenaCharaType
+{
+    allies,
+    monsters,
+};
+
+void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type);
+
+void map_place_player_and_allies();
+
+/// Replace random tiles by @a tile_id.
+/// @param tile_id Tile ID. Some of tiles in the current map will be replaced by
+/// the tile.
+/// @param density Density in percentage
+void map_replace_random_tiles(int tile_id, int density);
+
+void map_set_fog();
+
+void map_place_upstairs(int x, int y);
+void map_place_downstairs(int x, int y);
+
+void map_generate_debug_map();
 void generate_random_nefia();
 int initialize_quest_map_crop();
 int initialize_random_nefia_rdtype1();
@@ -36,6 +49,9 @@ int initialize_random_nefia_rdtype2();
 int initialize_random_nefia_rdtype3();
 int initialize_quest_map_party();
 void initialize_home_mdata();
+
+// Functions called from `init.cpp`.
+void map_init_cell_object_data();
 
 
 
