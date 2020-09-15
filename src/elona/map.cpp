@@ -1363,8 +1363,7 @@ TurnResult exit_map()
             }
         }
     }
-    game()->previous_map = game()->current_map;
-    if (game()->previous_map == mdata_t::MapId::shelter_)
+    if (previous_map == mdata_t::MapId::shelter_)
     {
         game()->current_map = game()->previous_map2;
         game()->current_dungeon_level = game()->previous_dungeon_level;
@@ -1506,7 +1505,7 @@ TurnResult exit_map()
         }
         if (area_data[game()->current_map].type == mdata_t::MapType::town)
         {
-            if (game()->current_map == game()->previous_map)
+            if (game()->current_map == previous_map)
             {
                 if (game()->current_dungeon_level == 1)
                 {
@@ -1538,8 +1537,7 @@ TurnResult exit_map()
         game()->current_dungeon_level = game()->destination_dungeon_level;
         if (game()->executing_immediate_quest_type == 0)
         {
-            if (game()->previous_map !=
-                static_cast<int>(mdata_t::MapId::fields))
+            if (previous_map != static_cast<int>(mdata_t::MapId::fields))
             {
                 game()->pc_x_in_world_map =
                     area_data[game()->current_map].position.x;
@@ -1569,15 +1567,15 @@ TurnResult exit_map()
         Message::instance().buffered_message_append(
             u8"(再生成"s + rdtry + u8"回)"s);
     }
-    if (game()->current_map != game()->previous_map)
+    if (game()->current_map != previous_map)
     {
         if (map_is_town_or_guild() ||
-            game()->previous_map == mdata_t::MapId::your_home ||
+            previous_map == mdata_t::MapId::your_home ||
             game()->departure_date == 0)
         {
             game()->departure_date = game()->date.hours();
             game()->distance_between_town = 0;
-            game()->left_town_map = game()->previous_map;
+            game()->left_town_map = previous_map;
         }
         if (area_data[game()->current_map].type !=
                 mdata_t::MapType::world_map &&
@@ -1594,9 +1592,9 @@ TurnResult exit_map()
                 if (fixtransfermap == 0)
                 {
                     game()->pc_x_in_world_map =
-                        area_data[game()->previous_map].position.x;
+                        area_data[previous_map].position.x;
                     game()->pc_y_in_world_map =
-                        area_data[game()->previous_map].position.y;
+                        area_data[previous_map].position.y;
                 }
                 else
                 {
@@ -1614,8 +1612,7 @@ TurnResult exit_map()
                 i18n::s.get("core.action.exit_map.delivered_to_your_home"));
             weather_changes_by_location(false);
         }
-        else if (
-            area_data[game()->previous_map].type == mdata_t::MapType::world_map)
+        else if (area_data[previous_map].type == mdata_t::MapType::world_map)
         {
             Message::instance().buffered_message_append(i18n::s.get(
                 "core.action.exit_map.entered", mapname(game()->current_map)));
@@ -1629,7 +1626,7 @@ TurnResult exit_map()
         else
         {
             Message::instance().buffered_message_append(i18n::s.get(
-                "core.action.exit_map.left", mapname(game()->previous_map)));
+                "core.action.exit_map.left", mapname(previous_map)));
         }
         if (game()->cargo_weight > game()->current_cart_limit)
         {

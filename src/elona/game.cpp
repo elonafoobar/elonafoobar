@@ -41,7 +41,6 @@ FoobarData foobar_data;
     SERIALIZE(16, next_inventory_serial_id); \
     SERIALIZE(17, weather); \
     SERIALIZE(18, hours_until_weather_changes); \
-    SERIALIZE(19, previous_map); \
     SERIALIZE(20, current_map); \
     SERIALIZE(22, current_dungeon_level); \
     SERIALIZE(24, home_scale); \

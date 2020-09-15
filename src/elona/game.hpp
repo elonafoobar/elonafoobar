@@ -117,7 +117,6 @@ struct Game
     int next_inventory_serial_id;
     int weather;
     int hours_until_weather_changes;
-    int previous_map;
     int current_map;
     int current_dungeon_level;
     int home_scale;

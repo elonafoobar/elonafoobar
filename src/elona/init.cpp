@@ -92,7 +92,6 @@ void initialize_world()
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
 
-    game()->previous_map = -1;
     game()->destination_outer_map = 4;
     game()->current_map = static_cast<int>(mdata_t::MapId::your_home);
     game()->current_dungeon_level = 1;
@@ -506,7 +505,6 @@ void initialize_debug_globals()
     game()->next_shelter_serial_id = 100;
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
-    game()->previous_map = -1;
     game()->random_seed = 1 + rnd(2000000000);
     game()->random_seed_offset = 0;
     game()->current_map = static_cast<int>(mdata_t::MapId::north_tyris);
