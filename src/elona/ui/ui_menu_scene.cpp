@@ -37,7 +37,7 @@ static void _load_scenes()
         p = instr(buff, 0, s);
         if (p != -1)
         {
-            if (cnt <= game_data.played_scene)
+            if (cnt <= game()->played_scene)
             {
                 list(0, listmax) = cnt;
                 list(1, listmax) = p;

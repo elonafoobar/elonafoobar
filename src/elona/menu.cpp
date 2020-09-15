@@ -320,13 +320,13 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
 {
     if (g_config.extra_help())
     {
-        if (game_data.exhelp_flags.at(id) == 0)
+        if (game()->exhelp_flags.at(id) == 0)
         {
             if (mode == 0)
             {
                 if (cdata.player().activity.turn == 0)
                 {
-                    game_data.exhelp_flags.at(id) = 1;
+                    game()->exhelp_flags.at(id) = 1;
                     show_ex_help(id);
 
                     if (should_update_screen)
@@ -727,7 +727,7 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                     s(9) = i18n::s.get("core.ui.appearance.basic.riding");
                 }
                 p = 9 + (!chara.is_player()) +
-                    (chara.is_player()) * (game_data.mount != 0);
+                    (chara.is_player()) * (game()->mount != 0);
             }
             else
             {

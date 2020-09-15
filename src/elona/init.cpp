@@ -83,33 +83,33 @@ void initialize_screen(const PreinitConfigOptions& opts)
 
 void initialize_world()
 {
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 16;
-    game_data.date.minute = 10;
+    game()->date.year = 517;
+    game()->date.month = 8;
+    game()->date.day = 12;
+    game()->date.hour = 16;
+    game()->date.minute = 10;
 
-    game_data.pc_x_in_world_map = 22;
-    game_data.pc_y_in_world_map = 21;
+    game()->pc_x_in_world_map = 22;
+    game()->pc_y_in_world_map = 21;
 
-    game_data.previous_map = -1;
-    game_data.destination_outer_map = 4;
-    game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-    game_data.current_dungeon_level = 1;
-    game_data.entrance_type = 4;
+    game()->previous_map = -1;
+    game()->destination_outer_map = 4;
+    game()->current_map = static_cast<int>(mdata_t::MapId::your_home);
+    game()->current_dungeon_level = 1;
+    game()->entrance_type = 4;
 
-    game_data.version = 1220;
+    game()->version = 1220;
 
-    game_data.home_scale = 0;
+    game()->home_scale = 0;
 
     initialize_adata();
 
-    game_data.weather = 3;
-    game_data.hours_until_weather_changes = 6;
+    game()->weather = 3;
+    game()->hours_until_weather_changes = 6;
 
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        game_data.ranks.at(cnt) = 10000;
+        game()->ranks.at(cnt) = 10000;
     }
 }
 
@@ -117,8 +117,8 @@ void initialize_world()
 
 void initialize_testbed()
 {
-    game_data.current_map = 499;
-    game_data.current_dungeon_level = 2;
+    game()->current_map = 499;
+    game()->current_dungeon_level = 2;
 }
 
 } // namespace
@@ -355,8 +355,8 @@ void initialize_elona()
     map_init_cell_object_data();
     load_random_title_table();
     load_random_name_table();
-    game_data.random_seed = 1 + rnd(2000000000);
-    game_data.random_seed_offset = 0;
+    game()->random_seed = 1 + rnd(2000000000);
+    game()->random_seed_offset = 0;
     set_item_info();
     clear_trait_data();
     initialize_rankn();
@@ -499,55 +499,54 @@ void initialize_debug_globals()
 {
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        game_data.ranks.at(cnt) = 5000;
+        game()->ranks.at(cnt) = 5000;
     }
-    game_data.version = 1220;
-    game_data.next_inventory_serial_id = 1000;
-    game_data.next_shelter_serial_id = 100;
-    game_data.pc_x_in_world_map = 22;
-    game_data.pc_y_in_world_map = 21;
-    game_data.previous_map = -1;
-    game_data.random_seed = 1 + rnd(2000000000);
-    game_data.random_seed_offset = 0;
-    game_data.current_map = static_cast<int>(mdata_t::MapId::north_tyris);
-    game_data.current_dungeon_level = 0;
-    game_data.entrance_type = 7;
+    game()->version = 1220;
+    game()->next_inventory_serial_id = 1000;
+    game()->next_shelter_serial_id = 100;
+    game()->pc_x_in_world_map = 22;
+    game()->pc_y_in_world_map = 21;
+    game()->previous_map = -1;
+    game()->random_seed = 1 + rnd(2000000000);
+    game()->random_seed_offset = 0;
+    game()->current_map = static_cast<int>(mdata_t::MapId::north_tyris);
+    game()->current_dungeon_level = 0;
+    game()->entrance_type = 7;
     mapstartx = 22;
     mapstarty = 21;
-    game_data.current_map = static_cast<int>(mdata_t::MapId::vernis);
-    game_data.current_dungeon_level = 1;
-    game_data.entrance_type = 7;
+    game()->current_map = static_cast<int>(mdata_t::MapId::vernis);
+    game()->current_dungeon_level = 1;
+    game()->entrance_type = 7;
     mapstartx = 10;
     mapstarty = 23;
     initlv = 50;
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    game_data.date.year = 517;
-    game_data.date.month = 12;
-    game_data.date.day = 30;
-    game_data.date.hour = 1;
-    game_data.date.minute = 10;
-    game_data.played_scene = 50;
-    game_data.has_not_been_to_vernis = 1;
+    game()->date.year = 517;
+    game()->date.month = 12;
+    game()->date.day = 30;
+    game()->date.hour = 1;
+    game()->date.minute = 10;
+    game()->played_scene = 50;
+    game()->has_not_been_to_vernis = 1;
     area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
         static_cast<int>(mdata_t::MapId::north_tyris);
-    game_data.destination_outer_map =
-        area_data[game_data.current_map].outer_map;
-    game_data.acquirable_feat_count = 2;
-    game_data.quest_flags.save_count_of_little_sister = 1000;
-    game_data.rights_to_succeed_to = 1000;
-    game_data.home_scale = 0;
-    game_data.number_of_waiting_guests = 2;
-    game_data.charge_power = 1000;
+    game()->destination_outer_map = area_data[game()->current_map].outer_map;
+    game()->acquirable_feat_count = 2;
+    game()->quest_flags.save_count_of_little_sister = 1000;
+    game()->rights_to_succeed_to = 1000;
+    game()->home_scale = 0;
+    game()->number_of_waiting_guests = 2;
+    game()->charge_power = 1000;
     cdata.player().god_id = core_god::int2godid(2);
     cdata.player().piety_point = 1000;
     cdata.player().praying_point = 1000;
-    game_data.quest_flags.pael_and_her_mom = 1000;
+    game()->quest_flags.pael_and_her_mom = 1000;
     earn_gold(cdata.player(), 1000000);
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
-    game_data.quest_flags.main_quest = 100;
+    game()->quest_flags.main_quest = 100;
     chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
@@ -595,8 +594,8 @@ void initialize_game()
     }
     if (mode == 2)
     {
-        game_data.next_inventory_serial_id = 1000;
-        game_data.next_shelter_serial_id = 100;
+        game()->next_inventory_serial_id = 1000;
+        game()->next_shelter_serial_id = 100;
         blending_clear_recipememory();
     }
     if (mode == 3)
@@ -668,11 +667,11 @@ void init()
     config_save();
 
     // It is necessary to calculate PC's birth year correctly.
-    game_data.date.year = 517;
-    game_data.date.month = 8;
-    game_data.date.day = 12;
-    game_data.date.hour = 16;
-    game_data.date.minute = 10;
+    game()->date.year = 517;
+    game()->date.month = 8;
+    game()->date.day = 12;
+    game()->date.hour = 16;
+    game()->date.minute = 10;
 
     quickpage = 1;
 

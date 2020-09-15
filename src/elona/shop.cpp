@@ -46,12 +46,12 @@ void shop_refresh_on_talk(Character& shopkeeper)
         }
         else
         {
-            ++game_data.next_inventory_serial_id;
-            shopkeeper.shop_store_id = game_data.next_inventory_serial_id;
+            ++game()->next_inventory_serial_id;
+            shopkeeper.shop_store_id = game()->next_inventory_serial_id;
         }
         shop_refresh(shopkeeper);
     }
-    else if (game_data.date.hours() >= shopkeeper.time_to_restore)
+    else if (game()->date.hours() >= shopkeeper.time_to_restore)
     {
         shop_refresh(shopkeeper);
     }
@@ -82,11 +82,11 @@ void shop_refresh(Character& shopkeeper)
     if (g_config.restock_interval())
     {
         shopkeeper.time_to_restore =
-            game_data.date.hours() + 24 * g_config.restock_interval();
+            game()->date.hours() + 24 * g_config.restock_interval();
     }
     else
     {
-        shopkeeper.time_to_restore = game_data.date.hours() - 1;
+        shopkeeper.time_to_restore = game()->date.hours() - 1;
     }
 }
 

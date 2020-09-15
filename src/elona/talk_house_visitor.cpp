@@ -228,7 +228,7 @@ void _adventurer_learn_skill(int skill_id)
     cdata.player().platinum_coin -=
         calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
-    ++game_data.number_of_learned_skills_by_trainer;
+    ++game()->number_of_learned_skills_by_trainer;
 }
 
 
@@ -610,7 +610,7 @@ TalkResult _talk_hv_adventurer_drink(Character& speaker)
 
 TalkResult _talk_hv_adventurer(Character& speaker)
 {
-    if (game_data.date.month == 1 && rnd(4))
+    if (game()->date.month == 1 && rnd(4))
     {
         return _talk_hv_adventurer_new_year(speaker);
     }
@@ -665,24 +665,24 @@ int _trainer_calc_skills(Character& speaker)
 {
     int plat = 3;
 
-    game_data.last_month_when_trainer_visited = game_data.date.month;
+    game()->last_month_when_trainer_visited = game()->date.month;
     buff = i18n::s.get(
         "core.talk.visitor.trainer.dialog.member", guildname(), plat, speaker);
-    if (game_data.guild.belongs_to_mages_guild != 0)
+    if (game()->guild.belongs_to_mages_guild != 0)
     {
         p(0) = 16;
         p(1) = 15;
         p(2) = 14;
         p(3) = -1;
     }
-    else if (game_data.guild.belongs_to_fighters_guild != 0)
+    else if (game()->guild.belongs_to_fighters_guild != 0)
     {
         p(0) = 10;
         p(1) = 11;
         p(2) = 12;
         p(3) = -1;
     }
-    else if (game_data.guild.belongs_to_thieves_guild != 0)
+    else if (game()->guild.belongs_to_thieves_guild != 0)
     {
         p(0) = 12;
         p(1) = 13;
@@ -726,7 +726,7 @@ TalkResult _talk_hv_trainer(Character& speaker)
 {
     int plat = 0;
 
-    if (game_data.last_month_when_trainer_visited == game_data.date.month)
+    if (game()->last_month_when_trainer_visited == game()->date.month)
     {
         listmax = 0;
         buff = i18n::s.get(

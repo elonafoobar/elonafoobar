@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <memory>
 
 #include "../version.hpp"
 
@@ -97,7 +98,7 @@ struct GuildData
 /**
  * Global game data that is serialized. Replaces gdata.
  */
-struct GameData
+struct Game
 {
     template <size_t N>
     using ArrayType = std::array<int, N>;
@@ -232,7 +233,12 @@ struct GameData
     void unpack_from(elona_vector1<int>&);
 };
 
-extern GameData game_data;
+
+
+/**
+ * Gets the game data.
+ */
+const std::unique_ptr<Game>& game();
 
 
 

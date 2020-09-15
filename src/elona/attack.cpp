@@ -234,7 +234,7 @@ bool do_physical_attack_internal(
 
     const auto expmodifer = 1 + target.is_hung_on_sand_bag() * 15 +
         target.splits() + target.splits2() +
-        (game_data.current_map == mdata_t::MapId::show_house);
+        (game()->current_map == mdata_t::MapId::show_house);
     int hit = calcattackhit(attacker, target, weapon, ammo);
     i = 0;
     if (hit == 1)
@@ -327,7 +327,7 @@ bool do_physical_attack_internal(
             {
                 if (!target.is_player_or_ally())
                 {
-                    game_data.proc_damage_events_flag = 2;
+                    game()->proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.damage.weapon.attacks_unarmed_and",
                         attacker,
@@ -360,7 +360,7 @@ bool do_physical_attack_internal(
                 {
                     if (!target.is_player_or_ally())
                     {
-                        game_data.proc_damage_events_flag = 2;
+                        game()->proc_damage_events_flag = 2;
                         if (attackskill == 111)
                         {
                             txt(i18n::s.get(
@@ -440,7 +440,7 @@ bool do_physical_attack_internal(
             }
             if (attacker.is_player())
             {
-                if (game_data.mount != 0)
+                if (game()->mount != 0)
                 {
                     chara_gain_skill_exp(
                         cdata.player(), 301, 30 / expmodifer, 0, 5);
@@ -923,13 +923,13 @@ void proc_weapon_enchantments(
         }
         if (enc == 40)
         {
-            if (game_data.left_turns_of_timestop == 0)
+            if (game()->left_turns_of_timestop == 0)
             {
                 if (rnd(25) == 0)
                 {
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
-                    game_data.left_turns_of_timestop =
+                    game()->left_turns_of_timestop =
                         weapon->enchantments[cnt].power / 100 + 1 + 1;
                 }
                 continue;
@@ -940,7 +940,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
-                game_data.proc_damage_events_flag = 1;
+                game()->proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -950,7 +950,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/god/"))
             {
-                game_data.proc_damage_events_flag = 1;
+                game()->proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -960,7 +960,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/undead/"))
             {
-                game_data.proc_damage_events_flag = 1;
+                game()->proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -980,7 +980,7 @@ void proc_weapon_enchantments(
                 {
                     continue;
                 }
-                game_data.proc_damage_events_flag = 1;
+                game()->proc_damage_events_flag = 1;
                 damage_hp(
                     target,
                     rnd_capped(
@@ -1029,13 +1029,13 @@ void proc_weapon_enchantments(
     {
         txt(i18n::s.get("core.action.time_stop.begins", attacker),
             Message::color{ColorIndex::cyan});
-        game_data.left_turns_of_timestop = 4;
+        game()->left_turns_of_timestop = 4;
     }
     if (ammoproc == 3)
     {
         if (target.state() == Character::State::alive)
         {
-            game_data.proc_damage_events_flag = 1;
+            game()->proc_damage_events_flag = 1;
             damage_hp(
                 target,
                 orgdmg * 2 / 3,

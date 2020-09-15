@@ -257,8 +257,8 @@ calc_skill_damage(const Character& chara, int skill, int power)
 
 int calcobjlv(int base)
 {
-    int ret = base <= 0 ? game_data.current_dungeon_level : base;
-    if (game_data.current_map == mdata_t::MapId::shelter_)
+    int ret = base <= 0 ? game()->current_dungeon_level : base;
+    if (game()->current_map == mdata_t::MapId::shelter_)
     {
         ret = 1;
     }
@@ -397,7 +397,7 @@ int calc_rate_to_pierce(int id)
 
 std::string calc_age(const Character& chara)
 {
-    int n = game_data.date.year - chara.birth_year;
+    int n = game()->date.year - chara.birth_year;
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
@@ -494,7 +494,7 @@ int calc_accuracy(
         }
     }
 
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
         if (attacker.is_player())
         {
@@ -507,7 +507,7 @@ int calc_accuracy(
                     (10 + attacker.get_skill(301).level / 5);
             }
         }
-        if (attacker.index == game_data.mount)
+        if (attacker.index == game()->mount)
         {
             accuracy = accuracy * 100 /
                 clamp((150 - attacker.get_skill(10).level / 2), 115, 150);
@@ -906,7 +906,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         else
         {
             ret = cdata.player().level / 5 *
-                    ((game_data.random_seed +
+                    ((game()->random_seed +
                       static_cast<int>(item->slot()) * 31) %
                          cdata.player().level +
                      4) +
@@ -997,7 +997,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     {
         int max = ret / 2;
         ret = ret * 100 / (100 + cdata.player().get_skill(156).level);
-        if (game_data.guild.belongs_to_mages_guild != 0)
+        if (game()->guild.belongs_to_mages_guild != 0)
         {
             if (category == ItemCategory::spellbook)
             {
@@ -1023,7 +1023,7 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
         }
         if (item->is_stolen)
         {
-            if (game_data.guild.belongs_to_thieves_guild == 0)
+            if (game()->guild.belongs_to_thieves_guild == 0)
             {
                 ret /= 10;
             }
@@ -1149,14 +1149,14 @@ void calccosthire()
               25,
               200) /
         100;
-    game_data.cost_to_hire = cost;
+    game()->cost_to_hire = cost;
 }
 
 
 
 int calccostbuilding()
 {
-    int cost = game_data.home_scale * game_data.home_scale * 200;
+    int cost = game()->home_scale * game()->home_scale * 200;
 
     for (int cnt = 300; cnt < 450; ++cnt)
     {
@@ -1246,8 +1246,7 @@ int calccargoupdate()
 
 int calccargoupdatecost()
 {
-    return (game_data.current_cart_limit - game_data.initial_cart_limit) /
-        10000 +
+    return (game()->current_cart_limit - game()->initial_cart_limit) / 10000 +
         1;
 }
 
@@ -1279,7 +1278,7 @@ int calcidentifyvalue(int type)
     }
     cost = cost * 100 / (100 + cdata.player().get_skill(156).level * 2);
 
-    return game_data.guild.belongs_to_fighters_guild ? cost / 2 : cost;
+    return game()->guild.belongs_to_fighters_guild ? cost / 2 : cost;
 }
 
 
@@ -1303,7 +1302,7 @@ int calc_skill_learning_cost(
     (void)skill_id;
     (void)chara;
 
-    int platinum = 15 + 3 * game_data.number_of_learned_skills_by_trainer;
+    int platinum = 15 + 3 * game()->number_of_learned_skills_by_trainer;
     return discount ? platinum * 2 / 3 : platinum;
 }
 
@@ -1337,7 +1336,7 @@ int calc_slave_value(const Character& chara)
 
 int calcrestorecost()
 {
-    return game_data.guild.belongs_to_fighters_guild ? 250 : 500;
+    return game()->guild.belongs_to_fighters_guild ? 250 : 500;
 }
 
 
@@ -1347,8 +1346,8 @@ int calcinitgold(int owner)
     if (owner < 0)
     {
         return rnd_capped(
-                   game_data.current_dungeon_level * 25 *
-                       (game_data.current_map != mdata_t::MapId::shelter_) +
+                   game()->current_dungeon_level * 25 *
+                       (game()->current_map != mdata_t::MapId::shelter_) +
                    10) +
             1;
     }
@@ -1399,7 +1398,7 @@ int calc_spell_success_rate(const Character& caster, int id)
 
     if (!caster.is_player())
     {
-        if (game_data.mount == caster.index)
+        if (game()->mount == caster.index)
         {
             return 95 -
                 clamp(30 - cdata.player().get_skill(301).level / 2, 0, 30);
@@ -1425,7 +1424,7 @@ int calc_spell_success_rate(const Character& caster, int id)
     {
         penalty = 4;
     }
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
         penalty += 4;
     }
@@ -1527,9 +1526,9 @@ int calc_spell_cost_stock(const Character& caster, int id)
 int calcscore()
 {
     int score = cdata.player().level * cdata.player().level +
-        game_data.deepest_dungeon_level * game_data.deepest_dungeon_level +
-        game_data.kill_count;
-    if (game_data.death_count > 1)
+        game()->deepest_dungeon_level * game()->deepest_dungeon_level +
+        game()->kill_count;
+    if (game()->death_count > 1)
     {
         score = score / 10 + 1;
     }
@@ -1608,7 +1607,7 @@ int generate_color(ColorIndex index, int id)
         // same as all other items of this type. So, base it off the
         // random seed of the current save data.
         const auto index =
-            (id + game_data.random_seed) % item_random_colors.size();
+            (id + game()->random_seed) % item_random_colors.size();
         color = item_random_colors.at(index);
     }
     if (index == ColorIndex::random_any)

@@ -30,7 +30,7 @@ namespace elona::lua::api::classes::class_LuaMapGenerator
  */
 int LuaMapGenerator_stood_world_map_tile()
 {
-    return game_data.stood_world_map_tile;
+    return game()->stood_world_map_tile;
 }
 
 
@@ -57,8 +57,8 @@ bool LuaMapGenerator_is_first_generation()
  */
 bool LuaMapGenerator_is_deepest_level()
 {
-    return game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level;
+    return game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level;
 }
 
 
@@ -166,7 +166,7 @@ void LuaMapGenerator_set_stair_down_pos(int x, int y)
  */
 void LuaMapGenerator_set_entrance_type(const EnumString& type)
 {
-    game_data.entrance_type =
+    game()->entrance_type =
         LuaEnums::MapEntranceTypeTable.ensure_from_string(type);
 }
 
@@ -212,7 +212,7 @@ void LuaMapGenerator_place_player_xy(int x, int y)
 {
     // Set the entrance type to "Specified" as a specific position was
     // requested.
-    game_data.entrance_type = 7;
+    game()->entrance_type = 7;
 
     mapstartx = x;
     mapstarty = y;

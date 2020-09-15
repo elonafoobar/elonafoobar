@@ -60,7 +60,7 @@ int Map_height()
  */
 int Map_integer_id()
 {
-    return area_data[game_data.current_map].id;
+    return area_data[game()->current_map].id;
 }
 
 
@@ -98,7 +98,7 @@ sol::optional<std::string> Map_id()
  */
 int Map_instance_id()
 {
-    return game_data.current_map;
+    return game()->current_map;
 }
 
 
@@ -111,7 +111,7 @@ int Map_instance_id()
  */
 int Map_current_dungeon_level()
 {
-    return game_data.current_dungeon_level;
+    return game()->current_dungeon_level;
 }
 
 
@@ -567,10 +567,10 @@ void Map_travel_to_with_level(const std::string& map_id, int level)
 {
     auto map = the_mapdef_db.ensure(data::InstanceId{map_id});
 
-    game_data.player_x_on_map_leave = cdata.player().position.x;
-    game_data.player_y_on_map_leave = cdata.player().position.y;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
+    game()->player_x_on_map_leave = cdata.player().position.x;
+    game()->player_y_on_map_leave = cdata.player().position.y;
+    game()->previous_x = cdata.player().position.x;
+    game()->previous_y = cdata.player().position.y;
 
     // Set up the outer map of the map traveled to, such that the player will
     // appear on top the map's area when they leave via the map's edge.
@@ -580,18 +580,18 @@ void Map_travel_to_with_level(const std::string& map_id, int level)
 
         if (outer_map)
         {
-            game_data.previous_map2 = outer_map->integer_id;
-            game_data.previous_dungeon_level = 1;
-            game_data.pc_x_in_world_map = map.outer_map_position.x;
-            game_data.pc_y_in_world_map = map.outer_map_position.y;
-            game_data.destination_outer_map = outer_map->integer_id;
+            game()->previous_map2 = outer_map->integer_id;
+            game()->previous_dungeon_level = 1;
+            game()->pc_x_in_world_map = map.outer_map_position.x;
+            game()->pc_y_in_world_map = map.outer_map_position.y;
+            game()->destination_outer_map = outer_map->integer_id;
         }
     }
     else
     {
-        game_data.previous_map2 = map.integer_id;
-        game_data.previous_dungeon_level = 1;
-        game_data.destination_outer_map = map.integer_id;
+        game()->previous_map2 = map.integer_id;
+        game()->previous_dungeon_level = 1;
+        game()->destination_outer_map = map.integer_id;
     }
 
     map_prepare_for_travel(map.integer_id, level);

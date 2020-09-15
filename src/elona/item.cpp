@@ -526,12 +526,12 @@ void cell_refresh(int x, int y)
 
 void itemturn(const ItemRef& item)
 {
-    ++game_data.item_turns;
-    if (game_data.item_turns < 0)
+    ++game()->item_turns;
+    if (game()->item_turns < 0)
     {
-        game_data.item_turns = 1;
+        game()->item_turns = 1;
     }
-    item->turn = game_data.item_turns;
+    item->turn = game()->item_turns;
 }
 
 
@@ -1592,11 +1592,11 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time && game_data.date.hours() < item->charges)
+    if (item->has_cooldown_time && game()->date.hours() < item->charges)
     {
         s_ += lang(
-            u8"("s + (item->charges - game_data.date.hours()) + u8"時間)"s,
-            u8"(Next: "s + (item->charges - game_data.date.hours()) + u8"h.)"s);
+            u8"("s + (item->charges - game()->date.hours()) + u8"時間)"s,
+            u8"(Next: "s + (item->charges - game()->date.hours()) + u8"h.)"s);
     }
     if (item->id == "core.shelter" && item->charges != 0)
     {
@@ -2114,8 +2114,8 @@ void item_drop(
     if (building_shelter)
     {
         dropped_item->own_state = OwnState::shelter;
-        dropped_item->charges = game_data.next_shelter_serial_id + 100;
-        ++game_data.next_shelter_serial_id;
+        dropped_item->charges = game()->next_shelter_serial_id + 100;
+        ++game()->next_shelter_serial_id;
     }
     else
     {
@@ -2148,14 +2148,14 @@ void item_drop(
     screenupdate = -1;
     update_screen();
 
-    if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
+    if (area_data[game()->current_map].id == mdata_t::MapId::museum)
     {
         if (mode == 0)
         {
             update_museum();
         }
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         if (mode == 0)
         {
@@ -2533,7 +2533,7 @@ void equip_melee_weapon(Character& chara)
         }
         if (chara.is_player())
         {
-            if (game_data.mount != 0)
+            if (game()->mount != 0)
             {
                 if (weapon->weight >= 4000)
                 {

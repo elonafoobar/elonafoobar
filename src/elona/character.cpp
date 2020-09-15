@@ -178,11 +178,11 @@ optional<int> chara_create_internal(int slot, int chara_id)
             chara_id = _get_random_npc_id();
         }
     }
-    if (game_data.current_map == mdata_t::MapId::the_void)
+    if (game()->current_map == mdata_t::MapId::the_void)
     {
         if (!novoidlv)
         {
-            voidlv = game_data.current_dungeon_level / 50 * 50;
+            voidlv = game()->current_dungeon_level / 50 * 50;
         }
     }
     novoidlv = 0;
@@ -457,7 +457,7 @@ void failed_to_place_character(Character& chara)
     if (chara.role == Role::adventurer)
     {
         chara.set_state(Character::State::adventurer_dead);
-        chara.time_to_revive = game_data.date.hours() + 24 + rnd(12);
+        chara.time_to_revive = game()->date.hours() + 24 + rnd(12);
     }
 }
 
@@ -600,7 +600,7 @@ bool chara_place(Character& chara)
         return false;
     }
 
-    if (game_data.mount != 0 && game_data.mount == chara.index)
+    if (game()->mount != 0 && game()->mount == chara.index)
     {
         chara.position = cdata.player().position;
         return true;
@@ -662,8 +662,8 @@ void initialize_character(Character& chara)
     chara.sp = chara.max_sp;
     if (chara.is_player())
     {
-        game_data.initial_cart_limit = 80000;
-        game_data.current_cart_limit = game_data.initial_cart_limit;
+        game()->initial_cart_limit = 80000;
+        game()->current_cart_limit = game()->initial_cart_limit;
     }
     if (chara.has_lay_hand())
     {
@@ -734,13 +734,13 @@ void chara_refresh(Character& chara)
     int rp3 = 0;
     if (chara.is_player())
     {
-        game_data.seven_league_boot_effect = 0;
-        game_data.ether_disease_speed = 0;
-        game_data.protects_from_etherwind = 0;
-        game_data.protects_from_bad_weather = 0;
-        game_data.light = 70;
-        game_data.catches_god_signal = 0;
-        game_data.reveals_religion = 0;
+        game()->seven_league_boot_effect = 0;
+        game()->ether_disease_speed = 0;
+        game()->protects_from_etherwind = 0;
+        game()->protects_from_bad_weather = 0;
+        game()->light = 70;
+        game()->catches_god_signal = 0;
+        game()->reveals_religion = 0;
     }
     for (int cnt = 0; cnt < 600; ++cnt)
     {
@@ -834,7 +834,7 @@ void chara_refresh(Character& chara)
         {
             if (chara.is_player())
             {
-                game_data.ether_disease_speed += 5;
+                game()->ether_disease_speed += 5;
             }
         }
 
@@ -883,7 +883,7 @@ void chara_refresh(Character& chara)
                 {
                     if (chara.is_player())
                     {
-                        game_data.catches_god_signal = 1;
+                        game()->catches_god_signal = 1;
                         continue;
                     }
                 }
@@ -891,7 +891,7 @@ void chara_refresh(Character& chara)
                 {
                     if (chara.is_player())
                     {
-                        game_data.reveals_religion = 1;
+                        game()->reveals_religion = 1;
                         continue;
                     }
                 }
@@ -900,7 +900,7 @@ void chara_refresh(Character& chara)
                     chara.get_skill(18).level += enchantment.power / 50 + 1;
                     if (chara.is_player())
                     {
-                        game_data.seven_league_boot_effect +=
+                        game()->seven_league_boot_effect +=
                             enchantment.power / 8;
                         continue;
                     }
@@ -1006,12 +1006,12 @@ void chara_refresh(Character& chara)
                 {
                     if (rp2 == 30)
                     {
-                        game_data.protects_from_etherwind = 1;
+                        game()->protects_from_etherwind = 1;
                         continue;
                     }
                     if (rp2 == 31)
                     {
-                        game_data.protects_from_bad_weather = 1;
+                        game()->protects_from_bad_weather = 1;
                         continue;
                     }
                 }
@@ -1424,7 +1424,7 @@ void chara_vanquish(Character& chara)
     if (chara.is_player())
         return;
 
-    if (chara.index == game_data.mount)
+    if (chara.index == game()->mount)
     {
         ride_end();
     }
@@ -1533,7 +1533,7 @@ void chara_relocate(
     optional_ref<Character> destination_slot,
     CharaRelocationMode mode)
 {
-    if (source.index == game_data.mount)
+    if (source.index == game()->mount)
     {
         ride_end();
         source.position = cdata.player().position;
@@ -1819,16 +1819,16 @@ void ride_begin(int mount)
     cdata[mount].is_ridden() = true;
     cell_data.at(cdata[mount].position.x, cdata[mount].position.y)
         .chara_index_plus_one = 0;
-    game_data.mount = mount;
+    game()->mount = mount;
     create_pcpic(cdata.player());
-    cdata[game_data.mount].activity.finish();
-    refresh_speed(cdata[game_data.mount]);
+    cdata[game()->mount].activity.finish();
+    refresh_speed(cdata[game()->mount]);
     txt(""s + cdata[mount].current_speed + u8") "s);
-    if (cdata[game_data.mount].is_suitable_for_mount())
+    if (cdata[game()->mount].is_suitable_for_mount())
     {
         txt(i18n::s.get("core.magic.mount.mount.suitable"));
     }
-    else if (cdata[game_data.mount].is_unsuitable_for_mount())
+    else if (cdata[game()->mount].is_unsuitable_for_mount())
     {
         txt(i18n::s.get("core.magic.mount.mount.unsuitable"));
     }
@@ -1838,10 +1838,10 @@ void ride_begin(int mount)
 
 void ride_end()
 {
-    int mount = game_data.mount;
+    int mount = game()->mount;
     cdata[mount].is_ridden() = false;
     cdata[mount].activity.finish();
-    game_data.mount = 0;
+    game()->mount = 0;
     create_pcpic(cdata.player());
     refresh_speed(cdata[mount]);
 }
@@ -1930,7 +1930,7 @@ void chara_act_hostile_action(Character& attacker, Character& target)
         }
         if (target.id == CharaId::ebon)
         {
-            if (game_data.released_fire_giant == 0)
+            if (game()->released_fire_giant == 0)
             {
                 txt(i18n::s.get(
                         "core.misc.hostile_action.glares_at_you", target),
@@ -1982,7 +1982,7 @@ void chara_act_hostile_action(Character& attacker, Character& target)
 
 void wake_up()
 {
-    if (game_data.date.hour >= 7 && game_data.date.hour <= 22)
+    if (game()->date.hour >= 7 && game()->date.hour <= 22)
     {
         for (auto&& cnt : cdata.others())
         {
@@ -2075,7 +2075,7 @@ void refresh_burden_state()
         cdata.player().get_skill(10).level * 500 +
         cdata.player().get_skill(11).level * 250 +
         cdata.player().get_skill(153).level * 2000 + 45000;
-    game_data.cargo_weight = inv_cargo_weight(inv_player());
+    game()->cargo_weight = inv_cargo_weight(inv_player());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata.player().inventory_weight >
@@ -2208,9 +2208,9 @@ void revive_player(Character& chara)
     do_chara_revival(chara);
     if (chara.is_player())
     {
-        game_data.is_returning_or_escaping = 0;
+        game()->is_returning_or_escaping = 0;
         traveldone = 0;
-        if (game_data.executing_immediate_quest_type == 0)
+        if (game()->executing_immediate_quest_type == 0)
         {
             event_add(6);
         }
@@ -2427,9 +2427,9 @@ void get_pregnant(Character& chara)
 
 void monster_respawn()
 {
-    if (area_data[game_data.current_map].is_museum_or_shop())
+    if (area_data[game()->current_map].is_museum_or_shop())
     {
-        if (game_data.crowd_density < map_data.max_crowd_density / 2)
+        if (game()->crowd_density < map_data.max_crowd_density / 2)
         {
             if (rnd(2) == 0)
             {
@@ -2442,7 +2442,7 @@ void monster_respawn()
     {
         return;
     }
-    if (game_data.crowd_density < map_data.max_crowd_density / 4)
+    if (game()->crowd_density < map_data.max_crowd_density / 4)
     {
         if (rnd(2) == 0)
         {
@@ -2450,7 +2450,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (game_data.crowd_density < map_data.max_crowd_density / 2)
+    if (game()->crowd_density < map_data.max_crowd_density / 2)
     {
         if (rnd(4) == 0)
         {
@@ -2458,7 +2458,7 @@ void monster_respawn()
             chara_create(-1, dbid, -2, 0);
         }
     }
-    if (game_data.crowd_density < map_data.max_crowd_density)
+    if (game()->crowd_density < map_data.max_crowd_density)
     {
         if (rnd(8) == 0)
         {
@@ -2485,9 +2485,9 @@ bool move_character_internal(Character& chara)
     cell_data.at(chara.next_position.x, chara.next_position.y)
         .chara_index_plus_one = chara.index + 1;
 
-    if (chara.is_player() && game_data.mount != 0)
+    if (chara.is_player() && game()->mount != 0)
     {
-        cdata[game_data.mount].position = cdata.player().position;
+        cdata[game()->mount].position = cdata.player().position;
     }
 
     auto movx = chara.position.x;
@@ -2518,7 +2518,7 @@ bool move_character_internal(Character& chara)
             feat(0) = tile_trap;
         }
     }
-    refdiff = 100 + game_data.current_dungeon_level * 3;
+    refdiff = 100 + game()->current_dungeon_level * 3;
     if (feat(0) == tile_trap)
     {
         refdiff = refdiff / 3;
@@ -2586,7 +2586,7 @@ bool move_character_internal(Character& chara)
             {
                 damage_hp(
                     chara,
-                    rnd_capped(game_data.current_dungeon_level * 2 + 10),
+                    rnd_capped(game()->current_dungeon_level * 2 + 10),
                     -1);
             }
         }
@@ -2599,7 +2599,7 @@ bool move_character_internal(Character& chara)
             status_ailment_damage(
                 chara,
                 StatusAilment::poisoned,
-                100 + game_data.current_dungeon_level * 2);
+                100 + game()->current_dungeon_level * 2);
         }
         if (feat(2) == 2)
         {
@@ -2610,7 +2610,7 @@ bool move_character_internal(Character& chara)
             status_ailment_damage(
                 chara,
                 StatusAilment::sleep,
-                100 + game_data.current_dungeon_level * 2);
+                100 + game()->current_dungeon_level * 2);
         }
         if (feat(2) == 3)
         {
@@ -2652,7 +2652,7 @@ bool move_character_internal(Character& chara)
             status_ailment_damage(
                 chara,
                 StatusAilment::blinded,
-                100 + game_data.current_dungeon_level * 2);
+                100 + game()->current_dungeon_level * 2);
         }
         if (feat(2) == 5)
         {
@@ -2663,7 +2663,7 @@ bool move_character_internal(Character& chara)
             status_ailment_damage(
                 chara,
                 StatusAilment::confused,
-                100 + game_data.current_dungeon_level * 2);
+                100 + game()->current_dungeon_level * 2);
         }
         if (feat(2) == 6)
         {
@@ -2674,7 +2674,7 @@ bool move_character_internal(Character& chara)
             status_ailment_damage(
                 chara,
                 StatusAilment::paralyzed,
-                100 + game_data.current_dungeon_level * 2);
+                100 + game()->current_dungeon_level * 2);
         }
         if (feat(2) == 7)
         {
@@ -2821,7 +2821,7 @@ TurnResult proc_movement_event(Character& chara)
         if (chara.is_player())
         {
             encounter = 0;
-            game_data.stood_world_map_tile =
+            game()->stood_world_map_tile =
                 cell_data.at(chara.position.x, chara.position.y).chip_id_actual;
             if (cell_data.at(chara.position.x, chara.position.y).feats == 0)
             {
@@ -2831,14 +2831,14 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounter = 1;
                 }
-                if (game_data.weather == 4)
+                if (game()->weather == 4)
                 {
                     if (rnd(10) == 0)
                     {
                         encounter = 1;
                     }
                 }
-                if (game_data.weather == 1)
+                if (game()->weather == 1)
                 {
                     if (rnd(13) == 0)
                     {
@@ -2859,8 +2859,8 @@ TurnResult proc_movement_event(Character& chara)
                 if (rnd_capped(
                         220 + cdata.player().level * 10 -
                         clamp(
-                            game_data.cargo_weight * 150 /
-                                (game_data.current_cart_limit + 1),
+                            game()->cargo_weight * 150 /
+                                (game()->current_cart_limit + 1),
                             0,
                             (210 + cdata.player().level * 10))) == 0)
                 {
@@ -2868,7 +2868,7 @@ TurnResult proc_movement_event(Character& chara)
                 }
                 if (rnd(20) == 0)
                 {
-                    for (const auto& quest_idx : game_data.taken_quests)
+                    for (const auto& quest_idx : game()->taken_quests)
                     {
                         auto& quest = quest_data[quest_idx];
                         if (quest.id == 1007 && quest.progress == 1 &&
@@ -2897,11 +2897,10 @@ TurnResult proc_movement_event(Character& chara)
             {
                 txt(i18n::s.get("core.misc.caught_by_assassins"));
                 msg_halt();
-                game_data.previous_map2 = game_data.current_map;
-                game_data.previous_dungeon_level =
-                    game_data.current_dungeon_level;
-                game_data.previous_x = cdata.player().position.x;
-                game_data.previous_y = cdata.player().position.y;
+                game()->previous_map2 = game()->current_map;
+                game()->previous_dungeon_level = game()->current_dungeon_level;
+                game()->previous_x = cdata.player().position.x;
+                game()->previous_y = cdata.player().position.y;
                 levelexitby = 4;
                 return TurnResult::exit_map;
             }
@@ -2926,7 +2925,7 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounterlv /= 2;
                 }
-                else if (game_data.weather == 1)
+                else if (game()->weather == 1)
                 {
                     encounterlv = encounterlv * 3 / 2 + 10;
                 }

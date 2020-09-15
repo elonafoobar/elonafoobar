@@ -110,9 +110,9 @@ bool cell_swap(Character& chara, const Position& pos)
         return cell_swap(chara, cdata[chara_b_index_plus_one - 1]);
     }
 
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        if (game_data.mount == chara.index)
+        if (game()->mount == chara.index)
         {
             return false;
         }
@@ -124,9 +124,9 @@ bool cell_swap(Character& chara, const Position& pos)
 
     if (chara.is_player())
     {
-        if (game_data.mount)
+        if (game()->mount)
         {
-            cdata[game_data.mount].position = cdata.player().position;
+            cdata[game()->mount].position = cdata.player().position;
         }
     }
     return true;
@@ -136,10 +136,9 @@ bool cell_swap(Character& chara, const Position& pos)
 
 bool cell_swap(Character& chara_a, Character& chara_b)
 {
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        if (game_data.mount == chara_a.index ||
-            game_data.mount == chara_b.index)
+        if (game()->mount == chara_a.index || game()->mount == chara_b.index)
         {
             return false;
         }
@@ -153,9 +152,9 @@ bool cell_swap(Character& chara_a, Character& chara_b)
 
     if (chara_a.is_player() || chara_b.is_player())
     {
-        if (game_data.mount)
+        if (game()->mount)
         {
-            cdata[game_data.mount].position = cdata.player().position;
+            cdata[game()->mount].position = cdata.player().position;
         }
     }
     return true;

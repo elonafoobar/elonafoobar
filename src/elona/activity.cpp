@@ -76,7 +76,7 @@ void search_material_spot()
         return;
     }
     int atxspot = 11;
-    int atxlv = game_data.current_dungeon_level;
+    int atxlv = game()->current_dungeon_level;
     if (map_data.type == mdata_t::MapType::dungeon)
     {
         atxspot = 9;
@@ -100,23 +100,23 @@ void search_material_spot()
         {
             atxlv = 30 + rnd(rnd_capped(atxlv - 30) + 1);
         }
-        if (4 <= game_data.stood_world_map_tile &&
-            game_data.stood_world_map_tile < 9)
+        if (4 <= game()->stood_world_map_tile &&
+            game()->stood_world_map_tile < 9)
         {
             atxspot = 10;
         }
-        if (264 <= game_data.stood_world_map_tile &&
-            game_data.stood_world_map_tile < 363)
+        if (264 <= game()->stood_world_map_tile &&
+            game()->stood_world_map_tile < 363)
         {
             atxspot = 11;
         }
-        if (9 <= game_data.stood_world_map_tile &&
-            game_data.stood_world_map_tile < 13)
+        if (9 <= game()->stood_world_map_tile &&
+            game()->stood_world_map_tile < 13)
         {
             atxspot = 10;
         }
-        if (13 <= game_data.stood_world_map_tile &&
-            game_data.stood_world_map_tile < 17)
+        if (13 <= game()->stood_world_map_tile &&
+            game()->stood_world_map_tile < 17)
         {
             atxspot = 11;
         }
@@ -277,7 +277,7 @@ void activity_perform_generate_item(
 
     flttypemajor = choice(fsetperform);
     int item_id = 0;
-    if (game_data.executing_immediate_quest_type == 1009)
+    if (game()->executing_immediate_quest_type == 1009)
     {
         if (rnd(150) == 0)
         {
@@ -375,7 +375,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0);
     }
-    if (game_data.date.hours() >= audience.time_interest_revive)
+    if (game()->date.hours() >= audience.time_interest_revive)
     {
         audience.interest = 100;
     }
@@ -424,7 +424,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     if (performer.is_player())
     {
         audience.interest -= rnd(15);
-        audience.time_interest_revive = game_data.date.hours() + 12;
+        audience.time_interest_revive = game()->date.hours() + 12;
     }
     if (audience.interest <= 0)
     {
@@ -475,7 +475,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     }
     if (rnd_capped(performer_skill + 1) > rnd_capped(audience.level * 2 + 1))
     {
-        if (game_data.executing_immediate_quest_type == 1009)
+        if (game()->executing_immediate_quest_type == 1009)
         {
             if (audience.is_map_local())
             {
@@ -680,7 +680,7 @@ void activity_others_start(
     doer.activity.type = Activity::Type::others;
     doer.activity.item = activity_item;
 
-    switch (game_data.activity_about_to_start)
+    switch (game()->activity_about_to_start)
     {
     case 105:
         assert(activity_item);
@@ -724,18 +724,18 @@ void activity_others_start(
         break;
     case 104:
         assert(activity_item);
-        if (game_data.weather == 0 || game_data.weather == 3)
+        if (game()->weather == 0 || game()->weather == 3)
         {
-            if (game_data.time_when_textbook_becomes_available >
-                game_data.date.hours())
+            if (game()->time_when_textbook_becomes_available >
+                game()->date.hours())
             {
                 txt(i18n::s.get("core.activity.study.start.bored"));
                 doer.activity.finish();
                 return;
             }
         }
-        game_data.time_when_textbook_becomes_available =
-            game_data.date.hours() + 48;
+        game()->time_when_textbook_becomes_available =
+            game()->date.hours() + 48;
         if (activity_item->id == "core.textbook")
         {
             txt(i18n::s.get(
@@ -746,9 +746,9 @@ void activity_others_start(
         {
             txt(i18n::s.get("core.activity.study.start.training"));
         }
-        if (game_data.weather != 0 && game_data.weather != 3)
+        if (game()->weather != 0 && game()->weather != 3)
         {
-            if (game_data.current_map == mdata_t::MapId::shelter_ ||
+            if (game()->current_map == mdata_t::MapId::shelter_ ||
                 map_can_use_bad_weather_in_study())
             {
                 txt(i18n::s.get("core.activity.study.start.weather_is_bad"));
@@ -799,7 +799,7 @@ void activity_others_doing_steal(Character& doer, const ItemRef& steal_target)
     }
     i = cdata.player().get_skill(300).level * 5 +
         cdata.player().get_skill(12).level + 25;
-    if (game_data.date.hour >= 19 || game_data.date.hour < 7)
+    if (game()->date.hour >= 19 || game()->date.hour < 7)
     {
         i = i * 15 / 10;
     }
@@ -953,7 +953,7 @@ void activity_others_doing(
     Character& doer,
     const OptionalItemRef& activity_item)
 {
-    switch (game_data.activity_about_to_start)
+    switch (game()->activity_about_to_start)
     {
     case 103:
         if (rnd(5) == 0)
@@ -990,16 +990,16 @@ void activity_others_doing(
     case 104: {
         assert(activity_item);
         int p = 25;
-        if (game_data.weather != 0 && game_data.weather != 3)
+        if (game()->weather != 0 && game()->weather != 3)
         {
-            if (game_data.current_map == mdata_t::MapId::shelter_)
+            if (game()->current_map == mdata_t::MapId::shelter_)
             {
                 p = 5;
             }
             if (map_can_use_bad_weather_in_study())
             {
                 p = 5;
-                game_data.date.minute += 30;
+                game()->date.minute += 30;
             }
         }
         if (activity_item->id == "core.textbook")
@@ -1111,12 +1111,12 @@ void activity_others_end_enter_shelter(const ItemRef& shelter)
 {
     txt(i18n::s.get("core.activity.pull_hatch.finish", shelter));
     chatteleport = 1;
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = static_cast<int>(mdata_t::MapId::shelter_);
-    game_data.destination_dungeon_level = shelter->charges;
+    game()->previous_map2 = game()->current_map;
+    game()->previous_dungeon_level = game()->current_dungeon_level;
+    game()->previous_x = cdata.player().position.x;
+    game()->previous_y = cdata.player().position.y;
+    game()->destination_map = static_cast<int>(mdata_t::MapId::shelter_);
+    game()->destination_dungeon_level = shelter->charges;
     levelexitby = 2;
     snd("core.exitmap1");
 }
@@ -1151,7 +1151,7 @@ void activity_others_end_study(const ItemRef& item)
 
 void activity_others_end(Character& doer, const OptionalItemRef& activity_item)
 {
-    switch (game_data.activity_about_to_start)
+    switch (game()->activity_about_to_start)
     {
     case 105:
         assert(activity_item);
@@ -1303,7 +1303,7 @@ optional<TurnResult> activity_proc(Character& chara)
         activity_sex(chara, none);
         break;
     case Activity::Type::others:
-        switch (game_data.activity_about_to_start)
+        switch (game()->activity_about_to_start)
         {
         case 103: auto_turn(g_config.animation_wait() * 2); break;
         case 104: auto_turn(g_config.animation_wait() * 2); break;
@@ -1988,8 +1988,8 @@ void spot_mining_or_wall(Character& chara)
             }
         }
         if (f == 1 ||
-            (game_data.quest_flags.tutorial == 2 &&
-             game_data.current_map == mdata_t::MapId::your_home))
+            (game()->quest_flags.tutorial == 2 &&
+             game()->current_map == mdata_t::MapId::your_home))
         {
             rtval = 0;
             if (rnd(5) == 0)
@@ -2013,8 +2013,8 @@ void spot_mining_or_wall(Character& chara)
             snd("core.crush1");
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.activity.dig_mining.finish.wall"));
-            if (game_data.quest_flags.tutorial == 2 &&
-                game_data.current_map == mdata_t::MapId::your_home)
+            if (game()->quest_flags.tutorial == 2 &&
+                game()->current_map == mdata_t::MapId::your_home)
             {
                 flt();
                 if (const auto item = itemcreate_map_inv(208, digx, digy, 0))
@@ -2022,10 +2022,10 @@ void spot_mining_or_wall(Character& chara)
                     item->curse_state = CurseState::cursed;
                 }
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
-                game_data.quest_flags.tutorial = 3;
+                game()->quest_flags.tutorial = 3;
             }
             else if (
-                rtval != 0 && game_data.current_map != mdata_t::MapId::shelter_)
+                rtval != 0 && game()->current_map != mdata_t::MapId::shelter_)
             {
                 if (rtval > 0)
                 {
@@ -2034,7 +2034,7 @@ void spot_mining_or_wall(Character& chara)
                 }
                 else if (rtval == -1)
                 {
-                    flt(calcobjlv(game_data.current_dungeon_level),
+                    flt(calcobjlv(game()->current_dungeon_level),
                         calcfixlv(Quality::good));
                     flttypemajor = 77000;
                     itemcreate_map_inv(0, digx, digy, 0);
@@ -2077,13 +2077,13 @@ TurnResult do_dig_after_sp_check(Character& chara)
 void sleep_start(const OptionalItemRef& bed)
 {
     int timeslept = 0;
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
         txt(i18n::s.get("core.activity.sleep.but_you_cannot"));
-        game_data.character_and_status_for_gene = 0;
+        game()->character_and_status_for_gene = 0;
         return;
     }
-    if (game_data.catches_god_signal)
+    if (game()->catches_god_signal)
     {
         txtgod(cdata.player().god_id, 10);
     }
@@ -2108,7 +2108,7 @@ void sleep_start(const OptionalItemRef& bed)
         cdata[cnt].dimmed = 0;
         cdata[cnt].drunk = 0;
         cdata[cnt].bleeding = 0;
-        game_data.continuous_active_hours = 0;
+        game()->continuous_active_hours = 0;
         cdata[cnt].hp = cdata[cnt].max_hp;
         cdata[cnt].mp = cdata[cnt].max_mp;
         cdata[cnt].sp = cdata[cnt].max_sp;
@@ -2136,19 +2136,19 @@ void sleep_start(const OptionalItemRef& bed)
     timeslept = 7 + rnd(5);
     for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
     {
-        ++game_data.date.hour;
+        ++game()->date.hour;
         weather_changes();
         if (mode != 9)
         {
             load_sleep_background();
             mode = 9;
         }
-        game_data.continuous_active_hours = 0;
-        game_data.date.minute = 0;
+        game()->continuous_active_hours = 0;
+        game()->date.minute = 0;
         draw_sleep_background_frame();
         await(g_config.animation_wait() * 25);
     }
-    if (game_data.character_and_status_for_gene != 0)
+    if (game()->character_and_status_for_gene != 0)
     {
         optional_ref<Character> gene_chara;
         for (auto& ally : cdata.allies())
@@ -2174,7 +2174,7 @@ void sleep_start(const OptionalItemRef& bed)
         }
     }
     draw_sleep_background_frame();
-    game_data.character_and_status_for_gene = 0;
+    game()->character_and_status_for_gene = 0;
     mode = 0;
     wake_up();
     cdata.player().nutrition -= 1500 / (trait(158) + 1);
@@ -2201,14 +2201,14 @@ void sleep_start(const OptionalItemRef& bed)
         }
         i = clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
-        game_data.sleep_experience =
-            game_data.sleep_experience * (*bed_quality) / 100;
+        game()->sleep_experience =
+            game()->sleep_experience * (*bed_quality) / 100;
         grown = 0;
         for (int cnt = 0;; ++cnt)
         {
-            if (game_data.sleep_experience >= exp)
+            if (game()->sleep_experience >= exp)
             {
-                game_data.sleep_experience -= exp;
+                game()->sleep_experience -= exp;
             }
             else if (cnt != 0)
             {
@@ -2220,7 +2220,7 @@ void sleep_start(const OptionalItemRef& bed)
             {
                 if (rnd(5) == 0)
                 {
-                    game_data.sleep_experience = 0;
+                    game()->sleep_experience = 0;
                     break;
                 }
             }
@@ -2232,7 +2232,7 @@ void sleep_start(const OptionalItemRef& bed)
     msg_halt();
     play_music();
     save_trigger_autosaving();
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -2242,7 +2242,7 @@ void sleep_start(const OptionalItemRef& bed)
 
 void start_stealing(Character& thief, ItemRef steal_target)
 {
-    game_data.activity_about_to_start = 105;
+    game()->activity_about_to_start = 105;
     activity_others(thief, steal_target);
 }
 

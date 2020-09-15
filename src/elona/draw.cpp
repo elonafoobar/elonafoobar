@@ -392,7 +392,7 @@ void show_hp_bar(HPBarSide side, int inf_clocky)
             {
                 for (int i = 0; i < 10; ++i)
                 {
-                    if (game_data.tracked_skills.at(i) % 10000 != 0)
+                    if (game()->tracked_skills.at(i) % 10000 != 0)
                     {
                         y += 16;
                     }
@@ -526,7 +526,7 @@ void show_damage_popups()
         }
 
         const auto& chara = cdata[damage_popup.character];
-        if (game_data.current_map != mdata_t::MapId::pet_arena)
+        if (game()->current_map != mdata_t::MapId::pet_arena)
         {
             if (!is_in_fov(chara.position))
             {
@@ -674,7 +674,7 @@ void create_pcpic(Character& chara, bool with_equipments)
         }
     }
     _load_pcc_part(chara, 1, u8"hairbk_");
-    if (idx == 0 && game_data.mount != 0 && pcc(16, idx) != 0)
+    if (idx == 0 && game()->mount != 0 && pcc(16, idx) != 0)
     {
         _load_pcc_part(chara, 16, u8"ridebk_");
     }
@@ -683,7 +683,7 @@ void create_pcpic(Character& chara, bool with_equipments)
         _load_pcc_part(chara, 15, u8"body_");
     }
     _load_pcc_part(chara, 14, u8"eye_");
-    if (idx != 0 || game_data.mount == 0 || pcc(16, idx) == 0)
+    if (idx != 0 || game()->mount == 0 || pcc(16, idx) == 0)
     {
         _load_pcc_part(chara, 7, u8"pants_");
     }
@@ -694,7 +694,7 @@ void create_pcpic(Character& chara, bool with_equipments)
         {
             _load_pcc_part(chara, 2, u8"chest_");
         }
-        if ((idx != 0 || game_data.mount == 0 || pcc(16, idx) == 0) &&
+        if ((idx != 0 || game()->mount == 0 || pcc(16, idx) == 0) &&
             pcc(21, idx) == 0)
         {
             _load_pcc_part(chara, 3, u8"leg_");
@@ -710,7 +710,7 @@ void create_pcpic(Character& chara, bool with_equipments)
     }
     if (idx == 0)
     {
-        if (game_data.mount != 0)
+        if (game()->mount != 0)
         {
             _load_pcc_part(chara, 16, u8"ride_");
         }
@@ -811,41 +811,41 @@ static int _get_map_chip_shadow()
 
     if (map_data.indoors_flag == 2)
     {
-        if (game_data.date.hour >= 24 ||
-            (game_data.date.hour >= 0 && game_data.date.hour < 4))
+        if (game()->date.hour >= 24 ||
+            (game()->date.hour >= 0 && game()->date.hour < 4))
         {
             shadow = 110;
         }
-        if (game_data.date.hour >= 4 && game_data.date.hour < 10)
+        if (game()->date.hour >= 4 && game()->date.hour < 10)
         {
-            shadow = std::min(10, 70 - (game_data.date.hour - 3) * 10);
+            shadow = std::min(10, 70 - (game()->date.hour - 3) * 10);
         }
-        if (game_data.date.hour >= 10 && game_data.date.hour < 12)
+        if (game()->date.hour >= 10 && game()->date.hour < 12)
         {
             shadow = 10;
         }
-        if (game_data.date.hour >= 12 && game_data.date.hour < 17)
+        if (game()->date.hour >= 12 && game()->date.hour < 17)
         {
             shadow = 1;
         }
-        if (game_data.date.hour >= 17 && game_data.date.hour < 21)
+        if (game()->date.hour >= 17 && game()->date.hour < 21)
         {
-            shadow = (game_data.date.hour - 17) * 20;
+            shadow = (game()->date.hour - 17) * 20;
         }
-        if (game_data.date.hour >= 21 && game_data.date.hour < 24)
+        if (game()->date.hour >= 21 && game()->date.hour < 24)
         {
-            shadow = 80 + (game_data.date.hour - 21) * 10;
+            shadow = 80 + (game()->date.hour - 21) * 10;
         }
-        if (game_data.weather == 3 && shadow < 40)
+        if (game()->weather == 3 && shadow < 40)
         {
             shadow = 40;
         }
-        if (game_data.weather == 4 && shadow < 65)
+        if (game()->weather == 4 && shadow < 65)
         {
             shadow = 65;
         }
-        if (game_data.current_map == mdata_t::MapId::noyel &&
-            (game_data.date.hour >= 17 || game_data.date.hour < 7))
+        if (game()->current_map == mdata_t::MapId::noyel &&
+            (game()->date.hour >= 17 || game()->date.hour < 7))
         {
             shadow += 35;
         }

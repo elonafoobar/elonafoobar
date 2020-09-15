@@ -326,7 +326,7 @@ void chara_gain_skill_exp(
     {
         exp = experience;
     }
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         exp /= 5;
     }
@@ -341,7 +341,7 @@ void chara_gain_skill_exp(
                 chara.experience += lvl_exp;
                 if (chara.is_player())
                 {
-                    game_data.sleep_experience += lvl_exp;
+                    game()->sleep_experience += lvl_exp;
                 }
             }
         }
@@ -443,7 +443,7 @@ void chara_gain_exp_lock_picking(Character& chara)
 void chara_gain_exp_detection(Character& chara)
 {
     chara_gain_skill_exp(
-        chara, 159, calc_exp_gain_detection(game_data.current_dungeon_level));
+        chara, 159, calc_exp_gain_detection(game()->current_dungeon_level));
 }
 
 

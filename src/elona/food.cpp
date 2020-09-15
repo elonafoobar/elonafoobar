@@ -46,7 +46,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     {
         return; // Has already been rotten.
     }
-    if (food->param3 > game_data.date.hours())
+    if (food->param3 > game()->date.hours())
     {
         return; // The expiration date has not come yet.
     }
@@ -59,12 +59,12 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     if (chara_idx == -1 && food->id == "core.corpse" &&
         chip_data.for_cell(food->position().x, food->position().y).kind == 1)
     {
-        if (game_data.weather != 0)
+        if (game()->weather != 0)
         {
             return;
         }
         txt(i18n::s.get("core.misc.corpse_is_dried_up", food));
-        food->param3 = game_data.date.hours() + 2160;
+        food->param3 = game()->date.hours() + 2160;
         food->image = 337;
         food->id = "core.jerky";
         food->param1 = 0;
@@ -463,7 +463,7 @@ void make_dish(const ItemRef& food, int dish_rank)
     food->param2 = dish_rank;
     if (food->material == "core.raw" && 0 <= food->param3)
     {
-        food->param3 = game_data.date.hours() + 72;
+        food->param3 = game()->date.hours() + 72;
     }
 }
 
@@ -1362,11 +1362,11 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         }
         if (enc == 40)
         {
-            if (game_data.left_turns_of_timestop == 0)
+            if (game()->left_turns_of_timestop == 0)
             {
                 txt(i18n::s.get("core.action.time_stop.begins", eater),
                     Message::color{ColorIndex::cyan});
-                game_data.left_turns_of_timestop =
+                game()->left_turns_of_timestop =
                     food->enchantments[cnt].power / 100 + 1 + 1;
                 continue;
             }

@@ -620,7 +620,7 @@ void make_item_list(
             {
                 if (invctrl(1) == 0)
                 {
-                    if (game_data.current_map == mdata_t::MapId::lumiest)
+                    if (game()->current_map == mdata_t::MapId::lumiest)
                     {
                         if (item->id != "core.ancient_book" ||
                             item->param2 == 0)
@@ -781,9 +781,9 @@ optional<MenuResult> check_command(
     {
         if (invctrl(1) == 0)
         {
-            if (game_data.current_map == mdata_t::MapId::lumiest)
+            if (game()->current_map == mdata_t::MapId::lumiest)
             {
-                if (game_data.guild.mages_guild_quota <= 0)
+                if (game()->guild.mages_guild_quota <= 0)
                 {
                     txt(i18n::s.get("core.ui.inv.put.guild.have_no_quota"));
                     f = 1;
@@ -878,11 +878,11 @@ void show_message(const OptionalItemRef& citrade, const OptionalItemRef& cidip)
         }
         if (invctrl == 24 && invctrl(1) == 0)
         {
-            if (game_data.current_map == mdata_t::MapId::lumiest)
+            if (game()->current_map == mdata_t::MapId::lumiest)
             {
                 txt(i18n::s.get(
                     "core.ui.inv.put.guild.remaining",
-                    game_data.guild.mages_guild_quota));
+                    game()->guild.mages_guild_quota));
             }
         }
     }
@@ -1115,7 +1115,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
             "core.ui.inv.window.total_weight",
             cnvweight(cdata.player().inventory_weight),
             cnvweight(cdata.player().max_inventory_weight),
-            cnvweight(game_data.cargo_weight)) +
+            cnvweight(game()->cargo_weight)) +
         ")"s;
     if (invctrl == 25)
     {
@@ -1226,7 +1226,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         }
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            if (game_data.skill_shortcuts.at(cnt) ==
+            if (game()->skill_shortcuts.at(cnt) ==
                 the_item_db[g_inv[p]->id]->integer_id + invctrl * 10000)
             {
                 s +=
@@ -1440,7 +1440,7 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 1)
         {
-            if (game_data.rights_to_succeed_to < 1)
+            if (game()->rights_to_succeed_to < 1)
             {
                 txt(i18n::s.get("core.ui.inv.take.no_claim"));
                 return OnEnterResult{2};
@@ -1580,17 +1580,17 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 1)
         {
-            --game_data.rights_to_succeed_to;
+            --game()->rights_to_succeed_to;
             if (invctrl(1) == 1)
             {
                 txt(i18n::s.get(
                     "core.ui.inv.take.can_claim_more",
-                    game_data.rights_to_succeed_to));
+                    game()->rights_to_succeed_to));
             }
         }
         if (invctrl(1) == 4)
         {
-            ++game_data.quest_flags.gift_count_of_little_sister;
+            ++game()->quest_flags.gift_count_of_little_sister;
             invsubroutine = 0;
             result.succeeded = true;
             return OnEnterResult{result};
@@ -1644,7 +1644,7 @@ OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
     snd("core.equip1");
     Message::instance().linebreak();
     txt(i18n::s.get("core.ui.inv.equip.you_equip", selected_item));
-    game_data.player_is_changing_equipment = 1;
+    game()->player_is_changing_equipment = 1;
     switch (selected_item->curse_state)
     {
     case CurseState::doomed:
@@ -2104,13 +2104,13 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
     if (invctrl(1) == 0)
     {
         snd("core.inv");
-        if (game_data.current_map == mdata_t::MapId::lumiest)
+        if (game()->current_map == mdata_t::MapId::lumiest)
         {
-            game_data.guild.mages_guild_quota -=
+            game()->guild.mages_guild_quota -=
                 (selected_item->param1 + 1) * selected_item->number();
-            if (game_data.guild.mages_guild_quota <= 0)
+            if (game()->guild.mages_guild_quota <= 0)
             {
-                game_data.guild.mages_guild_quota = 0;
+                game()->guild.mages_guild_quota = 0;
             }
             txt(i18n::s.get(
                     "core.ui.inv.put.guild.you_deliver", selected_item) +
@@ -2118,7 +2118,7 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
                     (selected_item->param1 + 1) * selected_item->number() +
                     u8" Guild Point)"s,
                 Message::color{ColorIndex::green});
-            if (game_data.guild.mages_guild_quota == 0)
+            if (game()->guild.mages_guild_quota == 0)
             {
                 snd("core.complete1");
                 txt(i18n::s.get("core.ui.inv.put.guild.you_fulfill"),
@@ -2149,7 +2149,7 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
             txt(i18n::s.get("core.ui.inv.put.tax.not_enough_money"));
             return OnEnterResult{2};
         }
-        if (game_data.left_bill <= 0)
+        if (game()->left_bill <= 0)
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.put.tax.do_not_have_to"));
@@ -2160,7 +2160,7 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
         txt(i18n::s.get("core.ui.inv.put.tax.you_pay", selected_item),
             Message::color{ColorIndex::green});
         selected_item->modify_number(-1);
-        --game_data.left_bill;
+        --game()->left_bill;
         screenupdate = -1;
         update_screen();
         return OnEnterResult{1};
@@ -2637,19 +2637,19 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
     snd("core.ok1");
     p = the_item_db[g_inv[list(0, pagesize * page + cs)]->id]->integer_id +
         invctrl * 10000;
-    if (game_data.skill_shortcuts.at(shortcut) == p)
+    if (game()->skill_shortcuts.at(shortcut) == p)
     {
-        game_data.skill_shortcuts.at(shortcut) = 0;
+        game()->skill_shortcuts.at(shortcut) = 0;
         return true;
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (game_data.skill_shortcuts.at(cnt) == p)
+        if (game()->skill_shortcuts.at(cnt) == p)
         {
-            game_data.skill_shortcuts.at(cnt) = 0;
+            game()->skill_shortcuts.at(cnt) = 0;
         }
     }
-    game_data.skill_shortcuts.at(shortcut) = p;
+    game()->skill_shortcuts.at(shortcut) = p;
     txt(i18n::s.get(
         "core.ui.assign_shortcut",
         get_bound_shortcut_key_name_by_action_id(action)));

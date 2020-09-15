@@ -93,7 +93,7 @@ bool Chara_is_ally(LuaCharacterHandle chara)
  */
 int Chara_count()
 {
-    return game_data.crowd_density;
+    return game()->crowd_density;
 }
 
 

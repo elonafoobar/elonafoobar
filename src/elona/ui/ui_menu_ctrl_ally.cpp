@@ -180,7 +180,7 @@ static void _update_pet_arena()
 
 static void _update_staying()
 {
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         txt(i18n::s.get("core.ui.ally_list.shop.prompt"));
         s(10) = i18n::s.get("core.ui.ally_list.shop.title");
@@ -188,7 +188,7 @@ static void _update_staying()
         s(12) = i18n::s.get("core.ui.ally_list.name");
         s(13) = i18n::s.get("core.ui.ally_list.shop.chr_negotiation");
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
         txt(i18n::s.get("core.ui.ally_list.ranch.prompt"));
         s(10) = i18n::s.get("core.ui.ally_list.ranch.title");
@@ -196,7 +196,7 @@ static void _update_staying()
         s(12) = i18n::s.get("core.ui.ally_list.name");
         s(13) = i18n::s.get("core.ui.ally_list.ranch.breed_power");
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         txt(i18n::s.get("core.ui.ally_list.stayer.prompt"));
         s(10) = i18n::s.get("core.ui.ally_list.stayer.title");
@@ -335,12 +335,12 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 {
     std::string _s = "";
 
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         _s = u8"   "s + chara.get_skill(17).level + u8" / " +
             chara.get_skill(156).level;
     }
-    else if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    else if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
         _s = u8"   "s + chara_breed_power(chara);
     }
@@ -352,7 +352,7 @@ static bool _has_general_info(ControlAllyOperation operation)
 {
     return operation != ControlAllyOperation::staying ||
         (operation == ControlAllyOperation::staying &&
-         game_data.current_map == mdata_t::MapId::your_home);
+         game()->current_map == mdata_t::MapId::your_home);
 }
 
 std::string UIMenuCtrlAlly::_get_ally_info(const Character& chara)

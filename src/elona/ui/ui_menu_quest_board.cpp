@@ -17,7 +17,7 @@ namespace ui
 
 static bool _should_display_quest(int cnt)
 {
-    if (quest_data[cnt].originating_map_id != game_data.current_map)
+    if (quest_data[cnt].originating_map_id != game()->current_map)
     {
         return false;
     }
@@ -42,7 +42,7 @@ static void _populate_quest_list()
 {
     quest_refresh_list();
 
-    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {

@@ -24,11 +24,11 @@ namespace
 
 std::string game_date_time()
 {
-    const auto Y = std::to_string(game_data.date.year);
-    const auto m = std::to_string(game_data.date.month);
-    const auto d = std::to_string(game_data.date.day);
-    const auto H = std::to_string(game_data.date.hour);
-    const auto M = std::to_string(game_data.date.minute);
+    const auto Y = std::to_string(game()->date.year);
+    const auto m = std::to_string(game()->date.month);
+    const auto d = std::to_string(game()->date.day);
+    const auto H = std::to_string(game()->date.hour);
+    const auto M = std::to_string(game()->date.minute);
 
     return Y + u8"年" + m + u8"月" + d + u8"日 " + H + u8"時" + M + u8"分";
 }
@@ -67,28 +67,28 @@ void save_dump_player_info()
     ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
     ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
-       << fixtxt(u8"経過日数  : " + std::to_string(game_data.play_days), 32)
+       << fixtxt(u8"経過日数  : " + std::to_string(game()->play_days), 32)
        << std::endl;
     ss << fixtxt(
               u8"残りBP     : " + std::to_string(cdata.player().skill_bonus),
               30)
-       << fixtxt(u8"経過ターン: " + std::to_string(game_data.play_turns), 32)
+       << fixtxt(u8"経過ターン: " + std::to_string(game()->play_turns), 32)
        << std::endl;
     ss << fixtxt(u8"金貨       : " + std::to_string(cdata.player().gold), 30)
-       << fixtxt(u8"殺害数    : " + std::to_string(game_data.kill_count), 32)
+       << fixtxt(u8"殺害数    : " + std::to_string(game()->kill_count), 32)
        << std::endl;
     ss << fixtxt(
               u8"プラチナ   : " + std::to_string(cdata.player().platinum_coin),
               30)
        << fixtxt(
-              u8"最深到達  : " +
-                  std::to_string(game_data.deepest_dungeon_level) + u8"階相当",
+              u8"最深到達  : " + std::to_string(game()->deepest_dungeon_level) +
+                  u8"階相当",
               32)
        << std::endl;
     ss << fixtxt(
               u8"プレイ時間 : "s +
-                  cnvplaytime((
-                      game_data.play_time + timeGetTime() / 1000 - time_begin)),
+                  cnvplaytime(
+                      (game()->play_time + timeGetTime() / 1000 - time_begin)),
               30)
        << std::endl;
 
@@ -250,9 +250,9 @@ void save_dump_player_info()
 
     for (int i = 0; i < 9; ++i)
     {
-        if (game_data.ranks.at(i) < 10000)
+        if (game()->ranks.at(i) < 10000)
         {
-            ss << ranktitle(i) << u8" Rank." << game_data.ranks.at(i) / 100
+            ss << ranktitle(i) << u8" Rank." << game()->ranks.at(i) / 100
                << std::endl;
             ss << u8"給料: 約 " << calcincome(i) << u8" gold  ノルマ: ";
             if (i == 3 || i == 4 || i == 5 || i == 8)
@@ -261,7 +261,7 @@ void save_dump_player_info()
             }
             else
             {
-                ss << game_data.rank_deadlines.at(i) << u8"日以内";
+                ss << game()->rank_deadlines.at(i) << u8"日以内";
             }
             ss << std::endl;
         }

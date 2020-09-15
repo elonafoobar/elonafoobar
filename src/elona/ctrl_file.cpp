@@ -423,14 +423,13 @@ void ctrl_file_global_read(const fs::path& dir)
     ELONA_LOG("save.ctrl_file")
         << "global_read(" << dir.to_u8string() << ") BEGIN";
 
-    game_data.play_time =
-        game_data.play_time + timeGetTime() / 1000 - time_begin;
+    game()->play_time = game()->play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     {
         const auto filepath = dir / u8"gdata.s1";
         load_v1(filepath, gdata, 0, 1000);
-        game_data.unpack_from(gdata);
+        game()->unpack_from(gdata);
     }
 
     {
@@ -509,7 +508,7 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"krecipe.s1";
-        if (game_data.version >= 1200)
+        if (game()->version >= 1200)
         {
             load_v1(filepath, recipememory, 0, 1200);
         }
@@ -567,8 +566,7 @@ void ctrl_file_global_write(const fs::path& dir)
     ELONA_LOG("save.ctrl_file")
         << "global_write(" << dir.to_u8string() << ") BEGIN";
 
-    game_data.play_time =
-        game_data.play_time + timeGetTime() / 1000 - time_begin;
+    game()->play_time = game()->play_time + timeGetTime() / 1000 - time_begin;
     time_begin = timeGetTime() / 1000;
 
     if (!fs::exists(dir))
@@ -586,7 +584,7 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"gdata.s1";
-        game_data.pack_to(gdata);
+        game()->pack_to(gdata);
         save_v1(filepath, gdata, 0, 1000);
     }
 

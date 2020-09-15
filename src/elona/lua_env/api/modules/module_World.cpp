@@ -1,4 +1,5 @@
 #include "../../../deferred_event.hpp"
+#include "../../../game.hpp"
 #include "../../../text.hpp"
 #include "../../../world.hpp"
 #include "../common.hpp"
@@ -65,15 +66,15 @@ bool World_belongs_to_guild(const std::string& guild_name)
 {
     if (guild_name == "mages")
     {
-        return game_data.guild.belongs_to_mages_guild == 1;
+        return game()->guild.belongs_to_mages_guild == 1;
     }
     else if (guild_name == "fighters")
     {
-        return game_data.guild.belongs_to_fighters_guild == 1;
+        return game()->guild.belongs_to_fighters_guild == 1;
     }
     else if (guild_name == "thieves")
     {
-        return game_data.guild.belongs_to_thieves_guild == 1;
+        return game()->guild.belongs_to_thieves_guild == 1;
     }
 
     return false;
@@ -90,32 +91,32 @@ bool World_belongs_to_guild(const std::string& guild_name)
  */
 void World_join_guild(const std::string& guild_name)
 {
-    game_data.guild.belongs_to_thieves_guild = 0;
-    game_data.guild.belongs_to_fighters_guild = 0;
-    game_data.guild.belongs_to_mages_guild = 0;
-    game_data.guild.mages_guild_quota = 0;
-    game_data.guild.thieves_guild_quota = 0;
-    game_data.guild.joining_mages_guild = 0;
-    game_data.guild.joining_thieves_guild = 0;
-    game_data.guild.joining_fighters_guild = 0;
-    game_data.guild.fighters_guild_quota_recurring = 0;
-    game_data.guild.mages_guild_quota_recurring = 0;
-    game_data.guild.thieves_guild_quota_recurring = 0;
+    game()->guild.belongs_to_thieves_guild = 0;
+    game()->guild.belongs_to_fighters_guild = 0;
+    game()->guild.belongs_to_mages_guild = 0;
+    game()->guild.mages_guild_quota = 0;
+    game()->guild.thieves_guild_quota = 0;
+    game()->guild.joining_mages_guild = 0;
+    game()->guild.joining_thieves_guild = 0;
+    game()->guild.joining_fighters_guild = 0;
+    game()->guild.fighters_guild_quota_recurring = 0;
+    game()->guild.mages_guild_quota_recurring = 0;
+    game()->guild.thieves_guild_quota_recurring = 0;
 
     if (guild_name == "mages")
     {
-        game_data.guild.joining_mages_guild = 1000;
-        game_data.guild.belongs_to_mages_guild = 1;
+        game()->guild.joining_mages_guild = 1000;
+        game()->guild.belongs_to_mages_guild = 1;
     }
     else if (guild_name == "fighters")
     {
-        game_data.guild.joining_fighters_guild = 1000;
-        game_data.guild.belongs_to_fighters_guild = 1;
+        game()->guild.joining_fighters_guild = 1000;
+        game()->guild.belongs_to_fighters_guild = 1;
     }
     else if (guild_name == "thieves")
     {
-        game_data.guild.joining_thieves_guild = 1000;
-        game_data.guild.belongs_to_thieves_guild = 1;
+        game()->guild.joining_thieves_guild = 1000;
+        game()->guild.belongs_to_thieves_guild = 1;
     }
 }
 
@@ -183,7 +184,7 @@ void bind(sol::table api_table)
      *
      * [R] Data for the current game save.
      */
-    api_table.set("data", &game_data);
+    api_table.set("data", game().get());
 
     /* clang-format on */
 }

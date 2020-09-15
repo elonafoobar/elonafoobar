@@ -34,7 +34,7 @@ void _do_save_game()
 {
     ELONA_LOG("save") << "Save: " << playerid;
 
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         txt(i18n::s.get("core.misc.save.cannot_save_in_user_map"),
             Message::color{ColorIndex::red});
@@ -162,9 +162,8 @@ void save_autosave_if_triggered()
 
     will_autosave = false;
     if (!debug_is_wizard() &&
-        game_data.current_map != mdata_t::MapId::show_house &&
-        game_data.current_map != mdata_t::MapId::pet_arena &&
-        g_config.autosave())
+        game()->current_map != mdata_t::MapId::show_house &&
+        game()->current_map != mdata_t::MapId::pet_arena && g_config.autosave())
     {
         save_save_game();
     }

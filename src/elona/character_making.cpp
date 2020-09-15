@@ -171,7 +171,7 @@ MainMenuResult character_making_role_attributes(bool advanced_to_next_menu)
 
 MainMenuResult character_making_select_feats()
 {
-    game_data.acquirable_feat_count = 3;
+    game()->acquirable_feat_count = 3;
     DIM2(trait, 500);
     DIM2(spact, 500);
     gain_race_feat();

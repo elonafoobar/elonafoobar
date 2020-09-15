@@ -1712,7 +1712,7 @@ void calcdomain()
 void calcdecksize()
 {
     int cardsize_at_tcg = 0;
-    game_data.tcg_decks.at(curdeck) = 0;
+    game()->tcg_decks.at(curdeck) = 0;
     cardsize_at_tcg = 0;
     cpdata_at_tcg(9, 0) = 0;
     DIM2(domain_at_tcg, 5);
@@ -1723,7 +1723,7 @@ void calcdecksize()
         {
             continue;
         }
-        game_data.tcg_decks.at(curdeck) += deck(card_at_tcg(18, cnt));
+        game()->tcg_decks.at(curdeck) += deck(card_at_tcg(18, cnt));
         domain_at_tcg(card_at_tcg(23, cnt)) = 1;
     }
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -1771,12 +1771,12 @@ void tcgdeck()
             s_at_tcg(cnt) = i18n::s.get("core.tcg.deck.name", s_at_tcg(cnt));
             if (save_fs_exists(fs::u8path(u8"deck_"s + cnt + u8".s2")))
             {
-                if (game_data.tcg_decks.at(cnt) != 30)
+                if (game()->tcg_decks.at(cnt) != 30)
                 {
-                    s_at_tcg(cnt) += u8" (NG "s + game_data.tcg_decks.at(cnt) +
+                    s_at_tcg(cnt) += u8" (NG "s + game()->tcg_decks.at(cnt) +
                         u8"/"s + 30 + u8")"s;
                 }
-                if (game_data.tcg_used_deck == cnt)
+                if (game()->tcg_used_deck == cnt)
                 {
                     s_at_tcg(cnt) += u8" [Use]"s;
                 }
@@ -1807,7 +1807,7 @@ void tcgdeck()
             }
             if (rtval == 1)
             {
-                game_data.tcg_used_deck = curdeck;
+                game()->tcg_used_deck = curdeck;
                 continue;
             }
             if (rtval == 0)
@@ -1815,7 +1815,7 @@ void tcgdeck()
                 ctrl_file_deck_read(fs::u8path(u8"deck_"s + curdeck + u8".s2"));
             }
         }
-        decksizebk_at_tcg = game_data.tcg_decks.at(curdeck);
+        decksizebk_at_tcg = game()->tcg_decks.at(curdeck);
         snd("core.wear");
         calcdecksize();
         deckmode_at_tcg(0) = 0;
@@ -2370,12 +2370,12 @@ void tcg_draw_deck_editor()
             basey_at_tcg + 52,
             u8"Deck\n Editor"s,
             {255, 255, 255});
-        const auto text_color = game_data.tcg_decks.at(curdeck) != 30
+        const auto text_color = game()->tcg_decks.at(curdeck) != 30
             ? snail::Color{255, 100, 100}
             : snail::Color{100, 255, 100};
         mes(basex_at_tcg + 24,
             basey_at_tcg + 120,
-            u8"Deck "s + game_data.tcg_decks.at(curdeck) + u8"/"s + 30,
+            u8"Deck "s + game()->tcg_decks.at(curdeck) + u8"/"s + 30,
             text_color);
         mes(basex_at_tcg + 24,
             basey_at_tcg + 140,
@@ -2719,7 +2719,7 @@ void tcg_draw_menu()
                 }
                 else
                 {
-                    game_data.tcg_decks.at(curdeck) = decksizebk_at_tcg;
+                    game()->tcg_decks.at(curdeck) = decksizebk_at_tcg;
                 }
                 if (rtval == -1)
                 {

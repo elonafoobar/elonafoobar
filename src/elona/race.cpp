@@ -27,7 +27,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     chara.dv_correction_value = data->dv_multiplier;
     chara.pv_correction_value = data->pv_multiplier;
 
-    chara.birth_year = game_data.date.year -
+    chara.birth_year = game()->date.year -
         (rnd(data->max_age - data->min_age + 1) + data->min_age);
     chara.height = data->height;
 

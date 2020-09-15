@@ -129,51 +129,51 @@ void map_get_trainer_skills(const Character& chara)
 
     std::vector<int> skills{159, 173};
 
-    if (game_data.current_map == mdata_t::MapId::yowyn)
+    if (game()->current_map == mdata_t::MapId::yowyn)
     {
         append(skills, _yowyn);
     }
-    if (game_data.current_map == mdata_t::MapId::vernis)
+    if (game()->current_map == mdata_t::MapId::vernis)
     {
         append(skills, _vernis);
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
         append(skills, _palmia);
     }
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
         append(skills, _noyel);
     }
-    if (game_data.current_map == mdata_t::MapId::lumiest)
+    if (game()->current_map == mdata_t::MapId::lumiest)
     {
-        if (game_data.current_dungeon_level == 1)
+        if (game()->current_dungeon_level == 1)
         {
             append(skills, _lumiest);
         }
-        else if (game_data.current_dungeon_level == 3)
+        else if (game()->current_dungeon_level == 3)
         {
             append(skills, _mages_guild);
         }
     }
-    if (game_data.current_map == mdata_t::MapId::derphy)
+    if (game()->current_map == mdata_t::MapId::derphy)
     {
-        if (game_data.current_dungeon_level == 1)
+        if (game()->current_dungeon_level == 1)
         {
             append(skills, _derphy);
         }
-        else if (game_data.current_dungeon_level == 3)
+        else if (game()->current_dungeon_level == 3)
         {
             append(skills, _thieves_guild);
         }
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
-        if (game_data.current_dungeon_level == 1)
+        if (game()->current_dungeon_level == 1)
         {
             append(skills, _port_kapul);
         }
-        else if (game_data.current_dungeon_level == 3)
+        else if (game()->current_dungeon_level == 3)
         {
             append(skills, _fighters_guild);
         }

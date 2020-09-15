@@ -138,7 +138,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
     std::string spell_shortcut = "";
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (game_data.skill_shortcuts.at(cnt) == spell_id)
+        if (game()->skill_shortcuts.at(cnt) == spell_id)
         {
             spell_shortcut =
                 u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
@@ -210,19 +210,19 @@ void UIMenuSpells::draw()
 void UIMenuSpells::_assign_shortcut(int sc_, int spell_id)
 {
     snd("core.ok1");
-    if (game_data.skill_shortcuts.at(sc_) == spell_id)
+    if (game()->skill_shortcuts.at(sc_) == spell_id)
     {
-        game_data.skill_shortcuts.at(sc_) = 0;
+        game()->skill_shortcuts.at(sc_) = 0;
         return;
     }
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        if (game_data.skill_shortcuts.at(cnt) == spell_id)
+        if (game()->skill_shortcuts.at(cnt) == spell_id)
         {
-            game_data.skill_shortcuts.at(cnt) = 0;
+            game()->skill_shortcuts.at(cnt) = 0;
         }
     }
-    game_data.skill_shortcuts.at(sc_) = spell_id;
+    game()->skill_shortcuts.at(sc_) = spell_id;
     txt(i18n::s.get(
         "core.ui.assign_shortcut", get_bound_shortcut_key_name_by_index(sc_)));
 }

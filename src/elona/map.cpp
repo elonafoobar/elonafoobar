@@ -348,9 +348,9 @@ bool map_should_reveal_fog()
 {
     bool result = false;
 
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
-        return game_data.executing_immediate_quest_type == 1009;
+        return game()->executing_immediate_quest_type == 1009;
     }
 
     if (auto map = area_data.current_mapdef())
@@ -374,10 +374,9 @@ bool map_shows_floor_count_in_name()
         result |= map->shows_floor_count_in_name;
     }
 
-    return area_data[game_data.current_map].type != mdata_t::MapType::town &&
+    return area_data[game()->current_map].type != mdata_t::MapType::town &&
         (result ||
-         area_data[game_data.current_map].id ==
-             mdata_t::MapId::random_dungeon ||
+         area_data[game()->current_map].id == mdata_t::MapId::random_dungeon ||
          mdata_t::is_nefia(map_data.type));
 }
 
@@ -481,19 +480,19 @@ void map_set_caravan_destinations()
     p(1) = 0;
     p(2) = 0;
 
-    if (game_data.current_map == mdata_t::MapId::north_tyris_south_border)
+    if (game()->current_map == mdata_t::MapId::north_tyris_south_border)
     {
         p(0) = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
         p(1) = static_cast<int>(mdata_t::MapId::test_world_north_border);
         p(2) = 0;
     }
-    if (game_data.current_map == mdata_t::MapId::south_tyris_north_border)
+    if (game()->current_map == mdata_t::MapId::south_tyris_north_border)
     {
         p(0) = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
         p(1) = static_cast<int>(mdata_t::MapId::test_world_north_border);
         p(2) = 0;
     }
-    if (game_data.current_map == mdata_t::MapId::test_world_north_border)
+    if (game()->current_map == mdata_t::MapId::test_world_north_border)
     {
         p(0) = static_cast<int>(mdata_t::MapId::north_tyris_south_border);
         p(1) = static_cast<int>(mdata_t::MapId::south_tyris_north_border);
@@ -509,7 +508,7 @@ void map_calc_trade_goods_price()
     {
         trate(cnt) = 100;
     }
-    if (game_data.current_map == mdata_t::MapId::vernis)
+    if (game()->current_map == mdata_t::MapId::vernis)
     {
         trate(0) = 130;
         trate(1) = 70;
@@ -518,7 +517,7 @@ void map_calc_trade_goods_price()
         trate(6) = 150;
         trate(7) = 120;
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
         trate(0) = 65;
         trate(1) = 110;
@@ -528,7 +527,7 @@ void map_calc_trade_goods_price()
         trate(6) = 200;
         trate(7) = 150;
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
         trate(0) = 120;
         trate(2) = 75;
@@ -537,7 +536,7 @@ void map_calc_trade_goods_price()
         trate(6) = 110;
         trate(7) = 80;
     }
-    if (game_data.current_map == mdata_t::MapId::yowyn)
+    if (game()->current_map == mdata_t::MapId::yowyn)
     {
         trate(0) = 120;
         trate(3) = 75;
@@ -545,7 +544,7 @@ void map_calc_trade_goods_price()
         trate(6) = 160;
         trate(7) = 100;
     }
-    if (game_data.current_map == mdata_t::MapId::derphy)
+    if (game()->current_map == mdata_t::MapId::derphy)
     {
         trate(0) = 85;
         trate(3) = 70;
@@ -554,7 +553,7 @@ void map_calc_trade_goods_price()
         trate(6) = 130;
         trate(7) = 90;
     }
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
         trate(1) = 175;
         trate(0) = 170;
@@ -564,7 +563,7 @@ void map_calc_trade_goods_price()
         trate(6) = 75;
         trate(7) = 120;
     }
-    if (game_data.current_map == mdata_t::MapId::lumiest)
+    if (game()->current_map == mdata_t::MapId::lumiest)
     {
         trate(1) = 145;
         trate(0) = 130;
@@ -574,7 +573,7 @@ void map_calc_trade_goods_price()
         trate(6) = 100;
         trate(7) = 70;
     }
-    randomize(game_data.date.hours() / 100);
+    randomize(game()->date.hours() / 100);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         trate(cnt) += rnd(15) - rnd(15);
@@ -596,7 +595,7 @@ bool map_villagers_make_snowmen()
 
 bool map_can_use_bad_weather_in_study()
 {
-    return game_data.current_map != mdata_t::MapId::shelter_ &&
+    return game()->current_map != mdata_t::MapId::shelter_ &&
         map_data.indoors_flag == 1 &&
         (map_data.type == mdata_t::MapType::player_owned ||
          map_is_town_or_guild());
@@ -606,9 +605,9 @@ bool map_can_use_bad_weather_in_study()
 
 static void _map_update_arena_random_seed()
 {
-    area_data[game_data.current_map].arena_random_seed = rnd(10000);
-    area_data[game_data.current_map].time_of_next_update_of_arena_random_seed =
-        game_data.date.hours() + 24;
+    area_data[game()->current_map].arena_random_seed = rnd(10000);
+    area_data[game()->current_map].time_of_next_update_of_arena_random_seed =
+        game()->date.hours() + 24;
 }
 
 
@@ -714,7 +713,7 @@ static void _map_regenerate()
 
         _set_feats_on_regenerate();
     }
-    map_data.next_regenerate_date = game_data.date.hours() + 120;
+    map_data.next_regenerate_date = game()->date.hours() + 120;
 }
 
 
@@ -811,7 +810,7 @@ static void _map_restock_regenerate()
     _grow_plants();
 
     if (map_is_town_or_guild() ||
-        game_data.current_map == mdata_t::MapId::your_home)
+        game()->current_map == mdata_t::MapId::your_home)
     {
         _restock_character_inventories();
     }
@@ -827,13 +826,13 @@ static void _map_restock()
     else
     {
         renewmulti =
-            (game_data.date.hours() - map_data.next_restock_date) / 24 + 1;
+            (game()->date.hours() - map_data.next_restock_date) / 24 + 1;
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
         update_ranch();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::your_home)
+    if (area_data[game()->current_map].id == mdata_t::MapId::your_home)
     {
         for (auto&& cnt : cdata.others())
         {
@@ -853,22 +852,22 @@ static void _map_restock()
     {
         _map_restock_regenerate();
     }
-    map_data.next_restock_date = game_data.date.hours() + 24;
+    map_data.next_restock_date = game()->date.hours() + 24;
 }
 
 
 void map_proc_regen_and_update()
 {
-    if (game_data.date.hours() >= area_data[game_data.current_map]
-                                      .time_of_next_update_of_arena_random_seed)
+    if (game()->date.hours() >=
+        area_data[game()->current_map].time_of_next_update_of_arena_random_seed)
     {
         _map_update_arena_random_seed();
     }
-    if (game_data.date.hours() >= map_data.next_regenerate_date)
+    if (game()->date.hours() >= map_data.next_regenerate_date)
     {
         _map_regenerate();
     }
-    if (game_data.date.hours() >= map_data.next_restock_date)
+    if (game()->date.hours() >= map_data.next_restock_date)
     {
         _map_restock();
     }
@@ -887,7 +886,7 @@ void map_reload_noyel()
         item->remove();
     }
 
-    if (area_data[game_data.current_map].christmas_festival)
+    if (area_data[game()->current_map].christmas_festival)
     {
         flt();
         if (const auto item = itemcreate_map_inv(763, 29, 16, 0))
@@ -1104,7 +1103,7 @@ static void _create_nefia(int index, int x, int y)
     auto& area = area_data[index];
     const auto& map = the_mapdef_db.ensure("core.random_dungeon");
 
-    area_generate_from_mapdef(area, map, game_data.destination_outer_map, x, y);
+    area_generate_from_mapdef(area, map, game()->destination_outer_map, x, y);
 
     area.type = static_cast<int>(mdata_t::MapType::dungeon) + rnd(4);
     if (rnd(3))
@@ -1122,7 +1121,7 @@ static void _create_nefia(int index, int x, int y)
     area.deepest_level = area.danger_level + rnd(4) + 2;
     area.has_been_conquered = 0;
     area.dungeon_prefix = rnd(mapnamerd.i_size());
-    area.outer_map = game_data.destination_outer_map;
+    area.outer_map = game()->destination_outer_map;
 
     cell_data.at(x, y).feats = 1;
 
@@ -1226,19 +1225,19 @@ int map_global_place_random_nefias()
 
 void map_prepare_for_travel(int id, int level)
 {
-    game_data.destination_map = id;
-    game_data.destination_dungeon_level = level;
+    game()->destination_map = id;
+    game()->destination_dungeon_level = level;
     levelexitby = 2;
 }
 
 void map_prepare_for_travel_with_prev(int id, int level)
 {
-    game_data.previous_map2 = game_data.current_map;
-    game_data.previous_dungeon_level = game_data.current_dungeon_level;
-    game_data.previous_x = cdata.player().position.x;
-    game_data.previous_y = cdata.player().position.y;
-    game_data.destination_map = id;
-    game_data.destination_dungeon_level = level;
+    game()->previous_map2 = game()->current_map;
+    game()->previous_dungeon_level = game()->current_dungeon_level;
+    game()->previous_x = cdata.player().position.x;
+    game()->previous_y = cdata.player().position.y;
+    game()->destination_map = id;
+    game()->destination_dungeon_level = level;
     levelexitby = 2;
 }
 
@@ -1324,16 +1323,16 @@ void spillfrag(int x, int y, int range)
 
 TurnResult exit_map()
 {
-    int previous_map = game_data.current_map;
-    int previous_dungeon_level = game_data.current_dungeon_level;
+    int previous_map = game()->current_map;
+    int previous_dungeon_level = game()->current_dungeon_level;
     int fixstart = 0;
 
     ELONA_LOG("map") << "exit_map levelexitby begin " << levelexitby << " cur "
-                     << game_data.current_map << " cur_level "
-                     << game_data.current_dungeon_level;
+                     << game()->current_map << " cur_level "
+                     << game()->current_dungeon_level;
 
-    game_data.left_minutes_of_executing_quest = 0;
-    game_data.rogue_boss_encountered = 0;
+    game()->left_minutes_of_executing_quest = 0;
+    game()->rogue_boss_encountered = 0;
     if (map_data.type == mdata_t::MapType::player_owned)
     {
         maybe_show_ex_help(1);
@@ -1343,42 +1342,42 @@ TurnResult exit_map()
         quest_exit_map();
     }
     Message::instance().buffered_message_begin("  ");
-    if (game_data.current_map == mdata_t::MapId::show_house ||
-        game_data.current_map == mdata_t::MapId::arena ||
-        game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::show_house ||
+        game()->current_map == mdata_t::MapId::arena ||
+        game()->current_map == mdata_t::MapId::pet_arena)
     {
         usermapid = 0;
     }
     rdtry = 0;
     fixstart = 0;
-    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
+    if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game()->current_dungeon_level ==
+            area_data[game()->current_map].deepest_level)
         {
-            if (area_data[game_data.current_map].has_been_conquered > 0)
+            if (area_data[game()->current_map].has_been_conquered > 0)
             {
                 chara_vanquish(
-                    cdata[area_data[game_data.current_map].has_been_conquered]);
-                area_data[game_data.current_map].has_been_conquered = -1;
+                    cdata[area_data[game()->current_map].has_been_conquered]);
+                area_data[game()->current_map].has_been_conquered = -1;
             }
         }
     }
-    game_data.previous_map = game_data.current_map;
-    if (game_data.previous_map == mdata_t::MapId::shelter_)
+    game()->previous_map = game()->current_map;
+    if (game()->previous_map == mdata_t::MapId::shelter_)
     {
-        game_data.current_map = game_data.previous_map2;
-        game_data.current_dungeon_level = game_data.previous_dungeon_level;
-        mapstartx = game_data.previous_x;
-        mapstarty = game_data.previous_y;
-        game_data.entrance_type = 7;
+        game()->current_map = game()->previous_map2;
+        game()->current_dungeon_level = game()->previous_dungeon_level;
+        mapstartx = game()->previous_x;
+        mapstarty = game()->previous_y;
+        game()->entrance_type = 7;
         fixstart = 1;
         levelexitby = 5;
     }
     if (levelexitby == 4)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
-        if (game_data.current_map == mdata_t::MapId::your_home)
+        if (game()->current_map == mdata_t::MapId::your_home)
         {
             if (mapitemfind(cdata.player().position, "core.downstairs"))
             {
@@ -1397,18 +1396,18 @@ TurnResult exit_map()
             Message::instance().buffered_message_append(
                 i18n::s.get("core.misc.walk_down_stairs"));
             f = 1;
-            game_data.entrance_type = 1;
+            game()->entrance_type = 1;
             map_data.stair_down_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
-                ++game_data.current_dungeon_level;
-                game_data.current_dungeon_level -=
-                    (area_data[game_data.current_map].entrance == 2) * 2;
+                ++game()->current_dungeon_level;
+                game()->current_dungeon_level -=
+                    (area_data[game()->current_map].entrance == 2) * 2;
             }
             else
             {
-                game_data.current_dungeon_level = feat(2);
+                game()->current_dungeon_level = feat(2);
             }
         }
         if (feat(1) == 10)
@@ -1416,31 +1415,31 @@ TurnResult exit_map()
             Message::instance().buffered_message_append(
                 i18n::s.get("core.misc.walk_up_stairs"));
             f = 1;
-            game_data.entrance_type = 2;
+            game()->entrance_type = 2;
             map_data.stair_up_pos =
                 cdata.player().position.y * 1000 + cdata.player().position.x;
             if (feat(2) == 0)
             {
-                --game_data.current_dungeon_level;
-                game_data.current_dungeon_level +=
-                    (area_data[game_data.current_map].entrance == 2) * 2;
+                --game()->current_dungeon_level;
+                game()->current_dungeon_level +=
+                    (area_data[game()->current_map].entrance == 2) * 2;
             }
             else
             {
-                game_data.current_dungeon_level = feat(2);
+                game()->current_dungeon_level = feat(2);
             }
         }
         if (f == 0)
         {
             if (map_data.type == mdata_t::MapType::world_map)
             {
-                game_data.pc_x_in_world_map = cdata.player().position.x;
-                game_data.pc_y_in_world_map = cdata.player().position.y;
-                game_data.current_dungeon_level = 1;
+                game()->pc_x_in_world_map = cdata.player().position.x;
+                game()->pc_y_in_world_map = cdata.player().position.y;
+                game()->current_dungeon_level = 1;
                 if (feat(2) != 0 || feat(3) != 0)
                 {
-                    game_data.current_map = feat(2) + feat(3) * 100;
-                    if (area_data[game_data.current_map].id ==
+                    game()->current_map = feat(2) + feat(3) * 100;
+                    if (area_data[game()->current_map].id ==
                         mdata_t::MapId::the_void)
                     {
                         if (!itemfind(
@@ -1450,40 +1449,40 @@ TurnResult exit_map()
                             txt(i18n::s.get(
                                 "core.action.exit_map.not_permitted"));
                             msg_halt();
-                            game_data.current_map =
+                            game()->current_map =
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (area_data[game_data.current_map].id ==
+                    if (area_data[game()->current_map].id ==
                         mdata_t::MapId::pyramid)
                     {
-                        if (game_data.quest_flags.pyramid_trial == 0)
+                        if (game()->quest_flags.pyramid_trial == 0)
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.no_invitation_to_pyramid"));
                             msg_halt();
-                            game_data.current_map =
+                            game()->current_map =
                                 static_cast<int>(mdata_t::MapId::fields);
                         }
                     }
-                    if (area_data[game_data.current_map].id ==
+                    if (area_data[game()->current_map].id ==
                         mdata_t::MapId::jail)
                     {
                         txt(i18n::s.get(
                             "core.action.exit_map.cannot_enter_jail"));
                         msg_halt();
-                        game_data.current_map =
+                        game()->current_map =
                             static_cast<int>(mdata_t::MapId::fields);
                     }
                 }
                 else
                 {
-                    game_data.current_map =
+                    game()->current_map =
                         static_cast<int>(mdata_t::MapId::fields);
                 }
                 if (feat(1) != 15)
                 {
-                    game_data.current_map =
+                    game()->current_map =
                         static_cast<int>(mdata_t::MapId::fields);
                 }
             }
@@ -1493,97 +1492,97 @@ TurnResult exit_map()
                 map_data.type == mdata_t::MapType::shelter ||
                 map_data.type == mdata_t::MapType::guild)
             {
-                game_data.current_map = game_data.destination_outer_map;
+                game()->current_map = game()->destination_outer_map;
             }
         }
         if (mdata_t::is_nefia(map_data.type) ||
             map_data.type == static_cast<int>(mdata_t::MapType::shelter))
         {
-            if (game_data.current_dungeon_level <
-                area_data[game_data.current_map].danger_level)
+            if (game()->current_dungeon_level <
+                area_data[game()->current_map].danger_level)
             {
-                game_data.current_map = game_data.destination_outer_map;
+                game()->current_map = game()->destination_outer_map;
             }
         }
-        if (area_data[game_data.current_map].type == mdata_t::MapType::town)
+        if (area_data[game()->current_map].type == mdata_t::MapType::town)
         {
-            if (game_data.current_map == game_data.previous_map)
+            if (game()->current_map == game()->previous_map)
             {
-                if (game_data.current_dungeon_level == 1)
+                if (game()->current_dungeon_level == 1)
                 {
                     Message::instance().buffered_message_append(i18n::s.get(
                         "core.action.exit_map.surface.returned_to",
-                        mapname(game_data.current_map)));
+                        mapname(game()->current_map)));
                 }
                 else
                 {
                     Message::instance().buffered_message_append(i18n::s.get(
                         "core.action.exit_map.surface.left",
-                        mapname(game_data.current_map)));
+                        mapname(game()->current_map)));
                 }
             }
         }
     }
     if (map_data.type == mdata_t::MapType::temporary)
     {
-        game_data.current_map = game_data.previous_map2;
-        game_data.current_dungeon_level = game_data.previous_dungeon_level;
-        mapstartx = game_data.previous_x;
-        mapstarty = game_data.previous_y;
-        game_data.entrance_type = 7;
+        game()->current_map = game()->previous_map2;
+        game()->current_dungeon_level = game()->previous_dungeon_level;
+        mapstartx = game()->previous_x;
+        mapstarty = game()->previous_y;
+        game()->entrance_type = 7;
         fixstart = 1;
     }
     if (levelexitby == 2)
     {
-        game_data.current_map = game_data.destination_map;
-        game_data.current_dungeon_level = game_data.destination_dungeon_level;
-        if (game_data.executing_immediate_quest_type == 0)
+        game()->current_map = game()->destination_map;
+        game()->current_dungeon_level = game()->destination_dungeon_level;
+        if (game()->executing_immediate_quest_type == 0)
         {
-            if (game_data.previous_map !=
+            if (game()->previous_map !=
                 static_cast<int>(mdata_t::MapId::fields))
             {
-                game_data.pc_x_in_world_map =
-                    area_data[game_data.current_map].position.x;
-                game_data.pc_y_in_world_map =
-                    area_data[game_data.current_map].position.y;
+                game()->pc_x_in_world_map =
+                    area_data[game()->current_map].position.x;
+                game()->pc_y_in_world_map =
+                    area_data[game()->current_map].position.y;
                 weather_changes_by_location(false);
             }
         }
-        if (game_data.current_map == mdata_t::MapId::jail)
+        if (game()->current_map == mdata_t::MapId::jail)
         {
             mapstartx = 29;
             mapstarty = 3;
-            game_data.entrance_type = 7;
+            game()->entrance_type = 7;
             fixstart = 1;
         }
     }
     if (cdata.player().state() == Character::State::empty)
     {
         revive_player(cdata.player());
-        game_data.current_map = static_cast<int>(mdata_t::MapId::your_home);
-        game_data.destination_outer_map =
+        game()->current_map = static_cast<int>(mdata_t::MapId::your_home);
+        game()->destination_outer_map =
             area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map;
-        game_data.current_dungeon_level = 1;
+        game()->current_dungeon_level = 1;
     }
     if (rdtry > 1)
     {
         Message::instance().buffered_message_append(
             u8"(再生成"s + rdtry + u8"回)"s);
     }
-    if (game_data.current_map != game_data.previous_map)
+    if (game()->current_map != game()->previous_map)
     {
         if (map_is_town_or_guild() ||
-            game_data.previous_map == mdata_t::MapId::your_home ||
-            game_data.departure_date == 0)
+            game()->previous_map == mdata_t::MapId::your_home ||
+            game()->departure_date == 0)
         {
-            game_data.departure_date = game_data.date.hours();
-            game_data.distance_between_town = 0;
-            game_data.left_town_map = game_data.previous_map;
+            game()->departure_date = game()->date.hours();
+            game()->distance_between_town = 0;
+            game()->left_town_map = game()->previous_map;
         }
-        if (area_data[game_data.current_map].type !=
+        if (area_data[game()->current_map].type !=
                 mdata_t::MapType::world_map &&
-            area_data[game_data.current_map].type != mdata_t::MapType::field &&
-            game_data.current_map != mdata_t::MapId::show_house)
+            area_data[game()->current_map].type != mdata_t::MapType::field &&
+            game()->current_map != mdata_t::MapId::show_house)
         {
             save_trigger_autosaving();
         }
@@ -1594,10 +1593,10 @@ TurnResult exit_map()
             {
                 if (fixtransfermap == 0)
                 {
-                    game_data.pc_x_in_world_map =
-                        area_data[game_data.previous_map].position.x;
-                    game_data.pc_y_in_world_map =
-                        area_data[game_data.previous_map].position.y;
+                    game()->pc_x_in_world_map =
+                        area_data[game()->previous_map].position.x;
+                    game()->pc_y_in_world_map =
+                        area_data[game()->previous_map].position.y;
                 }
                 else
                 {
@@ -1607,7 +1606,7 @@ TurnResult exit_map()
         }
         if (fixstart == 0)
         {
-            game_data.entrance_type = area_data[game_data.current_map].entrance;
+            game()->entrance_type = area_data[game()->current_map].entrance;
         }
         if (event_find(6))
         {
@@ -1616,57 +1615,54 @@ TurnResult exit_map()
             weather_changes_by_location(false);
         }
         else if (
-            area_data[game_data.previous_map].type ==
-            mdata_t::MapType::world_map)
+            area_data[game()->previous_map].type == mdata_t::MapType::world_map)
         {
             Message::instance().buffered_message_append(i18n::s.get(
-                "core.action.exit_map.entered",
-                mapname(game_data.current_map)));
+                "core.action.exit_map.entered", mapname(game()->current_map)));
         }
         else if (map_data.type == mdata_t::MapType::temporary)
         {
             Message::instance().buffered_message_append(i18n::s.get(
                 "core.action.exit_map.returned_to",
-                mapname(game_data.current_map)));
+                mapname(game()->current_map)));
         }
         else
         {
             Message::instance().buffered_message_append(i18n::s.get(
-                "core.action.exit_map.left", mapname(game_data.previous_map)));
+                "core.action.exit_map.left", mapname(game()->previous_map)));
         }
-        if (game_data.cargo_weight > game_data.current_cart_limit)
+        if (game()->cargo_weight > game()->current_cart_limit)
         {
-            if (area_data[game_data.current_map].type ==
+            if (area_data[game()->current_map].type ==
                     mdata_t::MapType::world_map ||
-                area_data[game_data.current_map].type ==
-                    mdata_t::MapType::field)
+                area_data[game()->current_map].type == mdata_t::MapType::field)
             {
                 Message::instance().buffered_message_append(
                     i18n::s.get("core.action.exit_map.burdened_by_cargo"));
             }
         }
     }
-    if (game_data.current_map == mdata_t::MapId::larna)
+    if (game()->current_map == mdata_t::MapId::larna)
     {
-        if (game_data.current_dungeon_level == 2)
+        if (game()->current_dungeon_level == 2)
         {
-            game_data.current_map =
+            game()->current_map =
                 static_cast<int>(mdata_t::MapId::mountain_pass);
-            game_data.current_dungeon_level =
-                area_data[game_data.current_map].deepest_level - 1;
-            game_data.entrance_type = 1;
+            game()->current_dungeon_level =
+                area_data[game()->current_map].deepest_level - 1;
+            game()->entrance_type = 1;
             Message::instance().buffered_message_append(
                 i18n::s.get("core.action.exit_map.mountain_pass"));
         }
     }
-    if (game_data.current_map == mdata_t::MapId::mountain_pass)
+    if (game()->current_map == mdata_t::MapId::mountain_pass)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game()->current_dungeon_level ==
+            area_data[game()->current_map].deepest_level)
         {
-            game_data.current_map = static_cast<int>(mdata_t::MapId::larna);
-            game_data.current_dungeon_level = 1;
-            game_data.entrance_type = 2;
+            game()->current_map = static_cast<int>(mdata_t::MapId::larna);
+            game()->current_dungeon_level = 1;
+            game()->entrance_type = 2;
             Message::instance().buffered_message_append(
                 i18n::s.get("core.action.exit_map.larna"));
         }
@@ -1725,12 +1721,12 @@ TurnResult exit_map()
         ELONA_LOG("map") << "exit_map clear temporary";
     }
 
-    bool map_changed = game_data.current_map != previous_map ||
-        game_data.current_dungeon_level != previous_dungeon_level;
+    bool map_changed = game()->current_map != previous_map ||
+        game()->current_dungeon_level != previous_dungeon_level;
 
     ELONA_LOG("map") << "exit_map levelexitby end " << levelexitby << " cur "
-                     << game_data.current_map << " cur_level "
-                     << game_data.current_dungeon_level << " prev "
+                     << game()->current_map << " cur_level "
+                     << game()->current_dungeon_level << " prev "
                      << previous_map << " prev_level "
                      << previous_dungeon_level;
 
@@ -1772,7 +1768,7 @@ void prepare_charas_for_map_unload()
 
 void map_global_proc_diastrophism()
 {
-    if (game_data.reset_world_map_in_diastrophism_flag == 1)
+    if (game()->reset_world_map_in_diastrophism_flag == 1)
     {
         initialize_adata();
         map_global_prepare();
@@ -1796,10 +1792,10 @@ void map_global_proc_diastrophism()
             }
         }
     }
-    if (p <= 25 || rnd(150) == 0 || game_data.diastrophism_flag != 0 ||
-        game_data.reset_world_map_in_diastrophism_flag)
+    if (p <= 25 || rnd(150) == 0 || game()->diastrophism_flag != 0 ||
+        game()->reset_world_map_in_diastrophism_flag)
     {
-        game_data.diastrophism_flag = 0;
+        game()->diastrophism_flag = 0;
         Message::instance().buffered_message_append(
             i18n::s.get("core.action.move.global.diastrophism"));
         for (int cnt = 450; cnt < 500; ++cnt)
@@ -1815,7 +1811,7 @@ void map_global_proc_diastrophism()
         initialize_world_map();
         map_global_prepare();
     }
-    game_data.reset_world_map_in_diastrophism_flag = 0;
+    game()->reset_world_map_in_diastrophism_flag = 0;
 }
 
 
@@ -1834,7 +1830,7 @@ void map_global_place_entrances()
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         int cnt2 = cnt;
-        if (game_data.destination_outer_map != 4)
+        if (game()->destination_outer_map != 4)
         {
             break;
         }
@@ -1860,7 +1856,7 @@ void map_global_place_entrances()
         {
             continue;
         }
-        if (area_data[cnt].outer_map != game_data.destination_outer_map)
+        if (area_data[cnt].outer_map != game()->destination_outer_map)
         {
             continue;
         }
@@ -1973,7 +1969,7 @@ void try_to_return()
     p = 0;
     p = 0;
     i = 7;
-    if (area_data[i].outer_map == game_data.destination_outer_map)
+    if (area_data[i].outer_map == game()->destination_outer_map)
     {
         list(0, p) = i;
         list(1, p) = 1;
@@ -1987,7 +1983,7 @@ void try_to_return()
         {
             continue;
         }
-        if (area_data[i].outer_map != game_data.destination_outer_map)
+        if (area_data[i].outer_map != game()->destination_outer_map)
         {
             continue;
         }
@@ -2036,22 +2032,21 @@ void try_to_return()
     if (rtval >= 0)
     {
         txt(i18n::s.get("core.misc.return.air_becomes_charged"));
-        if (area_data[game_data.current_map].id ==
-            mdata_t::MapId::random_dungeon)
+        if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (game_data.current_dungeon_level ==
-                area_data[game_data.current_map].deepest_level)
+            if (game()->current_dungeon_level ==
+                area_data[game()->current_map].deepest_level)
             {
-                if (area_data[game_data.current_map].has_been_conquered != -1)
+                if (area_data[game()->current_map].has_been_conquered != -1)
                 {
                     txt(i18n::s.get(
                         "core.misc.return.lord_of_dungeon_might_disappear"));
                 }
             }
         }
-        game_data.destination_map = list(0, rtval);
-        game_data.destination_dungeon_level = list(1, rtval);
-        game_data.is_returning_or_escaping = 15 + rnd(15);
+        game()->destination_map = list(0, rtval);
+        game()->destination_dungeon_level = list(1, rtval);
+        game()->is_returning_or_escaping = 15 + rnd(15);
     }
     update_screen();
 }
@@ -2064,25 +2059,25 @@ void map_global_proc_travel_events(Character& chara)
     {
         chara.activity.type = Activity::Type::travel;
         chara.activity.turn = 20;
-        if (game_data.weather == 3)
+        if (game()->weather == 3)
         {
             chara.activity.turn = chara.activity.turn * 13 / 10;
         }
-        if (game_data.weather == 4)
+        if (game()->weather == 4)
         {
             chara.activity.turn = chara.activity.turn * 16 / 10;
         }
-        if (game_data.weather == 2 ||
+        if (game()->weather == 2 ||
             chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
         {
             chara.activity.turn = chara.activity.turn * 22 / 10;
         }
-        if (game_data.weather == 1)
+        if (game()->weather == 1)
         {
             chara.activity.turn = chara.activity.turn * 5 / 10;
         }
         chara.activity.turn = chara.activity.turn * 100 /
-            (100 + game_data.seven_league_boot_effect +
+            (100 + game()->seven_league_boot_effect +
              cdata.player().get_skill(182).level);
         return;
     }
@@ -2101,10 +2096,10 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game_data.weather == 2 ||
+    if (game()->weather == 2 ||
         chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
     {
-        if (game_data.protects_from_bad_weather == 0)
+        if (game()->protects_from_bad_weather == 0)
         {
             if (rnd(100) == 0)
             {
@@ -2137,9 +2132,9 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game_data.weather == 4)
+    if (game()->weather == 4)
     {
-        if (game_data.protects_from_bad_weather == 0)
+        if (game()->protects_from_bad_weather == 0)
         {
             if (rnd(100) == 0)
             {
@@ -2171,11 +2166,11 @@ void map_global_proc_travel_events(Character& chara)
     }
     if (chara.activity.turn > 0)
     {
-        ++game_data.date.minute;
+        ++game()->date.minute;
         return;
     }
     traveldone = 1;
-    game_data.distance_between_town += 4;
+    game()->distance_between_town += 4;
     chara.activity.finish();
 }
 
@@ -2186,8 +2181,8 @@ void sense_map_feats_on_move(Character& chara)
     if (!chara.is_player())
         return;
 
-    game_data.player_x_on_map_leave = -1;
-    game_data.player_y_on_map_leave = -1;
+    game()->player_x_on_map_leave = -1;
+    game()->player_y_on_map_leave = -1;
     x = cdata.player().position.x;
     y = cdata.player().position.y;
     if (!cell_data.at(x, y).item_info_actual.is_empty())

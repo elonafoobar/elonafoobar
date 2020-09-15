@@ -87,7 +87,7 @@ void prepare_house_board_tiles()
         }
         if (chip_data[cnt].kind == 3)
         {
-            if (game_data.home_scale <= 3)
+            if (game()->home_scale <= 3)
             {
                 continue;
             }

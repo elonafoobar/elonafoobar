@@ -130,7 +130,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (action == "wizard_advance_time")
         {
             dbg_skipevent = 1;
-            ++game_data.date.hour;
+            ++game()->date.hour;
             weather_changes();
             dbg_skipevent = 0;
             mode = 0;
@@ -141,8 +141,8 @@ optional<TurnResult> handle_pc_action(std::string& action)
             if (map_data.type != mdata_t::MapType::town)
             {
                 dbg_revealmap = 1;
-                ++game_data.current_dungeon_level;
-                txt(u8"lv:"s + game_data.current_dungeon_level);
+                ++game()->current_dungeon_level;
+                txt(u8"lv:"s + game()->current_dungeon_level);
                 ctrl_file_map_delete();
                 mode = 2;
                 levelexitby = 4;
@@ -260,12 +260,12 @@ optional<TurnResult> handle_pc_action(std::string& action)
                 action = "go_down";
             }
             if (item->id == "core.upstairs" &&
-                game_data.current_map == mdata_t::MapId::your_home)
+                game()->current_map == mdata_t::MapId::your_home)
             {
                 action = "go_up";
             }
             if (item->id == "core.downstairs" &&
-                game_data.current_map == mdata_t::MapId::your_home)
+                game()->current_map == mdata_t::MapId::your_home)
             {
                 action = "go_down";
             }
@@ -738,7 +738,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
+        game()->player_next_move_direction = 3;
         dirsub = 0;
     }
     if (action == "south")
@@ -746,7 +746,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
+        game()->player_next_move_direction = 0;
         dirsub = 4;
     }
     if (action == "west")
@@ -754,7 +754,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y;
-        game_data.player_next_move_direction = 1;
+        game()->player_next_move_direction = 1;
         dirsub = 6;
     }
     if (action == "east")
@@ -762,7 +762,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y;
-        game_data.player_next_move_direction = 2;
+        game()->player_next_move_direction = 2;
         dirsub = 2;
     }
     if (action == "northwest")
@@ -770,7 +770,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
+        game()->player_next_move_direction = 3;
         dirsub = 7;
     }
     if (action == "northeast")
@@ -778,7 +778,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y - 1;
-        game_data.player_next_move_direction = 3;
+        game()->player_next_move_direction = 3;
         dirsub = 1;
     }
     if (action == "southwest")
@@ -786,7 +786,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x - 1;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
+        game()->player_next_move_direction = 0;
         dirsub = 5;
     }
     if (action == "southeast")
@@ -794,10 +794,10 @@ optional<TurnResult> handle_pc_action(std::string& action)
         p = 1;
         cdata.player().next_position.x = cdata.player().position.x + 1;
         cdata.player().next_position.y = cdata.player().position.y + 1;
-        game_data.player_next_move_direction = 0;
+        game()->player_next_move_direction = 0;
         dirsub = 3;
     }
-    cdata.player().direction = game_data.player_next_move_direction;
+    cdata.player().direction = game()->player_next_move_direction;
     if (p == 1)
     {
         if (_proc_autodig())

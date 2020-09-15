@@ -70,8 +70,8 @@ void modify_ether_disease_stage(int delta)
     int mod_amount = 0;
     int cnt2_at_m134 = 0;
     int i_at_m134 = 0;
-    original_amount = game_data.ether_disease_stage / 1000;
-    add_amount = delta + (delta > 0) * game_data.ether_disease_speed;
+    original_amount = game()->ether_disease_stage / 1000;
+    add_amount = delta + (delta > 0) * game()->ether_disease_speed;
     if (trait(168))
     {
         if (delta > 0)
@@ -79,9 +79,9 @@ void modify_ether_disease_stage(int delta)
             add_amount = add_amount * 100 / 150;
         }
     }
-    game_data.ether_disease_stage =
-        clamp(game_data.ether_disease_stage + add_amount, 0, 20000);
-    mod_amount = game_data.ether_disease_stage / 1000 - original_amount;
+    game()->ether_disease_stage =
+        clamp(game()->ether_disease_stage + add_amount, 0, 20000);
+    mod_amount = game()->ether_disease_stage / 1000 - original_amount;
     if (mod_amount > 0)
     {
         if (original_amount == 0)
@@ -119,7 +119,7 @@ void modify_ether_disease_stage(int delta)
                 }
                 --trait(tid);
                 i_at_m134 = original_amount + cnt2_at_m134;
-                game_data.ether_disease_history.at(i_at_m134) = tid;
+                game()->ether_disease_history.at(i_at_m134) = tid;
                 txt(i18n::s.get("core.chara.corruption.add"),
                     Message::color{ColorIndex::purple});
                 txt(traitrefn(1), Message::color{ColorIndex::red});
@@ -168,9 +168,9 @@ void modify_ether_disease_stage(int delta)
                 if (cnt == 0)
                 {
                     i_at_m134 = original_amount - cnt2_at_m134 - 1;
-                    if (game_data.ether_disease_history.at(i_at_m134) != 0)
+                    if (game()->ether_disease_history.at(i_at_m134) != 0)
                     {
-                        tid = game_data.ether_disease_history.at(i_at_m134);
+                        tid = game()->ether_disease_history.at(i_at_m134);
                     }
                 }
                 int stat = trait_get_info(0, tid);
@@ -335,28 +335,27 @@ void refresh_speed(Character& chara)
     }
     chara.speed_percentage_in_next_turn = 0;
 
-    if (!chara.is_player() && game_data.mount != chara.index)
+    if (!chara.is_player() && game()->mount != chara.index)
         return;
 
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        const auto mount_speed = cdata[game_data.mount].get_skill(18).level *
-            clamp(100 - cdata[game_data.mount].speed_correction_value, 0, 100) /
+        const auto mount_speed = cdata[game()->mount].get_skill(18).level *
+            clamp(100 - cdata[game()->mount].speed_correction_value, 0, 100) /
             100;
 
         cdata.player().current_speed = mount_speed * 100 /
             clamp(100 + mount_speed -
-                      cdata[game_data.mount].get_skill(10).level * 3 / 2 -
+                      cdata[game()->mount].get_skill(10).level * 3 / 2 -
                       cdata.player().get_skill(301).level * 2 -
-                      (cdata[game_data.mount].is_suitable_for_mount() == 1) *
-                          50,
+                      (cdata[game()->mount].is_suitable_for_mount() == 1) * 50,
                   100,
                   1000);
-        if (cdata[game_data.mount].is_unsuitable_for_mount())
+        if (cdata[game()->mount].is_unsuitable_for_mount())
         {
             cdata.player().current_speed /= 10;
         }
-        if (game_data.mount == chara.index)
+        if (game()->mount == chara.index)
         {
             chara.current_speed = clamp(
                 chara.get_skill(10).level + cdata.player().get_skill(301).level,
@@ -368,7 +367,7 @@ void refresh_speed(Character& chara)
 
     gspdorg = cdata.player().get_skill(18).base_level;
 
-    if (game_data.mount == 0)
+    if (game()->mount == 0)
     {
         int n = cdata.player().nutrition / 1000 * 1000;
         if (n < 1000)
@@ -407,12 +406,10 @@ void refresh_speed(Character& chara)
     if (map_data.type == mdata_t::MapType::world_map ||
         map_data.type == mdata_t::MapType::field)
     {
-        if (game_data.cargo_weight > game_data.current_cart_limit)
+        if (game()->cargo_weight > game()->current_cart_limit)
         {
             cdata.player().speed_percentage_in_next_turn -= 25 +
-                25 *
-                    (game_data.cargo_weight /
-                     (game_data.current_cart_limit + 1));
+                25 * (game()->cargo_weight / (game()->current_cart_limit + 1));
         }
     }
     gspd = cdata.player().current_speed *
@@ -520,7 +517,7 @@ void gain_level(Character& chara)
             {
                 if (chara.level <= 50)
                 {
-                    ++game_data.acquirable_feat_count;
+                    ++game()->acquirable_feat_count;
                 }
             }
         }

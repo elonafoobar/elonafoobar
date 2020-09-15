@@ -25,7 +25,7 @@ namespace elona
 
 static void _init_map_shelter()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         map_init_static_map("shelter_2");
         map_data.refresh_type = 0;
@@ -47,8 +47,8 @@ static void _init_map_shelter()
 static void _init_map_nefia()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
         event_add(4);
     }
@@ -953,15 +953,15 @@ static void _init_map_fort_of_chaos_collapsed()
 
 static void _init_map_your_home()
 {
-    map_init_static_map("home" + std::to_string(game_data.home_scale));
+    map_init_static_map("home" + std::to_string(game()->home_scale));
     map_data.bgm = 68;
-    game_data.entrance_type = 4;
+    game()->entrance_type = 4;
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
     map_data.tileset = 3;
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
-        if (game_data.home_scale == 0)
+        if (game()->home_scale == 0)
         {
             map_data.play_campfire_sound = 1;
             flt();
@@ -1014,7 +1014,7 @@ static void _init_map_your_home()
                 cell_refresh(item->position().x, item->position().y);
             }
         }
-        if (game_data.home_scale == 5)
+        if (game()->home_scale == 5)
         {
             flt();
             if (const auto chara = chara_create(-1, 1, 31, 20))
@@ -1281,11 +1281,11 @@ static void _init_map_derphy_thieves_guild()
 
 static void _init_map_derphy()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         _init_map_derphy_town();
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         _init_map_derphy_thieves_guild();
     }
@@ -1344,7 +1344,7 @@ static void _init_map_palmia()
     {
         chara->role = Role::other;
     }
-    if (game_data.quest_flags.mias_dream == 1000)
+    if (game()->quest_flags.mias_dream == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 246, 42, 11))
@@ -1527,7 +1527,7 @@ static void _init_map_lumiest_town()
     map_init_static_map("lumiest");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game_data.quest_flags.sewer_sweeping)
+    if (game()->quest_flags.sewer_sweeping)
     {
         cell_featset(18, 45, tile_downstairs, 11, 20);
     }
@@ -1754,7 +1754,7 @@ static void _init_map_lumiest_sewer()
     map_data.should_regenerate = 1;
     mdatan(0) = i18n::s.get("core.map.unique.the_sewer.name");
     quest_place_target();
-    game_data.entrance_type = 1;
+    game()->entrance_type = 1;
     map_place_player_and_allies();
 }
 
@@ -1762,15 +1762,15 @@ static void _init_map_lumiest_sewer()
 
 static void _init_map_lumiest()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         _init_map_lumiest_town();
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         _init_map_lumiest_mages_guild();
     }
-    if (game_data.current_dungeon_level == 20)
+    if (game()->current_dungeon_level == 20)
     {
         _init_map_lumiest_sewer();
     }
@@ -1784,7 +1784,7 @@ static void _init_map_yowyn_town()
     map_init_static_map("yowyn");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game_data.quest_flags.cat_house)
+    if (game()->quest_flags.cat_house)
     {
         cell_featset(23, 22, tile_downstairs, 11, 3);
     }
@@ -1943,7 +1943,7 @@ static void _init_map_yowyn_battle_field()
     map_data.refresh_type = 0;
     mdatan(0) = i18n::s.get("core.map.unique.battle_field.name");
     quest_place_target();
-    game_data.entrance_type = 8;
+    game()->entrance_type = 8;
     map_place_player_and_allies();
     listmax = 0;
     for (auto&& cnt : cdata.others())
@@ -1978,15 +1978,15 @@ static void _init_map_yowyn_battle_field()
 
 static void _init_map_yowyn()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         _init_map_yowyn_town();
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         _init_map_yowyn_cat_mansion();
     }
-    if (game_data.current_dungeon_level == 4)
+    if (game()->current_dungeon_level == 4)
     {
         _init_map_yowyn_battle_field();
     }
@@ -2003,7 +2003,7 @@ static void _init_map_noyel()
     flt();
     if (const auto chara = chara_create(-1, 202, 46, 18))
     {
-        game_data.fire_giant = chara->index;
+        game()->fire_giant = chara->index;
         chara->role = Role::other;
     }
     flt();
@@ -2036,7 +2036,7 @@ static void _init_map_noyel()
     {
         chara->role = Role::other;
     }
-    if (game_data.quest_flags.pael_and_her_mom != 1001)
+    if (game()->quest_flags.pael_and_her_mom != 1001)
     {
         flt();
         if (const auto chara = chara_create(-1, 222, 19, 2))
@@ -2413,8 +2413,8 @@ static void _init_map_port_kapul_doom_ground()
     map_data.should_regenerate = 1;
     map_data.refresh_type = 0;
     mdatan(0) = i18n::s.get("core.map.unique.doom_ground.name");
-    game_data.entrance_type = 4;
-    game_data.quest_flags.duration_of_kamikaze_attack = 0;
+    game()->entrance_type = 4;
+    game()->quest_flags.duration_of_kamikaze_attack = 0;
     map_place_player_and_allies();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -2433,15 +2433,15 @@ static void _init_map_port_kapul_doom_ground()
 
 static void _init_map_port_kapul()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         _init_map_port_kapul_town();
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         _init_map_port_kapul_fighters_guild();
     }
-    if (game_data.current_dungeon_level == 25)
+    if (game()->current_dungeon_level == 25)
     {
         _init_map_port_kapul_doom_ground();
     }
@@ -2455,7 +2455,7 @@ static void _init_map_vernis_town()
     map_init_static_map("vernis");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game_data.quest_flags.thieves_hideout)
+    if (game()->quest_flags.thieves_hideout)
     {
         cell_featset(48, 5, tile_downstairs, 11, 4);
     }
@@ -2491,7 +2491,7 @@ static void _init_map_vernis_town()
     {
         chara->role = Role::other;
     }
-    if (game_data.quest_flags.puppys_cave == 1000)
+    if (game()->quest_flags.puppys_cave == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 225, 31, 4))
@@ -2655,7 +2655,7 @@ static void _init_map_vernis_test_site()
     map_data.should_regenerate = 1;
     mdatan(0) = i18n::s.get("core.map.unique.test_site.name");
     quest_place_target();
-    game_data.entrance_type = 7;
+    game()->entrance_type = 7;
     mapstartx = 6;
     mapstarty = 27;
     map_place_player_and_allies();
@@ -2665,19 +2665,19 @@ static void _init_map_vernis_test_site()
 
 static void _init_map_vernis()
 {
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
         _init_map_vernis_town();
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         _init_map_vernis_the_mine();
     }
-    if (game_data.current_dungeon_level == 4)
+    if (game()->current_dungeon_level == 4)
     {
         _init_map_vernis_robbers_hideout();
     }
-    if (game_data.current_dungeon_level == 5)
+    if (game()->current_dungeon_level == 5)
     {
         _init_map_vernis_test_site();
     }
@@ -2839,10 +2839,10 @@ static void _init_map_fields_maybe_generate_encounter()
     {
         map_data.max_crowd_density = 0;
         map_data.type = static_cast<int>(mdata_t::MapType::temporary);
-        game_data.executing_immediate_quest_type = 1007;
-        game_data.executing_immediate_quest_show_hunt_remain = 1;
-        game_data.executing_immediate_quest = encounterref;
-        game_data.executing_immediate_quest_status = 1;
+        game()->executing_immediate_quest_type = 1007;
+        game()->executing_immediate_quest_show_hunt_remain = 1;
+        game()->executing_immediate_quest = encounterref;
+        game()->executing_immediate_quest_status = 1;
         p = rnd(3) + 5;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
@@ -2898,10 +2898,10 @@ static void _init_map_fields_maybe_generate_encounter()
         for (int cnt = 0, cnt_end = (2 + p); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
-            if (game_data.weather == 1)
+            if (game()->weather == 1)
             {
-                if ((33 > game_data.stood_world_map_tile ||
-                     game_data.stood_world_map_tile >= 66) &&
+                if ((33 > game()->stood_world_map_tile ||
+                     game()->stood_world_map_tile >= 66) &&
                     rnd(3) == 0)
                 {
                     fixlv = Quality::godly;
@@ -2963,8 +2963,8 @@ static void _init_map_fields()
     }
 
     map_place_player_and_allies();
-    if (264 > game_data.stood_world_map_tile ||
-        game_data.stood_world_map_tile >= 363)
+    if (264 > game()->stood_world_map_tile ||
+        game()->stood_world_map_tile >= 363)
     {
         for (int cnt = 0, cnt_end = (4 + rnd(5)); cnt < cnt_end; ++cnt)
         {
@@ -2982,18 +2982,18 @@ static void _init_map_fields()
 static void _init_map_the_void()
 {
     generate_random_nefia();
-    if (game_data.void_next_lord_floor == 0)
+    if (game()->void_next_lord_floor == 0)
     {
-        game_data.void_next_lord_floor =
-            area_data[game_data.current_map].danger_level + 4;
+        game()->void_next_lord_floor =
+            area_data[game()->current_map].danger_level + 4;
     }
-    if (game_data.void_next_lord_floor <= game_data.current_dungeon_level)
+    if (game()->void_next_lord_floor <= game()->current_dungeon_level)
     {
         event_add(29);
     }
     else
     {
-        area_data[game_data.current_map].has_been_conquered = 0;
+        area_data[game()->current_map].has_been_conquered = 0;
     }
 }
 
@@ -3004,8 +3004,8 @@ static void _init_map_lesimas()
     map_tileset(map_data.tileset);
     for (int cnt = 0; cnt < 1; ++cnt)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game()->current_dungeon_level ==
+            area_data[game()->current_map].deepest_level)
         {
             map_init_static_map("lesimas_1");
             map_data.max_crowd_density = 0;
@@ -3013,7 +3013,7 @@ static void _init_map_lesimas()
             map_data.bgm = 66;
             mdatan(0) =
                 i18n::s.get_enum_property("core.map.unique", "the_depth", 3);
-            if (game_data.quest_flags.main_quest < 170)
+            if (game()->quest_flags.main_quest < 170)
             {
                 event_add(3);
             }
@@ -3037,7 +3037,7 @@ static void _init_map_lesimas()
         generate_random_nefia();
         break;
     }
-    if (game_data.current_dungeon_level == 3)
+    if (game()->current_dungeon_level == 3)
     {
         if (const auto chara = chara_create(
                 -1, 139, cdata.player().position.x, cdata.player().position.y))
@@ -3046,7 +3046,7 @@ static void _init_map_lesimas()
             chara->ai_calm = 3;
         }
     }
-    if (game_data.current_dungeon_level == 17)
+    if (game()->current_dungeon_level == 17)
     {
         if (const auto chara = chara_create(
                 -1, 146, cdata.player().position.x, cdata.player().position.y))
@@ -3061,8 +3061,8 @@ static void _init_map_lesimas()
 
 static void _init_map_tower_of_fire()
 {
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
         map_init_static_map("firet1");
         map_data.max_crowd_density = 0;
@@ -3079,8 +3079,8 @@ static void _init_map_tower_of_fire()
 
 static void _init_map_crypt_of_the_damned()
 {
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
         map_init_static_map("undeadt1");
         map_data.max_crowd_density = 0;
@@ -3097,8 +3097,8 @@ static void _init_map_crypt_of_the_damned()
 
 static void _init_map_ancient_castle()
 {
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
         map_init_static_map("roguet1");
         map_data.max_crowd_density = 0;
@@ -3115,8 +3115,8 @@ static void _init_map_ancient_castle()
 
 static void _init_map_dragons_nest()
 {
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
         map_init_static_map("d_1");
         map_data.max_crowd_density = 0;
@@ -3134,10 +3134,10 @@ static void _init_map_dragons_nest()
 static void _init_map_minotaurs_nest()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
-        if (game_data.quest_flags.minotaur_king < 2)
+        if (game()->quest_flags.minotaur_king < 2)
         {
             flt();
             chara_create(-1, 300, -3, 0);
@@ -3150,10 +3150,10 @@ static void _init_map_minotaurs_nest()
 static void _init_map_yeeks_nest()
 {
     generate_random_nefia();
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
-        if (game_data.quest_flags.novice_knight < 2)
+        if (game()->quest_flags.novice_knight < 2)
         {
             flt();
             if (const auto rodlob = chara_create(-1, 242, -3, 0))
@@ -3208,11 +3208,11 @@ static void _init_map_pyramid_second_floor()
 
 static void _init_map_pyramid()
 {
-    if (game_data.current_dungeon_level == 20)
+    if (game()->current_dungeon_level == 20)
     {
         _init_map_pyramid_first_floor();
     }
-    if (game_data.current_dungeon_level == 21)
+    if (game()->current_dungeon_level == 21)
     {
         _init_map_pyramid_second_floor();
     }
@@ -3223,7 +3223,7 @@ static void _init_map_pyramid()
 void initialize_map_from_map_type()
 {
     using namespace mdata_t;
-    if (game_data.current_map == MapId::your_home)
+    if (game()->current_map == MapId::your_home)
     {
         if (mdatan(0) == ""s ||
             mdatan(0) ==
@@ -3234,14 +3234,14 @@ void initialize_map_from_map_type()
     }
     else
     {
-        mdatan(0) = mapname(game_data.current_map);
+        mdatan(0) = mapname(game()->current_map);
     }
 
 
     // In most cases the area's map ID will be the same as
-    // game_data.current_map. However, multiple player-owned areas can share
+    // game()->current_map. However, multiple player-owned areas can share
     // the same map ID.
-    int map_id = area_data[game_data.current_map].id;
+    int map_id = area_data[game()->current_map].id;
     auto map = the_mapdef_db[map_id];
 
     if (map && map->generator)
@@ -3267,7 +3267,7 @@ void initialize_map_from_map_type()
         // clang-format on
     }
 
-    map_id_ = static_cast<mdata_t::MapId>(game_data.current_map);
+    map_id_ = static_cast<mdata_t::MapId>(game()->current_map);
     switch (map_id_)
     {
         // clang-format off

@@ -186,7 +186,7 @@ TurnResult pc_died()
     snd("core.dead1");
     screenupdate = -1;
     update_screen();
-    if (game_data.executing_immediate_quest_type)
+    if (game()->executing_immediate_quest_type)
     {
         return quest_pc_died_during_immediate_quest();
     }
@@ -214,9 +214,9 @@ TurnResult pc_died()
     this_death.last_words = last_words;
     this_death.date = i18n::s.get(
         "core.misc.death.date",
-        game_data.date.year,
-        game_data.date.month,
-        game_data.date.day);
+        game()->date.year,
+        game()->date.month,
+        game()->date.day);
     this_death.cause =
         i18n::s.get("core.misc.death.you_died", ndeathcause, mdatan(0));
     this_death.image = cdata.player().image;

@@ -66,7 +66,7 @@ void end_dmghp(const Character& victim)
             }
         }
     }
-    game_data.proc_damage_events_flag = 0;
+    game()->proc_damage_events_flag = 0;
     txt3rd = 0;
 }
 
@@ -122,12 +122,12 @@ Character::State dmgheal_set_death_status(Character& victim)
     else if (victim.role == Role::adventurer)
     {
         new_state = Character::State::adventurer_dead;
-        victim.time_to_revive = game_data.date.hours() + 24 + rnd(12);
+        victim.time_to_revive = game()->date.hours() + 24 + rnd(12);
     }
     else
     {
         new_state = Character::State::villager_dead;
-        victim.time_to_revive = game_data.date.hours() + 48;
+        victim.time_to_revive = game()->date.hours() + 48;
     }
 
     if (victim.is_ally())
@@ -336,7 +336,7 @@ int damage_hp(
             {
                 victim.hp = 1;
             }
-            if (game_data.current_map == mdata_t::MapId::pet_arena)
+            if (game()->current_map == mdata_t::MapId::pet_arena)
             {
                 victim.hp = 1;
             }
@@ -409,11 +409,11 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.proc_damage_events_flag == 1)
+        if (game()->proc_damage_events_flag == 1)
         {
             txteledmg(0, none, victim, element);
         }
-        else if (game_data.proc_damage_events_flag == 2)
+        else if (game()->proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
             assert(attacker);
@@ -707,7 +707,7 @@ int damage_hp(
         if (attacker && attacker->is_player())
         {
             chara_act_hostile_action(cdata.player(), victim);
-            game_data.chara_last_attacked_by_player = victim.index;
+            game()->chara_last_attacked_by_player = victim.index;
         }
         if (victim.is_player())
         {
@@ -735,7 +735,7 @@ int damage_hp(
         }
         if (victim.splits())
         {
-            if (game_data.proc_damage_events_flag != 1)
+            if (game()->proc_damage_events_flag != 1)
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
@@ -751,7 +751,7 @@ int damage_hp(
         }
         if (victim.splits2())
         {
-            if (game_data.proc_damage_events_flag != 1)
+            if (game()->proc_damage_events_flag != 1)
             {
                 if (rnd(3) == 0)
                 {
@@ -772,7 +772,7 @@ int damage_hp(
         }
         if (victim.is_quick_tempered())
         {
-            if (game_data.proc_damage_events_flag != 1)
+            if (game()->proc_damage_events_flag != 1)
             {
                 if (victim.furious == 0)
                 {
@@ -850,7 +850,7 @@ int damage_hp(
             if (element)
             {
                 if (!victim.is_player_or_ally() &&
-                    game_data.proc_damage_events_flag == 2)
+                    game()->proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
                     if (damage_statements_subject_is_noncharacter)
@@ -873,7 +873,7 @@ int damage_hp(
                 if (death_type == 0)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game_data.proc_damage_events_flag == 2)
+                        game()->proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -900,7 +900,7 @@ int damage_hp(
                 if (death_type == 1)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game_data.proc_damage_events_flag == 2)
+                        game()->proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -926,7 +926,7 @@ int damage_hp(
                 if (death_type == 2)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game_data.proc_damage_events_flag == 2)
+                        game()->proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -952,7 +952,7 @@ int damage_hp(
                 if (death_type == 3)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game_data.proc_damage_events_flag == 2)
+                        game()->proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -1022,7 +1022,7 @@ int damage_hp(
                 }
             }
         }
-        if (game_data.mount != victim.index || victim.is_player())
+        if (game()->mount != victim.index || victim.is_player())
         {
             cell_removechara(victim.position);
         }
@@ -1049,11 +1049,11 @@ int damage_hp(
         }
         if (victim.is_player())
         {
-            ++game_data.death_count;
+            ++game()->death_count;
         }
-        if (victim.index == game_data.chara_last_attacked_by_player)
+        if (victim.index == game()->chara_last_attacked_by_player)
         {
-            game_data.chara_last_attacked_by_player = 0;
+            game()->chara_last_attacked_by_player = 0;
         }
         if (attacker)
         {
@@ -1076,21 +1076,21 @@ int damage_hp(
             attacker->experience += gained_exp;
             if (attacker->is_player())
             {
-                game_data.sleep_experience += gained_exp;
+                game()->sleep_experience += gained_exp;
             }
             attacker->hate = 0;
             if (attacker->is_player_or_ally())
             {
                 attacker->enemy_id = 0;
                 cdata.player().enemy_id = 0;
-                game_data.chara_last_attacked_by_player = 0;
+                game()->chara_last_attacked_by_player = 0;
             }
         }
         if (!victim.is_player())
         {
-            if (game_data.current_map != mdata_t::MapId::show_house)
+            if (game()->current_map != mdata_t::MapId::show_house)
             {
-                if (game_data.current_map != mdata_t::MapId::the_void)
+                if (game()->current_map != mdata_t::MapId::the_void)
                 {
                     if (victim.id == CharaId::zeome)
                     {
@@ -1101,35 +1101,35 @@ int damage_hp(
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game_data.quest_flags.magic_stone_of_fool = 1;
+                        game()->quest_flags.magic_stone_of_fool = 1;
                     }
                     if (victim.id == CharaId::wynan)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game_data.quest_flags.magic_stone_of_king = 1;
+                        game()->quest_flags.magic_stone_of_king = 1;
                     }
                     if (victim.id == CharaId::quruiza)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game_data.quest_flags.magic_stone_of_sage = 1;
+                        game()->quest_flags.magic_stone_of_sage = 1;
                     }
                     if (victim.id == CharaId::rodlob)
                     {
-                        if (game_data.quest_flags.novice_knight < 1000)
+                        if (game()->quest_flags.novice_knight < 1000)
                         {
-                            game_data.quest_flags.novice_knight = 2;
+                            game()->quest_flags.novice_knight = 2;
                             quest_update_journal_msg();
                         }
                     }
                     if (victim.id == CharaId::tuwen)
                     {
-                        if (game_data.quest_flags.pyramid_trial < 1000)
+                        if (game()->quest_flags.pyramid_trial < 1000)
                         {
-                            game_data.quest_flags.pyramid_trial = 1000;
+                            game()->quest_flags.pyramid_trial = 1000;
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.quest.completed"));
                             snd("core.complete1");
@@ -1137,9 +1137,9 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::ungaga)
                     {
-                        if (game_data.quest_flags.minotaur_king < 1000)
+                        if (game()->quest_flags.minotaur_king < 1000)
                         {
-                            game_data.quest_flags.minotaur_king = 2;
+                            game()->quest_flags.minotaur_king = 2;
                             quest_update_journal_msg();
                         }
                     }
@@ -1149,21 +1149,20 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::little_sister)
                     {
-                        ++game_data.quest_flags.kill_count_of_little_sister;
+                        ++game()->quest_flags.kill_count_of_little_sister;
                         txt(i18n::s.get(
                                 "core.talk.unique.strange_scientist.saved_count",
-                                game_data.quest_flags
-                                    .save_count_of_little_sister,
-                                game_data.quest_flags
-                                    .kill_count_of_little_sister),
+                                game()->quest_flags.save_count_of_little_sister,
+                                game()
+                                    ->quest_flags.kill_count_of_little_sister),
                             Message::color{ColorIndex::red});
                     }
-                    if (game_data.current_dungeon_level ==
-                            area_data[game_data.current_map].deepest_level ||
-                        game_data.current_map == mdata_t::MapId::the_void)
+                    if (game()->current_dungeon_level ==
+                            area_data[game()->current_map].deepest_level ||
+                        game()->current_map == mdata_t::MapId::the_void)
                     {
-                        if (area_data[game_data.current_map]
-                                    .has_been_conquered == victim.index &&
+                        if (area_data[game()->current_map].has_been_conquered ==
+                                victim.index &&
                             victim.is_lord_of_dungeon() == 1)
                         {
                             event_add(5);
@@ -1178,9 +1177,9 @@ int damage_hp(
                     }
                     quest_check();
                 }
-                else if (game_data.current_map == mdata_t::MapId::the_void)
+                else if (game()->current_map == mdata_t::MapId::the_void)
                 {
-                    if (area_data[game_data.current_map].has_been_conquered ==
+                    if (area_data[game()->current_map].has_been_conquered ==
                             victim.index &&
                         victim.is_lord_of_dungeon() == 1)
                     {
@@ -1204,9 +1203,9 @@ int damage_hp(
             // if they are dead.
             modify_crowd_density(victim.index, -1);
         }
-        if (game_data.mount)
+        if (game()->mount)
         {
-            if (victim.index == game_data.mount)
+            if (victim.index == game()->mount)
             {
                 txt(i18n::s.get("core.damage.get_off_corpse", victim));
                 ride_end();
@@ -1232,7 +1231,7 @@ int damage_hp(
             chara_gain_skill_exp(*attacker, 161, 10 + rollanatomy * 4);
         }
         character_drops_item(victim);
-        if (game_data.current_map == mdata_t::MapId::pet_arena)
+        if (game()->current_map == mdata_t::MapId::pet_arena)
         {
             if (rnd(5) == 0)
             {
@@ -1265,7 +1264,7 @@ int damage_hp(
         }
         if (attacker && attacker->is_player())
         {
-            if (game_data.catches_god_signal)
+            if (game()->catches_god_signal)
             {
                 if (rnd(20) == 0)
                 {
@@ -1422,7 +1421,7 @@ void character_drops_item(Character& victim)
 {
     if (victim.is_player())
     {
-        if (game_data.executing_immediate_quest_type != 0)
+        if (game()->executing_immediate_quest_type != 0)
         {
             return;
         }
@@ -1570,7 +1569,7 @@ void character_drops_item(Character& victim)
             return;
         }
     }
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
         if (victim.id == CharaId::tourist)
         {
@@ -1622,7 +1621,7 @@ void character_drops_item(Character& victim)
                 f = 0;
             }
         }
-        if (game_data.current_map == mdata_t::MapId::arena)
+        if (game()->current_map == mdata_t::MapId::arena)
         {
             if (rnd(4))
             {
@@ -2007,12 +2006,12 @@ void character_drops_item(Character& victim)
             remain_make(item.unwrap(), victim);
         }
     }
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         cell_refresh(victim.position.x, victim.position.y);
         return;
     }
-    if (game_data.current_map != mdata_t::MapId::arena &&
+    if (game()->current_map != mdata_t::MapId::arena &&
         victim.role != Role::user)
     {
         if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
@@ -2080,9 +2079,9 @@ void character_drops_item(Character& victim)
 
 void check_kill(optional_ref<Character> killer_chara, Character& victim)
 {
-    if (game_data.current_map == mdata_t::MapId::pet_arena ||
-        game_data.current_map == mdata_t::MapId::show_house ||
-        game_data.current_map == mdata_t::MapId::arena)
+    if (game()->current_map == mdata_t::MapId::pet_arena ||
+        game()->current_map == mdata_t::MapId::show_house ||
+        game()->current_map == mdata_t::MapId::arena)
     {
         return;
     }
@@ -2096,12 +2095,12 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
     {
         if (!victim.is_player_or_ally())
         {
-            ++game_data.kill_count;
-            if (victim.id == int2charaid(game_data.guild.fighters_guild_target))
+            ++game()->kill_count;
+            if (victim.id == int2charaid(game()->guild.fighters_guild_target))
             {
-                if (game_data.guild.fighters_guild_quota > 0)
+                if (game()->guild.fighters_guild_quota > 0)
                 {
-                    --game_data.guild.fighters_guild_quota;
+                    --game()->guild.fighters_guild_quota;
                 }
             }
             if (victim.original_relationship >= 0)
@@ -2161,17 +2160,17 @@ void heal_both_rider_and_mount(Character& target)
 {
     std::vector<std::reference_wrapper<Character>> targets;
     targets.push_back(std::ref(target));
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        if (target.index == game_data.mount || target.is_player())
+        if (target.index == game()->mount || target.is_player())
         {
-            if (target.index == game_data.mount)
+            if (target.index == game()->mount)
             {
                 targets.push_back(std::ref(cdata.player()));
             }
             else
             {
-                targets.push_back(std::ref(cdata[game_data.mount]));
+                targets.push_back(std::ref(cdata[game()->mount]));
             }
         }
     }
@@ -2208,7 +2207,7 @@ void heal_completely(Character& target)
     target.dimmed = 0;
     target.drunk = 0;
     target.bleeding = 0;
-    game_data.continuous_active_hours = 0;
+    game()->continuous_active_hours = 0;
     target.hp = target.max_hp;
     target.mp = target.max_mp;
     target.sp = target.max_sp;

@@ -176,19 +176,17 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
     {
         map_set_chara_generation_filter();
         fixlv = Quality::miracle;
-        initlv = game_data.current_dungeon_level + rnd(5);
+        initlv = game()->current_dungeon_level + rnd(5);
         lord = chara_create(-1, 0, -3, 0);
     } while (!lord);
     assert(lord);
 
     lord->is_lord_of_dungeon() = true;
-    area_data[game_data.current_map].has_been_conquered = lord->index;
+    area_data[game()->current_map].has_been_conquered = lord->index;
     lord->name += u8" Lv"s + lord->level;
     txt(i18n::s.get("core.event.reached_deepest_level"));
     txt(i18n::s.get(
-            "core.event.guarded_by_lord",
-            mapname(game_data.current_map),
-            *lord),
+            "core.event.guarded_by_lord", mapname(game()->current_map), *lord),
         Message::color{ColorIndex::red});
 }
 
@@ -213,7 +211,7 @@ void eh_conquer_nefia(const DeferredEvent&)
     itemcreate_map_inv(
         55,
         cdata.player().position,
-        clamp(rnd(3) + game_data.current_dungeon_level / 10, 1, 6));
+        clamp(rnd(3) + game()->current_dungeon_level / 10, 1, 6));
     flt();
     if (const auto item = itemcreate_map_inv(239, cdata.player().position, 0))
     {
@@ -223,22 +221,22 @@ void eh_conquer_nefia(const DeferredEvent&)
     snd("core.complete1");
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     modrank(2, 300, 8);
-    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
-        cdata.player(), game_data.current_dungeon_level * 30 + 200);
+    game()->executing_immediate_quest_fame_gained = calc_gained_fame(
+        cdata.player(), game()->current_dungeon_level * 30 + 200);
     txt(i18n::s.get(
             "core.quest.gain_fame",
-            game_data.executing_immediate_quest_fame_gained),
+            game()->executing_immediate_quest_fame_gained),
         Message::color{ColorIndex::green});
-    cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
-    if (game_data.current_map == mdata_t::MapId::the_void)
+    cdata.player().fame += game()->executing_immediate_quest_fame_gained;
+    if (game()->current_map == mdata_t::MapId::the_void)
     {
-        area_data[game_data.current_map].has_been_conquered = 0;
-        game_data.void_next_lord_floor = game_data.void_next_lord_floor + 5;
+        area_data[game()->current_map].has_been_conquered = 0;
+        game()->void_next_lord_floor = game()->void_next_lord_floor + 5;
         txt(i18n::s.get("core.event.seal_broken"));
     }
     else
     {
-        area_data[game_data.current_map].has_been_conquered = -1;
+        area_data[game()->current_map].has_been_conquered = -1;
     }
 }
 
@@ -264,7 +262,7 @@ void eh_player_died(const DeferredEvent&)
     {
         txt(i18n::s.get("core.event.death_penalty_not_applied"));
     }
-    if (game_data.ether_disease_stage >= 20000)
+    if (game()->ether_disease_stage >= 20000)
     {
         modify_ether_disease_stage(-2000);
     }
@@ -368,7 +366,7 @@ void eh_marriage(const DeferredEvent&)
 
 void eh_quest_time_is_up(const DeferredEvent&)
 {
-    switch (game_data.executing_immediate_quest_type)
+    switch (game()->executing_immediate_quest_type)
     {
     case 1009:
         txt(i18n::s.get("core.quest.party.is_over"));
@@ -380,7 +378,7 @@ void eh_quest_time_is_up(const DeferredEvent&)
         if (quest_data.immediate().extra_info_1 <=
             quest_data.immediate().extra_info_2)
         {
-            game_data.executing_immediate_quest_status = 3;
+            game()->executing_immediate_quest_status = 3;
             quest_data.immediate().progress = 3;
             txt(i18n::s.get("core.quest.party.complete"),
                 Message::color{ColorIndex::green});
@@ -396,7 +394,7 @@ void eh_quest_time_is_up(const DeferredEvent&)
         if (quest_data.immediate().extra_info_1 <
             quest_data.immediate().extra_info_2)
         {
-            game_data.executing_immediate_quest_status = 3;
+            game()->executing_immediate_quest_status = 3;
             quest_data.immediate().progress = 3;
             txt(i18n::s.get("core.quest.collect.complete"),
                 Message::color{ColorIndex::green});
@@ -418,7 +416,7 @@ void eh_quest_time_is_up(const DeferredEvent&)
     // have already left the map when this event is being processed. Therefore
     // you need not exit twice, or you will go to the continent map. See #1450
     // for details.
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
         levelexitby = 4;
         snd("core.exitmap1");
@@ -432,7 +430,7 @@ void eh_quest_failed(const DeferredEvent& event)
 {
     // param1: The character ID of the man who you escort.
 
-    for (int i = 0; i < game_data.number_of_existing_quests; ++i)
+    for (int i = 0; i < game()->number_of_existing_quests; ++i)
     {
         if (quest_data[i].id == 1007 && quest_data[i].progress == 1 &&
             quest_data[i].extra_info_2 == event.param1)
@@ -470,7 +468,7 @@ void eh_okaeri(const DeferredEvent&)
         {
             if (cdata[chara_index].role != Role::none ||
                 cdata[chara_index].relationship == 0 ||
-                cdata[chara_index].current_map == game_data.current_map)
+                cdata[chara_index].current_map == game()->current_map)
             {
                 cdata[chara_index].emotion_icon = 2006;
                 bool did_speak = chara_custom_talk(cdata[chara_index], 104);
@@ -485,7 +483,7 @@ void eh_okaeri(const DeferredEvent&)
     {
         txt(i18n::s.get("core.event.okaeri"), Message::color{ColorIndex::cyan});
     }
-    if (game_data.number_of_waiting_guests != 0)
+    if (game()->number_of_waiting_guests != 0)
     {
         optional_ref<Character> maid;
         for (auto&& chara : cdata.all())
@@ -514,7 +512,7 @@ void eh_ragnarok(const DeferredEvent& event)
     if (map_data.type == mdata_t::MapType::world_map)
         return;
 
-    game_data.weather = 1;
+    game()->weather = 1;
     sound_play_environmental();
     txt(i18n::s.get("core.event.ragnarok"));
     msg_halt();
@@ -580,7 +578,7 @@ void eh_lily_killed(const DeferredEvent& event)
     cdata[event.param1].set_state(Character::State::empty);
     flt();
     itemcreate_map_inv(55, cdata[event.param1].position, 4);
-    game_data.quest_flags.pael_and_her_mom = 1001;
+    game()->quest_flags.pael_and_her_mom = 1001;
     if (const auto pael = chara_find("core.pael"))
     {
         if (pael->state() == Character::State::alive)
@@ -785,10 +783,10 @@ void eh_nuclear_bomb(const DeferredEvent& event)
         }
     }
     if (event.param1 == 33 && event.param2 == 16 &&
-        game_data.current_map == mdata_t::MapId::palmia &&
-        game_data.quest_flags.red_blossom_in_palmia == 1)
+        game()->current_map == mdata_t::MapId::palmia &&
+        game()->quest_flags.red_blossom_in_palmia == 1)
     {
-        game_data.quest_flags.red_blossom_in_palmia = 2;
+        game()->quest_flags.red_blossom_in_palmia = 2;
         quest_update_journal_msg();
     }
     if (map_is_town_or_guild())
@@ -799,7 +797,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
     {
         modify_karma(cdata.player(), -10);
     }
-    net_send_news("bomb", mapname(game_data.current_map));
+    net_send_news("bomb", mapname(game()->current_map));
 }
 
 
@@ -830,7 +828,7 @@ void eh_rogue_party_ambush(const DeferredEvent&)
     const auto rogue_boss = chara_find("core.rogue_boss");
     assert(rogue_boss);
     talk_to_npc(*rogue_boss);
-    game_data.rogue_boss_encountered = 23;
+    game()->rogue_boss_encountered = 23;
 }
 
 
@@ -845,7 +843,7 @@ void eh_init_economy(const DeferredEvent&)
 
 void eh_guest_visit(const DeferredEvent&)
 {
-    --game_data.number_of_waiting_guests;
+    --game()->number_of_waiting_guests;
     if (chara_get_free_slot() == -1)
     {
         txt(i18n::s.get("core.event.guest_lost_his_way"));
@@ -856,8 +854,7 @@ void eh_guest_visit(const DeferredEvent&)
     if (rnd(3) == 0)
     {
         flt(0, Quality::good);
-        if ((game_data.last_month_when_trainer_visited !=
-                 game_data.date.month ||
+        if ((game()->last_month_when_trainer_visited != game()->date.month ||
              rnd(5) == 0) &&
             rnd(3))
         {
@@ -918,7 +915,7 @@ void eh_guest_visit(const DeferredEvent&)
             if (adventurer.state() ==
                     Character::State::adventurer_in_other_map &&
                 !adventurer.is_contracting() &&
-                adventurer.current_map != game_data.current_map &&
+                adventurer.current_map != game()->current_map &&
                 adventurer.relationship >= 0)
             {
                 if (rnd(25) < p)
@@ -973,7 +970,7 @@ void eh_guest_visit(const DeferredEvent&)
         {
             continue;
         }
-        if (game_data.mount != 0 && chara.index == game_data.mount)
+        if (game()->mount != 0 && chara.index == game()->mount)
         {
             continue;
         }
@@ -1033,7 +1030,7 @@ void eh_guest_visit(const DeferredEvent&)
             guest->position.y);
         if (chara.is_player())
         {
-            game_data.player_next_move_direction = chara.direction;
+            game()->player_next_move_direction = chara.direction;
         }
     }
 
@@ -1062,7 +1059,7 @@ void eh_little_sister(const DeferredEvent& event)
 {
     // param1, param2: The position (x, y) where Big Daddy standed.
 
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         return;
     }
@@ -1089,7 +1086,7 @@ void eh_god_inside_ehekatl(const DeferredEvent& event)
 
 void eh_lord_of_void(const DeferredEvent&)
 {
-    randomize(game_data.date.year + game_data.current_dungeon_level);
+    randomize(game()->date.year + game()->current_dungeon_level);
     int c = choice(std::initializer_list<int>{
         300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
         145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
@@ -1097,21 +1094,21 @@ void eh_lord_of_void(const DeferredEvent&)
     randomize();
     flt();
     fixlv = Quality::miracle;
-    initlv = clamp(game_data.current_dungeon_level / 4, 50, 250);
+    initlv = clamp(game()->current_dungeon_level / 4, 50, 250);
     if (const auto lord = chara_create(-1, c, -3, 0))
     {
         lord->is_lord_of_dungeon() = true;
         lord->relationship = -3;
         lord->original_relationship = -3;
-        area_data[game_data.current_map].has_been_conquered = lord->index;
+        area_data[game()->current_map].has_been_conquered = lord->index;
         txt(i18n::s.get(
                 "core.event.guarded_by_lord",
-                mapname(game_data.current_map),
+                mapname(game()->current_map),
                 *lord),
             Message::color{ColorIndex::red});
-        if (game_data.current_dungeon_level % 50 == 0)
+        if (game()->current_dungeon_level % 50 == 0)
         {
-            net_send_news("void", cnvrank(game_data.current_dungeon_level));
+            net_send_news("void", cnvrank(game()->current_dungeon_level));
         }
     }
 }

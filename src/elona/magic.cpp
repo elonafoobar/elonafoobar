@@ -437,8 +437,8 @@ bool _magic_1130(Character& target)
 // Pickpocket
 bool _magic_300(Character& subject, Character& target)
 {
-    if (game_data.executing_immediate_quest_type == 1008 ||
-        game_data.executing_immediate_quest_type == 1010)
+    if (game()->executing_immediate_quest_type == 1008 ||
+        game()->executing_immediate_quest_type == 1010)
     {
         txt(i18n::s.get("core.magic.steal.in_quest"));
         return false;
@@ -492,7 +492,7 @@ bool _magic_301(Character& subject, Character& target)
             rnd(the_ability_db[efid]->cost / 2 + 1) +
                 the_ability_db[efid]->cost / 2 + 1);
     }
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
         if (target == subject)
         {
@@ -503,10 +503,9 @@ bool _magic_301(Character& subject, Character& target)
                 txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
                 return true;
             }
-            cell_setchara(cdata[game_data.mount], rtval, rtval(1));
-            txt(i18n::s.get(
-                "core.magic.mount.dismount", cdata[game_data.mount]));
-            txt(name(game_data.mount) +
+            cell_setchara(cdata[game()->mount], rtval, rtval(1));
+            txt(i18n::s.get("core.magic.mount.dismount", cdata[game()->mount]));
+            txt(name(game()->mount) +
                     i18n::s.get("core.magic.mount.dismount_dialog"),
                 Message::color{ColorIndex::cyan});
             ride_end();
@@ -525,7 +524,7 @@ bool _magic_301(Character& subject, Character& target)
     }
     if (target == subject)
     {
-        if (game_data.mount == 0)
+        if (game()->mount == 0)
         {
             txt(i18n::s.get("core.magic.mount.ride_self", subject));
         }
@@ -536,17 +535,17 @@ bool _magic_301(Character& subject, Character& target)
         txt(i18n::s.get("core.magic.mount.stays_in_area"));
         return true;
     }
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
         txt(i18n::s.get(
             "core.magic.mount.currently_riding",
             subject,
-            cdata[game_data.mount]));
+            cdata[game()->mount]));
     }
     else
     {
         ride_begin(target.index);
-        txt(name(game_data.mount) + i18n::space_if_needed() +
+        txt(name(game()->mount) + i18n::space_if_needed() +
                 i18n::s.get("core.magic.mount.mount.dialog"),
             Message::color{ColorIndex::cyan});
     }
@@ -725,7 +724,7 @@ bool _magic_185(Character& subject, const ItemRef& rod)
     {
         cdata.player().direction = 0;
     }
-    game_data.player_next_move_direction = cdata.player().direction;
+    game()->player_next_move_direction = cdata.player().direction;
     fishx = x;
     fishy = y;
     addefmap(fishx, fishy, 1, 3);
@@ -1738,7 +1737,7 @@ bool _magic_658(Character& subject, Character& target)
             Message::color{ColorIndex::red});
         if (!target.is_player_or_ally())
         {
-            game_data.proc_damage_events_flag = 2;
+            game()->proc_damage_events_flag = 2;
             txt3rd = 1;
             txt(i18n::s.get("core.magic.vorpal.other", subject, target));
         }
@@ -1863,10 +1862,10 @@ bool _magic_1141(Character& target)
         obvious = 0;
         return true;
     }
-    if (game_data.is_returning_or_escaping != 0)
+    if (game()->is_returning_or_escaping != 0)
     {
         txt(i18n::s.get("core.magic.escape.cancel"));
-        game_data.is_returning_or_escaping = 0;
+        game()->is_returning_or_escaping = 0;
     }
     else
     {
@@ -1879,29 +1878,28 @@ bool _magic_1141(Character& target)
             }
         }
         txt(i18n::s.get("core.magic.escape.begin"));
-        if (area_data[game_data.current_map].id ==
-            mdata_t::MapId::random_dungeon)
+        if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (game_data.current_dungeon_level ==
-                area_data[game_data.current_map].deepest_level)
+            if (game()->current_dungeon_level ==
+                area_data[game()->current_map].deepest_level)
             {
-                if (area_data[game_data.current_map].has_been_conquered != -1)
+                if (area_data[game()->current_map].has_been_conquered != -1)
                 {
                     txt(i18n::s.get("core.magic.escape.lord_may_disappear"));
                 }
             }
         }
-        game_data.destination_map = game_data.destination_outer_map;
-        game_data.destination_dungeon_level = 1;
+        game()->destination_map = game()->destination_outer_map;
+        game()->destination_dungeon_level = 1;
         if (is_cursed(efstatus))
         {
             if (rnd(3) == 0)
             {
-                game_data.destination_map = 41;
-                game_data.destination_dungeon_level = 1;
+                game()->destination_map = 41;
+                game()->destination_dungeon_level = 1;
             }
         }
-        game_data.is_returning_or_escaping = 5 + rnd(10);
+        game()->is_returning_or_escaping = 5 + rnd(10);
     }
     return true;
 }
@@ -1917,10 +1915,10 @@ bool _magic_428(Character& target)
         obvious = 0;
         return true;
     }
-    if (game_data.is_returning_or_escaping != 0)
+    if (game()->is_returning_or_escaping != 0)
     {
         txt(i18n::s.get("core.magic.return.cancel"));
-        game_data.is_returning_or_escaping = 0;
+        game()->is_returning_or_escaping = 0;
     }
     else
     {
@@ -1929,8 +1927,8 @@ bool _magic_428(Character& target)
         {
             if (rnd(3) == 0)
             {
-                game_data.destination_map = 41;
-                game_data.destination_dungeon_level = 1;
+                game()->destination_map = 41;
+                game()->destination_dungeon_level = 1;
             }
         }
     }
@@ -2568,12 +2566,12 @@ bool _magic_1128(Character& subject)
     }
     snd("core.ding2");
     p = rnd_capped(efp + 1) / 100 + 1;
-    game_data.rights_to_succeed_to += p;
+    game()->rights_to_succeed_to += p;
     txt(i18n::s.get("core.magic.deed_of_inheritance.claim", p(0)),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get(
         "core.magic.deed_of_inheritance.can_now_inherit",
-        game_data.rights_to_succeed_to));
+        game()->rights_to_succeed_to));
     return true;
 }
 
@@ -2636,14 +2634,13 @@ bool _magic_630_1129(Character& subject)
     }
     if (efid == 630)
     {
-        if (game_data.charge_power < 10)
+        if (game()->charge_power < 10)
         {
             txt(i18n::s.get("core.magic.fill_charge.more_power_needed"));
             return true;
         }
-        game_data.charge_power -= 10;
-        txt(i18n::s.get(
-            "core.magic.fill_charge.spend", game_data.charge_power));
+        game()->charge_power -= 10;
+        txt(i18n::s.get("core.magic.fill_charge.spend", game()->charge_power));
     }
     invsubroutine = 1;
     invctrl(0) = 23;
@@ -2779,12 +2776,9 @@ bool _magic_629(Character& subject)
         }
         animeload(8, subject);
         p = p * target_item->charges;
-        game_data.charge_power += p;
+        game()->charge_power += p;
         txt(i18n::s.get(
-            "core.magic.draw_charge",
-            target_item,
-            p(0),
-            game_data.charge_power));
+            "core.magic.draw_charge", target_item, p(0), game()->charge_power));
         target_item->remove();
         refresh_burden_state();
     }
@@ -3651,9 +3645,9 @@ optional_ref<Character> _ball_spell_internal(
             {
                 continue;
             }
-            if (game_data.mount != 0)
+            if (game()->mount != 0)
             {
-                if (game_data.mount == subject.index)
+                if (game()->mount == subject.index)
                 {
                     if (target_index == 0)
                     {
@@ -3685,7 +3679,7 @@ optional_ref<Character> _ball_spell_internal(
                 {
                     if (target_index >= 16)
                     {
-                        game_data.proc_damage_events_flag = 2;
+                        game()->proc_damage_events_flag = 2;
                         txt3rd = 1;
                         txt(i18n::s.get(
                             "core.magic.explosion.other", cdata[target_index]));
@@ -3706,7 +3700,7 @@ optional_ref<Character> _ball_spell_internal(
             {
                 if (target_index >= 16)
                 {
-                    game_data.proc_damage_events_flag = 2;
+                    game()->proc_damage_events_flag = 2;
                     txt3rd = 1;
                     txt(i18n::s.get(
                         "core.magic.ball.other", cdata[target_index]));
@@ -3836,11 +3830,11 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         if (efid == 625 || efid == 446)
         {
             if ((target.is_player() && subject.is_player()) ||
-                subject.index == game_data.mount)
+                subject.index == game()->mount)
             {
-                if (game_data.mount != 0)
+                if (game()->mount != 0)
                 {
-                    target_ref = cdata[game_data.mount];
+                    target_ref = cdata[game()->mount];
                 }
             }
         }
@@ -3858,9 +3852,9 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             if (efstatus == CurseState::blessed)
             {
                 target_.birth_year += rnd(3) + 1;
-                if (target_.birth_year + 12 > game_data.date.year)
+                if (target_.birth_year + 12 > game()->date.year)
                 {
-                    target_.birth_year = game_data.date.year - 12;
+                    target_.birth_year = game()->date.year - 12;
                 }
                 if (is_in_fov(target_))
                 {
@@ -3975,9 +3969,9 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     cell_data.at(dx, dy).chara_index_plus_one - 1;
                 if (subject.index != target_index)
                 {
-                    if (game_data.mount != 0)
+                    if (game()->mount != 0)
                     {
-                        if (game_data.mount == subject.index)
+                        if (game()->mount == subject.index)
                         {
                             if (target_index == 0)
                             {
@@ -3994,7 +3988,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     {
                         if (target_index >= 16)
                         {
-                            game_data.proc_damage_events_flag = 2;
+                            game()->proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
                                 "core.magic.bolt.other", cdata[target_index]));
@@ -4023,7 +4017,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (!target.is_player_or_ally())
             {
-                game_data.proc_damage_events_flag = 2;
+                game()->proc_damage_events_flag = 2;
                 txt3rd = 1;
                 txt(i18n::s.get("core.magic.arrow.other", target));
             }
@@ -4107,7 +4101,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             {
                 if (!target.is_player_or_ally())
                 {
-                    game_data.proc_damage_events_flag = 2;
+                    game()->proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.magic.sucks_blood.other", subject, target));
                 }
@@ -4129,7 +4123,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (!target.is_player_or_ally())
             {
-                game_data.proc_damage_events_flag = 2;
+                game()->proc_damage_events_flag = 2;
                 txt(i18n::s.get(
                     "core.magic.touch.other",
                     subject,
@@ -4201,7 +4195,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
     case 7:
         if (subject.is_player())
         {
-            if (game_data.crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
+            if (game()->crowd_density + 100 >= ELONA_MAX_OTHER_CHARACTERS)
             {
                 txt(i18n::s.get("core.common.nothing_happens"));
                 obvious = 0;
@@ -4282,9 +4276,9 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         return true;
     case 5: {
-        if (game_data.mount != 0)
+        if (game()->mount != 0)
         {
-            if (game_data.mount == target.index)
+            if (game()->mount == target.index)
             {
                 return true;
             }
@@ -4299,7 +4293,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             telex = cdata[target_index].position.x;
             teley = cdata[target_index].position.y;
             target_index = subject.index;
-            if (game_data.mount != 0 && game_data.mount == target_index)
+            if (game()->mount != 0 && game()->mount == target_index)
             {
                 return true;
             }
@@ -4368,9 +4362,9 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 earn_gold(subject, p);
             }
             target_index = subject.index;
-            if (game_data.mount != 0)
+            if (game()->mount != 0)
             {
-                if (game_data.mount == target_index)
+                if (game()->mount == target_index)
                 {
                     return true;
                 }
@@ -4521,7 +4515,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     {
                         if (target_index >= 16)
                         {
-                            game_data.proc_damage_events_flag = 2;
+                            game()->proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
                                 "core.magic.breath.other",

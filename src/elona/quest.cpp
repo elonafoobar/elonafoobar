@@ -106,7 +106,7 @@ void Quest::unpack_from(elona_vector2<int>& legacy_qdata, int quest_id)
 
 Quest& QuestData::immediate()
 {
-    return quest_data[game_data.executing_immediate_quest];
+    return quest_data[game()->executing_immediate_quest];
 }
 
 
@@ -145,7 +145,7 @@ int rewardfix = 0;
 
 bool quest_is_return_forbidden()
 {
-    for (const auto& quest_idx : game_data.taken_quests)
+    for (const auto& quest_idx : game()->taken_quests)
     {
         if (quest_data[quest_idx].progress == 1)
         {
@@ -194,88 +194,88 @@ bool quest_targets_remaining()
 
 void quest_check()
 {
-    if (game_data.current_map == mdata_t::MapId::vernis)
+    if (game()->current_map == mdata_t::MapId::vernis)
     {
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.putit_attacks < 2)
+                if (game()->quest_flags.putit_attacks < 2)
                 {
-                    game_data.quest_flags.putit_attacks = 2;
+                    game()->quest_flags.putit_attacks = 2;
                     quest_update_journal_msg();
                 }
             }
         }
-        if (game_data.current_dungeon_level == 4)
+        if (game()->current_dungeon_level == 4)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.thieves_hideout < 2)
+                if (game()->quest_flags.thieves_hideout < 2)
                 {
-                    game_data.quest_flags.thieves_hideout = 2;
+                    game()->quest_flags.thieves_hideout = 2;
                     quest_update_journal_msg();
                 }
             }
         }
-        if (game_data.current_dungeon_level == 5)
+        if (game()->current_dungeon_level == 5)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.nightmare < 3)
+                if (game()->quest_flags.nightmare < 3)
                 {
-                    game_data.quest_flags.nightmare = 3;
+                    game()->quest_flags.nightmare = 3;
                     quest_update_journal_msg();
                 }
             }
         }
     }
-    if (game_data.current_map == mdata_t::MapId::yowyn)
+    if (game()->current_map == mdata_t::MapId::yowyn)
     {
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.cat_house < 2)
+                if (game()->quest_flags.cat_house < 2)
                 {
-                    game_data.quest_flags.cat_house = 2;
+                    game()->quest_flags.cat_house = 2;
                     quest_update_journal_msg();
                 }
             }
         }
-        if (game_data.current_dungeon_level == 4)
+        if (game()->current_dungeon_level == 4)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.defense_line < 3)
+                if (game()->quest_flags.defense_line < 3)
                 {
-                    game_data.quest_flags.defense_line = 3;
+                    game()->quest_flags.defense_line = 3;
                     quest_update_journal_msg();
                 }
             }
         }
     }
-    if (game_data.current_map == mdata_t::MapId::lumiest)
+    if (game()->current_map == mdata_t::MapId::lumiest)
     {
-        if (game_data.current_dungeon_level == 20)
+        if (game()->current_dungeon_level == 20)
         {
             if (!quest_targets_remaining())
             {
-                if (game_data.quest_flags.sewer_sweeping < 2)
+                if (game()->quest_flags.sewer_sweeping < 2)
                 {
-                    game_data.quest_flags.sewer_sweeping = 2;
+                    game()->quest_flags.sewer_sweeping = 2;
                     quest_update_journal_msg();
                 }
             }
         }
     }
-    if (game_data.executing_immediate_quest_type == 0)
+    if (game()->executing_immediate_quest_type == 0)
     {
         return;
     }
-    if (game_data.executing_immediate_quest_status != 3)
+    if (game()->executing_immediate_quest_status != 3)
     {
-        if (game_data.executing_immediate_quest_show_hunt_remain == 1)
+        if (game()->executing_immediate_quest_show_hunt_remain == 1)
         {
             size_t remaining_monsters{};
             for (auto&& chara : cdata.others())
@@ -296,7 +296,7 @@ void quest_check()
                     Message::color{ColorIndex::blue});
             }
         }
-        if (game_data.executing_immediate_quest_type == 1008)
+        if (game()->executing_immediate_quest_type == 1008)
         {
             if (!chara_find(
                     the_character_db[quest_data.immediate().extra_info_1]->id))
@@ -347,7 +347,7 @@ void quest_set_data(
         s(10) = ""s + cnvweight(quest.extra_info_1);
         s(11) = mapname(quest.originating_map_id);
         s(4) = i18n::s.get("core.quest.info.harvest.text", s(10));
-        if (game_data.executing_immediate_quest == quest_idx)
+        if (game()->executing_immediate_quest == quest_idx)
         {
             s(4) += i18n::s.get(
                 "core.quest.info.now", cnvweight(quest.extra_info_2));
@@ -361,7 +361,7 @@ void quest_set_data(
         s(10) = i18n::s.get("core.quest.info.party.points", quest.extra_info_1);
         s(11) = mapname(quest.originating_map_id);
         s(4) = i18n::s.get("core.quest.info.party.text", s(10));
-        if (game_data.executing_immediate_quest == quest_idx)
+        if (game()->executing_immediate_quest == quest_idx)
         {
             s(4) += i18n::s.get("core.quest.info.now", quest.extra_info_2);
         }
@@ -442,8 +442,8 @@ void quest_set_data(
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(quest.target_item_id));
         s(11) = ""s + mapname(quest.originating_map_id);
-        if (game_data.current_map == quest.originating_map_id &&
-            game_data.current_dungeon_level == 1)
+        if (game()->current_map == quest.originating_map_id &&
+            game()->current_dungeon_level == 1)
         {
             s(12) = cdata[quest.target_chara_index].name;
         }
@@ -575,7 +575,7 @@ void quest_on_map_initialize()
         {
             if (quest_data[cnt].client_chara_index == cnt2)
             {
-                if (quest_data[cnt].originating_map_id == game_data.current_map)
+                if (quest_data[cnt].originating_map_id == game()->current_map)
                 {
                     i = -1;
                     break;
@@ -587,10 +587,10 @@ void quest_on_map_initialize()
             break;
         }
         quest_data[i].client_chara_index = cnt.index;
-        quest_data[i].originating_map_id = game_data.current_map;
+        quest_data[i].originating_map_id = game()->current_map;
         qname(i) = cnt.name;
         cnt.related_quest_id = i + 1;
-        game_data.number_of_existing_quests = i + 1;
+        game()->number_of_existing_quests = i + 1;
     }
 }
 
@@ -598,7 +598,7 @@ void quest_on_map_initialize()
 
 void quest_refresh_list()
 {
-    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -606,13 +606,13 @@ void quest_refresh_list()
         {
             continue;
         }
-        if (quest_data[cnt].originating_map_id != game_data.current_map)
+        if (quest_data[cnt].originating_map_id != game()->current_map)
         {
             continue;
         }
         if (quest_data[cnt].progress == 0)
         {
-            if (quest_data[cnt].deadline_hours < game_data.date.hours())
+            if (quest_data[cnt].deadline_hours < game()->date.hours())
             {
                 const auto generated = quest_generate(cnt);
                 if (generated)
@@ -642,7 +642,7 @@ bool quest_generate(int quest_idx)
 
     quest.id = 0;
     quest.progress = 0;
-    quest.deadline_hours = (rnd(3) + 1) * 24 + game_data.date.hours();
+    quest.deadline_hours = (rnd(3) + 1) * 24 + game()->date.hours();
     quest.reward_item_id = 0;
 
     if (rnd(3) == 0)
@@ -691,7 +691,7 @@ bool quest_generate(int quest_idx)
         {
             quest.target_chara_index = *target_chara_index;
             quest.target_item_id = *target_item_id;
-            quest.originating_map_id = game_data.current_map;
+            quest.originating_map_id = game()->current_map;
             rewardfix = 60;
             quest.reward_item_id = 5;
             quest.id = 1011;
@@ -730,7 +730,7 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
             quest.reward_item_id = 0;
             quest.id = 1010;
             quest.escort_difficulty = 0;
@@ -765,7 +765,7 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
             quest.reward_item_id = 0;
             quest.id = 1008;
             quest.escort_difficulty = 0;
@@ -778,7 +778,7 @@ bool quest_generate(int quest_idx)
 
     if (rnd(11) == 0)
     {
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
         quest.id = 1007;
         quest.escort_difficulty = rnd(3);
         quest.target_chara_index = 0;
@@ -786,7 +786,7 @@ bool quest_generate(int quest_idx)
         while (true)
         {
             quest.extra_info_1 = choice(asettown);
-            if (quest.extra_info_1 != game_data.current_map)
+            if (quest.extra_info_1 != game()->current_map)
             {
                 break;
             }
@@ -796,7 +796,7 @@ bool quest_generate(int quest_idx)
         {
             rewardfix = 140 +
                 dist(
-                    area_data[game_data.current_map].position,
+                    area_data[game()->current_map].position,
                     area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(8) + 6;
@@ -810,7 +810,7 @@ bool quest_generate(int quest_idx)
         {
             rewardfix = 130 +
                 dist(
-                    area_data[game_data.current_map].position,
+                    area_data[game()->current_map].position,
                     area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(5) + 2;
@@ -820,14 +820,14 @@ bool quest_generate(int quest_idx)
         {
             rewardfix = 80 +
                 dist(
-                    area_data[game_data.current_map].position,
+                    area_data[game()->current_map].position,
                     area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(8) + 6;
             quest.difficulty = clamp(rewardfix / 20 + 1, 1, 40);
         }
         if (quest.extra_info_1 == 33 ||
-            game_data.current_map == mdata_t::MapId::noyel)
+            game()->current_map == mdata_t::MapId::noyel)
         {
             rewardfix = rewardfix * 180 / 100;
         }
@@ -835,13 +835,13 @@ bool quest_generate(int quest_idx)
     }
 
     if (rnd(23) == 0 ||
-        (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
+        (game()->current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest.difficulty = clamp(
             rnd_capped(cdata.player().get_skill(183).level + 10),
             int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
             cdata.player().fame / 1000 + 10);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
         quest.reward_item_id = 0;
         quest.id = 1009;
         quest.escort_difficulty = 0;
@@ -854,14 +854,14 @@ bool quest_generate(int quest_idx)
     }
 
     if (rnd(30) == 0 ||
-        (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
+        (game()->current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
         quest.difficulty = clamp(
             rnd_capped(cdata.player().level + 5) +
                 rnd_capped(cdata.player().fame / 800 + 1) + 1,
             1,
             50);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
         quest.id = 1006;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 5;
@@ -880,7 +880,7 @@ bool quest_generate(int quest_idx)
             1,
             80);
         quest.difficulty = roundmargin(quest.difficulty, cdata.player().level);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
+        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
         quest.reward_item_id = 0;
         quest.id = 1001;
         quest.escort_difficulty = 0;
@@ -893,12 +893,12 @@ bool quest_generate(int quest_idx)
     if (rnd(6) == 0)
     {
         int i = -1;
-        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
-            int p = rnd(game_data.number_of_existing_quests);
-            for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+            int p = rnd(game()->number_of_existing_quests);
+            for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
                  cnt < cnt_end;
                  ++cnt)
             {
@@ -917,7 +917,7 @@ bool quest_generate(int quest_idx)
             }
             if (quest_data[p].client_chara_index != 0)
             {
-                if (quest_data[p].originating_map_id != game_data.current_map)
+                if (quest_data[p].originating_map_id != game()->current_map)
                 {
                     i = p;
                     break;
@@ -929,10 +929,10 @@ bool quest_generate(int quest_idx)
             int p = quest_data[i].originating_map_id;
             rewardfix = 70 +
                 dist(
-                    area_data[game_data.current_map].position,
+                    area_data[game()->current_map].position,
                     area_data[p].position) *
                     2;
-            if (p == 33 || game_data.current_map == mdata_t::MapId::noyel)
+            if (p == 33 || game()->current_map == mdata_t::MapId::noyel)
             {
                 rewardfix = rewardfix * 175 / 100;
             }
@@ -1031,7 +1031,7 @@ bool quest_generate(int quest_idx)
 
 void quest_check_all_for_failed()
 {
-    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -1059,15 +1059,15 @@ void quest_check_all_for_failed()
 
 void quest_enter_map()
 {
-    if (game_data.executing_immediate_quest_type == 1009)
+    if (game()->executing_immediate_quest_type == 1009)
     {
         txt(i18n::s.get(
                 "core.map.quest.on_enter.party",
-                game_data.left_minutes_of_executing_quest,
+                game()->left_minutes_of_executing_quest,
                 quest_data.immediate().extra_info_1),
             Message::color{ColorIndex::cyan});
     }
-    if (game_data.executing_immediate_quest_type == 1006)
+    if (game()->executing_immediate_quest_type == 1006)
     {
         if (quest_data.immediate().extra_info_1 <= 0)
         {
@@ -1077,16 +1077,16 @@ void quest_enter_map()
         txt(i18n::s.get(
                 "core.map.quest.on_enter.harvest",
                 cnvweight(quest_data.immediate().extra_info_1),
-                game_data.left_minutes_of_executing_quest),
+                game()->left_minutes_of_executing_quest),
             Message::color{ColorIndex::cyan});
     }
-    if (game_data.executing_immediate_quest_type == 1008)
+    if (game()->executing_immediate_quest_type == 1008)
     {
         txt(i18n::s.get(
                 "core.map.quest.on_enter.conquer",
                 chara_db_get_name(
                     int2charaid(quest_data.immediate().extra_info_1)),
-                game_data.left_minutes_of_executing_quest),
+                game()->left_minutes_of_executing_quest),
             Message::color{ColorIndex::cyan});
     }
 }
@@ -1095,7 +1095,7 @@ void quest_enter_map()
 
 void quest_exit_map()
 {
-    if (game_data.executing_immediate_quest_type == 1006)
+    if (game()->executing_immediate_quest_type == 1006)
     {
         for (const auto& item : *inv_player())
         {
@@ -1106,22 +1106,22 @@ void quest_exit_map()
         }
         refresh_burden_state();
     }
-    if (game_data.executing_immediate_quest_status != 3)
+    if (game()->executing_immediate_quest_status != 3)
     {
         optional<int> quest_idx;
-        if (game_data.executing_immediate_quest_type >= 1000)
+        if (game()->executing_immediate_quest_type >= 1000)
         {
-            quest_idx = game_data.executing_immediate_quest;
+            quest_idx = game()->executing_immediate_quest;
         }
-        if (game_data.executing_immediate_quest_type == 1007)
+        if (game()->executing_immediate_quest_type == 1007)
         {
             assert(quest_idx);
             if (quest_data[*quest_idx].progress == 0)
             {
-                game_data.executing_immediate_quest_type = 0;
-                game_data.executing_immediate_quest_show_hunt_remain = 0;
-                game_data.executing_immediate_quest = 0;
-                game_data.executing_immediate_quest_status = 0;
+                game()->executing_immediate_quest_type = 0;
+                game()->executing_immediate_quest_show_hunt_remain = 0;
+                game()->executing_immediate_quest = 0;
+                game()->executing_immediate_quest_status = 0;
                 return;
             }
             else
@@ -1129,13 +1129,13 @@ void quest_exit_map()
                 txt(i18n::s.get("core.quest.escort.you_left_your_client"));
             }
         }
-        quest_failed(quest_idx, game_data.executing_immediate_quest_type);
+        quest_failed(quest_idx, game()->executing_immediate_quest_type);
         msg_halt();
     }
-    game_data.executing_immediate_quest_type = 0;
-    game_data.executing_immediate_quest_show_hunt_remain = 0;
-    game_data.executing_immediate_quest = 0;
-    game_data.executing_immediate_quest_status = 0;
+    game()->executing_immediate_quest_type = 0;
+    game()->executing_immediate_quest_show_hunt_remain = 0;
+    game()->executing_immediate_quest = 0;
+    game()->executing_immediate_quest_status = 0;
 }
 
 
@@ -1146,7 +1146,7 @@ TurnResult quest_pc_died_during_immediate_quest()
     chara_gain_skill_exp(cdata.player(), 17, -500);
     chara_gain_skill_exp(cdata.player(), 15, -500);
     levelexitby = 4;
-    game_data.current_dungeon_level = 0;
+    game()->current_dungeon_level = 0;
     return TurnResult::exit_map;
 }
 
@@ -1156,7 +1156,7 @@ void quest_failed(optional<int> quest_idx, int val0)
 {
     if (val0 == 1)
     {
-        area_data[game_data.previous_map2].winning_streak_in_arena = 0;
+        area_data[game()->previous_map2].winning_streak_in_arena = 0;
         txt(i18n::s.get("core.quest.you_were_defeated"));
         modrank(0, -100);
     }
@@ -1254,20 +1254,18 @@ void quest_team_victorious()
             Message::color{ColorIndex::green});
         txt(i18n::s.get(
                 "core.quest.gain_fame",
-                game_data.executing_immediate_quest_fame_gained),
+                game()->executing_immediate_quest_fame_gained),
             Message::color{ColorIndex::green});
-        cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
+        cdata.player().fame += game()->executing_immediate_quest_fame_gained;
         modrank(1, 100, 2);
-        ++area_data[game_data.previous_map2].winning_streak_in_pet_arena;
-        if (area_data[game_data.previous_map2].winning_streak_in_pet_arena %
-                20 ==
+        ++area_data[game()->previous_map2].winning_streak_in_pet_arena;
+        if (area_data[game()->previous_map2].winning_streak_in_pet_arena % 20 ==
             0)
         {
             crafting_material_gain("core.five_hundred_yen_coin", 1);
         }
         else if (
-            area_data[game_data.previous_map2].winning_streak_in_pet_arena %
-                5 ==
+            area_data[game()->previous_map2].winning_streak_in_pet_arena % 5 ==
             0)
         {
             crafting_material_gain("core.one_hundred_yen_coin", 1);
@@ -1277,7 +1275,7 @@ void quest_team_victorious()
     {
         txt(i18n::s.get("core.quest.arena.your_team_is_defeated"),
             Message::color{ColorIndex::purple});
-        area_data[game_data.previous_map2].winning_streak_in_pet_arena = 0;
+        area_data[game()->previous_map2].winning_streak_in_pet_arena = 0;
         modrank(1, -100);
         int stat = decrease_fame(cdata.player(), 60);
         p = stat;
@@ -1294,47 +1292,46 @@ void quest_team_victorious()
 void quest_all_targets_killed()
 {
     play_music("core.mcFanfare", false);
-    game_data.executing_immediate_quest_status = 3;
-    if (game_data.executing_immediate_quest_type == 1)
+    game()->executing_immediate_quest_status = 3;
+    if (game()->executing_immediate_quest_type == 1)
     {
         snd("core.cheer");
         txt(i18n::s.get("core.quest.arena.you_are_victorious"),
             Message::color{ColorIndex::green});
         txt(i18n::s.get(
                 "core.quest.gain_fame",
-                game_data.executing_immediate_quest_fame_gained),
+                game()->executing_immediate_quest_fame_gained),
             Message::color{ColorIndex::green});
         modrank(0, 100, 2);
-        cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
+        cdata.player().fame += game()->executing_immediate_quest_fame_gained;
         txt(i18n::s.get("core.quest.arena.stairs_appear"));
         map_place_upstairs(map_data.width / 2, map_data.height / 2);
-        ++area_data[game_data.previous_map2].winning_streak_in_arena;
-        if (area_data[game_data.previous_map2].winning_streak_in_arena % 20 ==
-            0)
+        ++area_data[game()->previous_map2].winning_streak_in_arena;
+        if (area_data[game()->previous_map2].winning_streak_in_arena % 20 == 0)
         {
             crafting_material_gain("core.five_hundred_yen_coin", 1);
         }
         else if (
-            area_data[game_data.previous_map2].winning_streak_in_arena % 5 == 0)
+            area_data[game()->previous_map2].winning_streak_in_arena % 5 == 0)
         {
             crafting_material_gain("core.one_hundred_yen_coin", 1);
         }
     }
-    if (game_data.executing_immediate_quest_type == 1001 ||
-        game_data.executing_immediate_quest_type == 1010)
+    if (game()->executing_immediate_quest_type == 1001 ||
+        game()->executing_immediate_quest_type == 1010)
     {
         quest_data.immediate().progress = 3;
         txt(i18n::s.get("core.quest.hunt.complete"),
             Message::color{ColorIndex::green});
     }
-    if (game_data.executing_immediate_quest_type == 1007)
+    if (game()->executing_immediate_quest_type == 1007)
     {
         txt(i18n::s.get("core.quest.hunt.complete"),
             Message::color{ColorIndex::green});
     }
-    if (game_data.executing_immediate_quest_type == 1008)
+    if (game()->executing_immediate_quest_type == 1008)
     {
-        game_data.left_minutes_of_executing_quest = 0;
+        game()->left_minutes_of_executing_quest = 0;
         quest_data.immediate().progress = 3;
         txt(i18n::s.get("core.quest.conquer.complete"),
             Message::color{ColorIndex::green});
@@ -1444,15 +1441,15 @@ void quest_complete(int quest_idx)
         }
     }
     modify_karma(cdata.player(), 1);
-    game_data.executing_immediate_quest_fame_gained =
+    game()->executing_immediate_quest_fame_gained =
         calc_gained_fame(cdata.player(), quest.difficulty * 3 + 10);
     txt(i18n::s.get("core.quest.completed_taken_from", qname(quest_idx)),
         Message::color{ColorIndex::green});
     txt(i18n::s.get(
             "core.quest.gain_fame",
-            game_data.executing_immediate_quest_fame_gained),
+            game()->executing_immediate_quest_fame_gained),
         Message::color{ColorIndex::green});
-    cdata.player().fame += game_data.executing_immediate_quest_fame_gained;
+    cdata.player().fame += game()->executing_immediate_quest_fame_gained;
     txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
     if (quest.id == 1002)
     {

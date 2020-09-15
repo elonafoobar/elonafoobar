@@ -10,7 +10,6 @@
 namespace elona
 {
 
-GameData game_data;
 FoobarData foobar_data;
 
 
@@ -183,27 +182,36 @@ FoobarData foobar_data;
 
 
 #define SERIALIZE GDATA_PACK
-void GameData::pack_to(elona_vector1<int>& gdata)
+void Game::pack_to(elona_vector1<int>& gdata)
 {
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
 
 #define SERIALIZE GDATA_UNPACK
-void GameData::unpack_from(elona_vector1<int>& gdata)
+void Game::unpack_from(elona_vector1<int>& gdata)
 {
     SERIALIZE_ALL();
 }
 #undef SERIALIZE
 
 
+
+const std::unique_ptr<Game>& game()
+{
+    static const auto the_instance = std::make_unique<Game>();
+    return the_instance;
+}
+
+
+
 void modify_crowd_density(int chara_index, int delta)
 {
     if (chara_index >= 57)
     {
-        game_data.crowd_density += delta;
-        if (game_data.crowd_density < 0)
-            game_data.crowd_density = 0;
+        game()->crowd_density += delta;
+        if (game()->crowd_density < 0)
+            game()->crowd_density = 0;
     }
 }
 
