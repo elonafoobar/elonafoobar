@@ -1288,7 +1288,6 @@ void _generate_new_map()
     randomize();
 
     map_data.regenerate_count = game_data.map_regenerate_count;
-    map_data.mefs_loaded_flag = 1;
 }
 
 
