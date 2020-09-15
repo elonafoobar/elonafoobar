@@ -1,4 +1,5 @@
 local Data = ELONA.require("core.Data")
+local Enums = ELONA.require("core.Enums")
 local Rand = ELONA.require("core.Rand")
 local Item = ELONA.require("core.Item")
 local math = math
@@ -66,8 +67,8 @@ local filter_set_wear = make_filter_list({10000, 10000, 24000, 24000,
 
 local merchant_rules = {
    { choices = filter_set_wear },
-   { fixlv = "great" },
-   { one_in = 2, fixlv = "miracle" },
+   { fixlv = Enums.Quality.great },
+   { one_in = 2, fixlv = Enums.Quality.miracle },
 }
 
 local function merchant_item_number()
@@ -193,8 +194,8 @@ ELONA.data:add(
                   {flttypemajor = 34000},
                }
             },
-            { one_in = 3, fixlv = "great" },
-            { one_in = 10, fixlv = "miracle" },
+            { one_in = 3, fixlv = Enums.Quality.great },
+            { one_in = 10, fixlv = Enums.Quality.miracle },
          },
          item_base_value = function(args)
             return args.item.value * 2
@@ -242,8 +243,8 @@ ELONA.data:add(
          integer_id = 1007,
          rules = {
             { choices = filter_set_wear },
-            { one_in = 3, fixlv = "great" },
-            { one_in = 10, fixlv = "miracle" },
+            { one_in = 3, fixlv = Enums.Quality.great },
+            { one_in = 10, fixlv = Enums.Quality.miracle },
          },
          item_number = function(args)
             return 6 + args.shopkeeper.shop_rank // 10
@@ -436,7 +437,7 @@ ELONA.data:add(
          item_number = function() return #medal_items end,
          on_generate_item = function(args)
             args.item.number = 1
-            args.item.curse_state = "none"
+            args.item.curse_state = Enums.CurseState.none
             if args.item.id == "core.rod_of_domination" then
                args.item.count = 4
             end

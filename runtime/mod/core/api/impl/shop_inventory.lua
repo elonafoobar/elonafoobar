@@ -1,4 +1,5 @@
 local Data = ELONA.require("core.Data")
+local Enums = ELONA.require("core.Enums")
 local Inventory = ELONA.require("core.Inventory")
 local Item = ELONA.require("core.Item")
 local math = math
@@ -56,7 +57,7 @@ function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 end
 
 function shop_inventory.apply_rules(index, shopkeeper, inv)
-   local ret = {level = shopkeeper.shop_rank, quality = "bad"}
+   local ret = {level = shopkeeper.shop_rank, quality = Enums.Quality.bad}
 
    if not inv.rules then
       return ret
@@ -110,7 +111,7 @@ local function is_excluded(item)
 end
 
 local function is_cursed(item)
-   return item.curse_state == "cursed" or item.curse_state == "doomed"
+   return item.curse_state == Enums.CurseState.cursed or item.curse_state == Enums.CurseState.doomed
 end
 
 function shop_inventory.should_remove(item, inv)
@@ -277,7 +278,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       -- Blessed items are never generated in multiple (per cycle).
-      if item.curse_state == "blessed" then
+      if item.curse_state == Enums.CurseState.blessed then
          item.number = 1
       end
 
