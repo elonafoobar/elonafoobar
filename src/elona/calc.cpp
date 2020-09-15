@@ -9,6 +9,7 @@
 #include "debug.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

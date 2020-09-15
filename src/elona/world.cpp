@@ -8,7 +8,7 @@
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "food.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "map.hpp"

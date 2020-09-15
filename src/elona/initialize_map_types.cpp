@@ -5,7 +5,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
 #include "deferred_event.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

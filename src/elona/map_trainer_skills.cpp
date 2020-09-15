@@ -1,7 +1,7 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "variables.hpp"
 
 

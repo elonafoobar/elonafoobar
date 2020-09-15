@@ -3,8 +3,11 @@
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../map.hpp"
+
+
 
 namespace elona
 {

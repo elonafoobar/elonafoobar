@@ -20,6 +20,7 @@
 #include "enchantment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "initialize_map.hpp"

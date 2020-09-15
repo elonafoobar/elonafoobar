@@ -19,8 +19,8 @@
 #include "../snail/input.hpp"
 #include "../snail/window.hpp"
 #include "enums.hpp"
-#include "gdata.hpp"
 #include "mdata.hpp"
+
 
 
 namespace elona

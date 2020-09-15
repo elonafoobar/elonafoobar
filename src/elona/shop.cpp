@@ -6,6 +6,7 @@
 #include "config.hpp"
 #include "data/types/type_item.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"

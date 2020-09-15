@@ -28,6 +28,7 @@
 #include "enchantment.hpp"
 #include "equipment.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

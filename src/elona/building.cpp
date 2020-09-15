@@ -15,6 +15,7 @@
 #include "data/types/type_item.hpp"
 #include "data/types/type_map.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"

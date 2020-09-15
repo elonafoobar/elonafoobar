@@ -1,5 +1,6 @@
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "variables.hpp"
 

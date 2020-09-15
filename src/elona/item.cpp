@@ -24,6 +24,7 @@
 #include "enums.hpp"
 #include "food.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "itemgen.hpp"

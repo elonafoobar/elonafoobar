@@ -6,6 +6,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"

@@ -9,6 +9,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
 #include "menu.hpp"

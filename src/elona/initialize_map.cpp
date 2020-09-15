@@ -14,6 +14,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
 #include "inventory.hpp"

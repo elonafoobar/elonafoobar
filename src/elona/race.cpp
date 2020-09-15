@@ -4,6 +4,7 @@
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
 #include "variables.hpp"

@@ -1,5 +1,4 @@
 #include "../../../deferred_event.hpp"
-#include "../../../gdata.hpp"
 #include "../../../text.hpp"
 #include "../../../world.hpp"
 #include "../common.hpp"

@@ -16,6 +16,7 @@
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"

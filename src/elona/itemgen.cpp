@@ -7,6 +7,7 @@
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

@@ -10,6 +10,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "debug.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "log.hpp"

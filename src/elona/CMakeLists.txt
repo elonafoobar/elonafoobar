@@ -43,7 +43,7 @@ set(ELONA_SOURCES
   fish.cpp
   food.cpp
   fov.cpp
-  gdata.cpp
+  game.cpp
   get_card_info.cpp
   globals.cpp
   god.cpp

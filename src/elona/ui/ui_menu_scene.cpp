@@ -3,6 +3,7 @@
 #include "../audio.hpp"
 #include "../data/types/type_asset.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
 #include "../scene.hpp"

@@ -3,7 +3,10 @@
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
+
+
 
 namespace elona
 {

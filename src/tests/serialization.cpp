@@ -2,7 +2,7 @@
 #include "../elona/character.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/filesystem.hpp"
-#include "../elona/gdata.hpp"
+#include "../elona/game.hpp"
 #include "../elona/init.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"

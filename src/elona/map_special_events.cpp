@@ -5,6 +5,7 @@
 #include "character_status.hpp"
 #include "dmgheal.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"

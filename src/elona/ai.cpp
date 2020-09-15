@@ -10,6 +10,7 @@
 #include "command.hpp"
 #include "data/types/type_item.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

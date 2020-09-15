@@ -1,4 +1,5 @@
 #include "../elona/filesystem.hpp"
+#include "../elona/game.hpp"
 #include "../elona/lua_env/api_manager.hpp"
 #include "../elona/lua_env/lua_env.hpp"
 #include "../elona/lua_env/mod_manager.hpp"

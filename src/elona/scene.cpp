@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"

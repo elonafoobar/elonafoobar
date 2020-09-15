@@ -4,6 +4,7 @@
 #include "../../util/range.hpp"
 #include "../../util/strutil.hpp"
 #include "../enchantment.hpp"
+#include "../game.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
 #include "../trait.hpp"

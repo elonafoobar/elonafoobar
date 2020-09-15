@@ -1,6 +1,7 @@
 #include "randomgen.hpp"
 
 #include "calc.hpp"
+#include "game.hpp"
 #include "variables.hpp"
 
 

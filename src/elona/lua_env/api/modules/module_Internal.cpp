@@ -3,6 +3,7 @@
 #include "../../../character.hpp"
 #include "../../../crafting.hpp"
 #include "../../../data/types/type_map.hpp"
+#include "../../../game.hpp"
 #include "../../../i18n.hpp"
 #include "../../../inventory.hpp"
 #include "../../../item.hpp"

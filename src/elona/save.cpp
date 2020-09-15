@@ -7,6 +7,7 @@
 #include "ctrl_file.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

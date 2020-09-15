@@ -16,6 +16,7 @@
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "item.hpp"

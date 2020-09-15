@@ -3,6 +3,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "position.hpp"
 #include "variables.hpp"
 

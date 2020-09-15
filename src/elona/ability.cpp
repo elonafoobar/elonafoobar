@@ -7,6 +7,7 @@
 #include "character_status.hpp"
 #include "data/types/type_ability.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "message.hpp"

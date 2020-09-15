@@ -4,6 +4,7 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "optional.hpp"
 #include "ui.hpp"

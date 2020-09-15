@@ -10,6 +10,7 @@
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
+#include "game.hpp"
 #include "item.hpp"
 #include "log.hpp"
 #include "lua_env/handle_manager.hpp"

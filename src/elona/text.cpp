@@ -10,6 +10,7 @@
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

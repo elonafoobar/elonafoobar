@@ -7,6 +7,7 @@
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "map.hpp"

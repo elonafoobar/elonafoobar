@@ -1,5 +1,6 @@
 #include "ui_menu_voting_box.hpp"
 
+#include "../game.hpp"
 #include "../input_prompt.hpp"
 #include "../world.hpp"
 

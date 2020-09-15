@@ -1,6 +1,7 @@
 #include "main.hpp"
 
 #include "../util/tinyargparser.hpp"
+#include "../version.hpp"
 #include "config.hpp"
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"

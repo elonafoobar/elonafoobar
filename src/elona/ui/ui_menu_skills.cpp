@@ -3,11 +3,14 @@
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../data/types/type_ability.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
 #include "menu_cursor_history.hpp"
+
+
 
 namespace elona
 {

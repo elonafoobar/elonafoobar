@@ -1,6 +1,6 @@
 #include "random.hpp"
 
-#include "gdata.hpp"
+#include "game.hpp"
 
 
 

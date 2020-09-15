@@ -7,7 +7,7 @@
 #include "../version.hpp"
 #include "character.hpp"
 #include "class.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "json5util.hpp"
 #include "race.hpp"
 #include "serialization/serialization.hpp"

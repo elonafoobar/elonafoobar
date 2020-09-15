@@ -1,4 +1,5 @@
 #include "../../../character.hpp"
+#include "../../../game.hpp"
 #include "../../../map.hpp"
 #include "../../../randomgen.hpp"
 #include "../../enums/enums.hpp"

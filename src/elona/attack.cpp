@@ -13,6 +13,7 @@
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"

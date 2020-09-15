@@ -19,6 +19,7 @@
 #include "equipment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"

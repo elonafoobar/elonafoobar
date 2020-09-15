@@ -14,6 +14,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "equipment.hpp"
+#include "game.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"

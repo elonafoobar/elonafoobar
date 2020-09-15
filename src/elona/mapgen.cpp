@@ -6,6 +6,7 @@
 #include "ctrl_file.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

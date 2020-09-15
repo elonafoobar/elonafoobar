@@ -2,10 +2,13 @@
 
 #include "../character.hpp"
 #include "../equipment.hpp"
+#include "../game.hpp"
 #include "../globals.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+
+
 
 namespace elona
 {

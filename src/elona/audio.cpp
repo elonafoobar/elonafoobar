@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "data/types/type_music.hpp"
 #include "data/types/type_sound.hpp"
+#include "game.hpp"
 #include "log.hpp"
 #include "map.hpp"
 #include "variables.hpp"

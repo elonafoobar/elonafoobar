@@ -3,9 +3,12 @@
 #include "../../snail/color.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
 #include "../quest.hpp"
+
+
 
 namespace elona
 {

@@ -2,7 +2,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "data/types/type_map.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "lua_env/enums/enums.hpp"
 #include "map.hpp"
 #include "quest.hpp"

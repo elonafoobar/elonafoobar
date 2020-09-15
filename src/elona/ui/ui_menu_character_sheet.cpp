@@ -13,12 +13,15 @@
 #include "../data/types/type_race.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
+#include "../game.hpp"
 #include "../keybind/keybind.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
 #include "../pic_loader/pic_loader.hpp"
 #include "../pic_loader/tinted_buffers.hpp"
+
+
 
 namespace elona
 {

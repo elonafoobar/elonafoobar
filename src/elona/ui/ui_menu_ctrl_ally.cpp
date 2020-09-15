@@ -7,6 +7,7 @@
 #include "../character.hpp"
 #include "../data/types/type_ability.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"

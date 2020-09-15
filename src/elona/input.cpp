@@ -8,6 +8,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input_prompt.hpp"
 #include "keybind/input_context.hpp"

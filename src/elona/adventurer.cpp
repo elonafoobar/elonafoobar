@@ -9,6 +9,7 @@
 #include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "equipment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

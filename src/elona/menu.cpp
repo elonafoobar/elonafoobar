@@ -22,6 +22,7 @@
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "equipment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"

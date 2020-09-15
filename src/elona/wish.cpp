@@ -16,6 +16,7 @@
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"

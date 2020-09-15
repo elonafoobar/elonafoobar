@@ -2,6 +2,7 @@
 
 #include "character.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"
