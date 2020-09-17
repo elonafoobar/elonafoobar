@@ -11,8 +11,8 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
+#include "crafting_material.hpp"
 #include "data/types/type_ability.hpp"
-#include "data/types/type_crafting_material.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -179,7 +179,8 @@ void search_material_spot()
                 i = 3;
                 chara_gain_skill_exp(cdata.player(), 180, 30);
             }
-            matgetmain(random_material(atxlv, 0, atxspot), 1, i);
+            crafting_material_gain(
+                crafting_material_select_random_id(atxlv, 0, atxspot), 1, i);
         }
     }
     if (rnd(50 + trait(159) * 20) == 0)
@@ -2068,50 +2069,6 @@ TurnResult do_dig_after_sp_check(Character& chara)
     digy = tlocy;
     spot_mining_or_wall(chara);
     return TurnResult::turn_end;
-}
-
-
-
-void matgetmain(int material_id, int amount, int spot_type)
-{
-    mat(material_id) += amount;
-    snd("core.alert1");
-
-    std::string verb;
-    switch (spot_type)
-    {
-    case 0: verb = i18n::s.get("core.activity.material.get_verb.get"); break;
-    case 1: verb = i18n::s.get("core.activity.material.get_verb.dig_up"); break;
-    case 2:
-        verb = i18n::s.get("core.activity.material.get_verb.fish_up");
-        break;
-    case 3:
-        verb = i18n::s.get("core.activity.material.get_verb.harvest");
-        break;
-    case 5: verb = i18n::s.get("core.activity.material.get_verb.find"); break;
-    default: verb = i18n::s.get("core.activity.material.get_verb.get"); break;
-    }
-
-    txt(i18n::s.get(
-            "core.activity.material.get",
-            verb,
-            amount,
-            the_crafting_material_db.get_text(material_id, "name")) +
-            u8"("s + mat(material_id) + u8") "s,
-        Message::color{ColorIndex::blue});
-}
-
-
-
-void matdelmain(int material_id, int amount)
-{
-    mat(material_id) -= amount;
-    txt(i18n::s.get(
-        "core.activity.material.lose",
-        the_crafting_material_db.get_text(material_id, "name"),
-        amount));
-    txt(i18n::s.get("core.activity.material.lose_total", mat(material_id)),
-        Message::color{ColorIndex::blue});
 }
 
 

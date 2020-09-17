@@ -16,6 +16,7 @@
 #include "character_status.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
+#include "crafting_material.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_crafting_material.hpp"
@@ -4025,16 +4026,19 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
     screenupdate = -1;
     update_screen();
     const auto required_material =
-        gatcha_machine->id == "core.red_treasure_machine" ? 40 : 41;
+        gatcha_machine->id == "core.red_treasure_machine"
+        ? data::InstanceId{"core.one_hundred_yen_coin"}
+        : data::InstanceId{"core.five_hundred_yen_coin"};
     txt(i18n::s.get(
         "core.action.gatcha.prompt",
         the_crafting_material_db.get_text(required_material, "name")));
     if (yes_no())
     {
-        if (mat(required_material) > 0)
+        if (mat(the_crafting_material_db.ensure(required_material).integer_id) >
+            0)
         {
             snd("core.gasha");
-            matdelmain(required_material);
+            crafting_material_lose(required_material, 1);
             const auto gatcha_ball_id =
                 gatcha_machine->id == "core.red_treasure_machine" ? 415 : 416;
             flt();
@@ -4095,8 +4099,8 @@ void disarm_trap(Character& chara, int x, int y)
         txt(i18n::s.get("core.action.move.trap.disarm.dismantle"));
         for (int _i = 0, n = rnd(3) + 1; _i < n; ++_i)
         {
-            matgetmain(
-                random_material(
+            crafting_material_gain(
+                crafting_material_select_random_id(
                     game_data.current_dungeon_level,
                     game_data.current_dungeon_level / 5,
                     19),

@@ -14,6 +14,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
+#include "crafting_material.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
@@ -841,15 +842,17 @@ bool _magic_1117(Character& target)
          cnt < cnt_end;
          ++cnt)
     {
+        data::InstanceId crafting_material_id;
         if (!is_cursed(efstatus))
         {
-            p = random_material(efp / 10, efp / 50, 19);
+            crafting_material_id =
+                crafting_material_select_random_id(efp / 10, efp / 50, 19);
         }
         else
         {
-            p = 0;
+            crafting_material_id = "core.garbage";
         }
-        matgetmain(p, 1);
+        crafting_material_gain(crafting_material_id, 1);
     }
     return true;
 }

@@ -38,6 +38,5 @@ struct CraftingRecipe
 
 void crafting_menu();
 optional_ref<const CraftingRecipe> crafting_find_recipe(int matid);
-int random_material(int level, int rarity, int spot_type);
 
 } // namespace elona
