@@ -12,6 +12,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "data/types/type_ability.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -73,7 +74,7 @@ void search_material_spot()
     {
         return;
     }
-    atxspot = 11;
+    int atxspot = 11;
     int atxlv = game_data.current_dungeon_level;
     if (map_data.type == mdata_t::MapType::dungeon)
     {
@@ -178,7 +179,7 @@ void search_material_spot()
                 i = 3;
                 chara_gain_skill_exp(cdata.player(), 180, 30);
             }
-            matgetmain(random_material(atxlv, 0), 1, i);
+            matgetmain(random_material(atxlv, 0, atxspot), 1, i);
         }
     }
     if (rnd(50 + trait(159) * 20) == 0)
@@ -2092,7 +2093,10 @@ void matgetmain(int material_id, int amount, int spot_type)
     }
 
     txt(i18n::s.get(
-            "core.activity.material.get", verb, amount, matname(material_id)) +
+            "core.activity.material.get",
+            verb,
+            amount,
+            the_crafting_material_db.get_text(material_id, "name")) +
             u8"("s + mat(material_id) + u8") "s,
         Message::color{ColorIndex::blue});
 }
@@ -2103,7 +2107,9 @@ void matdelmain(int material_id, int amount)
 {
     mat(material_id) -= amount;
     txt(i18n::s.get(
-        "core.activity.material.lose", matname(material_id), amount));
+        "core.activity.material.lose",
+        the_crafting_material_db.get_text(material_id, "name"),
+        amount));
     txt(i18n::s.get("core.activity.material.lose_total", mat(material_id)),
         Message::color{ColorIndex::blue});
 }

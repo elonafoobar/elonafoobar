@@ -841,10 +841,9 @@ bool _magic_1117(Character& target)
          cnt < cnt_end;
          ++cnt)
     {
-        atxspot = 19;
         if (!is_cursed(efstatus))
         {
-            p = random_material(efp / 10, efp / 50);
+            p = random_material(efp / 10, efp / 50, 19);
         }
         else
         {

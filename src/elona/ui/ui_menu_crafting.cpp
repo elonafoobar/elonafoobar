@@ -3,6 +3,7 @@
 #include "../ability.hpp"
 #include "../audio.hpp"
 #include "../crafting.hpp"
+#include "../data/types/type_crafting_material.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../inventory.hpp"
@@ -195,7 +196,8 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
     int mat_index,
     const RequiredMaterial& required_mat)
 {
-    std::string mat_desc = matname(required_mat.id) + " " +
+    std::string mat_desc =
+        the_crafting_material_db.get_text(required_mat.id, "name") + " " +
         i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount +
         u8"("s + mat(required_mat.id) + u8")"s;
 

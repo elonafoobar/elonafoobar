@@ -18,6 +18,7 @@
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_ability.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "data/types/type_music.hpp"
@@ -4025,7 +4026,9 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
     update_screen();
     const auto required_material =
         gatcha_machine->id == "core.red_treasure_machine" ? 40 : 41;
-    txt(i18n::s.get("core.action.gatcha.prompt", matname(required_material)));
+    txt(i18n::s.get(
+        "core.action.gatcha.prompt",
+        the_crafting_material_db.get_text(required_material, "name")));
     if (yes_no())
     {
         if (mat(required_material) > 0)
@@ -4045,7 +4048,8 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
         else
         {
             txt(i18n::s.get(
-                "core.action.gatcha.do_not_have", matname(required_material)));
+                "core.action.gatcha.do_not_have",
+                the_crafting_material_db.get_text(required_material, "name")));
         }
     }
     return TurnResult::turn_end;
@@ -4091,11 +4095,11 @@ void disarm_trap(Character& chara, int x, int y)
         txt(i18n::s.get("core.action.move.trap.disarm.dismantle"));
         for (int _i = 0, n = rnd(3) + 1; _i < n; ++_i)
         {
-            atxspot = 19;
             matgetmain(
                 random_material(
                     game_data.current_dungeon_level,
-                    game_data.current_dungeon_level / 5),
+                    game_data.current_dungeon_level / 5,
+                    19),
                 1);
         }
     }
