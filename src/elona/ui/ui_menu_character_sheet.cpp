@@ -684,9 +684,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
         const auto description = buff_get_description(
             *the_buff_db.get_id_from_integer(_chara.buffs[_cs_buff].id),
             _chara.buffs[_cs_buff].power);
-        buff_desc = ""s +
-            i18n::s.get_enum_property(
-                "core.buff", "name", _chara.buffs[_cs_buff].id) +
+        buff_desc = the_buff_db.get_text(_chara.buffs[_cs_buff].id, "name") +
             ": "s + _chara.buffs[_cs_buff].turns +
             i18n::s.get("core.ui.chara_sheet.buff.duration", duration) +
             description;

@@ -1404,8 +1404,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             {
                 if (is_in_fov(eater))
                 {
-                    txt(i18n::s.get_enum_property(
-                        "core.buff", "apply", enc + 10, eater));
+                    txt(the_buff_db.get_text(enc + 10, "apply", eater));
                 }
 
                 int integer_id = 20 + (enc - 10);
