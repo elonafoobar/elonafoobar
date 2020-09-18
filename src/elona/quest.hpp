@@ -219,6 +219,6 @@ void quest_exit_map();
 void quest_team_victorious();
 TurnResult quest_pc_died_during_immediate_quest();
 
-int quest_generate(int quest_idx);
+bool quest_generate(int quest_idx);
 
 } // namespace elona

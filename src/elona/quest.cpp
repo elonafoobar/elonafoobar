@@ -629,9 +629,12 @@ void quest_refresh_list()
         {
             if (quest_data[cnt].deadline_hours < game_data.date.hours())
             {
-                quest_generate(cnt);
-                quest_data[cnt].reward_gold =
-                    quest_gen_scale_by_level(quest_data[cnt], rewardfix);
+                const auto generated = quest_generate(cnt);
+                if (generated)
+                {
+                    quest_data[cnt].reward_gold =
+                        quest_gen_scale_by_level(quest_data[cnt], rewardfix);
+                }
             }
         }
     }
@@ -648,7 +651,7 @@ void quest_update_journal_msg()
 
 
 
-int quest_generate(int quest_idx)
+bool quest_generate(int quest_idx)
 {
     auto& quest = quest_data[quest_idx];
 
@@ -657,50 +660,53 @@ int quest_generate(int quest_idx)
     quest.progress = 0;
     quest.deadline_hours = (rnd(3) + 1) * 24 + game_data.date.hours();
     quest.reward_item_id = 0;
+
     if (rnd(3) == 0)
     {
-        return 0;
+        return false;
     }
+
     if (rnd(14) == 0)
     {
-        i = -1;
-        for (int cnt = 0; cnt < 300; ++cnt)
+        optional<int> target_chara_index;
+        optional<int> target_item_id;
+        for (int _i = 0; _i < 300; ++_i)
         {
-            int n =
+            const auto chara_index =
                 rnd(ELONA_MAX_OTHER_CHARACTERS) + ELONA_MAX_PARTY_CHARACTERS;
-            if (n == quest.client_chara_index)
+            if (chara_index == quest.client_chara_index)
             {
                 continue;
             }
-            if (cdata[n].state() != Character::State::alive)
+            if (cdata[chara_index].state() != Character::State::alive)
             {
                 continue;
             }
-            if (cdata[n].relationship != 0 ||
-                (cdata[n].role != Role::citizen &&
-                 cdata[n].role != Role::guard))
+            if (cdata[chara_index].relationship != 0 ||
+                (cdata[chara_index].role != Role::citizen &&
+                 cdata[chara_index].role != Role::guard))
             {
                 continue;
             }
             flt(40, Quality::good);
             flttypemajor = choice(fsetcollect);
-            if (const auto item = itemcreate_chara_inv(cdata[n], 0, 0))
+            if (const auto item =
+                    itemcreate_chara_inv(cdata[chara_index], 0, 0))
             {
-                i(0) = n;
-                i(1) = the_item_db[item->id]->integer_id;
+                target_chara_index = chara_index;
+                target_item_id = the_item_db[item->id]->integer_id;
                 item->is_quest_target = true;
                 break;
             }
             else
             {
-                i = -1;
                 break;
             }
         }
-        if (i != -1)
+        if (target_chara_index)
         {
-            quest.target_chara_index = i;
-            quest.target_item_id = i(1);
+            quest.target_chara_index = *target_chara_index;
+            quest.target_item_id = *target_item_id;
             quest.originating_map_id = game_data.current_map;
             rewardfix = 60;
             quest.reward_item_id = 5;
@@ -708,10 +714,15 @@ int quest_generate(int quest_idx)
             quest.client_chara_type = 3;
             quest.escort_difficulty = 0;
             quest.deadline_days = rnd(3) + 2;
-            quest.difficulty = cdata[i].level / 3;
+            quest.difficulty = cdata[*target_chara_index].level / 3;
+            return true;
         }
-        return 0;
+        else
+        {
+            return false;
+        }
     }
+
     if (cdata.player().fame >= 30000)
     {
         if (rnd(13) == 0)
@@ -720,8 +731,8 @@ int quest_generate(int quest_idx)
                 rnd_capped(cdata.player().fame / 2500 + 1);
             quest.difficulty =
                 roundmargin(quest.difficulty, cdata.player().level);
-            minlevel = clamp(quest.difficulty / 7, 5, 30);
-            for (int cnt = 0; cnt < 50; ++cnt)
+            const auto min_level = clamp(quest.difficulty / 7, 5, 30);
+            for (int _i = 0; _i < 50; ++_i)
             {
                 flt(quest.difficulty, Quality::good);
                 const auto chara = chara_create(56, 0, -3, 0);
@@ -729,7 +740,7 @@ int quest_generate(int quest_idx)
                 {
                     continue;
                 }
-                if (chara->level < minlevel)
+                if (chara->level < min_level)
                 {
                     continue;
                 }
@@ -744,9 +755,10 @@ int quest_generate(int quest_idx)
             quest.reward_item_id = 5;
             quest.deadline_days = -1;
             rewardfix = 140;
-            return 0;
+            return true;
         }
     }
+
     if (cdata.player().fame >= 50000)
     {
         if (rnd(20) == 0)
@@ -755,8 +767,8 @@ int quest_generate(int quest_idx)
                 rnd_capped(cdata.player().fame / 2500 + 1);
             quest.difficulty =
                 roundmargin(quest.difficulty, cdata.player().level);
-            minlevel = clamp(quest.difficulty / 4, 5, 30);
-            for (int cnt = 0; cnt < 50; ++cnt)
+            const auto min_level = clamp(quest.difficulty / 4, 5, 30);
+            for (int _i = 0; _i < 50; ++_i)
             {
                 flt(quest.difficulty, Quality::good);
                 const auto chara = chara_create(56, 0, -3, 0);
@@ -764,7 +776,7 @@ int quest_generate(int quest_idx)
                 {
                     continue;
                 }
-                if (chara->level < minlevel)
+                if (chara->level < min_level)
                 {
                     continue;
                 }
@@ -779,9 +791,10 @@ int quest_generate(int quest_idx)
             quest.reward_item_id = 1;
             quest.deadline_days = -1;
             rewardfix = 175;
-            return 0;
+            return true;
         }
     }
+
     if (rnd(11) == 0)
     {
         quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
@@ -790,7 +803,7 @@ int quest_generate(int quest_idx)
         quest.escort_difficulty = rnd(3);
         quest.target_chara_index = 0;
         quest.reward_item_id = 5;
-        while (1)
+        while (true)
         {
             quest.extra_info_1 = choice(asettown);
             if (quest.extra_info_1 != game_data.current_map)
@@ -798,13 +811,13 @@ int quest_generate(int quest_idx)
                 break;
             }
         }
-        p = quest.extra_info_1;
+        const auto destination_map = quest.extra_info_1;
         if (quest.escort_difficulty == 0)
         {
             rewardfix = 140 +
                 dist(
                     area_data[game_data.current_map].position,
-                    area_data[p].position) *
+                    area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(8) + 6;
             quest.difficulty = clamp(
@@ -818,7 +831,7 @@ int quest_generate(int quest_idx)
             rewardfix = 130 +
                 dist(
                     area_data[game_data.current_map].position,
-                    area_data[p].position) *
+                    area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(5) + 2;
             quest.difficulty = clamp(rewardfix / 10 + 1, 1, 40);
@@ -828,7 +841,7 @@ int quest_generate(int quest_idx)
             rewardfix = 80 +
                 dist(
                     area_data[game_data.current_map].position,
-                    area_data[p].position) *
+                    area_data[destination_map].position) *
                     2;
             quest.deadline_days = rnd(8) + 6;
             quest.difficulty = clamp(rewardfix / 20 + 1, 1, 40);
@@ -838,8 +851,9 @@ int quest_generate(int quest_idx)
         {
             rewardfix = rewardfix * 180 / 100;
         }
-        return 0;
+        return true;
     }
+
     if (rnd(23) == 0 ||
         (game_data.current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
@@ -857,8 +871,9 @@ int quest_generate(int quest_idx)
         quest.extra_info_2 = 0;
         quest.deadline_days = -1;
         rewardfix = 0;
-        return 0;
+        return true;
     }
+
     if (rnd(30) == 0 ||
         (game_data.current_map == mdata_t::MapId::yowyn && rnd(2) == 0))
     {
@@ -876,8 +891,9 @@ int quest_generate(int quest_idx)
         quest.extra_info_1 = 15000 + quest.difficulty * 2500;
         quest.extra_info_2 = 0;
         rewardfix = 60 + quest.difficulty * 2;
-        return 0;
+        return true;
     }
+
     if (rnd(8) == 0)
     {
         quest.difficulty = clamp(
@@ -894,16 +910,17 @@ int quest_generate(int quest_idx)
         quest.reward_item_id = 1;
         quest.deadline_days = -1;
         rewardfix = 135;
-        return 0;
+        return true;
     }
+
     if (rnd(6) == 0)
     {
-        i = -1;
+        int i = -1;
         for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
-            p = rnd(game_data.number_of_existing_quests);
+            int p = rnd(game_data.number_of_existing_quests);
             for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
                  cnt < cnt_end;
                  ++cnt)
@@ -923,8 +940,7 @@ int quest_generate(int quest_idx)
             }
             if (quest_data[p].client_chara_index != 0)
             {
-                if (quest_data[p].originating_map_id != game_data.current_map ||
-                    0)
+                if (quest_data[p].originating_map_id != game_data.current_map)
                 {
                     i = p;
                     break;
@@ -933,7 +949,7 @@ int quest_generate(int quest_idx)
         }
         if (i != -1)
         {
-            p = quest_data[i].originating_map_id;
+            int p = quest_data[i].originating_map_id;
             rewardfix = 70 +
                 dist(
                     area_data[game_data.current_map].position,
@@ -970,9 +986,14 @@ int quest_generate(int quest_idx)
             quest.escort_difficulty = 0;
             quest.deadline_days = rnd(12) + 3;
             quest.difficulty = clamp(rewardfix / 20 + 1, 1, 25);
+            return true;
         }
-        return 0;
+        else
+        {
+            return false;
+        }
     }
+
     if (rnd(6) == 0)
     {
         quest.id = 1003;
@@ -1011,8 +1032,9 @@ int quest_generate(int quest_idx)
         quest.extra_info_2 = rnd(7) + 3;
         quest.difficulty = quest.extra_info_2 * 3;
         rewardfix = 60 + quest.difficulty;
-        return 0;
+        return true;
     }
+
     if (rnd(5) == 0)
     {
         quest.id = 1004;
@@ -1025,9 +1047,10 @@ int quest_generate(int quest_idx)
         quest.difficulty =
             clamp(rnd_capped(cdata.player().level + 5) + 1, 1, 30);
         rewardfix = 65 + quest.difficulty;
-        return 0;
+        return true;
     }
-    return 1;
+
+    return false;
 }
 
 
