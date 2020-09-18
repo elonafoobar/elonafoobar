@@ -607,14 +607,14 @@ void bind(sol::state& lua)
     LuaCharacter.set("index", sol::readonly(&Character::index));
 
     /**
-     * @luadoc index field integer_id
+     * @luadoc integer_id field num
      *
      * [R] The integer ID of this character.
      */
     LuaCharacter.set("integer_id", sol::readonly(&Character::id));
 
     /**
-     * @luadoc name field string
+     * @luadoc hp field string
      * [R] The character's proper name without any qualifiers.
      */
     LuaCharacter.set("hp", sol::readonly(&Character::hp));
@@ -655,7 +655,7 @@ void bind(sol::state& lua)
     LuaCharacter.set("max_mp", sol::readonly(&Character::max_mp));
 
     /**
-     * @luadoc max_mp field string
+     * @luadoc god field string
      *
      * [RW] The character's worshipped god.
      */
@@ -761,7 +761,7 @@ void bind(sol::state& lua)
     LuaCharacter.set("hate", &Character::hate);
 
     /**
-     * @luadoc fame field num
+     * @luadoc emotion_icon field num
      *
      * [RW] The character's current emotion icon. Valid values are 0-99.
      */
@@ -871,7 +871,7 @@ void bind(sol::state& lua)
         LUA_API_ENUM_PROPERTY(Character, relationship, Relationship));
 
     /**
-     * @luadoc relationship field Relationship
+     * @luadoc original_relationship field Relationship
      *
      * [RW] The original relationship of the character to the player.
      */
