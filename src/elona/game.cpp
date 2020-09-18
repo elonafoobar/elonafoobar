@@ -87,7 +87,6 @@ FoobarData foobar_data;
     SERIALIZE(91, activity_about_to_start); \
     SERIALIZE(92, sleep_experience); \
     SERIALIZE(93, acquirable_feat_count); \
-    SERIALIZE(94, chara_last_attacked_by_player); \
     SERIALIZE(95, wish_count); \
     SERIALIZE(96, version); \
     SERIALIZE(97, rights_to_succeed_to); \
@@ -162,8 +161,6 @@ FoobarData foobar_data;
     SERIALIZE(805, play_time); \
     SERIALIZE(806, last_etherwind_month); \
     SERIALIZE(807, god_rank); \
-    SERIALIZE(808, player_is_changing_equipment); \
-    SERIALIZE(809, proc_damage_events_flag); \
     SERIALIZE(810, quest_flags.kill_count_of_little_sister); \
     SERIALIZE(811, quest_flags.save_count_of_little_sister); \
     SERIALIZE(812, quest_flags.gift_count_of_little_sister); \

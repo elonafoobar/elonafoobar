@@ -29,6 +29,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -1737,7 +1738,7 @@ bool _magic_658(Character& subject, Character& target)
             Message::color{ColorIndex::red});
         if (!target.is_player_or_ally())
         {
-            game()->proc_damage_events_flag = 2;
+            g_proc_damage_events_flag = 2;
             txt3rd = 1;
             txt(i18n::s.get("core.magic.vorpal.other", subject, target));
         }
@@ -3679,7 +3680,7 @@ optional_ref<Character> _ball_spell_internal(
                 {
                     if (target_index >= 16)
                     {
-                        game()->proc_damage_events_flag = 2;
+                        g_proc_damage_events_flag = 2;
                         txt3rd = 1;
                         txt(i18n::s.get(
                             "core.magic.explosion.other", cdata[target_index]));
@@ -3700,7 +3701,7 @@ optional_ref<Character> _ball_spell_internal(
             {
                 if (target_index >= 16)
                 {
-                    game()->proc_damage_events_flag = 2;
+                    g_proc_damage_events_flag = 2;
                     txt3rd = 1;
                     txt(i18n::s.get(
                         "core.magic.ball.other", cdata[target_index]));
@@ -3988,7 +3989,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     {
                         if (target_index >= 16)
                         {
-                            game()->proc_damage_events_flag = 2;
+                            g_proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
                                 "core.magic.bolt.other", cdata[target_index]));
@@ -4017,7 +4018,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (!target.is_player_or_ally())
             {
-                game()->proc_damage_events_flag = 2;
+                g_proc_damage_events_flag = 2;
                 txt3rd = 1;
                 txt(i18n::s.get("core.magic.arrow.other", target));
             }
@@ -4101,7 +4102,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             {
                 if (!target.is_player_or_ally())
                 {
-                    game()->proc_damage_events_flag = 2;
+                    g_proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.magic.sucks_blood.other", subject, target));
                 }
@@ -4123,7 +4124,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (!target.is_player_or_ally())
             {
-                game()->proc_damage_events_flag = 2;
+                g_proc_damage_events_flag = 2;
                 txt(i18n::s.get(
                     "core.magic.touch.other",
                     subject,
@@ -4515,7 +4516,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     {
                         if (target_index >= 16)
                         {
-                            game()->proc_damage_events_flag = 2;
+                            g_proc_damage_events_flag = 2;
                             txt3rd = 1;
                             txt(i18n::s.get(
                                 "core.magic.breath.other",

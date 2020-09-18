@@ -22,6 +22,7 @@
 #include "equipment.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -66,7 +67,7 @@ void end_dmghp(const Character& victim)
             }
         }
     }
-    game()->proc_damage_events_flag = 0;
+    g_proc_damage_events_flag = 0;
     txt3rd = 0;
 }
 
@@ -409,11 +410,11 @@ int damage_hp(
                 }
             }
         }
-        if (game()->proc_damage_events_flag == 1)
+        if (g_proc_damage_events_flag == 1)
         {
             txteledmg(0, none, victim, element);
         }
-        else if (game()->proc_damage_events_flag == 2)
+        else if (g_proc_damage_events_flag == 2)
         {
             Message::instance().continue_sentence();
             assert(attacker);
@@ -707,7 +708,7 @@ int damage_hp(
         if (attacker && attacker->is_player())
         {
             chara_act_hostile_action(cdata.player(), victim);
-            game()->chara_last_attacked_by_player = victim.index;
+            g_chara_last_attacked_by_player = victim.index;
         }
         if (victim.is_player())
         {
@@ -735,7 +736,7 @@ int damage_hp(
         }
         if (victim.splits())
         {
-            if (game()->proc_damage_events_flag != 1)
+            if (g_proc_damage_events_flag != 1)
             {
                 if (dmg_at_m141 > victim.max_hp / 20 || rnd(10) == 0)
                 {
@@ -751,7 +752,7 @@ int damage_hp(
         }
         if (victim.splits2())
         {
-            if (game()->proc_damage_events_flag != 1)
+            if (g_proc_damage_events_flag != 1)
             {
                 if (rnd(3) == 0)
                 {
@@ -772,7 +773,7 @@ int damage_hp(
         }
         if (victim.is_quick_tempered())
         {
-            if (game()->proc_damage_events_flag != 1)
+            if (g_proc_damage_events_flag != 1)
             {
                 if (victim.furious == 0)
                 {
@@ -850,7 +851,7 @@ int damage_hp(
             if (element)
             {
                 if (!victim.is_player_or_ally() &&
-                    game()->proc_damage_events_flag == 2)
+                    g_proc_damage_events_flag == 2)
                 {
                     Message::instance().continue_sentence();
                     if (damage_statements_subject_is_noncharacter)
@@ -873,7 +874,7 @@ int damage_hp(
                 if (death_type == 0)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game()->proc_damage_events_flag == 2)
+                        g_proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -900,7 +901,7 @@ int damage_hp(
                 if (death_type == 1)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game()->proc_damage_events_flag == 2)
+                        g_proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -926,7 +927,7 @@ int damage_hp(
                 if (death_type == 2)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game()->proc_damage_events_flag == 2)
+                        g_proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -952,7 +953,7 @@ int damage_hp(
                 if (death_type == 3)
                 {
                     if (!victim.is_player_or_ally() &&
-                        game()->proc_damage_events_flag == 2)
+                        g_proc_damage_events_flag == 2)
                     {
                         Message::instance().continue_sentence();
                         if (damage_statements_subject_is_noncharacter)
@@ -1051,9 +1052,9 @@ int damage_hp(
         {
             ++game()->death_count;
         }
-        if (victim.index == game()->chara_last_attacked_by_player)
+        if (victim.index == g_chara_last_attacked_by_player)
         {
-            game()->chara_last_attacked_by_player = 0;
+            g_chara_last_attacked_by_player = 0;
         }
         if (attacker)
         {
@@ -1083,7 +1084,7 @@ int damage_hp(
             {
                 attacker->enemy_id = 0;
                 cdata.player().enemy_id = 0;
-                game()->chara_last_attacked_by_player = 0;
+                g_chara_last_attacked_by_player = 0;
             }
         }
         if (!victim.is_player())

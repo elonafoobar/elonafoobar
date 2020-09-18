@@ -14,6 +14,7 @@
 #include "draw.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -327,7 +328,7 @@ bool do_physical_attack_internal(
             {
                 if (!target.is_player_or_ally())
                 {
-                    game()->proc_damage_events_flag = 2;
+                    g_proc_damage_events_flag = 2;
                     txt(i18n::s.get(
                         "core.damage.weapon.attacks_unarmed_and",
                         attacker,
@@ -360,7 +361,7 @@ bool do_physical_attack_internal(
                 {
                     if (!target.is_player_or_ally())
                     {
-                        game()->proc_damage_events_flag = 2;
+                        g_proc_damage_events_flag = 2;
                         if (attackskill == 111)
                         {
                             txt(i18n::s.get(
@@ -940,7 +941,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/dragon/"))
             {
-                game()->proc_damage_events_flag = 1;
+                g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -950,7 +951,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/god/"))
             {
-                game()->proc_damage_events_flag = 1;
+                g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -960,7 +961,7 @@ void proc_weapon_enchantments(
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/undead/"))
             {
-                game()->proc_damage_events_flag = 1;
+                g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
             }
             continue;
@@ -980,7 +981,7 @@ void proc_weapon_enchantments(
                 {
                     continue;
                 }
-                game()->proc_damage_events_flag = 1;
+                g_proc_damage_events_flag = 1;
                 damage_hp(
                     target,
                     rnd_capped(
@@ -1035,7 +1036,7 @@ void proc_weapon_enchantments(
     {
         if (target.state() == Character::State::alive)
         {
-            game()->proc_damage_events_flag = 1;
+            g_proc_damage_events_flag = 1;
             damage_hp(
                 target,
                 orgdmg * 2 / 3,

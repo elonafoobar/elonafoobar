@@ -1644,7 +1644,7 @@ OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
     snd("core.equip1");
     Message::instance().linebreak();
     txt(i18n::s.get("core.ui.inv.equip.you_equip", selected_item));
-    game()->player_is_changing_equipment = 1;
+    g_player_is_changing_equipment = true;
     switch (selected_item->curse_state)
     {
     case CurseState::doomed:

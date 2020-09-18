@@ -21,6 +21,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "initialize_map.hpp"
@@ -1343,7 +1344,7 @@ optional<TurnResult> pc_turn_advance_time()
             txtgod(player.god_id, 12);
         }
     }
-    game()->player_is_changing_equipment = 0;
+    g_player_is_changing_equipment = false;
     tgloc = 0;
     if (game()->mount != 0)
     {
@@ -1440,7 +1441,7 @@ TurnResult pc_turn(bool advance_time)
             firstturn = 0;
         }
 
-        if (game()->player_is_changing_equipment)
+        if (g_player_is_changing_equipment)
         {
             txt(i18n::s.get("core.action.equip.you_change"));
             return TurnResult::turn_end;

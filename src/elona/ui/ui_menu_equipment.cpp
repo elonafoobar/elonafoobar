@@ -285,7 +285,7 @@ void UIMenuEquipment::draw()
 
 static void _unequip_item()
 {
-    game()->player_is_changing_equipment = 1;
+    g_player_is_changing_equipment = true;
     const auto equipment = cdata.player().equipment_slots[body - 100].equipment;
     if (is_cursed(equipment->curse_state))
     {

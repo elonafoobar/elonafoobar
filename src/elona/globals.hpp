@@ -17,6 +17,15 @@ enum class AdditionalItemInfo;
 
 ELONA_EXTERN(AdditionalItemInfo g_show_additional_item_info);
 
+
+// proc fury/splitting/active-form damage text from damage_hp()? 1 if not, 2 if
+// yes
+ELONA_EXTERN(int g_proc_damage_events_flag);
+
+ELONA_EXTERN(int g_chara_last_attacked_by_player);
+
+ELONA_EXTERN(bool g_player_is_changing_equipment);
+
 } // namespace elona
 
 

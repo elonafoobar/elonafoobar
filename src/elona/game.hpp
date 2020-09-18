@@ -163,7 +163,6 @@ struct Game
     int activity_about_to_start;
     int sleep_experience;
     int acquirable_feat_count;
-    int chara_last_attacked_by_player;
     int wish_count;
     int version;
     int rights_to_succeed_to;
@@ -202,9 +201,6 @@ struct Game
     int play_time;
     int last_etherwind_month;
     int god_rank;
-    int player_is_changing_equipment;
-    int proc_damage_events_flag; // proc fury/splitting/active-form damage text
-                                 // from damage_hp()? 1 if not, 2 if yes
     int tcg_used_deck;
     int number_of_waiting_guests;
     int politics_map_id;

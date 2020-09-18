@@ -30,6 +30,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -2240,14 +2241,14 @@ TurnResult do_use_command(ItemRef use_item)
         if (target_chara_index == 0)
         {
             txt(i18n::s.get("core.action.use.stethoscope.self"));
-            game()->chara_last_attacked_by_player = 0;
+            g_chara_last_attacked_by_player = 0;
             return TurnResult::turn_end;
         }
         if (target_chara_index > 0 && target_chara_index < 16)
         {
             if (cdata[target_chara_index].state() == Character::State::alive)
             {
-                game()->chara_last_attacked_by_player = 0;
+                g_chara_last_attacked_by_player = 0;
                 if (cdata[target_chara_index].has_been_used_stethoscope() == 1)
                 {
                     cdata[target_chara_index].has_been_used_stethoscope() =

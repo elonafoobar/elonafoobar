@@ -15,6 +15,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
 #include "inventory.hpp"
@@ -1505,7 +1506,7 @@ TurnResult initialize_map()
     wake_up();
     pcattacker = 0;
     cdata.player().enemy_id = 0;
-    game()->chara_last_attacked_by_player = 0;
+    g_chara_last_attacked_by_player = 0;
     mode = 0;
     screenupdate = -1;
     update_entire_screen();
