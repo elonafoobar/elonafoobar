@@ -214,12 +214,11 @@ void buff_add(
         // Messages of fodd buff are shown elsewhere.
         if (buff_data.type != BuffType::food)
         {
-            txt(i18n::s.get_enum_property(
-                "core.buff", "apply", integer_id, chara));
+            txt(the_buff_db.get_text(integer_id, "apply", chara));
         }
 
         add_damage_popup(
-            i18n::s.get_enum_property("core.buff", "name", integer_id),
+            the_buff_db.get_text(integer_id, "name"),
             chara.index,
             {255, 255, 255});
     }
@@ -237,15 +236,13 @@ void buff_delete(Character& chara, int slot)
     {
         txt(i18n::s.get(
                 "core.magic.buff.ends",
-                i18n::s.get_enum_property(
-                    "core.buff", "name", chara.buffs[slot].id)),
+                the_buff_db.get_text(chara.buffs[slot].id, "name")),
             Message::color{ColorIndex::purple});
     }
     if (is_in_fov(chara))
     {
         add_damage_popup(
-            i18n::s.get_enum_property(
-                "core.buff", "name", chara.buffs[slot].id),
+            the_buff_db.get_text(chara.buffs[slot].id, "name"),
             chara.index,
             {191, 191, 191});
     }
