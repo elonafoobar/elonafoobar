@@ -83,7 +83,6 @@ FoobarData foobar_data;
     SERIALIZE(83, protects_from_bad_weather); \
     SERIALIZE(84, left_minutes_of_executing_quest); \
     SERIALIZE(85, ether_disease_stage); \
-    SERIALIZE(87, executing_immediate_quest_time_left_display_period); \
     SERIALIZE(88, time_when_textbook_becomes_available); \
     SERIALIZE(89, light); \
     SERIALIZE(90, continuous_active_hours); \

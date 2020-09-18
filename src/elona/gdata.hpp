@@ -157,7 +157,6 @@ struct GameData
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
     int ether_disease_stage;
-    int executing_immediate_quest_time_left_display_period;
     int time_when_textbook_becomes_available;
     int light;
     int continuous_active_hours;
