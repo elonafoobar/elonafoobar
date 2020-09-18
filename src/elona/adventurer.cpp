@@ -9,6 +9,7 @@
 #include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
 #include "equipment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -42,10 +43,10 @@ void add_news_entry(std::string news_content, bool show_message)
 
 void add_news_topic(const std::string& mark, const std::string& news_content)
 {
-    const auto date = std::to_string(game_data.date.year) + "/" +
-        std::to_string(game_data.date.month) + "/" +
-        std::to_string(game_data.date.day) + " h" +
-        std::to_string(game_data.date.hour);
+    const auto date = std::to_string(game()->date.year) + "/" +
+        std::to_string(game()->date.month) + "/" +
+        std::to_string(game()->date.day) + " h" +
+        std::to_string(game()->date.hour);
     add_news_entry(mark + " " + date + " " + news_content, false);
 }
 
@@ -207,7 +208,7 @@ void adventurer_update()
     {
         if (adv.period_of_contract != 0)
         {
-            if (adv.period_of_contract < game_data.date.hours())
+            if (adv.period_of_contract < game()->date.hours())
             {
                 adv.period_of_contract = 0;
                 adv.is_contracting() = false;
@@ -215,7 +216,7 @@ void adventurer_update()
                 txt(i18n::s.get("core.chara.contract_expired", adv));
             }
         }
-        if (adv.current_map != game_data.current_map)
+        if (adv.current_map != game()->current_map)
         {
             if (adv.state() == Character::State::adventurer_empty)
             {
@@ -224,7 +225,7 @@ void adventurer_update()
             }
             if (adv.state() == Character::State::adventurer_dead)
             {
-                if (game_data.date.hours() >= adv.time_to_revive)
+                if (game()->date.hours() >= adv.time_to_revive)
                 {
                     if (rnd(3) == 0)
                     {
@@ -242,7 +243,7 @@ void adventurer_update()
                 }
             }
         }
-        if ((adv.current_map != game_data.current_map ||
+        if ((adv.current_map != game()->current_map ||
              map_data.type == mdata_t::MapType::world_map) &&
             rnd(60) == 0)
         {
@@ -273,7 +274,7 @@ void adventurer_update()
             adv.current_map = p;
             adv.current_dungeon_level = 1;
         }
-        if (adv.current_map == game_data.current_map)
+        if (adv.current_map == game()->current_map)
         {
             continue;
         }

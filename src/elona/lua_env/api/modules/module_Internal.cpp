@@ -3,6 +3,7 @@
 #include "../../../character.hpp"
 #include "../../../crafting.hpp"
 #include "../../../data/types/type_map.hpp"
+#include "../../../game.hpp"
 #include "../../../i18n.hpp"
 #include "../../../inventory.hpp"
 #include "../../../item.hpp"
@@ -29,7 +30,7 @@ int Internal_get_quest_flag(const std::string& id)
 #define GET_QUEST_FLAG(id_) \
     if (id == #id_) \
     { \
-        return game_data.quest_flags.id_; \
+        return game()->quest_flags.id_; \
     }
 
     GET_QUEST_FLAG(tutorial);
@@ -71,7 +72,7 @@ void Internal_set_quest_flag(const std::string& id, int value)
 #define SET_QUEST_FLAG(id_, value) \
     if (id == #id_) \
     { \
-        game_data.quest_flags.id_ = value; \
+        game()->quest_flags.id_ = value; \
         return; \
     }
 
@@ -114,8 +115,8 @@ void Internal_go_to_quest_map(const std::string& map_name, int dungeon_level)
     auto id = the_mapdef_db[data::InstanceId{map_name}]->integer_id;
     map_data.stair_down_pos =
         cdata.player().position.y * 1000 + cdata.player().position.x;
-    game_data.destination_map = id;
-    game_data.destination_dungeon_level = dungeon_level;
+    game()->destination_map = id;
+    game()->destination_dungeon_level = dungeon_level;
     levelexitby = 2;
     chatteleport = 1;
 }
@@ -213,7 +214,7 @@ void Internal_strange_scientist_pick_reward()
         {
             continue;
         }
-        randomize(game_data.date.day + cnt);
+        randomize(game()->date.day + cnt);
         f = 0;
         if (itemmemory(0, cnt))
         {
@@ -221,21 +222,21 @@ void Internal_strange_scientist_pick_reward()
         }
         if (cnt == 662)
         {
-            if (game_data.quest_flags.kamikaze_attack >= 1000)
+            if (game()->quest_flags.kamikaze_attack >= 1000)
             {
                 f = 1;
             }
         }
         if (cnt == 655)
         {
-            if (game_data.quest_flags.rare_books >= 1000)
+            if (game()->quest_flags.rare_books >= 1000)
             {
                 f = 1;
             }
         }
         if (cnt == 639)
         {
-            if (game_data.quest_flags.pael_and_her_mom >= 1000)
+            if (game()->quest_flags.pael_and_her_mom >= 1000)
             {
                 f = 1;
             }

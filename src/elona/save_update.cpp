@@ -6,6 +6,7 @@
 
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
+#include "../version.hpp"
 #include "character.hpp"
 #include "item.hpp"
 #include "lua_env/handle_manager.hpp"

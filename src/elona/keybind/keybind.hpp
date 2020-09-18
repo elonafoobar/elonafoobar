@@ -136,7 +136,7 @@ std::string get_bound_shortcut_key_name_by_action_id(
 
 /**
  * Get the text representation of the bound shortcut key's name(s) by
- * shortcut's index. The index is the same as that stored in `GameData` or
+ * shortcut's index. The index is the same as that stored in `Game` or
  * other save data. See also `get_bound_shortcut_key_name_by_action_id` for the
  * detailed format of th return value.
  */

@@ -5,6 +5,7 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -24,9 +25,9 @@ namespace elona
 
 void do_play_scene()
 {
-    if (game_data.played_scene < sceneid)
+    if (game()->played_scene < sceneid)
     {
-        game_data.played_scene = sceneid;
+        game()->played_scene = sceneid;
     }
     if (!g_config.story())
     {
@@ -409,16 +410,16 @@ void conquer_lesimas()
         wy + 116,
         i18n::s.get(
             "core.win.window.have_killed",
-            game_data.deepest_dungeon_level,
-            game_data.kill_count));
+            game()->deepest_dungeon_level,
+            game()->kill_count));
     mes(wx + 40, wy + 146, i18n::s.get("core.win.window.score", calcscore()));
     mes(wx + 40,
         wy + 186,
         i18n::s.get(
             "core.win.window.lesimas",
-            game_data.date.year,
-            game_data.date.month,
-            game_data.date.day));
+            game()->date.year,
+            game()->date.month,
+            game()->date.day));
     mes(wx + 40, wy + 206, i18n::s.get("core.win.window.comment", win_comment));
     mes(wx + 40,
         wy + 246,
@@ -450,7 +451,7 @@ void play_the_last_scene_again()
         conquer_lesimas();
         return;
     }
-    game_data.quest_flags.main_quest = 180;
+    game()->quest_flags.main_quest = 180;
     update_screen();
 }
 

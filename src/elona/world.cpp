@@ -8,7 +8,7 @@
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "food.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "map.hpp"
@@ -33,14 +33,13 @@ elona_vector1<int> ranknorma;
 
 void weather_changes_by_location(bool output_immediately)
 {
-    if (game_data.weather == 2)
+    if (game()->weather == 2)
     {
-        if (game_data.pc_x_in_world_map < 65 &&
-            game_data.pc_y_in_world_map > 10)
+        if (game()->pc_x_in_world_map < 65 && game()->pc_y_in_world_map > 10)
         {
-            game_data.weather = 3;
+            game()->weather = 3;
             sound_play_environmental();
-            game_data.hours_until_weather_changes += 3;
+            game()->hours_until_weather_changes += 3;
             if (output_immediately)
             {
                 txt(i18n::s.get("core.action.weather.changes"));
@@ -52,14 +51,13 @@ void weather_changes_by_location(bool output_immediately)
             }
         }
     }
-    if (game_data.weather == 4 || game_data.weather == 3)
+    if (game()->weather == 4 || game()->weather == 3)
     {
-        if (game_data.pc_x_in_world_map > 65 ||
-            game_data.pc_y_in_world_map < 10)
+        if (game()->pc_x_in_world_map > 65 || game()->pc_y_in_world_map < 10)
         {
-            game_data.weather = 2;
+            game()->weather = 2;
             sound_play_environmental();
-            game_data.hours_until_weather_changes += 3;
+            game()->hours_until_weather_changes += 3;
             if (output_immediately)
             {
                 txt(i18n::s.get("core.action.weather.changes"));
@@ -77,43 +75,41 @@ void weather_changes_by_location(bool output_immediately)
 
 void weather_changes()
 {
-    if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
+    if (area_data[game()->current_map].id == mdata_t::MapId::museum)
     {
         update_museum();
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         building_update_home_rank();
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        game_data.pc_x_in_world_map = cdata.player().position.x;
-        game_data.pc_y_in_world_map = cdata.player().position.y;
+        game()->pc_x_in_world_map = cdata.player().position.x;
+        game()->pc_y_in_world_map = cdata.player().position.y;
     }
-    --game_data.hours_until_weather_changes;
+    --game()->hours_until_weather_changes;
     weather_changes_by_location();
-    if (game_data.hours_until_weather_changes < 0)
+    if (game()->hours_until_weather_changes < 0)
     {
-        game_data.hours_until_weather_changes = rnd(22) + 2;
-        p = game_data.weather;
+        game()->hours_until_weather_changes = rnd(22) + 2;
+        p = game()->weather;
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (game_data.date.month % 3 == 0)
+            if (game()->date.month % 3 == 0)
             {
-                if (game_data.date.day >= 1 && game_data.date.day <= 10)
+                if (game()->date.day >= 1 && game()->date.day <= 10)
                 {
-                    if (game_data.last_etherwind_month != game_data.date.month)
+                    if (game()->last_etherwind_month != game()->date.month)
                     {
-                        if (rnd(15) < game_data.date.day + 5)
+                        if (rnd(15) < game()->date.day + 5)
                         {
-                            game_data.weather = 1;
+                            game()->weather = 1;
                             txt(i18n::s.get(
                                     "core.action.weather.ether_wind.starts"),
                                 Message::color{ColorIndex::red});
-                            game_data.last_etherwind_month =
-                                game_data.date.month;
-                            game_data.hours_until_weather_changes =
-                                rnd(24) + 24;
+                            game()->last_etherwind_month = game()->date.month;
+                            game()->hours_until_weather_changes = rnd(24) + 24;
                             break;
                         }
                     }
@@ -126,17 +122,17 @@ void weather_changes()
                 {
                     if (rnd(4) == 0)
                     {
-                        game_data.weather = 3;
+                        game()->weather = 3;
                         txt(i18n::s.get("core.action.weather.rain.draw_cloud"));
                         break;
                     }
                 }
-                if (game_data.pc_x_in_world_map > 65 ||
-                    game_data.pc_y_in_world_map < 10)
+                if (game()->pc_x_in_world_map > 65 ||
+                    game()->pc_y_in_world_map < 10)
                 {
                     if (rnd(2) == 0)
                     {
-                        game_data.weather = 2;
+                        game()->weather = 2;
                         txt(i18n::s.get("core.action.weather.snow.starts"));
                         break;
                     }
@@ -145,20 +141,20 @@ void weather_changes()
                 {
                     if (rnd(10) == 0)
                     {
-                        game_data.weather = 3;
+                        game()->weather = 3;
                         txt(i18n::s.get("core.action.weather.rain.starts"));
                         break;
                     }
                     if (rnd(40) == 0)
                     {
-                        game_data.weather = 4;
+                        game()->weather = 4;
                         txt(i18n::s.get(
                             "core.action.weather.rain.starts_heavy"));
                         break;
                     }
                     if (rnd(60) == 0)
                     {
-                        game_data.weather = 2;
+                        game()->weather = 2;
                         txt(i18n::s.get("core.action.weather.snow.starts"));
                         break;
                     }
@@ -168,13 +164,13 @@ void weather_changes()
             {
                 if (rnd(4) == 0)
                 {
-                    game_data.weather = 0;
+                    game()->weather = 0;
                     txt(i18n::s.get("core.action.weather.rain.stops"));
                     break;
                 }
                 if (rnd(15) == 0)
                 {
-                    game_data.weather = 4;
+                    game()->weather = 4;
                     txt(i18n::s.get(
                         "core.action.weather.rain.becomes_heavier"));
                     break;
@@ -184,7 +180,7 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    game_data.weather = 3;
+                    game()->weather = 3;
                     txt(i18n::s.get(
                         "core.action.weather.rain.becomes_lighter"));
                     break;
@@ -194,7 +190,7 @@ void weather_changes()
             {
                 if (rnd(2) == 0)
                 {
-                    game_data.weather = 0;
+                    game()->weather = 0;
                     txt(i18n::s.get("core.action.weather.ether_wind.stops"));
                     break;
                 }
@@ -203,25 +199,25 @@ void weather_changes()
             {
                 if (rnd(3) == 0)
                 {
-                    game_data.weather = 0;
+                    game()->weather = 0;
                     txt(i18n::s.get("core.action.weather.snow.stops"));
                     break;
                 }
             }
         }
-        if (game_data.weather == 4)
+        if (game()->weather == 4)
         {
             maybe_show_ex_help(11);
         }
-        if (game_data.weather == 2)
+        if (game()->weather == 2)
         {
             maybe_show_ex_help(12);
         }
-        if (game_data.weather == 1)
+        if (game()->weather == 1)
         {
             maybe_show_ex_help(13);
         }
-        if (p != game_data.weather)
+        if (p != game()->weather)
         {
             sound_play_environmental();
         }
@@ -233,31 +229,31 @@ void weather_changes()
     {
         if (rnd(3) == 0)
         {
-            ++game_data.continuous_active_hours;
+            ++game()->continuous_active_hours;
         }
         if (rnd(15) == 0)
         {
             if (mode == 0)
             {
                 txt(i18n::s.get("core.action.move.global.nap"));
-                game_data.continuous_active_hours -= 3;
-                if (game_data.continuous_active_hours < 0)
+                game()->continuous_active_hours -= 3;
+                if (game()->continuous_active_hours < 0)
                 {
-                    game_data.continuous_active_hours = 0;
+                    game()->continuous_active_hours = 0;
                 }
             }
         }
     }
-    else if (game_data.current_map != mdata_t::MapId::shelter_)
+    else if (game()->current_map != mdata_t::MapId::shelter_)
     {
-        ++game_data.continuous_active_hours;
+        ++game()->continuous_active_hours;
     }
-    if (game_data.date.hour == 6)
+    if (game()->date.hour == 6)
     {
         txt(i18n::s.get("core.action.day_breaks"),
             Message::color{ColorIndex::orange});
     }
-    if (game_data.continuous_active_hours >= 15)
+    if (game()->continuous_active_hours >= 15)
     {
         maybe_show_ex_help(9);
     }
@@ -265,13 +261,13 @@ void weather_changes()
     {
         maybe_show_ex_help(10);
     }
-    if (game_data.date.hour >= 24)
+    if (game()->date.hour >= 24)
     {
-        if (game_data.number_of_waiting_guests < 3)
+        if (game()->number_of_waiting_guests < 3)
         {
-            if (rnd(8 + game_data.number_of_waiting_guests * 5) == 0)
+            if (rnd(8 + game()->number_of_waiting_guests * 5) == 0)
             {
-                ++game_data.number_of_waiting_guests;
+                ++game()->number_of_waiting_guests;
             }
         }
         txt(i18n::s.get("core.action.new_day"),
@@ -279,60 +275,60 @@ void weather_changes()
         update_shop_and_report();
         for (int rank_id = 0; rank_id < 9; ++rank_id)
         {
-            if (game_data.ranks.at(rank_id) >= 10000)
+            if (game()->ranks.at(rank_id) >= 10000)
             {
-                game_data.ranks.at(rank_id) = 10000;
+                game()->ranks.at(rank_id) = 10000;
                 continue;
             }
             if (rank_id == 3 || rank_id == 4 || rank_id == 5 || rank_id == 8)
             {
                 continue;
             }
-            --game_data.rank_deadlines.at(rank_id);
-            if (game_data.rank_deadlines.at(rank_id) <= 0)
+            --game()->rank_deadlines.at(rank_id);
+            if (game()->rank_deadlines.at(rank_id) <= 0)
             {
-                modrank(rank_id, (game_data.ranks.at(rank_id) / 12 + 100) * -1);
-                game_data.rank_deadlines.at(rank_id) = ranknorma(rank_id);
+                modrank(rank_id, (game()->ranks.at(rank_id) / 12 + 100) * -1);
+                game()->rank_deadlines.at(rank_id) = ranknorma(rank_id);
             }
         }
         snd("core.night");
         event_add(10);
-        game_data.play_days += game_data.date.hour / 24;
-        game_data.date.day += game_data.date.hour / 24;
-        game_data.date.hour = game_data.date.hour % 24;
-        if (game_data.date.day >= 31)
+        game()->play_days += game()->date.hour / 24;
+        game()->date.day += game()->date.hour / 24;
+        game()->date.hour = game()->date.hour % 24;
+        if (game()->date.day >= 31)
         {
-            ++game_data.date.month;
-            game_data.date.day = game_data.date.day - 30;
-            if (game_data.date.month % 2 == 0)
+            ++game()->date.month;
+            game()->date.day = game()->date.day - 30;
+            if (game()->date.month % 2 == 0)
             {
-                ++game_data.holy_well_count;
+                ++game()->holy_well_count;
             }
         }
-        if (game_data.date.month >= 13)
+        if (game()->date.month >= 13)
         {
-            ++game_data.date.year;
-            game_data.date.month = 1;
-            game_data.last_month_when_trainer_visited = 0;
-            game_data.wish_count = clamp(game_data.wish_count - 1, 0, 10);
-            game_data.lost_wallet_count =
-                clamp(game_data.lost_wallet_count - 1, 0, 999999);
+            ++game()->date.year;
+            game()->date.month = 1;
+            game()->last_month_when_trainer_visited = 0;
+            game()->wish_count = clamp(game()->wish_count - 1, 0, 10);
+            game()->lost_wallet_count =
+                clamp(game()->lost_wallet_count - 1, 0, 999999);
         }
-        if (game_data.date.day == 1 || game_data.date.day == 15)
+        if (game()->date.day == 1 || game()->date.day == 15)
         {
             supply_income();
         }
-        if (game_data.quest_flags.pael_and_her_mom == 1 ||
-            game_data.quest_flags.pael_and_her_mom == 3 ||
-            game_data.quest_flags.pael_and_her_mom == 5 ||
-            game_data.quest_flags.pael_and_her_mom == 7 ||
-            game_data.quest_flags.pael_and_her_mom == 9)
+        if (game()->quest_flags.pael_and_her_mom == 1 ||
+            game()->quest_flags.pael_and_her_mom == 3 ||
+            game()->quest_flags.pael_and_her_mom == 5 ||
+            game()->quest_flags.pael_and_her_mom == 7 ||
+            game()->quest_flags.pael_and_her_mom == 9)
         {
-            if (area_data[game_data.current_map].id != mdata_t::MapId::noyel)
+            if (area_data[game()->current_map].id != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {
-                    ++game_data.quest_flags.pael_and_her_mom;
+                    ++game()->quest_flags.pael_and_her_mom;
                     quest_update_journal_msg();
                 }
             }
@@ -401,10 +397,10 @@ void initialize_economy()
     elona_vector1<int> bkdata;
     if (initeco)
     {
-        game_data.politics_map_id = static_cast<int>(mdata_t::MapId::palmia);
+        game()->politics_map_id = static_cast<int>(mdata_t::MapId::palmia);
     }
-    bkdata(0) = game_data.current_map;
-    bkdata(1) = game_data.current_dungeon_level;
+    bkdata(0) = game()->current_map;
+    bkdata(1) = game()->current_dungeon_level;
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
     save_save_game(save_game_no_message);
@@ -423,10 +419,10 @@ void initialize_economy()
         {
             continue;
         }
-        game_data.current_map = area_data[cnt].id;
-        game_data.current_dungeon_level = 1;
-        if (game_data.current_map != bkdata(0) ||
-            game_data.current_dungeon_level != bkdata(1))
+        game()->current_map = area_data[cnt].id;
+        game()->current_dungeon_level = 1;
+        if (game()->current_map != bkdata(0) ||
+            game()->current_dungeon_level != bkdata(1))
         {
             initialize_map();
         }
@@ -479,11 +475,11 @@ void initialize_economy()
         }
         save_save_map_local_data();
     }
-    game_data.current_map = bkdata(0);
-    game_data.current_dungeon_level = bkdata(1);
+    game()->current_map = bkdata(0);
+    game()->current_dungeon_level = bkdata(1);
     cdata.player().position.x = bkdata(2);
     cdata.player().position.y = bkdata(3);
-    game_data.reset_world_map_in_diastrophism_flag = 1;
+    game()->reset_world_map_in_diastrophism_flag = 1;
     mode = 3;
     mapsubroutine = 1;
     initialize_map();
@@ -524,14 +520,14 @@ int initialize_world_map()
 
 void modrank(int rank_id, int amount, int min)
 {
-    int rank_factor = game_data.ranks.at(rank_id) / 100;
-    int orgrank_at_m75 = game_data.ranks.at(rank_id);
+    int rank_factor = game()->ranks.at(rank_id) / 100;
+    int orgrank_at_m75 = game()->ranks.at(rank_id);
     int i_at_m75 = amount;
     if (amount > 0)
     {
         i_at_m75 = amount * (rank_factor + 20) * (rank_factor + 20) / 2500;
-        game_data.rank_deadlines.at(rank_id) = ranknorma(rank_id);
-        if (game_data.ranks.at(rank_id) == 100)
+        game()->rank_deadlines.at(rank_id) = ranknorma(rank_id);
+        if (game()->ranks.at(rank_id) == 100)
         {
             return;
         }
@@ -543,18 +539,18 @@ void modrank(int rank_id, int amount, int min)
             }
         }
     }
-    game_data.ranks.at(rank_id) -= i_at_m75;
-    if (game_data.ranks.at(rank_id) >= 10000)
+    game()->ranks.at(rank_id) -= i_at_m75;
+    if (game()->ranks.at(rank_id) >= 10000)
     {
-        game_data.ranks.at(rank_id) = 10000;
+        game()->ranks.at(rank_id) = 10000;
     }
-    if (game_data.ranks.at(rank_id) < 100)
+    if (game()->ranks.at(rank_id) < 100)
     {
-        game_data.ranks.at(rank_id) = 100;
+        game()->ranks.at(rank_id) = 100;
     }
-    if (orgrank_at_m75 / 100 != game_data.ranks.at(rank_id) / 100)
+    if (orgrank_at_m75 / 100 != game()->ranks.at(rank_id) / 100)
     {
-        i_at_m75 = game_data.ranks.at(rank_id) / 100 - orgrank_at_m75 / 100;
+        i_at_m75 = game()->ranks.at(rank_id) / 100 - orgrank_at_m75 / 100;
         if (i_at_m75 < 0)
         {
             Message::instance().txtef(ColorIndex::green);
@@ -564,7 +560,7 @@ void modrank(int rank_id, int amount, int min)
             Message::instance().txtef(ColorIndex::purple);
         }
         const auto from = orgrank_at_m75 / 100;
-        const auto to = game_data.ranks.at(rank_id) / 100;
+        const auto to = game()->ranks.at(rank_id) / 100;
         txt(i18n::s.get(
             "core.misc.ranking.changed",
             rankn(10, rank_id),

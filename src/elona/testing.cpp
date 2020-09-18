@@ -10,7 +10,7 @@
 #include "data/types/type_music.hpp"
 #include "data/types/type_sound.hpp"
 #include "draw.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "initialize_map.hpp"
@@ -129,8 +129,8 @@ void start_in_map(int map, int level)
     fs::create_directory(filesystem::dirs::tmp());
     save_fs_clear();
 
-    game_data.current_map = map;
-    game_data.current_dungeon_level = level;
+    game()->current_map = map;
+    game()->current_dungeon_level = level;
     init_fovlist();
     elona::mode = 2;
     initialize_map();
@@ -145,12 +145,12 @@ void start_in_debug_map()
 
 void run_in_temporary_map(int map, int dungeon_level, std::function<void()> f)
 {
-    auto previous_map = game_data.current_map;
-    auto previous_dungeon_level = game_data.current_dungeon_level;
+    auto previous_map = game()->current_map;
+    auto previous_dungeon_level = game()->current_dungeon_level;
     auto previous_x = cdata.player().position.x;
     auto previous_y = cdata.player().position.y;
-    game_data.destination_map = map;
-    game_data.destination_dungeon_level = dungeon_level;
+    game()->destination_map = map;
+    game()->destination_dungeon_level = dungeon_level;
     elona::levelexitby = 2;
     exit_map();
     initialize_map();
@@ -159,8 +159,8 @@ void run_in_temporary_map(int map, int dungeon_level, std::function<void()> f)
 
     elona::mapstartx = previous_x;
     elona::mapstarty = previous_y;
-    game_data.destination_map = previous_map;
-    game_data.destination_dungeon_level = previous_dungeon_level;
+    game()->destination_map = previous_map;
+    game()->destination_dungeon_level = previous_dungeon_level;
     elona::levelexitby = 2;
     exit_map();
     initialize_map();

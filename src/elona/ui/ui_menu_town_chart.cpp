@@ -3,7 +3,10 @@
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
+
+
 
 namespace elona
 {
@@ -29,7 +32,7 @@ void UIMenuTownChart::update()
     render_hud();
     windowshadow = 1;
 
-    _city = area_data[game_data.current_map].quest_town_id;
+    _city = area_data[game()->current_map].quest_town_id;
 
     cs_bk = -1;
     pagemax = (listmax - 1) / pagesize;
@@ -60,8 +63,8 @@ void UIMenuTownChart::draw()
         400);
     keyrange = 0;
     cs_listbk();
-    if (area_data[game_data.current_map].quest_town_id == 0 ||
-        game_data.current_dungeon_level != 1)
+    if (area_data[game()->current_map].quest_town_id == 0 ||
+        game()->current_dungeon_level != 1)
     {
         font(14 - en * 2);
         mes(wx + 40, wy + 50, i18n::s.get("core.ui.town_chart.no_economy"));
@@ -71,7 +74,7 @@ void UIMenuTownChart::draw()
         display_topic(
             i18n::s.get(
                 "core.ui.town_chart.chart",
-                mapname(area_data[game_data.current_map].id)),
+                mapname(area_data[game()->current_map].id)),
             wx + 40,
             wy + 34);
 

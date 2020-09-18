@@ -15,6 +15,7 @@
 #include "data/types/type_item.hpp"
 #include "data/types/type_map.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -86,7 +87,7 @@ void add_heirloom_if_valuable_enough(
     const auto category = the_item_db[heirloom->id]->category;
     if (category == ItemCategory::furniture)
     {
-        game_data.total_deco_value += clamp(heirloom->value / 50, 50, 500);
+        game()->total_deco_value += clamp(heirloom->value / 50, 50, 500);
     }
 
     const auto value = calc_heirloom_value(heirloom);
@@ -256,23 +257,23 @@ void initialize_home_adata()
 {
     p = 7;
     area_data[p].appearance = 143;
-    if (game_data.home_scale == 0)
+    if (game()->home_scale == 0)
     {
         area_data[p].appearance = 138;
     }
-    if (game_data.home_scale == 4)
+    if (game()->home_scale == 4)
     {
         area_data[p].appearance = 148;
     }
-    if (game_data.home_scale == 5)
+    if (game()->home_scale == 5)
     {
         area_data[p].appearance = 144;
     }
-    if (game_data.home_scale != 0)
+    if (game()->home_scale != 0)
     {
         area_data[p].position = cdata.player().position;
     }
-    area_data[p].outer_map = game_data.destination_outer_map;
+    area_data[p].outer_map = game()->destination_outer_map;
 }
 
 static optional_ref<const MapDefData> _find_map_from_deed(int item_id)
@@ -316,7 +317,7 @@ static optional_ref<const MapDefData> _find_map_from_deed(int item_id)
 
 static TurnResult _build_new_home(int home_scale)
 {
-    game_data.home_scale = home_scale;
+    game()->home_scale = home_scale;
     initialize_home_adata();
 
     std::string midbk = mid;
@@ -327,11 +328,11 @@ static TurnResult _build_new_home(int home_scale)
     map_global_prepare();
 
     levelexitby = 2;
-    game_data.destination_map = static_cast<int>(mdata_t::MapId::your_home);
-    game_data.destination_dungeon_level = 1;
-    game_data.pc_x_in_world_map =
+    game()->destination_map = static_cast<int>(mdata_t::MapId::your_home);
+    game()->destination_dungeon_level = 1;
+    game()->pc_x_in_world_map =
         area_data[static_cast<int>(mdata_t::MapId::your_home)].position.x;
-    game_data.pc_y_in_world_map =
+    game()->pc_y_in_world_map =
         area_data[static_cast<int>(mdata_t::MapId::your_home)].position.y;
 
     snd("core.build1");
@@ -415,7 +416,7 @@ TurnResult build_new_building(const ItemRef& deed)
     auto& area = area_data[p];
     auto pos = cdata.player().position;
     area_generate_from_mapdef(
-        area, *map, game_data.destination_outer_map, pos.x, pos.y);
+        area, *map, game()->destination_outer_map, pos.x, pos.y);
 
     s = i18n::s.get_enum(
         "core.building.names", the_item_db[deed->id]->integer_id);
@@ -483,37 +484,37 @@ TurnResult show_house_board()
     }
     txt(i18n::s.get(
         "core.building.house_board.item_count",
-        mapname(game_data.current_map),
+        mapname(game()->current_map),
         p(0),
         p(1),
         p(2)));
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
-        if (getworker(game_data.current_map) != -1)
+        if (getworker(game()->current_map) != -1)
         {
             txt(i18n::s.get(
                 "core.building.shop.current_shopkeeper",
-                cdata[getworker(game_data.current_map)]));
+                cdata[getworker(game()->current_map)]));
         }
         else
         {
             txt(i18n::s.get("core.building.shop.no_assigned_shopkeeper"));
         }
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
-        if (getworker(game_data.current_map) != -1)
+        if (getworker(game()->current_map) != -1)
         {
             txt(i18n::s.get(
                 "core.building.ranch.current_breeder",
-                cdata[getworker(game_data.current_map)]));
+                cdata[getworker(game()->current_map)]));
         }
         else
         {
             txt(i18n::s.get("core.building.ranch.no_assigned_breeder"));
         }
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         p = 0;
         for (auto&& cnt : cdata.others())
@@ -528,9 +529,7 @@ TurnResult show_house_board()
             }
         }
         txt(i18n::s.get(
-            "core.building.home.staying.count",
-            p(0),
-            game_data.home_scale + 2));
+            "core.building.home.staying.count", p(0), game()->home_scale + 2));
     }
     Message::instance().linebreak();
     txt(i18n::s.get("core.building.house_board.what_do"));
@@ -538,7 +537,7 @@ TurnResult show_house_board()
 
     Prompt prompt("core.building.house_board.choices");
 
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         prompt.append("assign_a_shopkeeper", 4);
         if (map_data.max_item_count < 400)
@@ -551,18 +550,18 @@ TurnResult show_house_board()
         }
     }
 
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
         prompt.append("assign_a_breeder", 4);
     }
 
     prompt.append("design", 0);
 
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         prompt.append("home_rank", 2);
         prompt.append("allies_in_your_home", 4);
-        if (game_data.current_dungeon_level == 1)
+        if (game()->current_dungeon_level == 1)
         {
             prompt.append("recruit_a_servant", 6);
         }
@@ -609,14 +608,14 @@ void prompt_hiring()
             }
         }
     }
-    if (p >= game_data.home_scale + 2)
+    if (p >= game()->home_scale + 2)
     {
         txt(i18n::s.get("core.building.home.hire.too_many_guests"));
         return;
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        randomize(game_data.date.day + cnt);
+        randomize(game()->date.day + cnt);
         if (rnd(2))
         {
             continue;
@@ -630,7 +629,7 @@ void prompt_hiring()
             hire = rnd(isethire.size());
         }
         const auto chara_id = isethire.at(hire).first;
-        randomize(game_data.date.day + cnt);
+        randomize(game()->date.day + cnt);
         flt(20);
         const auto servant = chara_create(-1, chara_id, -3, 0);
         if (!servant)
@@ -774,9 +773,9 @@ void show_home_value()
     s(1) = i18n::s.get("core.building.home.rank.type.deco");
     s(2) = i18n::s.get("core.building.home.rank.type.heir");
     s(3) = i18n::s.get("core.building.home.rank.type.total");
-    p(0) = game_data.basic_point_of_home_rank;
-    p(1) = game_data.total_deco_value;
-    p(2) = game_data.total_heirloom_value;
+    p(0) = game()->basic_point_of_home_rank;
+    p(1) = game()->total_deco_value;
+    p(2) = game()->total_heirloom_value;
     p(3) = (p + p(1) + p(2)) / 3;
     for (int cnt = 0; cnt < 4; ++cnt)
     {
@@ -891,9 +890,9 @@ void prompt_ally_staying()
         int c = stat;
         snd("core.ok1");
         Message::instance().linebreak();
-        if (getworker(game_data.current_map, c) == c)
+        if (getworker(game()->current_map, c) == c)
         {
-            if (game_data.current_map == mdata_t::MapId::your_home)
+            if (game()->current_map == mdata_t::MapId::your_home)
             {
                 cdata[c].current_map = 0;
                 txt(i18n::s.get(
@@ -901,14 +900,14 @@ void prompt_ally_staying()
             }
             else
             {
-                removeworker(game_data.current_map);
+                removeworker(game()->current_map);
                 txt(i18n::s.get(
                     "core.building.home.staying.remove.worker", cdata[c]));
             }
         }
         else
         {
-            if (game_data.current_map == mdata_t::MapId::your_home)
+            if (game()->current_map == mdata_t::MapId::your_home)
             {
                 cdata[c].initial_position = cdata[c].position;
                 txt(i18n::s.get(
@@ -916,11 +915,11 @@ void prompt_ally_staying()
             }
             else
             {
-                removeworker(game_data.current_map);
+                removeworker(game()->current_map);
                 txt(i18n::s.get(
                     "core.building.home.staying.add.worker", cdata[c]));
             }
-            cdata[c].current_map = game_data.current_map;
+            cdata[c].current_map = game()->current_map;
         }
     }
 }
@@ -958,7 +957,7 @@ void update_shop_and_report()
         }
     }
     mid = midbk;
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -975,14 +974,14 @@ void show_shop_log()
         return;
     }
 
-    if (game_data.current_map != area)
+    if (game()->current_map != area)
     {
         ctrl_file_map_items_write(u8"shoptmp.s2");
         ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
     }
     mode = 6;
 
-    const auto shop_level = 100 - game_data.ranks.at(5) / 100;
+    const auto shop_level = 100 - game()->ranks.at(5) / 100;
     const auto num_of_customers =
         calc_num_of_shop_customers(shop_level, cdata[worker]);
 
@@ -1039,7 +1038,7 @@ void show_shop_log()
             total_profit += total_price;
         }
 
-        if (area == game_data.current_map)
+        if (area == game()->current_map)
         {
             for (auto&& chara : cdata.all())
             {
@@ -1060,7 +1059,7 @@ void show_shop_log()
     }
 
     mode = 0;
-    if (game_data.current_map != area)
+    if (game()->current_map != area)
     {
         ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
         ctrl_file_map_items_read(u8"shoptmp.s2");
@@ -1149,7 +1148,7 @@ void show_shop_log()
             clamp(int(std::sqrt(total_profit)) * 6, 25, 1000));
     }
 
-    if (total_sold_items > (110 - game_data.ranks.at(5) / 100) / 10)
+    if (total_sold_items > (110 - game()->ranks.at(5) / 100) / 10)
     {
         modrank(5, 30, 2);
     }
@@ -1162,7 +1161,7 @@ void show_shop_log()
 
 void update_shop()
 {
-    map_data.max_crowd_density = (100 - game_data.ranks.at(5) / 100) / 4 + 1;
+    map_data.max_crowd_density = (100 - game()->ranks.at(5) / 100) / 4 + 1;
     for (int y = 0; y < map_data.height; ++y)
     {
         for (int x = 0; x < map_data.width; ++x)
@@ -1223,7 +1222,7 @@ void calc_collection_value(int chara_id, bool val0)
 
 void update_museum()
 {
-    rankorg = game_data.ranks.at(3);
+    rankorg = game()->ranks.at(3);
     rankcur = 0;
     DIM3(dblist, 2, 800);
     for (const auto& item : *inv_map())
@@ -1252,7 +1251,7 @@ void update_museum()
     {
         rankcur = 100;
     }
-    game_data.ranks.at(3) = rankcur;
+    game()->ranks.at(3) = rankcur;
     if (rankorg != rankcur)
     {
         if (rankorg > rankcur)
@@ -1271,21 +1270,21 @@ void update_museum()
             ranktitle(3),
             rankn(10, 3)));
     }
-    map_data.max_crowd_density = (100 - game_data.ranks.at(3) / 100) / 2 + 1;
+    map_data.max_crowd_density = (100 - game()->ranks.at(3) / 100) / 2 + 1;
 }
 
 
 
 std::vector<HomeRankHeirloom> building_update_home_rank()
 {
-    if (game_data.current_dungeon_level != 1)
+    if (game()->current_dungeon_level != 1)
     {
         return {};
     }
-    rankorg = game_data.ranks.at(4);
+    rankorg = game()->ranks.at(4);
     rankcur = 0;
-    game_data.total_deco_value = 0;
-    game_data.total_heirloom_value = 0;
+    game()->total_deco_value = 0;
+    game()->total_heirloom_value = 0;
 
     std::vector<HomeRankHeirloom> heirlooms;
     for (const auto& item : *inv_map())
@@ -1301,25 +1300,25 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
 
     for (const auto& [_, value] : heirlooms)
     {
-        game_data.total_heirloom_value += clamp(value, 100, 2000);
+        game()->total_heirloom_value += clamp(value, 100, 2000);
     }
-    if (game_data.total_deco_value > 10000)
+    if (game()->total_deco_value > 10000)
     {
-        game_data.total_deco_value = 10000;
+        game()->total_deco_value = 10000;
     }
-    if (game_data.total_heirloom_value > 10000)
+    if (game()->total_heirloom_value > 10000)
     {
-        game_data.total_heirloom_value = 10000;
+        game()->total_heirloom_value = 10000;
     }
     rankcur = 10000 -
-        (game_data.basic_point_of_home_rank + game_data.total_deco_value +
-         game_data.total_heirloom_value) /
+        (game()->basic_point_of_home_rank + game()->total_deco_value +
+         game()->total_heirloom_value) /
             3;
     if (rankcur < 100)
     {
         rankcur = 100;
     }
-    game_data.ranks.at(4) = rankcur;
+    game()->ranks.at(4) = rankcur;
     if (rankorg != rankcur)
     {
         if (rankorg > rankcur)
@@ -1333,8 +1332,8 @@ std::vector<HomeRankHeirloom> building_update_home_rank()
         Message::instance().linebreak();
         txt(i18n::s.get(
             "core.building.home.rank.change",
-            game_data.total_deco_value / 100,
-            game_data.total_heirloom_value / 100,
+            game()->total_deco_value / 100,
+            game()->total_heirloom_value / 100,
             cnvrank(rankorg / 100),
             cnvrank(rankcur / 100),
             ranktitle(4),
@@ -1357,7 +1356,7 @@ void update_ranch()
         }
     }
 
-    const auto worker = getworker(game_data.current_map);
+    const auto worker = getworker(game()->current_map);
     for (int i = 0; i < renewmulti; ++i)
     {
         if (worker != -1 &&
@@ -1506,7 +1505,7 @@ void update_ranch()
 
 int calcincome(int rank_id)
 {
-    int rank_amount = 100 - game_data.ranks.at(rank_id) / 100;
+    int rank_amount = 100 - game()->ranks.at(rank_id) / 100;
     if (rank_amount == 99)
     {
         rank_amount = rank_amount * 70;
@@ -1557,7 +1556,7 @@ void supply_income()
     income(1) = 0;
     for (int cnt = 0; cnt < 9; ++cnt)
     {
-        if (game_data.ranks.at(cnt) >= 10000)
+        if (game()->ranks.at(cnt) >= 10000)
         {
             continue;
         }
@@ -1579,7 +1578,7 @@ void supply_income()
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
             int item_id = 0;
-            flt(calcobjlv((100 - game_data.ranks.at(rank_id) / 100) / 2 + 1),
+            flt(calcobjlv((100 - game()->ranks.at(rank_id) / 100) / 2 + 1),
                 calcfixlv(
                     (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
             flttypemajor = choice(fsetincome);
@@ -1587,7 +1586,7 @@ void supply_income()
             {
                 flttypemajor = choice(fsetwear);
             }
-            if (rnd(100 + game_data.ranks.at(rank_id) / 5) < 2)
+            if (rnd(100 + game()->ranks.at(rank_id) / 5) < 2)
             {
                 item_id = 559;
             }
@@ -1624,7 +1623,7 @@ void supply_income()
         }
         save_trigger_autosaving();
     }
-    if (game_data.date.day == 1)
+    if (game()->date.day == 1)
     {
         if (cdata.player().level > 5)
         {
@@ -1637,17 +1636,17 @@ void supply_income()
             if (const auto item = itemcreate_tmp_inv(615, 0))
             {
                 item->subname =
-                    game_data.cost_to_hire + calccostbuilding() + calccosttax();
+                    game()->cost_to_hire + calccostbuilding() + calccosttax();
                 item->subname = item->subname * (100 + rnd(20)) / 100;
             }
             mode = 0;
-            ++game_data.left_bill;
+            ++game()->left_bill;
             txt(i18n::s.get("core.misc.tax.bill"));
-            if (game_data.left_bill > 1)
+            if (game()->left_bill > 1)
             {
-                if (game_data.left_bill <= 4)
+                if (game()->left_bill <= 4)
                 {
-                    if (game_data.left_bill > 3)
+                    if (game()->left_bill > 3)
                     {
                         s(0) = i18n::s.get("core.misc.tax.warning");
                         s(1) = i18n::s.get("core.misc.tax.have_to_go_embassy");
@@ -1660,15 +1659,14 @@ void supply_income()
                     txt(s +
                             i18n::s.get(
                                 "core.misc.tax.left_bills",
-                                game_data.left_bill - 1) +
+                                game()->left_bill - 1) +
                             s(1),
                         Message::color{ColorIndex::red});
                 }
             }
-            if (game_data.left_bill > 4)
+            if (game()->left_bill > 4)
             {
-                txt(i18n::s.get(
-                        "core.misc.tax.accused", game_data.left_bill - 1),
+                txt(i18n::s.get("core.misc.tax.accused", game()->left_bill - 1),
                     Message::color{ColorIndex::red});
                 int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
@@ -1738,7 +1736,7 @@ void try_to_grow_plant(int val0)
     }
     if (feat == tile_plant)
     {
-        if (game_data.weather < 3)
+        if (game()->weather < 3)
         {
             p = p * 2;
         }
@@ -1774,7 +1772,7 @@ void harvest_plant(int val)
     {
         p = p * 2;
     }
-    if (game_data.weather < 3)
+    if (game()->weather < 3)
     {
         p = p * 4 / 3;
     }

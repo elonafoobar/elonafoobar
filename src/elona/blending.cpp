@@ -13,6 +13,7 @@
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "enums.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -1083,7 +1084,7 @@ void activity_blending_end()
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
-            ++game_data.date.hour;
+            ++game()->date.hour;
             weather_changes();
             render_hud();
             if (cnt % 5 == 0)
@@ -1093,7 +1094,7 @@ void activity_blending_end()
             }
             redraw();
             await(g_config.animation_wait() * 5);
-            game_data.date.minute = 0;
+            game()->date.minute = 0;
             --cdata.player().activity.turn;
             if (cdata.player().activity.turn <= 0)
             {

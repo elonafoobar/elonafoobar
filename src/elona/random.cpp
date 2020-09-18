@@ -1,6 +1,6 @@
 #include "random.hpp"
 
-#include "gdata.hpp"
+#include "game.hpp"
 
 
 
@@ -16,8 +16,8 @@ xoshiro256::xoshiro256_engine engine{std::random_device{}()};
 
 void randomize()
 {
-    ++game_data.random_seed_offset;
-    randomize(game_data.random_seed + game_data.random_seed_offset);
+    ++game()->random_seed_offset;
+    randomize(game()->random_seed + game()->random_seed_offset);
 }
 
 

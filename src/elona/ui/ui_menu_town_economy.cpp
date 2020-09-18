@@ -3,7 +3,10 @@
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
+
+
 
 namespace elona
 {
@@ -93,7 +96,7 @@ void UIMenuTownEconomy::_draw_economy_info(int _city)
         x,
         y,
         i18n::s.get("core.ui.economy.basic_tax") + u8" ("s +
-            game_data.politics_tax_amount + u8"%)"s,
+            game()->politics_tax_amount + u8"%)"s,
         podata(102, _city),
         podata(103, _city));
     _show_economy_info(
@@ -116,8 +119,8 @@ void UIMenuTownEconomy::_draw_economy_details()
 
 static bool _map_has_economy()
 {
-    return area_data[game_data.current_map].quest_town_id != 0 &&
-        game_data.current_dungeon_level == 1;
+    return area_data[game()->current_map].quest_town_id != 0 &&
+        game()->current_dungeon_level == 1;
 }
 
 void UIMenuTownEconomy::draw()

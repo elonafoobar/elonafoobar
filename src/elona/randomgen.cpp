@@ -1,6 +1,7 @@
 #include "randomgen.hpp"
 
 #include "calc.hpp"
+#include "game.hpp"
 #include "variables.hpp"
 
 
@@ -19,7 +20,7 @@ void flt(int level, Quality quality)
     flttypemajor = 0;
     flttypeminor = 0;
     fltnrace = "";
-    objlv = level == 0 ? calcobjlv(game_data.current_dungeon_level) : level;
+    objlv = level == 0 ? calcobjlv(game()->current_dungeon_level) : level;
     fixlv = quality == Quality::none ? calcfixlv(Quality::bad) : quality;
 }
 

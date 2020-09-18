@@ -3,6 +3,7 @@
 #include "ability.hpp"
 #include "character.hpp"
 #include "data/types/type_ability.hpp"
+#include "game.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "variables.hpp"
@@ -50,7 +51,7 @@ bool is_in_fov(const Position& pos)
 
 bool is_in_fov(const Character& chara)
 {
-    return chara.vision_flag == msync || chara.index == game_data.mount;
+    return chara.vision_flag == msync || chara.index == game()->mount;
 }
 
 

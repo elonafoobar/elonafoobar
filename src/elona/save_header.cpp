@@ -7,7 +7,7 @@
 #include "../version.hpp"
 #include "character.hpp"
 #include "class.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "json5util.hpp"
 #include "race.hpp"
 #include "serialization/serialization.hpp"
@@ -37,7 +37,7 @@ int64_t now_unix_time()
 
 int64_t get_played_seconds()
 {
-    return game_data.play_time;
+    return game()->play_time;
 }
 
 
@@ -197,7 +197,7 @@ SaveHeader SaveHeader::current_state()
     h.race = the_race_db.get_text(cdata.player().race, "name");
     h.class_ = class_get_name(cdata.player().class_);
     h.location = mdatan(0) + maplevel();
-    h.ingame_time = game_data.date.to_string(); // TODO localize
+    h.ingame_time = game()->date.to_string(); // TODO localize
     h.last_played_at = now;
     h.play_seconds = play_seconds;
 

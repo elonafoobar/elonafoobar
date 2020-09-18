@@ -3,9 +3,12 @@
 #include "../../snail/color.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../message.hpp"
 #include "../quest.hpp"
+
+
 
 namespace elona
 {
@@ -14,7 +17,7 @@ namespace ui
 
 static bool _should_display_quest(int cnt)
 {
-    if (quest_data[cnt].originating_map_id != game_data.current_map)
+    if (quest_data[cnt].originating_map_id != game()->current_map)
     {
         return false;
     }
@@ -39,7 +42,7 @@ static void _populate_quest_list()
 {
     quest_refresh_list();
 
-    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {

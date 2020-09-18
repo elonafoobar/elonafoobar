@@ -2,7 +2,7 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "data/types/type_map.hpp"
-#include "gdata.hpp"
+#include "game.hpp"
 #include "lua_env/enums/enums.hpp"
 #include "map.hpp"
 #include "quest.hpp"
@@ -16,12 +16,12 @@ namespace elona
 
 static void _chara_filter_quest()
 {
-    if (game_data.executing_immediate_quest_type >= 1000)
+    if (game()->executing_immediate_quest_type >= 1000)
     {
         flt(calcobjlv(quest_data.immediate().difficulty + 1),
             calcfixlv(Quality::bad));
     }
-    if (game_data.executing_immediate_quest_type == 1006)
+    if (game()->executing_immediate_quest_type == 1006)
     {
         fltn(u8"wild"s);
         objlv = clamp(objlv / 4, 1, 8);
@@ -30,7 +30,7 @@ static void _chara_filter_quest()
 
 static void _chara_filter_nefia()
 {
-    flt(calcobjlv(game_data.current_dungeon_level), calcfixlv(Quality::bad));
+    flt(calcobjlv(game()->current_dungeon_level), calcfixlv(Quality::bad));
 }
 
 static void _process_chara_filter(const lua::WrappedFunction& chara_filter)
@@ -108,13 +108,13 @@ void map_set_chara_generation_filter()
 {
     dbid = 0;
 
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
         _chara_filter_quest();
         return;
     }
 
-    int map_id = area_data[game_data.current_map].id;
+    int map_id = area_data[game()->current_map].id;
     auto mapdef_data = the_mapdef_db[map_id];
     if (mapdef_data && mapdef_data->chara_filter)
     {

@@ -2,7 +2,7 @@
 
 
 
-LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::GameData)
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::Game)
 
 
 
@@ -16,66 +16,66 @@ namespace elona::lua::api::classes::class_LuaGameData
 
 #define ELONA_LUA_GUILD_PROPERTY(field) \
     sol::property( \
-        [](GameData& it) { return it.guild.field; }, \
-        [](GameData& it, int value) { it.guild.field = value; })
+        [](Game& it) { return it.guild.field; }, \
+        [](Game& it, int value) { it.guild.field = value; })
 
 #define ELONA_LUA_GUILD_FLAG(field) \
     sol::property( \
-        [](GameData& it) { return it.guild.field == 1; }, \
-        [](GameData& it, bool value) { it.guild.field = value ? 1 : 0; })
+        [](Game& it) { return it.guild.field == 1; }, \
+        [](Game& it, bool value) { it.guild.field = value ? 1 : 0; })
 
 
 void bind(sol::state& lua)
 {
     auto LuaGameData =
-        lua.new_usertype<GameData>("LuaGameData", sol::no_constructor);
+        lua.new_usertype<Game>("LuaGameData", sol::no_constructor);
 
     /**
      * @luadoc holy_well_count field num
      *
      * [RW] The amount of the water which the the holy well has.
      */
-    LuaGameData.set("holy_well_count", &GameData::holy_well_count);
+    LuaGameData.set("holy_well_count", &Game::holy_well_count);
 
     /**
      * @luadoc home_scale field num
      *
      * [RW] The player's home scale.
      */
-    LuaGameData.set("home_scale", &GameData::home_scale);
+    LuaGameData.set("home_scale", &Game::home_scale);
 
     /**
      * @luadoc initial_cart_limit field num
      *
      * [RW] The player's initial cargo capacity.
      */
-    LuaGameData.set("initial_cart_limit", &GameData::initial_cart_limit);
+    LuaGameData.set("initial_cart_limit", &Game::initial_cart_limit);
 
     /**
      * @luadoc current_cart_limit field num
      *
      * [RW] The player's maximum cargo capacity.
      */
-    LuaGameData.set("current_cart_limit", &GameData::current_cart_limit);
+    LuaGameData.set("current_cart_limit", &Game::current_cart_limit);
 
     /**
      * @luadoc ranks field table
      */
-    LuaGameData.set("ranks", &GameData::ranks);
+    LuaGameData.set("ranks", &Game::ranks);
 
     /**
      * @luadoc left_bill field num
      *
      * [RW] The number of unpaid bills the player owns.
      */
-    LuaGameData.set("left_bill", &GameData::left_bill);
+    LuaGameData.set("left_bill", &Game::left_bill);
 
     /**
      * @luadoc date field LuaDateTime
      *
      * [R] The current date and time.
      */
-    LuaGameData.set("date", &GameData::date);
+    LuaGameData.set("date", &Game::date);
 
 
     /**

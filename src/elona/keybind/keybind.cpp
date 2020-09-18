@@ -2,7 +2,6 @@
 
 #include "../../util/strutil.hpp"
 #include "../enums.hpp"
-#include "../gdata.hpp"
 #include "../log.hpp"
 #include "../variables.hpp"
 #include "keybind_manager.hpp"

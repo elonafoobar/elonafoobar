@@ -13,6 +13,7 @@
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -266,7 +267,7 @@ void run_random_event(RandomEvent event)
     case 15:
         for (int cnt = 0; cnt < 20; ++cnt)
         {
-            p = rnd(game_data.crowd_density + 1) + 57;
+            p = rnd(game()->crowd_density + 1) + 57;
             if (p >= ELONA_MAX_CHARACTERS)
             {
                 --cnt;

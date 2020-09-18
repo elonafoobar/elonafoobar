@@ -14,6 +14,8 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "food.hpp"
+#include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
 #include "inventory.hpp"
@@ -53,30 +55,30 @@ elona_vector2<int> medalbk;
 
 void _update_dungeon_level()
 {
-    if (game_data.current_dungeon_level >
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level >
+        area_data[game()->current_map].deepest_level)
     {
-        game_data.current_dungeon_level =
-            area_data[game_data.current_map].deepest_level;
+        game()->current_dungeon_level =
+            area_data[game()->current_map].deepest_level;
     }
-    if (game_data.current_dungeon_level <
-        area_data[game_data.current_map].danger_level)
+    if (game()->current_dungeon_level <
+        area_data[game()->current_map].danger_level)
     {
-        game_data.current_dungeon_level =
-            area_data[game_data.current_map].danger_level;
+        game()->current_dungeon_level =
+            area_data[game()->current_map].danger_level;
     }
-    if (game_data.deepest_dungeon_level < game_data.current_dungeon_level)
+    if (game()->deepest_dungeon_level < game()->current_dungeon_level)
     {
-        if (game_data.current_map != mdata_t::MapId::shelter_)
+        if (game()->current_map != mdata_t::MapId::shelter_)
         {
-            game_data.deepest_dungeon_level = game_data.current_dungeon_level;
+            game()->deepest_dungeon_level = game()->current_dungeon_level;
         }
     }
-    if (area_data[game_data.current_map].visited_deepest_level <
-        game_data.current_dungeon_level)
+    if (area_data[game()->current_map].visited_deepest_level <
+        game()->current_dungeon_level)
     {
-        area_data[game_data.current_map].visited_deepest_level =
-            game_data.current_dungeon_level;
+        area_data[game()->current_map].visited_deepest_level =
+            game()->current_dungeon_level;
     }
 }
 
@@ -86,7 +88,7 @@ void _update_pets_moving_status()
 {
     for (auto&& ally : cdata.allies())
     {
-        if (ally.current_map != 0 && ally.current_map == game_data.current_map)
+        if (ally.current_map != 0 && ally.current_map == game()->current_map)
         {
             if (ally.state() == Character::State::pet_moving_to_map)
             {
@@ -134,16 +136,15 @@ void _clear_map_and_objects()
 
 void _init_map_data()
 {
-    map_data.current_dungeon_level = game_data.current_dungeon_level;
-    map_data.atlas_number = area_data[game_data.current_map].tile_set;
-    map_data.tileset = area_data[game_data.current_map].tile_type;
-    map_data.type = area_data[game_data.current_map].type;
-    map_data.turn_cost = area_data[game_data.current_map].turn_cost_base;
+    map_data.current_dungeon_level = game()->current_dungeon_level;
+    map_data.atlas_number = area_data[game()->current_map].tile_set;
+    map_data.tileset = area_data[game()->current_map].tile_type;
+    map_data.type = area_data[game()->current_map].type;
+    map_data.turn_cost = area_data[game()->current_map].turn_cost_base;
     map_data.refresh_type =
-        area_data[game_data.current_map].is_generated_every_time ? 0 : 1;
-    map_data.designated_spawns =
-        area_data[game_data.current_map].default_ai_calm;
-    map_data.indoors_flag = area_data[game_data.current_map].is_indoor ? 1 : 2;
+        area_data[game()->current_map].is_generated_every_time ? 0 : 1;
+    map_data.designated_spawns = area_data[game()->current_map].default_ai_calm;
+    map_data.indoors_flag = area_data[game()->current_map].is_indoor ? 1 : 2;
 }
 
 
@@ -345,13 +346,13 @@ void _do_mapupdate()
 
 void _proc_three_years_later()
 {
-    if (game_data.current_map == mdata_t::MapId::north_tyris)
+    if (game()->current_map == mdata_t::MapId::north_tyris)
     {
-        if (game_data.quest_flags.main_quest == 180)
+        if (game()->quest_flags.main_quest == 180)
         {
             cdata.player().position = area_data[11].position;
-            game_data.player_next_move_direction = 1;
-            game_data.player_x_on_map_leave = -1;
+            game()->player_next_move_direction = 1;
+            game()->player_x_on_map_leave = -1;
             Message::instance().buffered_message_begin(
                 "  " + i18n::s.get("core.scenario.three_years_later"));
         }
@@ -369,11 +370,11 @@ void _update_adventurer(Character& adv)
     if (adv.is_contracting())
     {
         adv.relationship = 10;
-        adv.current_map = game_data.current_map;
+        adv.current_map = game()->current_map;
     }
     else
     {
-        if (adv.current_map != game_data.current_map)
+        if (adv.current_map != game()->current_map)
         {
             return;
         }
@@ -382,13 +383,13 @@ void _update_adventurer(Character& adv)
         {
             return;
         }
-        if (game_data.current_dungeon_level != 1)
+        if (game()->current_dungeon_level != 1)
         {
             return;
         }
     }
-    if (game_data.current_map == mdata_t::MapId::arena ||
-        game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::arena ||
+        game()->current_map == mdata_t::MapId::pet_arena)
     {
         return;
     }
@@ -423,60 +424,60 @@ void _update_adventurers()
 
 bool _should_regenerate_map()
 {
-    return game_data.date.hours() >= map_data.next_regenerate_date &&
+    return game()->date.hours() >= map_data.next_regenerate_date &&
         map_data.should_regenerate == 0 && map_data.next_regenerate_date != 0 &&
-        game_data.current_dungeon_level == 1;
+        game()->current_dungeon_level == 1;
 }
 
 
 
 void _regenerate_map()
 {
-    if (game_data.current_map == mdata_t::MapId::lumiest)
+    if (game()->current_map == mdata_t::MapId::lumiest)
     {
         map_reload(u8"lumiest"s);
     }
-    if (game_data.current_map == mdata_t::MapId::vernis)
+    if (game()->current_map == mdata_t::MapId::vernis)
     {
         map_reload(u8"vernis"s);
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
         map_reload(u8"palmia"s);
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
         map_reload(u8"kapul"s);
     }
-    if (game_data.current_map == mdata_t::MapId::yowyn)
+    if (game()->current_map == mdata_t::MapId::yowyn)
     {
         map_reload(u8"yowyn"s);
     }
-    if (game_data.current_map == mdata_t::MapId::derphy)
+    if (game()->current_map == mdata_t::MapId::derphy)
     {
         map_reload(u8"rogueden"s);
     }
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
-        if (game_data.date.month == 12)
+        if (game()->date.month == 12)
         {
-            if (!area_data[game_data.current_map].christmas_festival)
+            if (!area_data[game()->current_map].christmas_festival)
             {
-                area_data[game_data.current_map].christmas_festival = true;
+                area_data[game()->current_map].christmas_festival = true;
                 map_reload_noyel();
             }
             map_reload(u8"noyel_fest"s);
         }
         else
         {
-            if (area_data[game_data.current_map].christmas_festival)
+            if (area_data[game()->current_map].christmas_festival)
             {
-                area_data[game_data.current_map].christmas_festival = false;
+                area_data[game()->current_map].christmas_festival = false;
                 map_reload_noyel();
             }
             map_reload(u8"noyel"s);
         }
-        game_data.released_fire_giant = 0;
+        game()->released_fire_giant = 0;
     }
 }
 
@@ -564,7 +565,7 @@ void _refresh_map_character_other(Character& chara)
     if (map_is_town_or_guild())
     {
         chara.sleep = 0;
-        if (game_data.date.hour >= 22 || game_data.date.hour < 7)
+        if (game()->date.hour >= 22 || game()->date.hour < 7)
         {
             if (rnd(6) == 0)
             {
@@ -606,7 +607,7 @@ void _refresh_map_character(Character& cnt)
     }
     if (cnt.state() == Character::State::villager_dead)
     {
-        if (game_data.date.hours() >= cnt.time_to_revive)
+        if (game()->date.hours() >= cnt.time_to_revive)
         {
             revive_player(cnt);
         }
@@ -626,7 +627,7 @@ void _refresh_map_character(Character& cnt)
     {
         _refresh_map_character_other(cnt);
     }
-    if (cnt.is_player() || game_data.mount != cnt.index)
+    if (cnt.is_player() || game()->mount != cnt.index)
     {
         if (_position_blocked(cnt))
         {
@@ -673,11 +674,11 @@ void _adjust_spawns()
             map_data.max_item_count = 0;
         }
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
-        area_data[game_data.current_map].danger_level = 0;
-        area_data[game_data.current_map].deepest_level = 10;
-        area_data[game_data.current_map].default_ai_calm = 1;
+        area_data[game()->current_map].danger_level = 0;
+        area_data[game()->current_map].deepest_level = 10;
+        area_data[game()->current_map].default_ai_calm = 1;
         map_data.designated_spawns = 1;
         event_add(17);
         calccosthire();
@@ -688,58 +689,58 @@ void _adjust_spawns()
 
 void _update_quest_flags_any()
 {
-    if (game_data.quest_flags.main_quest == 9)
+    if (game()->quest_flags.main_quest == 9)
     {
         sceneid = 2;
         do_play_scene();
-        game_data.quest_flags.main_quest = 10;
+        game()->quest_flags.main_quest = 10;
     }
-    if (game_data.quest_flags.main_quest == 60)
+    if (game()->quest_flags.main_quest == 60)
     {
         sceneid = 5;
         do_play_scene();
-        game_data.quest_flags.main_quest = 65;
+        game()->quest_flags.main_quest = 65;
     }
-    if (game_data.quest_flags.main_quest == 110)
+    if (game()->quest_flags.main_quest == 110)
     {
         sceneid = 26;
         do_play_scene();
-        game_data.quest_flags.main_quest = 115;
+        game()->quest_flags.main_quest = 115;
     }
-    if (game_data.quest_flags.main_quest == 115)
+    if (game()->quest_flags.main_quest == 115)
     {
-        if (game_data.quest_flags.magic_stone_of_fool +
-                game_data.quest_flags.magic_stone_of_king +
-                game_data.quest_flags.magic_stone_of_sage >=
+        if (game()->quest_flags.magic_stone_of_fool +
+                game()->quest_flags.magic_stone_of_king +
+                game()->quest_flags.magic_stone_of_sage >=
             1)
         {
             sceneid = 28;
             do_play_scene();
-            game_data.quest_flags.main_quest = 116;
+            game()->quest_flags.main_quest = 116;
         }
     }
-    if (game_data.quest_flags.main_quest == 116)
+    if (game()->quest_flags.main_quest == 116)
     {
-        if (game_data.quest_flags.magic_stone_of_fool +
-                game_data.quest_flags.magic_stone_of_king +
-                game_data.quest_flags.magic_stone_of_sage >=
+        if (game()->quest_flags.magic_stone_of_fool +
+                game()->quest_flags.magic_stone_of_king +
+                game()->quest_flags.magic_stone_of_sage >=
             2)
         {
             sceneid = 29;
             do_play_scene();
-            game_data.quest_flags.main_quest = 117;
+            game()->quest_flags.main_quest = 117;
         }
     }
-    if (game_data.quest_flags.main_quest == 117)
+    if (game()->quest_flags.main_quest == 117)
     {
-        if (game_data.quest_flags.magic_stone_of_fool +
-                game_data.quest_flags.magic_stone_of_king +
-                game_data.quest_flags.magic_stone_of_sage >=
+        if (game()->quest_flags.magic_stone_of_fool +
+                game()->quest_flags.magic_stone_of_king +
+                game()->quest_flags.magic_stone_of_sage >=
             3)
         {
             sceneid = 30;
             do_play_scene();
-            game_data.quest_flags.main_quest = 120;
+            game()->quest_flags.main_quest = 120;
         }
     }
 }
@@ -748,109 +749,109 @@ void _update_quest_flags_any()
 
 void _update_quest_flags_lesimas()
 {
-    if (game_data.quest_flags.main_quest == 10)
+    if (game()->quest_flags.main_quest == 10)
     {
         sceneid = 3;
         do_play_scene();
-        game_data.quest_flags.main_quest = 20;
+        game()->quest_flags.main_quest = 20;
     }
-    if (game_data.current_dungeon_level == 4)
+    if (game()->current_dungeon_level == 4)
     {
-        if (game_data.quest_flags.main_quest == 65)
+        if (game()->quest_flags.main_quest == 65)
         {
             sceneid = 7;
             do_play_scene();
-            game_data.quest_flags.main_quest = 70;
+            game()->quest_flags.main_quest = 70;
         }
     }
-    if (game_data.current_dungeon_level == 7)
+    if (game()->current_dungeon_level == 7)
     {
-        if (game_data.quest_flags.main_quest == 70)
+        if (game()->quest_flags.main_quest == 70)
         {
             sceneid = 15;
             do_play_scene();
-            game_data.quest_flags.main_quest = 75;
+            game()->quest_flags.main_quest = 75;
         }
     }
-    if (game_data.current_dungeon_level == 10)
+    if (game()->current_dungeon_level == 10)
     {
-        if (game_data.quest_flags.main_quest == 75)
+        if (game()->quest_flags.main_quest == 75)
         {
             sceneid = 16;
             do_play_scene();
-            game_data.quest_flags.main_quest = 80;
+            game()->quest_flags.main_quest = 80;
         }
     }
-    if (game_data.current_dungeon_level == 14)
+    if (game()->current_dungeon_level == 14)
     {
-        if (game_data.quest_flags.main_quest == 80)
+        if (game()->quest_flags.main_quest == 80)
         {
             sceneid = 17;
             do_play_scene();
-            game_data.quest_flags.main_quest = 85;
+            game()->quest_flags.main_quest = 85;
         }
     }
-    if (game_data.current_dungeon_level == 16)
+    if (game()->current_dungeon_level == 16)
     {
-        if (game_data.quest_flags.main_quest == 85)
+        if (game()->quest_flags.main_quest == 85)
         {
             sceneid = 24;
             do_play_scene();
-            game_data.quest_flags.main_quest = 90;
+            game()->quest_flags.main_quest = 90;
         }
     }
-    if (game_data.current_dungeon_level == 26)
+    if (game()->current_dungeon_level == 26)
     {
-        if (game_data.quest_flags.main_quest == 125)
+        if (game()->quest_flags.main_quest == 125)
         {
             sceneid = 33;
             do_play_scene();
-            game_data.quest_flags.main_quest = 130;
+            game()->quest_flags.main_quest = 130;
         }
     }
-    if (game_data.current_dungeon_level == 28)
+    if (game()->current_dungeon_level == 28)
     {
-        if (game_data.quest_flags.main_quest == 130)
+        if (game()->quest_flags.main_quest == 130)
         {
             sceneid = 35;
             do_play_scene();
-            game_data.quest_flags.main_quest = 135;
+            game()->quest_flags.main_quest = 135;
         }
     }
-    if (game_data.current_dungeon_level == 31)
+    if (game()->current_dungeon_level == 31)
     {
-        if (game_data.quest_flags.main_quest == 135)
+        if (game()->quest_flags.main_quest == 135)
         {
             sceneid = 40;
             do_play_scene();
-            game_data.quest_flags.main_quest = 140;
+            game()->quest_flags.main_quest = 140;
         }
     }
-    if (game_data.current_dungeon_level == 35)
+    if (game()->current_dungeon_level == 35)
     {
-        if (game_data.quest_flags.main_quest == 140)
+        if (game()->quest_flags.main_quest == 140)
         {
             sceneid = 60;
             do_play_scene();
-            game_data.quest_flags.main_quest = 145;
+            game()->quest_flags.main_quest = 145;
         }
     }
-    if (game_data.current_dungeon_level == 38)
+    if (game()->current_dungeon_level == 38)
     {
-        if (game_data.quest_flags.main_quest == 145)
+        if (game()->quest_flags.main_quest == 145)
         {
             sceneid = 70;
             do_play_scene();
-            game_data.quest_flags.main_quest = 150;
+            game()->quest_flags.main_quest = 150;
         }
     }
-    if (game_data.current_dungeon_level == 42)
+    if (game()->current_dungeon_level == 42)
     {
-        if (game_data.quest_flags.main_quest == 150)
+        if (game()->quest_flags.main_quest == 150)
         {
             sceneid = 90;
             do_play_scene();
-            game_data.quest_flags.main_quest = 160;
+            game()->quest_flags.main_quest = 160;
         }
     }
 }
@@ -861,7 +862,7 @@ void _update_paels_mom()
 {
     if (const auto lily = chara_find("core.lily"))
     {
-        if (game_data.quest_flags.pael_and_her_mom >= 10)
+        if (game()->quest_flags.pael_and_her_mom >= 10)
         {
             lily->image = 360;
             lily->portrait = "";
@@ -873,25 +874,25 @@ void _update_paels_mom()
 
 void _proc_guild_entry_events()
 {
-    if (area_data[game_data.current_map].id == mdata_t::MapId::lumiest)
+    if (area_data[game()->current_map].id == mdata_t::MapId::lumiest)
     {
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game_data.guild.belongs_to_mages_guild);
+            event_add(22, game()->guild.belongs_to_mages_guild);
         }
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::derphy)
+    if (area_data[game()->current_map].id == mdata_t::MapId::derphy)
     {
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game_data.guild.belongs_to_thieves_guild);
+            event_add(22, game()->guild.belongs_to_thieves_guild);
         }
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::port_kapul)
+    if (area_data[game()->current_map].id == mdata_t::MapId::port_kapul)
     {
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game_data.guild.belongs_to_fighters_guild);
+            event_add(22, game()->guild.belongs_to_fighters_guild);
         }
     }
 }
@@ -900,15 +901,15 @@ void _proc_guild_entry_events()
 
 void _update_quest_flags_vernis()
 {
-    if (game_data.quest_flags.main_quest == 0)
+    if (game()->quest_flags.main_quest == 0)
     {
         sceneid = 1;
         do_play_scene();
-        game_data.quest_flags.main_quest = 9;
+        game()->quest_flags.main_quest = 9;
     }
-    if (game_data.has_not_been_to_vernis == 0)
+    if (game()->has_not_been_to_vernis == 0)
     {
-        game_data.has_not_been_to_vernis = 1;
+        game()->has_not_been_to_vernis = 1;
         event_add(12);
     }
 }
@@ -917,17 +918,17 @@ void _update_quest_flags_vernis()
 
 void _update_quest_flags_palmia()
 {
-    if (game_data.quest_flags.main_quest == 30)
+    if (game()->quest_flags.main_quest == 30)
     {
         sceneid = 4;
         do_play_scene();
-        game_data.quest_flags.main_quest = 40;
+        game()->quest_flags.main_quest = 40;
     }
-    if (game_data.quest_flags.main_quest == 100)
+    if (game()->quest_flags.main_quest == 100)
     {
         sceneid = 25;
         do_play_scene();
-        game_data.quest_flags.main_quest = 105;
+        game()->quest_flags.main_quest = 105;
     }
 }
 
@@ -935,12 +936,12 @@ void _update_quest_flags_palmia()
 
 void _update_quest_flags_north_tyris()
 {
-    if (game_data.quest_flags.main_quest == 180)
+    if (game()->quest_flags.main_quest == 180)
     {
         sceneid = 100;
         do_play_scene();
-        game_data.quest_flags.main_quest = 200;
-        game_data.date.year += 3;
+        game()->quest_flags.main_quest = 200;
+        game()->date.year += 3;
     }
 }
 
@@ -948,13 +949,13 @@ void _update_quest_flags_north_tyris()
 
 void _proc_no_dungeon_master()
 {
-    if (game_data.current_dungeon_level ==
-        area_data[game_data.current_map].deepest_level)
+    if (game()->current_dungeon_level ==
+        area_data[game()->current_map].deepest_level)
     {
-        if (area_data[game_data.current_map].has_been_conquered == -1)
+        if (area_data[game()->current_map].has_been_conquered == -1)
         {
             Message::instance().buffered_message_append(i18n::s.get(
-                "core.map.no_dungeon_master", mapname(game_data.current_map)));
+                "core.map.no_dungeon_master", mapname(game()->current_map)));
         }
     }
 }
@@ -965,35 +966,35 @@ void _proc_map_hooks_1()
 {
     _update_quest_flags_any();
 
-    if (game_data.current_map == mdata_t::MapId::lesimas)
+    if (game()->current_map == mdata_t::MapId::lesimas)
     {
         _update_quest_flags_lesimas();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::noyel)
+    if (area_data[game()->current_map].id == mdata_t::MapId::noyel)
     {
         _update_paels_mom();
     }
     _proc_guild_entry_events();
-    if (game_data.current_map == mdata_t::MapId::vernis)
+    if (game()->current_map == mdata_t::MapId::vernis)
     {
         _update_quest_flags_vernis();
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
         _update_quest_flags_palmia();
     }
-    if (game_data.current_map == mdata_t::MapId::north_tyris)
+    if (game()->current_map == mdata_t::MapId::north_tyris)
     {
         _update_quest_flags_north_tyris();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
+    if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
     {
         _proc_no_dungeon_master();
     }
 
     // Work-around: shop's `cell_data` should be fixed before `cell_draw()` is
     // called.
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         update_shop();
     }
@@ -1003,15 +1004,15 @@ void _proc_map_hooks_1()
 
 void _notify_distance_traveled()
 {
-    p = game_data.date.hours() - game_data.departure_date;
+    p = game()->date.hours() - game()->departure_date;
     txt(i18n::s.get(
         "core.map.since_leaving.time_passed",
         p / 24,
         p % 24,
-        mapname(game_data.left_town_map),
-        cnvdate(game_data.departure_date, false)));
+        mapname(game()->left_town_map),
+        cnvdate(game()->departure_date, false)));
     p = 0;
-    exp = cdata.player().level * game_data.distance_between_town *
+    exp = cdata.player().level * game()->distance_between_town *
             cdata.player().get_skill(182).level / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
@@ -1031,21 +1032,21 @@ void _notify_distance_traveled()
     {
         txt(i18n::s.get(
             "core.map.since_leaving.walked.you",
-            game_data.distance_between_town));
+            game()->distance_between_town));
     }
     else
     {
         txt(i18n::s.get(
             "core.map.since_leaving.walked.you_and_allies",
-            game_data.distance_between_town));
+            game()->distance_between_town));
     }
     chara_gain_skill_exp(
         cdata.player(),
         182,
-        25 + game_data.distance_between_town * 2 / 3,
+        25 + game()->distance_between_town * 2 / 3,
         0,
         1000);
-    game_data.distance_between_town = 0;
+    game()->distance_between_town = 0;
 }
 
 
@@ -1082,7 +1083,7 @@ void _update_quest_escort(int cnt2)
         {
             if (ally.is_escorted() &&
                 ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
-                quest_data[cnt2].extra_info_1 == game_data.current_map)
+                quest_data[cnt2].extra_info_1 == game()->current_map)
             {
                 event_add(16, cnt2, ally.index);
                 ally.is_escorted() = false;
@@ -1106,7 +1107,7 @@ void _spawn_museum_or_shop_crowds()
 
 void _update_quest_escorts()
 {
-    for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+    for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
          cnt < cnt_end;
          ++cnt)
     {
@@ -1136,16 +1137,16 @@ void _set_livestock_relations()
 
 void _proc_map_hooks_2()
 {
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game_data.quest_flags.main_quest != 0)
+        if (game()->quest_flags.main_quest != 0)
         {
             _remove_lomias_and_larnneire();
         }
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
-        if (game_data.quest_flags.main_quest >= 90)
+        if (game()->quest_flags.main_quest >= 90)
         {
             _remove_xabi();
         }
@@ -1154,7 +1155,7 @@ void _proc_map_hooks_2()
     {
         _update_quest_escorts();
     }
-    if (area_data[game_data.current_map].is_museum_or_shop())
+    if (area_data[game()->current_map].is_museum_or_shop())
     {
         _spawn_museum_or_shop_crowds();
     }
@@ -1162,15 +1163,15 @@ void _proc_map_hooks_2()
     {
         foods_get_rotten();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
+    if (area_data[game()->current_map].id == mdata_t::MapId::museum)
     {
         update_museum();
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         building_update_home_rank();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
         _set_livestock_relations();
     }
@@ -1182,19 +1183,19 @@ void _proc_map_hooks_2()
     {
         maybe_show_ex_help(3);
     }
-    if (game_data.current_map == mdata_t::MapId::shelter_)
+    if (game()->current_map == mdata_t::MapId::shelter_)
     {
         maybe_show_ex_help(14);
     }
     if (map_is_town_or_guild() ||
-        game_data.current_map == mdata_t::MapId::your_home)
+        game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game_data.distance_between_town >= 16)
+        if (game()->distance_between_town >= 16)
         {
             _notify_distance_traveled();
         }
     }
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
         quest_enter_map();
     }
@@ -1204,7 +1205,7 @@ void _proc_map_hooks_2()
 
 void _update_aggro_and_crowd_density()
 {
-    game_data.crowd_density = 0;
+    game()->crowd_density = 0;
     for (auto&& cnt : cdata.all())
     {
         cnt.turn_cost = 0;
@@ -1269,8 +1270,8 @@ void _generate_new_map()
     if (mapupdate)
     {
         randomize(
-            game_data.random_seed + game_data.current_map * 1000 +
-            game_data.current_dungeon_level);
+            game()->random_seed + game()->current_map * 1000 +
+            game()->current_dungeon_level);
     }
 
     // Initialize map-specific features.
@@ -1287,7 +1288,7 @@ void _generate_new_map()
 
     randomize();
 
-    map_data.regenerate_count = game_data.map_regenerate_count;
+    map_data.regenerate_count = game()->map_regenerate_count;
 }
 
 
@@ -1323,8 +1324,8 @@ int initialize_map_pregenerate()
 
     _update_pets_moving_status();
 
-    mid = ""s + game_data.current_map + u8"_"s +
-        (100 + game_data.current_dungeon_level);
+    mid = ""s + game()->current_map + u8"_"s +
+        (100 + game()->current_dungeon_level);
 
     if (mode == 3)
     {
@@ -1345,8 +1346,8 @@ int initialize_map_pregenerate()
         {
             return 0;
         }
-        if (map_data.regenerate_count != game_data.map_regenerate_count ||
-            (game_data.reset_world_map_in_diastrophism_flag == 1 &&
+        if (map_data.regenerate_count != game()->map_regenerate_count ||
+            (game()->reset_world_map_in_diastrophism_flag == 1 &&
              map_data.type == mdata_t::MapType::world_map))
         {
             if (map_data.type == mdata_t::MapType::town ||
@@ -1440,8 +1441,8 @@ TurnResult initialize_map()
 
     _update_aggro_and_crowd_density();
 
-    cdata.player().current_map = game_data.current_map;
-    cdata.player().current_dungeon_level = game_data.current_dungeon_level;
+    cdata.player().current_map = game()->current_map;
+    cdata.player().current_dungeon_level = game()->current_dungeon_level;
 
     _init_tileset_minimap_and_scroll();
 
@@ -1450,11 +1451,11 @@ TurnResult initialize_map()
         quest_refresh_list();
     }
 
-    auto integer_id = area_data[game_data.current_map].id;
+    auto integer_id = area_data[game()->current_map].id;
     auto map_id =
         the_mapdef_db.get_id_from_integer(integer_id).value_or("").get();
     auto event =
-        lua::MapInitializedEvent(was_generated, map_id, game_data.current_map);
+        lua::MapInitializedEvent(was_generated, map_id, game()->current_map);
 
     if (mode == 11)
     {
@@ -1469,7 +1470,7 @@ TurnResult initialize_map()
     play_music();
     _adjust_spawns();
     noaggrorefresh = 0;
-    if (area_data[game_data.current_map].type == mdata_t::MapType::world_map)
+    if (area_data[game()->current_map].type == mdata_t::MapType::world_map)
     {
         // initialize_cloud_data();
         map_global_proc_diastrophism();
@@ -1505,7 +1506,7 @@ TurnResult initialize_map()
     wake_up();
     pcattacker = 0;
     cdata.player().enemy_id = 0;
-    game_data.chara_last_attacked_by_player = 0;
+    g_chara_last_attacked_by_player = 0;
     mode = 0;
     screenupdate = -1;
     update_entire_screen();

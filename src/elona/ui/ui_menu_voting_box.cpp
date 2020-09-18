@@ -1,5 +1,6 @@
 #include "ui_menu_voting_box.hpp"
 
+#include "../game.hpp"
 #include "../input_prompt.hpp"
 #include "../world.hpp"
 
@@ -16,7 +17,7 @@ namespace ui
 // listn(1, n) => vote count
 bool UIMenuVotingBox::init()
 {
-    _can_vote_now = game_data.next_voting_time < game_data.date.hours();
+    _can_vote_now = game()->next_voting_time < game()->date.hours();
 
     load_background_variants(4);
     gsel(0);
@@ -65,7 +66,7 @@ bool UIMenuVotingBox::init()
     {
         txt(i18n::s.get(
             "core.net.alias.cannot_vote_until",
-            cnvdate(game_data.next_voting_time)));
+            cnvdate(game()->next_voting_time)));
         for (int i = 0; i < listmax; ++i)
         {
             if (i == 0)
@@ -210,7 +211,7 @@ optional<UIMenuVotingBox::ResultType> UIMenuVotingBox::on_key(
             return none;
         }
 
-        game_data.next_voting_time = game_data.date.hours() + 7 * 24; // 7 days
+        game()->next_voting_time = game()->date.hours() + 7 * 24; // 7 days
         txt(i18n::s.get("core.net.alias.i_like", listn(0, *idx)));
         txt(i18n::s.get("core.net.alias.you_vote"));
         net_send_vote(id);

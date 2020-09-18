@@ -10,6 +10,7 @@
 #include "config.hpp"
 #include "data/types/type_music.hpp"
 #include "data/types/type_sound.hpp"
+#include "game.hpp"
 #include "log.hpp"
 #include "map.hpp"
 #include "variables.hpp"
@@ -199,15 +200,15 @@ data::InstanceId get_default_music()
 {
     optional<data::InstanceId> music_id = none;
 
-    if (area_data[game_data.current_map].type == mdata_t::MapType::field)
+    if (area_data[game()->current_map].type == mdata_t::MapType::field)
     {
         return musicprev;
     }
-    if (area_data[game_data.current_map].type == mdata_t::MapType::town)
+    if (area_data[game()->current_map].type == mdata_t::MapType::town)
     {
         music_id = "core.mcTown1";
     }
-    if (area_data[game_data.current_map].type == mdata_t::MapType::player_owned)
+    if (area_data[game()->current_map].type == mdata_t::MapType::player_owned)
     {
         music_id = "core.mcHome";
     }
@@ -215,7 +216,7 @@ data::InstanceId get_default_music()
     {
         music_id = the_music_db.get_id_from_integer(map_data.bgm);
     }
-    if (mdata_t::is_nefia(area_data[game_data.current_map].type))
+    if (mdata_t::is_nefia(area_data[game()->current_map].type))
     {
         static const std::vector<data::InstanceId> choices{
             "core.mcDungeon1",
@@ -225,89 +226,89 @@ data::InstanceId get_default_music()
             "core.mcDungeon5",
             "core.mcDungeon6",
         };
-        music_id = choices[game_data.date.hour % 6];
+        music_id = choices[game()->date.hour % 6];
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon ||
-        area_data[game_data.current_map].id == mdata_t::MapId::the_void)
+    if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon ||
+        area_data[game()->current_map].id == mdata_t::MapId::the_void)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game()->current_dungeon_level ==
+            area_data[game()->current_map].deepest_level)
         {
-            if (area_data[game_data.current_map].has_been_conquered != -1)
+            if (area_data[game()->current_map].has_been_conquered != -1)
             {
                 music_id = "core.mcBoss";
             }
         }
     }
-    if (game_data.current_map == mdata_t::MapId::quest)
+    if (game()->current_map == mdata_t::MapId::quest)
     {
-        if (game_data.executing_immediate_quest_type == 1001)
+        if (game()->executing_immediate_quest_type == 1001)
         {
             music_id = "core.mcBattle1";
         }
-        if (game_data.executing_immediate_quest_type == 1006)
+        if (game()->executing_immediate_quest_type == 1006)
         {
             music_id = "core.mcVillage1";
         }
-        if (game_data.executing_immediate_quest_type == 1009)
+        if (game()->executing_immediate_quest_type == 1009)
         {
             music_id = "core.mcCasino";
         }
-        if (game_data.executing_immediate_quest_type == 1008)
+        if (game()->executing_immediate_quest_type == 1008)
         {
             music_id = "core.mcBoss";
         }
-        if (game_data.executing_immediate_quest_type == 1010)
+        if (game()->executing_immediate_quest_type == 1010)
         {
             music_id = "core.mcArena";
         }
     }
-    if (game_data.current_map == mdata_t::MapId::arena)
+    if (game()->current_map == mdata_t::MapId::arena)
     {
         music_id = "core.mcArena";
     }
-    if (game_data.current_map == mdata_t::MapId::larna)
+    if (game()->current_map == mdata_t::MapId::larna)
     {
         music_id = "core.mcVillage1";
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
         music_id = "core.mcTown2";
     }
-    if (game_data.current_map == mdata_t::MapId::lumiest)
+    if (game()->current_map == mdata_t::MapId::lumiest)
     {
         music_id = "core.mcTown2";
     }
-    if (game_data.current_map == mdata_t::MapId::yowyn)
+    if (game()->current_map == mdata_t::MapId::yowyn)
     {
         music_id = "core.mcVillage1";
     }
-    if (game_data.current_map == mdata_t::MapId::derphy)
+    if (game()->current_map == mdata_t::MapId::derphy)
     {
         music_id = "core.mcTown3";
     }
-    if (game_data.current_map == mdata_t::MapId::palmia)
+    if (game()->current_map == mdata_t::MapId::palmia)
     {
         music_id = "core.mcTown4";
     }
-    if (game_data.current_map == mdata_t::MapId::cyber_dome)
+    if (game()->current_map == mdata_t::MapId::cyber_dome)
     {
         music_id = "core.mcTown5";
     }
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
         music_id = "core.mcTown6";
     }
 
     if (!music_id ||
-        area_data[game_data.current_map].type == mdata_t::MapType::world_map)
+        area_data[game()->current_map].type == mdata_t::MapType::world_map)
     {
         static const std::vector<data::InstanceId> choices = {
             "core.mcField1",
             "core.mcField2",
             "core.mcField3",
         };
-        music_id = choices[game_data.date.day % 3];
+        music_id = choices[game()->date.day % 3];
     }
 
     return *music_id;
@@ -479,15 +480,15 @@ void sound_play_environmental()
 {
     optional<data::InstanceId> env = none;
 
-    if (game_data.weather == 3)
+    if (game()->weather == 3)
     {
         env = "core.bg_rain";
     }
-    if (game_data.weather == 4)
+    if (game()->weather == 4)
     {
         env = "core.bg_thunder";
     }
-    if (game_data.weather == 1)
+    if (game()->weather == 1)
     {
         env = "core.bg_wind";
     }
@@ -511,8 +512,8 @@ void sound_play_environmental()
         set_volume(13, max_volume * 0.8);
     }
     else if (
-        game_data.current_dungeon_level == 1 ||
-        game_data.current_map == mdata_t::MapId::shelter_)
+        game()->current_dungeon_level == 1 ||
+        game()->current_map == mdata_t::MapId::shelter_)
     {
         set_volume(13, max_volume * 0.2);
     }
@@ -520,7 +521,7 @@ void sound_play_environmental()
     {
         set_volume(13, max_volume);
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
         snd("core.bg_sea", true);
     }

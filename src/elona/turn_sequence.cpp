@@ -20,6 +20,8 @@
 #include "enchantment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
+#include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "initialize_map.hpp"
@@ -63,14 +65,14 @@ int ct = 0;
 
 optional<TurnResult> proc_return_or_escape()
 {
-    --game_data.is_returning_or_escaping;
+    --game()->is_returning_or_escaping;
     if (map_prevents_return())
     {
-        game_data.is_returning_or_escaping = 0;
+        game()->is_returning_or_escaping = 0;
         txt(i18n::s.get("core.magic.return.prevented.normal"));
         return none;
     }
-    if (game_data.is_returning_or_escaping <= 0 && !event_has_pending_events())
+    if (game()->is_returning_or_escaping <= 0 && !event_has_pending_events())
     {
         f = 0;
         for (const auto& chara : cdata.allies())
@@ -94,9 +96,9 @@ optional<TurnResult> proc_return_or_escape()
             txt(i18n::s.get("core.magic.return.prevented.overweight"));
             return none;
         }
-        if (game_data.destination_map == game_data.destination_outer_map)
+        if (game()->destination_map == game()->destination_outer_map)
         {
-            if (game_data.current_map == game_data.destination_outer_map)
+            if (game()->current_map == game()->destination_outer_map)
             {
                 txt(i18n::s.get("core.common.nothing_happens"));
                 return none;
@@ -109,7 +111,7 @@ optional<TurnResult> proc_return_or_escape()
         }
         snd("core.teleport1");
         txt(i18n::s.get("core.magic.return.door_opens"));
-        if (game_data.destination_map == 41)
+        if (game()->destination_map == 41)
         {
             txt(i18n::s.get("core.magic.return.destination_changed"));
         }
@@ -142,7 +144,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     // Leash
     if (!is_in_fov(chara) && cdata.player().blind == 0 && chara.is_leashed() &&
         map_data.type != mdata_t::MapType::world_map &&
-        game_data.current_map != mdata_t::MapId::pet_arena)
+        game()->current_map != mdata_t::MapId::pet_arena)
     {
         if (rnd(4) == 0)
         {
@@ -239,7 +241,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     }
 
     // Pet arena
-    if (game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::pet_arena)
     {
         if (chara.relationship != -3 && chara.relationship != 10)
         {
@@ -319,18 +321,18 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     }
 
     // <Ebon>
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
-        if (chara.index != game_data.fire_giant)
+        if (chara.index != game()->fire_giant)
         {
             if (!chara.is_player_or_ally())
             {
-                if (game_data.released_fire_giant != 0)
+                if (game()->released_fire_giant != 0)
                 {
-                    if (cdata[game_data.fire_giant].state() ==
+                    if (cdata[game()->fire_giant].state() ==
                         Character::State::alive)
                     {
-                        chara.enemy_id = game_data.fire_giant;
+                        chara.enemy_id = game()->fire_giant;
                         chara.hate = 500;
                     }
                 }
@@ -339,9 +341,9 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     }
 
     // Mount
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        if (chara.enemy_id == game_data.mount)
+        if (chara.enemy_id == game()->mount)
         {
             if (rnd(3))
             {
@@ -354,7 +356,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             {
                 if (rnd(3) == 0)
                 {
-                    chara.enemy_id = game_data.mount;
+                    chara.enemy_id = game()->mount;
                 }
             }
         }
@@ -530,7 +532,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                         map_data.type != mdata_t::MapType::player_owned)
                     {
                         in = item_opt->number();
-                        if (game_data.mount != chara.index)
+                        if (game()->mount != chara.index)
                         {
                             int stat =
                                 pick_up_item(
@@ -544,7 +546,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                     }
                 }
             }
-            if (chara.current_map == game_data.current_map)
+            if (chara.current_map == game()->current_map)
             {
                 if (chara.is_contracting() == 0)
                 {
@@ -808,44 +810,44 @@ TurnResult turn_begin()
         }
     }
 
-    game_data.date.second += turncost / 5 + 1;
-    if (game_data.date.second >= 60)
+    game()->date.second += turncost / 5 + 1;
+    if (game()->date.second >= 60)
     {
-        ++game_data.play_turns;
-        if (game_data.play_turns % 20 == 0)
+        ++game()->play_turns;
+        if (game()->play_turns % 20 == 0)
         {
             monster_respawn();
         }
-        if (game_data.play_turns % 10 == 1)
+        if (game()->play_turns % 10 == 1)
         {
             auto_identify();
         }
-        game_data.date.minute += game_data.date.second / 60;
-        if (game_data.left_minutes_of_executing_quest > 0)
+        game()->date.minute += game()->date.second / 60;
+        if (game()->left_minutes_of_executing_quest > 0)
         {
-            const auto elapsed_minutes = game_data.date.second / 60;
+            const auto elapsed_minutes = game()->date.second / 60;
             const auto previous_left_minutes =
-                game_data.left_minutes_of_executing_quest;
-            game_data.left_minutes_of_executing_quest -= elapsed_minutes;
+                game()->left_minutes_of_executing_quest;
+            game()->left_minutes_of_executing_quest -= elapsed_minutes;
             if (previous_left_minutes / 10 !=
-                game_data.left_minutes_of_executing_quest / 10)
+                game()->left_minutes_of_executing_quest / 10)
             {
                 txt(i18n::s.get(
                         "core.quest.minutes_left",
-                        (game_data.left_minutes_of_executing_quest + 1)),
+                        (game()->left_minutes_of_executing_quest + 1)),
                     Message::color{ColorIndex::cyan});
             }
-            if (game_data.left_minutes_of_executing_quest <= 0)
+            if (game()->left_minutes_of_executing_quest <= 0)
             {
-                game_data.left_minutes_of_executing_quest = 0;
+                game()->left_minutes_of_executing_quest = 0;
                 event_add(14);
             }
         }
-        game_data.date.second = game_data.date.second % 60;
-        if (game_data.date.minute >= 60)
+        game()->date.second = game()->date.second % 60;
+        if (game()->date.minute >= 60)
         {
-            game_data.date.hour += game_data.date.minute / 60;
-            game_data.date.minute = game_data.date.minute % 60;
+            game()->date.hour += game()->date.minute / 60;
+            game()->date.minute = game()->date.minute % 60;
             weather_changes();
         }
     }
@@ -912,7 +914,7 @@ TurnResult pass_one_turn(bool time_passing)
         default: break;
         }
 
-        if (game_data.is_returning_or_escaping != 0)
+        if (game()->is_returning_or_escaping != 0)
         {
             if (const auto result = proc_return_or_escape())
             {
@@ -925,23 +927,23 @@ TurnResult pass_one_turn(bool time_passing)
         {
             return TurnResult::pc_died;
         }
-        if (game_data.weather == 1)
+        if (game()->weather == 1)
         {
             if (map_data.indoors_flag == 2)
             {
                 if (rnd(2) == 0)
                 {
-                    if (game_data.protects_from_etherwind == 0)
+                    if (game()->protects_from_etherwind == 0)
                     {
                         modify_ether_disease_stage(
-                            5 + clamp(game_data.play_turns / 20000, 0, 15));
+                            5 + clamp(game()->play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
                         modify_ether_disease_stage(5);
                     }
                 }
-                if (game_data.protects_from_etherwind == 0 || rnd(4) == 0)
+                if (game()->protects_from_etherwind == 0 || rnd(4) == 0)
                 {
                     if (rnd(2000) == 0)
                     {
@@ -954,9 +956,9 @@ TurnResult pass_one_turn(bool time_passing)
         }
         else if (rnd(1500) == 0)
         {
-            if (area_data[game_data.current_map].id !=
+            if (area_data[game()->current_map].id !=
                     mdata_t::MapId::your_home &&
-                game_data.current_map != mdata_t::MapId::shelter_)
+                game()->current_map != mdata_t::MapId::shelter_)
             {
                 modify_ether_disease_stage(10);
             }
@@ -1120,7 +1122,7 @@ void update_emoicon(Character& chara)
     {
         chara.emotion_icon = 0;
     }
-    if (map_data.indoors_flag == 2 && game_data.weather >= 3)
+    if (map_data.indoors_flag == 2 && game()->weather >= 3)
     {
         chara.wet = 50;
     }
@@ -1147,12 +1149,12 @@ TurnResult turn_end()
     proc_turn_end(cdata[ct]);
     if (ct == 0)
     {
-        if (game_data.character_and_status_for_gene != 0)
+        if (game()->character_and_status_for_gene != 0)
         {
-            if (game_data.character_and_status_for_gene < 10000)
+            if (game()->character_and_status_for_gene < 10000)
             {
-                game_data.character_and_status_for_gene += 10000;
-                game_data.activity_about_to_start = 100;
+                game()->character_and_status_for_gene += 10000;
+                game()->activity_about_to_start = 100;
                 activity_others(cdata[ct], nullptr);
             }
         }
@@ -1186,11 +1188,11 @@ TurnResult turn_end()
             }
         }
     }
-    if (game_data.left_turns_of_timestop > 0)
+    if (game()->left_turns_of_timestop > 0)
     {
-        --game_data.left_turns_of_timestop;
+        --game()->left_turns_of_timestop;
         if (cdata[ct].state() != Character::State::alive ||
-            game_data.left_turns_of_timestop == 0)
+            game()->left_turns_of_timestop == 0)
         {
             txt(i18n::s.get("core.action.time_stop.ends"),
                 Message::color{ColorIndex::cyan});
@@ -1215,7 +1217,7 @@ optional<TurnResult> pc_turn_pet_arena()
 {
     auto& player = cdata.player();
 
-    game_data.executing_immediate_quest_status = 3;
+    game()->executing_immediate_quest_status = 3;
     bool pet_exists = false;
     for (const auto& ally : cdata.allies())
     {
@@ -1335,25 +1337,25 @@ optional<TurnResult> pc_turn_advance_time()
 {
     auto& player = cdata.player();
 
-    if (game_data.catches_god_signal)
+    if (game()->catches_god_signal)
     {
         if (rnd(1000) == 0)
         {
             txtgod(player.god_id, 12);
         }
     }
-    game_data.player_is_changing_equipment = 0;
+    g_player_is_changing_equipment = false;
     tgloc = 0;
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        cdata[game_data.mount].position = player.position;
+        cdata[game()->mount].position = player.position;
     }
     if (map_data.type == mdata_t::MapType::world_map)
     {
         cell_data.at(player.position.x, player.position.y)
             .chara_index_plus_one = 1;
     }
-    if (game_data.ether_disease_stage >= 20000)
+    if (game()->ether_disease_stage >= 20000)
     {
         damage_hp(player, 999999, -14);
     }
@@ -1375,7 +1377,7 @@ optional<TurnResult> pc_turn_advance_time()
     lua::lua->get_event_manager().trigger(
         lua::BaseEvent("core.player_turn_started"));
 
-    if (game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::pet_arena)
     {
         if (const auto result = pc_turn_pet_arena())
         {
@@ -1432,14 +1434,14 @@ TurnResult pc_turn(bool advance_time)
 
         if (firstturn == 1)
         {
-            if (game_data.catches_god_signal)
+            if (game()->catches_god_signal)
             {
                 txtgod(cdata.player().god_id, 11);
             }
             firstturn = 0;
         }
 
-        if (game_data.player_is_changing_equipment)
+        if (g_player_is_changing_equipment)
         {
             txt(i18n::s.get("core.action.equip.you_change"));
             return TurnResult::turn_end;
@@ -1691,7 +1693,7 @@ void proc_turn_end(Character& chara)
                 if (chara.activity.type != Activity::Type::eat)
                 {
                     damage_hp(chara, rnd(2) + cdata.player().max_hp / 50, -3);
-                    if (game_data.play_turns % 10 == 0)
+                    if (game()->play_turns % 10 == 0)
                     {
                         rowact_check(chara);
                         if (rnd(50) == 0)
@@ -1703,13 +1705,13 @@ void proc_turn_end(Character& chara)
             }
             regen = 0;
         }
-        if (game_data.continuous_active_hours >= 30)
+        if (game()->continuous_active_hours >= 30)
         {
             if (debug_has_wizard_flag("core.wizard.no_sleepy"))
             {
-                game_data.continuous_active_hours = 0;
+                game()->continuous_active_hours = 0;
             }
-            if (game_data.play_turns % 100 == 0)
+            if (game()->play_turns % 100 == 0)
             {
                 txt(i18n::s.get("core.misc.status_ailment.sleepy"));
             }
@@ -1717,7 +1719,7 @@ void proc_turn_end(Character& chara)
             {
                 regen = 0;
             }
-            if (game_data.continuous_active_hours >= 50)
+            if (game()->continuous_active_hours >= 50)
             {
                 regen = 0;
                 damage_sp(chara, 1);
@@ -1739,7 +1741,7 @@ void proc_turn_end(Character& chara)
             }
         }
     }
-    if (game_data.executing_immediate_quest_type == 1009)
+    if (game()->executing_immediate_quest_type == 1009)
     {
         if (chara.is_map_local())
         {

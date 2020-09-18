@@ -3,8 +3,11 @@
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
 #include "../map.hpp"
+
+
 
 namespace elona
 {
@@ -13,7 +16,7 @@ namespace ui
 
 static void _load_politics_list(bool is_town)
 {
-    int city = area_data[game_data.current_map].quest_town_id;
+    int city = area_data[game()->current_map].quest_town_id;
 
     // TODO: untranslated
     listmax = 0;
@@ -23,8 +26,8 @@ static void _load_politics_list(bool is_town)
     cs_bk = -1;
 
     list(0, listmax) = 1;
-    listn(0, listmax) = i18n::s.get(
-        "core.ui.politics.name", mapname(game_data.politics_map_id));
+    listn(0, listmax) =
+        i18n::s.get("core.ui.politics.name", mapname(game()->politics_map_id));
     ++listmax;
 
     if (is_town)
@@ -93,7 +96,7 @@ void UIMenuTownPolitics::_draw_window()
         mes(wx + 285,
             wy + 52,
             i18n::s.get(
-                "core.ui.politics.law_of", mapname(game_data.current_map)));
+                "core.ui.politics.law_of", mapname(game()->current_map)));
     }
 
     gmode(2);

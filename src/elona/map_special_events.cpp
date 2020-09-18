@@ -5,6 +5,7 @@
 #include "character_status.hpp"
 #include "dmgheal.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "itemgen.hpp"
 #include "map.hpp"
@@ -18,11 +19,11 @@ namespace elona
 
 static void _map_events_noyel()
 {
-    if (game_data.released_fire_giant == 1)
+    if (game()->released_fire_giant == 1)
     {
-        if (cdata[game_data.fire_giant].state() == Character::State::alive)
+        if (cdata[game()->fire_giant].state() == Character::State::alive)
         {
-            if (game_data.crowd_density < 70)
+            if (game()->crowd_density < 70)
             {
                 if (rnd(4) == 0)
                 {
@@ -45,8 +46,8 @@ static void _map_events_quest_party()
 {
     if (quest_data.immediate().progress != 3)
     {
-        if (game_data.crowd_density <
-            game_data.left_minutes_of_executing_quest / 60)
+        if (game()->crowd_density <
+            game()->left_minutes_of_executing_quest / 60)
         {
             int chara_id = 0;
             if (rnd(4) == 0)
@@ -90,9 +91,9 @@ static void _map_events_tower_of_fire()
 
 static void _map_events_port_kapul()
 {
-    if (game_data.current_dungeon_level == 25)
+    if (game()->current_dungeon_level == 25)
     {
-        ++game_data.quest_flags.duration_of_kamikaze_attack;
+        ++game()->quest_flags.duration_of_kamikaze_attack;
         x = 1;
         y = rnd(map_data.height);
         if (rnd(4) == 0)
@@ -111,31 +112,31 @@ static void _map_events_port_kapul()
             y = map_data.height - 2;
         }
         p = 237;
-        if (game_data.quest_flags.duration_of_kamikaze_attack > 50)
+        if (game()->quest_flags.duration_of_kamikaze_attack > 50)
         {
             if (rnd(10) == 0)
             {
                 p = 245;
             }
         }
-        if (game_data.quest_flags.duration_of_kamikaze_attack > 100)
+        if (game()->quest_flags.duration_of_kamikaze_attack > 100)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game_data.quest_flags.duration_of_kamikaze_attack > 150)
+        if (game()->quest_flags.duration_of_kamikaze_attack > 150)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game_data.quest_flags.duration_of_kamikaze_attack == 250)
+        if (game()->quest_flags.duration_of_kamikaze_attack == 250)
         {
             quest_update_journal_msg();
-            game_data.quest_flags.kamikaze_attack = 3;
+            game()->quest_flags.kamikaze_attack = 3;
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.message"),
                 Message::color{ColorIndex::cyan});
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.stairs_appear"));
@@ -185,8 +186,7 @@ static void _map_events_jail()
 
 static void _map_events_shelter()
 {
-    if (game_data.weather == 2 || game_data.weather == 4 ||
-        game_data.weather == 1)
+    if (game()->weather == 2 || game()->weather == 4 || game()->weather == 1)
     {
         if (cdata.player().nutrition < 5000)
         {
@@ -198,9 +198,9 @@ static void _map_events_shelter()
                 show_eating_message(cdata.player());
             }
         }
-        if (game_data.continuous_active_hours >= 15)
+        if (game()->continuous_active_hours >= 15)
         {
-            game_data.continuous_active_hours = 13;
+            game()->continuous_active_hours = 13;
         }
         map_data.turn_cost = 1000000;
     }
@@ -219,7 +219,7 @@ static void _map_events_shelter()
 
 static void _map_events_museum()
 {
-    if (game_data.crowd_density > 0)
+    if (game()->crowd_density > 0)
     {
         if (rnd(25) == 0)
         {
@@ -234,19 +234,19 @@ static void _map_events_museum()
         if (rnd(15) == 0)
         {
             std::string locale_key;
-            if (game_data.ranks.at(3) > 8000)
+            if (game()->ranks.at(3) > 8000)
             {
                 locale_key = "core.map.museum.rank_lowest";
             }
-            else if (game_data.ranks.at(3) > 5000)
+            else if (game()->ranks.at(3) > 5000)
             {
                 locale_key = "core.map.museum.rank_low";
             }
-            else if (game_data.ranks.at(3) > 2500)
+            else if (game()->ranks.at(3) > 2500)
             {
                 locale_key = "core.map.museum.rank_middle";
             }
-            else if (game_data.ranks.at(3) > 500)
+            else if (game()->ranks.at(3) > 500)
             {
                 locale_key = "core.map.museum.rank_high";
             }
@@ -266,7 +266,7 @@ static void _map_events_museum()
 
 static void _map_events_shop()
 {
-    if (game_data.crowd_density > 0)
+    if (game()->crowd_density > 0)
     {
         if (rnd(25) == 0)
         {
@@ -279,36 +279,36 @@ static void _map_events_shop()
 
 void map_proc_special_events()
 {
-    if (game_data.current_map == mdata_t::MapId::noyel)
+    if (game()->current_map == mdata_t::MapId::noyel)
     {
         _map_events_noyel();
     }
-    if (game_data.executing_immediate_quest_type == 1008)
+    if (game()->executing_immediate_quest_type == 1008)
     {
         _map_events_quest_party();
     }
-    if (game_data.current_map == mdata_t::MapId::tower_of_fire)
+    if (game()->current_map == mdata_t::MapId::tower_of_fire)
     {
         _map_events_tower_of_fire();
         return;
     }
-    if (game_data.current_map == mdata_t::MapId::port_kapul)
+    if (game()->current_map == mdata_t::MapId::port_kapul)
     {
         _map_events_port_kapul();
     }
-    if (game_data.current_map == mdata_t::MapId::jail)
+    if (game()->current_map == mdata_t::MapId::jail)
     {
         _map_events_jail();
     }
-    if (game_data.current_map == mdata_t::MapId::shelter_)
+    if (game()->current_map == mdata_t::MapId::shelter_)
     {
         _map_events_shelter();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
+    if (area_data[game()->current_map].id == mdata_t::MapId::museum)
     {
         _map_events_museum();
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::shop)
+    if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
         _map_events_shop();
     }

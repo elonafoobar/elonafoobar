@@ -8,6 +8,7 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input_prompt.hpp"
 #include "keybind/input_context.hpp"
@@ -612,17 +613,17 @@ int ask_direction()
 
 optional<TurnResult> check_angband()
 {
-    if (game_data.angband_flag == -1 ||
+    if (game()->angband_flag == -1 ||
         map_data.type == mdata_t::MapType::world_map)
         return none;
 
-    switch (game_data.angband_flag)
+    switch (game()->angband_flag)
     {
     case 0:
         if (key == u8"Q"s)
         {
             txt(i18n::s.get("core.action.angband.q"));
-            ++game_data.angband_flag;
+            ++game()->angband_flag;
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -631,7 +632,7 @@ optional<TurnResult> check_angband()
         if (key == u8"y"s)
         {
             txt(i18n::s.get("core.action.angband.y"));
-            ++game_data.angband_flag;
+            ++game()->angband_flag;
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
@@ -649,7 +650,7 @@ optional<TurnResult> check_angband()
                     cdata.player().position.x,
                     cdata.player().position.y);
             }
-            game_data.angband_flag = -1;
+            game()->angband_flag = -1;
             update_screen();
             return TurnResult::turn_end;
         }
@@ -657,7 +658,7 @@ optional<TurnResult> check_angband()
     default: break;
     }
 
-    game_data.angband_flag = 0;
+    game()->angband_flag = 0;
     return none;
 }
 

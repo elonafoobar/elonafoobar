@@ -3,7 +3,10 @@
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../draw.hpp"
+#include "../game.hpp"
 #include "../i18n.hpp"
+
+
 
 namespace elona
 {
@@ -35,7 +38,7 @@ bool UIMenuHire::_should_display_chara(const Character& chara)
         }
         if (chara.is_player_or_ally())
         {
-            if (chara.current_map != game_data.current_map)
+            if (chara.current_map != game()->current_map)
             {
                 return false;
             }

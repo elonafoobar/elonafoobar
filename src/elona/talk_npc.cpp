@@ -11,6 +11,7 @@
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "food.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -230,7 +231,7 @@ TalkResult talk_trade(Character& speaker)
 
 TalkResult talk_arena_master(Character& speaker, int chatval_)
 {
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
         int stat = cell_findspace(
             cdata.player().position.x, cdata.player().position.y, 1);
@@ -239,42 +240,42 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             txt(i18n::s.get("core.magic.mount.no_place_to_get_off"));
             return TalkResult::talk_end;
         }
-        cell_setchara(cdata[game_data.mount], rtval, rtval(1));
-        txt(i18n::s.get("core.magic.mount.dismount", cdata[game_data.mount]));
+        cell_setchara(cdata[game()->mount], rtval, rtval(1));
+        txt(i18n::s.get("core.magic.mount.dismount", cdata[game()->mount]));
         ride_end();
     }
-    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+    game()->executing_immediate_quest_fame_gained = calc_gained_fame(
         cdata.player(),
-        (220 - game_data.ranks.at(0) / 50) *
+        (220 - game()->ranks.at(0) / 50) *
                 (100 +
                  clamp(
-                     area_data[game_data.current_map].winning_streak_in_arena,
+                     area_data[game()->current_map].winning_streak_in_arena,
                      0,
                      50)) /
                 100 +
             2);
     listmax = 0;
-    randomize(area_data[game_data.current_map].time_of_next_arena);
+    randomize(area_data[game()->current_map].time_of_next_arena);
     if (chatval_ == 21)
     {
-        if (area_data[game_data.current_map].time_of_next_arena >
-            game_data.date.hours())
+        if (area_data[game()->current_map].time_of_next_arena >
+            game()->date.hours())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
             return TalkResult::talk_npc;
         }
-        randomize(area_data[game_data.current_map].arena_random_seed);
+        randomize(area_data[game()->current_map].arena_random_seed);
         for (int cnt = 0; cnt < 50; ++cnt)
         {
             arenaop(0) = 0;
-            arenaop(1) = (100 - game_data.ranks.at(0) / 100) / 3 + 1;
+            arenaop(1) = (100 - game()->ranks.at(0) / 100) / 3 + 1;
             arenaop(2) = 3;
-            if (game_data.ranks.at(0) / 100 < 30)
+            if (game()->ranks.at(0) / 100 < 30)
             {
                 arenaop(2) = 4;
             }
-            if (game_data.ranks.at(0) / 100 < 10)
+            if (game()->ranks.at(0) / 100 < 10)
             {
                 arenaop(2) = 5;
             }
@@ -304,15 +305,15 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     else
     {
-        if (area_data[game_data.current_map].time_of_next_rumble >
-            game_data.date.hours())
+        if (area_data[game()->current_map].time_of_next_rumble >
+            game()->date.hours())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
             return TalkResult::talk_npc;
         }
         arenaop(0) = 1;
-        arenaop(1) = (100 - game_data.ranks.at(0) / 100) / 2 + 1;
+        arenaop(1) = (100 - game()->ranks.at(0) / 100) / 2 + 1;
         buff = i18n::s.get(
             "core.talk.npc.arena_master.enter.target_group",
             arenaop(1),
@@ -333,18 +334,18 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     if (arenaop == 0)
     {
-        area_data[game_data.current_map].time_of_next_arena =
-            game_data.date.hours() + 24;
+        area_data[game()->current_map].time_of_next_arena =
+            game()->date.hours() + 24;
     }
     if (arenaop == 1)
     {
-        area_data[game_data.current_map].time_of_next_rumble =
-            game_data.date.hours() + 24;
+        area_data[game()->current_map].time_of_next_rumble =
+            game()->date.hours() + 24;
     }
-    game_data.executing_immediate_quest_type = 1;
-    game_data.executing_immediate_quest_show_hunt_remain = 1;
-    game_data.executing_immediate_quest = 0;
-    game_data.executing_immediate_quest_status = 1;
+    game()->executing_immediate_quest_type = 1;
+    game()->executing_immediate_quest_show_hunt_remain = 1;
+    game()->executing_immediate_quest = 0;
+    game()->executing_immediate_quest_status = 1;
     map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::arena));
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -354,13 +355,12 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
 
 TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
 {
-    game_data.executing_immediate_quest_fame_gained = calc_gained_fame(
+    game()->executing_immediate_quest_fame_gained = calc_gained_fame(
         cdata.player(),
-        (220 - game_data.ranks.at(1) / 50) *
+        (220 - game()->ranks.at(1) / 50) *
                 (50 +
                  clamp(
-                     area_data[game_data.current_map]
-                         .winning_streak_in_pet_arena,
+                     area_data[game()->current_map].winning_streak_in_pet_arena,
                      0,
                      50)) /
                 100 +
@@ -370,7 +370,7 @@ TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
     {
         arenaop(0) = 0;
         arenaop(1) = 1;
-        arenaop(2) = (100 - game_data.ranks.at(1) / 100) / 3 * 2 + 3;
+        arenaop(2) = (100 - game()->ranks.at(1) / 100) / 3 * 2 + 3;
         buff = i18n::s.get(
             "core.talk.npc.pet_arena_master.register.target",
             arenaop(2),
@@ -380,7 +380,7 @@ TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
     {
         arenaop(0) = 1;
         arenaop(1) = 2;
-        arenaop(2) = (100 - game_data.ranks.at(1) / 100) / 2 + 1;
+        arenaop(2) = (100 - game()->ranks.at(1) / 100) / 2 + 1;
         arenaop(1) = rnd(7) + 2;
         buff = i18n::s.get(
             "core.talk.npc.pet_arena_master.register.target_group",
@@ -414,10 +414,10 @@ TalkResult talk_pet_arena_master(Character& speaker, int chatval_)
         buff = i18n::s.get("core.talk.npc.arena_master.enter.cancel", speaker);
         return TalkResult::talk_npc;
     }
-    game_data.executing_immediate_quest_type = 2;
-    game_data.executing_immediate_quest_show_hunt_remain = 0;
-    game_data.executing_immediate_quest = 0;
-    game_data.executing_immediate_quest_status = 1;
+    game()->executing_immediate_quest_type = 2;
+    game()->executing_immediate_quest_show_hunt_remain = 0;
+    game()->executing_immediate_quest = 0;
+    game()->executing_immediate_quest_status = 1;
     map_prepare_for_travel_with_prev(
         static_cast<int>(mdata_t::MapId::pet_arena));
     chatteleport = 1;
@@ -430,7 +430,7 @@ TalkResult talk_pet_arena_master_score(Character& speaker)
 {
     buff = i18n::s.get(
         "core.talk.npc.arena_master.streak",
-        area_data[game_data.current_map].winning_streak_in_pet_arena,
+        area_data[game()->current_map].winning_streak_in_pet_arena,
         speaker);
     return TalkResult::talk_npc;
 }
@@ -441,7 +441,7 @@ TalkResult talk_arena_master_score(Character& speaker)
 {
     buff = i18n::s.get(
         "core.talk.npc.arena_master.streak",
-        area_data[game_data.current_map].winning_streak_in_arena,
+        area_data[game()->current_map].winning_streak_in_arena,
         speaker);
     return TalkResult::talk_npc;
 }
@@ -532,8 +532,8 @@ TalkResult talk_guard_return_item(Character& speaker)
         chatesc = 1;
         talk_window_query(speaker);
         modify_karma(cdata.player(), 5);
-        ++game_data.lost_wallet_count;
-        if (game_data.lost_wallet_count >= 4)
+        ++game()->lost_wallet_count;
+        if (game()->lost_wallet_count >= 4)
         {
             listmax = 0;
             buff = i18n::s.get_enum(
@@ -799,7 +799,7 @@ TalkResult talk_ally_marriage(Character& speaker)
 TalkResult talk_ally_gene(Character& speaker)
 {
     /*
-    if (game_data.current_map == mdata_t::MapId::shelter_)
+    if (game()->current_map == mdata_t::MapId::shelter_)
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.ally.make_gene.refuses");
@@ -828,7 +828,7 @@ TalkResult talk_ally_gene(Character& speaker)
         }
     }
     speaker.has_made_gene() = true;
-    game_data.character_and_status_for_gene = speaker.index;
+    game()->character_and_status_for_gene = speaker.index;
     return TalkResult::talk_end;
     */
 
@@ -1026,7 +1026,7 @@ TalkResult talk_adventurer_hire(Character& speaker)
         cdata.player().gold -= calc_adventurer_hire_cost(speaker);
         speaker.relationship = 10;
         speaker.is_contracting() = true;
-        speaker.period_of_contract = game_data.date.hours() + 168;
+        speaker.period_of_contract = game()->date.hours() + 168;
         ++speaker.hire_count;
         snd("core.pray1");
         txt(i18n::s.get("core.talk.npc.adventurer.hire.you_hired", speaker),
@@ -1099,7 +1099,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         modify_karma(cdata.player(), -20);
         snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
-        game_data.quest_flags.pael_and_her_mom = 1002;
+        game()->quest_flags.pael_and_her_mom = 1002;
         const auto lily = chara_find("core.lily");
         assert(lily);
         lily->ai_calm = 3;
@@ -1221,7 +1221,7 @@ TalkResult talk_sex(Character& speaker)
 
 TalkResult talk_result_maid_chase_out(Character& speaker)
 {
-    --game_data.number_of_waiting_guests;
+    --game()->number_of_waiting_guests;
     listmax = 0;
     buff = i18n::s.get("core.talk.npc.maid.do_not_meet", speaker);
     ELONA_APPEND_RESPONSE(0, i18n::s.get("core.ui.more"));
@@ -1302,13 +1302,13 @@ TalkResult talk_caravan_master_hire(Character& speaker)
         buff = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
         return TalkResult::talk_npc;
     }
-    game_data.destination_map = area_data[chatval_].outer_map;
-    game_data.destination_dungeon_level = 1;
+    game()->destination_map = area_data[chatval_].outer_map;
+    game()->destination_dungeon_level = 1;
     levelexitby = 4;
-    game_data.reset_world_map_in_diastrophism_flag = 1;
-    game_data.destination_outer_map = area_data[chatval_].outer_map;
-    game_data.pc_x_in_world_map = area_data[chatval_].position.x;
-    game_data.pc_y_in_world_map = area_data[chatval_].position.y;
+    game()->reset_world_map_in_diastrophism_flag = 1;
+    game()->destination_outer_map = area_data[chatval_].outer_map;
+    game()->pc_x_in_world_map = area_data[chatval_].position.x;
+    game()->pc_y_in_world_map = area_data[chatval_].position.y;
     fixtransfermap = 1;
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -1444,11 +1444,11 @@ TalkResult talk_accepted_quest(Character& speaker, int quest_idx)
             }
         }
     }
-    game_data.executing_immediate_quest_type = quest_data[quest_idx].id;
-    game_data.executing_immediate_quest_show_hunt_remain =
+    game()->executing_immediate_quest_type = quest_data[quest_idx].id;
+    game()->executing_immediate_quest_show_hunt_remain =
         quest_data[quest_idx].id == 1001 || quest_data[quest_idx].id == 1010;
-    game_data.executing_immediate_quest = quest_idx;
-    game_data.executing_immediate_quest_status = 1;
+    game()->executing_immediate_quest = quest_idx;
+    game()->executing_immediate_quest_status = 1;
     map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::quest));
     chatteleport = 1;
     return TalkResult::talk_end;
@@ -1530,7 +1530,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
             cdata.player().platinum_coin -=
                 calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
-            ++game_data.number_of_learned_skills_by_trainer;
+            ++game()->number_of_learned_skills_by_trainer;
             buff =
                 i18n::s.get("core.talk.npc.trainer.finish.learning", speaker);
         }
@@ -1587,7 +1587,7 @@ TalkResult talk_invest(Character& speaker)
     {
         buff = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         calccosthire();
     }
@@ -1620,13 +1620,13 @@ TalkResult talk_finish_escort(Character& speaker)
 TalkResult talk_quest_giver(Character& speaker)
 {
     int quest_idx = -1;
-    for (int i = 0; i < game_data.number_of_existing_quests; ++i)
+    for (int i = 0; i < game()->number_of_existing_quests; ++i)
     {
         if (quest_data[i].id == 0)
         {
             continue;
         }
-        if (quest_data[i].originating_map_id == game_data.current_map &&
+        if (quest_data[i].originating_map_id == game()->current_map &&
             quest_data[i].client_chara_index == speaker.index)
         {
             quest_idx = i;
@@ -1655,7 +1655,7 @@ TalkResult talk_quest_giver(Character& speaker)
     if (chatval_ == 1)
     {
         p = 0;
-        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -1676,18 +1676,18 @@ TalkResult talk_quest_giver(Character& speaker)
         }
         for (int cnt = 0; cnt < 5; ++cnt)
         {
-            p = game_data.taken_quests.at(cnt);
+            p = game()->taken_quests.at(cnt);
             f = 0;
             for (int cnt = 0; cnt < 5; ++cnt)
             {
-                if (game_data.taken_quests.at(cnt) == p)
+                if (game()->taken_quests.at(cnt) == p)
                 {
                     ++f;
                 }
             }
             if (quest_data[p].progress == 0 || f > 1)
             {
-                game_data.taken_quests.at(cnt) = quest_idx;
+                game()->taken_quests.at(cnt) = quest_idx;
                 break;
             }
         }
@@ -1784,12 +1784,12 @@ TalkResult talk_quest_giver(Character& speaker)
 /// trading quests you are taking now.
 bool _talk_check_trade(int chara_index)
 {
-    for (const auto& quest_index : game_data.taken_quests)
+    for (const auto& quest_index : game()->taken_quests)
     {
         const auto& quest = quest_data[quest_index];
         if (quest.progress == 1 &&
-            quest.originating_map_id == game_data.current_map &&
-            game_data.current_dungeon_level == 1 &&
+            quest.originating_map_id == game()->current_map &&
+            game()->current_dungeon_level == 1 &&
             chara_index == quest.target_chara_index)
         {
             return true;
@@ -1877,14 +1877,14 @@ TalkResult talk_npc(Character& speaker)
                         }
                     }
                     speaker.interest -= rnd(30);
-                    speaker.time_interest_revive = game_data.date.hours() + 8;
+                    speaker.time_interest_revive = game()->date.hours() + 8;
                 }
             }
         }
     }
     if (speaker.role == Role::maid)
     {
-        if (game_data.number_of_waiting_guests > 0)
+        if (game()->number_of_waiting_guests > 0)
         {
             ELONA_APPEND_RESPONSE(
                 58, i18n::s.get("core.talk.npc.maid.choices.meet_guest"));
@@ -1953,7 +1953,7 @@ TalkResult talk_npc(Character& speaker)
                         i18n::s.get(
                             "core.talk.npc.ally.choices.ask_for_marriage"));
                 }
-                else if (game_data.continuous_active_hours >= 15)
+                else if (game()->continuous_active_hours >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
                         39,
@@ -1992,8 +1992,8 @@ TalkResult talk_npc(Character& speaker)
             13,
             i18n::s.get("core.talk.npc.innkeeper.choices.eat") + u8" ("s +
                 calcmealvalue() + i18n::s.get("core.ui.gold") + u8")"s);
-        if (game_data.weather == 1 || game_data.weather == 4 ||
-            game_data.weather == 2)
+        if (game()->weather == 1 || game()->weather == 4 ||
+            game()->weather == 2)
         {
             ELONA_APPEND_RESPONSE(
                 43,
@@ -2118,7 +2118,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.role == Role::spell_writer)
     {
-        if (game_data.guild.belongs_to_mages_guild != 0)
+        if (game()->guild.belongs_to_mages_guild != 0)
         {
             ELONA_APPEND_RESPONSE(
                 55, i18n::s.get("core.talk.npc.spell_writer.choices.reserve"));
@@ -2126,7 +2126,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.drunk != 0 || 0)
     {
-        if (game_data.current_map != mdata_t::MapId::show_house)
+        if (game()->current_map != mdata_t::MapId::show_house)
         {
             if (!speaker.is_player_or_ally())
             {
@@ -2154,13 +2154,13 @@ TalkResult talk_npc(Character& speaker)
     f = 0;
     deliver = -1;
     int quest_idx = -1;
-    if (game_data.current_dungeon_level == 1)
+    if (game()->current_dungeon_level == 1)
     {
-        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
-            if (quest_data[cnt].originating_map_id == game_data.current_map)
+            if (quest_data[cnt].originating_map_id == game()->current_map)
             {
                 if (quest_data[cnt].client_chara_index == speaker.index)
                 {
@@ -2173,7 +2173,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (f == 1)
     {
-        for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
+        for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
              cnt < cnt_end;
              ++cnt)
         {
@@ -2271,7 +2271,7 @@ TalkResult talk_npc(Character& speaker)
             25,
             i18n::s.get("core.talk.npc.quest_giver.choices.here_is_delivery"));
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         if (speaker.is_map_local())
         {
@@ -2287,7 +2287,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.role == Role::moyer)
     {
-        if (game_data.quest_flags.pael_and_her_mom == 1000)
+        if (game()->quest_flags.pael_and_her_mom == 1000)
         {
             if (const auto lily = chara_find("core.lily"))
             {
@@ -2313,8 +2313,8 @@ TalkResult talk_npc(Character& speaker)
             if (cdata.player().karma < -30 &&
                 cdata.player().is_incognito() == 0)
             {
-                if (game_data.current_map != mdata_t::MapId::derphy &&
-                    game_data.current_map != mdata_t::MapId::your_home)
+                if (game()->current_map != mdata_t::MapId::derphy &&
+                    game()->current_map != mdata_t::MapId::your_home)
                 {
                     listmax = 0;
                     if (chatval_ == 10)
@@ -2395,7 +2395,7 @@ TalkResult talk_npc(Character& speaker)
     case 55: return talk_spell_writer_reserve(speaker);
     case 56: return talk_sex(speaker);
     case 58: {
-        if (game_data.left_turns_of_timestop == 0)
+        if (game()->left_turns_of_timestop == 0)
         {
             event_add(25);
         }

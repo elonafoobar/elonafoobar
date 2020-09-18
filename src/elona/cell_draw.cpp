@@ -6,6 +6,8 @@
 #include "draw.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
+#include "game.hpp"
+#include "globals.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
 #include "map.hpp"
@@ -1043,15 +1045,14 @@ bool you_can_see(const Character& chara)
 bool hp_bar_visible(const Character& chara)
 {
     return chara.has_been_used_stethoscope() ||
-        game_data.chara_last_attacked_by_player == chara.index ||
-        debug_is_wizard();
+        g_chara_last_attacked_by_player == chara.index || debug_is_wizard();
 }
 
 
 
 bool is_night()
 {
-    return game_data.date.hour > 17 || game_data.date.hour < 6;
+    return game()->date.hour > 17 || game()->date.hour < 6;
 }
 
 
@@ -1429,10 +1430,10 @@ void cell_draw()
     const bool update_frame = scrturn_ != prev_scrturn;
     prev_scrturn = scrturn_;
 
-    int light_ = game_data.light;
+    int light_ = game()->light;
     randomize(scrturn_);
 
-    if (game_data.torch == 1)
+    if (game()->torch == 1)
     {
         if (mdata_t::is_nefia(map_data.type))
         {

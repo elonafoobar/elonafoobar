@@ -11,6 +11,8 @@
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
+#include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "lua_env/console.hpp"
@@ -18,6 +20,7 @@
 #include "random.hpp"
 #include "text.hpp"
 #include "variables.hpp"
+
 
 
 namespace
@@ -239,7 +242,7 @@ void render_weather_effect_snow()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game_data.weather)
+        if (particle == Position{0, 0} || weatherbk != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -291,7 +294,7 @@ void render_weather_effect_etherwind()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game_data.weather)
+        if (particle == Position{0, 0} || weatherbk != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -319,7 +322,7 @@ void render_weather_effect()
     if (map_data.indoors_flag != 2)
         return;
 
-    switch (game_data.weather)
+    switch (game()->weather)
     {
     case 3: render_weather_effect_rain(); break;
     case 4: render_weather_effect_hard_rain(); break;
@@ -328,7 +331,7 @@ void render_weather_effect()
     default: break;
     }
 
-    weatherbk = game_data.weather;
+    weatherbk = game()->weather;
     gmode(2);
 }
 
@@ -614,7 +617,7 @@ void render_analogue_clock()
         "core.clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
-        game_data.date.hour * 30 + game_data.date.minute / 2);
+        game()->date.hour * 30 + game()->date.minute / 2);
     // Long hand
     draw_rotated(
         "core.clock_hand",
@@ -622,15 +625,15 @@ void render_analogue_clock()
         inf_clockarrowy,
         info.width / 2,
         info.height,
-        game_data.date.minute * 6);
+        game()->date.minute * 6);
 
     mes(inf_clockw - 3,
         inf_clocky + 17 + vfix,
-        ""s + game_data.date.year + u8"/"s + game_data.date.month + u8"/"s +
-            game_data.date.day);
+        ""s + game()->date.year + u8"/"s + game()->date.month + u8"/"s +
+            game()->date.day);
     bmes(
-        i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game_data.weather),
+        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
+            i18n::s.get_enum("core.ui.weather", game()->weather),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -644,9 +647,9 @@ void render_digital_clock()
     bmes(
         i18n::s.get(
             "core.ui.digital_clock.time",
-            game_data.date.hour,
-            game_data.date.minute,
-            game_data.date.second),
+            game()->date.hour,
+            game()->date.minute,
+            game()->date.second),
         8,
         8);
 
@@ -656,16 +659,16 @@ void render_digital_clock()
     bmes(
         i18n::s.get(
             "core.ui.digital_clock.date",
-            game_data.date.year,
-            game_data.date.month,
-            game_data.date.day),
+            game()->date.year,
+            game()->date.month,
+            game()->date.day),
         datex,
         8);
 
     // time of day + weather
     bmes(
-        i18n::s.get_enum("core.ui.time", game_data.date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game_data.weather),
+        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
+            i18n::s.get_enum("core.ui.weather", game()->weather),
         datex + 64 + 12,
         8);
 }
@@ -677,15 +680,15 @@ void render_skill_trackers()
     int y{};
     for (int i = 0; i < 10; ++i)
     {
-        const auto skill = game_data.tracked_skills.at(i) % 10000;
+        const auto skill = game()->tracked_skills.at(i) % 10000;
         if (skill == 0)
         {
             continue;
         }
-        const auto chara = game_data.tracked_skills.at(i) / 10000;
+        const auto chara = game()->tracked_skills.at(i) / 10000;
         if (chara != 0 && cdata[chara].state() != Character::State::alive)
         {
-            game_data.tracked_skills.at(i) = 0;
+            game()->tracked_skills.at(i) = 0;
             continue;
         }
         bmes(
@@ -1005,7 +1008,7 @@ void render_status_ailments()
         {0, 80, 80});
 
     y = render_one_status_ailment(
-        game_data.continuous_active_hours,
+        game()->continuous_active_hours,
         x,
         y,
         [](auto hours) { return hours >= 15; },
@@ -1060,7 +1063,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        static_cast<int>(foobar_data.is_autodig_enabled),
+        static_cast<int>(g_is_autodig_enabled),
         x,
         y,
         [](auto is_enabled) { return is_enabled == 1; },
@@ -1103,7 +1106,7 @@ void render_autoturn_animation()
     bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
     draw_rotated(
-        "core.hourglass", sx + 18, sy + 12, game_data.date.minute / 4 * 24);
+        "core.hourglass", sx + 18, sy + 12, game()->date.minute / 4 * 24);
 
     if (cdata.player().activity.type == Activity::Type::dig_ground ||
         cdata.player().activity.type == Activity::Type::dig_wall ||
@@ -1491,10 +1494,10 @@ void render_hud()
     font(12 - en * 2, snail::Font::Style::bold);
     render_hp_bar(cdata.player(), inf_hpx, inf_hpy, true);
     render_mp_bar(cdata.player(), inf_mpx, inf_mpy, true);
-    if (game_data.mount != 0 &&
-        cdata[game_data.mount].state() == Character::State::alive)
+    if (game()->mount != 0 &&
+        cdata[game()->mount].state() == Character::State::alive)
     {
-        render_hp_bar(cdata[game_data.mount], inf_hpx - 120, inf_hpy);
+        render_hp_bar(cdata[game()->mount], inf_hpx - 120, inf_hpy);
     }
 
     // Basic attributes and PV/DV.
@@ -1650,7 +1653,7 @@ void update_scrolling_info()
         sy(0) = tlocy - scy;
         sy(1) = tlocy;
     }
-    if (game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::pet_arena)
     {
         sx(0) = cdata[camera].position.x - scx;
         sx(1) = cdata[camera].position.x;
@@ -1756,7 +1759,7 @@ void update_slight()
                 continue;
             }
             const auto all_cells_visible =
-                game_data.current_map == mdata_t::MapId::pet_arena;
+                game()->current_map == mdata_t::MapId::pet_arena;
             bool blinded = false;
             if (cdata.player().blind != 0)
             {
@@ -1807,7 +1810,7 @@ void ui_render_non_hud()
 {
     cell_draw();
 
-    if (game_data.current_map == mdata_t::MapId::pet_arena)
+    if (game()->current_map == mdata_t::MapId::pet_arena)
     {
         highlight_characters_in_pet_arena();
     }

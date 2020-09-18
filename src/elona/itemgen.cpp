@@ -7,6 +7,7 @@
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "enchantment.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -312,9 +313,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
                 cnven(iknownnameref(the_item_db[item->id]->integer_id)),
                 *owner,
                 mapname(owner->current_map),
-                game_data.date.day,
-                game_data.date.month,
-                game_data.date.year));
+                game()->date.day,
+                game()->date.month,
+                game()->date.year));
         }
         else
         {
@@ -322,9 +323,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
                 "core.magic.oracle.was_created_at",
                 iknownnameref(the_item_db[item->id]->integer_id),
                 mdatan(0),
-                game_data.date.day,
-                game_data.date.month,
-                game_data.date.year));
+                game()->date.day,
+                game()->date.month,
+                game()->date.year));
         }
     }
 
@@ -406,8 +407,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
 
     if (item->id == "core.cooler_box")
     {
-        ++game_data.next_inventory_serial_id;
-        item->charges = game_data.next_inventory_serial_id;
+        ++game()->next_inventory_serial_id;
+        item->charges = game()->next_inventory_serial_id;
     }
 
     if (item->id == "core.heir_trunk")
@@ -434,8 +435,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
 
     if (category == ItemCategory::chest)
     {
-        item->param1 = game_data.current_dungeon_level *
-                (game_data.current_map != mdata_t::MapId::shelter_) +
+        item->param1 = game()->current_dungeon_level *
+                (game()->current_map != mdata_t::MapId::shelter_) +
             5;
         if (item->id == "core.suitcase")
         {
@@ -447,8 +448,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
             item->param1 = cdata.player().level;
         }
         item->param2 = rnd_capped(
-            std::abs(game_data.current_dungeon_level) *
-                (game_data.current_map != mdata_t::MapId::shelter_) +
+            std::abs(game()->current_dungeon_level) *
+                (game()->current_map != mdata_t::MapId::shelter_) +
             1);
         if (item->id == "core.wallet" || item->id == "core.suitcase")
         {
@@ -482,7 +483,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         }
         if (item->material == "core.raw")
         {
-            item->param3 += game_data.date.hours();
+            item->param3 += game()->date.hours();
         }
     }
 

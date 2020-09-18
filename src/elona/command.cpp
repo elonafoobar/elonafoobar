@@ -29,6 +29,8 @@
 #include "enchantment.hpp"
 #include "food.hpp"
 #include "fov.hpp"
+#include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -194,7 +196,7 @@ void _search_for_map_feats(Character& chara)
     }
     if (feat(1) == 32)
     {
-        if (game_data.current_map != mdata_t::MapId::show_house)
+        if (game()->current_map != mdata_t::MapId::show_house)
         {
             _try_to_reveal_small_coin(chara);
         }
@@ -291,7 +293,7 @@ TurnResult _bump_into_character(Character& chara)
     if (chara.relationship >= 10 ||
         (chara.relationship == -1 && !g_config.attack_neutral_npcs()) ||
         (chara.relationship == 0 &&
-         (area_data[game_data.current_map].is_museum_or_shop() ||
+         (area_data[game()->current_map].is_museum_or_shop() ||
           is_modifier_pressed(snail::ModKey::shift))))
     {
         if (chara.is_hung_on_sand_bag() == 0)
@@ -573,9 +575,9 @@ TurnResult do_give_command()
     }
     if (target_chara_index == 0)
     {
-        if (game_data.mount != 0)
+        if (game()->mount != 0)
         {
-            target_chara_index = game_data.mount;
+            target_chara_index = game()->mount;
         }
     }
     if (target_chara_index != 0)
@@ -654,7 +656,7 @@ TurnResult do_interact_command()
         }
         prompt.append("teach_words", 7);
         prompt.append("change_tone", 10);
-        if (game_data.current_map != mdata_t::MapId::show_house)
+        if (game()->current_map != mdata_t::MapId::show_house)
         {
             if (cdata[target_index].is_hung_on_sand_bag())
             {
@@ -863,7 +865,7 @@ TurnResult do_dig_command()
 TurnResult do_search_command()
 {
     txt(i18n::s.get("core.action.search.execute"), Message::only_once{true});
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         _search_for_crystal();
     }
@@ -1671,7 +1673,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             {
                 if (mix_target->param1 < -5 || mix_target->param3 >= 20 ||
                     (mix_target->id == "core.holy_well" &&
-                     game_data.holy_well_count <= 0))
+                     game()->holy_well_count <= 0))
                 {
                     txt(i18n::s.get(
                         "core.action.dip.result.natural_potion_dry",
@@ -1688,7 +1690,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                 OptionalItemRef natural_potion;
                 if (mix_target->id == "core.holy_well")
                 {
-                    --game_data.holy_well_count;
+                    --game()->holy_well_count;
                     flt();
                     if ((natural_potion = itemcreate_player_inv(516, 0)))
                     {
@@ -1882,7 +1884,7 @@ TurnResult do_use_command(ItemRef use_item)
 
     if (use_item->has_cooldown_time)
     {
-        if (game_data.date.hours() < use_item->charges)
+        if (game()->date.hours() < use_item->charges)
         {
             txt(i18n::s.get(
                 "core.action.use.useable_again_at",
@@ -1891,7 +1893,7 @@ TurnResult do_use_command(ItemRef use_item)
             return TurnResult::pc_turn_user_error;
         }
         item_separate(use_item);
-        use_item->charges = game_data.date.hours() + use_item->param3;
+        use_item->charges = game()->date.hours() + use_item->param3;
     }
     if (use_item->has_charges)
     {
@@ -1914,13 +1916,13 @@ TurnResult do_use_command(ItemRef use_item)
     }
     if (item_data->subcategory == 60004)
     {
-        if (game_data.continuous_active_hours < 15)
+        if (game()->continuous_active_hours < 15)
         {
             txt(i18n::s.get("core.action.use.not_sleepy"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        game_data.activity_about_to_start = 100;
+        game()->activity_about_to_start = 100;
         activity_others(cdata.player(), use_item);
         return TurnResult::turn_end;
     }
@@ -2198,14 +2200,14 @@ TurnResult do_use_command(ItemRef use_item)
         break;
     case 13:
         snd("core.fire1");
-        if (game_data.torch == 0)
+        if (game()->torch == 0)
         {
-            game_data.torch = 1;
+            game()->torch = 1;
             txt(i18n::s.get("core.action.use.torch.light"));
         }
         else
         {
-            game_data.torch = 0;
+            game()->torch = 0;
             txt(i18n::s.get("core.action.use.torch.put_out"));
         }
         chara_refresh(cdata.player());
@@ -2239,14 +2241,14 @@ TurnResult do_use_command(ItemRef use_item)
         if (target_chara_index == 0)
         {
             txt(i18n::s.get("core.action.use.stethoscope.self"));
-            game_data.chara_last_attacked_by_player = 0;
+            g_chara_last_attacked_by_player = 0;
             return TurnResult::turn_end;
         }
         if (target_chara_index > 0 && target_chara_index < 16)
         {
             if (cdata[target_chara_index].state() == Character::State::alive)
             {
-                game_data.chara_last_attacked_by_player = 0;
+                g_chara_last_attacked_by_player = 0;
                 if (cdata[target_chara_index].has_been_used_stethoscope() == 1)
                 {
                     cdata[target_chara_index].has_been_used_stethoscope() =
@@ -2337,7 +2339,7 @@ TurnResult do_use_command(ItemRef use_item)
         break;
     }
     case 45: {
-        if (game_data.current_map == mdata_t::MapId::show_house)
+        if (game()->current_map == mdata_t::MapId::show_house)
         {
             txt(i18n::s.get("core.action.use.sandbag.cannot_use_here"));
             update_screen();
@@ -2426,7 +2428,7 @@ TurnResult do_use_command(ItemRef use_item)
         {
             if (map_prevents_building_shelter())
             {
-                if (game_data.current_map == mdata_t::MapId::fields)
+                if (game()->current_map == mdata_t::MapId::fields)
                 {
                     txt(i18n::s.get(
                         "core.action.use.shelter.only_in_world_map"));
@@ -2439,17 +2441,16 @@ TurnResult do_use_command(ItemRef use_item)
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            game_data.activity_about_to_start = 101;
+            game()->activity_about_to_start = 101;
             activity_others(cdata.player(), use_item);
             return TurnResult::turn_end;
         }
-        if (area_data[game_data.current_map].id ==
-            mdata_t::MapId::random_dungeon)
+        if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
         {
-            if (game_data.current_dungeon_level ==
-                area_data[game_data.current_map].deepest_level)
+            if (game()->current_dungeon_level ==
+                area_data[game()->current_map].deepest_level)
             {
-                if (area_data[game_data.current_map].has_been_conquered != -1)
+                if (area_data[game()->current_map].has_been_conquered != -1)
                 {
                     txt(i18n::s.get("core.action.use.shelter.during_quest"));
                     if (!yes_no())
@@ -2460,7 +2461,7 @@ TurnResult do_use_command(ItemRef use_item)
                 }
             }
         }
-        game_data.activity_about_to_start = 102;
+        game()->activity_about_to_start = 102;
         activity_others(cdata.player(), use_item);
         break;
     case 11:
@@ -2525,7 +2526,7 @@ TurnResult do_use_command(ItemRef use_item)
         break;
     case 26:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
-        game_data.diastrophism_flag = 1;
+        game()->diastrophism_flag = 1;
         snd("core.pray1");
         txt(i18n::s.get("core.action.use.statue.opatos"),
             Message::color{ColorIndex::orange});
@@ -2548,32 +2549,32 @@ TurnResult do_use_command(ItemRef use_item)
     case 27:
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         snd("core.pray1");
-        if (game_data.weather == 1)
+        if (game()->weather == 1)
         {
             txt(i18n::s.get("core.action.use.statue.lulwy.during_etherwind"),
                 Message::color{ColorIndex::orange});
             break;
         }
-        p = game_data.weather;
+        p = game()->weather;
         while (1)
         {
             if (rnd(10) == 0)
             {
-                game_data.weather = 0;
+                game()->weather = 0;
             }
             if (rnd(10) == 0)
             {
-                game_data.weather = 3;
+                game()->weather = 3;
             }
             if (rnd(15) == 0)
             {
-                game_data.weather = 4;
+                game()->weather = 4;
             }
             if (rnd(20) == 0)
             {
-                game_data.weather = 2;
+                game()->weather = 2;
             }
-            if (game_data.weather != p)
+            if (game()->weather != p)
             {
                 break;
             }
@@ -2592,7 +2593,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
         if (cdata.player().position.x != 33 || cdata.player().position.y != 16)
         {
-            if (game_data.quest_flags.red_blossom_in_palmia == 1)
+            if (game()->quest_flags.red_blossom_in_palmia == 1)
             {
                 txt(i18n::s.get("core.action.use.nuke.not_quest_goal"));
                 if (!yes_no())
@@ -2615,8 +2616,7 @@ TurnResult do_use_command(ItemRef use_item)
             cdata.player().index);
         break;
     case 48:
-        if (game_data.current_map != mdata_t::MapId::show_house ||
-            usermapid == 0)
+        if (game()->current_map != mdata_t::MapId::show_house || usermapid == 0)
         {
             txt(i18n::s.get("core.action.use.statue.creator.normal"));
             break;
@@ -2646,8 +2646,8 @@ TurnResult do_use_command(ItemRef use_item)
         magic(cdata.player(), cdata.player());
         break;
     case 41:
-        if (game_data
-                .next_level_minus_one_kumiromis_experience_becomes_available >
+        if (game()
+                ->next_level_minus_one_kumiromis_experience_becomes_available >
             cdata.player().level)
         {
             txt(i18n::s.get(
@@ -2656,10 +2656,10 @@ TurnResult do_use_command(ItemRef use_item)
             return TurnResult::pc_turn_user_error;
         }
         snd("core.pray1");
-        game_data.next_level_minus_one_kumiromis_experience_becomes_available +=
+        game()->next_level_minus_one_kumiromis_experience_becomes_available +=
             10;
         use_item->modify_number(-1);
-        ++game_data.acquirable_feat_count;
+        ++game()->acquirable_feat_count;
         txt(i18n::s.get(
             "core.action.use.secret_experience.kumiromi.use.dialog"));
         txt(i18n::s.get("core.action.use.secret_experience.kumiromi.use.text"),
@@ -2828,11 +2828,11 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
     {
         snd_("core.locked1");
         txt(i18n::s.get("core.action.open.shackle.text"));
-        if (game_data.current_map == mdata_t::MapId::noyel &&
-            game_data.current_dungeon_level == 1 &&
-            game_data.released_fire_giant == 0)
+        if (game()->current_map == mdata_t::MapId::noyel &&
+            game()->current_dungeon_level == 1 &&
+            game()->released_fire_giant == 0)
         {
-            if (cdata[game_data.fire_giant].state() == Character::State::alive)
+            if (cdata[game()->fire_giant].state() == Character::State::alive)
             {
                 if (const auto moyer = chara_find("core.moyer"))
                 {
@@ -2840,11 +2840,11 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
                     {
                         txt(i18n::s.get("core.action.open.shackle.dialog"),
                             Message::color{ColorIndex::cyan});
-                        cdata[game_data.fire_giant].enemy_id = moyer->index;
-                        cdata[game_data.fire_giant].hate = 1000;
+                        cdata[game()->fire_giant].enemy_id = moyer->index;
+                        cdata[game()->fire_giant].hate = 1000;
                     }
                 }
-                game_data.released_fire_giant = 1;
+                game()->released_fire_giant = 1;
                 net_send_news("fire");
             }
         }
@@ -2864,7 +2864,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         }
         if (box->charges == 3 || box->charges == 4 || box->charges == 6)
         {
-            if (game_data.current_map != mdata_t::MapId::your_home)
+            if (game()->current_map != mdata_t::MapId::your_home)
             {
                 txt(i18n::s.get("core.action.open.only_in_home"));
                 update_screen();
@@ -2873,7 +2873,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         }
         if (box->charges == 5)
         {
-            if (area_data[game_data.current_map].id != mdata_t::MapId::shop)
+            if (area_data[game()->current_map].id != mdata_t::MapId::shop)
             {
                 txt(i18n::s.get("core.action.open.only_in_shop"));
                 update_screen();
@@ -2889,7 +2889,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             txt(i18n::s.get(
                 "core.ui.inv.take.can_claim_more",
-                game_data.rights_to_succeed_to));
+                game()->rights_to_succeed_to));
             invctrl(1) = 1;
         }
         if (invfile == 6 || invcontainer(1) == 641)
@@ -2992,14 +2992,14 @@ TurnResult do_use_stairs_command(int val0)
             return TurnResult::turn_end;
         }
     }
-    if (game_data.current_map == mdata_t::MapId::your_home)
+    if (game()->current_map == mdata_t::MapId::your_home)
     {
         if (val0 == 1)
         {
             if (mapitemfind(cdata.player().position, "core.downstairs"))
             {
-                if (game_data.current_dungeon_level >=
-                    area_data[game_data.current_map].deepest_level)
+                if (game()->current_dungeon_level >=
+                    area_data[game()->current_map].deepest_level)
                 {
                     txt(i18n::s.get("core.action.use_stairs.cannot_go.down"));
                     return TurnResult::pc_turn_user_error;
@@ -3014,8 +3014,8 @@ TurnResult do_use_stairs_command(int val0)
         {
             if (mapitemfind(cdata.player().position, "core.upstairs"))
             {
-                if (game_data.current_dungeon_level <=
-                    area_data[game_data.current_map].danger_level)
+                if (game()->current_dungeon_level <=
+                    area_data[game()->current_map].danger_level)
                 {
                     txt(i18n::s.get("core.action.use_stairs.cannot_go.up"));
                     return TurnResult::pc_turn_user_error;
@@ -3042,9 +3042,9 @@ TurnResult do_use_stairs_command(int val0)
                 else
                 {
                     movelevelbystairs = 1;
-                    if (game_data.current_map == mdata_t::MapId::the_void &&
-                        game_data.current_dungeon_level >=
-                            game_data.void_next_lord_floor)
+                    if (game()->current_map == mdata_t::MapId::the_void &&
+                        game()->current_dungeon_level >=
+                            game()->void_next_lord_floor)
                     {
                         txt(i18n::s.get(
                             "core.action.use_stairs.blocked_by_barrier"));
@@ -3070,37 +3070,37 @@ TurnResult do_use_stairs_command(int val0)
     if (feat == tile_downlocked)
     {
         f = 0;
-        if (game_data.current_dungeon_level == 3)
+        if (game()->current_dungeon_level == 3)
         {
-            if (game_data.quest_flags.main_quest >= 65)
+            if (game()->quest_flags.main_quest >= 65)
             {
                 f = 1;
             }
         }
-        if (game_data.current_dungeon_level == 17)
+        if (game()->current_dungeon_level == 17)
         {
-            if (game_data.quest_flags.main_quest >= 115)
+            if (game()->quest_flags.main_quest >= 115)
             {
                 f = 1;
             }
         }
-        if (game_data.current_dungeon_level == 25)
+        if (game()->current_dungeon_level == 25)
         {
-            if (game_data.quest_flags.main_quest >= 125)
+            if (game()->quest_flags.main_quest >= 125)
             {
                 f = 1;
             }
         }
-        if (game_data.current_dungeon_level == 44)
+        if (game()->current_dungeon_level == 44)
         {
-            if (game_data.quest_flags.main_quest >= 125)
+            if (game()->quest_flags.main_quest >= 125)
             {
                 f = 1;
             }
         }
         if (f == 1)
         {
-            if (game_data.current_dungeon_level == 44)
+            if (game()->current_dungeon_level == 44)
             {
                 txt(i18n::s.get("core.action.use_stairs.unlock.stones"));
             }
@@ -3120,12 +3120,12 @@ TurnResult do_use_stairs_command(int val0)
         txt(i18n::s.get("core.action.use_stairs.locked"));
         return TurnResult::turn_end;
     }
-    if (area_data[game_data.current_map].id == mdata_t::MapId::random_dungeon)
+    if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
     {
-        if (game_data.current_dungeon_level ==
-            area_data[game_data.current_map].deepest_level)
+        if (game()->current_dungeon_level ==
+            area_data[game()->current_map].deepest_level)
         {
-            if (area_data[game_data.current_map].has_been_conquered != -1)
+            if (area_data[game()->current_map].has_been_conquered != -1)
             {
                 txt(i18n::s.get("core.action.use_stairs.prompt_give_up_quest"));
                 if (!yes_no())
@@ -3200,16 +3200,16 @@ TurnResult do_movement_command()
         cdata.player().next_position.x = cdata.player().position.x + rnd(3) - 1;
         cdata.player().next_position.y = cdata.player().position.y + rnd(3) - 1;
     }
-    if (game_data.mount != 0)
+    if (game()->mount != 0)
     {
-        if (cdata[game_data.mount].activity)
+        if (cdata[game()->mount].activity)
         {
-            if (cdata[game_data.mount].activity.turn > 0)
+            if (cdata[game()->mount].activity.turn > 0)
             {
                 txt(i18n::s.get(
-                    "core.action.move.interrupt", cdata[game_data.mount]));
-                cdata[game_data.mount].activity.type = Activity::Type::none;
-                cdata[game_data.mount].activity.turn = 0;
+                    "core.action.move.interrupt", cdata[game()->mount]));
+                cdata[game()->mount].activity.type = Activity::Type::none;
+                cdata[game()->mount].activity.turn = 0;
             }
         }
     }
@@ -3249,7 +3249,7 @@ TurnResult do_movement_command()
         return _pre_proc_movement_event(cdata.player());
     }
     if (map_data.type == mdata_t::MapType::shelter ||
-        (game_data.current_dungeon_level == 1 &&
+        (game()->current_dungeon_level == 1 &&
          map_data.type != mdata_t::MapType::world_map &&
          !mdata_t::is_nefia(map_data.type)))
     {
@@ -3261,7 +3261,7 @@ TurnResult do_movement_command()
             txt(i18n::s.get("core.action.move.leave.prompt", mdatan(0)));
             if (map_data.type == mdata_t::MapType::temporary)
             {
-                if (game_data.executing_immediate_quest_status != 3)
+                if (game()->executing_immediate_quest_status != 3)
                 {
                     txt(i18n::s.get("core.action.move.leave.abandoning_quest"));
                 }
@@ -3270,10 +3270,10 @@ TurnResult do_movement_command()
             update_screen();
             if (yesno_result)
             {
-                game_data.player_x_on_map_leave = cdata.player().position.x;
-                game_data.player_y_on_map_leave = cdata.player().position.y;
+                game()->player_x_on_map_leave = cdata.player().position.x;
+                game()->player_y_on_map_leave = cdata.player().position.y;
                 snd("core.exitmap1");
-                --game_data.current_dungeon_level;
+                --game()->current_dungeon_level;
                 levelexitby = 4;
                 return TurnResult::exit_map;
             }
@@ -3458,7 +3458,7 @@ TurnResult do_get_command()
 
     if (cell_data.at(cdata.player().position.x, cdata.player().position.y)
                 .feats != 0 &&
-        game_data.current_map != mdata_t::MapId::show_house && stack_count == 0)
+        game()->current_map != mdata_t::MapId::show_house && stack_count == 0)
     {
         cell_featread(cdata.player().position.x, cdata.player().position.y);
         if (feat(1) == 29)
@@ -3614,23 +3614,23 @@ TurnResult do_cast_command()
 TurnResult do_short_cut_command(int sc_)
 {
     menucycle = 0;
-    if (game_data.skill_shortcuts.at(sc_) == 0)
+    if (game()->skill_shortcuts.at(sc_) == 0)
     {
         txt(i18n::s.get("core.action.shortcut.unassigned"),
             Message::only_once{true});
         update_screen();
         return TurnResult::pc_turn_user_error;
     }
-    if (game_data.skill_shortcuts.at(sc_) >= 10000)
+    if (game()->skill_shortcuts.at(sc_) >= 10000)
     {
-        invsc = game_data.skill_shortcuts.at(sc_) % 10000;
-        invctrl(0) = game_data.skill_shortcuts.at(sc_) / 10000;
+        invsc = game()->skill_shortcuts.at(sc_) % 10000;
+        invctrl(0) = game()->skill_shortcuts.at(sc_) / 10000;
         invctrl(1) = 0;
         MenuResult mr = ctrl_inventory().menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
-    efid = game_data.skill_shortcuts.at(sc_);
+    efid = game()->skill_shortcuts.at(sc_);
     if (efid >= 300 && efid < 400)
     {
         return do_spact_command();
@@ -3681,7 +3681,7 @@ TurnResult do_short_cut_command(int sc_)
 TurnResult do_exit_command()
 {
     Message::instance().linebreak();
-    if (game_data.current_map == mdata_t::MapId::show_house)
+    if (game()->current_map == mdata_t::MapId::show_house)
     {
         txt(i18n::s.get("core.action.exit.cannot_save_in_usermap"),
             Message::color{ColorIndex::red});
@@ -3699,7 +3699,7 @@ TurnResult do_exit_command()
 
     if (rtval == 0)
     {
-        if (game_data.current_map != mdata_t::MapId::show_house)
+        if (game()->current_map != mdata_t::MapId::show_house)
         {
             save_save_game(save_game_no_message);
             txt(i18n::s.get("core.action.exit.saved"));
@@ -3892,7 +3892,7 @@ int try_to_reveal(Character& chara)
 {
     if (rnd_capped(
             chara.get_skill(159).level * 15 + 20 + chara.get_skill(13).level) >
-        rnd_capped(game_data.current_dungeon_level * 8 + 60))
+        rnd_capped(game()->current_dungeon_level * 8 + 60))
     {
         chara_gain_exp_detection(chara);
         return 1;
@@ -3929,7 +3929,7 @@ int try_to_disarm_trap(Character& chara)
 {
     if (rnd_capped(
             chara.get_skill(175).level * 15 + 20 + chara.get_skill(12).level) >
-        rnd_capped(game_data.current_dungeon_level * 12 + 100))
+        rnd_capped(game()->current_dungeon_level * 12 + 100))
     {
         chara_gain_exp_disarm_trap(chara);
         return 1;
@@ -4074,7 +4074,7 @@ bool read_textbook(Character& doer, ItemRef textbook)
             }
         }
     }
-    game_data.activity_about_to_start = 104;
+    game()->activity_about_to_start = 104;
     activity_others(doer, textbook);
     return true;
 }
@@ -4101,8 +4101,8 @@ void disarm_trap(Character& chara, int x, int y)
         {
             crafting_material_gain(
                 crafting_material_select_random_id(
-                    game_data.current_dungeon_level,
-                    game_data.current_dungeon_level / 5,
+                    game()->current_dungeon_level,
+                    game()->current_dungeon_level / 5,
                     19),
                 1);
         }
@@ -4138,10 +4138,10 @@ void do_rest(Character& chara)
         }
         return;
     }
-    if (game_data.continuous_active_hours >= 30)
+    if (game()->continuous_active_hours >= 30)
     {
         f = 0;
-        if (game_data.continuous_active_hours >= 50)
+        if (game()->continuous_active_hours >= 50)
         {
             f = 1;
         }
@@ -4438,12 +4438,12 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         if (the_ability_db[efid]->ability_type == 7)
         {
             if (caster.relationship == 10 ||
-                game_data.current_map == mdata_t::MapId::pet_arena)
+                game()->current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
                 return 0;
             }
-            if (game_data.play_turns % 10 > 4)
+            if (game()->play_turns % 10 > 4)
             {
                 efsource = 0;
                 return 0;
@@ -4635,7 +4635,7 @@ int drink_potion(Character& chara, const OptionalItemRef& potion)
 int drink_well(Character& chara, const ItemRef& well)
 {
     if (well->param1 < -5 || well->param3 >= 20 ||
-        (well->id == "core.holy_well" && game_data.holy_well_count <= 0))
+        (well->id == "core.holy_well" && game()->holy_well_count <= 0))
     {
         const auto valn = itemname(well);
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
@@ -4779,14 +4779,14 @@ int drink_well(Character& chara, const ItemRef& well)
         }
         if (p == 0)
         {
-            if (rnd(game_data.wish_count + 1))
+            if (rnd(game()->wish_count + 1))
             {
                 txt(i18n::s.get(
                         "core.action.drink.well.effect.wish_too_frequent"),
                     Message::color{ColorIndex::orange});
                 break;
             }
-            ++game_data.wish_count;
+            ++game()->wish_count;
             efid = 441;
             magic(chara, chara);
             break;
@@ -4806,7 +4806,7 @@ int drink_well(Character& chara, const ItemRef& well)
     }
     if (well->id == "core.holy_well")
     {
-        --game_data.holy_well_count;
+        --game()->holy_well_count;
     }
     else
     {
@@ -5315,15 +5315,15 @@ PickUpItemResult pick_up_item(
     }
     if (inv_owner_chara && inv_owner_chara->is_player())
     {
-        if (game_data.mount != 0)
+        if (game()->mount != 0)
         {
-            if (cdata[game_data.mount].activity)
+            if (cdata[game()->mount].activity)
             {
-                if (cdata[game_data.mount].activity.item == item)
+                if (cdata[game()->mount].activity.item == item)
                 {
                     txt(i18n::s.get(
                         "core.action.pick_up.used_by_mount",
-                        cdata[game_data.mount]));
+                        cdata[game()->mount]));
                     return {1, nullptr};
                 }
             }
@@ -5340,7 +5340,7 @@ PickUpItemResult pick_up_item(
                             "core.ui.inv.common.inventory_is_full"));
                         return {0, nullptr};
                     }
-                    game_data.activity_about_to_start = 103;
+                    game()->activity_about_to_start = 103;
                     activity_others(*inv_owner_chara, item);
                     return {-1, nullptr};
                 }
@@ -5464,14 +5464,14 @@ PickUpItemResult pick_up_item(
                 {
                     if (picked_up_item->param3 > 0)
                     {
-                        picked_up_item->param3 += game_data.date.hours();
+                        picked_up_item->param3 += game()->date.hours();
                     }
                 }
                 else if (
                     picked_up_item->param3 != 0 &&
                     picked_up_item->material == "core.raw")
                 {
-                    picked_up_item->param3 = game_data.date.hours() +
+                    picked_up_item->param3 = game()->date.hours() +
                         the_item_db[picked_up_item->id]->expiration_date;
                     if (picked_up_item->param2 != 0)
                     {
@@ -5484,7 +5484,7 @@ PickUpItemResult pick_up_item(
                 if (picked_up_item->param3 > 0)
                 {
                     picked_up_item->param3 =
-                        picked_up_item->param3 - game_data.date.hours();
+                        picked_up_item->param3 - game()->date.hours();
                 }
             }
         }
@@ -5519,16 +5519,16 @@ PickUpItemResult pick_up_item(
                 txt(i18n::s.get(
                     "core.action.pick_up.you_sell_stolen",
                     itemname(picked_up_item.unwrap(), in)));
-                if (game_data.guild.thieves_guild_quota > 0)
+                if (game()->guild.thieves_guild_quota > 0)
                 {
-                    game_data.guild.thieves_guild_quota -= sellgold;
-                    if (game_data.guild.thieves_guild_quota < 0)
+                    game()->guild.thieves_guild_quota -= sellgold;
+                    if (game()->guild.thieves_guild_quota < 0)
                     {
-                        game_data.guild.thieves_guild_quota = 0;
+                        game()->guild.thieves_guild_quota = 0;
                     }
                     txt(i18n::s.get(
                         "core.action.pick_up.thieves_guild_quota",
-                        game_data.guild.thieves_guild_quota));
+                        game()->guild.thieves_guild_quota));
                 }
             }
             snd_("core.getgold1");
@@ -5597,14 +5597,14 @@ PickUpItemResult pick_up_item(
             }
         }
         picked_up_item = item_convert_artifact(picked_up_item.unwrap());
-        if (area_data[game_data.current_map].id == mdata_t::MapId::museum)
+        if (area_data[game()->current_map].id == mdata_t::MapId::museum)
         {
             if (mode == 0)
             {
                 update_museum();
             }
         }
-        if (game_data.current_map == mdata_t::MapId::your_home)
+        if (game()->current_map == mdata_t::MapId::your_home)
         {
             if (mode == 0)
             {
@@ -5731,8 +5731,8 @@ TurnResult do_bash(Character& chara)
             cell_data.at(x, y).feats = 0;
             spillfrag(x, y, 2);
             flt(calcobjlv(
-                    game_data.current_dungeon_level *
-                    (game_data.current_map != mdata_t::MapId::shelter_)),
+                    game()->current_dungeon_level *
+                    (game()->current_map != mdata_t::MapId::shelter_)),
                 calcfixlv(Quality::bad));
             flttypemajor = choice(fsetbarrel);
             itemcreate_map_inv(0, x, y, 0);
@@ -5749,7 +5749,7 @@ TurnResult do_bash(Character& chara)
         {
             snd("core.bash1");
             p = feat(2) * 3 + 30;
-            if (game_data.current_map == mdata_t::MapId::jail)
+            if (game()->current_map == mdata_t::MapId::jail)
             {
                 p *= 20;
             }
@@ -5767,7 +5767,7 @@ TurnResult do_bash(Character& chara)
             else
             {
                 txt(i18n::s.get("core.action.bash.door.execute"));
-                if (game_data.current_map == mdata_t::MapId::jail)
+                if (game()->current_map == mdata_t::MapId::jail)
                 {
                     txt(i18n::s.get("core.action.bash.door.jail"));
                 }
@@ -5827,10 +5827,9 @@ void proc_autopick()
         return;
     if (is_modifier_pressed(snail::ModKey::ctrl))
         return;
-    if (area_data[game_data.current_map].type ==
-            mdata_t::MapType::player_owned &&
-        area_data[game_data.current_map].id != mdata_t::MapId::shelter_ &&
-        area_data[game_data.current_map].id != mdata_t::MapId::ranch)
+    if (area_data[game()->current_map].type == mdata_t::MapType::player_owned &&
+        area_data[game()->current_map].id != mdata_t::MapId::shelter_ &&
+        area_data[game()->current_map].id != mdata_t::MapId::ranch)
         return;
 
 

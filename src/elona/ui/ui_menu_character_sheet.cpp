@@ -13,6 +13,7 @@
 #include "../data/types/type_race.hpp"
 #include "../draw.hpp"
 #include "../enchantment.hpp"
+#include "../game.hpp"
 #include "../keybind/keybind.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"
@@ -20,13 +21,15 @@
 #include "../pic_loader/pic_loader.hpp"
 #include "../pic_loader/tinted_buffers.hpp"
 
+
+
 namespace elona
 {
 namespace ui
 {
 
 /*
-        game_data.tracked_skills(0 - 10) => tracked skills
+        game()->tracked_skills(0 - 10) => tracked skills
         (ctrl +f for [TRACKING])
 */
 
@@ -621,12 +624,12 @@ void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 void UIMenuCharacterSheet::_draw_first_page_stats_time()
 {
     s(0) = i18n::s.get(
-        "core.ui.chara_sheet.time.turn_counter", game_data.play_turns);
-    s(1) = i18n::s.get(
-        "core.ui.chara_sheet.time.days_counter", game_data.play_days);
-    s(2) = ""s + game_data.kill_count;
+        "core.ui.chara_sheet.time.turn_counter", game()->play_turns);
+    s(1) =
+        i18n::s.get("core.ui.chara_sheet.time.days_counter", game()->play_days);
+    s(2) = ""s + game()->kill_count;
     s(3) = ""s +
-        cnvplaytime((game_data.play_time + timeGetTime() / 1000 - time_begin));
+        cnvplaytime((game()->play_time + timeGetTime() / 1000 - time_begin));
     s(4) = "";
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -637,13 +640,13 @@ void UIMenuCharacterSheet::_draw_first_page_stats_time()
 
 void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
-    s(0) = ""s + cnvweight(game_data.cargo_weight);
-    s(1) = cnvweight(game_data.current_cart_limit);
+    s(0) = ""s + cnvweight(game()->cargo_weight);
+    s(1) = cnvweight(game()->current_cart_limit);
     s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
         get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
-        cnvrank(game_data.deepest_dungeon_level));
+        cnvrank(game()->deepest_dungeon_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         mes(wx + 287 + en * 14, wy + 299 + cnt * 15, s(cnt));
@@ -844,7 +847,7 @@ void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
     for (int cnt = 0; cnt < (elona::g_config.allow_enhanced_skill() ? 10 : 3);
          ++cnt)
     {
-        if (game_data.tracked_skills.at(cnt) == _chara.index * 10000 + skill_id)
+        if (game()->tracked_skills.at(cnt) == _chara.index * 10000 + skill_id)
         {
             skill_name = u8"*"s + skill_name;
         }
@@ -1022,18 +1025,18 @@ static void _track_skill(const Character& chara, int skill_id)
 
     for (int cnt = 0; cnt < max_tracked_skills; ++cnt)
     {
-        if (game_data.tracked_skills.at(cnt) % 10000 == 0)
+        if (game()->tracked_skills.at(cnt) % 10000 == 0)
         {
             tracked_skill_index = cnt;
         }
-        if (game_data.tracked_skills.at(cnt) == chara.index * 10000 + skill_id)
+        if (game()->tracked_skills.at(cnt) == chara.index * 10000 + skill_id)
         {
             tracked_skill_index = cnt;
             skill_id = 0;
             break;
         }
     }
-    game_data.tracked_skills.at(tracked_skill_index) =
+    game()->tracked_skills.at(tracked_skill_index) =
         chara.index * 10000 + skill_id;
     snd("core.ok1");
 }

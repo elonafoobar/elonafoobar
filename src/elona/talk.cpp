@@ -7,6 +7,7 @@
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -76,7 +77,7 @@ bool talk_setup_variables(Character& chara)
             return false;
         }
     }
-    if (game_data.date.hours() >= chara.time_interest_revive)
+    if (game()->date.hours() >= chara.time_interest_revive)
     {
         chara.interest = 100;
     }
@@ -143,7 +144,7 @@ void talk_to_npc(Character& chara)
     }
 
     if (chatval_unique_chara_id &&
-        game_data.current_map != mdata_t::MapId::show_house &&
+        game()->current_map != mdata_t::MapId::show_house &&
         !chara.is_player_or_ally())
     {
         talk_wrapper(chara, TalkResult::talk_unique);
@@ -538,7 +539,7 @@ std::string talk_get_speaker_name(const Character& chara)
         speaker_name +=
             " " + i18n::s.get("core.talk.window.shop_rank", chara.shop_rank);
     }
-    if (game_data.reveals_religion)
+    if (game()->reveals_religion)
     {
         speaker_name += u8" ("s + god_name(chara.god_id) + u8")"s;
     }
@@ -773,17 +774,16 @@ int talk_guide_quest_client()
 
     for (int i = 0; i < max_quest; ++i)
     {
-        const auto quest_id = game_data.taken_quests.at(i);
+        const auto quest_id = game()->taken_quests.at(i);
         if (quest_data[quest_id].progress != 1)
             continue;
-        if (game_data.current_dungeon_level != 1)
+        if (game()->current_dungeon_level != 1)
             continue;
 
         auto client = -1;
         if (quest_data[quest_id].id == 1011)
         {
-            if (quest_data[quest_id].originating_map_id ==
-                game_data.current_map)
+            if (quest_data[quest_id].originating_map_id == game()->current_map)
             {
                 client = quest_data[quest_id].target_chara_index;
             }
@@ -791,7 +791,7 @@ int talk_guide_quest_client()
         if (quest_data[quest_id].id == 1002)
         {
             if (quest_data[quest_data[quest_id].target_chara_index]
-                    .originating_map_id == game_data.current_map)
+                    .originating_map_id == game()->current_map)
             {
                 client = quest_data[quest_data[quest_id].target_chara_index]
                              .client_chara_index;
@@ -803,7 +803,7 @@ int talk_guide_quest_client()
             bool duplicated{};
             for (int j = 0; j < i; ++j)
             {
-                if (game_data.taken_quests.at(j) == quest_id)
+                if (game()->taken_quests.at(j) == quest_id)
                 {
                     duplicated = true;
                     break;

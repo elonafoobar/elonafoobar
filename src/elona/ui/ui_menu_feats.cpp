@@ -4,6 +4,7 @@
 #include "../../util/range.hpp"
 #include "../../util/strutil.hpp"
 #include "../enchantment.hpp"
+#include "../game.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
 #include "../trait.hpp"
@@ -268,8 +269,7 @@ void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
     if (tc_ == 0)
     {
         note = i18n::s.get(
-            "core.trait.window.you_can_acquire",
-            game_data.acquirable_feat_count);
+            "core.trait.window.you_can_acquire", game()->acquirable_feat_count);
     }
     else
     {
@@ -417,7 +417,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
         return false;
     }
 
-    --game_data.acquirable_feat_count;
+    --game()->acquirable_feat_count;
     cs = -10000 + tid;
     snd("core.ding3");
     ++trait(tid);
@@ -430,7 +430,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
 
 bool UIMenuFeats::_can_select_trait(int p_)
 {
-    return game_data.acquirable_feat_count > 0 && list(1, p_) < 10000 &&
+    return game()->acquirable_feat_count > 0 && list(1, p_) < 10000 &&
         _chara_index == 0;
 }
 
@@ -480,7 +480,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
         {
             if (_operation == Operation::character_making)
             {
-                if (game_data.acquirable_feat_count == 0)
+                if (game()->acquirable_feat_count == 0)
                 {
                     return UIMenuFeats::Result::finish(
                         UIMenuCompositeCharacterResult{FeatsResult::confirmed});

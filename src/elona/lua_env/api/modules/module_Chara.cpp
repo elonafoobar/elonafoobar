@@ -1,4 +1,5 @@
 #include "../../../character.hpp"
+#include "../../../game.hpp"
 #include "../../../map.hpp"
 #include "../../../randomgen.hpp"
 #include "../../enums/enums.hpp"
@@ -92,7 +93,7 @@ bool Chara_is_ally(LuaCharacterHandle chara)
  */
 int Chara_count()
 {
-    return game_data.crowd_density;
+    return game()->crowd_density;
 }
 
 

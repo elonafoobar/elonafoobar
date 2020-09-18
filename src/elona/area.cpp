@@ -3,6 +3,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_map.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "position.hpp"
 #include "variables.hpp"
 
@@ -121,9 +122,9 @@ void AreaData::unpack_from(elona_vector2<int>& legacy_adata)
 
 Area& AreaData::current()
 {
-    assert(game_data.current_map != 0);
+    assert(game()->current_map != 0);
 
-    return area_data[game_data.current_map];
+    return area_data[game()->current_map];
 }
 
 
@@ -194,7 +195,7 @@ void initialize_adata()
         // other maps all have fixed positions/tiles.
         bool is_fixed_in_place = map.is_fixed ||
             (map_id == static_cast<int>(mdata_t::MapId::your_home) &&
-             game_data.home_scale == 0);
+             game()->home_scale == 0);
         if (is_fixed_in_place)
         {
             area.position = map.outer_map_position;

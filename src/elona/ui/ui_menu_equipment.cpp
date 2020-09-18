@@ -2,10 +2,13 @@
 
 #include "../character.hpp"
 #include "../equipment.hpp"
+#include "../game.hpp"
 #include "../globals.hpp"
 #include "../item.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+
+
 
 namespace elona
 {
@@ -282,7 +285,7 @@ void UIMenuEquipment::draw()
 
 static void _unequip_item()
 {
-    game_data.player_is_changing_equipment = 1;
+    g_player_is_changing_equipment = true;
     const auto equipment = cdata.player().equipment_slots[body - 100].equipment;
     if (is_cursed(equipment->curse_state))
     {

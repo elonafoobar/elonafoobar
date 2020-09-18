@@ -10,6 +10,7 @@
 #include "command.hpp"
 #include "data/types/type_item.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -394,7 +395,7 @@ void _proc_drunk_cat(Character& chara)
 
 bool _is_at_night()
 {
-    return game_data.date.hour >= 22 || game_data.date.hour < 7;
+    return game()->date.hour >= 22 || game()->date.hour < 7;
 }
 
 
@@ -404,14 +405,14 @@ optional<TurnResult> _proc_make_snowman(Character& chara)
     // Throws a snowball to <Ebon> if he is released.
     if (rnd(4) == 0)
     {
-        if (cdata[game_data.fire_giant].state() == Character::State::alive &&
-            is_in_fov(cdata[game_data.fire_giant]))
+        if (cdata[game()->fire_giant].state() == Character::State::alive &&
+            is_in_fov(cdata[game()->fire_giant]))
         {
             flt();
             if (const auto snowball = itemcreate_chara_inv(chara, 587, 0))
             {
-                tlocx = cdata[game_data.fire_giant].position.x;
-                tlocy = cdata[game_data.fire_giant].position.y;
+                tlocx = cdata[game()->fire_giant].position.x;
+                tlocy = cdata[game()->fire_giant].position.y;
                 txt(i18n::s.get("core.ai.fire_giant"),
                     Message::color{ColorIndex::cyan});
                 return do_throw_command(chara, snowball.unwrap());
@@ -913,8 +914,8 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
 
     if (!chara.ai_item && chara.relationship != 10)
     {
-        if (game_data.current_map == mdata_t::MapId::quest &&
-            game_data.executing_immediate_quest_type == 1009)
+        if (game()->current_map == mdata_t::MapId::quest &&
+            game()->executing_immediate_quest_type == 1009)
         {
             if (rnd(30) == 0)
             {

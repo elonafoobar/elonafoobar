@@ -14,6 +14,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "fov.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "map.hpp"
@@ -310,7 +311,7 @@ void Message::_txt_conv()
         {
             std::stringstream ss;
             ss << "[" << std::setw(2) << std::setfill('0')
-               << game_data.date.minute << "] ";
+               << game()->date.minute << "] ";
             msgtemp = ss.str() + msgtemp;
         }
         else

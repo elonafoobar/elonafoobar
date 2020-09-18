@@ -11,6 +11,7 @@
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -400,12 +401,12 @@ bool casino_start()
     noteadd(i18n::s.get_enum("core.casino.window.desc", 0));
     noteadd(i18n::s.get_enum("core.casino.window.desc", 1));
     noteadd(i18n::s.get_enum("core.casino.window.desc", 2));
-    if (game_data.used_casino_once == 0)
+    if (game()->used_casino_once == 0)
     {
         noteadd(""s);
         noteadd(i18n::s.get_enum("core.casino.window.first", 0));
         noteadd(i18n::s.get_enum("core.casino.window.first", 1));
-        game_data.used_casino_once = 1;
+        game()->used_casino_once = 1;
         snd("core.get3");
         mat(1) += 10;
         noteadd(
