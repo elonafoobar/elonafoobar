@@ -386,7 +386,6 @@ ELONA_EXTERN(int rapidmagic);
 ELONA_EXTERN(int reftype);
 ELONA_EXTERN(int reftypeminor);
 ELONA_EXTERN(int returnfromidentify);
-ELONA_EXTERN(int rq);
 ELONA_EXTERN(int running);
 ELONA_EXTERN(int sc);
 ELONA_EXTERN(int scene_cut);

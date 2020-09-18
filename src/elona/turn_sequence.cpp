@@ -102,8 +102,7 @@ optional<TurnResult> proc_return_or_escape()
                 return none;
             }
         }
-        int stat = quest_is_return_forbidden();
-        if (stat == 1)
+        if (quest_is_return_forbidden())
         {
             txt(i18n::s.get("core.magic.return.you_commit_a_crime"));
             modify_karma(cdata.player(), -10);
@@ -824,17 +823,17 @@ TurnResult turn_begin()
         game_data.date.minute += game_data.date.second / 60;
         if (game_data.left_minutes_of_executing_quest > 0)
         {
-            game_data.left_minutes_of_executing_quest -=
-                game_data.date.second / 60;
-            if (game_data.executing_immediate_quest_time_left_display_period >
+            const auto elapsed_minutes = game_data.date.second / 60;
+            const auto previous_left_minutes =
+                game_data.left_minutes_of_executing_quest;
+            game_data.left_minutes_of_executing_quest -= elapsed_minutes;
+            if (previous_left_minutes / 10 !=
                 game_data.left_minutes_of_executing_quest / 10)
             {
                 txt(i18n::s.get(
                         "core.quest.minutes_left",
                         (game_data.left_minutes_of_executing_quest + 1)),
                     Message::color{ColorIndex::cyan});
-                game_data.executing_immediate_quest_time_left_display_period =
-                    game_data.left_minutes_of_executing_quest / 10;
             }
             if (game_data.left_minutes_of_executing_quest <= 0)
             {

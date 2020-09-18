@@ -2027,7 +2027,6 @@ void initialize_random_nefia_rdtype6()
 int initialize_quest_map_crop()
 {
     game_data.left_minutes_of_executing_quest = 120;
-    game_data.executing_immediate_quest_time_left_display_period = 9999;
     map_data.indoors_flag = 2;
     map_data.tileset = 4;
     map_data.width = 58 + rnd(16);
@@ -2476,7 +2475,6 @@ int initialize_quest_map_party()
 {
     int roomdiff = 0;
     game_data.left_minutes_of_executing_quest = 60;
-    game_data.executing_immediate_quest_time_left_display_period = 9999;
     rdroomsizemin = 5;
     mdatan(0) = i18n::s.get("core.map.quest.party_room");
     map_data.indoors_flag = 1;
@@ -2831,7 +2829,6 @@ void initialize_quest_map_town()
     if (game_data.executing_immediate_quest_type == 1008)
     {
         game_data.left_minutes_of_executing_quest = 720;
-        game_data.executing_immediate_quest_time_left_display_period = 9999;
         flt();
         initlv = quest_data.immediate().difficulty;
         fixlv = Quality::godly;

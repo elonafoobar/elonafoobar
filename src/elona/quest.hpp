@@ -22,11 +22,11 @@ struct Quest
     /**
      * 0 if empty.
      */
-    int client_chara_index;
+    int client_chara_index{};
 
-    int originating_map_id;
+    int originating_map_id{};
 
-    int deadline_hours;
+    int deadline_hours{};
 
     /**
      * TODO: enum class
@@ -43,7 +43,7 @@ struct Quest
      * 1010 - huntex
      * 1011 - collect
      */
-    int id;
+    int id{};
 
     /**
      * Used only for escort quests.
@@ -52,7 +52,7 @@ struct Quest
      * 1 - moderate (poison)
      * 2 - normal (delivery)
      */
-    int escort_difficulty;
+    int escort_difficulty{};
 
     /**
      * For hunting quests, target character level is determined as follows.
@@ -60,9 +60,9 @@ struct Quest
      * hunt   - difficulty * 10 / 6
      * huntex - difficulty * 3 / 2
      */
-    int difficulty;
+    int difficulty{};
 
-    int reward_gold;
+    int reward_gold{};
 
     /**
      * If < 10000:
@@ -75,31 +75,31 @@ struct Quest
      *
      * If <= 10000, acts as flttypemajor
      */
-    int reward_item_id;
+    int reward_item_id{};
 
     /**
      * 0: not taken
      * 1: accepted
      * 3: complete
      */
-    int progress;
+    int progress{};
 
     /**
      * If -1, deadline is immediate
      */
-    int deadline_days;
+    int deadline_days{};
 
     /**
      * Target character for quests like "collect" (person bragging about item)
      *
      * Also may point to the quest giver.
      */
-    int target_chara_index;
+    int target_chara_index{};
 
     /**
      * Used for "deliver", "supply" and "collect".
      */
-    int target_item_id;
+    int target_item_id{};
 
     /**
      * cook    - food type
@@ -108,7 +108,7 @@ struct Quest
      * party   - required points
      * huntex  - target character id
      */
-    int extra_info_1;
+    int extra_info_1{};
 
     /**
      * cook    - food rank
@@ -116,32 +116,15 @@ struct Quest
      * escort  - escorted character id
      * party   - points so far
      */
-    int extra_info_2;
-
-    /**
-     * Used in dialog option insertion when talking to client.
-     *
-     * 1 - hunt
-     * 2 - deliver
-     * 3 - supply
-     * 4 - conquer (old)
-     * 5 - harvest
-     * 6 - escort
-     * 7 - party
-     * 8 - conquer
-     */
-    int client_chara_type;
+    int extra_info_2{};
 
     /**
      * If a character has a related quest and this flag is set on the quest, the
      * emotion icon for the character will indicate they are the package
      * recipient.
      */
-    int delivery_has_package_flag;
+    int delivery_has_package_flag{};
 
-
-
-    void clear();
 
 
     /**
@@ -179,9 +162,6 @@ struct QuestData
     Quest& immediate();
 
 
-    void clear();
-
-
     // Helper method to pack all quests to `qdata`.
     void pack_to(elona_vector2<int>& legacy_qdata);
 
@@ -202,8 +182,8 @@ extern QuestData quest_data;
 
 void quest_on_map_initialize();
 void quest_place_target();
-int quest_targets_remaining();
-void quest_set_data(optional_ref<const Character> client, int);
+bool quest_targets_remaining();
+void quest_set_data(int quest_idx, optional_ref<const Character> client, int);
 void quest_refresh_list();
 void quest_update_journal_msg();
 
@@ -211,17 +191,14 @@ void quest_check();
 void quest_check_all_for_failed();
 void quest_update_main_quest_journal();
 void quest_all_targets_killed();
-void quest_failed(int);
-void quest_complete();
-int quest_is_return_forbidden();
+void quest_failed(optional<int> quest_idx, int);
+void quest_complete(int quest_idx);
+bool quest_is_return_forbidden();
 void quest_enter_map();
 void quest_exit_map();
 void quest_team_victorious();
 TurnResult quest_pc_died_during_immediate_quest();
 
-int quest_generate();
-void quest_gen_scale_by_level();
-
-void clear_existing_quest_list();
+bool quest_generate(int quest_idx);
 
 } // namespace elona

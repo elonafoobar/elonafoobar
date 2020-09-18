@@ -436,8 +436,7 @@ void eh_quest_failed(const DeferredEvent& event)
         if (quest_data[i].id == 1007 && quest_data[i].progress == 1 &&
             quest_data[i].extra_info_2 == event.param1)
         {
-            rq = i;
-            quest_failed(quest_data[rq].id);
+            quest_failed(i, quest_data[i].id);
             break;
         }
     }
@@ -452,8 +451,7 @@ void eh_quest_escort_complete(const DeferredEvent& event)
 
     txt(i18n::s.get("core.quest.escort.complete"));
     talk_to_npc(cdata[event.param2]);
-    rq = event.param1;
-    quest_complete();
+    quest_complete(event.param1);
     chara_vanquish(cdata[event.param2]);
 }
 
