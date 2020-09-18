@@ -31,6 +31,36 @@
 namespace elona
 {
 
+namespace
+{
+
+int quest_gen_scale_by_level(const Quest& quest, int factor)
+{
+    const auto D = quest.difficulty;
+    const auto L = cdata.player().level;
+
+    const auto k = (D + 3) * 100 + rnd_capped(D * 30 + 200) + 400;
+    const auto n = (k * factor / 100) * 100 / (100 + D * 2 / 3);
+
+    if (quest.client_chara_type == 3 || quest.client_chara_type == 2)
+    {
+        return n;
+    }
+
+    if (L >= D)
+    {
+        return n * 100 / (100 + (L - D) * 10);
+    }
+    else
+    {
+        return n * (100 + clamp((D - L) / 5 * 25, 0, 200)) / 100;
+    }
+}
+
+} // namespace
+
+
+
 QuestData quest_data;
 
 #define QDATA_PACK(x, ident) legacy_qdata(x, quest_id) = ident;
@@ -124,26 +154,24 @@ void QuestData::unpack_from(elona_vector2<int>& legacy_qdata)
 
 
 
-enum class TurnResult;
-
 int rewardfix = 0;
 
-int quest_is_return_forbidden()
+
+
+bool quest_is_return_forbidden()
 {
-    f = 0;
-    for (int cnt = 0; cnt < 5; ++cnt)
+    for (const auto& quest_idx : game_data.taken_quests)
     {
-        p = game_data.taken_quests.at(cnt);
-        if (quest_data[p].progress == 1)
+        if (quest_data[quest_idx].progress == 1)
         {
-            if (quest_data[p].id == 1007 || quest_data[p].id == 1002)
+            if (quest_data[quest_idx].id == 1007 ||
+                quest_data[quest_idx].id == 1002)
             {
-                f = 1;
-                break;
+                return true;
             }
         }
     }
-    return f;
+    return false;
 }
 
 
@@ -162,33 +190,30 @@ void quest_place_target()
 
 
 
-int quest_targets_remaining()
+bool quest_targets_remaining()
 {
-    int f_at_m119 = 0;
-    f_at_m119 = 0;
-    for (auto&& cnt : cdata.others())
+    for (auto&& chara : cdata.others())
     {
-        if (cnt.state() == Character::State::alive)
+        if (chara.state() == Character::State::alive)
         {
-            if (cnt.is_quest_target() == 1)
+            if (chara.is_quest_target())
             {
-                ++f_at_m119;
+                return true;
             }
         }
     }
-    return f_at_m119;
+    return false;
 }
 
 
 
 void quest_check()
 {
-    int p_at_m119 = 0;
     if (game_data.current_map == mdata_t::MapId::vernis)
     {
         if (game_data.current_dungeon_level == 3)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.putit_attacks < 2)
                 {
@@ -199,7 +224,7 @@ void quest_check()
         }
         if (game_data.current_dungeon_level == 4)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.thieves_hideout < 2)
                 {
@@ -210,7 +235,7 @@ void quest_check()
         }
         if (game_data.current_dungeon_level == 5)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.nightmare < 3)
                 {
@@ -224,7 +249,7 @@ void quest_check()
     {
         if (game_data.current_dungeon_level == 3)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.cat_house < 2)
                 {
@@ -235,7 +260,7 @@ void quest_check()
         }
         if (game_data.current_dungeon_level == 4)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.defense_line < 3)
                 {
@@ -249,7 +274,7 @@ void quest_check()
     {
         if (game_data.current_dungeon_level == 20)
         {
-            if (quest_targets_remaining() == 0)
+            if (!quest_targets_remaining())
             {
                 if (game_data.quest_flags.sewer_sweeping < 2)
                 {
@@ -267,21 +292,22 @@ void quest_check()
     {
         if (game_data.executing_immediate_quest_show_hunt_remain == 1)
         {
-            p_at_m119 = 0;
-            for (auto&& cnt : cdata.others())
+            size_t remaining_monsters{};
+            for (auto&& chara : cdata.others())
             {
-                if (cnt.state() == Character::State::alive)
+                if (chara.state() == Character::State::alive)
                 {
-                    ++p_at_m119;
+                    ++remaining_monsters;
                 }
             }
-            if (p_at_m119 == 0)
+            if (remaining_monsters == 0)
             {
                 event_add(8);
             }
             else
             {
-                txt(i18n::s.get("core.quest.hunt.remaining", p_at_m119),
+                txt(i18n::s.get(
+                        "core.quest.hunt.remaining", remaining_monsters),
                     Message::color{ColorIndex::blue});
             }
         }
@@ -607,11 +633,14 @@ void quest_refresh_list()
             {
                 rq = cnt;
                 quest_generate();
-                quest_gen_scale_by_level();
+                quest_data[rq].reward_gold =
+                    quest_gen_scale_by_level(quest_data[rq], rewardfix);
             }
         }
     }
 }
+
+
 
 void quest_update_journal_msg()
 {
@@ -1010,36 +1039,6 @@ int quest_generate()
 }
 
 
-
-void quest_gen_scale_by_level()
-{
-    quest_data[rq].reward_gold =
-        ((quest_data[rq].difficulty + 3) * 100 +
-         rnd_capped(quest_data[rq].difficulty * 30 + 200) + 400) *
-        rewardfix / 100;
-    quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100 /
-        (100 + quest_data[rq].difficulty * 2 / 3);
-    if (quest_data[rq].client_chara_type == 3 ||
-        quest_data[rq].client_chara_type == 2)
-    {
-        return;
-    }
-    if (cdata.player().level >= quest_data[rq].difficulty)
-    {
-        quest_data[rq].reward_gold = quest_data[rq].reward_gold * 100 /
-            (100 + (cdata.player().level - quest_data[rq].difficulty) * 10);
-    }
-    else
-    {
-        quest_data[rq].reward_gold = quest_data[rq].reward_gold *
-            (100 +
-             clamp(
-                 (quest_data[rq].difficulty - cdata.player().level) / 5 * 25,
-                 0,
-                 200)) /
-            100;
-    }
-}
 
 void quest_check_all_for_failed()
 {

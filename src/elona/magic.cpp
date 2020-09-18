@@ -1867,8 +1867,7 @@ bool _magic_1141(Character& target)
     }
     else
     {
-        int stat = quest_is_return_forbidden();
-        if (stat == 1)
+        if (quest_is_return_forbidden())
         {
             txt(i18n::s.get("core.magic.escape.during_quest"));
             if (!yes_no())

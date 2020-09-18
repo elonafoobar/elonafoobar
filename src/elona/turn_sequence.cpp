@@ -102,8 +102,7 @@ optional<TurnResult> proc_return_or_escape()
                 return none;
             }
         }
-        int stat = quest_is_return_forbidden();
-        if (stat == 1)
+        if (quest_is_return_forbidden())
         {
             txt(i18n::s.get("core.magic.return.you_commit_a_crime"));
             modify_karma(cdata.player(), -10);

@@ -1960,8 +1960,7 @@ void map_clear_material_spots_and_light()
 
 void try_to_return()
 {
-    int stat = quest_is_return_forbidden();
-    if (stat == 1)
+    if (quest_is_return_forbidden())
     {
         txt(i18n::s.get("core.misc.return.forbidden"));
         if (!yes_no())
