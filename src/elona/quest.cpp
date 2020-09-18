@@ -42,7 +42,8 @@ int quest_gen_scale_by_level(const Quest& quest, int factor)
     const auto k = (D + 3) * 100 + rnd_capped(D * 30 + 200) + 400;
     const auto n = (k * factor / 100) * 100 / (100 + D * 2 / 3);
 
-    if (quest.client_chara_type == 3 || quest.client_chara_type == 2)
+    if (quest.id == 1011 || quest.id == 1003 || quest.id == 1004 ||
+        quest.id == 1002)
     {
         return n;
     }
@@ -81,7 +82,6 @@ QuestData quest_data;
     SERIALIZE(11, target_item_id); \
     SERIALIZE(12, extra_info_1); \
     SERIALIZE(13, extra_info_2); \
-    SERIALIZE(14, client_chara_type); \
     SERIALIZE(15, delivery_has_package_flag);
 
 
@@ -639,7 +639,6 @@ bool quest_generate(int quest_idx)
     auto& quest = quest_data[quest_idx];
 
     quest.id = 0;
-    quest.client_chara_type = 0;
     quest.progress = 0;
     quest.deadline_hours = (rnd(3) + 1) * 24 + game_data.date.hours();
     quest.reward_item_id = 0;
@@ -694,7 +693,6 @@ bool quest_generate(int quest_idx)
             rewardfix = 60;
             quest.reward_item_id = 5;
             quest.id = 1011;
-            quest.client_chara_type = 3;
             quest.escort_difficulty = 0;
             quest.deadline_days = rnd(3) + 2;
             quest.difficulty = cdata[*target_chara_index].level / 3;
@@ -733,7 +731,6 @@ bool quest_generate(int quest_idx)
             quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
             quest.reward_item_id = 0;
             quest.id = 1010;
-            quest.client_chara_type = 1;
             quest.escort_difficulty = 0;
             quest.reward_item_id = 5;
             quest.deadline_days = -1;
@@ -769,7 +766,6 @@ bool quest_generate(int quest_idx)
             quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
             quest.reward_item_id = 0;
             quest.id = 1008;
-            quest.client_chara_type = 8;
             quest.escort_difficulty = 0;
             quest.reward_item_id = 1;
             quest.deadline_days = -1;
@@ -782,7 +778,6 @@ bool quest_generate(int quest_idx)
     {
         quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
         quest.id = 1007;
-        quest.client_chara_type = 6;
         quest.escort_difficulty = rnd(3);
         quest.target_chara_index = 0;
         quest.reward_item_id = 5;
@@ -847,7 +842,6 @@ bool quest_generate(int quest_idx)
         quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
         quest.reward_item_id = 0;
         quest.id = 1009;
-        quest.client_chara_type = 7;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 0;
         quest.extra_info_1 = quest.difficulty * 10 + rnd(50);
@@ -867,7 +861,6 @@ bool quest_generate(int quest_idx)
             50);
         quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
         quest.id = 1006;
-        quest.client_chara_type = 5;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 5;
         quest.deadline_days = -1;
@@ -888,7 +881,6 @@ bool quest_generate(int quest_idx)
         quest.deadline_hours = (rnd(6) + 2) * 24 + game_data.date.hours();
         quest.reward_item_id = 0;
         quest.id = 1001;
-        quest.client_chara_type = 1;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 1;
         quest.deadline_days = -1;
@@ -965,7 +957,6 @@ bool quest_generate(int quest_idx)
             }
             quest.target_item_id = get_random_item_id();
             quest.id = 1002;
-            quest.client_chara_type = 2;
             quest.escort_difficulty = 0;
             quest.deadline_days = rnd(12) + 3;
             quest.difficulty = clamp(rewardfix / 20 + 1, 1, 25);
@@ -980,7 +971,6 @@ bool quest_generate(int quest_idx)
     if (rnd(6) == 0)
     {
         quest.id = 1003;
-        quest.client_chara_type = 3;
         quest.deadline_days = rnd(6) + 2;
         quest.reward_item_id = 5;
         quest.extra_info_1 = rnd(8) + 1;
@@ -1021,7 +1011,6 @@ bool quest_generate(int quest_idx)
     if (rnd(5) == 0)
     {
         quest.id = 1004;
-        quest.client_chara_type = 3;
         quest.deadline_days = rnd(6) + 2;
         flt();
         flttypemajor = choice(fsetsupply);

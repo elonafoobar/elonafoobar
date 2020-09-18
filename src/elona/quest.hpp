@@ -119,20 +119,6 @@ struct Quest
     int extra_info_2{};
 
     /**
-     * Used in dialog option insertion when talking to client.
-     *
-     * 1 - hunt
-     * 2 - deliver
-     * 3 - supply
-     * 4 - conquer (old)
-     * 5 - harvest
-     * 6 - escort
-     * 7 - party
-     * 8 - conquer
-     */
-    int client_chara_type{};
-
-    /**
      * If a character has a related quest and this flag is set on the quest, the
      * emotion icon for the character will indicate they are the package
      * recipient.

@@ -1446,7 +1446,7 @@ TalkResult talk_accepted_quest(Character& speaker, int quest_idx)
     }
     game_data.executing_immediate_quest_type = quest_data[quest_idx].id;
     game_data.executing_immediate_quest_show_hunt_remain =
-        quest_data[quest_idx].client_chara_type;
+        quest_data[quest_idx].id == 1001 || quest_data[quest_idx].id == 1010;
     game_data.executing_immediate_quest = quest_idx;
     game_data.executing_immediate_quest_status = 1;
     map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::quest));
@@ -2185,7 +2185,7 @@ TalkResult talk_npc(Character& speaker)
             {
                 continue;
             }
-            if (quest_data[cnt].client_chara_type == 2)
+            if (quest_data[cnt].id == 1002)
             {
                 if (quest_data[cnt].target_chara_index == quest_idx)
                 {
@@ -2208,7 +2208,9 @@ TalkResult talk_npc(Character& speaker)
             quest_complete(quest_idx);
         }
         else if (
-            quest_data[quest_idx].client_chara_type == 3 &&
+            (quest_data[quest_idx].id == 1011 ||
+             quest_data[quest_idx].id == 1003 ||
+             quest_data[quest_idx].id == 1004) &&
             quest_data[quest_idx].progress == 1)
         {
             for (const auto& item : *inv_player())
