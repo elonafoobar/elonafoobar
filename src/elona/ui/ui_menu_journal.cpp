@@ -55,8 +55,7 @@ bool UIMenuJournal::init()
         {
             continue;
         }
-        rq = cnt;
-        quest_set_data(none, 2);
+        quest_set_data(cnt, none, 2);
     }
     append_subquest_journal(0);
     for (int cnt = 0,

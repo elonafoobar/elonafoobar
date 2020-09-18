@@ -1225,7 +1225,6 @@ void show_weapon_dice(
 static TurnResult _visit_quest_giver(int quest_index)
 {
     // TODO move the below somewhere else to decouple quest_teleport
-    rq = quest_index;
     client = quest_data[quest_index].client_chara_index;
     efid = 619;
     magic(cdata.player(), cdata[client]);

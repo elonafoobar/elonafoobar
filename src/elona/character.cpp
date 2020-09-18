@@ -2867,24 +2867,17 @@ TurnResult proc_movement_event(Character& chara)
                 }
                 if (rnd(20) == 0)
                 {
-                    for (int cnt = 0; cnt < 5; ++cnt)
+                    for (const auto& quest_idx : game_data.taken_quests)
                     {
-                        rq = game_data.taken_quests.at(cnt);
-                        if (quest_data[rq].id == 1007)
+                        auto& quest = quest_data[quest_idx];
+                        if (quest.id == 1007 && quest.progress == 1 &&
+                            quest.escort_difficulty == 0 &&
+                            quest.target_chara_index < 2)
                         {
-                            if (quest_data[rq].progress == 1)
-                            {
-                                if (quest_data[rq].escort_difficulty == 0)
-                                {
-                                    if (quest_data[rq].target_chara_index < 2)
-                                    {
-                                        encounter = 3;
-                                        encounterref = rq;
-                                        ++quest_data[rq].target_chara_index;
-                                        break;
-                                    }
-                                }
-                            }
+                            encounter = 3;
+                            encounterref = quest_idx;
+                            ++quest.target_chara_index;
+                            break;
                         }
                     }
                 }

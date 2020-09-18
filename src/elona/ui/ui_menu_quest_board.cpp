@@ -224,18 +224,18 @@ void UIMenuQuestBoard::_draw_list_entry_desc()
     mes(wx + 20, y + 20, buff);
 }
 
-void UIMenuQuestBoard::_draw_list_entry(int cnt, int rq, int giver_index)
+void UIMenuQuestBoard::_draw_list_entry(int cnt, int quest_idx)
 {
-    quest_set_data(cdata[giver_index], 0);
-    int quest_difficulty = quest_data[rq].difficulty / 5 + 1;
+    auto& quest = quest_data[quest_idx];
+
+    quest_set_data(quest_idx, cdata[quest.client_chara_index], 0);
     p(1) = 14;
 
     _draw_list_entry_title(cnt, s(3));
     _draw_list_entry_date(nquestdate);
-    _draw_list_entry_giver_name(giver_index);
+    _draw_list_entry_giver_name(quest.client_chara_index);
 
-
-    _draw_list_entry_difficulty(quest_data[rq].difficulty, quest_difficulty);
+    _draw_list_entry_difficulty(quest.difficulty, quest.difficulty / 5 + 1);
     _draw_list_entry_desc();
 }
 
@@ -251,8 +251,7 @@ void UIMenuQuestBoard::_draw_list_entries()
             break;
         }
 
-        rq = list(0, index);
-        _draw_list_entry(cnt, rq, quest_data[rq].client_chara_index);
+        _draw_list_entry(cnt, list(0, index));
     }
     if (keyrange != 0)
     {

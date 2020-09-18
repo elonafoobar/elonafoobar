@@ -3,6 +3,11 @@
 
 namespace elona
 {
+
+struct Quest;
+
+
+
 namespace ui
 {
 
@@ -30,7 +35,7 @@ private:
     void _draw_list_entry_giver_name(int);
     void _draw_list_entry_difficulty(int, int);
     void _draw_list_entry_desc();
-    void _draw_list_entry(int, int, int);
+    void _draw_list_entry(int, int);
     void _draw_list_entries();
 };
 

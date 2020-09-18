@@ -2839,15 +2839,14 @@ static void _init_map_fields_maybe_generate_encounter()
     {
         map_data.max_crowd_density = 0;
         map_data.type = static_cast<int>(mdata_t::MapType::temporary);
-        rq = encounterref;
         game_data.executing_immediate_quest_type = 1007;
         game_data.executing_immediate_quest_show_hunt_remain = 1;
-        game_data.executing_immediate_quest = rq;
+        game_data.executing_immediate_quest = encounterref;
         game_data.executing_immediate_quest_status = 1;
         p = rnd(3) + 5;
         for (int cnt = 0, cnt_end = (p); cnt < cnt_end; ++cnt)
         {
-            flt(quest_data[rq].difficulty, Quality::great);
+            flt(quest_data[encounterref].difficulty, Quality::great);
             if (const auto chara = chara_create(
                     -1,
                     0,

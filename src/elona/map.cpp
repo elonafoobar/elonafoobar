@@ -1339,7 +1339,6 @@ TurnResult exit_map()
     }
     if (map_data.type == mdata_t::MapType::temporary)
     {
-        rq = game_data.executing_immediate_quest;
         quest_exit_map();
     }
     Message::instance().buffered_message_begin("  ");

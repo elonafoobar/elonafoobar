@@ -457,16 +457,18 @@ TalkResult talk_quest_delivery(
     const auto slot = inv_make_free_slot_force(inv);
     const auto handed_over_item = item_separate(item_to_deliver, inv, slot, 1);
     chara_set_ai_item(speaker, handed_over_item);
-    rq = deliver;
-    quest_set_data(speaker, 3);
-    quest_complete();
+    quest_set_data(deliver, speaker, 3);
+    quest_complete(deliver);
     refresh_burden_state();
     return TalkResult::talk_npc;
 }
 
 
 
-TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
+TalkResult talk_quest_supply(
+    Character& speaker,
+    int quest_idx,
+    const ItemRef& item_to_supply)
 {
     txt(i18n::s.get("core.talk.npc.common.hand_over", item_to_supply));
     const auto inv = speaker.inventory();
@@ -474,8 +476,8 @@ TalkResult talk_quest_supply(Character& speaker, const ItemRef& item_to_supply)
     const auto handed_over_item = item_separate(item_to_supply, inv, slot, 1);
     speaker.was_passed_item_by_you_just_now() = true;
     chara_set_ai_item(speaker, handed_over_item);
-    quest_set_data(speaker, 3);
-    quest_complete();
+    quest_set_data(quest_idx, speaker, 3);
+    quest_complete(quest_idx);
     refresh_burden_state();
     return TalkResult::talk_npc;
 }
@@ -1389,9 +1391,9 @@ TalkResult talk_guard_where_is(Character& speaker, int chatval_)
 
 
 
-TalkResult talk_accepted_quest(Character& speaker)
+TalkResult talk_accepted_quest(Character& speaker, int quest_idx)
 {
-    if (quest_data[rq].id == 1001 || quest_data[rq].id == 1010)
+    if (quest_data[quest_idx].id == 1001 || quest_data[quest_idx].id == 1010)
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.quest_giver.accept.hunt", speaker);
@@ -1408,7 +1410,7 @@ TalkResult talk_accepted_quest(Character& speaker)
             }
         }
     }
-    if (quest_data[rq].id == 1006)
+    if (quest_data[quest_idx].id == 1006)
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.quest_giver.accept.harvest", speaker);
@@ -1425,7 +1427,7 @@ TalkResult talk_accepted_quest(Character& speaker)
             }
         }
     }
-    if (quest_data[rq].id == 1009)
+    if (quest_data[quest_idx].id == 1009)
     {
         listmax = 0;
         buff = i18n::s.get("core.talk.npc.quest_giver.accept.party", speaker);
@@ -1442,10 +1444,10 @@ TalkResult talk_accepted_quest(Character& speaker)
             }
         }
     }
-    game_data.executing_immediate_quest_type = quest_data[rq].id;
+    game_data.executing_immediate_quest_type = quest_data[quest_idx].id;
     game_data.executing_immediate_quest_show_hunt_remain =
-        quest_data[rq].client_chara_type;
-    game_data.executing_immediate_quest = rq;
+        quest_data[quest_idx].client_chara_type;
+    game_data.executing_immediate_quest = quest_idx;
     game_data.executing_immediate_quest_status = 1;
     map_prepare_for_travel_with_prev(static_cast<int>(mdata_t::MapId::quest));
     chatteleport = 1;
@@ -1617,12 +1619,28 @@ TalkResult talk_finish_escort(Character& speaker)
 
 TalkResult talk_quest_giver(Character& speaker)
 {
-    if (quest_data[rq].progress == 1)
+    int quest_idx = -1;
+    for (int i = 0; i < game_data.number_of_existing_quests; ++i)
+    {
+        if (quest_data[i].id == 0)
+        {
+            continue;
+        }
+        if (quest_data[i].originating_map_id == game_data.current_map &&
+            quest_data[i].client_chara_index == speaker.index)
+        {
+            quest_idx = i;
+            break;
+        }
+    }
+    assert(quest_idx != -1);
+
+    if (quest_data[quest_idx].progress == 1)
     {
         buff = i18n::s.get("core.talk.npc.quest_giver.about.during", speaker);
         return TalkResult::talk_npc;
     }
-    quest_set_data(speaker, 1);
+    quest_set_data(quest_idx, speaker, 1);
     listmax = 0;
     list(0, listmax) = 1;
     listn(0, listmax) =
@@ -1669,11 +1687,11 @@ TalkResult talk_quest_giver(Character& speaker)
             }
             if (quest_data[p].progress == 0 || f > 1)
             {
-                game_data.taken_quests.at(cnt) = rq;
+                game_data.taken_quests.at(cnt) = quest_idx;
                 break;
             }
         }
-        if (quest_data[rq].id == 1002)
+        if (quest_data[quest_idx].id == 1002)
         {
             if (!inv_player()->has_free_slot())
             {
@@ -1682,7 +1700,7 @@ TalkResult talk_quest_giver(Character& speaker)
                 return TalkResult::talk_npc;
             }
         }
-        if (quest_data[rq].id == 1007)
+        if (quest_data[quest_idx].id == 1007)
         {
             f = chara_get_free_slot_ally();
             if (f == 0)
@@ -1702,7 +1720,7 @@ TalkResult talk_quest_giver(Character& speaker)
                 {
                     chara_id = 0;
                 }
-                flt(quest_data[rq].difficulty + cnt, Quality::bad);
+                flt(quest_data[quest_idx].difficulty + cnt, Quality::bad);
                 fltn(u8"man"s);
                 const auto chara = chara_create(56, chara_id, -3, 0);
                 f = !!chara;
@@ -1728,21 +1746,21 @@ TalkResult talk_quest_giver(Character& speaker)
             }
             const auto ally = new_ally_joins(cdata.tmp());
             ally->is_escorted() = true;
-            quest_data[rq].extra_info_2 = charaid2int(ally->id);
+            quest_data[quest_idx].extra_info_2 = charaid2int(ally->id);
         }
-        quest_data[rq].progress = 1;
-        if (quest_data[rq].deadline_days == -1)
+        quest_data[quest_idx].progress = 1;
+        if (quest_data[quest_idx].deadline_days == -1)
         {
-            return talk_accepted_quest(speaker);
+            return talk_accepted_quest(speaker, quest_idx);
         }
         buff = i18n::s.get("core.talk.npc.quest_giver.about.thanks", speaker);
-        if (quest_data[rq].id == 1002)
+        if (quest_data[quest_idx].id == 1002)
         {
-            ++quest_data[quest_data[rq].target_chara_index]
+            ++quest_data[quest_data[quest_idx].target_chara_index]
                   .delivery_has_package_flag;
             flt();
-            if (const auto item =
-                    itemcreate_player_inv(quest_data[rq].target_item_id, 0))
+            if (const auto item = itemcreate_player_inv(
+                    quest_data[quest_idx].target_item_id, 0))
             {
                 txt(i18n::s.get(
                     "core.common.you_put_in_your_backpack", item.unwrap()));
@@ -2135,6 +2153,7 @@ TalkResult talk_npc(Character& speaker)
     }
     f = 0;
     deliver = -1;
+    int quest_idx = -1;
     if (game_data.current_dungeon_level == 1)
     {
         for (int cnt = 0, cnt_end = (game_data.number_of_existing_quests);
@@ -2145,7 +2164,7 @@ TalkResult talk_npc(Character& speaker)
             {
                 if (quest_data[cnt].client_chara_index == speaker.index)
                 {
-                    rq = cnt;
+                    quest_idx = cnt;
                     f = 1;
                     break;
                 }
@@ -2168,7 +2187,7 @@ TalkResult talk_npc(Character& speaker)
             }
             if (quest_data[cnt].client_chara_type == 2)
             {
-                if (quest_data[cnt].target_chara_index == rq)
+                if (quest_data[cnt].target_chara_index == quest_idx)
                 {
                     p = quest_data[cnt].target_item_id;
                     deliver = cnt;
@@ -2183,14 +2202,14 @@ TalkResult talk_npc(Character& speaker)
                 }
             }
         }
-        if (quest_data[rq].progress == 3)
+        if (quest_data[quest_idx].progress == 3)
         {
-            quest_set_data(speaker, 3);
-            quest_complete();
+            quest_set_data(quest_idx, speaker, 3);
+            quest_complete(quest_idx);
         }
         else if (
-            quest_data[rq].client_chara_type == 3 &&
-            quest_data[rq].progress == 1)
+            quest_data[quest_idx].client_chara_type == 3 &&
+            quest_data[quest_idx].progress == 1)
         {
             for (const auto& item : *inv_player())
             {
@@ -2198,20 +2217,22 @@ TalkResult talk_npc(Character& speaker)
                 {
                     continue;
                 }
-                if (quest_data[rq].id == 1003)
+                if (quest_data[quest_idx].id == 1003)
                 {
                     if (the_item_db[item->id]->category == ItemCategory::food &&
-                        item->param1 / 1000 == quest_data[rq].extra_info_1 &&
-                        item->param2 == quest_data[rq].extra_info_2)
+                        item->param1 / 1000 ==
+                            quest_data[quest_idx].extra_info_1 &&
+                        item->param2 == quest_data[quest_idx].extra_info_2)
                     {
                         item_to_supply = item;
                         break;
                     }
                 }
-                if (quest_data[rq].id == 1004 || quest_data[rq].id == 1011)
+                if (quest_data[quest_idx].id == 1004 ||
+                    quest_data[quest_idx].id == 1011)
                 {
                     if (the_item_db[item->id]->integer_id ==
-                        quest_data[rq].target_item_id)
+                        quest_data[quest_idx].target_item_id)
                     {
                         item_to_supply = item;
                         break;
@@ -2234,7 +2255,7 @@ TalkResult talk_npc(Character& speaker)
                         "core.talk.npc.quest_giver.choices.about_the_work"));
             }
         }
-        else if (quest_data[rq].id != 0)
+        else if (quest_data[quest_idx].id != 0)
         {
             ELONA_APPEND_RESPONSE(
                 24,
@@ -2346,7 +2367,7 @@ TalkResult talk_npc(Character& speaker)
         return talk_quest_delivery(speaker, item_to_deliver.unwrap());
     case 26:
         assert(item_to_supply);
-        return talk_quest_supply(speaker, item_to_supply.unwrap());
+        return talk_quest_supply(speaker, quest_idx, item_to_supply.unwrap());
     case 30: return talk_trainer_learn_skill(speaker);
     case 31: return talk_shop_attack(speaker);
     case 32: return talk_guard_return_item(speaker);
