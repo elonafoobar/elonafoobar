@@ -22,11 +22,11 @@ struct Quest
     /**
      * 0 if empty.
      */
-    int client_chara_index;
+    int client_chara_index{};
 
-    int originating_map_id;
+    int originating_map_id{};
 
-    int deadline_hours;
+    int deadline_hours{};
 
     /**
      * TODO: enum class
@@ -43,7 +43,7 @@ struct Quest
      * 1010 - huntex
      * 1011 - collect
      */
-    int id;
+    int id{};
 
     /**
      * Used only for escort quests.
@@ -52,7 +52,7 @@ struct Quest
      * 1 - moderate (poison)
      * 2 - normal (delivery)
      */
-    int escort_difficulty;
+    int escort_difficulty{};
 
     /**
      * For hunting quests, target character level is determined as follows.
@@ -60,9 +60,9 @@ struct Quest
      * hunt   - difficulty * 10 / 6
      * huntex - difficulty * 3 / 2
      */
-    int difficulty;
+    int difficulty{};
 
-    int reward_gold;
+    int reward_gold{};
 
     /**
      * If < 10000:
@@ -75,31 +75,31 @@ struct Quest
      *
      * If <= 10000, acts as flttypemajor
      */
-    int reward_item_id;
+    int reward_item_id{};
 
     /**
      * 0: not taken
      * 1: accepted
      * 3: complete
      */
-    int progress;
+    int progress{};
 
     /**
      * If -1, deadline is immediate
      */
-    int deadline_days;
+    int deadline_days{};
 
     /**
      * Target character for quests like "collect" (person bragging about item)
      *
      * Also may point to the quest giver.
      */
-    int target_chara_index;
+    int target_chara_index{};
 
     /**
      * Used for "deliver", "supply" and "collect".
      */
-    int target_item_id;
+    int target_item_id{};
 
     /**
      * cook    - food type
@@ -108,7 +108,7 @@ struct Quest
      * party   - required points
      * huntex  - target character id
      */
-    int extra_info_1;
+    int extra_info_1{};
 
     /**
      * cook    - food rank
@@ -116,7 +116,7 @@ struct Quest
      * escort  - escorted character id
      * party   - points so far
      */
-    int extra_info_2;
+    int extra_info_2{};
 
     /**
      * Used in dialog option insertion when talking to client.
@@ -130,18 +130,15 @@ struct Quest
      * 7 - party
      * 8 - conquer
      */
-    int client_chara_type;
+    int client_chara_type{};
 
     /**
      * If a character has a related quest and this flag is set on the quest, the
      * emotion icon for the character will indicate they are the package
      * recipient.
      */
-    int delivery_has_package_flag;
+    int delivery_has_package_flag{};
 
-
-
-    void clear();
 
 
     /**
@@ -177,9 +174,6 @@ struct QuestData
 
 
     Quest& immediate();
-
-
-    void clear();
 
 
     // Helper method to pack all quests to `qdata`.

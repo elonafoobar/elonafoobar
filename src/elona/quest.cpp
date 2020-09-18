@@ -102,26 +102,9 @@ void Quest::unpack_from(elona_vector2<int>& legacy_qdata, int quest_id)
 
 
 
-void Quest::clear()
-{
-    *this = {};
-}
-
-
-
 Quest& QuestData::immediate()
 {
     return quest_data[game_data.executing_immediate_quest];
-}
-
-
-
-void QuestData::clear()
-{
-    for (auto&& quest : quests)
-    {
-        quest.clear();
-    }
 }
 
 

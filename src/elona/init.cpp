@@ -213,7 +213,6 @@ void initialize_elona()
     DIM3(adata, 40, 500);
     area_data.clear();
     DIM3(qdata, 20, 500);
-    quest_data.clear();
     SDIM3(qname, 40, 500);
     DIM2(gdata, 1000);
     DIM2(genetemp, 1000);
