@@ -1473,15 +1473,4 @@ void quest_complete()
     save_trigger_autosaving();
 }
 
-
-
-void clear_existing_quest_list()
-{
-    ++game_data.map_regenerate_count;
-    DIM3(qdata, 20, 500);
-    SDIM3(qname, 40, 500);
-    game_data.number_of_existing_quests = 0;
-    initialize_adata();
-}
-
 } // namespace elona

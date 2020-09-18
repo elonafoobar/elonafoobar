@@ -222,6 +222,4 @@ TurnResult quest_pc_died_during_immediate_quest();
 int quest_generate();
 void quest_gen_scale_by_level();
 
-void clear_existing_quest_list();
-
 } // namespace elona
