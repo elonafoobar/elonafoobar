@@ -433,11 +433,6 @@ void ctrl_file_global_read(const fs::path& dir)
     }
 
     {
-        const auto filepath = dir / u8"foobar_data.s1";
-        serialization::binary::load(filepath, foobar_data);
-    }
-
-    {
         const auto filepath = dir / u8"cdata.s1";
         load(filepath, cdata, 0, ELONA_MAX_PARTY_CHARACTERS);
 
@@ -586,11 +581,6 @@ void ctrl_file_global_write(const fs::path& dir)
         const auto filepath = dir / u8"gdata.s1";
         game()->pack_to(gdata);
         save_v1(filepath, gdata, 0, 1000);
-    }
-
-    {
-        const auto filepath = dir / u8"foobar_data.s1";
-        serialization::binary::save(filepath, foobar_data);
     }
 
     {

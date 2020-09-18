@@ -10,10 +10,6 @@
 namespace elona
 {
 
-FoobarData foobar_data;
-
-
-
 #define GDATA_PACK(x, ident) gdata(x) = ident;
 #define GDATA_UNPACK(x, ident) ident = gdata(x);
 

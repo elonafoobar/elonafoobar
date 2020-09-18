@@ -122,9 +122,3 @@ TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
     REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).experience == 0);
     REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).potential == 22);
 }
-
-TEST_CASE("Test foobar save data compatibility", "[C++: Serialization]")
-{
-    load_previous_savefile();
-    REQUIRE(elona::foobar_data.is_autodig_enabled == 0);
-}

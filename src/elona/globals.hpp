@@ -26,6 +26,8 @@ ELONA_EXTERN(int g_chara_last_attacked_by_player);
 
 ELONA_EXTERN(bool g_player_is_changing_equipment);
 
+ELONA_EXTERN(bool g_is_autodig_enabled);
+
 } // namespace elona
 
 

@@ -16,6 +16,7 @@
 #include "draw.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -84,7 +85,7 @@ bool _proc_autodig()
 {
     int x = cdata.player().next_position.x;
     int y = cdata.player().next_position.y;
-    if (foobar_data.is_autodig_enabled)
+    if (g_is_autodig_enabled)
     {
         if (0 <= x && x < map_data.width && 0 <= y && y < map_data.height &&
             (chip_data.for_cell(x, y).effect & 4) &&
@@ -669,10 +670,10 @@ optional<TurnResult> handle_pc_action(std::string& action)
 
     if (action == "autodig")
     {
-        foobar_data.is_autodig_enabled = !foobar_data.is_autodig_enabled;
+        g_is_autodig_enabled = !g_is_autodig_enabled;
         txt(i18n::s.get(
             "core.ui.autodig."s +
-            (foobar_data.is_autodig_enabled ? "enabled" : "disabled")));
+            (g_is_autodig_enabled ? "enabled" : "disabled")));
         return none;
     }
 

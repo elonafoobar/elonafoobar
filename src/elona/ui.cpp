@@ -12,6 +12,7 @@
 #include "draw.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "lua_env/console.hpp"
@@ -19,6 +20,7 @@
 #include "random.hpp"
 #include "text.hpp"
 #include "variables.hpp"
+
 
 
 namespace
@@ -1061,7 +1063,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        static_cast<int>(foobar_data.is_autodig_enabled),
+        static_cast<int>(g_is_autodig_enabled),
         x,
         y,
         [](auto is_enabled) { return is_enabled == 1; },

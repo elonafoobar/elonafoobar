@@ -237,25 +237,6 @@ const std::unique_ptr<Game>& game();
 
 
 
-struct FoobarData
-{
-    bool is_autodig_enabled{};
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(is_autodig_enabled);
-        /* clang-format on */
-    }
-};
-
-
-extern FoobarData foobar_data;
-
-
 // TODO: Make gdata class and make this function method.
 void modify_crowd_density(int chara_index, int delta);
 
