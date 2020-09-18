@@ -30,8 +30,6 @@ ELONA_EXTERN(elona_vector1<std::string> atxinfon);
 ELONA_EXTERN(elona_vector1<int> fsetwear);
 ELONA_EXTERN(elona_vector1<int> fsetitem);
 ELONA_EXTERN(int txtadvscreenupdate);
-ELONA_EXTERN(elona_vector2<int> matref);
-ELONA_EXTERN(elona_vector1<std::string> matname);
 
 // fov.cpp
 ELONA_EXTERN(elona_vector2<int> route);
@@ -54,7 +52,6 @@ ELONA_EXTERN(int inf_ver);
 ELONA_EXTERN(int autoturn);
 ELONA_EXTERN(int firstautoturn);
 ELONA_EXTERN(int racount);
-ELONA_EXTERN(elona_vector1<std::string> matdesc);
 ELONA_EXTERN(std::string nquestdate);
 ELONA_EXTERN(elona_vector2<int> podata);
 ELONA_EXTERN(int refreshmode);
@@ -68,7 +65,6 @@ ELONA_EXTERN(int weatherbk);
 // crafting.cpp / blending.cpp
 ELONA_EXTERN(elona_vector1<int> rpsourcelist);
 ELONA_EXTERN(int prodtype);
-ELONA_EXTERN(elona_vector2<int> matspot);
 
 // quest.cpp
 ELONA_EXTERN(elona_vector1<int> fsetcollect);
@@ -254,7 +250,6 @@ ELONA_EXTERN(int area);
 ELONA_EXTERN(int attacknum);
 ELONA_EXTERN(int attackrange);
 ELONA_EXTERN(int attackskill);
-ELONA_EXTERN(int atxspot);
 ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);

@@ -8,6 +8,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "crafting_material.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "food.hpp"
@@ -1272,14 +1273,14 @@ void quest_team_victorious()
                 20 ==
             0)
         {
-            matgetmain(41, 1);
+            crafting_material_gain("core.five_hundred_yen_coin", 1);
         }
         else if (
             area_data[game_data.previous_map2].winning_streak_in_pet_arena %
                 5 ==
             0)
         {
-            matgetmain(40, 1);
+            crafting_material_gain("core.one_hundred_yen_coin", 1);
         }
     }
     else
@@ -1321,12 +1322,12 @@ void quest_all_targets_killed()
         if (area_data[game_data.previous_map2].winning_streak_in_arena % 20 ==
             0)
         {
-            matgetmain(41, 1);
+            crafting_material_gain("core.five_hundred_yen_coin", 1);
         }
         else if (
             area_data[game_data.previous_map2].winning_streak_in_arena % 5 == 0)
         {
-            matgetmain(40, 1);
+            crafting_material_gain("core.one_hundred_yen_coin", 1);
         }
     }
     if (game_data.executing_immediate_quest_type == 1001 ||

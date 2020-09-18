@@ -2,6 +2,9 @@
 
 #include "../audio.hpp"
 #include "../data/types/type_asset.hpp"
+#include "../data/types/type_crafting_material.hpp"
+
+
 
 namespace elona
 {
@@ -92,14 +95,16 @@ void UIMenuMaterials::_draw_keys()
 
 void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
 {
-    std::string mat_name = ""s + matname(list_item) + " " +
+    std::string mat_name =
+        the_crafting_material_db.get_text(list_item, "name") + " " +
         i18n::s.get("core.crafting.menu.x") + " " + mat(list_item);
     cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1);
 }
 
 void UIMenuMaterials::_draw_single_list_entry_desc(int cnt, int list_item)
 {
-    std::string mat_desc = matdesc(list_item);
+    std::string mat_desc =
+        the_crafting_material_db.get_text(list_item, "description");
     mes(wx + 308, wy + 66 + cnt * 19 + 2, mat_desc);
 }
 
@@ -108,7 +113,10 @@ void UIMenuMaterials::_draw_single_list_entry(int cnt, int list_item)
     _draw_single_list_entry_name(cnt, list_item);
     _draw_single_list_entry_desc(cnt, list_item);
 
-    draw_item_material(matref(2, list_item), wx + 47, wy + 69 + cnt * 19 + 2);
+    draw_item_material(
+        the_crafting_material_db.ensure(list_item).icon,
+        wx + 47,
+        wy + 69 + cnt * 19 + 2);
 }
 
 void UIMenuMaterials::_draw_list_entries()

@@ -32,8 +32,6 @@ void spot_material(Character& chara);
 void spot_digging(Character& chara);
 void spot_mining_or_wall(Character& chara);
 TurnResult do_dig_after_sp_check(Character& chara);
-void matdelmain(int material_id, int amount = 1);
-void matgetmain(int material_id, int amount = 1, int spot_type = 0);
 
 
 void start_stealing(Character& thief, ItemRef steal_target);

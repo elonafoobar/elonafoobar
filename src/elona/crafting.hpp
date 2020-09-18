@@ -36,9 +36,7 @@ struct CraftingRecipe
     std::vector<RequiredMaterial> required_materials;
 };
 
-void initialize_craft_material_data();
 void crafting_menu();
 optional_ref<const CraftingRecipe> crafting_find_recipe(int matid);
-int random_material(int = 0, int = 0);
 
 } // namespace elona

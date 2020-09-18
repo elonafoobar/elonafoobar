@@ -237,8 +237,6 @@ void initialize_elona()
     DIM3(card, 4, 1000);
     DIM2(deck, 1000);
 
-    initialize_craft_material_data();
-
     DIM3(dirxy, 2, 4);
 
     dirxy(0, 3) = 0;

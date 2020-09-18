@@ -7,6 +7,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
@@ -408,7 +409,12 @@ bool casino_start()
         snd("core.get3");
         mat(1) += 10;
         noteadd(
-            "@BL" + i18n::s.get("core.casino.you_get", 10, matname(1), mat(1)));
+            "@BL" +
+            i18n::s.get(
+                "core.casino.you_get",
+                10,
+                the_crafting_material_db.get_text("core.casino_chip", "name"),
+                mat(1)));
     }
     atxinfon(1) = i18n::s.get("core.casino.chips_left", mat(1));
     atxinfon(2) = "";
@@ -500,8 +506,11 @@ bool casino_blackjack()
         if (cnt == 0)
         {
             mat(1) -= stake;
-            noteadd(
-                i18n::s.get("core.casino.you_lose", stake, matname(1), mat(1)));
+            noteadd(i18n::s.get(
+                "core.casino.you_lose",
+                stake,
+                the_crafting_material_db.get_text("core.casino_chip", "name"),
+                mat(1)));
         }
         if (cardround == 0)
         {

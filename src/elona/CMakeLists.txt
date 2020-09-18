@@ -26,6 +26,7 @@ set(ELONA_SOURCES
   config.cpp
   config_menu.cpp
   crafting.cpp
+  crafting_material.cpp
   ctrl_file.cpp
   ctrl_inventory.cpp
   death.cpp
