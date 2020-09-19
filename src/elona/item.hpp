@@ -1,14 +1,13 @@
 #pragma once
 
-#include <bitset>
 #include <memory>
 #include <variant>
 #include <vector>
 
 #include "../util/range.hpp"
-#include "consts.hpp"
 #include "data/types/type_item.hpp"
 #include "dice.hpp"
+#include "enchantment.hpp"
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
@@ -17,30 +16,6 @@
 
 namespace elona
 {
-
-struct Enchantment
-{
-    int id = 0;
-    int power = 0;
-
-    bool operator==(const Enchantment& other) const noexcept
-    {
-        return id == other.id && power == other.power;
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(id);
-        ar(power);
-        /* clang-format on */
-    }
-};
-
-
 
 struct Inventory;
 
@@ -143,7 +118,7 @@ public:
     bool is_handmade{};
     bool is_showroom_only{};
 
-    std::vector<Enchantment> enchantments;
+    EnchantmentList enchantments;
 
 
     void clear();

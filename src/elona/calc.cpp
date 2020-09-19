@@ -1215,9 +1215,6 @@ int calc_ammo_reloading_cost(Character& owner, bool do_reload)
 
         for (auto&& enc : item->enchantments)
         {
-            if (enc.id == 0)
-                break;
-
             if (enc.id / 10000 == 9)
             {
                 int type = enc.id % 10000;

@@ -61,8 +61,8 @@ int f_at_m138 = 0;
 int a_at_m138 = 0;
 
 
+
 Item::Item()
-    : enchantments(15)
 {
 }
 
@@ -2207,10 +2207,11 @@ std::vector<int> item_get_inheritance(const ItemRef& item)
     randomize(item->turn + 1);
     for (int _i = 0; _i < 10; ++_i)
     {
-        const auto enc_index = rnd(15);
+        const auto enc_index =
+            rnd(std::max(item->enchantments.size(), size_t{15}));
         if (enc_index == 0)
             continue;
-        if (item->enchantments[enc_index].id == 0)
+        if (item->enchantments.size() <= enc_index)
             continue;
 
         const auto exists = range::find(result, enc_index) != std::end(result);

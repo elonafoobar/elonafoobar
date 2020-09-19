@@ -50,8 +50,6 @@ void draw_additional_item_info_resistance(const ItemRef& equip, int x, int y)
 {
     for (const auto& enc : equip->enchantments)
     {
-        if (enc.id == 0)
-            break;
         if (enc.id / 10000 != 2)
             continue;
 

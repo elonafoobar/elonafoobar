@@ -1336,22 +1336,18 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         status_ailment_damage(eater, StatusAilment::dimmed, 500);
         eater.emotion_icon = 317;
     }
-    for (int cnt = 0; cnt < 15; ++cnt)
+    for (const auto& enc : food->enchantments)
     {
-        if (food->enchantments[cnt].id == 0)
-        {
-            break;
-        }
-        int enc_id = food->enchantments[cnt].id;
+        int enc_id = enc.id;
         if (enc_id == 36)
         {
-            p = rnd_capped(food->enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(enc.power / 50 + 1) + 1;
             heal_sp(eater, p);
             continue;
         }
         if (enc_id == 38)
         {
-            p = rnd_capped(food->enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(enc.power / 25 + 1) + 1;
             heal_mp(eater, p / 5);
             continue;
         }
@@ -1366,8 +1362,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             {
                 txt(i18n::s.get("core.action.time_stop.begins", eater),
                     Message::color{ColorIndex::cyan});
-                game()->left_turns_of_timestop =
-                    food->enchantments[cnt].power / 100 + 1 + 1;
+                game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
                 continue;
             }
         }
@@ -1379,7 +1374,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             {
                 if (is_in_fov(eater))
                 {
-                    if (food->enchantments[cnt].power / 50 + 1 >= 0)
+                    if (enc.power / 50 + 1 >= 0)
                     {
                         txt(i18n::s.get(
                             "core.food.effect.ability.develops",
@@ -1397,7 +1392,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 chara_gain_skill_exp(
                     eater,
                     enc_id,
-                    (food->enchantments[cnt].power / 50 + 1) * 100 *
+                    (enc.power / 50 + 1) * 100 *
                         (1 + (!eater.is_player()) * 5));
                 continue;
             }
@@ -1415,8 +1410,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 buff_add(
                     eater,
                     *buff_id,
-                    (food->enchantments[cnt].power / 50 + 1) * 5 *
-                        (1 + (!eater.is_player()) * 2),
+                    (enc.power / 50 + 1) * 5 * (1 + (!eater.is_player()) * 2),
                     2000);
 
                 continue;

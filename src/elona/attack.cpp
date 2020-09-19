@@ -889,23 +889,19 @@ void proc_weapon_enchantments(
     Character& target,
     const ItemRef& weapon)
 {
-    for (int cnt = 0; cnt < 15; ++cnt)
+    for (const auto& enc : weapon->enchantments)
     {
-        if (weapon->enchantments[cnt].id == 0)
-        {
-            break;
-        }
-        int enc_id = weapon->enchantments[cnt].id;
+        int enc_id = enc.id;
         if (enc_id == 36)
         {
-            p = rnd_capped(weapon->enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(enc.power / 50 + 1) + 1;
             heal_sp(attacker, p);
             damage_sp(target, p / 2);
             continue;
         }
         if (enc_id == 38)
         {
-            p = rnd_capped(weapon->enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(enc.power / 25 + 1) + 1;
             heal_mp(attacker, p / 5);
             if (target.state() != Character::State::alive)
             {
@@ -930,8 +926,7 @@ void proc_weapon_enchantments(
                 {
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
-                    game()->left_turns_of_timestop =
-                        weapon->enchantments[cnt].power / 100 + 1 + 1;
+                    game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
                 }
                 continue;
             }
@@ -984,14 +979,10 @@ void proc_weapon_enchantments(
                 g_proc_damage_events_flag = 1;
                 damage_hp(
                     target,
-                    rnd_capped(
-                        orgdmg * (100 + weapon->enchantments[cnt].power) /
-                            1000 +
-                        1) +
-                        5,
+                    rnd_capped(orgdmg * (100 + enc.power) / 1000 + 1) + 5,
                     attacker.index,
                     ele,
-                    weapon->enchantments[cnt].power / 2 + 100);
+                    enc.power / 2 + 100);
                 continue;
             }
             if (i == 8)
@@ -1017,8 +1008,8 @@ void proc_weapon_enchantments(
                 if (rnd(100) < p)
                 {
                     efid = enc_id;
-                    efp = weapon->enchantments[cnt].power +
-                        attacker.get_skill(attackskill).level * 10;
+                    efp =
+                        enc.power + attacker.get_skill(attackskill).level * 10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;

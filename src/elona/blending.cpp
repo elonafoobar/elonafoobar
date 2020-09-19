@@ -519,9 +519,6 @@ void window_recipe(
     {
         for (const auto& inh : inheritance)
         {
-            if (item->enchantments[inh].id == 0)
-                break;
-
             get_enchantment_description(
                 item->enchantments[inh].id,
                 item->enchantments[inh].power,

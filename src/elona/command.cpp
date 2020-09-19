@@ -1236,27 +1236,21 @@ TurnResult do_change_ammo_command()
 
     listmax = 0;
     cs = -1;
-    for (int cnt = 0; cnt < 15; ++cnt)
     {
-        if (ammo->enchantments[cnt].id == 0)
+        int enc_index{};
+        for (const auto& enc : ammo->enchantments)
         {
-            break;
-        }
-        int enc_id = ammo->enchantments[cnt].id;
-        i = enc_id / 10000;
-        if (i != 0)
-        {
-            enc_id = enc_id % 10000;
-            if (i == 9)
+            const auto enc_id = enc.id;
+            if (enc_id / 10000 == 9)
             {
-                if (ammo->charges == cnt)
+                if (ammo->charges == enc_index)
                 {
-                    cs = cnt;
+                    cs = enc_index;
                 }
-                list(0, listmax) = cnt;
+                list(0, listmax) = enc_index;
                 ++listmax;
-                continue;
             }
+            ++enc_index;
         }
     }
     if (listmax == 0)
@@ -2029,7 +2023,7 @@ TurnResult do_use_command(ItemRef use_item)
                         "core.action.use.living.becoming_a_threat"));
                     if (!enchantment_add(use_item, 45, 50))
                     {
-                        use_item->enchantments[14].id = 0;
+                        use_item->enchantments.remove_last();
                         txt(i18n::s.get(
                             "core.action.use.living.removes_enchantment",
                             use_item));

@@ -98,8 +98,6 @@ void UIMenuFeats::_load_traits_by_enchantments()
         {
             for (const auto& enc : equipment->enchantments)
             {
-                if (enc.id == 0)
-                    break;
                 get_enchantment_description(
                     enc.id, enc.power, ItemCategory::unidentified, true);
                 if (!s(0).empty())

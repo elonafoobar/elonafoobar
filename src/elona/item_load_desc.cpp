@@ -243,9 +243,6 @@ void _load_item_enchantment_desc(const ItemRef& item, int& num_of_desc)
     size_t enc_index{};
     for (const auto& enc : item->enchantments)
     {
-        if (enc.id == 0)
-            break;
-
         get_enchantment_description(
             enc.id, enc.power, the_item_db[item->id]->category);
         listn(0, num_of_desc) = i18n::s.get("core.enchantment.it") + s;
