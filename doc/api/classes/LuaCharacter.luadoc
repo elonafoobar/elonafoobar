@@ -185,10 +185,10 @@ function get_ailment(ailment) end
 --  @tfield num index
 
 --- [R] The integer ID of this character.
---  @tfield integer_id index
+--  @tfield num integer_id
 
 --- [R] The character's proper name without any qualifiers.
---  @tfield string name
+--  @tfield string hp
 
 --- [R] The character's maximum HP.
 --  @tfield num max_hp
@@ -206,7 +206,7 @@ function get_ailment(ailment) end
 --  @tfield num max_mp
 
 --- [RW] The character's worshipped god.
---  @tfield string max_mp
+--  @tfield string god
 
 --- [RW] The character's position.
 --  @tfield LuaPosition position
@@ -252,7 +252,7 @@ function get_ailment(ailment) end
 --  @tfield num hate
 
 --- [RW] The character's current emotion icon. Valid values are 0-99.
---  @tfield num fame
+--  @tfield num emotion_icon
 
 --- [RW] The character's current karma. Only valid if the character is
 --  the player.
@@ -295,7 +295,7 @@ function get_ailment(ailment) end
 --  @tfield Relationship relationship
 
 --- [RW] The original relationship of the character to the player.
---  @tfield Relationship relationship
+--  @tfield Relationship original_relationship
 
 --- [RW] The quality of the character.
 --  @tfield Quality quality
