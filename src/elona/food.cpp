@@ -1342,25 +1342,25 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             break;
         }
-        enc = food->enchantments[cnt].id;
-        if (enc == 36)
+        int enc_id = food->enchantments[cnt].id;
+        if (enc_id == 36)
         {
             p = rnd_capped(food->enchantments[cnt].power / 50 + 1) + 1;
             heal_sp(eater, p);
             continue;
         }
-        if (enc == 38)
+        if (enc_id == 38)
         {
             p = rnd_capped(food->enchantments[cnt].power / 25 + 1) + 1;
             heal_mp(eater, p / 5);
             continue;
         }
-        if (enc == 37)
+        if (enc_id == 37)
         {
             event_add(18, eater.index);
             continue;
         }
-        if (enc == 40)
+        if (enc_id == 40)
         {
             if (game()->left_turns_of_timestop == 0)
             {
@@ -1371,10 +1371,10 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 continue;
             }
         }
-        const auto enc2 = enc / 10000;
+        const auto enc2 = enc_id / 10000;
         if (enc2 != 0)
         {
-            enc = enc % 10000;
+            enc_id = enc_id % 10000;
             if (enc2 == 1)
             {
                 if (is_in_fov(eater))
@@ -1384,19 +1384,19 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         txt(i18n::s.get(
                             "core.food.effect.ability.develops",
                             eater,
-                            the_ability_db.get_text(enc, "name")));
+                            the_ability_db.get_text(enc_id, "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.food.effect.ability.deteriorates",
                             eater,
-                            the_ability_db.get_text(enc, "name")));
+                            the_ability_db.get_text(enc_id, "name")));
                     }
                 }
                 chara_gain_skill_exp(
                     eater,
-                    enc,
+                    enc_id,
                     (food->enchantments[cnt].power / 50 + 1) * 100 *
                         (1 + (!eater.is_player()) * 5));
                 continue;
@@ -1405,10 +1405,10 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             {
                 if (is_in_fov(eater))
                 {
-                    txt(the_buff_db.get_text(enc + 10, "apply", eater));
+                    txt(the_buff_db.get_text(enc_id + 10, "apply", eater));
                 }
 
-                int integer_id = 20 + (enc - 10);
+                int integer_id = 20 + (enc_id - 10);
                 auto buff_id = the_buff_db.get_id_from_integer(integer_id);
                 assert(buff_id);
 

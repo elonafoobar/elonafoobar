@@ -1242,11 +1242,11 @@ TurnResult do_change_ammo_command()
         {
             break;
         }
-        enc = ammo->enchantments[cnt].id;
-        i = enc / 10000;
+        int enc_id = ammo->enchantments[cnt].id;
+        i = enc_id / 10000;
         if (i != 0)
         {
-            enc = enc % 10000;
+            enc_id = enc_id % 10000;
             if (i == 9)
             {
                 if (ammo->charges == cnt)
