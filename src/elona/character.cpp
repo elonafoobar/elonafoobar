@@ -840,10 +840,6 @@ void chara_refresh(Character& chara)
 
         for (const auto& enchantment : equipment->enchantments)
         {
-            if (enchantment.id == 0)
-            {
-                break;
-            }
             rp2 = enchantment.id;
             if (rp2 >= 10000)
             {
@@ -2285,9 +2281,6 @@ void proc_one_equipment_with_negative_enchantments(
 {
     for (const auto& enc : equipment->enchantments)
     {
-        if (enc.id == 0)
-            break;
-
         switch (enc.id)
         {
         case 21:

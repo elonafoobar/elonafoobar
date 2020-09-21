@@ -114,7 +114,7 @@ end
 --  @treturn string The formatted string
 --  @function get_data_text
 function I18N.get_data_text(prototype_id, instance_id, property_name, ...)
-   return get_data_text(("%s#%s.%s"):format(prorotype_id, instance_id, property_name), {...})
+   return get_data_text(("%s#%s.%s"):format(prototype_id, instance_id, property_name), {...})
 end
 
 

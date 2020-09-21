@@ -889,23 +889,19 @@ void proc_weapon_enchantments(
     Character& target,
     const ItemRef& weapon)
 {
-    for (int cnt = 0; cnt < 15; ++cnt)
+    for (const auto& enc : weapon->enchantments)
     {
-        if (weapon->enchantments[cnt].id == 0)
+        int enc_id = enc.id;
+        if (enc_id == 36)
         {
-            break;
-        }
-        enc = weapon->enchantments[cnt].id;
-        if (enc == 36)
-        {
-            p = rnd_capped(weapon->enchantments[cnt].power / 50 + 1) + 1;
+            p = rnd_capped(enc.power / 50 + 1) + 1;
             heal_sp(attacker, p);
             damage_sp(target, p / 2);
             continue;
         }
-        if (enc == 38)
+        if (enc_id == 38)
         {
-            p = rnd_capped(weapon->enchantments[cnt].power / 25 + 1) + 1;
+            p = rnd_capped(enc.power / 25 + 1) + 1;
             heal_mp(attacker, p / 5);
             if (target.state() != Character::State::alive)
             {
@@ -914,7 +910,7 @@ void proc_weapon_enchantments(
             damage_mp(target, p);
             continue;
         }
-        if (enc == 37)
+        if (enc_id == 37)
         {
             if (rnd(66) == 0)
             {
@@ -922,7 +918,7 @@ void proc_weapon_enchantments(
             }
             continue;
         }
-        if (enc == 40)
+        if (enc_id == 40)
         {
             if (game()->left_turns_of_timestop == 0)
             {
@@ -930,13 +926,12 @@ void proc_weapon_enchantments(
                 {
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
-                    game()->left_turns_of_timestop =
-                        weapon->enchantments[cnt].power / 100 + 1 + 1;
+                    game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
                 }
                 continue;
             }
         }
-        if (enc == 57)
+        if (enc_id == 57)
         {
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/dragon/"))
@@ -946,7 +941,7 @@ void proc_weapon_enchantments(
             }
             continue;
         }
-        if (enc == 61)
+        if (enc_id == 61)
         {
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/god/"))
@@ -956,7 +951,7 @@ void proc_weapon_enchantments(
             }
             continue;
         }
-        if (enc == 58)
+        if (enc_id == 58)
         {
             s = chara_db_get_filter(target.id);
             if (strutil::contains(s(0), u8"/undead/"))
@@ -966,17 +961,17 @@ void proc_weapon_enchantments(
             }
             continue;
         }
-        i = enc / 10000;
+        i = enc_id / 10000;
         if (i != 0)
         {
-            enc = enc % 10000;
+            enc_id = enc_id % 10000;
             if (i == 7)
             {
                 if (orgdmg <= 1)
                 {
                     continue;
                 }
-                ele = enc;
+                ele = enc_id;
                 if (target.state() != Character::State::alive)
                 {
                     continue;
@@ -984,14 +979,10 @@ void proc_weapon_enchantments(
                 g_proc_damage_events_flag = 1;
                 damage_hp(
                     target,
-                    rnd_capped(
-                        orgdmg * (100 + weapon->enchantments[cnt].power) /
-                            1000 +
-                        1) +
-                        5,
+                    rnd_capped(orgdmg * (100 + enc.power) / 1000 + 1) + 5,
                     attacker.index,
                     ele,
-                    weapon->enchantments[cnt].power / 2 + 100);
+                    enc.power / 2 + 100);
                 continue;
             }
             if (i == 8)
@@ -1000,25 +991,25 @@ void proc_weapon_enchantments(
                 {
                     continue;
                 }
-                if (enc >= 26)
+                if (enc_id >= 26)
                 {
                     continue;
                 }
-                p = encprocref(1, enc);
+                p = encprocref(1, enc_id);
                 auto invoke_target = target.index;
                 if (p == 3000 || p == 10000)
                 {
                     invoke_target = attacker.index;
                 }
-                p = encprocref(5, enc);
-                enc = encprocref(0, enc);
+                p = encprocref(5, enc_id);
+                enc_id = encprocref(0, enc_id);
                 tlocx = cdata[invoke_target].position.x;
                 tlocy = cdata[invoke_target].position.y;
                 if (rnd(100) < p)
                 {
-                    efid = enc;
-                    efp = weapon->enchantments[cnt].power +
-                        attacker.get_skill(attackskill).level * 10;
+                    efid = enc_id;
+                    efp =
+                        enc.power + attacker.get_skill(attackskill).level * 10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;

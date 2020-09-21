@@ -5,6 +5,7 @@
 #include <boost/uuid/uuid_io.hpp>
 
 #include "../util/fileutil.hpp"
+#include "../util/range.hpp"
 #include "../util/strutil.hpp"
 #include "../version.hpp"
 #include "character.hpp"
@@ -4000,6 +4001,189 @@ void _update_save_data_22(const fs::path& save_dir)
 
 
 
+/*
+ * Update save data from v23 to v24.
+ *
+ * - Shrink `Item::enchantments` array by deleting enchantments of ID 0.
+ */
+void _update_save_data_23(const fs::path& save_dir)
+{
+    for_each_inv(
+        save_dir, [&](auto& iar, auto& oar, const auto&, int item_index) {
+            bool exists;
+            boost::uuids::uuid obj_id;
+            int64_t number;
+            int64_t value;
+            int image;
+            std::string id;
+            int quality;
+            int position_x;
+            int position_y;
+            int64_t weight;
+            int identify_state;
+            int64_t charges;
+            int64_t dice_rolls;
+            int64_t dice_faces;
+            int64_t dice_bonus;
+            int64_t hit_bonus;
+            int64_t dv;
+            int64_t pv;
+            int skill;
+            int curse_state;
+            int body_part;
+            int function;
+            int64_t bonus_value;
+            int own_state;
+            int color;
+            int subname;
+            std::string material;
+            int param1;
+            int param2;
+            int param3;
+            int param4;
+            int64_t identify_level;
+            int64_t turn;
+            bool is_acidproof;
+            bool is_fireproof;
+            bool is_coldproof;
+            bool is_precious;
+            bool has_charges;
+            bool has_cooldown_time;
+            bool is_aphrodisiac;
+            bool is_poisoned;
+            bool is_blessed_by_ehekatl;
+            bool is_stolen;
+            bool is_quest_target;
+            bool is_no_drop;
+            bool is_alive;
+            bool is_eternal_force;
+            bool is_handmade;
+            bool is_showroom_only;
+            std::vector<std::tuple<int, int>> enchantments;
+
+            iar(exists);
+            if (!exists)
+            {
+                ELONA_LOG("save.update") << "item(" << item_index << "): nil";
+                oar(exists);
+                return;
+            }
+
+            iar(obj_id);
+            iar(number);
+            iar(value);
+            iar(image);
+            iar(id);
+            iar(quality);
+            iar(position_x);
+            iar(position_y);
+            iar(weight);
+            iar(identify_state);
+            iar(charges);
+            iar(dice_rolls);
+            iar(dice_faces);
+            iar(dice_bonus);
+            iar(hit_bonus);
+            iar(dv);
+            iar(pv);
+            iar(skill);
+            iar(curse_state);
+            iar(body_part);
+            iar(function);
+            iar(bonus_value);
+            iar(own_state);
+            iar(color);
+            iar(subname);
+            iar(material);
+            iar(param1);
+            iar(param2);
+            iar(param3);
+            iar(param4);
+            iar(identify_level);
+            iar(turn);
+            iar(is_acidproof);
+            iar(is_fireproof);
+            iar(is_coldproof);
+            iar(is_precious);
+            iar(has_charges);
+            iar(has_cooldown_time);
+            iar(is_aphrodisiac);
+            iar(is_poisoned);
+            iar(is_blessed_by_ehekatl);
+            iar(is_stolen);
+            iar(is_quest_target);
+            iar(is_no_drop);
+            iar(is_alive);
+            iar(is_eternal_force);
+            iar(is_handmade);
+            iar(is_showroom_only);
+            iar(enchantments);
+
+            {
+                // Remove enchantments of ID 0.
+                range::remove_erase_if(enchantments, [](const auto& pair) {
+                    return std::get<0>(pair) == 0;
+                });
+                ELONA_LOG("save.update")
+                    << "item(" << item_index
+                    << ").enchantments truncated: " << enchantments.size();
+            }
+
+            oar(exists);
+            oar(obj_id);
+            oar(number);
+            oar(value);
+            oar(image);
+            oar(id);
+            oar(quality);
+            oar(position_x);
+            oar(position_y);
+            oar(weight);
+            oar(identify_state);
+            oar(charges);
+            oar(dice_rolls);
+            oar(dice_faces);
+            oar(dice_bonus);
+            oar(hit_bonus);
+            oar(dv);
+            oar(pv);
+            oar(skill);
+            oar(curse_state);
+            oar(body_part);
+            oar(function);
+            oar(bonus_value);
+            oar(own_state);
+            oar(color);
+            oar(subname);
+            oar(material);
+            oar(param1);
+            oar(param2);
+            oar(param3);
+            oar(param4);
+            oar(identify_level);
+            oar(turn);
+            oar(is_acidproof);
+            oar(is_fireproof);
+            oar(is_coldproof);
+            oar(is_precious);
+            oar(has_charges);
+            oar(has_cooldown_time);
+            oar(is_aphrodisiac);
+            oar(is_poisoned);
+            oar(is_blessed_by_ehekatl);
+            oar(is_stolen);
+            oar(is_quest_target);
+            oar(is_no_drop);
+            oar(is_alive);
+            oar(is_eternal_force);
+            oar(is_handmade);
+            oar(is_showroom_only);
+            oar(enchantments);
+        });
+}
+
+
+
 void _update_save_data(const fs::path& save_dir, int serial_id)
 {
     if (serial_id <= 14)
@@ -4021,6 +4205,7 @@ void _update_save_data(const fs::path& save_dir, int serial_id)
         ELONA_CASE(20)
         ELONA_CASE(21)
         ELONA_CASE(22)
+        ELONA_CASE(23)
     default: assert(0); break;
     }
 #undef ELONA_CASE

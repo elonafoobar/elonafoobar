@@ -74,16 +74,6 @@ bool check_enchantment_filters(int category, int type)
 
 
 
-/// Sort item's enchantments by ID (DESCENDING).
-void enchantment_sort(const ItemRef& item)
-{
-    range::sort(item->enchantments, [](const auto& e1, const auto& e2) {
-        return e1.id > e2.id;
-    });
-}
-
-
-
 void add_one_enchantment_by_fixed_ego(const ItemRef& item, int ego_type)
 {
     for (int i = 0; i < 10; ++i)
@@ -602,6 +592,8 @@ bool enchantment_add(
     bool only_check,
     bool force)
 {
+    constexpr size_t max_enchantments = 15;
+
     const auto category = the_item_db[item->id]->category;
 
     if (type == 0)
@@ -702,28 +694,15 @@ bool enchantment_add(
     default: break;
     }
 
-    i_at_m48 = -1;
-    for (int cnt = 0; cnt < 15; ++cnt)
-    {
-        if (item->enchantments[cnt].id == enc)
-        {
-            i_at_m48 = cnt;
-            continue;
-        }
-        if (i_at_m48 == -1)
-        {
-            if (item->enchantments[cnt].id == 0)
-            {
-                i_at_m48 = cnt;
-            }
-        }
-    }
-    if (i_at_m48 == -1)
+    const auto already_included = item->enchantments.has(enc);
+    const auto has_free_slot =
+        already_included || item->enchantments.size() < max_enchantments;
+    if (!has_free_slot)
     {
         return false;
     }
 
-    if (item->enchantments[i_at_m48].id == enc)
+    if (already_included)
     {
         if (category == ItemCategory::ammo)
         {
@@ -742,12 +721,7 @@ bool enchantment_add(
         return true;
     }
 
-    if (item->enchantments[i_at_m48].id == enc)
-    {
-        encp += item->enchantments[i_at_m48].power;
-    }
-    item->enchantments[i_at_m48].id = enc;
-    item->enchantments[i_at_m48].power = encp;
+    item->enchantments.add(enc, encp);
 
     if (type < 10000)
     {
@@ -761,7 +735,6 @@ bool enchantment_add(
     {
         item->value = item->value * encref(1, p_at_m48) / 100;
     }
-    enchantment_sort(item);
 
     return true;
 }
@@ -770,27 +743,10 @@ bool enchantment_add(
 
 void enchantment_remove(const ItemRef& item, int id, int power)
 {
-    if (id == 0)
-        return;
-
-    // Reduce the power by `power`.
-    for (auto&& enc : item->enchantments)
-    {
-        if (enc.id == id)
-        {
-            enc.power -= power;
-            if (enc.power == 0)
-            {
-                enc.id = 0;
-            }
-            break;
-        }
-    }
+    item->enchantments.remove(id, power);
 
     // Updates the value.
     item->value = item->value * 100 / encref(1, id < 10000 ? id : id / 10000);
-
-    enchantment_sort(item);
 }
 
 
@@ -822,9 +778,6 @@ optional<int> enchantment_find(const ItemRef& item, int id)
 {
     for (const auto& enc : item->enchantments)
     {
-        if (enc.id == 0)
-            break;
-
         if (enc.id == id)
         {
             return enc.power;
