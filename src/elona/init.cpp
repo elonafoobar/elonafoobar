@@ -13,6 +13,7 @@
 #include "crafting.hpp"
 #include "ctrl_file.hpp"
 #include "data/init.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -544,9 +545,9 @@ void initialize_debug_globals()
     cdata.player().can_cast_rapid_magic() = true;
     mode = 0;
     refresh_burden_state();
-    for (int cnt = 0; cnt < 55; ++cnt)
+    for (const auto& [id, _] : the_crafting_material_db)
     {
-        mat(cnt) = 200;
+        game()->crafting_materials().set_amount(id, 200);
     }
     create_all_adventurers();
     create_pcpic(cdata.player());

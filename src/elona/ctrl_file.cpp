@@ -9,6 +9,7 @@
 #include "character_status.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -497,7 +498,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"mat.s1";
+        elona_vector1<int> mat;
+        DIM2(mat, 400);
         load_v1(filepath, mat, 0, 400);
+        game()->crafting_materials().unpack_from(mat);
     }
 
     {
@@ -661,6 +665,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"mat.s1";
+        elona_vector1<int> mat;
+        DIM2(mat, 400);
+        game()->crafting_materials().pack_to(mat);
         save_v1(filepath, mat, 0, 400);
     }
 
@@ -1367,6 +1374,44 @@ void ItemMemoryTable::unpack_from(elona_vector2<int>& legacy_itemmemory)
             _memories[*id].generate_count = legacy_itemmemory(1, i);
             _memories[*id].is_decoded = legacy_itemmemory(2, i) != 0;
             _memories[*id]._is_reserved = legacy_itemmemory(2, i) == 2;
+        }
+    }
+}
+
+
+
+void CraftingMaterialBag::pack_to(elona_vector1<int>& legacy_mat) const
+{
+    for (int i = 0; i < 400; ++i)
+    {
+        const auto integer_material_id = i;
+        if (const auto id = the_crafting_material_db.get_id_from_integer(
+                integer_material_id))
+        {
+            if (const auto itr = _materials.find(*id); itr != _materials.end())
+            {
+                legacy_mat(i) = itr->second;
+            }
+        }
+    }
+}
+
+
+
+void CraftingMaterialBag::unpack_from(elona_vector1<int>& legacy_mat)
+{
+    _materials.clear();
+
+    for (int i = 0; i < 400; ++i)
+    {
+        if (legacy_mat(i) == 0)
+            continue;
+
+        const auto integer_material_id = i;
+        if (const auto id = the_crafting_material_db.get_id_from_integer(
+                integer_material_id))
+        {
+            _materials[*id] = legacy_mat(i);
         }
     }
 }

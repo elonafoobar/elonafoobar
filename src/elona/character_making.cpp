@@ -397,10 +397,7 @@ MainMenuResult character_making_final_phase()
     }
     else
     {
-        for (int i = 0; i < 400; ++i)
-        {
-            mat(i) = 0;
-        }
+        game()->crafting_materials().clear();
     }
 
     cdata.player().index = 0;
