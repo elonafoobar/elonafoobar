@@ -7,6 +7,7 @@
 #include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -441,7 +442,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spell.s1";
+        elona_vector1<int> spell;
+        DIM2(spell, 200);
         load_v1(filepath, spell, 0, 200);
+        cdata.player().spell_stocks().unpack_from(spell);
     }
 
     {
@@ -590,6 +594,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spell.s1";
+        elona_vector1<int> spell;
+        DIM2(spell, 200);
+        cdata.player().spell_stocks().pack_to(spell);
         save_v1(filepath, spell, 0, 200);
     }
 
@@ -1096,6 +1103,44 @@ void ctrl_file_tmp_inv_write(const fs::path& filename)
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_write(" << filename.to_u8string() << ") END";
+}
+
+
+
+void SpellStockTable::pack_to(elona_vector1<int>& legacy_spell) const
+{
+    for (int i = 0; i < 200; ++i)
+    {
+        const auto integer_spell_id = i + 400;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spell_id))
+        {
+            if (const auto itr = _stocks.find(*id); itr != _stocks.end())
+            {
+                legacy_spell(i) = itr->second;
+            }
+        }
+    }
+}
+
+
+
+void SpellStockTable::unpack_from(elona_vector1<int>& legacy_spell)
+{
+    _stocks.clear();
+
+    for (int i = 0; i < 200; ++i)
+    {
+        if (legacy_spell(i) == 0)
+            continue;
+
+        const auto integer_spell_id = i + 400;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spell_id))
+        {
+            _stocks[*id] = legacy_spell(i);
+        }
+    }
 }
 
 } // namespace elona

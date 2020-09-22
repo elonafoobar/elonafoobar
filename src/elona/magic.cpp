@@ -1286,40 +1286,41 @@ bool _magic_1104(Character& target)
                     continue;
                 }
             }
+            if (!the_ability_db[p])
+            {
+                continue;
+            }
             if (!is_cursed(efstatus))
             {
-                if (the_ability_db[p])
+                if (cnt2 == 0)
                 {
-                    if (cnt2 == 0)
-                    {
-                        s = i18n::s.get("core.magic.gain_knowledge.suddenly");
-                    }
-                    else
-                    {
-                        s = i18n::s.get(
-                            "core.magic.gain_knowledge.furthermore");
-                    }
-                    chara_gain_skill(cdata.player(), p, 1, 200);
-                    txt(s +
-                            i18n::s.get(
-                                "core.magic.gain_knowledge.gain",
-                                the_ability_db.get_text(p, "name")),
-                        Message::color{ColorIndex::green});
-                    snd("core.ding2");
-                    f = 1;
-                    break;
+                    s = i18n::s.get("core.magic.gain_knowledge.suddenly");
                 }
+                else
+                {
+                    s = i18n::s.get("core.magic.gain_knowledge.furthermore");
+                }
+                chara_gain_skill(cdata.player(), p, 1, 200);
+                txt(s +
+                        i18n::s.get(
+                            "core.magic.gain_knowledge.gain",
+                            the_ability_db.get_text(p, "name")),
+                    Message::color{ColorIndex::green});
+                snd("core.ding2");
+                f = 1;
+                break;
             }
             else
             {
-                p = p - 400;
-                if (spell(p) > 0)
+                if (target.spell_stocks().amount(
+                        *the_ability_db.get_id_from_integer(p)) > 0)
                 {
-                    spell(p) = 0;
+                    target.spell_stocks().set_amount(
+                        *the_ability_db.get_id_from_integer(p), 0);
                     txt(i18n::s.get("core.magic.common.it_is_cursed"));
                     txt(i18n::s.get(
                             "core.magic.gain_knowledge.lose",
-                            the_ability_db.get_text(p + 400, "name")),
+                            the_ability_db.get_text(p, "name")),
                         Message::color{ColorIndex::red});
                     snd("core.curse3");
                     animeload(14, cdata.player());

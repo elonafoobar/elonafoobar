@@ -145,7 +145,8 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
     {
         if (chara.is_player())
         {
-            spell(id - 400) += stock;
+            chara.spell_stocks().gain(
+                *the_ability_db.get_id_from_integer(id), stock);
             modify_potential(chara, id, 1);
         }
     }

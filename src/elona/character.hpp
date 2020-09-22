@@ -13,6 +13,7 @@
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
+#include "spell.hpp"
 
 
 
@@ -403,6 +404,9 @@ public:
 private:
     SkillData _skills;
 
+    /// Spell stocks
+    SpellStockTable _spell_stocks;
+
 
 public:
     Ability& get_skill(int id)
@@ -414,6 +418,18 @@ public:
     const Ability& get_skill(int id) const
     {
         return _skills.get(id);
+    }
+
+
+    SpellStockTable& spell_stocks() noexcept
+    {
+        return _spell_stocks;
+    }
+
+
+    const SpellStockTable& spell_stocks() const noexcept
+    {
+        return _spell_stocks;
     }
 
 

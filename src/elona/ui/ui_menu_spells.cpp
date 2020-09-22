@@ -22,12 +22,16 @@ static void _populate_spell_list()
 {
     for (int cnt = 0; cnt < 200; ++cnt)
     {
-        if (spell(cnt) > 0)
+        const auto integer_spell_id = cnt + 400;
+        if (const auto data = the_ability_db[integer_spell_id])
         {
-            list(0, listmax) = cnt + 400;
-            list(1, listmax) = the_ability_db[400 + cnt]
-                                   ->related_basic_attribute; // TODO coupling
-            ++listmax;
+            if (cdata.player().spell_stocks().amount(data->id) > 0)
+            {
+                list(0, listmax) = integer_spell_id;
+                list(1, listmax) =
+                    data->related_basic_attribute; // TODO coupling
+                ++listmax;
+            }
         }
     }
     sort_list_by_column1();
@@ -155,7 +159,9 @@ void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
     std::string spell_cost = ""s +
         calc_spell_cost_mp(cdata.player(), spell_id) + u8" ("s +
-        spell((spell_id - 400)) + u8")"s;
+        std::to_string(cdata.player().spell_stocks().amount(
+            *the_ability_db.get_id_from_integer(spell_id))) +
+        u8")"s;
     mes(wx + 328 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
         spell_cost);
