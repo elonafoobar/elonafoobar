@@ -921,11 +921,13 @@ bool _magic_632_454_1144(
             {
                 p = -1;
             }
-            if (trait(tid) >= traitref(2))
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) >= traitref(2))
             {
                 p = -1;
             }
-            if (trait(tid) <= traitref(1))
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) <= traitref(1))
             {
                 p = 1;
             }
@@ -950,7 +952,8 @@ bool _magic_632_454_1144(
                     continue;
                 }
             }
-            trait(tid) += p;
+            cdata.player().traits().add(
+                *the_trait_db.get_id_from_integer(tid), p);
             txt(i18n::s.get("core.magic.mutation.apply"));
             if (p > 0)
             {
@@ -1008,19 +1011,23 @@ bool _magic_1121(Character& subject, Character& target)
             {
                 continue;
             }
-            if (trait(tid) == 0)
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) == 0)
             {
                 continue;
             }
-            if (trait(tid) > 0)
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) > 0)
             {
                 p = -1;
             }
-            if (trait(tid) < 0)
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) < 0)
             {
                 p = 1;
             }
-            trait(tid) = 0;
+            cdata.player().traits().set_level(
+                *the_trait_db.get_id_from_integer(tid), 0);
             txt(i18n::s.get("core.magic.cure_mutation"));
             if (p > 0)
             {
@@ -2065,7 +2072,7 @@ bool _magic_645_1114(Character& subject, Character& target)
     {
         if (rnd(3))
         {
-            if (trait(42))
+            if (cdata.player().traits().level("core.exorcist"))
             {
                 txt(i18n::s.get("core.magic.curse.no_effect"));
                 return true;
@@ -3896,7 +3903,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
     }
     if (subject.is_player())
     {
-        if (trait(165))
+        if (cdata.player().traits().level("core.itzpalt_blessing"))
         {
             if (ele == 50 || ele == 51 || ele == 52)
             {

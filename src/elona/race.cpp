@@ -115,51 +115,53 @@ void gain_race_feat()
 {
     if (cdata.player().race == "core.dwarf")
     {
-        trait(152) = 2;
-        trait(155) = 1;
+        cdata.player().traits().set_level("core.poison_resistance_nature", 2);
+        cdata.player().traits().set_level("core.darkness_resistance_nature", 1);
     }
     if (cdata.player().race == "core.elea")
     {
-        trait(168) = 1;
-        trait(156) = 1;
+        cdata.player().traits().set_level(
+            "core.slow_ether_disease_progress", 1);
+        cdata.player().traits().set_level("core.less_mana_reaction", 1);
     }
     if (cdata.player().race == "core.eulderna")
     {
-        trait(153) = 1;
+        cdata.player().traits().set_level("core.magic_resistance_nature", 1);
     }
     if (cdata.player().race == "core.lich")
     {
-        trait(151) = 1;
-        trait(155) = 2;
-        trait(152) = 1;
+        cdata.player().traits().set_level("core.cold_resistance_nature", 1);
+        cdata.player().traits().set_level("core.darkness_resistance_nature", 2);
+        cdata.player().traits().set_level("core.poison_resistance_nature", 1);
     }
     if (cdata.player().race == "core.golem")
     {
-        trait(157) = 1;
-        trait(152) = 2;
+        cdata.player().traits().set_level("core.will_not_dimmed", 1);
+        cdata.player().traits().set_level("core.poison_resistance_nature", 2);
     }
     if (cdata.player().race == "core.yerles")
     {
-        trait(154) = 1;
+        cdata.player().traits().set_level("core.more_bonus_points", 1);
     }
     if (cdata.player().race == "core.juere")
     {
-        trait(158) = 1;
-        trait(159) = 1;
+        cdata.player().traits().set_level("core.slow_digestion", 1);
+        cdata.player().traits().set_level("core.more_materials", 1);
     }
     if (cdata.player().race == "core.goblin")
     {
-        trait(155) = 1;
-        trait(159) = 1;
+        cdata.player().traits().set_level("core.darkness_resistance_nature", 1);
+        cdata.player().traits().set_level("core.more_materials", 1);
     }
     if (cdata.player().race == "core.mutant")
     {
-        trait(0) = 1;
+        cdata.player().traits().set_level("core.changing_body", 1);
     }
     if (cdata.player().race == "core.fairy")
     {
-        trait(160) = 1;
-        trait(161) = 1;
+        cdata.player().traits().set_level("core.outstanding_resistances", 1);
+        cdata.player().traits().set_level(
+            "core.cannot_wear_heavy_equipments", 1);
     }
 }
 

@@ -178,7 +178,6 @@ ELONA_EXTERN(elona_vector1<int> tile_fog);
 ELONA_EXTERN(elona_vector1<int> tile_room);
 ELONA_EXTERN(elona_vector1<int> tile_tunnel);
 ELONA_EXTERN(elona_vector1<int> tile_wall);
-ELONA_EXTERN(elona_vector1<int> trait);
 ELONA_EXTERN(elona_vector1<int> traitref);
 ELONA_EXTERN(elona_vector1<int> trate);
 ELONA_EXTERN(elona_vector1<int> windowshadow);

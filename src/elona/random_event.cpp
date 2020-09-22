@@ -369,7 +369,7 @@ void run_random_event(RandomEvent event)
         net_send_news("ehekatl");
         break;
     case 5:
-        if (trait(42))
+        if (cdata.player().traits().level("core.exorcist"))
         {
             txt(i18n::s.get_enum_property("core.event.popup", "no_effect", 5));
         }

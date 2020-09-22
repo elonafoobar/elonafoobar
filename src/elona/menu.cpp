@@ -536,7 +536,7 @@ std::string make_spell_description(int skill_id)
         bonus = damage->damage_bonus;
         ele = damage->element;
         elep = damage->element_power;
-        if (trait(165) != 0)
+        if (cdata.player().traits().level("core.itzpalt_blessing") != 0)
         {
             if (ele == 50 || ele == 51 || ele == 52)
             {

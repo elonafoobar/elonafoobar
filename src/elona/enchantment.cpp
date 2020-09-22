@@ -825,7 +825,12 @@ int enchantment_gen_level(int base_level)
 
 int enchantment_gen_p(int multiplier)
 {
-    const auto base = rnd(rnd(500 + (trait(163) != 0) * 50) + 1) + 1;
+    const auto base =
+        rnd(rnd(500 +
+                (cdata.player().traits().level("core.ehekatl_blessing") != 0) *
+                    50) +
+            1) +
+        1;
     return base * multiplier / 100;
 }
 

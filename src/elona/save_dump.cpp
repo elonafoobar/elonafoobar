@@ -171,9 +171,12 @@ void save_dump_player_info()
             continue;
         }
 
-        if ((trait(206) != 0 && equipment_slot.type == 2) ||
-            (trait(203) != 0 && equipment_slot.type == 9) ||
-            (trait(205) != 0 && equipment_slot.type == 3))
+        if ((cdata.player().traits().level("core.thick_neck") != 0 &&
+             equipment_slot.type == 2) ||
+            (cdata.player().traits().level("core.hooves") != 0 &&
+             equipment_slot.type == 9) ||
+            (cdata.player().traits().level("core.feathers") != 0 &&
+             equipment_slot.type == 3))
         {
             continue;
         }

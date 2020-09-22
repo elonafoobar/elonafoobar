@@ -2618,14 +2618,15 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.statue.creator.in_usermap"));
         break;
     case 29:
-        trait(use_item->param1) = 1;
+        cdata.player().traits().set_level(
+            *the_trait_db.get_id_from_integer(use_item->param1), 1);
         if (use_item->param1 == 169)
         {
-            trait(162) = 0;
+            cdata.player().traits().set_level("core.evil_man", 0);
         }
         if (use_item->param1 == 162)
         {
-            trait(169) = 0;
+            cdata.player().traits().set_level("core.good_man", 0);
         }
         use_item->modify_number(-1);
         txt(i18n::s.get("core.action.use.secret_treasure.use"));
@@ -5380,7 +5381,7 @@ PickUpItemResult pick_up_item(
     item->set_number(in);
     if (inv_owner_chara && inv_owner_chara->is_player())
     {
-        if (trait(215) != 0)
+        if (cdata.player().traits().level("core.mana_battery") != 0)
         {
             if (the_item_db[item->id]->category == ItemCategory::rod)
             {
@@ -5404,7 +5405,7 @@ PickUpItemResult pick_up_item(
                 }
             }
         }
-        if (trait(216) != 0)
+        if (cdata.player().traits().level("core.poisonous_hand") != 0)
         {
             if (the_item_db[item->id]->category == ItemCategory::potion)
             {

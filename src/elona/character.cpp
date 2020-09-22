@@ -749,7 +749,8 @@ void chara_refresh(Character& chara)
     if (chara.is_player())
     {
         chara.clear_flags();
-        if (trait(161) != 0)
+        if (cdata.player().traits().level(
+                "core.cannot_wear_heavy_equipments") != 0)
         {
             for (auto&& equipment_slot : chara.equipment_slots)
             {
@@ -1056,9 +1057,12 @@ void chara_refresh(Character& chara)
         god_apply_blessing(chara);
         for (int cnt = 0; cnt < 217; ++cnt)
         {
-            if (trait(cnt) != 0)
+            if (const auto trait_id = the_trait_db.get_id_from_integer(cnt))
             {
-                trait_get_info(1, cnt);
+                if (cdata.player().traits().level(*trait_id) != 0)
+                {
+                    trait_get_info(1, cnt);
+                }
             }
         }
     }
@@ -1099,7 +1103,7 @@ void chara_refresh(Character& chara)
         5;
     chara.max_sp = 100 +
         (chara.get_skill(15).level + chara.get_skill(11).level) / 5 +
-        trait(24) * 8;
+        cdata.player().traits().level("core.stamina_feat") * 8;
     if (chara.max_mp < 1)
     {
         chara.max_mp = 1;
@@ -1779,8 +1783,10 @@ void initialize_pc_character()
         itemcreate_player_inv(378, 0);
     }
     gain_race_feat();
-    cdata.player().skill_bonus = 5 + trait(154);
-    cdata.player().total_skill_bonus = 5 + trait(154);
+    cdata.player().skill_bonus =
+        5 + cdata.player().traits().level("core.more_bonus_points");
+    cdata.player().total_skill_bonus =
+        5 + cdata.player().traits().level("core.more_bonus_points");
     for (const auto& item : *inv_player())
     {
         item->identify_state = IdentifyState::completely;
@@ -2066,7 +2072,9 @@ void refresh_burden_state()
 {
     cdata.player().inventory_weight =
         clamp(inv_weight(inv_player()), 0, 20000000) *
-        (100 - trait(201) * 10 + trait(205) * 20) / 100;
+        (100 - cdata.player().traits().level("core.gravity") * 10 +
+         cdata.player().traits().level("core.feathers") * 20) /
+        100;
     cdata.player().max_inventory_weight =
         cdata.player().get_skill(10).level * 500 +
         cdata.player().get_skill(11).level * 250 +

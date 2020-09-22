@@ -15,6 +15,7 @@
 #include "position.hpp"
 #include "spact.hpp"
 #include "spell.hpp"
+#include "trait.hpp"
 
 
 
@@ -411,6 +412,9 @@ private:
     /// Spacts
     SpactTable _spacts;
 
+    /// All traits (feats, ether diseases and mutations) the character has.
+    TraitLevelTable _traits;
+
 
 public:
     Ability& get_skill(int id)
@@ -446,6 +450,19 @@ public:
     const SpactTable& spacts() const noexcept
     {
         return _spacts;
+    }
+
+
+
+    TraitLevelTable& traits() noexcept
+    {
+        return _traits;
+    }
+
+
+    const TraitLevelTable& traits() const noexcept
+    {
+        return _traits;
     }
 
 

@@ -1580,7 +1580,10 @@ void supply_income()
             int item_id = 0;
             flt(calcobjlv((100 - game()->ranks.at(rank_id) / 100) / 2 + 1),
                 calcfixlv(
-                    (rnd(12) < trait(39)) ? Quality::miracle : Quality::great));
+                    (rnd(12) <
+                     cdata.player().traits().level("core.quartermaster"))
+                        ? Quality::miracle
+                        : Quality::great));
             flttypemajor = choice(fsetincome);
             if (rnd(5) == 0)
             {

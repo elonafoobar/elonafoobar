@@ -72,7 +72,7 @@ void modify_ether_disease_stage(int delta)
     int i_at_m134 = 0;
     original_amount = game()->ether_disease_stage / 1000;
     add_amount = delta + (delta > 0) * game()->ether_disease_speed;
-    if (trait(168))
+    if (cdata.player().traits().level("core.slow_ether_disease_progress"))
     {
         if (delta > 0)
         {
@@ -113,11 +113,13 @@ void modify_ether_disease_stage(int delta)
                 {
                     continue;
                 }
-                if (trait(tid) <= traitref(1))
+                if (cdata.player().traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) <= traitref(1))
                 {
                     continue;
                 }
-                --trait(tid);
+                cdata.player().traits().sub(
+                    *the_trait_db.get_id_from_integer(tid), 1);
                 i_at_m134 = original_amount + cnt2_at_m134;
                 game()->ether_disease_history.at(i_at_m134) = tid;
                 txt(i18n::s.get("core.chara.corruption.add"),
@@ -178,11 +180,13 @@ void modify_ether_disease_stage(int delta)
                 {
                     continue;
                 }
-                if (trait(tid) >= 0)
+                if (cdata.player().traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) >= 0)
                 {
                     continue;
                 }
-                ++trait(tid);
+                cdata.player().traits().add(
+                    *the_trait_db.get_id_from_integer(tid), 1);
                 txt(i18n::s.get("core.chara.corruption.remove"),
                     Message::color{ColorIndex::green});
                 txt(traitrefn(0), Message::color{ColorIndex::green});
@@ -207,13 +211,13 @@ void modify_potential(Character& chara, int id, int delta)
 
 void modify_karma(Character& chara, int delta)
 {
-    if (trait(162) && delta < 0)
+    if (cdata.player().traits().level("core.evil_man") && delta < 0)
     {
         delta = delta * 75 / 100;
         if (delta == 0)
             return;
     }
-    if (trait(169) && delta < 0)
+    if (cdata.player().traits().level("core.good_man") && delta < 0)
     {
         delta = delta * 150 / 100;
     }
@@ -249,11 +253,11 @@ void modify_karma(Character& chara, int delta)
     chara.karma += delta;
 
     int max = 20;
-    if (trait(162))
+    if (cdata.player().traits().level("core.evil_man"))
     {
         max -= 20;
     }
-    if (trait(169))
+    if (cdata.player().traits().level("core.good_man"))
     {
         max += 20;
     }
@@ -522,11 +526,13 @@ void gain_level(Character& chara)
             }
         }
         gain_special_action();
-        p += trait(154);
+        p += cdata.player().traits().level("core.more_bonus_points");
     }
     chara.skill_bonus += p;
     chara.total_skill_bonus += p;
-    if (chara.race == "core.mutant" || (chara.is_player() && trait(0) == 1))
+    if (chara.race == "core.mutant" ||
+        (chara.is_player() &&
+         cdata.player().traits().level("core.changing_body") == 1))
     {
         if (chara.level < 37)
         {

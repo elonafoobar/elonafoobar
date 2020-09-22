@@ -22,7 +22,8 @@ void trait_format_other_parameterized(
 {
     optional<std::string> text = none;
     I18NKey full_prefix = i18n_prefix + ".negative.levels";
-    int level = trait(tid);
+    const auto level =
+        cdata.player().traits().level(*the_trait_db.get_id_from_integer(tid));
 
     // Assumptions:
     // 1. Ether Disease traits are not named.
@@ -126,7 +127,8 @@ void trait_format_other_parameterless(
     int max)
 {
     // Change in positive direction
-    if (trait(tid) >= 0)
+    if (cdata.player().traits().level(*the_trait_db.get_id_from_integer(tid)) >=
+        0)
     {
         if (auto text = i18n::s.get_optional(i18n_prefix + ".positive.name"))
         {
@@ -139,7 +141,9 @@ void trait_format_other_parameterless(
         }
     }
     // Change in negative direction
-    else if (trait(tid) < 0)
+    else if (
+        cdata.player().traits().level(*the_trait_db.get_id_from_integer(tid)) <
+        0)
     {
         if (auto text = i18n::s.get_optional(i18n_prefix + ".negative.name"))
         {
@@ -157,7 +161,8 @@ void trait_format_other_parameterless(
 
 bool trait_is_obtainable(const I18NKey& i18n_prefix, int tid)
 {
-    return trait(tid) >= 0 &&
+    return cdata.player().traits().level(
+               *the_trait_db.get_id_from_integer(tid)) >= 0 &&
         i18n::s.get_enum_property_optional(i18n_prefix + ".levels", "name", 0);
 }
 
@@ -232,9 +237,15 @@ bool is_acquirable(int id)
 {
     switch (id)
     {
-    case 4: return trait(id) == 0 || cdata.player().level >= 5;
+    case 4:
+        return cdata.player().traits().level(
+                   *the_trait_db.get_id_from_integer(id)) == 0 ||
+            cdata.player().level >= 5;
     case 6: return cdata.player().get_skill(159).base_level > 0;
-    case 7: return trait(id) == 0 || cdata.player().level >= 5;
+    case 7:
+        return cdata.player().traits().level(
+                   *the_trait_db.get_id_from_integer(id)) == 0 ||
+            cdata.player().level >= 5;
     case 10: return cdata.player().get_skill(173).base_level > 0;
     case 12: return cdata.player().get_skill(172).base_level > 0;
     case 16: return cdata.player().get_skill(156).base_level > 0;
@@ -271,6 +282,8 @@ int trait_get_info(int traitmode, int tid)
 
         return is_acquirable(tid) ? 1 : -1;
     }
+
+    const auto trait_id = data->id;
 
     if (tid == 24)
     {
@@ -309,7 +322,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 21)
     {
         cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level + trait(tid) * 4,
+            cdata.player().get_skill(17).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(17).level > 0},
             9999);
         return 1;
@@ -317,7 +331,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 5)
     {
         cdata.player().get_skill(10).level = clamp(
-            cdata.player().get_skill(10).level + trait(tid) * 3,
+            cdata.player().get_skill(10).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(10).level > 0},
             9999);
         return 1;
@@ -337,7 +352,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 9)
     {
         cdata.player().get_skill(11).level = clamp(
-            cdata.player().get_skill(11).level + trait(tid) * 3,
+            cdata.player().get_skill(11).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(11).level > 0},
             9999);
         return 1;
@@ -345,7 +361,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 20)
     {
         cdata.player().get_skill(106).level = clamp(
-            cdata.player().get_skill(106).level + trait(tid) * 3,
+            cdata.player().get_skill(106).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(106).level > 0},
             9999);
         return 1;
@@ -353,7 +370,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 12)
     {
         cdata.player().get_skill(172).level = clamp(
-            cdata.player().get_skill(172).level + trait(tid) * 4,
+            cdata.player().get_skill(172).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(172).level > 0},
             9999);
         return 1;
@@ -370,7 +388,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 19)
     {
         cdata.player().get_skill(166).level = clamp(
-            cdata.player().get_skill(166).level + trait(tid) * 4,
+            cdata.player().get_skill(166).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(166).level > 0},
             9999);
         return 1;
@@ -378,7 +397,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 15)
     {
         cdata.player().get_skill(53).level = clamp(
-            cdata.player().get_skill(53).level + trait(tid) * 50 / 2,
+            cdata.player().get_skill(53).level +
+                cdata.player().traits().level(trait_id) * 50 / 2,
             int{cdata.player().get_skill(53).level > 0},
             9999);
         return 1;
@@ -386,7 +406,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 18)
     {
         cdata.player().get_skill(55).level = clamp(
-            cdata.player().get_skill(55).level + trait(tid) * 50 / 2,
+            cdata.player().get_skill(55).level +
+                cdata.player().traits().level(trait_id) * 50 / 2,
             int{cdata.player().get_skill(55).level > 0},
             9999);
         return 1;
@@ -394,7 +415,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 16)
     {
         cdata.player().get_skill(156).level = clamp(
-            cdata.player().get_skill(156).level + trait(tid) * 4,
+            cdata.player().get_skill(156).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(156).level > 0},
             9999);
         return 1;
@@ -402,7 +424,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 17)
     {
         cdata.player().get_skill(181).level = clamp(
-            cdata.player().get_skill(181).level + trait(tid) * 4,
+            cdata.player().get_skill(181).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(181).level > 0},
             9999);
         return 1;
@@ -410,7 +433,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 1)
     {
         cdata.player().get_skill(19).level = clamp(
-            cdata.player().get_skill(19).level + trait(tid) * 5,
+            cdata.player().get_skill(19).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(19).level > 0},
             9999);
         return 1;
@@ -418,7 +442,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 2)
     {
         cdata.player().get_skill(2).level = clamp(
-            cdata.player().get_skill(2).level + trait(tid) * 5,
+            cdata.player().get_skill(2).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(2).level > 0},
             9999);
         return 1;
@@ -426,7 +451,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 11)
     {
         cdata.player().get_skill(3).level = clamp(
-            cdata.player().get_skill(3).level + trait(tid) * 5,
+            cdata.player().get_skill(3).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(3).level > 0},
             9999);
         return 1;
@@ -434,7 +460,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 6)
     {
         cdata.player().get_skill(159).level = clamp(
-            cdata.player().get_skill(159).level + trait(tid) * 3,
+            cdata.player().get_skill(159).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(159).level > 0},
             9999);
         return 1;
@@ -442,7 +469,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 4)
     {
         cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level + trait(tid) * 5,
+            cdata.player().get_skill(18).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(18).level > 0},
             9999);
         return 1;
@@ -450,7 +478,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 7)
     {
         cdata.player().pv = clamp(
-            cdata.player().pv + trait(tid) * 5,
+            cdata.player().pv + cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().pv > 0},
             9999);
         return 1;
@@ -458,7 +486,7 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 8)
     {
         cdata.player().dv = clamp(
-            cdata.player().dv + trait(tid) * 4,
+            cdata.player().dv + cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().dv > 0},
             9999);
         return 1;
@@ -466,7 +494,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 10)
     {
         cdata.player().get_skill(173).level = clamp(
-            cdata.player().get_skill(173).level + trait(tid) * 2,
+            cdata.player().get_skill(173).level +
+                cdata.player().traits().level(trait_id) * 2,
             int{cdata.player().get_skill(173).level > 0},
             9999);
         return 1;
@@ -477,13 +506,14 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 25)
     {
-        cdata.player().pv += trait(tid) * 3;
+        cdata.player().pv += cdata.player().traits().level(trait_id) * 3;
         return 1;
     }
     if (tid == 26)
     {
         cdata.player().get_skill(12).level = clamp(
-            cdata.player().get_skill(12).level + trait(tid) * 3,
+            cdata.player().get_skill(12).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(12).level > 0},
             9999);
         return 1;
@@ -491,7 +521,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 27)
     {
         cdata.player().get_skill(154).level = clamp(
-            cdata.player().get_skill(154).level + trait(tid) * 4,
+            cdata.player().get_skill(154).level +
+                cdata.player().traits().level(trait_id) * 4,
             int{cdata.player().get_skill(154).level > 0},
             9999);
         return 1;
@@ -499,7 +530,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 28)
     {
         cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level + trait(tid) * 5,
+            cdata.player().get_skill(18).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(18).level > 0},
             9999);
         return 1;
@@ -507,7 +539,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 29)
     {
         cdata.player().get_skill(10).level = clamp(
-            cdata.player().get_skill(10).level + trait(tid) * 3,
+            cdata.player().get_skill(10).level +
+                cdata.player().traits().level(trait_id) * 3,
             int{cdata.player().get_skill(10).level > 0},
             9999);
         return 1;
@@ -515,7 +548,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 30)
     {
         cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level + trait(tid) * 5,
+            cdata.player().get_skill(17).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(17).level > 0},
             9999);
         return 1;
@@ -525,7 +559,8 @@ int trait_get_info(int traitmode, int tid)
         if (cdata.player().get_skill(165).base_level != 0)
         {
             cdata.player().get_skill(165).level = clamp(
-                cdata.player().get_skill(165).level + trait(tid) * 4,
+                cdata.player().get_skill(165).level +
+                    cdata.player().traits().level(trait_id) * 4,
                 int{cdata.player().get_skill(165).level > 0},
                 9999);
         }
@@ -534,7 +569,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 32)
     {
         cdata.player().get_skill(60).level = clamp(
-            cdata.player().get_skill(60).level + trait(tid) * 50,
+            cdata.player().get_skill(60).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(60).level > 0},
             9999);
         return 1;
@@ -542,7 +578,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 33)
     {
         cdata.player().get_skill(57).level = clamp(
-            cdata.player().get_skill(57).level + trait(tid) * 50,
+            cdata.player().get_skill(57).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(57).level > 0},
             9999);
         return 1;
@@ -550,7 +587,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 34)
     {
         cdata.player().get_skill(50).level = clamp(
-            cdata.player().get_skill(50).level + trait(tid) * 50,
+            cdata.player().get_skill(50).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(50).level > 0},
             9999);
         return 1;
@@ -558,7 +596,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 35)
     {
         cdata.player().get_skill(51).level = clamp(
-            cdata.player().get_skill(51).level + trait(tid) * 50,
+            cdata.player().get_skill(51).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(51).level > 0},
             9999);
         return 1;
@@ -566,7 +605,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 36)
     {
         cdata.player().get_skill(52).level = clamp(
-            cdata.player().get_skill(52).level + trait(tid) * 50,
+            cdata.player().get_skill(52).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(52).level > 0},
             9999);
         return 1;
@@ -574,7 +614,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 37)
     {
         cdata.player().get_skill(13).level = clamp(
-            cdata.player().get_skill(13).level + trait(tid) * 5,
+            cdata.player().get_skill(13).level +
+                cdata.player().traits().level(trait_id) * 5,
             int{cdata.player().get_skill(13).level > 0},
             9999);
         return 1;
@@ -582,7 +623,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 150)
     {
         cdata.player().get_skill(50).level = clamp(
-            cdata.player().get_skill(50).level + trait(tid) * 50,
+            cdata.player().get_skill(50).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(50).level > 0},
             9999);
         return 1;
@@ -590,7 +632,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 151)
     {
         cdata.player().get_skill(51).level = clamp(
-            cdata.player().get_skill(51).level + trait(tid) * 50,
+            cdata.player().get_skill(51).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(51).level > 0},
             9999);
         return 1;
@@ -598,7 +641,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 152)
     {
         cdata.player().get_skill(55).level = clamp(
-            cdata.player().get_skill(55).level + trait(tid) * 50,
+            cdata.player().get_skill(55).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(55).level > 0},
             9999);
         return 1;
@@ -606,7 +650,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 155)
     {
         cdata.player().get_skill(53).level = clamp(
-            cdata.player().get_skill(53).level + trait(tid) * 50,
+            cdata.player().get_skill(53).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(53).level > 0},
             9999);
         return 1;
@@ -706,7 +751,8 @@ int trait_get_info(int traitmode, int tid)
     if (tid == 153)
     {
         cdata.player().get_skill(60).level = clamp(
-            cdata.player().get_skill(60).level + trait(tid) * 50,
+            cdata.player().get_skill(60).level +
+                cdata.player().traits().level(trait_id) * 50,
             int{cdata.player().get_skill(60).level > 0},
             9999);
         return 1;
@@ -727,7 +773,8 @@ int trait_get_info(int traitmode, int tid)
     {
         cdata.player().get_skill(17).level = clamp(
             cdata.player().get_skill(17).level +
-                trait(tid) * (4 + cdata.player().level / 5),
+                cdata.player().traits().level(trait_id) *
+                    (4 + cdata.player().level / 5),
             int{cdata.player().get_skill(17).level > 0},
             9999);
         return 1;
@@ -901,7 +948,8 @@ void trait_load_desc(Character& chara)
                 }
             }
         }
-        if (trait(cnt) != 0)
+        if (cdata.player().traits().level(
+                *the_trait_db.get_id_from_integer(cnt)) != 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) = 10000 + cnt + 1;
@@ -938,9 +986,11 @@ void trait_load_desc(Character& chara)
         s = "";
         if (list(1, cnt) < 10000)
         {
-            if (trait(tid) < traitref(2))
+            if (cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)) < traitref(2))
             {
-                s = traitrefn2(trait(tid));
+                s = traitrefn2(cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid)));
             }
             else
             {
@@ -977,7 +1027,10 @@ void trait_load_desc(Character& chara)
                     i18n::s.get("core.trait.window.category.ether_disease") +
                     u8"]"s;
             }
-            s += traitrefn(2 + std::abs(trait(tid)));
+            s += traitrefn(
+                2 +
+                std::abs(cdata.player().traits().level(
+                    *the_trait_db.get_id_from_integer(tid))));
         }
         listn(0, cnt) = s;
     }

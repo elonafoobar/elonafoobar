@@ -353,7 +353,8 @@ void UIMenuFeats::_draw_single_list_entry(
     if (list_value != trait_desc_value)
     {
         trait_get_info(0, list_item);
-        text_color = _get_trait_color(trait(list_item));
+        text_color = _get_trait_color(cdata.player().traits().level(
+            *the_trait_db.get_id_from_integer(list_item)));
     }
     else
     {
@@ -406,7 +407,8 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
     int tid = list(0, p_);
     trait_get_info(0, tid);
 
-    if (traitref(2) <= trait(tid))
+    if (traitref(2) <=
+        cdata.player().traits().level(*the_trait_db.get_id_from_integer(tid)))
     {
         if (show_text)
         {
@@ -418,7 +420,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
     --game()->acquirable_feat_count;
     cs = -10000 + tid;
     snd("core.ding3");
-    ++trait(tid);
+    cdata.player().traits().add(*the_trait_db.get_id_from_integer(tid), 1);
     chara_refresh(cdata[_chara_index]);
 
     return true;

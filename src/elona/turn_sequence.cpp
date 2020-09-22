@@ -1384,7 +1384,8 @@ optional<TurnResult> pc_turn_advance_time()
             return result;
         }
     }
-    if (trait(210) != 0 && rnd(5) == 0)
+    if (cdata.player().traits().level("core.potion_addiction") != 0 &&
+        rnd(5) == 0)
     {
         const auto item = inv_player()->at(inv_get_random_slot(inv_player()));
         if (item && the_item_db[item->id]->category == ItemCategory::potion)
@@ -1393,8 +1394,8 @@ optional<TurnResult> pc_turn_advance_time()
                 cdata.player(), item, the_item_db[item->id]->integer_id);
         }
     }
-    if (trait(214) != 0 && rnd(250) == 0 &&
-        map_data.type != mdata_t::MapType::world_map)
+    if (cdata.player().traits().level("core.random_teleportation") != 0 &&
+        rnd(250) == 0 && map_data.type != mdata_t::MapType::world_map)
     {
         efid = 408;
         magic(cdata.player(), cdata.player());

@@ -1629,7 +1629,7 @@ OnEnterResult on_enter_eat(const ItemRef& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
 {
-    if (trait(161) != 0)
+    if (cdata.player().traits().level("core.cannot_wear_heavy_equipments") != 0)
     {
         if (selected_item->weight >= 1000)
         {
