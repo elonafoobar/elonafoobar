@@ -165,7 +165,6 @@ ELONA_EXTERN(elona_vector1<int> mat);
 ELONA_EXTERN(elona_vector1<int> mdata);
 ELONA_EXTERN(elona_vector1<int> mdatatmp);
 ELONA_EXTERN(elona_vector1<int> p);
-ELONA_EXTERN(elona_vector1<int> recipememory);
 ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
 ELONA_EXTERN(elona_vector1<int> rowactre);

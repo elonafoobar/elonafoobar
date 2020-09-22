@@ -223,7 +223,6 @@ void initialize_elona()
     DIM2(mat, 400);
     DIM3(itemmemory, 3, 800);
     DIM3(npcmemory, 2, 800);
-    DIM2(recipememory, 1200);
     DIM2(invmark, 35);
     DIM2(feat, 5);
 
@@ -591,7 +590,7 @@ void initialize_game()
     {
         game()->next_inventory_serial_id = 1000;
         game()->next_shelter_serial_id = 100;
-        blending_clear_recipememory();
+        blending_clear_recipe_memory();
     }
     if (mode == 3)
     {

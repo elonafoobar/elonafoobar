@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "../version.hpp"
+#include "blending_recipe_memory.hpp"
 
 
 
@@ -214,6 +215,17 @@ struct Game
 
     QuestFlags quest_flags;
     GuildData guild;
+
+private:
+    BlendingRecipeMemoryTable _blending_recipe_memories;
+
+public:
+    BlendingRecipeMemoryTable& blending_recipe_memories() noexcept
+    {
+        return _blending_recipe_memories;
+    }
+
+
 
     /**
      * Moves this struct's fields into `gdata` so they can be serialized,

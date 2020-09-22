@@ -1169,13 +1169,13 @@ std::string blending_get_recipe_name(int recipe_id)
 
 
 
-void blending_clear_recipememory()
+void blending_clear_recipe_memory()
 {
-    for (const auto& [_, recipe_data] : the_blending_recipe_db)
+    for (const auto& [id, recipe_data] : the_blending_recipe_db)
     {
         if (recipe_data.known)
         {
-            recipememory(recipe_data.integer_id) = 1;
+            game()->blending_recipe_memories().set_read_count(id, 1);
         }
     }
 }
@@ -1264,9 +1264,9 @@ TurnResult blending_menu()
             rppage(0) = 0;
             rppage(1) = 0;
             listmax = 0;
-            for (const auto& [_, recipe_data] : the_blending_recipe_db)
+            for (const auto& [id, recipe_data] : the_blending_recipe_db)
             {
-                if (recipememory(recipe_data.integer_id) > 0)
+                if (game()->blending_recipe_memories().read_count(id) > 0)
                 {
                     list(0, listmax) = recipe_data.integer_id;
                     list(1, listmax) = recipe_data.integer_id;

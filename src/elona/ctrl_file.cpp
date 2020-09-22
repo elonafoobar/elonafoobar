@@ -8,6 +8,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "data/types/type_ability.hpp"
+#include "data/types/type_blending_recipe.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -513,10 +514,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"krecipe.s1";
-        if (game()->version >= 1200)
-        {
-            load_v1(filepath, recipememory, 0, 1200);
-        }
+        elona_vector1<int> recipememory;
+        DIM2(recipememory, 1200);
+        load_v1(filepath, recipememory, 0, 1200);
+        game()->blending_recipe_memories().unpack_from(recipememory);
     }
 
     {
@@ -671,6 +672,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"krecipe.s1";
+        elona_vector1<int> recipememory;
+        DIM2(recipememory, 1200);
+        game()->blending_recipe_memories().pack_to(recipememory);
         save_v1(filepath, recipememory, 0, 1200);
     }
 
@@ -1225,6 +1229,46 @@ void TraitLevelTable::unpack_from(elona_vector1<int>& legacy_trait)
         if (const auto id = the_trait_db.get_id_from_integer(integer_trait_id))
         {
             _traits[*id] = legacy_trait(i);
+        }
+    }
+}
+
+
+
+void BlendingRecipeMemoryTable::pack_to(
+    elona_vector1<int>& legacy_recipememory) const
+{
+    for (int i = 0; i < 1200; ++i)
+    {
+        const auto integer_recipe_id = i;
+        if (const auto id =
+                the_blending_recipe_db.get_id_from_integer(integer_recipe_id))
+        {
+            if (const auto itr = _memories.find(*id); itr != _memories.end())
+            {
+                legacy_recipememory(i) = itr->second.read_count;
+            }
+        }
+    }
+}
+
+
+
+void BlendingRecipeMemoryTable::unpack_from(
+    elona_vector1<int>& legacy_recipememory)
+{
+    _memories.clear();
+
+    for (int i = 0; i < 1200; ++i)
+    {
+        if (legacy_recipememory(i) == 0)
+            continue;
+
+        const auto integer_recipe_id = i;
+        if (const auto id =
+                the_blending_recipe_db.get_id_from_integer(integer_recipe_id))
+        {
+            _memories[*id].read_count = legacy_recipememory(i);
         }
     }
 }
