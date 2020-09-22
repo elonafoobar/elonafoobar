@@ -1192,7 +1192,7 @@ int damage_hp(
         }
         if (!victim.is_player())
         {
-            ++npcmemory(0, charaid2int(victim.id));
+            game()->character_memories().increment_kill_count(victim.new_id());
             chara_custom_talk(victim, 102);
             if (victim.is_player_or_ally())
             {

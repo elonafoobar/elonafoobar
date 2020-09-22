@@ -1711,7 +1711,8 @@ TurnResult exit_map()
         {
             if (cnt.state() != Character::State::empty)
             {
-                --npcmemory(1, charaid2int(cnt.id));
+                game()->character_memories().decrement_generate_count(
+                    cnt.new_id());
             }
         }
 

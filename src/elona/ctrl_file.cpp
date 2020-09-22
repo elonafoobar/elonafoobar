@@ -466,7 +466,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"knpc.s1";
+        elona_vector2<int> npcmemory;
+        DIM3(npcmemory, 2, 800);
         load_v2(filepath, npcmemory, 0, 2, 0, 800);
+        game()->character_memories().unpack_from(npcmemory);
     }
 
     {
@@ -624,6 +627,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"knpc.s1";
+        elona_vector2<int> npcmemory;
+        DIM3(npcmemory, 2, 800);
+        game()->character_memories().pack_to(npcmemory);
         save_v2(filepath, npcmemory, 0, 2, 0, 800);
     }
 
@@ -1269,6 +1275,46 @@ void BlendingRecipeMemoryTable::unpack_from(
                 the_blending_recipe_db.get_id_from_integer(integer_recipe_id))
         {
             _memories[*id].read_count = legacy_recipememory(i);
+        }
+    }
+}
+
+
+
+void CharacterMemoryTable::pack_to(elona_vector2<int>& legacy_npcmemory) const
+{
+    for (int i = 0; i < 800; ++i)
+    {
+        const auto integer_chara_id = i;
+        if (const auto id =
+                the_character_db.get_id_from_integer(integer_chara_id))
+        {
+            if (const auto itr = _memories.find(*id); itr != _memories.end())
+            {
+                legacy_npcmemory(0, i) = itr->second.kill_count;
+                legacy_npcmemory(1, i) = itr->second.generate_count;
+            }
+        }
+    }
+}
+
+
+
+void CharacterMemoryTable::unpack_from(elona_vector2<int>& legacy_npcmemory)
+{
+    _memories.clear();
+
+    for (int i = 0; i < 800; ++i)
+    {
+        if (legacy_npcmemory(0, i) == 0 && legacy_npcmemory(1, i) == 0)
+            continue;
+
+        const auto integer_chara_id = i;
+        if (const auto id =
+                the_character_db.get_id_from_integer(integer_chara_id))
+        {
+            _memories[*id].kill_count = legacy_npcmemory(0, i);
+            _memories[*id].generate_count = legacy_npcmemory(1, i);
         }
     }
 }

@@ -76,13 +76,14 @@ int _get_random_npc_id()
 {
     WeightedRandomSampler<int> sampler;
 
-    for (const auto& data : the_character_db.values())
+    for (const auto& [id, data] : the_character_db)
     {
         if (data.level > objlv)
             continue;
         if (fltselect != data.fltselect)
             continue;
-        if (fltselect == 2 && npcmemory(1, data.integer_id) != 0)
+        if (fltselect == 2 &&
+            game()->character_memories().generate_count(id) != 0)
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
@@ -163,7 +164,8 @@ optional<int> chara_create_internal(int slot, int chara_id)
 
     cm = slot + 1;
     cmshade = 0;
-    ++npcmemory(1, chara_id);
+    game()->character_memories().increment_generate_count(
+        *the_character_db.get_id_from_integer(chara_id));
     if (chara_id == 323)
     {
         if (rnd(5))
@@ -700,7 +702,8 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
         if (*result == 56)
         {
             cdata[*result].set_state(Character::State::empty);
-            --npcmemory(1, charaid2int(cdata[*result].id));
+            game()->character_memories().decrement_generate_count(
+                cdata[*result].new_id());
             return cdata.tmp();
         }
         if (*result != 0)
@@ -1508,7 +1511,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    ++npcmemory(1, charaid2int(destination.id));
+    game()->character_memories().increment_generate_count(destination.new_id());
 
     return slot;
 }

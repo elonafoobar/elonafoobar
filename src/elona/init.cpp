@@ -222,7 +222,6 @@ void initialize_elona()
     SDIM2(s1, 1000);
     DIM2(mat, 400);
     DIM3(itemmemory, 3, 800);
-    DIM3(npcmemory, 2, 800);
     DIM2(invmark, 35);
     DIM2(feat, 5);
 

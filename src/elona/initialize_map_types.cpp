@@ -3022,12 +3022,12 @@ static void _init_map_lesimas()
             cell_featset(x, y, tile_upstairs, 10);
             map_data.stair_up_pos = y * 1000 + x;
             map_place_player_and_allies();
-            if (npcmemory(0, charaid2int(CharaId::zeome)) == 0)
+            if (game()->character_memories().kill_count("core.zeome") == 0)
             {
                 flt();
                 chara_create(-1, 2, 16, 6);
             }
-            else if (npcmemory(0, charaid2int(CharaId::orphe)) == 0)
+            else if (game()->character_memories().kill_count("core.orphe") == 0)
             {
                 flt();
                 chara_create(-1, 23, 16, 6);

@@ -5,6 +5,7 @@
 
 #include "../version.hpp"
 #include "blending_recipe_memory.hpp"
+#include "character_memory.hpp"
 
 
 
@@ -218,11 +219,18 @@ struct Game
 
 private:
     BlendingRecipeMemoryTable _blending_recipe_memories;
+    CharacterMemoryTable _character_memories;
 
 public:
     BlendingRecipeMemoryTable& blending_recipe_memories() noexcept
     {
         return _blending_recipe_memories;
+    }
+
+
+    CharacterMemoryTable& character_memories() noexcept
+    {
+        return _character_memories;
     }
 
 
