@@ -173,7 +173,7 @@ MainMenuResult character_making_select_feats()
 {
     game()->acquirable_feat_count = 3;
     DIM2(trait, 500);
-    DIM2(spact, 500);
+    cdata.player().spacts().clear();
     gain_race_feat();
 
     character_making_draw_background("core.chara_making.select_feats.caption");

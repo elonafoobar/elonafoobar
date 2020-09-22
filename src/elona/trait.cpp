@@ -278,32 +278,32 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 3)
     {
-        spact(1) = 1;
+        cdata.player().spacts().gain("core.drain_blood");
         return 1;
     }
     if (tid == 40)
     {
-        spact(56) = 1;
+        cdata.player().spacts().gain("core.cheer");
         return 1;
     }
     if (tid == 13)
     {
-        spact(27) = 1;
+        cdata.player().spacts().gain("core.dimensional_move");
         return 1;
     }
     if (tid == 14)
     {
-        spact(2) = 1;
+        cdata.player().spacts().gain("core.fire_breath");
         return 1;
     }
     if (tid == 22)
     {
-        spact(18) = 1;
+        cdata.player().spacts().gain("core.touch_of_sleep");
         return 1;
     }
     if (tid == 23)
     {
-        spact(15) = 1;
+        cdata.player().spacts().gain("core.touch_of_poison");
         return 1;
     }
     if (tid == 21)

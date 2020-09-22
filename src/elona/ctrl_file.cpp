@@ -476,7 +476,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spact.s1";
+        elona_vector1<int> spact;
+        DIM2(spact, 500);
         load_v1(filepath, spact, 0, 500);
+        cdata.player().spacts().unpack_from(spact);
     }
 
     {
@@ -628,6 +631,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spact.s1";
+        elona_vector1<int> spact;
+        DIM2(spact, 500);
+        cdata.player().spacts().pack_to(spact);
         save_v1(filepath, spact, 0, 500);
     }
 
@@ -1139,6 +1145,44 @@ void SpellStockTable::unpack_from(elona_vector1<int>& legacy_spell)
                 the_ability_db.get_id_from_integer(integer_spell_id))
         {
             _stocks[*id] = legacy_spell(i);
+        }
+    }
+}
+
+
+
+void SpactTable::pack_to(elona_vector1<int>& legacy_spact) const
+{
+    for (int i = 0; i < 500; ++i)
+    {
+        const auto integer_spact_id = i + 600;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spact_id))
+        {
+            if (_spacts.find(*id) != _spacts.end())
+            {
+                legacy_spact(i) = 1;
+            }
+        }
+    }
+}
+
+
+
+void SpactTable::unpack_from(elona_vector1<int>& legacy_spact)
+{
+    _spacts.clear();
+
+    for (int i = 0; i < 500; ++i)
+    {
+        if (legacy_spact(i) == 0)
+            continue;
+
+        const auto integer_spact_id = i + 600;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spact_id))
+        {
+            _spacts.emplace(*id);
         }
     }
 }

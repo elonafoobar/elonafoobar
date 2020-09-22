@@ -3640,7 +3640,8 @@ TurnResult do_short_cut_command(int sc_)
         }
         if (efid < 661)
         {
-            if (spact(efid - 600) == 0)
+            if (!cdata.player().spacts().has(
+                    *the_ability_db.get_id_from_integer(efid)))
             {
                 txt(i18n::s.get("core.action.shortcut.cannot_use_anymore"));
                 update_screen();

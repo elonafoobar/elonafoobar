@@ -410,9 +410,9 @@ void switch_religion()
     cdata.player().piety_point = 0;
     cdata.player().praying_point = 500;
     game()->god_rank = 0;
-    spact(23) = 0;
-    spact(24) = 0;
-    spact(25) = 0;
+    cdata.player().spacts().lose("core.prayer_of_jure");
+    cdata.player().spacts().lose("core.absorb_magic");
+    cdata.player().spacts().lose("core.lulwys_trick");
     if (cdata.player().god_id == core_god::eyth)
     {
         txt(i18n::s.get("core.god.switch.unbeliever"),
@@ -428,15 +428,15 @@ void switch_religion()
             Message::color{ColorIndex::orange});
         if (cdata.player().god_id == core_god::itzpalt)
         {
-            spact(24) = 1;
+            cdata.player().spacts().gain("core.absorb_magic");
         }
         if (cdata.player().god_id == core_god::jure)
         {
-            spact(23) = 1;
+            cdata.player().spacts().gain("core.prayer_of_jure");
         }
         if (cdata.player().god_id == core_god::lulwy)
         {
-            spact(25) = 1;
+            cdata.player().spacts().gain("core.lulwys_trick");
         }
         txtgod(cdata.player().god_id, 5);
     }

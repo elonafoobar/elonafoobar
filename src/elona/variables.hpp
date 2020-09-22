@@ -170,7 +170,6 @@ ELONA_EXTERN(elona_vector1<int> reph);
 ELONA_EXTERN(elona_vector1<int> repw);
 ELONA_EXTERN(elona_vector1<int> rowactre);
 ELONA_EXTERN(elona_vector1<int> rtval);
-ELONA_EXTERN(elona_vector1<int> spact);
 ELONA_EXTERN(elona_vector1<int> sx);
 ELONA_EXTERN(elona_vector1<int> sy);
 ELONA_EXTERN(elona_vector1<int> tile);

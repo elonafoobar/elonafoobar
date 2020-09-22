@@ -178,17 +178,17 @@ void gain_special_action()
 {
     if (cdata.player().get_skill(174).base_level > 15)
     {
-        if (spact(29) == 0)
+        if (!cdata.player().spacts().has("core.draw_charge"))
         {
-            spact(29) = 1;
+            cdata.player().spacts().gain("core.draw_charge");
             txt(i18n::s.get(
                     "core.skill.gained",
                     the_ability_db.get_text("core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
-        if (spact(30) == 0)
+        if (!cdata.player().spacts().has("core.fill_charge"))
         {
-            spact(30) = 1;
+            cdata.player().spacts().gain("core.fill_charge");
             txt(i18n::s.get(
                     "core.skill.gained",
                     the_ability_db.get_text("core.fill_charge", "name")),
@@ -197,9 +197,9 @@ void gain_special_action()
     }
     if (cdata.player().get_skill(152).base_level > 15)
     {
-        if (spact(31) == 0)
+        if (!cdata.player().spacts().has("core.swarm"))
         {
-            spact(31) = 1;
+            cdata.player().spacts().gain("core.swarm");
             txt(i18n::s.get(
                     "core.skill.gained",
                     the_ability_db.get_text("core.swarm", "name")),

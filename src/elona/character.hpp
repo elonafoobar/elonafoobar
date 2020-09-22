@@ -13,6 +13,7 @@
 #include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
+#include "spact.hpp"
 #include "spell.hpp"
 
 
@@ -407,6 +408,9 @@ private:
     /// Spell stocks
     SpellStockTable _spell_stocks;
 
+    /// Spacts
+    SpactTable _spacts;
+
 
 public:
     Ability& get_skill(int id)
@@ -430,6 +434,18 @@ public:
     const SpellStockTable& spell_stocks() const noexcept
     {
         return _spell_stocks;
+    }
+
+
+    SpactTable& spacts() noexcept
+    {
+        return _spacts;
+    }
+
+
+    const SpactTable& spacts() const noexcept
+    {
+        return _spacts;
     }
 
 
