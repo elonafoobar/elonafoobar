@@ -4301,9 +4301,9 @@ int decode_book(Character& reader, const ItemRef& book)
                         1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
-        if (itemmemory(2, the_item_db[book->id]->integer_id) == 0)
+        if (!game()->item_memories().is_decoded(book->id))
         {
-            itemmemory(2, the_item_db[book->id]->integer_id) = 1;
+            game()->item_memories().set_decoded(book->id, true);
         }
     }
     item_identify(book, IdentifyState::partly);

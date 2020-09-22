@@ -14,13 +14,16 @@ static void _populate_book_list()
 {
     for (int cnt = 0; cnt < maxitemid; ++cnt)
     {
-        if (itemmemory(2, cnt) == 0)
+        if (const auto id = the_item_db.get_id_from_integer(cnt))
         {
-            continue;
+            if (!game()->item_memories().is_decoded(*id))
+            {
+                continue;
+            }
+            list(0, listmax) = cnt;
+            list(1, listmax) = cnt;
+            ++listmax;
         }
-        list(0, listmax) = cnt;
-        list(1, listmax) = cnt;
-        ++listmax;
     }
     sort_list_by_column1();
 }
@@ -106,7 +109,8 @@ void UIMenuSpellWriter::_draw_list_entry_name(int cnt, int item_index)
 
 void UIMenuSpellWriter::_draw_list_entry_reserve_status(int cnt, int item_index)
 {
-    if (itemmemory(2, item_index) == 1)
+    if (!game()->item_memories()._is_reserved(
+            *the_item_db.get_id_from_integer(item_index)))
     {
         mes(wx + 400,
             wy + 66 + cnt * 19 + 2,
@@ -164,13 +168,16 @@ static bool _book_is_unavailable(int _p)
 
 static void _toggle_book_reserve(int _p)
 {
-    if (itemmemory(2, _p) == 1)
+    if (!game()->item_memories()._is_reserved(
+            *the_item_db.get_id_from_integer(_p)))
     {
-        itemmemory(2, _p) = 2;
+        game()->item_memories()._set_reserved(
+            *the_item_db.get_id_from_integer(_p), true);
     }
     else
     {
-        itemmemory(2, _p) = 1;
+        game()->item_memories()._set_reserved(
+            *the_item_db.get_id_from_integer(_p), false);
     }
 }
 

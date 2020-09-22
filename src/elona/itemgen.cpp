@@ -300,7 +300,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         item->param1 = 1;
     }
 
-    ++itemmemory(1, item_id);
+    game()->item_memories().increment_generate_count(item->id);
 
     item->quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
@@ -516,7 +516,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     {
         item->identify_state = IdentifyState::completely;
         item->curse_state = CurseState::none;
-        itemmemory(0, the_item_db[item->id]->integer_id) = 1;
+        game()->item_memories().set_identify_state(
+            item->id, IdentifyState::partly);
     }
     if (category == ItemCategory::bodyparts || category == ItemCategory::junk ||
         category == ItemCategory::ore)

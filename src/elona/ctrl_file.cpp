@@ -461,7 +461,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"kitem.s1";
+        elona_vector2<int> itemmemory;
+        DIM3(itemmemory, 3, 800);
         load_v2(filepath, itemmemory, 0, 3, 0, 800);
+        game()->item_memories().unpack_from(itemmemory);
     }
 
     {
@@ -622,6 +625,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"kitem.s1";
+        elona_vector2<int> itemmemory;
+        DIM3(itemmemory, 3, 800);
+        game()->item_memories().pack_to(itemmemory);
         save_v2(filepath, itemmemory, 0, 3, 0, 800);
     }
 
@@ -1315,6 +1321,52 @@ void CharacterMemoryTable::unpack_from(elona_vector2<int>& legacy_npcmemory)
         {
             _memories[*id].kill_count = legacy_npcmemory(0, i);
             _memories[*id].generate_count = legacy_npcmemory(1, i);
+        }
+    }
+}
+
+
+
+void ItemMemoryTable::pack_to(elona_vector2<int>& legacy_itemmemory) const
+{
+    for (int i = 0; i < 800; ++i)
+    {
+        const auto integer_item_id = i;
+        if (const auto id = the_item_db.get_id_from_integer(integer_item_id))
+        {
+            if (const auto itr = _memories.find(*id); itr != _memories.end())
+            {
+                legacy_itemmemory(0, i) =
+                    static_cast<int>(itr->second.identify_state);
+                legacy_itemmemory(1, i) = itr->second.generate_count;
+                legacy_itemmemory(2, i) = itr->second._is_reserved
+                    ? 2
+                    : (itr->second.is_decoded ? 1 : 0);
+            }
+        }
+    }
+}
+
+
+
+void ItemMemoryTable::unpack_from(elona_vector2<int>& legacy_itemmemory)
+{
+    _memories.clear();
+
+    for (int i = 0; i < 800; ++i)
+    {
+        if (legacy_itemmemory(0, i) == 0 && legacy_itemmemory(1, i) == 0 &&
+            legacy_itemmemory(2, i) == 0)
+            continue;
+
+        const auto integer_item_id = i;
+        if (const auto id = the_item_db.get_id_from_integer(integer_item_id))
+        {
+            _memories[*id].identify_state =
+                static_cast<IdentifyState>(legacy_itemmemory(0, i));
+            _memories[*id].generate_count = legacy_itemmemory(1, i);
+            _memories[*id].is_decoded = legacy_itemmemory(2, i) != 0;
+            _memories[*id]._is_reserved = legacy_itemmemory(2, i) == 2;
         }
     }
 }

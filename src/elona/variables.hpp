@@ -224,7 +224,6 @@ ELONA_EXTERN(elona_vector1<int> eqweapon1);
 ELONA_EXTERN(elona_vector1<int> eqrange);
 ELONA_EXTERN(elona_vector1<int> eqammo);
 ELONA_EXTERN(elona_vector1<int> eqring1);
-ELONA_EXTERN(elona_vector2<int> itemmemory);
 ELONA_EXTERN(elona_vector2<int> list);
 ELONA_EXTERN(elona_vector2<int> mapsync);
 ELONA_EXTERN(elona_vector2<int> pcc);
