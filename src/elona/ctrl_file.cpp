@@ -7,6 +7,7 @@
 #include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_ability.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "filesystem.hpp"
@@ -441,7 +442,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spell.s1";
+        elona_vector1<int> spell;
+        DIM2(spell, 200);
         load_v1(filepath, spell, 0, 200);
+        cdata.player().spell_stocks().unpack_from(spell);
     }
 
     {
@@ -472,7 +476,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spact.s1";
+        elona_vector1<int> spact;
+        DIM2(spact, 500);
         load_v1(filepath, spact, 0, 500);
+        cdata.player().spacts().unpack_from(spact);
     }
 
     {
@@ -488,7 +495,10 @@ void ctrl_file_global_read(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"trait.s1";
+        elona_vector1<int> trait;
+        DIM2(trait, 500);
         load_v1(filepath, trait, 0, 500);
+        cdata.player().traits().unpack_from(trait);
     }
 
     {
@@ -590,6 +600,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spell.s1";
+        elona_vector1<int> spell;
+        DIM2(spell, 200);
+        cdata.player().spell_stocks().pack_to(spell);
         save_v1(filepath, spell, 0, 200);
     }
 
@@ -621,6 +634,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"spact.s1";
+        elona_vector1<int> spact;
+        DIM2(spact, 500);
+        cdata.player().spacts().pack_to(spact);
         save_v1(filepath, spact, 0, 500);
     }
 
@@ -637,6 +653,9 @@ void ctrl_file_global_write(const fs::path& dir)
 
     {
         const auto filepath = dir / u8"trait.s1";
+        elona_vector1<int> trait;
+        DIM2(trait, 500);
+        cdata.player().traits().pack_to(trait);
         save_v1(filepath, trait, 0, 500);
     }
 
@@ -1096,6 +1115,118 @@ void ctrl_file_tmp_inv_write(const fs::path& filename)
 
     ELONA_LOG("save.ctrl_file")
         << "tmp_inv_write(" << filename.to_u8string() << ") END";
+}
+
+
+
+void SpellStockTable::pack_to(elona_vector1<int>& legacy_spell) const
+{
+    for (int i = 0; i < 200; ++i)
+    {
+        const auto integer_spell_id = i + 400;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spell_id))
+        {
+            if (const auto itr = _stocks.find(*id); itr != _stocks.end())
+            {
+                legacy_spell(i) = itr->second;
+            }
+        }
+    }
+}
+
+
+
+void SpellStockTable::unpack_from(elona_vector1<int>& legacy_spell)
+{
+    _stocks.clear();
+
+    for (int i = 0; i < 200; ++i)
+    {
+        if (legacy_spell(i) == 0)
+            continue;
+
+        const auto integer_spell_id = i + 400;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spell_id))
+        {
+            _stocks[*id] = legacy_spell(i);
+        }
+    }
+}
+
+
+
+void SpactTable::pack_to(elona_vector1<int>& legacy_spact) const
+{
+    for (int i = 0; i < 500; ++i)
+    {
+        const auto integer_spact_id = i + 600;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spact_id))
+        {
+            if (_spacts.find(*id) != _spacts.end())
+            {
+                legacy_spact(i) = 1;
+            }
+        }
+    }
+}
+
+
+
+void SpactTable::unpack_from(elona_vector1<int>& legacy_spact)
+{
+    _spacts.clear();
+
+    for (int i = 0; i < 500; ++i)
+    {
+        if (legacy_spact(i) == 0)
+            continue;
+
+        const auto integer_spact_id = i + 600;
+        if (const auto id =
+                the_ability_db.get_id_from_integer(integer_spact_id))
+        {
+            _spacts.emplace(*id);
+        }
+    }
+}
+
+
+
+void TraitLevelTable::pack_to(elona_vector1<int>& legacy_trait) const
+{
+    for (int i = 0; i < 500; ++i)
+    {
+        const auto integer_trait_id = i;
+        if (const auto id = the_trait_db.get_id_from_integer(integer_trait_id))
+        {
+            if (const auto itr = _traits.find(*id); itr != _traits.end())
+            {
+                legacy_trait(i) = itr->second;
+            }
+        }
+    }
+}
+
+
+
+void TraitLevelTable::unpack_from(elona_vector1<int>& legacy_trait)
+{
+    _traits.clear();
+
+    for (int i = 0; i < 500; ++i)
+    {
+        if (legacy_trait(i) == 0)
+            continue;
+
+        const auto integer_trait_id = i;
+        if (const auto id = the_trait_db.get_id_from_integer(integer_trait_id))
+        {
+            _traits[*id] = legacy_trait(i);
+        }
+    }
 }
 
 } // namespace elona

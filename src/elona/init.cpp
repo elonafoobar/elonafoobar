@@ -220,10 +220,7 @@ void initialize_elona()
     map_data.clear();
     SDIM3(mdatan, 20, 2);
     SDIM2(s1, 1000);
-    DIM2(spell, 200);
-    DIM2(spact, 500);
     DIM2(mat, 400);
-    DIM2(trait, 500);
     DIM3(itemmemory, 3, 800);
     DIM3(npcmemory, 2, 800);
     DIM2(recipememory, 1200);

@@ -184,7 +184,8 @@ void search_material_spot()
                 crafting_material_select_random_id(atxlv, 0, atxspot), 1, i);
         }
     }
-    if (rnd(50 + trait(159) * 20) == 0)
+    if (rnd(50 + cdata.player().traits().level("core.more_materials") * 20) ==
+        0)
     {
         s = i18n::s.get("core.activity.material.searching.no_more");
         if (feat(1) == 26)
@@ -2177,7 +2178,8 @@ void sleep_start(const OptionalItemRef& bed)
     game()->character_and_status_for_gene = 0;
     mode = 0;
     wake_up();
-    cdata.player().nutrition -= 1500 / (trait(158) + 1);
+    cdata.player().nutrition -=
+        1500 / (cdata.player().traits().level("core.slow_digestion") + 1);
     txt(i18n::s.get("core.activity.sleep.slept_for", timeslept),
         Message::color{ColorIndex::green});
 

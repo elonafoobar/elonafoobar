@@ -717,7 +717,7 @@ int calcattackdmg(
     }
     if (attacker.is_player())
     {
-        if (trait(207))
+        if (cdata.player().traits().level("core.desire_for_violence"))
         {
             dmgfix += 5 + cdata.player().level * 2 / 3;
         }
@@ -806,7 +806,7 @@ int calcattackdmg(
     damage = damagenormal + damagepierce;
     if (attacker.is_player())
     {
-        if (trait(164) != 0)
+        if (cdata.player().traits().level("core.opatos_blessing") != 0)
         {
             --damage;
         }
@@ -1144,7 +1144,8 @@ void calccosthire()
         cost += calc_servant_hire_cost(cnt);
     }
     cost = cost *
-        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38) -
+        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) -
+                  7 * cdata.player().traits().level("core.accountant") -
                   (cdata.player().karma >= 20) * 5,
               25,
               200) /
@@ -1172,7 +1173,8 @@ int calccostbuilding()
     }
 
     return cost *
-        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38) -
+        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) -
+                  7 * cdata.player().traits().level("core.accountant") -
                   (cdata.player().karma >= 20) * 5,
               25,
               200) /
@@ -1188,7 +1190,8 @@ int calccosttax()
     cost += cdata.player().fame;
     cost += cdata.player().level * 200;
     return cost *
-        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) - 7 * trait(38) -
+        clamp(100 - clamp(cdata.player().karma / 2, 0, 50) -
+                  7 * cdata.player().traits().level("core.accountant") -
                   (cdata.player().karma >= 20) * 5,
               25,
               200) /

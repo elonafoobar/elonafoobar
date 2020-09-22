@@ -118,7 +118,7 @@ void weather_changes()
             if (p == 0)
             {
                 weatherbk = 0;
-                if (trait(209) != 0)
+                if (cdata.player().traits().level("core.rainy_clouds") != 0)
                 {
                     if (rnd(4) == 0)
                     {

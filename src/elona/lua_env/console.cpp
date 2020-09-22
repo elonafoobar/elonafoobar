@@ -11,6 +11,7 @@
 #include "../character.hpp"
 #include "../character_status.hpp"
 #include "../config.hpp"
+#include "../data/types/type_ability.hpp"
 #include "../debug.hpp"
 #include "../filesystem.hpp"
 #include "../input.hpp"
@@ -323,9 +324,10 @@ void Console::register_builtin_commands()
             _term.println("Activate wizard mode to run the command.");
             return;
         }
-        for (int i = 2; i < 61; ++i)
+        for (int i = 1; i < 61; ++i)
         {
-            spact(i) = 1;
+            cdata.player().spacts().gain(
+                *the_ability_db.get_id_from_integer(i + 600));
         }
     });
 

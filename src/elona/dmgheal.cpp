@@ -565,7 +565,8 @@ int damage_hp(
                         }
                         if (attacker && attacker->is_player())
                         {
-                            if (trait(44)) // Gentle Face
+                            if (cdata.player().traits().level(
+                                    "core.gentle_face")) // Gentle Face
                             {
                                 runs_away = false;
                             }
@@ -1311,7 +1312,7 @@ void damage_mp(Character& chara, int delta)
         auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
         if (chara.is_player())
         {
-            if (trait(156) == 1)
+            if (cdata.player().traits().level("core.less_mana_reaction") == 1)
             {
                 damage /= 2;
             }
@@ -1391,7 +1392,7 @@ void damage_insanity(Character& chara, int delta)
     delta /= resistance;
     if (chara.is_player_or_ally())
     {
-        if (trait(166))
+        if (cdata.player().traits().level("core.jure_blessing"))
         {
             delta -= rnd(4);
         }

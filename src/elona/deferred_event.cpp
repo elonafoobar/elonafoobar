@@ -791,7 +791,9 @@ void eh_nuclear_bomb(const DeferredEvent& event)
     }
     if (map_is_town_or_guild())
     {
-        modify_karma(cdata.player(), -80 + trait(162) * 60);
+        modify_karma(
+            cdata.player(),
+            -80 + cdata.player().traits().level("core.evil_man") * 60);
     }
     else
     {

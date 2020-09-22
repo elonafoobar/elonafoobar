@@ -29,9 +29,10 @@ static void _populate_skill_list()
             ++listmax;
         }
     }
-    for (int cnt = 0; cnt < 61; ++cnt)
+    for (int cnt = 1; cnt < 61; ++cnt)
     {
-        if (spact(cnt) != 0)
+        if (cdata.player().spacts().has(
+                *the_ability_db.get_id_from_integer(cnt + 600)))
         {
             list(0, listmax) = cnt + 600;
             list(1, listmax) =

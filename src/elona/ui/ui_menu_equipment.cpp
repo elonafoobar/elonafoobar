@@ -21,21 +21,24 @@ static bool _should_show_entry(const EquipmentSlot& equipment_slot)
     {
         return false;
     }
-    if (trait(206) != 0) // Your neck is extremely thick.
+    if (cdata.player().traits().level("core.thick_neck") !=
+        0) // Your neck is extremely thick.
     {
         if (equipment_slot.type == 2)
         {
             return false;
         }
     }
-    if (trait(203) != 0) // Your feet transformed into hooves.
+    if (cdata.player().traits().level("core.hooves") !=
+        0) // Your feet transformed into hooves.
     {
         if (equipment_slot.type == 9)
         {
             return false;
         }
     }
-    if (trait(205) != 0) // You have grown feather.
+    if (cdata.player().traits().level("core.feathers") !=
+        0) // You have grown feather.
     {
         if (equipment_slot.type == 3)
         {

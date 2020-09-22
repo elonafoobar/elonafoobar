@@ -372,7 +372,7 @@ void get_sick_if_cursed(CurseState curse_state, Character& drinker)
 
 void get_hungry(Character& chara)
 {
-    if ((trait(158) && rnd(3) == 0))
+    if ((cdata.player().traits().level("core.slow_digestion") && rnd(3) == 0))
         return;
     if (debug_has_wizard_flag("core.wizard.no_hungry"))
         return;
@@ -689,7 +689,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             if (eater.is_player())
             {
-                if (trait(41))
+                if (cdata.player().traits().level("core.cannibalism"))
                 {
                     if (food->id == "core.corpse")
                     {
@@ -1133,7 +1133,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             if (strutil::contains(s(0), u8"/man/"))
             {
-                if (trait(41))
+                if (cdata.player().traits().level("core.cannibalism"))
                 {
                     txt(i18n::s.get("core.food.effect.human.like"));
                 }
@@ -1142,19 +1142,20 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                     txt(i18n::s.get("core.food.effect.human.dislike"));
                     damage_insanity(eater, 15);
                     status_ailment_damage(eater, StatusAilment::insane, 150);
-                    if (trait(41) == 0)
+                    if (cdata.player().traits().level("core.cannibalism") == 0)
                     {
                         if (rnd(5) == 0)
                         {
                             trait_get_info(0, 41);
                             txt(traitrefn(0),
                                 Message::color{ColorIndex::green});
-                            trait(41) = 1;
+                            cdata.player().traits().set_level(
+                                "core.cannibalism", 1);
                         }
                     }
                 }
             }
-            else if (trait(41))
+            else if (cdata.player().traits().level("core.cannibalism"))
             {
                 txt(i18n::s.get(
                     "core.food.effect.human.would_have_rather_eaten"));

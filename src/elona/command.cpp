@@ -2618,14 +2618,15 @@ TurnResult do_use_command(ItemRef use_item)
         txt(i18n::s.get("core.action.use.statue.creator.in_usermap"));
         break;
     case 29:
-        trait(use_item->param1) = 1;
+        cdata.player().traits().set_level(
+            *the_trait_db.get_id_from_integer(use_item->param1), 1);
         if (use_item->param1 == 169)
         {
-            trait(162) = 0;
+            cdata.player().traits().set_level("core.evil_man", 0);
         }
         if (use_item->param1 == 162)
         {
-            trait(169) = 0;
+            cdata.player().traits().set_level("core.good_man", 0);
         }
         use_item->modify_number(-1);
         txt(i18n::s.get("core.action.use.secret_treasure.use"));
@@ -3640,7 +3641,8 @@ TurnResult do_short_cut_command(int sc_)
         }
         if (efid < 661)
         {
-            if (spact(efid - 600) == 0)
+            if (!cdata.player().spacts().has(
+                    *the_ability_db.get_id_from_integer(efid)))
             {
                 txt(i18n::s.get("core.action.shortcut.cannot_use_anymore"));
                 update_screen();
@@ -3658,7 +3660,8 @@ TurnResult do_short_cut_command(int sc_)
             redraw();
             return TurnResult::pc_turn_user_error;
         }
-        if (spell(efid - 400) <= 0)
+        if (cdata.player().spell_stocks().amount(
+                *the_ability_db.get_id_from_integer(efid)) <= 0)
         {
             txt(i18n::s.get("core.action.shortcut.cannot_use_spell_anymore"),
                 Message::only_once{true});
@@ -4287,7 +4290,13 @@ int decode_book(Character& reader, const ItemRef& book)
             (rnd(51) + 50) *
                     (90 + reader.get_skill(165).level +
                      (reader.get_skill(165).level > 0) * 20) /
-                    clamp((100 + spell((efid - 400)) / 2), 50, 1000) +
+                    clamp(
+                        (100 +
+                         reader.spell_stocks().amount(
+                             *the_ability_db.get_id_from_integer(efid)) /
+                             2),
+                        50,
+                        1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
         if (itemmemory(2, the_item_db[book->id]->integer_id) == 0)
@@ -4447,11 +4456,9 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
 
     if (caster.is_player())
     {
-        spell(efid - 400) -= calc_spell_cost_stock(caster, efid);
-        if (spell(efid - 400) < 0)
-        {
-            spell(efid - 400) = 0;
-        }
+        caster.spell_stocks().lose(
+            *the_ability_db.get_id_from_integer(efid),
+            calc_spell_cost_stock(caster, efid));
     }
     mp = calc_spell_cost_mp(caster, efid);
     if (caster.is_player())
@@ -5374,7 +5381,7 @@ PickUpItemResult pick_up_item(
     item->set_number(in);
     if (inv_owner_chara && inv_owner_chara->is_player())
     {
-        if (trait(215) != 0)
+        if (cdata.player().traits().level("core.mana_battery") != 0)
         {
             if (the_item_db[item->id]->category == ItemCategory::rod)
             {
@@ -5385,7 +5392,9 @@ PickUpItemResult pick_up_item(
                         "core.action.pick_up.you_absorb_magic", item));
                     if (efid >= 400 && efid < 467)
                     {
-                        spell(efid - 400) += item->charges * 5 * item->number();
+                        inv_owner_chara->spell_stocks().gain(
+                            *the_ability_db.get_id_from_integer(efid),
+                            item->charges * 5 * item->number());
                     }
                     else
                     {
@@ -5396,7 +5405,7 @@ PickUpItemResult pick_up_item(
                 }
             }
         }
-        if (trait(216) != 0)
+        if (cdata.player().traits().level("core.poisonous_hand") != 0)
         {
             if (the_item_db[item->id]->category == ItemCategory::potion)
             {
