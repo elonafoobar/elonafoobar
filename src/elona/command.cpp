@@ -19,6 +19,7 @@
 #include "crafting_material.hpp"
 #include "ctrl_file.hpp"
 #include "data/types/type_ability.hpp"
+#include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_crafting_material.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
@@ -4262,7 +4263,8 @@ int decode_book(Character& reader, const ItemRef& book)
             return 1;
         }
         txt(i18n::s.get("core.action.read.recipe.learned", book));
-        ++recipememory(book->subname);
+        game()->blending_recipe_memories().increment_read_count(
+            *the_blending_recipe_db.get_id_from_integer(book->subname));
         item_identify(book, IdentifyState::partly);
         book->modify_number(-1);
         if (is_in_fov(reader))
@@ -4299,9 +4301,9 @@ int decode_book(Character& reader, const ItemRef& book)
                         1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
-        if (itemmemory(2, the_item_db[book->id]->integer_id) == 0)
+        if (!game()->item_memories().is_decoded(book->id))
         {
-            itemmemory(2, the_item_db[book->id]->integer_id) = 1;
+            game()->item_memories().set_decoded(book->id, true);
         }
     }
     item_identify(book, IdentifyState::partly);

@@ -261,12 +261,7 @@ sol::optional<LuaCharacterHandle> Chara_generate_from_map_id_pos(
  */
 int Chara_kill_count(const std::string& id)
 {
-    auto data = the_character_db[data::InstanceId{id}];
-    if (!data)
-    {
-        return 0;
-    }
-    return npcmemory(0, data->integer_id);
+    return game()->character_memories().kill_count(data::InstanceId{id});
 }
 
 

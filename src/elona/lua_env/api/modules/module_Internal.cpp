@@ -216,9 +216,13 @@ void Internal_strange_scientist_pick_reward()
         }
         randomize(game()->date.day + cnt);
         f = 0;
-        if (itemmemory(0, cnt))
+        if (const auto id = the_item_db.get_id_from_integer(cnt))
         {
-            f = 1;
+            if (game()->item_memories().identify_state(*id) !=
+                IdentifyState::unidentified)
+            {
+                f = 1;
+            }
         }
         if (cnt == 662)
         {
