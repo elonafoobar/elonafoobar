@@ -5,7 +5,9 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_crafting_material.hpp"
 #include "draw.hpp"
+#include "game.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -135,7 +137,10 @@ void crafting_menu()
             int matuse = 0;
             for (const auto& required_mat : recipe->required_materials)
             {
-                mat(required_mat.id) -= required_mat.amount;
+                game()->crafting_materials().lose(
+                    *the_crafting_material_db.get_id_from_integer(
+                        required_mat.id),
+                    required_mat.amount);
                 matuse += required_mat.amount;
             }
 

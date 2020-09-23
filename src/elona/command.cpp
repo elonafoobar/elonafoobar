@@ -4032,8 +4032,7 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
         the_crafting_material_db.get_text(required_material, "name")));
     if (yes_no())
     {
-        if (mat(the_crafting_material_db.ensure(required_material).integer_id) >
-            0)
+        if (game()->crafting_materials().amount(required_material) > 0)
         {
             snd("core.gasha");
             crafting_material_lose(required_material, 1);

@@ -6,6 +6,7 @@
 #include "../version.hpp"
 #include "blending_recipe_memory.hpp"
 #include "character_memory.hpp"
+#include "crafting_material.hpp"
 #include "item_memory.hpp"
 
 
@@ -222,6 +223,7 @@ private:
     BlendingRecipeMemoryTable _blending_recipe_memories;
     CharacterMemoryTable _character_memories;
     ItemMemoryTable _item_memories;
+    CraftingMaterialBag _crafting_materials;
 
 public:
     BlendingRecipeMemoryTable& blending_recipe_memories() noexcept
@@ -239,6 +241,12 @@ public:
     ItemMemoryTable& item_memories() noexcept
     {
         return _item_memories;
+    }
+
+
+    CraftingMaterialBag& crafting_materials() noexcept
+    {
+        return _crafting_materials;
     }
 
 
