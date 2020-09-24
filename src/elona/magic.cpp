@@ -1242,19 +1242,21 @@ bool _magic_413(Character& target)
     }
     if (is_cursed(efstatus))
     {
-        artifactlocation.clear();
+        game()->artifact_logs.clear();
         txt(i18n::s.get("core.magic.oracle.cursed"));
         return true;
     }
-    if (artifactlocation.empty())
+    if (game()->artifact_logs.empty())
     {
         txt(i18n::s.get("core.magic.oracle.no_artifacts"));
     }
     else
     {
-        range::for_each(
-            artifactlocation, [](const auto& line) { txt(cnven(line)); });
-        artifactlocation.clear();
+        for (const auto& log : game()->artifact_logs)
+        {
+            txt(cnven(log.content));
+        }
+        game()->artifact_logs.clear();
     }
     return true;
 }

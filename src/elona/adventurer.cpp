@@ -28,26 +28,25 @@ namespace elona
 namespace
 {
 
-void add_news_entry(std::string news_content, bool show_message)
-{
-    if (show_message)
-    {
-        txt(u8"[News] "s + news_content,
-            Message::color{ColorIndex::light_brown});
-    }
-    talk_conv(news_content, 38 - en * 5);
-    newsbuff += news_content + u8"\n"s;
-}
-
-
-
-void add_news_topic(const std::string& mark, const std::string& news_content)
+void add_adv_log(
+    const std::string& mark,
+    const std::string& headline,
+    const std::string& content)
 {
     const auto dt = game_date_time();
-    const auto date = std::to_string(dt.year()) + "/" +
+    const auto date_str = std::to_string(dt.year()) + "/" +
         std::to_string(dt.month()) + "/" + std::to_string(dt.day()) + " h" +
         std::to_string(dt.hour());
-    add_news_entry(mark + " " + date + " " + news_content, false);
+
+    txt("[News] " + content, Message::color{ColorIndex::light_brown});
+
+    auto headline_ = mark + " " + date_str + " " + headline;
+    talk_conv(headline_, 38 - en * 5);
+    auto content_ = content;
+    talk_conv(content_, 38 - en * 5);
+
+    game()->adventurer_logs.append(
+        AdventurerLog{game_now(), headline_, content_});
 }
 
 } // namespace
@@ -150,54 +149,54 @@ void adventurer_add_news(
     switch (news_type)
     {
     case NewsType::discovery:
-        add_news_topic(u8"@01"s, i18n::s.get("core.news.discovery.title"));
-        add_news_entry(
+        add_adv_log(
+            u8"@01"s,
+            i18n::s.get("core.news.discovery.title"),
             i18n::s.get(
                 "core.news.discovery.text",
                 adventurer.alias,
                 adventurer.name,
                 extra_info /* discovered artifact */,
-                mapname(adventurer.current_map)),
-            true);
+                mapname(adventurer.current_map)));
         break;
     case NewsType::growth:
-        add_news_topic(u8"@02"s, i18n::s.get("core.news.growth.title"));
-        add_news_entry(
+        add_adv_log(
+            u8"@02"s,
+            i18n::s.get("core.news.growth.title"),
             i18n::s.get(
                 "core.news.growth.text",
                 adventurer.alias,
                 adventurer.name,
-                adventurer.level),
-            true);
+                adventurer.level));
         break;
     case NewsType::recovery:
-        add_news_topic(u8"@02"s, i18n::s.get("core.news.recovery.title"));
-        add_news_entry(
+        add_adv_log(
+            u8"@02"s,
+            i18n::s.get("core.news.recovery.title"),
             i18n::s.get(
-                "core.news.recovery.text", adventurer.alias, adventurer.name),
-            true);
+                "core.news.recovery.text", adventurer.alias, adventurer.name));
         break;
     case NewsType::accomplishment:
-        add_news_topic(u8"@03"s, i18n::s.get("core.news.accomplishment.title"));
-        add_news_entry(
+        add_adv_log(
+            u8"@03"s,
+            i18n::s.get("core.news.accomplishment.title"),
             i18n::s.get(
                 "core.news.accomplishment.text",
                 adventurer.alias,
                 adventurer.name,
-                extra_info /* gained fame */),
-            true);
+                extra_info /* gained fame */));
         break;
     case NewsType::retirement:
-        add_news_topic(u8"@04"s, i18n::s.get("core.news.retirement.title"));
-        add_news_entry(
+        add_adv_log(
+            u8"@04"s,
+            i18n::s.get("core.news.retirement.title"),
             i18n::s.get(
-                "core.news.retirement.text", adventurer.alias, adventurer.name),
-            true);
+                "core.news.retirement.text",
+                adventurer.alias,
+                adventurer.name));
         break;
     default: assert(0); break;
     }
-
-    newsbuff += u8"\n"s;
 }
 
 
@@ -310,14 +309,9 @@ void adventurer_update()
             gain_level(adv);
         }
     }
-    notesel(newsbuff);
-    if (noteinfo() > 195)
-    {
-        for (int cnt = 0, cnt_end = (noteinfo() - 195); cnt < cnt_end; ++cnt)
-        {
-            notedel(0);
-        }
-    }
+
+    const size_t max_logs = 195; // TODO: make it configurable
+    game()->adventurer_logs.shrink(max_logs);
 }
 
 

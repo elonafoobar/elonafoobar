@@ -309,24 +309,28 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         const auto owner = item_get_owner(item).as_character();
         if (owner && owner->role == Role::adventurer)
         {
-            artifactlocation.push_back(i18n::s.get(
-                "core.magic.oracle.was_held_by",
-                cnven(iknownnameref(the_item_db[item->id]->integer_id)),
-                *owner,
-                mapname(owner->current_map),
-                date.day(),
-                date.month(),
-                date.year()));
+            game()->artifact_logs.append(ArtifactLog{
+                game_now(),
+                i18n::s.get(
+                    "core.magic.oracle.was_held_by",
+                    cnven(iknownnameref(the_item_db[item->id]->integer_id)),
+                    *owner,
+                    mapname(owner->current_map),
+                    date.day(),
+                    date.month(),
+                    date.year())});
         }
         else
         {
-            artifactlocation.push_back(i18n::s.get(
-                "core.magic.oracle.was_created_at",
-                iknownnameref(the_item_db[item->id]->integer_id),
-                mdatan(0),
-                date.day(),
-                date.month(),
-                date.year()));
+            game()->artifact_logs.append(ArtifactLog{
+                game_now(),
+                i18n::s.get(
+                    "core.magic.oracle.was_created_at",
+                    iknownnameref(the_item_db[item->id]->integer_id),
+                    mdatan(0),
+                    date.day(),
+                    date.month(),
+                    date.year())});
         }
     }
 

@@ -3,6 +3,8 @@
 #include <array>
 #include <memory>
 
+#include "adventurer_log.hpp"
+#include "artifact_log.hpp"
 #include "blending_recipe_memory.hpp"
 #include "character_memory.hpp"
 #include "crafting_material.hpp"
@@ -114,6 +116,7 @@ struct Game
     /// Time when Etherwind blew last.
     time::Instant last_etherwind_time{};
 
+
     /* Player state */
 
     /// Total weight of cargo items on the cart.
@@ -139,6 +142,15 @@ struct Game
 
     /// Story quests
     StoryQuestTable story_quests{};
+
+
+    /* Game Log */
+
+    /// Artifact generation logs
+    ArtifactLogList artifact_logs{};
+
+    /// Other adventurers' logs.
+    AdventurerLogList adventurer_logs{};
 
 
     /* Miscellaneous */

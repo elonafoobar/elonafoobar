@@ -24,10 +24,17 @@ bool UIMenuJournal::init()
     cs = 0;
     keyrange = 0;
     key_list(0) = keybind_get_bound_key_name("enter");
-    buff = newsbuff;
-    if (newsbuff == ""s)
+    if (game()->adventurer_logs.empty())
     {
         buff = u8"No news"s;
+    }
+    else
+    {
+        buff = "";
+        for (const auto& log : game()->adventurer_logs)
+        {
+            buff += log.headline + log.content + "\n";
+        }
     }
     notesel(buff);
     noteadd(u8" - News - "s, 0);

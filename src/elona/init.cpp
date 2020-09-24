@@ -320,8 +320,6 @@ void initialize_elona()
 
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
-    artifactlocation.clear();
-    SDIM1(newsbuff);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
     keybind_regenerate_key_select();
