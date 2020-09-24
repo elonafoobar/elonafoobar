@@ -76,7 +76,6 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
-  position.cpp
   quest.cpp
   race.cpp
   random.cpp
