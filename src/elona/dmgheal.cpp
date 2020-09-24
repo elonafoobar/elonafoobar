@@ -6,6 +6,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
@@ -1249,19 +1250,7 @@ int damage_hp(
                 {
                     continue;
                 }
-                for (int buff_index = 0; buff_index < 16; ++buff_index)
-                {
-                    if (chara.buffs[buff_index].id == 0)
-                    {
-                        break;
-                    }
-                    if (chara.buffs[buff_index].id == 16)
-                    {
-                        buff_delete(chara, buff_index);
-                        --buff_index;
-                        continue;
-                    }
-                }
+                buff_remove(chara, "core.death_word");
             }
         }
         if (attacker && attacker->is_player())

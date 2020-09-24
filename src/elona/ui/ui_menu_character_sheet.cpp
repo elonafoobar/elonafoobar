@@ -662,7 +662,7 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
     {
         x = wx + 430 + cnt / 3 * 40;
         y = wy + 151 + cnt % 3 * 32;
-        if (_chara.buffs[cnt].id == 0)
+        if (_chara.buffs.size() <= static_cast<size_t>(cnt))
         {
             gmode(2, 120);
             elona::draw("core.buff_icon_none", x, y);
@@ -670,7 +670,11 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
             continue;
         }
         ++_cs_buffmax;
-        draw_indexed("core.buff_icon", x, y, _chara.buffs[cnt].id);
+        draw_indexed(
+            "core.buff_icon",
+            x,
+            y,
+            the_buff_db.ensure(_chara.buffs[cnt].id).integer_id);
         if (_cs_buff == cnt)
         {
             boxf(x, y, 32, 32, {200, 200, 255, 63});
@@ -681,14 +685,10 @@ void UIMenuCharacterSheet::_draw_first_page_buffs(
 
     if (_cs_buffmax != 0)
     {
-        const auto duration = buff_calc_duration(
-            *the_buff_db.get_id_from_integer(_chara.buffs[_cs_buff].id),
-            _chara.buffs[_cs_buff].power);
-        const auto description = buff_get_description(
-            *the_buff_db.get_id_from_integer(_chara.buffs[_cs_buff].id),
-            _chara.buffs[_cs_buff].power);
-        buff_desc = the_buff_db.get_text(_chara.buffs[_cs_buff].id, "name") +
-            ": "s + _chara.buffs[_cs_buff].turns +
+        const auto& buff = _chara.buffs[_cs_buff];
+        const auto duration = buff_calc_duration(buff.id, buff.power);
+        const auto description = buff_get_description(buff.id, buff.power);
+        buff_desc = the_buff_db.get_text(buff.id, "name") + ": "s + buff.turns +
             i18n::s.get("core.ui.chara_sheet.buff.duration", duration) +
             description;
     }

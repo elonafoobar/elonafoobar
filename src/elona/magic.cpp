@@ -8,6 +8,7 @@
 #include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -767,37 +768,26 @@ bool _magic_406_407(Character& subject, Character& target)
         }
         return _magic_645_1114(subject, target);
     }
-    p = 0;
-    for (int cnt = 0; cnt < 16; ++cnt)
-    {
-        i = 16 - cnt - 1;
-        if (efid == 406)
+
+    int cnt = 0;
+    buff_remove_if_reverse(target, [&cnt](const auto& buff) {
+        if (efid == 406 && 1 <= cnt)
+            return false;
+        if (buff.id == "core.punishment")
+            return false;
+        if (the_buff_db[buff.id]->type != BuffType::hex)
+            return false;
+        if (rnd_capped(efp * 2 + 1) > rnd_capped(buff.power + 1))
         {
-            if (p >= 1)
-            {
-                break;
-            }
+            cnt += 1;
+            return true;
         }
-        if (target.buffs[i].id == 0)
+        else
         {
-            continue;
+            return false;
         }
-        if (target.buffs[i].id == 13)
-        {
-            continue;
-        }
-        if (the_buff_db[target.buffs[i].id]->type != BuffType::hex)
-        {
-            continue;
-        }
-        if (rnd_capped(efp * 2 + 1) > rnd_capped(target.buffs[i].power + 1))
-        {
-            buff_delete(target, i);
-            ++p;
-            --cnt;
-            continue;
-        }
-    }
+    });
+
     buff_add(target, "core.holy_veil", efp, 5 + efp / 30, subject);
     animeload(11, target);
     return true;

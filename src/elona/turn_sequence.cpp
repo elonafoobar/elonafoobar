@@ -6,6 +6,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "building.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -970,25 +971,22 @@ TurnResult pass_one_turn(bool time_passing)
     {
         mef_proc(cdata[ct]);
     }
-    if (cdata[ct].buffs[0].id != 0)
+    for (auto itr = cdata[ct].buffs.begin(), end = cdata[ct].buffs.end();
+         itr != end;)
     {
-        for (int cnt = 0; cnt < 16; ++cnt)
+        auto& buff = *itr;
+        --buff.turns;
+        if (buff.turns <= 0)
         {
-            if (cdata[ct].buffs[cnt].id == 0)
+            if (buff.id == "core.death_word")
             {
-                break;
+                damage_hp(cdata[ct], 9999, -11);
             }
-            --cdata[ct].buffs[cnt].turns;
-            if (cdata[ct].buffs[cnt].turns <= 0)
-            {
-                if (cdata[ct].buffs[cnt].id == 16)
-                {
-                    damage_hp(cdata[ct], 9999, -11);
-                }
-                buff_delete(cdata[ct], cnt);
-                --cnt;
-                continue;
-            }
+            itr = buff_remove_at(cdata[ct], itr);
+        }
+        else
+        {
+            ++itr;
         }
     }
     if (cdata[ct].choked > 0 || cdata[ct].sleep > 0 ||

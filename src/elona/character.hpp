@@ -7,6 +7,7 @@
 
 #include "../util/range.hpp"
 #include "ability.hpp"
+#include "buff.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
@@ -31,15 +32,6 @@ namespace elona
 struct Item;
 struct Inventory;
 using InventoryRef = Inventory*;
-
-
-
-struct Buff
-{
-    int id = 0;
-    int power = 0;
-    int turns = 0;
-};
 
 
 
@@ -343,7 +335,7 @@ public:
     std::vector<EquipmentSlot> equipment_slots;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
-    std::vector<Buff> buffs;
+    BuffList buffs;
     std::vector<int> attr_adjs;
     std::bitset<sizeof(int) * 8 * 50> _flags;
     int _156 = 0;

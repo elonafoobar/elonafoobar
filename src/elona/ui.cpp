@@ -8,6 +8,7 @@
 #include "config.hpp"
 #include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
+#include "data/types/type_buff.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
@@ -592,11 +593,9 @@ void render_buffs()
 
     for (auto&& buff : cdata.player().buffs)
     {
-        if (buff.id == 0)
-            break;
-
         // Icon
-        draw_indexed("core.buff_icon", x, y, buff.id);
+        draw_indexed(
+            "core.buff_icon", x, y, the_buff_db.ensure(buff.id).integer_id);
         // Turns
         mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns

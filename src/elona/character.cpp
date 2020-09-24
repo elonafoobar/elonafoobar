@@ -12,6 +12,7 @@
 #include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character_status.hpp"
@@ -486,7 +487,6 @@ elona_vector1<std::string> usertxt;
 Character::Character()
     : growth_buffs(10)
     , equipment_slots(30)
-    , buffs(16)
     , attr_adjs(10)
 {
 }
@@ -1136,14 +1136,9 @@ void chara_refresh(Character& chara)
     {
         chara.max_hp += 10;
     }
-    for (auto&& buff : chara.buffs)
+    for (const auto& buff : chara.buffs)
     {
-        if (buff.id == 0)
-        {
-            break;
-        }
-        buff_apply(
-            chara, *the_buff_db.get_id_from_integer(buff.id), buff.power);
+        buff_apply(chara, buff.id, buff.power);
     }
     if (chara.combat_style.dual_wield())
     {
@@ -2188,23 +2183,8 @@ void chara_clear_status_effects(Character& chara)
     {
         chara.attr_adjs[cnt] = 0;
     }
-    if (chara.buffs[0].id != 0)
-    {
-        for (int cnt = 0; cnt < 16; ++cnt)
-        {
-            if (chara.buffs[cnt].id == 0)
-            {
-                break;
-            }
-            if (chara.buffs[cnt].id == 13)
-            {
-                continue;
-            }
-            buff_delete(chara, cnt);
-            --cnt;
-            continue;
-        }
-    }
+    buff_remove_if(
+        chara, [](const auto& buff) { return buff.id != "core.punishment"; });
     chara_refresh(chara);
 }
 

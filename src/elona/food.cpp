@@ -4,6 +4,7 @@
 #include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
@@ -242,21 +243,9 @@ void chara_vomit(Character& chara)
     }
 
     // Lose food buff.
-    for (size_t i = 0; i < chara.buffs.size();)
-    {
-        if (chara.buffs[i].id == 0)
-        {
-            break;
-        }
-        if (the_buff_db[chara.buffs[i].id]->type == BuffType::food)
-        {
-            buff_delete(chara, i);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    buff_remove_if(chara, [](const auto& buff) {
+        return the_buff_db[buff.id]->type == BuffType::food;
+    });
 
     // Vomit.
     if (map_data.type != mdata_t::MapType::world_map)
