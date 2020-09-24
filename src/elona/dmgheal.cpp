@@ -124,12 +124,13 @@ Character::State dmgheal_set_death_status(Character& victim)
     else if (victim.role == Role::adventurer)
     {
         new_state = Character::State::adventurer_dead;
-        victim.time_to_revive = game()->date.hours() + 24 + rnd(12);
+        victim.revival_time =
+            game_now() + time::Duration::from_hours(24 + rnd(12));
     }
     else
     {
         new_state = Character::State::villager_dead;
-        victim.time_to_revive = game()->date.hours() + 48;
+        victim.revival_time = game_now() + 3_days;
     }
 
     if (victim.is_ally())

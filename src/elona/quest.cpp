@@ -548,7 +548,7 @@ void quest_refresh_list()
         }
         if (quest_data[cnt].progress == 0)
         {
-            if (quest_data[cnt].deadline_hours < game()->date.hours())
+            if (quest_data[cnt].refresh_time <= game_now())
             {
                 const auto generated = quest_generate(cnt);
                 if (generated)
@@ -578,7 +578,8 @@ bool quest_generate(int quest_idx)
 
     quest.id = 0;
     quest.progress = 0;
-    quest.deadline_hours = (rnd(3) + 1) * 24 + game()->date.hours();
+    quest.refresh_time =
+        game_now() + time::Duration::from_days(rnd(3) + 1) + 1_hour;
     quest.reward_item_id = 0;
 
     if (rnd(3) == 0)
@@ -666,7 +667,8 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+            quest.refresh_time =
+                game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
             quest.id = 1010;
             quest.escort_difficulty = 0;
@@ -701,7 +703,8 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+            quest.refresh_time =
+                game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
             quest.id = 1008;
             quest.escort_difficulty = 0;
@@ -714,7 +717,8 @@ bool quest_generate(int quest_idx)
 
     if (rnd(11) == 0)
     {
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.id = 1007;
         quest.escort_difficulty = rnd(3);
         quest.target_chara_index = 0;
@@ -777,7 +781,8 @@ bool quest_generate(int quest_idx)
             rnd_capped(cdata.player().get_skill(183).level + 10),
             int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
             cdata.player().fame / 1000 + 10);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.reward_item_id = 0;
         quest.id = 1009;
         quest.escort_difficulty = 0;
@@ -797,7 +802,8 @@ bool quest_generate(int quest_idx)
                 rnd_capped(cdata.player().fame / 800 + 1) + 1,
             1,
             50);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.id = 1006;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 5;
@@ -816,7 +822,8 @@ bool quest_generate(int quest_idx)
             1,
             80);
         quest.difficulty = roundmargin(quest.difficulty, cdata.player().level);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.reward_item_id = 0;
         quest.id = 1001;
         quest.escort_difficulty = 0;

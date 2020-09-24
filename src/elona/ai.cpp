@@ -395,7 +395,8 @@ void _proc_drunk_cat(Character& chara)
 
 bool _is_at_night()
 {
-    return game()->date.hour >= 22 || game()->date.hour < 7;
+    const auto t = game_time();
+    return 22 <= t.hour() || t.hour() < 7;
 }
 
 

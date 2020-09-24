@@ -21,6 +21,7 @@
 #include "status_ailment.hpp"
 #include "talk.hpp"
 #include "text.hpp"
+#include "time_utils.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -610,7 +611,7 @@ TalkResult _talk_hv_adventurer_drink(Character& speaker)
 
 TalkResult _talk_hv_adventurer(Character& speaker)
 {
-    if (game()->date.month == 1 && rnd(4))
+    if (game_date().month() == 1 && rnd(4))
     {
         return _talk_hv_adventurer_new_year(speaker);
     }
@@ -665,7 +666,7 @@ int _trainer_calc_skills(Character& speaker)
 {
     int plat = 3;
 
-    game()->last_month_when_trainer_visited = game()->date.month;
+    game()->last_time_when_trainer_visited = game_now();
     buff = i18n::s.get(
         "core.talk.visitor.trainer.dialog.member", guildname(), plat, speaker);
     if (game()->guild.belongs_to_mages_guild != 0)
@@ -726,7 +727,8 @@ TalkResult _talk_hv_trainer(Character& speaker)
 {
     int plat = 0;
 
-    if (game()->last_month_when_trainer_visited == game()->date.month)
+    if (time::utils::is_same_month(
+            game()->last_time_when_trainer_visited, game_now()))
     {
         listmax = 0;
         buff = i18n::s.get(

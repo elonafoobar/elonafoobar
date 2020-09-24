@@ -3,6 +3,7 @@
 #include <vector>
 
 #include "optional.hpp"
+#include "time.hpp"
 
 
 
@@ -26,7 +27,8 @@ struct Quest
 
     int originating_map_id{};
 
-    int deadline_hours{};
+    /// Time when the quest is refreshed.
+    time::Instant refresh_time{};
 
     /**
      * TODO: enum class

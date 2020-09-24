@@ -179,9 +179,10 @@ std::string get_pc_alias()
 std::string get_date()
 {
     // E.g., 517/08/14
-    const auto y = game()->date.year;
-    const auto m = game()->date.month;
-    const auto d = game()->date.day;
+    const auto date = game_date();
+    const auto y = date.year();
+    const auto m = date.month();
+    const auto d = date.day();
     std::stringstream ss;
     ss.width(2);
     ss << y << '/' << m << '/' << d;

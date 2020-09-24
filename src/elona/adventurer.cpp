@@ -43,10 +43,10 @@ void add_news_entry(std::string news_content, bool show_message)
 
 void add_news_topic(const std::string& mark, const std::string& news_content)
 {
-    const auto date = std::to_string(game()->date.year) + "/" +
-        std::to_string(game()->date.month) + "/" +
-        std::to_string(game()->date.day) + " h" +
-        std::to_string(game()->date.hour);
+    const auto dt = game_date_time();
+    const auto date = std::to_string(dt.year()) + "/" +
+        std::to_string(dt.month()) + "/" + std::to_string(dt.day()) + " h" +
+        std::to_string(dt.hour());
     add_news_entry(mark + " " + date + " " + news_content, false);
 }
 
@@ -206,11 +206,11 @@ void adventurer_update()
 {
     for (auto&& adv : cdata.adventurers())
     {
-        if (adv.period_of_contract != 0)
+        if (adv.hire_limit_time != time::Instant::epoch())
         {
-            if (adv.period_of_contract < game()->date.hours())
+            if (adv.hire_limit_time <= game_now())
             {
-                adv.period_of_contract = 0;
+                adv.hire_limit_time = time::Instant::epoch();
                 adv.is_contracting() = false;
                 adv.relationship = 0;
                 txt(i18n::s.get("core.chara.contract_expired", adv));
@@ -225,7 +225,7 @@ void adventurer_update()
             }
             if (adv.state() == Character::State::adventurer_dead)
             {
-                if (game()->date.hours() >= adv.time_to_revive)
+                if (game_now() >= adv.revival_time)
                 {
                     if (rnd(3) == 0)
                     {

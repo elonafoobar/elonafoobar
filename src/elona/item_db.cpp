@@ -102,10 +102,7 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
     case 790: item->function = 15; break;
     case 789: item->function = 15; break;
     case 788: item->skill = 108; break;
-    case 787:
-        item->param2 = 5;
-        item->param3 = 720;
-        break;
+    case 787: item->param2 = 5; break;
     case 786: item->param2 = 4; break;
     case 785: item->param2 = 1; break;
     case 781: item->skill = 101; break;
@@ -128,10 +125,7 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         item->is_precious = true;
         item->param2 = 8;
         break;
-    case 772:
-        item->param1 = 2000;
-        item->param3 = 32;
-        break;
+    case 772: item->param1 = 2000; break;
     case 771: fixlv = Quality::special; break;
     case 767: item->param1 = 0; break;
     case 761:
@@ -790,10 +784,7 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
     case 624: item->is_precious = true; break;
     case 623: item->is_precious = true; break;
     case 622: item->is_precious = true; break;
-    case 618:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
+    case 618: item->param1 = 6000; break;
     case 616: item->is_precious = true; break;
     case 615: item->is_precious = true; break;
     case 613: item->param1 = 180; break;
@@ -825,10 +816,7 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         break;
     case 578: item->function = 11; break;
     case 576: item->function = 10; break;
-    case 573:
-        item->param1 = 8000;
-        item->param3 = 240;
-        break;
+    case 573: item->param1 = 8000; break;
     case 571: item->param2 = 5; break;
     case 570:
         item->charges = 4 + rnd(4) - rnd(4);
@@ -1198,46 +1186,16 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
-    case 354:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 353:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 352:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 351:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 350:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 349:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 348:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 347:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 346:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
-    case 345:
-        item->param1 = 6000;
-        item->param3 = 4;
-        break;
+    case 354: item->param1 = 6000; break;
+    case 353: item->param1 = 6000; break;
+    case 352: item->param1 = 6000; break;
+    case 351: item->param1 = 6000; break;
+    case 350: item->param1 = 6000; break;
+    case 349: item->param1 = 6000; break;
+    case 348: item->param1 = 6000; break;
+    case 347: item->param1 = 6000; break;
+    case 346: item->param1 = 6000; break;
+    case 345: item->param1 = 6000; break;
     case 344: item->param1 = 1; break;
     case 343: item->function = 22; break;
     case 342:
@@ -1312,18 +1270,9 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         item->charges = 3 + rnd(3) - rnd(3);
         item->has_charges = true;
         break;
-    case 261:
-        item->param1 = 6000;
-        item->param3 = 6;
-        break;
-    case 260:
-        item->param1 = 7000;
-        item->param3 = 240;
-        break;
-    case 259:
-        item->param1 = 5000;
-        item->param3 = 24;
-        break;
+    case 261: item->param1 = 6000; break;
+    case 260: item->param1 = 7000; break;
+    case 259: item->param1 = 5000; break;
     case 258: item->param2 = 3; break;
     case 257:
         item->charges = 5 + rnd(5) - rnd(5);
@@ -1430,10 +1379,7 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         item->identify_level = 500;
         fixlv = Quality::special;
         break;
-    case 204:
-        item->param1 = 1000;
-        item->param3 = 4;
-        break;
+    case 204: item->param1 = 1000; break;
     case 203:
         item->charges = 8 + rnd(8) - rnd(8);
         item->has_charges = true;
@@ -1442,90 +1388,30 @@ void item_db_set_full_stats(const ItemRef& item, int integer_id)
         item->charges = 9 + rnd(9) - rnd(9);
         item->has_charges = true;
         break;
-    case 201:
-        item->param1 = 2000;
-        item->param3 = 2;
-        break;
-    case 200:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
-    case 199:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
-    case 198:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
-    case 197:
-        item->param1 = 3000;
-        item->param3 = 12;
-        break;
-    case 196:
-        item->param1 = 3000;
-        item->param3 = 8;
-        break;
-    case 195:
-        item->param1 = 3000;
-        item->param3 = 12;
-        break;
-    case 194:
-        item->param1 = 3000;
-        item->param3 = 8;
-        break;
+    case 201: item->param1 = 2000; break;
+    case 200: item->param1 = 2000; break;
+    case 199: item->param1 = 2000; break;
+    case 198: item->param1 = 2000; break;
+    case 197: item->param1 = 3000; break;
+    case 196: item->param1 = 3000; break;
+    case 195: item->param1 = 3000; break;
+    case 194: item->param1 = 3000; break;
     case 193: item->param1 = 2000; break;
-    case 192:
-        item->param1 = 3000;
-        item->param3 = 16;
-        break;
+    case 192: item->param1 = 3000; break;
     case 191: item->param1 = 4000; break;
     case 190: item->param1 = 2000; break;
-    case 188:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
+    case 188: item->param1 = 2000; break;
     case 187: item->param1 = 2000; break;
-    case 186:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
-    case 185:
-        item->param1 = 2000;
-        item->param3 = 72;
-        break;
-    case 184:
-        item->param1 = 3000;
-        item->param3 = 8;
-        break;
-    case 183:
-        item->param1 = 3000;
-        item->param3 = 16;
-        break;
-    case 182:
-        item->param1 = 3000;
-        item->param3 = 12;
-        break;
-    case 181:
-        item->param1 = 3000;
-        item->param3 = 16;
-        break;
-    case 180:
-        item->param1 = 3000;
-        item->param3 = 16;
-        break;
-    case 179:
-        item->param1 = 2000;
-        item->param3 = 48;
-        break;
-    case 178:
-        item->param1 = 3000;
-        item->param3 = 72;
-        break;
-    case 177:
-        item->param1 = 3000;
-        item->param3 = 72;
-        break;
+    case 186: item->param1 = 2000; break;
+    case 185: item->param1 = 2000; break;
+    case 184: item->param1 = 3000; break;
+    case 183: item->param1 = 3000; break;
+    case 182: item->param1 = 3000; break;
+    case 181: item->param1 = 3000; break;
+    case 180: item->param1 = 3000; break;
+    case 179: item->param1 = 2000; break;
+    case 178: item->param1 = 3000; break;
+    case 177: item->param1 = 3000; break;
     case 176:
         item->charges = 8 + rnd(8) - rnd(8);
         item->has_charges = true;

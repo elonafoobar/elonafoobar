@@ -9,6 +9,7 @@
 #include "data/types/type_item.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
+#include "food.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
@@ -1302,7 +1303,7 @@ void supply_initial_equipments(Character& chara)
                 item->modify_number(rnd(4));
                 if (rnd(2))
                 {
-                    item->param3 = -1;
+                    food_make_rotten(item.unwrap());
                     item->image = 336;
                 }
             }

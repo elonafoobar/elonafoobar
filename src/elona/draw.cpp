@@ -816,30 +816,30 @@ static int _get_map_chip_shadow()
 
     if (map_data.indoors_flag == 2)
     {
-        if (game()->date.hour >= 24 ||
-            (game()->date.hour >= 0 && game()->date.hour < 4))
+        const auto h = game_time().hour();
+        if (h < 4)
         {
             shadow = 110;
         }
-        if (game()->date.hour >= 4 && game()->date.hour < 10)
+        else if (h < 10)
         {
-            shadow = std::min(10, 70 - (game()->date.hour - 3) * 10);
+            shadow = std::min(10, 70 - (h - 3) * 10);
         }
-        if (game()->date.hour >= 10 && game()->date.hour < 12)
+        else if (h < 12)
         {
             shadow = 10;
         }
-        if (game()->date.hour >= 12 && game()->date.hour < 17)
+        else if (h < 17)
         {
             shadow = 1;
         }
-        if (game()->date.hour >= 17 && game()->date.hour < 21)
+        else if (h < 21)
         {
-            shadow = (game()->date.hour - 17) * 20;
+            shadow = (h - 17) * 20;
         }
-        if (game()->date.hour >= 21 && game()->date.hour < 24)
+        else
         {
-            shadow = 80 + (game()->date.hour - 21) * 10;
+            shadow = 80 + (h - 21) * 10;
         }
         if (game()->weather == "core.rain" && shadow < 40)
         {
@@ -849,8 +849,7 @@ static int _get_map_chip_shadow()
         {
             shadow = 65;
         }
-        if (game()->current_map == mdata_t::MapId::noyel &&
-            (game()->date.hour >= 17 || game()->date.hour < 7))
+        if (game()->current_map == mdata_t::MapId::noyel && (h >= 17 || h < 7))
         {
             shadow += 35;
         }

@@ -14,6 +14,7 @@
 #include "enchantment.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -1081,8 +1082,7 @@ void activity_blending_end()
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
-            ++game()->date.hour;
-            weather_changes();
+            game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
             render_hud();
             if (cnt % 5 == 0)
             {
@@ -1091,7 +1091,12 @@ void activity_blending_end()
             }
             redraw();
             await(g_config.animation_wait() * 5);
-            game()->date.minute = 0;
+            {
+                // Backward time travel might cause time paradox!
+                const auto min = game_time().minute();
+                game()->universal_clock.turn_back(
+                    time::Duration::from_minutes(min));
+            }
             --cdata.player().activity.turns;
             if (cdata.player().activity.turns <= 0)
             {

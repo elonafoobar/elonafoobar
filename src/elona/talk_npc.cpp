@@ -258,11 +258,12 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
                 100 +
             2);
     listmax = 0;
-    randomize(area_data[game()->current_map].time_of_next_arena);
+    // vanilla bug?
+    randomize(
+        area_data[game()->current_map].time_of_next_arena.from_epoch().hours());
     if (chatval_ == 21)
     {
-        if (area_data[game()->current_map].time_of_next_arena >
-            game()->date.hours())
+        if (area_data[game()->current_map].time_of_next_arena > game_now())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
@@ -308,8 +309,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     else
     {
-        if (area_data[game()->current_map].time_of_next_rumble >
-            game()->date.hours())
+        if (area_data[game()->current_map].time_of_next_rumble > game_now())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
@@ -337,13 +337,11 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     if (arenaop == 0)
     {
-        area_data[game()->current_map].time_of_next_arena =
-            game()->date.hours() + 24;
+        area_data[game()->current_map].time_of_next_arena = game_now() + 1_day;
     }
     if (arenaop == 1)
     {
-        area_data[game()->current_map].time_of_next_rumble =
-            game()->date.hours() + 24;
+        area_data[game()->current_map].time_of_next_rumble = game_now() + 1_day;
     }
     game()->executing_immediate_quest_type = 1;
     game()->executing_immediate_quest_show_hunt_remain = 1;
@@ -1033,7 +1031,7 @@ TalkResult talk_adventurer_hire(Character& speaker)
         cdata.player().gold -= calc_adventurer_hire_cost(speaker);
         speaker.relationship = 10;
         speaker.is_contracting() = true;
-        speaker.period_of_contract = game()->date.hours() + 168;
+        speaker.hire_limit_time = game_now() + 7_days;
         ++speaker.hire_count;
         snd("core.pray1");
         txt(i18n::s.get("core.talk.npc.adventurer.hire.you_hired", speaker),
@@ -1884,7 +1882,7 @@ TalkResult talk_npc(Character& speaker)
                         }
                     }
                     speaker.interest -= rnd(30);
-                    speaker.time_interest_revive = game()->date.hours() + 8;
+                    speaker.interest_renewal_time = game_now() + 8_hours;
                 }
             }
         }
@@ -2404,7 +2402,7 @@ TalkResult talk_npc(Character& speaker)
     case 55: return talk_spell_writer_reserve(speaker);
     case 56: return talk_sex(speaker);
     case 58: {
-        if (game()->left_turns_of_timestop == 0)
+        if (game()->frozen_turns == 0)
         {
             deferred_event_add("core.guest_visit");
         }

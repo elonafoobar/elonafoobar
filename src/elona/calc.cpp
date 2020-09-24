@@ -397,7 +397,10 @@ int calc_rate_to_pierce(int id)
 
 std::string calc_age(const Character& chara)
 {
-    int n = game()->date.year - chara.birth_year;
+    // Note: In vanilla, `Character::birthday` field contains only year. To
+    // emulate vanilla's behavior, this function intentionally ignores month
+    // and day property.
+    const auto n = game_date().year() - chara.birthday.year();
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 

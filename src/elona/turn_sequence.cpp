@@ -22,6 +22,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
@@ -812,47 +813,10 @@ TurnResult turn_begin()
         }
     }
 
-    game()->date.second += turncost / 5 + 1;
-    if (game()->date.second >= 60)
-    {
-        ++game()->play_turns;
-        if (game()->play_turns % 20 == 0)
-        {
-            monster_respawn();
-        }
-        if (game()->play_turns % 10 == 1)
-        {
-            auto_identify();
-        }
-        game()->date.minute += game()->date.second / 60;
-        if (game()->left_minutes_of_executing_quest > 0)
-        {
-            const auto elapsed_minutes = game()->date.second / 60;
-            const auto previous_left_minutes =
-                game()->left_minutes_of_executing_quest;
-            game()->left_minutes_of_executing_quest -= elapsed_minutes;
-            if (previous_left_minutes / 10 !=
-                game()->left_minutes_of_executing_quest / 10)
-            {
-                txt(i18n::s.get(
-                        "core.quest.minutes_left",
-                        (game()->left_minutes_of_executing_quest + 1)),
-                    Message::color{ColorIndex::cyan});
-            }
-            if (game()->left_minutes_of_executing_quest <= 0)
-            {
-                game()->left_minutes_of_executing_quest = 0;
-                deferred_event_add("core.quest_time_is_up");
-            }
-        }
-        game()->date.second = game()->date.second % 60;
-        if (game()->date.minute >= 60)
-        {
-            game()->date.hour += game()->date.minute / 60;
-            game()->date.minute = game()->date.minute % 60;
-            weather_changes();
-        }
-    }
+    game_advance_clock(
+        time::Duration::from_seconds(turncost / 5 + 1),
+        GameAdvanceClockEvents::all);
+
     return TurnResult::pass_one_turn;
 }
 
@@ -1187,11 +1151,11 @@ TurnResult turn_end()
             }
         }
     }
-    if (game()->left_turns_of_timestop > 0)
+    if (game()->frozen_turns > 0)
     {
-        --game()->left_turns_of_timestop;
+        --game()->frozen_turns;
         if (cdata[ct].state() != Character::State::alive ||
-            game()->left_turns_of_timestop == 0)
+            game()->frozen_turns == 0)
         {
             txt(i18n::s.get("core.action.time_stop.ends"),
                 Message::color{ColorIndex::cyan});

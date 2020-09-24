@@ -207,16 +207,15 @@ TurnResult pc_died()
         last_words = i18n::s.get("core.misc.death.dying_message", inputlog(0));
     }
 
+    const auto date = game_date();
+
     Bone this_death;
     this_death.score = calcscore();
     this_death.alias = cdata.player().alias;
     this_death.name = cdata.player().name;
     this_death.last_words = last_words;
     this_death.date = i18n::s.get(
-        "core.misc.death.date",
-        game()->date.year,
-        game()->date.month,
-        game()->date.day);
+        "core.misc.death.date", date.year(), date.month(), date.day());
     this_death.cause =
         i18n::s.get("core.misc.death.you_died", ndeathcause, mdatan(0));
     this_death.image = cdata.player().image;

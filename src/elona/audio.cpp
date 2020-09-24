@@ -226,7 +226,7 @@ data::InstanceId get_default_music()
             "core.mcDungeon5",
             "core.mcDungeon6",
         };
-        music_id = choices[game()->date.hour % 6];
+        music_id = choices[game_time().hour() % 6];
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon ||
         area_data[game()->current_map].id == mdata_t::MapId::the_void)
@@ -308,7 +308,7 @@ data::InstanceId get_default_music()
             "core.mcField2",
             "core.mcField3",
         };
-        music_id = choices[game()->date.day % 3];
+        music_id = choices[game_date().day() % 3];
     }
 
     return *music_id;

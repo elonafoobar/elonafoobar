@@ -615,7 +615,8 @@ void prompt_hiring()
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        randomize(game()->date.day + cnt);
+        const auto seed = game_date().day() + cnt;
+        randomize(seed);
         if (rnd(2))
         {
             continue;
@@ -629,7 +630,7 @@ void prompt_hiring()
             hire = rnd(isethire.size());
         }
         const auto chara_id = isethire.at(hire).first;
-        randomize(game()->date.day + cnt);
+        randomize(seed);
         flt(20);
         const auto servant = chara_create(-1, chara_id, -3, 0);
         if (!servant)
@@ -1626,7 +1627,7 @@ void supply_income()
         }
         save_trigger_autosaving();
     }
-    if (game()->date.day == 1)
+    if (game_date().day() == 1)
     {
         if (cdata.player().level > 5)
         {

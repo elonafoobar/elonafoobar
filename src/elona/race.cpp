@@ -27,8 +27,14 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     chara.dv_correction_value = data->dv_multiplier;
     chara.pv_correction_value = data->pv_multiplier;
 
-    chara.birth_year = game()->date.year -
-        (rnd(data->max_age - data->min_age + 1) + data->min_age);
+    {
+        const auto age = rnd(data->max_age - data->min_age + 1) + data->min_age;
+        const auto today = game_date();
+        const auto y = today.year();
+        const auto m = today.month();
+        const auto d = today.day();
+        chara.birthday = time::Date{y - age, m, d};
+    }
     chara.height = data->height;
 
     if (mode == 1)

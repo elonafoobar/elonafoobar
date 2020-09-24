@@ -44,11 +44,11 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     {
         return;
     }
-    if (food->param3 <= 0)
+    if (food_is_rotten(food))
     {
         return; // Has already been rotten.
     }
-    if (food->param3 > game()->date.hours())
+    if (game_now() < food->__expiration_time)
     {
         return; // The expiration date has not come yet.
     }
@@ -66,7 +66,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
             return;
         }
         txt(i18n::s.get("core.misc.corpse_is_dried_up", food));
-        food->param3 = game()->date.hours() + 2160;
+        food->__expiration_time = game_now() + 90_days;
         food->image = 337;
         food->id = "core.jerky";
         food->param1 = 0;
@@ -79,7 +79,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
         txt(i18n::s.get("core.misc.get_rotten", food));
     }
 
-    food->param3 = -1;
+    food_make_rotten(food);
     food->image = 336;
 
     if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)
@@ -451,9 +451,9 @@ void make_dish(const ItemRef& food, int dish_rank)
     food->image = picfood(dish_rank, food->param1 / 1000);
     food->weight = 500;
     food->param2 = dish_rank;
-    if (food->material == "core.raw" && 0 <= food->param3)
+    if (food->material == "core.raw" && !food_is_rotten(food))
     {
-        food->param3 = game()->date.hours() + 72;
+        food->__expiration_time = game_now() + 3_days;
     }
 }
 
@@ -695,7 +695,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             }
             if (food->material == "core.raw")
             {
-                if (food->param3 < 0)
+                if (food_is_rotten(food))
                 {
                     txt(i18n::s.get("core.food.effect.rotten"));
                     break;
@@ -746,7 +746,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     else if (food->material == "core.raw")
     {
-        if (food->param3 < 0)
+        if (food_is_rotten(food))
         {
             txt(i18n::s.get("core.food.effect.raw_glum", eater));
         }
@@ -1110,7 +1110,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     {
         if (food->material == "core.raw")
         {
-            if (food->param3 < 0)
+            if (food_is_rotten(food))
             {
                 eat_rotten_food(eater);
             }
@@ -1171,7 +1171,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             i = 1500;
             if (food->material == "core.raw")
             {
-                if (food->param3 < 0)
+                if (food_is_rotten(food))
                 {
                     i = 500;
                 }
@@ -1352,11 +1352,11 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         }
         if (enc_id == 40)
         {
-            if (game()->left_turns_of_timestop == 0)
+            if (game()->frozen_turns == 0)
             {
                 txt(i18n::s.get("core.action.time_stop.begins", eater),
                     Message::color{ColorIndex::cyan});
-                game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
+                game()->frozen_turns = enc.power / 100 + 2;
                 continue;
             }
         }
@@ -1477,6 +1477,23 @@ void foods_get_rotten()
     {
         _food_gets_rotten(-1, item);
     }
+}
+
+
+
+bool food_is_rotten(const ItemRef& food)
+{
+    // return food->__expiration_time == "ROTTEN";
+    return food->__is_rotten;
+}
+
+
+
+void food_make_rotten(const ItemRef& food)
+{
+    // food->__expiration_time = "ROTTEN";
+    food->__expiration_time = time::Instant{};
+    food->__is_rotten = true;
 }
 
 } // namespace elona

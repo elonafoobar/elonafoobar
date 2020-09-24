@@ -77,7 +77,7 @@ bool talk_setup_variables(Character& chara)
             return false;
         }
     }
-    if (game()->date.hours() >= chara.time_interest_revive)
+    if (game_now() >= chara.interest_renewal_time)
     {
         chara.interest = 100;
     }

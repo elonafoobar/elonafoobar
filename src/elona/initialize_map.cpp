@@ -15,6 +15,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
@@ -119,7 +120,7 @@ void _prompt_initialize_map()
 
 void _clear_map_and_objects()
 {
-    map_data.next_regenerate_date = 0;
+    map_data.next_regenerate_date = time::Instant{};
     for (auto&& cnt : cdata.others())
     {
         cnt.set_state(Character::State::empty);
@@ -427,8 +428,9 @@ void _update_adventurers()
 
 bool _should_regenerate_map()
 {
-    return game()->date.hours() >= map_data.next_regenerate_date &&
-        map_data.should_regenerate == 0 && map_data.next_regenerate_date != 0 &&
+    return game_now() >= map_data.next_regenerate_date &&
+        map_data.should_regenerate == 0 &&
+        !map_data.next_regenerate_date.is_epoch() &&
         game()->current_dungeon_level == 1;
 }
 
@@ -462,7 +464,7 @@ void _regenerate_map()
     }
     if (game()->current_map == mdata_t::MapId::noyel)
     {
-        if (game()->date.month == 12)
+        if (game_date().month() == 12)
         {
             if (!area_data[game()->current_map].christmas_festival)
             {
@@ -568,7 +570,8 @@ void _refresh_map_character_other(Character& chara)
     if (map_is_town_or_guild())
     {
         chara.sleep = 0;
-        if (game()->date.hour >= 22 || game()->date.hour < 7)
+        const auto t = game_time();
+        if (22 <= t.hour() || t.hour() < 7)
         {
             if (rnd(6) == 0)
             {
@@ -610,7 +613,7 @@ void _refresh_map_character(Character& cnt)
     }
     if (cnt.state() == Character::State::villager_dead)
     {
-        if (game()->date.hours() >= cnt.time_to_revive)
+        if (game_now() >= cnt.revival_time)
         {
             revive_player(cnt);
         }
@@ -955,7 +958,7 @@ void _update_quest_flags_north_tyris()
         sceneid = 100;
         do_play_scene();
         story_quest_set_progress("core.elona", 200);
-        game()->date.year += 3;
+        game_advance_clock(3_years, GameAdvanceClockEvents::none);
     }
 }
 
@@ -1018,13 +1021,14 @@ void _proc_map_hooks_1()
 
 void _notify_distance_traveled()
 {
-    p = game()->date.hours() - game()->departure_date;
+    const auto elapsed_duration = game_now() - game()->departure_time;
     txt(i18n::s.get(
         "core.map.since_leaving.time_passed",
-        p / 24,
-        p % 24,
+        elapsed_duration.days(),
+        (elapsed_duration - time::Duration::from_days(elapsed_duration.days()))
+            .hours(),
         mapname(game()->left_town_map),
-        cnvdate(game()->departure_date, false)));
+        cnvdate(game()->departure_time.from_epoch().hours(), false)));
     p = 0;
     exp = cdata.player().level * game()->travel_distance *
             cdata.player().get_skill(182).level / 100 +

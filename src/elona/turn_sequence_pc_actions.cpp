@@ -16,6 +16,7 @@
 #include "draw.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -131,8 +132,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (action == "wizard_advance_time")
         {
             dbg_skipevent = 1;
-            ++game()->date.hour;
-            weather_changes();
+            game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
             dbg_skipevent = 0;
             mode = 0;
             return TurnResult::turn_end;

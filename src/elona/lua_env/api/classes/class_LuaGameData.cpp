@@ -1,3 +1,4 @@
+#include "../../../game.hpp"
 #include "../common.hpp"
 
 
@@ -70,13 +71,6 @@ void bind(sol::state& lua)
      * [RW] The number of unpaid bills the player owns.
      */
     LuaGameData.set("left_bills", &Game::left_bills);
-
-    /**
-     * @luadoc date field LuaDateTime
-     *
-     * [R] The current date and time.
-     */
-    LuaGameData.set("date", &Game::date);
 
 
     /**

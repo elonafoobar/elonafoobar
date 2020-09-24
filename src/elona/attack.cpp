@@ -918,13 +918,13 @@ void proc_weapon_enchantments(
         }
         if (enc_id == 40)
         {
-            if (game()->left_turns_of_timestop == 0)
+            if (game()->frozen_turns == 0)
             {
                 if (rnd(25) == 0)
                 {
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
-                    game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
+                    game()->frozen_turns = enc.power / 100 + 2;
                 }
                 continue;
             }
@@ -1019,7 +1019,7 @@ void proc_weapon_enchantments(
     {
         txt(i18n::s.get("core.action.time_stop.begins", attacker),
             Message::color{ColorIndex::cyan});
-        game()->left_turns_of_timestop = 4;
+        game()->frozen_turns = 4;
     }
     if (ammoproc == 3)
     {

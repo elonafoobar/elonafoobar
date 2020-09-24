@@ -72,7 +72,7 @@ bool is_N_or_S(Direction d)
 
 
 
-bool is_E_or_W(Direction d)
+[[maybe_unused]] bool is_E_or_W(Direction d)
 {
     return d == Direction::east || d == Direction::west;
 }

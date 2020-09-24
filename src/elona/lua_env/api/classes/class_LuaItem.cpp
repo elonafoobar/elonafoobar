@@ -89,7 +89,8 @@ void bind(sol::state& lua)
     /**
      * @luadoc charges field num
      *
-     * [RW] The number of charges this item holds (for rods, bait, etc.)
+     * [RW] The number of charges this item holds (for rods, spellbooks, bait,
+     * etc.)
      */
     LuaItem.set(
         "charges",

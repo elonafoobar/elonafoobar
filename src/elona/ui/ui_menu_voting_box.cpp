@@ -17,7 +17,7 @@ namespace ui
 // listn(1, n) => vote count
 bool UIMenuVotingBox::init()
 {
-    _can_vote_now = game()->next_voting_time < game()->date.hours();
+    _can_vote_now = game()->next_voting_time <= game_now();
 
     load_background_variants(4);
     gsel(0);
@@ -66,7 +66,7 @@ bool UIMenuVotingBox::init()
     {
         txt(i18n::s.get(
             "core.net.alias.cannot_vote_until",
-            cnvdate(game()->next_voting_time)));
+            cnvdate(game()->next_voting_time.from_epoch().hours())));
         for (int i = 0; i < listmax; ++i)
         {
             if (i == 0)
@@ -211,7 +211,7 @@ optional<UIMenuVotingBox::ResultType> UIMenuVotingBox::on_key(
             return none;
         }
 
-        game()->next_voting_time = game()->date.hours() + 7 * 24; // 7 days
+        game()->next_voting_time = game_now() + 7_days;
         txt(i18n::s.get("core.net.alias.i_like", listn(0, *idx)));
         txt(i18n::s.get("core.net.alias.you_vote"));
         net_send_vote(id);

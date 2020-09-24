@@ -12,6 +12,7 @@
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
+#include "time.hpp"
 
 
 
@@ -208,6 +209,14 @@ public:
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
+
+
+
+    time::Instant __cooldown_time{};
+    time::Instant __expiration_time{};
+    time::Duration __expiration_duration{};
+    bool __is_rotten{};
+
 
 
     void clear();

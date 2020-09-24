@@ -1023,7 +1023,7 @@ TurnResult do_throw_command_internal(
                         txt(i18n::s.get("core.action.throw.tomato"),
                             Message::color{ColorIndex::blue});
                     }
-                    if (throw_item->param3 == -1)
+                    if (food_is_rotten(throw_item))
                     {
                         if (is_in_fov(cdata[target_index]))
                         {
@@ -1330,7 +1330,7 @@ TurnResult do_offer_command(const ItemRef& offering)
     if (offering->id == "core.corpse")
     {
         i = clamp(offering->weight / 200, 1, 50);
-        if (offering->param3 < 0)
+        if (food_is_rotten(offering))
         {
             i = 1;
         }
@@ -1877,16 +1877,17 @@ TurnResult do_use_command(ItemRef use_item)
 
     if (use_item->has_cooldown_time)
     {
-        if (game()->date.hours() < use_item->charges)
+        if (game_now() < use_item->__cooldown_time)
         {
             txt(i18n::s.get(
                 "core.action.use.useable_again_at",
-                cnvdate(use_item->charges)));
+                cnvdate(use_item->__cooldown_time.from_epoch().hours())));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         item_separate(use_item);
-        use_item->charges = game()->date.hours() + use_item->param3;
+        use_item->__cooldown_time =
+            game_now() + time::Duration::from_hours(use_item->param3);
     }
     if (use_item->has_charges)
     {
@@ -5450,35 +5451,42 @@ PickUpItemResult pick_up_item(
 
     if (mode == 6)
     {
-        if (the_item_db[picked_up_item->id]->category == ItemCategory::food)
+        if (the_item_db[picked_up_item->id]->category == ItemCategory::food &&
+            picked_up_item->material == "core.raw")
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (picked_up_item->param3 > 0)
+                    // cooler box or freezer
+                    if (!picked_up_item->__expiration_duration.is_zero())
                     {
-                        picked_up_item->param3 += game()->date.hours();
+                        picked_up_item->__expiration_time =
+                            game_now() + picked_up_item->__expiration_duration;
+                        picked_up_item->__expiration_duration =
+                            time::Duration::zero();
                     }
                 }
-                else if (
-                    picked_up_item->param3 != 0 &&
-                    picked_up_item->material == "core.raw")
+                else
                 {
-                    picked_up_item->param3 = game()->date.hours() +
-                        the_item_db[picked_up_item->id]->expiration_date;
+                    picked_up_item->__expiration_time =
+                        game_now() +
+                        time::Duration::from_hours(
+                            the_item_db[picked_up_item->id]->expiration_date);
                     if (picked_up_item->param2 != 0)
                     {
-                        picked_up_item->param3 += 72;
+                        picked_up_item->__expiration_time += 3_days;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (picked_up_item->param3 > 0)
+                // cooler box or freezer
+                if (!food_is_rotten(picked_up_item.unwrap()))
                 {
-                    picked_up_item->param3 =
-                        picked_up_item->param3 - game()->date.hours();
+                    picked_up_item->__expiration_duration =
+                        picked_up_item->__expiration_time - game_now();
+                    picked_up_item->__expiration_time = time::Instant{};
                 }
             }
         }

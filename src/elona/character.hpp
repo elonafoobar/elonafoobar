@@ -18,6 +18,7 @@
 #include "position.hpp"
 #include "spact.hpp"
 #include "spell.hpp"
+#include "time.hpp"
 #include "trait.hpp"
 
 
@@ -140,7 +141,7 @@ private:
 public:
     Position position;
     Position next_position;
-    int time_to_revive = 0;
+    time::Instant revival_time{};
     int vision_flag = 0;
     int image = 0;
     int sex = 0;
@@ -150,13 +151,20 @@ public:
     OptionalItemRef ai_item;
     std::string portrait;
     int interest = 0;
-    int time_interest_revive = 0;
+    time::Instant interest_renewal_time{};
     int personality = 0;
     int impression = 0;
     int talk_type = 0;
     int height = 0;
     int weight = 0;
-    int birth_year = 0;
+
+    /// Birthday. Because Date class does not have default constructor (both
+    /// month of 0th and day of 0th are invalid), a dummy value is assgiend
+    /// until character initialization completes. The dummy value is the
+    /// birthday of the green-haired Elea.
+    /// http://elonagather.wiki.fc2.com/wiki/%E4%B8%BB%E8%A6%81%E3%81%AA%E4%BA%BA%E7%89%A9
+    time::Date birthday{493, 12, 26};
+
     int nutrition = 0;
     int can_talk = 0;
     Quality quality = Quality::none;
@@ -209,7 +217,7 @@ public:
     int current_dungeon_level = 0;
     int related_quest_id = 0;
     int direction = 0;
-    int period_of_contract = 0;
+    time::Instant hire_limit_time{};
     int hire_count = 0;
     int insanity = 0;
     int curse_power = 0;
@@ -226,7 +234,7 @@ public:
     int shop_rank = 0;
     int activity_target = 0;
     int shop_store_id = 0;
-    int time_to_restore = 0;
+    time::Instant shop_restock_time{};
     int cnpc_id = 0;
     Position initial_position;
     int hate = 0;

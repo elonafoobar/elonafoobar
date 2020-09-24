@@ -20,6 +20,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -374,7 +375,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0);
     }
-    if (game()->date.hours() >= audience.time_interest_revive)
+    if (game_now() >= audience.interest_renewal_time)
     {
         audience.interest = 100;
     }
@@ -423,7 +424,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     if (performer.is_player())
     {
         audience.interest -= rnd(15);
-        audience.time_interest_revive = game()->date.hours() + 12;
+        audience.interest_renewal_time = game_now() + 12_hours;
     }
     if (audience.interest <= 0)
     {
@@ -846,14 +847,14 @@ void activity_study_start(Character& doer, const ItemRef& textbook)
 
     if (game()->weather == "core.sunny" || game()->weather == "core.rain")
     {
-        if (game()->time_when_textbook_becomes_available > game()->date.hours())
+        if (game()->next_studying_time > game_now())
         {
             txt(i18n::s.get("core.activity.study.start.bored"));
             doer.activity.finish();
             return;
         }
     }
-    game()->time_when_textbook_becomes_available = game()->date.hours() + 48;
+    game()->next_studying_time = game_now() + 2_days;
     if (textbook->id == "core.textbook")
     {
         txt(i18n::s.get(
@@ -891,7 +892,7 @@ void activity_study_doing(Character& doer, const ItemRef& textbook)
         if (map_can_use_bad_weather_in_study())
         {
             p = 5;
-            game()->date.minute += 30;
+            game_advance_clock(30_minutes, GameAdvanceClockEvents::none);
         }
     }
     if (textbook->id == "core.textbook")
@@ -974,7 +975,8 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
     }
     i = cdata.player().get_skill(300).level * 5 +
         cdata.player().get_skill(12).level + 25;
-    if (game()->date.hour >= 19 || game()->date.hour < 7)
+    const auto t = game_time();
+    if (19 <= t.hour() || t.hour() < 7)
     {
         i = i * 15 / 10;
     }
@@ -1643,7 +1645,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
         }
         if (eater.was_passed_item_by_you_just_now())
         {
-            if (food->material == "core.raw" && food->param3 < 0)
+            if (food->material == "core.raw" && food_is_rotten(food))
             {
                 txt(i18n::s.get("core.food.passed_rotten"),
                     Message::color{ColorIndex::cyan});
@@ -2320,15 +2322,19 @@ void sleep_start(const OptionalItemRef& bed)
     timeslept = 7 + rnd(5);
     for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
     {
-        ++game()->date.hour;
-        weather_changes();
+        game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
         if (mode != 9)
         {
             load_sleep_background();
             mode = 9;
         }
         game()->continuous_active_hours = 0;
-        game()->date.minute = 0;
+        {
+            // Backward time travel might cause time paradox!
+            const auto min = game_time().minute();
+            game()->universal_clock.turn_back(
+                time::Duration::from_minutes(min));
+        }
         draw_sleep_background_frame();
         await(g_config.animation_wait() * 25);
     }

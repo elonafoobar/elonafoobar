@@ -46,6 +46,7 @@ set(ELONA_SOURCES
   food.cpp
   fov.cpp
   game.cpp
+  game_clock.cpp
   get_card_info.cpp
   globals.cpp
   god.cpp

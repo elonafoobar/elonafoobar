@@ -26,6 +26,7 @@
 #include "scene.hpp"
 #include "talk.hpp"
 #include "text.hpp"
+#include "time_utils.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 #include "world.hpp"
@@ -757,7 +758,8 @@ void eh_guest_visit(const DeferredEvent&)
     if (rnd(3) == 0)
     {
         flt(0, Quality::good);
-        if ((game()->last_month_when_trainer_visited != game()->date.month ||
+        if ((!time::utils::is_same_month(
+                 game()->last_time_when_trainer_visited, game_now()) ||
              rnd(5) == 0) &&
             rnd(3))
         {
@@ -993,7 +995,7 @@ void eh_god_inside_ehekatl(const DeferredEvent& event)
 
 void eh_lord_of_void(const DeferredEvent&)
 {
-    randomize(game()->date.year + game()->current_dungeon_level);
+    randomize(game_date().year() + game()->current_dungeon_level);
     int c = choice(std::initializer_list<int>{
         300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
         145, 242, 25, 257, 230, 202, 37, 33,  80,  332,

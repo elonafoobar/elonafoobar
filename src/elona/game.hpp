@@ -9,6 +9,7 @@
 #include "deferred_event.hpp"
 #include "item_memory.hpp"
 #include "story_quest.hpp"
+#include "time.hpp"
 #include "version.hpp"
 
 
@@ -18,27 +19,6 @@ namespace elona
 
 template <typename T>
 struct elona_vector1;
-
-
-
-struct DateTime
-{
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
-    int second;
-
-    int hours()
-    {
-        return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
-    }
-
-    // It is for debugging, not for showing to end-users.
-    // E.g., "518/02/03 14:56'30"
-    std::string to_string() const;
-};
 
 
 
@@ -97,6 +77,19 @@ struct Game
     lua_int ex_arena_highest_level{};
 
 
+    /* Time */
+
+    /// Universal clock
+    time::Clock universal_clock{};
+
+    /// The Epoch Year of the game world. E.g., year 123 is 123 years later
+    /// since the epoch.
+    lua_int epoch_year{};
+
+    /// Frozen turn counter during Time Stop caused by some means.
+    lua_int frozen_turns{};
+
+
     /* Memories */
 
     /// Character memories
@@ -118,6 +111,8 @@ struct Game
     /// Normally, it is decremented every 1 hour.
     lua_int weather_change_count{};
 
+    /// Time when Etherwind blew last.
+    time::Instant last_etherwind_time{};
 
     /* Player state */
 
@@ -133,9 +128,11 @@ struct Game
     /// Travel distance between towns. (in miles)
     lua_int travel_distance{};
 
+    /// Next time when the player can study with textbooks.
+    time::Instant next_studying_time{};
+
     // Crafting material bag
     CraftingMaterialBag crafting_materials{};
-
 
 
     /* Quests */
@@ -176,6 +173,12 @@ struct Game
     /// Next shelter serial number
     lua_int next_shelter_serial_number{};
 
+    /// Time when you left a town most recently
+    time::Instant departure_time{};
+
+    /// Next time of alias voting;
+    time::Instant next_voting_time{};
+
 
     int crowd_density;
     int pc_x_in_world_map;
@@ -183,7 +186,6 @@ struct Game
     int play_days;
     int random_seed;
     int random_seed_offset;
-    DateTime date;
     int next_inventory_serial_id;
     int current_map;
     int current_dungeon_level;
@@ -220,7 +222,6 @@ struct Game
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
     int ether_disease_stage;
-    int time_when_textbook_becomes_available;
     int light;
     int continuous_active_hours;
     int activity_about_to_start;
@@ -230,13 +231,11 @@ struct Game
     int character_and_status_for_gene; // the ally who is about to make gene
                                        // with you + (0 if activity not started,
                                        // 10000 if so)
-    int next_voting_time;
     ArrayType<20> ranks;
     ArrayType<9> rank_deadlines;
     ArrayType<5> taken_quests;
     int cost_to_hire;
     int rogue_boss_encountered;
-    int departure_date;
     int left_town_map;
     int mount;
     int map_regenerate_count;
@@ -251,15 +250,13 @@ struct Game
     ArrayType<20> ether_disease_history;
     ArrayType<10> tracked_skills;
     int ether_disease_speed;
-    int left_turns_of_timestop;
     int time_when_uploding_becomes_available;
-    int last_etherwind_month;
     int god_rank;
     int tcg_used_deck;
     int number_of_waiting_guests;
     int politics_map_id;
     int politics_tax_amount;
-    int last_month_when_trainer_visited;
+    time::Instant last_time_when_trainer_visited;
     int next_level_minus_one_kumiromis_experience_becomes_available;
     ArrayType<5> tcg_decks;
     int destination_outer_map;
@@ -278,5 +275,12 @@ const std::unique_ptr<Game>& game();
 
 // TODO: Make gdata class and make this function method.
 void modify_crowd_density(int chara_index, int delta);
+
+
+
+time::Instant game_now();
+time::Date game_date(optional<time::Instant> instant = none);
+time::Time game_time(optional<time::Instant> instant = none);
+time::DateTime game_date_time(optional<time::Instant> instant = none);
 
 } // namespace elona

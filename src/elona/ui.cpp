@@ -619,12 +619,14 @@ void render_analogue_clock()
 {
     const auto& info = get_image_info("core.clock_hand");
 
+    const auto dt = game_date_time();
+
     // Short hand
     draw_rotated(
         "core.clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
-        game()->date.hour * 30 + game()->date.minute / 2);
+        dt.hour() * 30 + dt.minute() / 2);
     // Long hand
     draw_rotated(
         "core.clock_hand",
@@ -632,14 +634,14 @@ void render_analogue_clock()
         inf_clockarrowy,
         info.width / 2,
         info.height,
-        game()->date.minute * 6);
+        dt.minute() * 6);
 
     mes(inf_clockw - 3,
         inf_clocky + 17 + vfix,
-        ""s + game()->date.year + u8"/"s + game()->date.month + u8"/"s +
-            game()->date.day);
+        std::to_string(dt.year()) + "/" + std::to_string(dt.month()) + "/" +
+            std::to_string(dt.day()));
     bmes(
-        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
             i18n::s.get_data_text("core.weather", game()->weather, "name"),
         inf_clockw + 6,
         inf_clocky + 35);
@@ -649,14 +651,13 @@ void render_analogue_clock()
 
 void render_digital_clock()
 {
+    const auto dt = game_date_time();
+
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
     bmes(
         i18n::s.get(
-            "core.ui.digital_clock.time",
-            game()->date.hour,
-            game()->date.minute,
-            game()->date.second),
+            "core.ui.digital_clock.time", dt.hour(), dt.minute(), dt.second()),
         8,
         8);
 
@@ -665,16 +666,13 @@ void render_digital_clock()
     int datex = 8 + 57 + 18;
     bmes(
         i18n::s.get(
-            "core.ui.digital_clock.date",
-            game()->date.year,
-            game()->date.month,
-            game()->date.day),
+            "core.ui.digital_clock.date", dt.year(), dt.month(), dt.day()),
         datex,
         8);
 
     // time of day + weather
     bmes(
-        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
             i18n::s.get_data_text("core.weather", game()->weather, "name"),
         datex + 64 + 12,
         8);
@@ -1113,7 +1111,7 @@ void render_autoturn_animation()
     bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
     draw_rotated(
-        "core.hourglass", sx + 18, sy + 12, game()->date.minute / 4 * 24);
+        "core.hourglass", sx + 18, sy + 12, game_time().minute() / 4 * 24);
 
     if (cdata.player().activity.id == "core.dig_ground" ||
         cdata.player().activity.id == "core.dig_wall" ||

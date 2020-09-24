@@ -460,7 +460,8 @@ void failed_to_place_character(Character& chara)
     if (chara.role == Role::adventurer)
     {
         chara.set_state(Character::State::adventurer_dead);
-        chara.time_to_revive = game()->date.hours() + 24 + rnd(12);
+        chara.revival_time =
+            game_now() + time::Duration::from_hours(24 + rnd(12));
     }
 }
 
@@ -1981,7 +1982,8 @@ void chara_act_hostile_action(Character& attacker, Character& target)
 
 void wake_up()
 {
-    if (game()->date.hour >= 7 && game()->date.hour <= 22)
+    const auto t = game_time();
+    if (7 <= t.hour() && t.hour() <= 22)
     {
         for (auto&& cnt : cdata.others())
         {

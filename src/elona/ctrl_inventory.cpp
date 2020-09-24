@@ -14,6 +14,7 @@
 #include "elona.hpp"
 #include "enums.hpp"
 #include "equipment.hpp"
+#include "food.hpp"
 #include "game.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
@@ -467,7 +468,7 @@ void make_item_list(
                 {
                     continue;
                 }
-                if (item->param3 < 0)
+                if (food_is_rotten(item))
                 {
                     continue;
                 }

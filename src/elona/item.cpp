@@ -123,7 +123,12 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         is_eternal_force == other.is_eternal_force &&
         is_handmade == other.is_handmade &&
         is_showroom_only == other.is_showroom_only &&
-        range::equal(enchantments, other.enchantments);
+        range::equal(enchantments, other.enchantments) &&
+        __cooldown_time == other.__cooldown_time &&
+        __expiration_time == other.__expiration_time &&
+        __expiration_duration == other.__expiration_duration &&
+        __is_rotten == other.__is_rotten &&
+        true;
     /* clang-format on */
 }
 
@@ -1184,7 +1189,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             s_ = ""s + number + u8" " + s_;
         }
     }
-    if (item->material == "core.raw" && item->param3 < 0)
+    if (item->material == "core.raw" && food_is_rotten(item))
     {
         if (jp)
         {
@@ -1593,11 +1598,12 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time && game()->date.hours() < item->charges)
+    if (item->has_cooldown_time && game_now() < item->__cooldown_time)
     {
+        const auto h = (item->__cooldown_time - game_now()).hours();
         s_ += lang(
-            u8"("s + (item->charges - game()->date.hours()) + u8"時間)"s,
-            u8"(Next: "s + (item->charges - game()->date.hours()) + u8"h.)"s);
+            u8"("s + std::to_string(h) + u8"時間)"s,
+            u8"(Next: "s + std::to_string(h) + u8"h.)"s);
     }
     if (item->id == "core.shelter" && item->charges != 0)
     {
@@ -2441,7 +2447,7 @@ void dipcursed(const ItemRef& item)
         if (item->material == "core.raw")
         {
             txt(i18n::s.get("core.action.dip.rots", item));
-            item->param3 = -1;
+            food_make_rotten(item);
             item->image = 336;
         }
         else

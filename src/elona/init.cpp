@@ -82,13 +82,23 @@ void initialize_screen(const PreinitConfigOptions& opts)
 
 
 
+void init_game_clock()
+{
+    game()->epoch_year = 0;
+
+    // 517/08/12 16:10
+    game()->universal_clock.advance(517_years);
+    game()->universal_clock.advance(8_months);
+    game()->universal_clock.advance(12_days);
+    game()->universal_clock.advance(16_hours);
+    game()->universal_clock.advance(10_minutes);
+}
+
+
+
 void initialize_world()
 {
-    game()->date.year = 517;
-    game()->date.month = 8;
-    game()->date.day = 12;
-    game()->date.hour = 16;
-    game()->date.minute = 10;
+    init_game_clock();
 
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
@@ -516,11 +526,7 @@ void initialize_debug_globals()
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    game()->date.year = 517;
-    game()->date.month = 12;
-    game()->date.day = 30;
-    game()->date.hour = 1;
-    game()->date.minute = 10;
+    init_game_clock();
     game()->played_scene = 50;
     game()->has_not_been_to_vernis = 1;
     area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
@@ -660,11 +666,7 @@ void init()
     config_save();
 
     // It is necessary to calculate PC's birth year correctly.
-    game()->date.year = 517;
-    game()->date.month = 8;
-    game()->date.day = 12;
-    game()->date.hour = 16;
-    game()->date.minute = 10;
+    init_game_clock();
 
     quickpage = 1;
 

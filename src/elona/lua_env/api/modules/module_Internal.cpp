@@ -132,7 +132,7 @@ void Internal_strange_scientist_pick_reward()
         {
             continue;
         }
-        randomize(game()->date.day + cnt);
+        randomize(game_date().day() + cnt);
         f = 0;
         if (const auto id = the_item_db.get_id_from_integer(cnt))
         {

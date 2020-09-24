@@ -378,11 +378,14 @@ bool grant_special_wishing(const std::string& wish)
     else if (match_special_wish(wish, "youth", {"youth", "age", "beauty"}))
     {
         txt(i18n::s.get("core.wish.wish_youth"));
-        cdata.player().birth_year += 20;
-        if (cdata.player().birth_year + 12 > game()->date.year)
-        {
-            cdata.player().birth_year = game()->date.year - 12;
-        }
+
+        const auto this_year = game_date().year();
+        const auto youngest_age = 12;
+        const auto y = cdata.player().birthday.year();
+        const auto m = cdata.player().birthday.month();
+        const auto d = cdata.player().birthday.day();
+        const auto new_y = std::min(y + 20, this_year - youngest_age);
+        cdata.player().birthday = time::Date{new_y, m, d};
     }
     else if (match_special_wish(
                  wish, "alias", {"aka", "title", "name", "alias"}))

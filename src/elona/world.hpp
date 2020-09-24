@@ -6,7 +6,7 @@ namespace elona
 {
 
 void weather_changes_by_location(bool output_immediately = true);
-void weather_changes();
+bool weather_changes();
 void initialize_building_data();
 void initialize_economy();
 int initialize_world_map();

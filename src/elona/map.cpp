@@ -20,6 +20,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -88,7 +89,7 @@ void _map_randsite()
 
     if (mdata_t::is_nefia(map_data.type))
     {
-        if (map_data.next_regenerate_date == 0)
+        if (map_data.next_regenerate_date.is_epoch())
         {
             if (rnd(25) == 0)
             {
@@ -530,7 +531,7 @@ void map_calc_trade_goods_price()
         trate(6) = 100;
         trate(7) = 70;
     }
-    randomize(game()->date.hours() / 100);
+    randomize(game_now().from_epoch().hours() / 100);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         trate(cnt) += rnd(15) - rnd(15);
@@ -564,7 +565,7 @@ static void _map_update_arena_random_seed()
 {
     area_data[game()->current_map].arena_random_seed = rnd(10000);
     area_data[game()->current_map].time_of_next_update_of_arena_random_seed =
-        game()->date.hours() + 24;
+        game_now() + 1_day;
 }
 
 
@@ -660,7 +661,7 @@ static void _map_regenerate()
 {
     if (map_data.should_regenerate == 0)
     {
-        if (map_data.next_regenerate_date != 0)
+        if (!map_data.next_regenerate_date.is_epoch())
         {
             _clear_material_spots();
             _modify_items_on_regenerate();
@@ -670,7 +671,7 @@ static void _map_regenerate()
 
         _set_feats_on_regenerate();
     }
-    map_data.next_regenerate_date = game()->date.hours() + 120;
+    map_data.next_regenerate_date = game_now() + 5_days;
 }
 
 
@@ -776,14 +777,13 @@ static void _map_restock_regenerate()
 
 static void _map_restock()
 {
-    if (map_data.next_restock_date == 0)
+    if (map_data.next_restock_date.is_epoch())
     {
         renewmulti = 1;
     }
     else
     {
-        renewmulti =
-            (game()->date.hours() - map_data.next_restock_date) / 24 + 1;
+        renewmulti = (game_now() - map_data.next_restock_date).days() + 1;
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
@@ -809,22 +809,22 @@ static void _map_restock()
     {
         _map_restock_regenerate();
     }
-    map_data.next_restock_date = game()->date.hours() + 24;
+    map_data.next_restock_date = game_now() + 1_day;
 }
 
 
 void map_proc_regen_and_update()
 {
-    if (game()->date.hours() >=
+    if (game_now() >=
         area_data[game()->current_map].time_of_next_update_of_arena_random_seed)
     {
         _map_update_arena_random_seed();
     }
-    if (game()->date.hours() >= map_data.next_regenerate_date)
+    if (game_now() >= map_data.next_regenerate_date)
     {
         _map_regenerate();
     }
-    if (game()->date.hours() >= map_data.next_restock_date)
+    if (game_now() >= map_data.next_restock_date)
     {
         _map_restock();
     }
@@ -1529,9 +1529,9 @@ TurnResult exit_map()
     {
         if (map_is_town_or_guild() ||
             previous_map == mdata_t::MapId::your_home ||
-            game()->departure_date == 0)
+            game()->departure_time.is_epoch())
         {
-            game()->departure_date = game()->date.hours();
+            game()->departure_time = game_now();
             game()->travel_distance = 0;
             game()->left_town_map = previous_map;
         }
@@ -2123,7 +2123,7 @@ void map_global_proc_travel_events(Character& chara)
     }
     if (chara.activity.turns > 0)
     {
-        ++game()->date.minute;
+        game_advance_clock(1_minute, GameAdvanceClockEvents::none);
         return;
     }
     traveldone = 1;

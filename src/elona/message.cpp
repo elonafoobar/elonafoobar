@@ -311,7 +311,7 @@ void Message::_txt_conv()
         {
             std::stringstream ss;
             ss << "[" << std::setw(2) << std::setfill('0')
-               << game()->date.minute << "] ";
+               << game_time().minute() << "] ";
             msgtemp = ss.str() + msgtemp;
         }
         else

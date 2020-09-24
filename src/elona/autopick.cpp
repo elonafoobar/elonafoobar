@@ -4,6 +4,7 @@
 #include "../util/strutil.hpp"
 #include "data/types/type_item.hpp"
 #include "elona.hpp"
+#include "food.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "text.hpp"
@@ -51,7 +52,7 @@ std::vector<ModifierMatcher> _modifier_matchers = {
          return item->identify_state == IdentifyState::completely;
      }},
     {"worthless", [](const ItemRef& item) { return item->value <= 10; }},
-    {"rotten", [](const ItemRef& item) { return item->param3 < 0; }},
+    {"rotten", [](const ItemRef& item) { return food_is_rotten(item); }},
     {"empty",
      [](const ItemRef& item) {
          return the_item_db[item->id]->category == ItemCategory::chest &&

@@ -3842,10 +3842,15 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (efstatus == CurseState::blessed)
             {
-                target_.birth_year += rnd(3) + 1;
-                if (target_.birth_year + 12 > game()->date.year)
                 {
-                    target_.birth_year = game()->date.year - 12;
+                    const auto this_year = game_date().year();
+                    const auto youngest_age = 12;
+                    const auto y = target_.birthday.year();
+                    const auto m = target_.birthday.month();
+                    const auto d = target_.birthday.day();
+                    const auto new_y =
+                        std::min(y + rnd(3) + 1, this_year - youngest_age);
+                    target_.birthday = time::Date{new_y, m, d};
                 }
                 if (is_in_fov(target_))
                 {
@@ -3858,7 +3863,13 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         {
             if (is_cursed(efstatus))
             {
-                target_.birth_year -= rnd(3) + 1;
+                {
+                    const auto y = target_.birthday.year();
+                    const auto m = target_.birthday.month();
+                    const auto d = target_.birthday.day();
+                    const auto new_y = y - (rnd(3) + 1);
+                    target_.birthday = time::Date{new_y, m, d};
+                }
                 if (is_in_fov(target_))
                 {
                     txt(i18n::s.get("core.magic.speed", target_),

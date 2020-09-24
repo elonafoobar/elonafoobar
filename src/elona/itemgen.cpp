@@ -305,6 +305,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     item->quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
+        const auto date = game_date();
         const auto owner = item_get_owner(item).as_character();
         if (owner && owner->role == Role::adventurer)
         {
@@ -313,9 +314,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
                 cnven(iknownnameref(the_item_db[item->id]->integer_id)),
                 *owner,
                 mapname(owner->current_map),
-                game()->date.day,
-                game()->date.month,
-                game()->date.year));
+                date.day(),
+                date.month(),
+                date.year()));
         }
         else
         {
@@ -323,9 +324,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
                 "core.magic.oracle.was_created_at",
                 iknownnameref(the_item_db[item->id]->integer_id),
                 mdatan(0),
-                game()->date.day,
-                game()->date.month,
-                game()->date.year));
+                date.day(),
+                date.month(),
+                date.year()));
         }
     }
 
@@ -483,7 +484,10 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         }
         if (item->material == "core.raw")
         {
-            item->param3 += game()->date.hours();
+            item->__expiration_time =
+                game_now() +
+                time::Duration::from_hours(
+                    the_item_db[item->id]->expiration_date);
         }
     }
 

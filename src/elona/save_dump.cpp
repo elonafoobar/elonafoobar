@@ -22,13 +22,15 @@ namespace elona
 namespace
 {
 
-std::string game_date_time()
+std::string game_date_time_string()
 {
-    const auto Y = std::to_string(game()->date.year);
-    const auto m = std::to_string(game()->date.month);
-    const auto d = std::to_string(game()->date.day);
-    const auto H = std::to_string(game()->date.hour);
-    const auto M = std::to_string(game()->date.minute);
+    const auto dt = game_date_time();
+
+    const auto Y = std::to_string(dt.year());
+    const auto m = std::to_string(dt.month());
+    const auto d = std::to_string(dt.day());
+    const auto H = std::to_string(dt.hour());
+    const auto M = std::to_string(dt.minute());
 
     return Y + u8"年" + m + u8"月" + d + u8"日 " + H + u8"時" + M + u8"分";
 }
@@ -46,7 +48,7 @@ void save_dump_player_info()
     ss << u8"Elona 1.22" << std::endl;
     ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
 
-    ss << u8"キャラクター情報 " << game_date_time() << "  " << mdatan(0)
+    ss << u8"キャラクター情報 " << game_date_time_string() << "  " << mdatan(0)
        << std::endl;
 
     ss << std::endl;
