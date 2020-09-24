@@ -45,18 +45,19 @@ void bind(sol::state& lua)
     LuaGameData.set("home_scale", &Game::home_scale);
 
     /**
-     * @luadoc initial_cart_limit field num
+     * @luadoc initial_max_cargo_weight field num
      *
      * [RW] The player's initial cargo capacity.
      */
-    LuaGameData.set("initial_cart_limit", &Game::initial_cart_limit);
+    LuaGameData.set(
+        "initial_max_cargo_weight", &Game::initial_max_cargo_weight);
 
     /**
-     * @luadoc current_cart_limit field num
+     * @luadoc max_cargo_weight field num
      *
      * [RW] The player's maximum cargo capacity.
      */
-    LuaGameData.set("current_cart_limit", &Game::current_cart_limit);
+    LuaGameData.set("max_cargo_weight", &Game::max_cargo_weight);
 
     /**
      * @luadoc ranks field table

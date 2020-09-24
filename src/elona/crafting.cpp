@@ -137,7 +137,7 @@ void crafting_menu()
             int matuse = 0;
             for (const auto& required_mat : recipe->required_materials)
             {
-                game()->crafting_materials().lose(
+                game()->crafting_materials.lose(
                     *the_crafting_material_db.get_id_from_integer(
                         required_mat.id),
                     required_mat.amount);

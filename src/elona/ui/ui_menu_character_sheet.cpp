@@ -642,8 +642,8 @@ void UIMenuCharacterSheet::_draw_first_page_stats_time()
 
 void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
-    s(0) = ""s + cnvweight(game()->cargo_weight);
-    s(1) = cnvweight(game()->current_cart_limit);
+    s(0) = cnvweight(game()->cargo_weight);
+    s(1) = cnvweight(game()->max_cargo_weight);
     s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
         get_armor_class_name(_chara);
     s(3) = i18n::s.get(

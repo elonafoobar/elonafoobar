@@ -154,6 +154,24 @@ struct Game
     lua_int weather_change_count{};
 
 
+    /* Player state */
+
+    /// Total weight of cargo items on the cart.
+    lua_int cargo_weight{};
+
+    /// Maximum weight of cargo items on the cart.
+    lua_int max_cargo_weight{};
+
+    /// Initial value of @ref max_cargo_weight.
+    lua_int initial_max_cargo_weight{};
+
+    /// Travel distance between towns. (in miles)
+    lua_int travel_distance{};
+
+    // Crafting material bag
+    CraftingMaterialBag crafting_materials{};
+
+
 
     int crowd_density;
     int pc_x_in_world_map;
@@ -197,9 +215,6 @@ struct Game
     int total_deco_value;
     int total_heirloom_value;
     int reset_world_map_in_diastrophism_flag;
-    int cargo_weight;
-    int initial_cart_limit;
-    int current_cart_limit;
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
     int ether_disease_stage;
@@ -222,7 +237,6 @@ struct Game
     int cost_to_hire;
     int rogue_boss_encountered;
     int left_bill;
-    int distance_between_town;
     int departure_date;
     int left_town_map;
     int mount;
@@ -257,15 +271,6 @@ struct Game
 
     QuestFlags quest_flags;
     GuildData guild;
-
-private:
-    CraftingMaterialBag _crafting_materials;
-
-public:
-    CraftingMaterialBag& crafting_materials() noexcept
-    {
-        return _crafting_materials;
-    }
 };
 
 

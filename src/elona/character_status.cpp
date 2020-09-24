@@ -410,10 +410,10 @@ void refresh_speed(Character& chara)
     if (map_data.type == mdata_t::MapType::world_map ||
         map_data.type == mdata_t::MapType::field)
     {
-        if (game()->cargo_weight > game()->current_cart_limit)
+        if (game()->cargo_weight > game()->max_cargo_weight)
         {
             cdata.player().speed_percentage_in_next_turn -= 25 +
-                25 * (game()->cargo_weight / (game()->current_cart_limit + 1));
+                25 * (game()->cargo_weight / (game()->max_cargo_weight + 1));
         }
     }
     gspd = cdata.player().current_speed *

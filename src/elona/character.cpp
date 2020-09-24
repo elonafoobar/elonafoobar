@@ -664,8 +664,8 @@ void initialize_character(Character& chara)
     chara.sp = chara.max_sp;
     if (chara.is_player())
     {
-        game()->initial_cart_limit = 80000;
-        game()->current_cart_limit = game()->initial_cart_limit;
+        game()->initial_max_cargo_weight = 80000;
+        game()->max_cargo_weight = game()->initial_max_cargo_weight;
     }
     if (chara.has_lay_hand())
     {
@@ -2844,7 +2844,7 @@ TurnResult proc_movement_event(Character& chara)
                         220 + cdata.player().level * 10 -
                         clamp(
                             game()->cargo_weight * 150 /
-                                (game()->current_cart_limit + 1),
+                                (game()->max_cargo_weight + 1),
                             0,
                             (210 + cdata.player().level * 10))) == 0)
                 {

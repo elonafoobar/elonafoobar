@@ -397,7 +397,7 @@ MainMenuResult character_making_final_phase()
     }
     else
     {
-        game()->crafting_materials().clear();
+        game()->crafting_materials.clear();
     }
 
     cdata.player().index = 0;

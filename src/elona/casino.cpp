@@ -408,18 +408,18 @@ bool casino_start()
         noteadd(i18n::s.get_enum("core.casino.window.first", 1));
         game()->used_casino_once = 1;
         snd("core.get3");
-        game()->crafting_materials().gain("core.casino_chip", 10);
+        game()->crafting_materials.gain("core.casino_chip", 10);
         noteadd(
             "@BL" +
             i18n::s.get(
                 "core.casino.you_get",
                 10,
                 the_crafting_material_db.get_text("core.casino_chip", "name"),
-                game()->crafting_materials().amount("core.casino_chip")));
+                game()->crafting_materials.amount("core.casino_chip")));
     }
     atxinfon(1) = i18n::s.get(
         "core.casino.chips_left",
-        game()->crafting_materials().amount("core.casino_chip"));
+        game()->crafting_materials.amount("core.casino_chip"));
     atxinfon(2) = "";
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.casino.window.choices.leave");
@@ -462,9 +462,9 @@ bool casino_blackjack()
     noteadd(i18n::s.get_enum("core.casino.blackjack.desc", 3));
     atxinfon(1) = i18n::s.get(
         "core.casino.chips_left",
-        game()->crafting_materials().amount("core.casino_chip"));
+        game()->crafting_materials.amount("core.casino_chip"));
     atxinfon(2) = "";
-    if (game()->crafting_materials().amount("core.casino_chip") <= 0)
+    if (game()->crafting_materials.amount("core.casino_chip") <= 0)
     {
         noteadd(""s);
         noteadd(i18n::s.get("core.casino.blackjack.no_chips"));
@@ -472,19 +472,19 @@ bool casino_blackjack()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.quit");
     ++listmax;
-    if (game()->crafting_materials().amount("core.casino_chip") >= 1)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 1)
     {
         list(0, listmax) = 1;
         listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.bet", 1);
         ++listmax;
     }
-    if (game()->crafting_materials().amount("core.casino_chip") >= 5)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 5)
     {
         list(0, listmax) = 5;
         listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.bet", 5);
         ++listmax;
     }
-    if (game()->crafting_materials().amount("core.casino_chip") >= 20)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 20)
     {
         list(0, listmax) = 20;
         listn(0, listmax) =
@@ -510,12 +510,12 @@ bool casino_blackjack()
         atxinit();
         if (cnt == 0)
         {
-            game()->crafting_materials().lose("core.casino_chip", stake);
+            game()->crafting_materials.lose("core.casino_chip", stake);
             noteadd(i18n::s.get(
                 "core.casino.you_lose",
                 stake,
                 the_crafting_material_db.get_text("core.casino_chip", "name"),
-                game()->crafting_materials().amount("core.casino_chip")));
+                game()->crafting_materials.amount("core.casino_chip")));
         }
         if (cardround == 0)
         {
@@ -597,7 +597,7 @@ bool casino_blackjack()
         }
         atxinfon(1) = i18n::s.get(
             "core.casino.chips_left",
-            game()->crafting_materials().amount("core.casino_chip"));
+            game()->crafting_materials.amount("core.casino_chip"));
         atxinfon(2) = i18n::s.get("core.casino.blackjack.game.bets", stake) +
             " " + i18n::s.get("core.casino.blackjack.game.wins", winrow);
         if (cardround == -1)
@@ -703,7 +703,7 @@ bool casino_blackjack()
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));
                 atxinfon(1) = i18n::s.get(
                     "core.casino.chips_left",
-                    game()->crafting_materials().amount("core.casino_chip"));
+                    game()->crafting_materials.amount("core.casino_chip"));
                 atxinfon(2) =
                     i18n::s.get("core.casino.blackjack.game.bets", stake) +
                     " " +

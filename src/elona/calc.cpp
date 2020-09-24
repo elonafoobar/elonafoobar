@@ -1246,7 +1246,8 @@ int calccargoupdate()
 
 int calccargoupdatecost()
 {
-    return (game()->current_cart_limit - game()->initial_cart_limit) / 10000 +
+    return (game()->max_cargo_weight - game()->initial_max_cargo_weight) /
+        10000 +
         1;
 }
 

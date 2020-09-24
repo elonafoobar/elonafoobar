@@ -33,7 +33,7 @@ static int _can_produce_item(int created_item_id)
 
     for (const auto& required_mat : recipe->required_materials)
     {
-        if (game()->crafting_materials().amount(
+        if (game()->crafting_materials.amount(
                 *the_crafting_material_db.get_id_from_integer(
                     required_mat.id)) < required_mat.amount)
         {
@@ -202,12 +202,12 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
         the_crafting_material_db.get_text(required_mat.id, "name") + " " +
         i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount +
         u8"("s +
-        game()->crafting_materials().amount(
+        game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(required_mat.id)) +
         u8")"s;
 
     const auto text_color =
-        game()->crafting_materials().amount(
+        game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(required_mat.id)) >=
             required_mat.amount
         ? snail::Color{30, 30, 200}

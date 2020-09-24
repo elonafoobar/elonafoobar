@@ -1014,7 +1014,7 @@ void _notify_distance_traveled()
         mapname(game()->left_town_map),
         cnvdate(game()->departure_date, false)));
     p = 0;
-    exp = cdata.player().level * game()->distance_between_town *
+    exp = cdata.player().level * game()->travel_distance *
             cdata.player().get_skill(182).level / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
@@ -1033,22 +1033,17 @@ void _notify_distance_traveled()
     if (p == 1)
     {
         txt(i18n::s.get(
-            "core.map.since_leaving.walked.you",
-            game()->distance_between_town));
+            "core.map.since_leaving.walked.you", game()->travel_distance));
     }
     else
     {
         txt(i18n::s.get(
             "core.map.since_leaving.walked.you_and_allies",
-            game()->distance_between_town));
+            game()->travel_distance));
     }
     chara_gain_skill_exp(
-        cdata.player(),
-        182,
-        25 + game()->distance_between_town * 2 / 3,
-        0,
-        1000);
-    game()->distance_between_town = 0;
+        cdata.player(), 182, 25 + game()->travel_distance * 2 / 3, 0, 1000);
+    game()->travel_distance = 0;
 }
 
 
@@ -1192,7 +1187,7 @@ void _proc_map_hooks_2()
     if (map_is_town_or_guild() ||
         game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game()->distance_between_town >= 16)
+        if (game()->travel_distance >= 16)
         {
             _notify_distance_traveled();
         }

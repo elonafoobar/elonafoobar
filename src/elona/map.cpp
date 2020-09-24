@@ -1532,7 +1532,7 @@ TurnResult exit_map()
             game()->departure_date == 0)
         {
             game()->departure_date = game()->date.hours();
-            game()->distance_between_town = 0;
+            game()->travel_distance = 0;
             game()->left_town_map = previous_map;
         }
         if (area_data[game()->current_map].type !=
@@ -1586,7 +1586,7 @@ TurnResult exit_map()
             Message::instance().buffered_message_append(i18n::s.get(
                 "core.action.exit_map.left", mapname(previous_map)));
         }
-        if (game()->cargo_weight > game()->current_cart_limit)
+        if (game()->cargo_weight > game()->max_cargo_weight)
         {
             if (area_data[game()->current_map].type ==
                     mdata_t::MapType::world_map ||
@@ -2127,7 +2127,7 @@ void map_global_proc_travel_events(Character& chara)
         return;
     }
     traveldone = 1;
-    game()->distance_between_town += 4;
+    game()->travel_distance += 4;
     chara.activity.finish();
 }
 

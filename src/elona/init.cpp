@@ -547,7 +547,7 @@ void initialize_debug_globals()
     refresh_burden_state();
     for (const auto& [id, _] : the_crafting_material_db)
     {
-        game()->crafting_materials().set_amount(id, 200);
+        game()->crafting_materials.set_amount(id, 200);
     }
     create_all_adventurers();
     create_pcpic(cdata.player());

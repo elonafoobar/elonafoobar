@@ -17,7 +17,7 @@ static void _load_materials_list()
     {
         if (const auto id = the_crafting_material_db.get_id_from_integer(cnt))
         {
-            if (game()->crafting_materials().amount(*id) != 0)
+            if (game()->crafting_materials.amount(*id) != 0)
             {
                 list(0, listmax) = cnt;
                 ++listmax;
@@ -101,7 +101,7 @@ void UIMenuMaterials::_draw_single_list_entry_name(int cnt, int list_item)
     std::string mat_name =
         the_crafting_material_db.get_text(list_item, "name") + " " +
         i18n::s.get("core.crafting.menu.x") + " " +
-        game()->crafting_materials().amount(
+        game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(list_item));
     cs_list(cs == cnt, mat_name, wx + 96, wy + 66 + cnt * 19 - 1);
 }
