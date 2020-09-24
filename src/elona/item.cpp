@@ -746,7 +746,7 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level)
     item->identify_state = level;
     if (item->identify_state >= IdentifyState::partly)
     {
-        game()->item_memories().set_identify_state(
+        game()->item_memories.set_identify_state(
             item->id, IdentifyState::partly);
     }
     idtresult = level;
@@ -767,7 +767,7 @@ IdentifyState item_identify(const ItemRef& item, int power)
 
 void item_checkknown(const ItemRef& item)
 {
-    if (game()->item_memories().identify_state(item->id) !=
+    if (game()->item_memories.identify_state(item->id) !=
             IdentifyState::unidentified &&
         item->identify_state == IdentifyState::unidentified)
     {
@@ -2259,7 +2259,7 @@ void auto_identify()
         {
             const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
-            game()->item_memories().set_identify_state(
+            game()->item_memories.set_identify_state(
                 item->id, IdentifyState::partly);
             if (!g_config.hide_autoidentify())
             {

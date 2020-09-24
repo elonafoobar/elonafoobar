@@ -132,6 +132,18 @@ struct Game
     lua_int ex_arena_highest_level{};
 
 
+    /* Memories */
+
+    /// Character memories
+    CharacterMemoryTable character_memories;
+
+    /// Item memories
+    ItemMemoryTable item_memories;
+
+    /// Blending recipe memories
+    BlendingRecipeMemoryTable blending_recipe_memories;
+
+
 
     int crowd_density;
     int pc_x_in_world_map;
@@ -239,30 +251,9 @@ struct Game
     GuildData guild;
 
 private:
-    BlendingRecipeMemoryTable _blending_recipe_memories;
-    CharacterMemoryTable _character_memories;
-    ItemMemoryTable _item_memories;
     CraftingMaterialBag _crafting_materials;
 
 public:
-    BlendingRecipeMemoryTable& blending_recipe_memories() noexcept
-    {
-        return _blending_recipe_memories;
-    }
-
-
-    CharacterMemoryTable& character_memories() noexcept
-    {
-        return _character_memories;
-    }
-
-
-    ItemMemoryTable& item_memories() noexcept
-    {
-        return _item_memories;
-    }
-
-
     CraftingMaterialBag& crafting_materials() noexcept
     {
         return _crafting_materials;

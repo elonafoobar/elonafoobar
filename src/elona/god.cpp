@@ -586,7 +586,7 @@ TurnResult do_pray()
             }
             if (item_id != 0)
             {
-                if (game()->item_memories().generate_count(
+                if (game()->item_memories.generate_count(
                         *the_item_db.get_id_from_integer(item_id)) != 0)
                 {
                     item_id = 559;
@@ -657,7 +657,7 @@ TurnResult do_pray()
             {
                 item_id = 675;
             }
-            if (game()->item_memories().generate_count(
+            if (game()->item_memories.generate_count(
                     *the_item_db.get_id_from_integer(item_id)) != 0)
             {
                 item_id = 621;

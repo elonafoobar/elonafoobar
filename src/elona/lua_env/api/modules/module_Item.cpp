@@ -249,14 +249,13 @@ int Item_memory(int type, const std::string& id)
 
     switch (type)
     {
-    case 0: return game()->item_memories().generate_count(data->id);
+    case 0: return game()->item_memories.generate_count(data->id);
     case 1:
-        return static_cast<int>(
-            game()->item_memories().identify_state(data->id));
+        return static_cast<int>(game()->item_memories.identify_state(data->id));
     case 2:
-        return game()->item_memories()._is_reserved(data->id)
+        return game()->item_memories._is_reserved(data->id)
             ? 2
-            : (game()->item_memories().is_decoded(data->id) ? 1 : 0);
+            : (game()->item_memories.is_decoded(data->id) ? 1 : 0);
     default: return 0;
     }
 }

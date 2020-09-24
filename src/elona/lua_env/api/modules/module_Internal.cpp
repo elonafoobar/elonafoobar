@@ -221,7 +221,7 @@ void Internal_strange_scientist_pick_reward()
         f = 0;
         if (const auto id = the_item_db.get_id_from_integer(cnt))
         {
-            if (game()->item_memories().identify_state(*id) !=
+            if (game()->item_memories.identify_state(*id) !=
                 IdentifyState::unidentified)
             {
                 f = 1;

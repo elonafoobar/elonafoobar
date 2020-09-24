@@ -4256,7 +4256,7 @@ int decode_book(Character& reader, const ItemRef& book)
             return 1;
         }
         txt(i18n::s.get("core.action.read.recipe.learned", book));
-        game()->blending_recipe_memories().increment_read_count(
+        game()->blending_recipe_memories.increment_read_count(
             *the_blending_recipe_db.get_id_from_integer(book->subname));
         item_identify(book, IdentifyState::partly);
         book->modify_number(-1);
@@ -4294,9 +4294,9 @@ int decode_book(Character& reader, const ItemRef& book)
                         1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
-        if (!game()->item_memories().is_decoded(book->id))
+        if (!game()->item_memories.is_decoded(book->id))
         {
-            game()->item_memories().set_decoded(book->id, true);
+            game()->item_memories.set_decoded(book->id, true);
         }
     }
     item_identify(book, IdentifyState::partly);

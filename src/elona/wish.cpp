@@ -547,7 +547,7 @@ bool wish_for_item(Character& chara, const std::string& input)
                 // Remove this item and retry.
                 selector.remove(id);
                 item->remove();
-                game()->item_memories().decrement_generate_count(item->id);
+                game()->item_memories.decrement_generate_count(item->id);
                 continue;
             }
         }

@@ -1175,7 +1175,7 @@ void blending_clear_recipe_memory()
     {
         if (recipe_data.known)
         {
-            game()->blending_recipe_memories().set_read_count(id, 1);
+            game()->blending_recipe_memories.set_read_count(id, 1);
         }
     }
 }
@@ -1266,7 +1266,7 @@ TurnResult blending_menu()
             listmax = 0;
             for (const auto& [id, recipe_data] : the_blending_recipe_db)
             {
-                if (game()->blending_recipe_memories().read_count(id) > 0)
+                if (game()->blending_recipe_memories.read_count(id) > 0)
                 {
                     list(0, listmax) = recipe_data.integer_id;
                     list(1, listmax) = recipe_data.integer_id;
