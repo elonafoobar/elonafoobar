@@ -106,7 +106,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         param3 == other.param3 &&
         param4 == other.param4 &&
         identify_level == other.identify_level &&
-        // turn == other.turn &&
+        // _z_order == other._z_order &&
         is_acidproof == other.is_acidproof &&
         is_fireproof == other.is_fireproof &&
         is_coldproof == other.is_coldproof &&
@@ -496,11 +496,11 @@ void cell_refresh(int x, int y)
     {
         range::sort(items, [](const auto& i1, const auto& i2) {
             const auto t1 = i1
-                ? i1->turn
-                : std::numeric_limits<decltype(Item::turn)>::max();
+                ? i1->_z_order
+                : std::numeric_limits<decltype(Item::_z_order)>::max();
             const auto t2 = i2
-                ? i2->turn
-                : std::numeric_limits<decltype(Item::turn)>::max();
+                ? i2->_z_order
+                : std::numeric_limits<decltype(Item::_z_order)>::max();
             return t1 < t2;
         });
     }
@@ -526,12 +526,12 @@ void cell_refresh(int x, int y)
 
 void itemturn(const ItemRef& item)
 {
-    ++game()->item_turns;
-    if (game()->item_turns < 0)
+    ++game()->next_item_z_order;
+    if (game()->next_item_z_order < 0)
     {
-        game()->item_turns = 1;
+        game()->next_item_z_order = 1;
     }
-    item->turn = game()->item_turns;
+    item->_z_order = game()->next_item_z_order;
 }
 
 
@@ -2111,8 +2111,8 @@ void item_drop(
     if (building_shelter)
     {
         dropped_item->own_state = OwnState::shelter;
-        dropped_item->charges = game()->next_shelter_serial_id + 100;
-        ++game()->next_shelter_serial_id;
+        dropped_item->charges = game()->next_shelter_serial_number + 100;
+        ++game()->next_shelter_serial_number;
     }
     else
     {
@@ -2201,7 +2201,7 @@ std::vector<int> item_get_inheritance(const ItemRef& item)
 {
     std::vector<int> result;
 
-    randomize(item->turn + 1);
+    randomize(item->_z_order + 1);
     for (int _i = 0; _i < 10; ++_i)
     {
         const auto enc_index =

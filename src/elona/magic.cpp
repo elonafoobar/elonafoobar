@@ -2557,12 +2557,12 @@ bool _magic_1128(Character& subject)
     }
     snd("core.ding2");
     p = rnd_capped(efp + 1) / 100 + 1;
-    game()->rights_to_succeed_to += p;
+    game()->inheritance_rights += p;
     txt(i18n::s.get("core.magic.deed_of_inheritance.claim", p(0)),
         Message::color{ColorIndex::orange});
     txt(i18n::s.get(
         "core.magic.deed_of_inheritance.can_now_inherit",
-        game()->rights_to_succeed_to));
+        game()->inheritance_rights));
     return true;
 }
 

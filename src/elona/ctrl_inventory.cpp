@@ -1444,7 +1444,7 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 1)
         {
-            if (game()->rights_to_succeed_to < 1)
+            if (game()->inheritance_rights < 1)
             {
                 txt(i18n::s.get("core.ui.inv.take.no_claim"));
                 return OnEnterResult{2};
@@ -1584,12 +1584,12 @@ OnEnterResult on_enter_external_inventory(
     {
         if (invctrl(1) == 1)
         {
-            --game()->rights_to_succeed_to;
+            --game()->inheritance_rights;
             if (invctrl(1) == 1)
             {
                 txt(i18n::s.get(
                     "core.ui.inv.take.can_claim_more",
-                    game()->rights_to_succeed_to));
+                    game()->inheritance_rights));
             }
         }
         if (invctrl(1) == 4)
@@ -2155,7 +2155,7 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
             txt(i18n::s.get("core.ui.inv.put.tax.not_enough_money"));
             return OnEnterResult{2};
         }
-        if (game()->left_bill <= 0)
+        if (game()->left_bills <= 0)
         {
             snd("core.fail1");
             txt(i18n::s.get("core.ui.inv.put.tax.do_not_have_to"));
@@ -2166,7 +2166,7 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
         txt(i18n::s.get("core.ui.inv.put.tax.you_pay", selected_item),
             Message::color{ColorIndex::green});
         selected_item->modify_number(-1);
-        --game()->left_bill;
+        --game()->left_bills;
         screenupdate = -1;
         update_screen();
         return OnEnterResult{1};

@@ -149,6 +149,33 @@ struct Game
     /// Deferred events
     DeferredEventQueue deferred_events{};
 
+    /// Amount of the water which the holy well holds.
+    lua_int holy_well_amount{};
+
+    /// Wish count
+    lua_int wish_count{};
+
+    /// Lost wallet count
+    lua_int lost_wallet_count{};
+
+    /// Flag for Easter Egg event (Angband's "Qy@")
+    lua_int angband_flag{};
+
+    /// Left bills
+    lua_int left_bills{};
+
+    /// Number of inheritance rights you currently have
+    lua_int inheritance_rights{};
+
+    /// Whether you used casino at least once or not
+    bool used_casino_once{};
+
+    /// Next `Item::_z_order`. See documentation of `Item::_z_order`.
+    lua_int next_item_z_order{};
+
+    /// Next shelter serial number
+    lua_int next_shelter_serial_number{};
+
 
     int crowd_density;
     int pc_x_in_world_map;
@@ -163,13 +190,11 @@ struct Game
     int home_scale;
     int charge_power;
     int entrance_type;
-    int next_shelter_serial_id;
     int seven_league_boot_effect;
     int protects_from_etherwind;
     int player_next_move_direction;
     int played_scene;
     int torch;
-    int angband_flag;
     int number_of_learned_skills_by_trainer;
     ArrayType<20> skill_shortcuts;
     int player_x_on_map_leave;
@@ -201,9 +226,7 @@ struct Game
     int activity_about_to_start;
     int sleep_experience;
     int acquirable_feat_count;
-    int wish_count;
     int version;
-    int rights_to_succeed_to;
     int character_and_status_for_gene; // the ally who is about to make gene
                                        // with you + (0 if activity not started,
                                        // 10000 if so)
@@ -213,7 +236,6 @@ struct Game
     ArrayType<5> taken_quests;
     int cost_to_hire;
     int rogue_boss_encountered;
-    int left_bill;
     int departure_date;
     int left_town_map;
     int mount;
@@ -222,11 +244,9 @@ struct Game
     int void_next_lord_floor;
     int reveals_religion;
     ArrayType<18> exhelp_flags;
-    int used_casino_once;
     int has_not_been_to_vernis;
     int released_fire_giant;
     int fire_giant;
-    int holy_well_count;
     int diastrophism_flag;
     ArrayType<20> ether_disease_history;
     ArrayType<10> tracked_skills;
@@ -240,11 +260,9 @@ struct Game
     int politics_map_id;
     int politics_tax_amount;
     int last_month_when_trainer_visited;
-    int item_turns;
     int next_level_minus_one_kumiromis_experience_becomes_available;
     ArrayType<5> tcg_decks;
     int destination_outer_map;
-    int lost_wallet_count;
 
     GuildData guild;
 };

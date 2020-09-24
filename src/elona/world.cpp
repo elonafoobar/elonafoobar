@@ -303,7 +303,7 @@ void weather_changes()
             game()->date.day = game()->date.day - 30;
             if (game()->date.month % 2 == 0)
             {
-                ++game()->holy_well_count;
+                ++game()->holy_well_amount;
             }
         }
         if (game()->date.month >= 13)

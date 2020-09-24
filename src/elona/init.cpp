@@ -497,7 +497,7 @@ void initialize_debug_globals()
     }
     game()->version = 1220;
     game()->next_inventory_serial_id = 1000;
-    game()->next_shelter_serial_id = 100;
+    game()->next_shelter_serial_number = 100;
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
     game()->random_seed = 1 + rnd(2000000000);
@@ -528,7 +528,7 @@ void initialize_debug_globals()
     game()->destination_outer_map = area_data[game()->current_map].outer_map;
     game()->acquirable_feat_count = 2;
     story_quest_set_ext("core.little_sister", "core.save_count", lua_int{1000});
-    game()->rights_to_succeed_to = 1000;
+    game()->inheritance_rights = 1000;
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
     game()->charge_power = 1000;
@@ -588,7 +588,7 @@ void initialize_game()
     if (mode == 2)
     {
         game()->next_inventory_serial_id = 1000;
-        game()->next_shelter_serial_id = 100;
+        game()->next_shelter_serial_number = 100;
         blending_clear_recipe_memory();
     }
     if (mode == 3)

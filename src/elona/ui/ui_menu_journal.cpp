@@ -137,7 +137,7 @@ bool UIMenuJournal::init()
         (game()->cost_to_hire + calccostbuilding() + calccosttax())));
     noteadd(""s);
     noteadd(
-        i18n::s.get("core.ui.journal.income.bills.unpaid", game()->left_bill));
+        i18n::s.get("core.ui.journal.income.bills.unpaid", game()->left_bills));
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;

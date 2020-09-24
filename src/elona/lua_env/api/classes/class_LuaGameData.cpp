@@ -31,11 +31,11 @@ void bind(sol::state& lua)
         lua.new_usertype<Game>("LuaGameData", sol::no_constructor);
 
     /**
-     * @luadoc holy_well_count field num
+     * @luadoc holy_well_amount field num
      *
      * [RW] The amount of the water which the the holy well has.
      */
-    LuaGameData.set("holy_well_count", &Game::holy_well_count);
+    LuaGameData.set("holy_well_amount", &Game::holy_well_amount);
 
     /**
      * @luadoc home_scale field num
@@ -65,11 +65,11 @@ void bind(sol::state& lua)
     LuaGameData.set("ranks", &Game::ranks);
 
     /**
-     * @luadoc left_bill field num
+     * @luadoc left_bills field num
      *
      * [RW] The number of unpaid bills the player owns.
      */
-    LuaGameData.set("left_bill", &Game::left_bill);
+    LuaGameData.set("left_bills", &Game::left_bills);
 
     /**
      * @luadoc date field LuaDateTime

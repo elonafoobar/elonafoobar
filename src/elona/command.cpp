@@ -1666,7 +1666,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             {
                 if (mix_target->param1 < -5 || mix_target->param3 >= 20 ||
                     (mix_target->id == "core.holy_well" &&
-                     game()->holy_well_count <= 0))
+                     game()->holy_well_amount <= 0))
                 {
                     txt(i18n::s.get(
                         "core.action.dip.result.natural_potion_dry",
@@ -1683,7 +1683,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                 OptionalItemRef natural_potion;
                 if (mix_target->id == "core.holy_well")
                 {
-                    --game()->holy_well_count;
+                    --game()->holy_well_amount;
                     flt();
                     if ((natural_potion = itemcreate_player_inv(516, 0)))
                     {
@@ -2876,8 +2876,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         if (invfile == 3)
         {
             txt(i18n::s.get(
-                "core.ui.inv.take.can_claim_more",
-                game()->rights_to_succeed_to));
+                "core.ui.inv.take.can_claim_more", game()->inheritance_rights));
             invctrl(1) = 1;
         }
         if (invfile == 6 || invcontainer(1) == 641)
@@ -4629,7 +4628,7 @@ int drink_potion(Character& chara, const OptionalItemRef& potion)
 int drink_well(Character& chara, const ItemRef& well)
 {
     if (well->param1 < -5 || well->param3 >= 20 ||
-        (well->id == "core.holy_well" && game()->holy_well_count <= 0))
+        (well->id == "core.holy_well" && game()->holy_well_amount <= 0))
     {
         const auto valn = itemname(well);
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
@@ -4800,7 +4799,7 @@ int drink_well(Character& chara, const ItemRef& well)
     }
     if (well->id == "core.holy_well")
     {
-        --game()->holy_well_count;
+        --game()->holy_well_amount;
     }
     else
     {

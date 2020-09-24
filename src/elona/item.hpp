@@ -99,7 +99,14 @@ public:
     int param3 = 0;
     int param4 = 0;
     lua_int identify_level{};
-    lua_int turn{};
+
+    /// Z-order of the item. Items on the ground are sorted and displayed so
+    /// that the last placed item is at the top, as in the real world. The
+    /// field, `_z_order`, determines the ordering, the larger the item's
+    /// `_z_order` is, the higher it is placed on. Note that it is *not*
+    /// absolute height, but relative one. The value is reset to
+    /// `Game::next_item_z_order` when the item is put on the ground.
+    lua_int _z_order{};
 
     bool is_acidproof{};
     bool is_fireproof{};

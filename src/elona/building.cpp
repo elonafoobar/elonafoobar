@@ -1643,13 +1643,13 @@ void supply_income()
                 item->subname = item->subname * (100 + rnd(20)) / 100;
             }
             mode = 0;
-            ++game()->left_bill;
+            ++game()->left_bills;
             txt(i18n::s.get("core.misc.tax.bill"));
-            if (game()->left_bill > 1)
+            if (game()->left_bills > 1)
             {
-                if (game()->left_bill <= 4)
+                if (game()->left_bills <= 4)
                 {
-                    if (game()->left_bill > 3)
+                    if (game()->left_bills > 3)
                     {
                         s(0) = i18n::s.get("core.misc.tax.warning");
                         s(1) = i18n::s.get("core.misc.tax.have_to_go_embassy");
@@ -1662,14 +1662,15 @@ void supply_income()
                     txt(s +
                             i18n::s.get(
                                 "core.misc.tax.left_bills",
-                                game()->left_bill - 1) +
+                                game()->left_bills - 1) +
                             s(1),
                         Message::color{ColorIndex::red});
                 }
             }
-            if (game()->left_bill > 4)
+            if (game()->left_bills > 4)
             {
-                txt(i18n::s.get("core.misc.tax.accused", game()->left_bill - 1),
+                txt(i18n::s.get(
+                        "core.misc.tax.accused", game()->left_bills - 1),
                     Message::color{ColorIndex::red});
                 int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
