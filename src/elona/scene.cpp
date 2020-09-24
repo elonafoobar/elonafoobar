@@ -410,8 +410,8 @@ void conquer_lesimas()
         wy + 116,
         i18n::s.get(
             "core.win.window.have_killed",
-            game()->deepest_dungeon_level,
-            game()->kill_count));
+            game()->deepest_dungeon_danger_level,
+            game()->total_kill_count));
     mes(wx + 40, wy + 146, i18n::s.get("core.win.window.score", calcscore()));
     mes(wx + 40,
         wy + 186,

@@ -37,7 +37,7 @@ int64_t now_unix_time()
 
 int64_t get_played_seconds()
 {
-    return game()->play_time;
+    return game()->play_seconds_in_real_world;
 }
 
 

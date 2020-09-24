@@ -107,11 +107,33 @@ struct Game
     template <size_t N>
     using ArrayType = std::array<int, N>;
 
-    int death_count;
-    int deepest_dungeon_level;
-    int kill_count;
+
+    /* Game statistics */
+
+    /// The deepest dungeon danger level the player have visited.
+    lua_int deepest_dungeon_danger_level{};
+
+    /// Total death count of player and your allies.
+    lua_int total_death_count{};
+
+    /// Total kill count of player and your allies.
+    lua_int total_kill_count{};
+
+    /// Play turns
+    lua_int play_turns{};
+
+    /// Play time in seconds (in the real world)
+    lua_int play_seconds_in_real_world{};
+
+    /// Ex arena stats: number of your team's wins
+    lua_int ex_arena_wins{};
+
+    /// Ex arena stats: the highest character level which your team has beated
+    lua_int ex_arena_highest_level{};
+
+
+
     int crowd_density;
-    int play_turns;
     int pc_x_in_world_map;
     int pc_y_in_world_map;
     int play_days;
@@ -199,10 +221,7 @@ struct Game
     ArrayType<10> tracked_skills;
     int ether_disease_speed;
     int left_turns_of_timestop;
-    int ex_arena_wins;
-    int ex_arena_level;
     int time_when_uploding_becomes_available;
-    int play_time;
     int last_etherwind_month;
     int god_rank;
     int tcg_used_deck;

@@ -5,6 +5,7 @@
 #include "enums.hpp"
 #include "eobject/forward.hpp"
 #include "optional.hpp"
+#include "typedefs.hpp"
 
 
 
@@ -103,7 +104,7 @@ int calc_spell_power(const Character& caster, int id);
 int calc_spell_success_rate(const Character& caster, int id);
 int calc_spell_cost_mp(const Character& caster, int id);
 int calc_spell_cost_stock(const Character& caster, int id);
-int calcscore();
+lua_int calcscore();
 void calcpartyscore();
 void calcpartyscore2();
 

@@ -67,11 +67,13 @@ void _update_dungeon_level()
         game()->current_dungeon_level =
             area_data[game()->current_map].danger_level;
     }
-    if (game()->deepest_dungeon_level < game()->current_dungeon_level)
+    // TODO danger level
+    if (game()->deepest_dungeon_danger_level < game()->current_dungeon_level)
     {
         if (game()->current_map != mdata_t::MapId::shelter_)
         {
-            game()->deepest_dungeon_level = game()->current_dungeon_level;
+            game()->deepest_dungeon_danger_level =
+                game()->current_dungeon_level;
         }
     }
     if (area_data[game()->current_map].visited_deepest_level <

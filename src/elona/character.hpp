@@ -290,6 +290,14 @@ public:
     int _203 = 0;
     Position target_position;
 
+
+    /// Death count
+    lua_int death_count;
+
+    /// Kill count
+    lua_int kill_count;
+
+
     std::string name;
     std::string alias;
     data::InstanceId race;

@@ -1523,16 +1523,17 @@ int calc_spell_cost_stock(const Character& caster, int id)
 
 
 
-int calcscore()
+lua_int calcscore()
 {
-    int score = cdata.player().level * cdata.player().level +
-        game()->deepest_dungeon_level * game()->deepest_dungeon_level +
-        game()->kill_count;
-    if (game()->death_count > 1)
-    {
-        score = score / 10 + 1;
-    }
-    return score;
+    const auto L = cdata.player().level;
+    const auto D = game()->deepest_dungeon_danger_level;
+    const auto K = game()->total_kill_count;
+
+    const auto S = L * L + D * D + K;
+    if (cdata.player().death_count <= 1)
+        return S;
+    else
+        return S / 10 + 1;
 }
 
 

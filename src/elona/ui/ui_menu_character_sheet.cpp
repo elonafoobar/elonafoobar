@@ -627,9 +627,11 @@ void UIMenuCharacterSheet::_draw_first_page_stats_time()
         "core.ui.chara_sheet.time.turn_counter", game()->play_turns);
     s(1) =
         i18n::s.get("core.ui.chara_sheet.time.days_counter", game()->play_days);
-    s(2) = ""s + game()->kill_count;
+    s(2) = std::to_string(game()->total_kill_count);
     s(3) = ""s +
-        cnvplaytime((game()->play_time + timeGetTime() / 1000 - time_begin));
+        cnvplaytime(
+               (game()->play_seconds_in_real_world + timeGetTime() / 1000 -
+                time_begin));
     s(4) = "";
     s(5) = "";
     for (int cnt = 0; cnt < 5; ++cnt)
@@ -646,7 +648,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
         get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
-        cnvrank(game()->deepest_dungeon_level));
+        cnvrank(game()->deepest_dungeon_danger_level));
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         mes(wx + 287 + en * 14, wy + 299 + cnt * 15, s(cnt));

@@ -1050,9 +1050,10 @@ int damage_hp(
             animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim.is_player())
+        ++victim.death_count;
+        if (victim.is_player_or_ally())
         {
-            ++game()->death_count;
+            ++game()->total_death_count;
         }
         if (victim.index == g_chara_last_attacked_by_player)
         {
@@ -2082,11 +2083,12 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
     }
 
     int karma = 0;
+    ++killer_chara->kill_count;
     if (killer_chara->is_player() || killer_chara->relationship >= 10)
     {
         if (!victim.is_player_or_ally())
         {
-            ++game()->kill_count;
+            ++game()->total_kill_count;
             if (victim.id == int2charaid(game()->guild.fighters_guild_target))
             {
                 if (game()->guild.fighters_guild_quota > 0)

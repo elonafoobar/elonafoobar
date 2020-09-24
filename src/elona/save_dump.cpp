@@ -75,20 +75,23 @@ void save_dump_player_info()
        << fixtxt(u8"経過ターン: " + std::to_string(game()->play_turns), 32)
        << std::endl;
     ss << fixtxt(u8"金貨       : " + std::to_string(cdata.player().gold), 30)
-       << fixtxt(u8"殺害数    : " + std::to_string(game()->kill_count), 32)
+       << fixtxt(
+              u8"殺害数    : " + std::to_string(game()->total_kill_count), 32)
        << std::endl;
     ss << fixtxt(
               u8"プラチナ   : " + std::to_string(cdata.player().platinum_coin),
               30)
        << fixtxt(
-              u8"最深到達  : " + std::to_string(game()->deepest_dungeon_level) +
+              u8"最深到達  : " +
+                  std::to_string(game()->deepest_dungeon_danger_level) +
                   u8"階相当",
               32)
        << std::endl;
     ss << fixtxt(
               u8"プレイ時間 : "s +
                   cnvplaytime(
-                      (game()->play_time + timeGetTime() / 1000 - time_begin)),
+                      (game()->play_seconds_in_real_world +
+                       timeGetTime() / 1000 - time_begin)),
               30)
        << std::endl;
 

@@ -112,7 +112,7 @@ bool UIMenuJournal::init()
     noteadd(i18n::s.get(
         "core.ui.journal.rank.arena",
         game()->ex_arena_wins,
-        cnvrank(game()->ex_arena_level)));
+        cnvrank(game()->ex_arena_highest_level)));
     noteadd(""s);
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
