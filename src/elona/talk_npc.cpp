@@ -1992,8 +1992,9 @@ TalkResult talk_npc(Character& speaker)
             13,
             i18n::s.get("core.talk.npc.innkeeper.choices.eat") + u8" ("s +
                 calcmealvalue() + i18n::s.get("core.ui.gold") + u8")"s);
-        if (game()->weather == 1 || game()->weather == 4 ||
-            game()->weather == 2)
+        if (game()->weather == "core.etherwind" ||
+            game()->weather == "core.hard_rain" ||
+            game()->weather == "core.snow")
         {
             ELONA_APPEND_RESPONSE(
                 43,

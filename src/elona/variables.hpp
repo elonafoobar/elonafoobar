@@ -59,7 +59,6 @@ ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
-ELONA_EXTERN(int weatherbk);
 
 
 // crafting.cpp / blending.cpp

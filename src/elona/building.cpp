@@ -1739,7 +1739,8 @@ void try_to_grow_plant(int val0)
     }
     if (feat == tile_plant)
     {
-        if (game()->weather < 3)
+        if (game()->weather != "core.rain" &&
+            game()->weather != "core.hard_rain")
         {
             p = p * 2;
         }
@@ -1775,7 +1776,7 @@ void harvest_plant(int val)
     {
         p = p * 2;
     }
-    if (game()->weather < 3)
+    if (game()->weather != "core.rain" && game()->weather != "core.hard_rain")
     {
         p = p * 4 / 3;
     }

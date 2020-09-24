@@ -600,14 +600,6 @@ ELONA.i18n:add {
          _8 = "*Love*",
       },
 
-      weather = {
-         _0 = "",
-         _1 = "Etherwind",
-         _2 = "Snow",
-         _3 = "Rain",
-         _4 = "Hard rain",
-      },
-
       home = {
          _0 = "cave",
          _1 = "shack",

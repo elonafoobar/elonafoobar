@@ -2016,20 +2016,20 @@ void map_global_proc_travel_events(Character& chara)
     {
         chara.activity.id = "core.travel";
         chara.activity.turns = 20;
-        if (game()->weather == 3)
+        if (game()->weather == "core.rain")
         {
             chara.activity.turns = chara.activity.turns * 13 / 10;
         }
-        if (game()->weather == 4)
+        if (game()->weather == "core.hard_rain")
         {
             chara.activity.turns = chara.activity.turns * 16 / 10;
         }
-        if (game()->weather == 2 ||
+        if (game()->weather == "core.snow" ||
             chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
         {
             chara.activity.turns = chara.activity.turns * 22 / 10;
         }
-        if (game()->weather == 1)
+        if (game()->weather == "core.etherwind")
         {
             chara.activity.turns = chara.activity.turns * 5 / 10;
         }
@@ -2053,7 +2053,7 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game()->weather == 2 ||
+    if (game()->weather == "core.snow" ||
         chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
     {
         if (game()->protects_from_bad_weather == 0)
@@ -2089,7 +2089,7 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game()->weather == 4)
+    if (game()->weather == "core.hard_rain")
     {
         if (game()->protects_from_bad_weather == 0)
         {

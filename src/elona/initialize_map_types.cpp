@@ -2898,7 +2898,7 @@ static void _init_map_fields_maybe_generate_encounter()
         for (int cnt = 0, cnt_end = (2 + p); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
-            if (game()->weather == 1)
+            if (game()->weather == "core.etherwind")
             {
                 if ((33 > game()->stood_world_map_tile ||
                      game()->stood_world_map_tile >= 66) &&

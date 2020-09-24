@@ -481,15 +481,15 @@ void sound_play_environmental()
 {
     optional<data::InstanceId> env = none;
 
-    if (game()->weather == 3)
+    if (game()->weather == "core.rain")
     {
         env = "core.bg_rain";
     }
-    if (game()->weather == 4)
+    if (game()->weather == "core.hard_rain")
     {
         env = "core.bg_thunder";
     }
-    if (game()->weather == 1)
+    if (game()->weather == "core.etherwind")
     {
         env = "core.bg_wind";
     }

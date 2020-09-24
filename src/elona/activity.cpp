@@ -844,7 +844,7 @@ void activity_study_start(Character& doer, const ItemRef& textbook)
     doer.activity.id = "core.study";
     doer.activity.item = textbook;
 
-    if (game()->weather == 0 || game()->weather == 3)
+    if (game()->weather == "core.sunny" || game()->weather == "core.rain")
     {
         if (game()->time_when_textbook_becomes_available > game()->date.hours())
         {
@@ -864,7 +864,7 @@ void activity_study_start(Character& doer, const ItemRef& textbook)
     {
         txt(i18n::s.get("core.activity.study.start.training"));
     }
-    if (game()->weather != 0 && game()->weather != 3)
+    if (game()->weather != "core.sunny" && game()->weather != "core.rain")
     {
         if (game()->current_map == mdata_t::MapId::shelter_ ||
             map_can_use_bad_weather_in_study())
@@ -882,7 +882,7 @@ void activity_study_start(Character& doer, const ItemRef& textbook)
 void activity_study_doing(Character& doer, const ItemRef& textbook)
 {
     int p = 25;
-    if (game()->weather != 0 && game()->weather != 3)
+    if (game()->weather != "core.sunny" && game()->weather != "core.rain")
     {
         if (game()->current_map == mdata_t::MapId::shelter_)
         {

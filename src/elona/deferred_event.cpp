@@ -488,7 +488,7 @@ void eh_ragnarok(const DeferredEvent& event)
     if (map_data.type == mdata_t::MapType::world_map)
         return;
 
-    game()->weather = 1;
+    game()->weather = "core.etherwind";
     sound_play_environmental();
     txt(i18n::s.get("core.event.ragnarok"));
     msg_halt();

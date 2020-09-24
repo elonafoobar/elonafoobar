@@ -60,7 +60,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     if (chara_idx == -1 && food->id == "core.corpse" &&
         chip_data.for_cell(food->position().x, food->position().y).kind == 1)
     {
-        if (game()->weather != 0)
+        if (game()->weather != "core.sunny")
         {
             return;
         }

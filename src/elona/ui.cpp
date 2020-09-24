@@ -243,7 +243,7 @@ void render_weather_effect_snow()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game()->weather)
+        if (particle == Position{0, 0} || g_prev_weather != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -295,7 +295,7 @@ void render_weather_effect_etherwind()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game()->weather)
+        if (particle == Position{0, 0} || g_prev_weather != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -323,16 +323,24 @@ void render_weather_effect()
     if (map_data.indoors_flag != 2)
         return;
 
-    switch (game()->weather)
+    if (game()->weather == "core.etherwind")
     {
-    case 3: render_weather_effect_rain(); break;
-    case 4: render_weather_effect_hard_rain(); break;
-    case 2: render_weather_effect_snow(); break;
-    case 1: render_weather_effect_etherwind(); break;
-    default: break;
+        render_weather_effect_etherwind();
+    }
+    else if (game()->weather == "core.snow")
+    {
+        render_weather_effect_snow();
+    }
+    else if (game()->weather == "core.rain")
+    {
+        render_weather_effect_rain();
+    }
+    else if (game()->weather == "core.hard_rain")
+    {
+        render_weather_effect_hard_rain();
     }
 
-    weatherbk = game()->weather;
+    g_prev_weather = game()->weather;
     gmode(2);
 }
 
@@ -632,7 +640,7 @@ void render_analogue_clock()
             game()->date.day);
     bmes(
         i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game()->weather),
+            i18n::s.get_data_text("core.weather", game()->weather, "name"),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -667,7 +675,7 @@ void render_digital_clock()
     // time of day + weather
     bmes(
         i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game()->weather),
+            i18n::s.get_data_text("core.weather", game()->weather, "name"),
         datex + 64 + 12,
         8);
 }

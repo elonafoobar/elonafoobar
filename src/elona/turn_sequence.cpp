@@ -928,7 +928,7 @@ TurnResult pass_one_turn(bool time_passing)
         {
             return TurnResult::pc_died;
         }
-        if (game()->weather == 1)
+        if (game()->weather == "core.etherwind")
         {
             if (map_data.indoors_flag == 2)
             {
@@ -1120,7 +1120,8 @@ void update_emoicon(Character& chara)
     {
         chara.emotion_icon = 0;
     }
-    if (map_data.indoors_flag == 2 && game()->weather >= 3)
+    if (map_data.indoors_flag == 2 &&
+        (game()->weather == "core.rain" || game()->weather == "core.hard_rain"))
     {
         chara.wet = 50;
     }

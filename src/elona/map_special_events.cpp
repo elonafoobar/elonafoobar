@@ -186,7 +186,8 @@ static void _map_events_jail()
 
 static void _map_events_shelter()
 {
-    if (game()->weather == 2 || game()->weather == 4 || game()->weather == 1)
+    if (game()->weather == "core.snow" || game()->weather == "core.hard_rain" ||
+        game()->weather == "core.etherwind")
     {
         if (cdata.player().nutrition < 5000)
         {

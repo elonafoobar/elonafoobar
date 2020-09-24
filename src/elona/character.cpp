@@ -2815,14 +2815,14 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounter = 1;
                 }
-                if (game()->weather == 4)
+                if (game()->weather == "core.hard_rain")
                 {
                     if (rnd(10) == 0)
                     {
                         encounter = 1;
                     }
                 }
-                if (game()->weather == 1)
+                if (game()->weather == "core.etherwind")
                 {
                     if (rnd(13) == 0)
                     {
@@ -2909,7 +2909,7 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounterlv /= 2;
                 }
-                else if (game()->weather == 1)
+                else if (game()->weather == "core.etherwind")
                 {
                     encounterlv = encounterlv * 3 / 2 + 10;
                 }

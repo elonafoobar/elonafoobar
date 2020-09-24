@@ -104,8 +104,8 @@ void initialize_world()
 
     initialize_adata();
 
-    game()->weather = 3;
-    game()->hours_until_weather_changes = 6;
+    game()->weather = "core.rain";
+    game()->weather_change_count = 6;
 
     for (int cnt = 0; cnt < 9; ++cnt)
     {

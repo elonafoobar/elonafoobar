@@ -137,7 +137,8 @@ void mef_update()
             {
                 if (map_data.type != mdata_t::MapType::world_map)
                 {
-                    if (game()->weather == 3 || game()->weather == 4)
+                    if (game()->weather == "core.rain" ||
+                        game()->weather == "core.hard_rain")
                     {
                         mef_delete(cnt);
                         continue;

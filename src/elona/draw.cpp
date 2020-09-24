@@ -836,11 +836,11 @@ static int _get_map_chip_shadow()
         {
             shadow = 80 + (game()->date.hour - 21) * 10;
         }
-        if (game()->weather == 3 && shadow < 40)
+        if (game()->weather == "core.rain" && shadow < 40)
         {
             shadow = 40;
         }
-        if (game()->weather == 4 && shadow < 65)
+        if (game()->weather == "core.hard_rain" && shadow < 65)
         {
             shadow = 65;
         }

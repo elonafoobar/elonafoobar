@@ -144,6 +144,16 @@ struct Game
     BlendingRecipeMemoryTable blending_recipe_memories;
 
 
+    /* Weather */
+
+    /// Current weather
+    data::InstanceId weather{"core.sunny"};
+
+    /// Weather change count. When it reaches zero, weather may change.
+    /// Normally, it is decremented every 1 hour.
+    lua_int weather_change_count{};
+
+
 
     int crowd_density;
     int pc_x_in_world_map;
@@ -153,8 +163,6 @@ struct Game
     int random_seed_offset;
     DateTime date;
     int next_inventory_serial_id;
-    int weather;
-    int hours_until_weather_changes;
     int current_map;
     int current_dungeon_level;
     int home_scale;

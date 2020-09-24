@@ -2537,44 +2537,41 @@ TurnResult do_use_command(ItemRef use_item)
             Message::color{ColorIndex::orange});
         buff_add(cdata.player(), "core.luck", 77, 2500);
         break;
-    case 27:
+    case 27: {
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         snd("core.pray1");
-        if (game()->weather == 1)
+        if (game()->weather == "core.etherwind")
         {
             txt(i18n::s.get("core.action.use.statue.lulwy.during_etherwind"),
                 Message::color{ColorIndex::orange});
             break;
         }
-        p = game()->weather;
-        while (1)
+        const auto prev_weather = game()->weather;
+        do
         {
             if (rnd(10) == 0)
             {
-                game()->weather = 0;
+                game()->weather = "core.sunny";
             }
             if (rnd(10) == 0)
             {
-                game()->weather = 3;
+                game()->weather = "core.rain";
             }
             if (rnd(15) == 0)
             {
-                game()->weather = 4;
+                game()->weather = "core.hard_rain";
             }
             if (rnd(20) == 0)
             {
-                game()->weather = 2;
+                game()->weather = "core.snow";
             }
-            if (game()->weather != p)
-            {
-                break;
-            }
-        }
+        } while (game()->weather != prev_weather);
         txt(i18n::s.get("core.action.use.statue.lulwy.normal"),
             Message::color{ColorIndex::orange});
         txt(i18n::s.get("core.action.weather.changes"));
         sound_play_environmental();
         break;
+    }
     case 28:
         if (map_data.type == mdata_t::MapType::world_map)
         {
