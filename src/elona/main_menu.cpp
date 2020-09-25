@@ -2,7 +2,6 @@
 
 #include "../util/fileutil.hpp"
 #include "../util/strutil.hpp"
-#include "../version.hpp"
 #include "audio.hpp"
 #include "browser.hpp"
 #include "character_making.hpp"
@@ -25,6 +24,7 @@
 #include "ui/simple_prompt.hpp"
 #include "ui/ui_menu_mods.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 
 

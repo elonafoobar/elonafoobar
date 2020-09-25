@@ -8,8 +8,7 @@ bak/
 *.o
 *.a
 bin/
-src/version.cpp
-src/elona/version.cpp
+/src/elona/version.cpp
 /*.vcxproj
 /*.sln
 /*.filters

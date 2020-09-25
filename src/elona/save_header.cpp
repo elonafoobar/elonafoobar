@@ -4,7 +4,6 @@
 
 #include <chrono>
 
-#include "../version.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "game.hpp"
@@ -12,6 +11,7 @@
 #include "race.hpp"
 #include "serialization/serialization.hpp"
 #include "text.hpp"
+#include "version.hpp"
 
 
 

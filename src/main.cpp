@@ -8,10 +8,10 @@
 #include "elona/defines.hpp"
 #include "elona/filesystem.hpp"
 #include "elona/log.hpp"
+#include "elona/version.hpp"
 #include "snail/application.hpp"
 #include "spider/http/core.hpp"
 #include "util/backtrace.hpp"
-#include "version.hpp"
 
 #if defined(ELONA_OS_WINDOWS)
 #include <windows.h> // OutputDebugStringA

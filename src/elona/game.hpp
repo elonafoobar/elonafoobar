@@ -3,11 +3,11 @@
 #include <array>
 #include <memory>
 
-#include "../version.hpp"
 #include "blending_recipe_memory.hpp"
 #include "character_memory.hpp"
 #include "crafting_material.hpp"
 #include "item_memory.hpp"
+#include "version.hpp"
 
 
 
