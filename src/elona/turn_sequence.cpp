@@ -383,7 +383,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             cdata.player().position.x < chara.position.x + 10 &&
             cdata.player().position.y > chara.position.y - 10 &&
             cdata.player().position.y < chara.position.y + 10 &&
-            cdata.player().activity.type != Activity::Type::perform)
+            cdata.player().activity.id != "core.perform")
         {
             if (chara.turn % 5 == 0)
             {
@@ -788,7 +788,7 @@ TurnResult turn_begin()
     bool update_turn_cost = true;
     if (map_data.type == mdata_t::MapType::world_map)
     {
-        if (cdata.player().activity.turn > 2)
+        if (cdata.player().activity.turns > 2)
         {
             cdata.player().turn_cost = map_data.turn_cost;
             update_turn_cost = false;
@@ -1067,7 +1067,7 @@ TurnResult pass_one_turn(bool time_passing)
             return TurnResult::turn_end;
         }
     }
-    if (cdata[ct].stops_activity_if_damaged == 1)
+    if (cdata[ct].activity.is_interrupted)
     {
         activity_handle_damage(cdata[ct]);
     }
@@ -1152,8 +1152,7 @@ TurnResult turn_end()
             if (game()->character_and_status_for_gene < 10000)
             {
                 game()->character_and_status_for_gene += 10000;
-                game()->activity_about_to_start = 100;
-                activity_others(cdata[ct], nullptr);
+                activity_sleep(cdata[ct], nullptr);
             }
         }
         if (cdata.player().inventory_weight_type >= 3)
@@ -1689,7 +1688,7 @@ void proc_turn_end(Character& chara)
         {
             if (chara.nutrition < 1000)
             {
-                if (chara.activity.type != Activity::Type::eat)
+                if (chara.activity.id != "core.eat")
                 {
                     damage_hp(chara, rnd(2) + cdata.player().max_hp / 50, -3);
                     if (game()->play_turns % 10 == 0)

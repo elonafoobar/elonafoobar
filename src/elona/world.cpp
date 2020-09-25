@@ -357,9 +357,9 @@ void weather_changes()
     {
         cdata.player().piety_point = 0;
     }
-    if (cdata.player().activity.turn != 0)
+    if (cdata.player().activity.turns != 0)
     {
-        if (cdata.player().activity.type != Activity::Type::travel)
+        if (cdata.player().activity.id != "core.travel")
         {
             update_screen();
         }

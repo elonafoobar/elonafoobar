@@ -1545,7 +1545,7 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().activity.type == Activity::Type::fish)
+                    if (cdata.player().activity.id == "core.fish")
                     {
                         ani_ = 0;
                     }

@@ -1,4 +1,5 @@
 require("data/ability.lua")
+require("data/activity.lua")
 require("data/asset.lua")
 require("data/blending_recipe.lua")
 require("data/buff.lua")

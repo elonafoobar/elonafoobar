@@ -1080,14 +1080,14 @@ void render_autoturn_animation()
     }
 
     if (firstautoturn ||
-        (cdata.player().activity.type == Activity::Type::fish &&
-         rowactre == 0 && fishanime == 0))
+        (cdata.player().activity.id == "core.fish" && rowactre == 0 &&
+         fishanime == 0))
     {
         ui_render_non_hud();
         render_hud();
     }
 
-    if (cdata.player().activity.type == Activity::Type::fish)
+    if (cdata.player().activity.id == "core.fish")
     {
         if (rowactre == 0 && g_config.animation_wait() != 0)
         {
@@ -1107,10 +1107,10 @@ void render_autoturn_animation()
     draw_rotated(
         "core.hourglass", sx + 18, sy + 12, game()->date.minute / 4 * 24);
 
-    if (cdata.player().activity.type == Activity::Type::dig_ground ||
-        cdata.player().activity.type == Activity::Type::dig_wall ||
-        cdata.player().activity.type == Activity::Type::search_material ||
-        (cdata.player().activity.type == Activity::Type::fish && rowactre != 0))
+    if (cdata.player().activity.id == "core.dig_ground" ||
+        cdata.player().activity.id == "core.dig_wall" ||
+        cdata.player().activity.id == "core.search_material" ||
+        (cdata.player().activity.id == "core.fish" && rowactre != 0))
     {
         if (g_config.animation_wait() != 0)
         {
@@ -1120,8 +1120,7 @@ void render_autoturn_animation()
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     gmode(0);
-                    if (cdata.player().activity.type ==
-                        Activity::Type::dig_wall)
+                    if (cdata.player().activity.id == "core.dig_wall")
                     {
                         if (cnt == 2)
                         {
@@ -1131,7 +1130,7 @@ void render_autoturn_animation()
                             9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2);
                     }
-                    if (cdata.player().activity.type == Activity::Type::fish)
+                    if (cdata.player().activity.id == "core.fish")
                     {
                         if (racount == 0)
                         {
@@ -1144,8 +1143,7 @@ void render_autoturn_animation()
                             9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2.5);
                     }
-                    if (cdata.player().activity.type ==
-                        Activity::Type::search_material)
+                    if (cdata.player().activity.id == "core.search_material")
                     {
                         if (cnt == 4)
                         {
@@ -1155,8 +1153,7 @@ void render_autoturn_animation()
                             9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2.75);
                     }
-                    if (cdata.player().activity.type ==
-                        Activity::Type::dig_ground)
+                    if (cdata.player().activity.id == "core.dig_ground")
                     {
                         if (cnt == 2)
                         {
@@ -1564,22 +1561,22 @@ void render_hud()
 void load_activity_animation()
 {
     gsel(9);
-    if (cdata.player().activity.type == Activity::Type::dig_wall)
+    if (cdata.player().activity.id == "core.dig_wall")
     {
         picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
     }
-    if (cdata.player().activity.type == Activity::Type::fish)
+    if (cdata.player().activity.id == "core.fish")
     {
         if (rowactre)
         {
             picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
-    if (cdata.player().activity.type == Activity::Type::search_material)
+    if (cdata.player().activity.id == "core.search_material")
     {
         picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
     }
-    if (cdata.player().activity.type == Activity::Type::dig_ground)
+    if (cdata.player().activity.id == "core.dig_ground")
     {
         picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
     }

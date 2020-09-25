@@ -2043,9 +2043,7 @@ OnEnterResult on_enter_trade_target(
     }
     if (inventory_owner.activity)
     {
-        inventory_owner.activity.type = Activity::Type::none;
-        inventory_owner.activity.turn = 0;
-        inventory_owner.activity.item = nullptr;
+        inventory_owner.activity.finish();
     }
     snd("core.equip1");
     citrade->is_quest_target = false;
@@ -2279,7 +2277,7 @@ OnEnterResult on_enter_throw(const ItemRef& selected_item, MenuResult& result)
 
 OnEnterResult on_enter_steal(const ItemRef& selected_item, MenuResult& result)
 {
-    start_stealing(cdata.player(), selected_item);
+    activity_steal(cdata.player(), selected_item);
     invsubroutine = 0;
     result.succeeded = true;
     return OnEnterResult{result};

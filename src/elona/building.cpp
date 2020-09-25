@@ -1046,7 +1046,7 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (!chara.activity || chara.activity.turn == 0)
+                if (!chara.activity || chara.activity.turns == 0)
                 {
                     continue;
                 }

@@ -7,6 +7,7 @@
 
 #include "../util/range.hpp"
 #include "ability.hpp"
+#include "activity.hpp"
 #include "buff.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
@@ -32,58 +33,6 @@ namespace elona
 struct Item;
 struct Inventory;
 using InventoryRef = Inventory*;
-
-
-
-struct Activity
-{
-    enum class Type : int
-    {
-        none,
-        eat,
-        read,
-        travel,
-        sleep,
-        dig_wall,
-        perform,
-        fish,
-        search_material,
-        dig_ground,
-        others,
-        sex,
-        blend,
-    };
-
-    Type type = Activity::Type::none;
-    int turn = 0;
-    OptionalItemRef item;
-
-
-    bool is_doing_nothing() const
-    {
-        return type == Activity::Type::none;
-    }
-
-
-    bool is_doing_something() const
-    {
-        return !is_doing_nothing();
-    }
-
-
-    explicit operator bool() const
-    {
-        return is_doing_something();
-    }
-
-
-    void finish()
-    {
-        type = Activity::Type::none;
-        turn = 0;
-        item = nullptr;
-    }
-};
 
 
 
@@ -299,7 +248,6 @@ public:
     int cut_counterattack = 0;
     int anorexia_count = 0;
     Activity activity;
-    int stops_activity_if_damaged = 0;
     int quality_of_performance = 0;
     int tip_gold = 0;
     Role role = Role::none;

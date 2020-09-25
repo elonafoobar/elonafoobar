@@ -324,7 +324,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
         {
             if (mode == 0)
             {
-                if (cdata.player().activity.turn == 0)
+                if (cdata.player().activity.turns == 0)
                 {
                     game()->exhelp_flags.at(id) = 1;
                     show_ex_help(id);

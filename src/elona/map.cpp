@@ -2014,26 +2014,26 @@ void map_global_proc_travel_events(Character& chara)
 {
     if (!chara.activity)
     {
-        chara.activity.type = Activity::Type::travel;
-        chara.activity.turn = 20;
+        chara.activity.id = "core.travel";
+        chara.activity.turns = 20;
         if (game()->weather == 3)
         {
-            chara.activity.turn = chara.activity.turn * 13 / 10;
+            chara.activity.turns = chara.activity.turns * 13 / 10;
         }
         if (game()->weather == 4)
         {
-            chara.activity.turn = chara.activity.turn * 16 / 10;
+            chara.activity.turns = chara.activity.turns * 16 / 10;
         }
         if (game()->weather == 2 ||
             chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
         {
-            chara.activity.turn = chara.activity.turn * 22 / 10;
+            chara.activity.turns = chara.activity.turns * 22 / 10;
         }
         if (game()->weather == 1)
         {
-            chara.activity.turn = chara.activity.turn * 5 / 10;
+            chara.activity.turns = chara.activity.turns * 5 / 10;
         }
-        chara.activity.turn = chara.activity.turn * 100 /
+        chara.activity.turns = chara.activity.turns * 100 /
             (100 + game()->seven_league_boot_effect +
              cdata.player().get_skill(182).level);
         return;
@@ -2066,14 +2066,14 @@ void map_global_proc_travel_events(Character& chara)
                     txt(i18n::s.get(
                             "core.action.move.global.weather.snow.sound"),
                         Message::color{ColorIndex::cyan});
-                    chara.activity.turn += 10;
+                    chara.activity.turns += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
                 txt(i18n::s.get("core.action.move.global.weather.snow.message"),
                     Message::color{ColorIndex::purple});
-                chara.activity.turn += 50;
+                chara.activity.turns += 50;
             }
         }
         if (cdata.player().nutrition <= 2000)
@@ -2101,7 +2101,7 @@ void map_global_proc_travel_events(Character& chara)
                     txt(i18n::s.get(
                             "core.action.move.global.weather.heavy_rain.sound"),
                         Message::color{ColorIndex::cyan});
-                    chara.activity.turn += 5;
+                    chara.activity.turns += 5;
                 }
             }
             if (cdata.player().confused == 0)
@@ -2121,7 +2121,7 @@ void map_global_proc_travel_events(Character& chara)
         }
         cdata.player().blind = 3;
     }
-    if (chara.activity.turn > 0)
+    if (chara.activity.turns > 0)
     {
         ++game()->date.minute;
         return;

@@ -332,13 +332,12 @@ TurnResult _bump_into_character(Character& chara)
                     }
                 }
             }
-            if (chara.activity.type == Activity::Type::eat)
+            if (chara.activity.id == "core.eat")
             {
-                if (chara.activity.turn > 0)
+                if (chara.activity.turns > 0)
                 {
                     txt(i18n::s.get("core.action.move.interrupt", chara));
-                    chara.activity.type = Activity::Type::none;
-                    chara.activity.turn = 0;
+                    chara.activity.finish();
                 }
             }
             sense_map_feats_on_move(cdata.player());
@@ -1917,8 +1916,7 @@ TurnResult do_use_command(ItemRef use_item)
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        game()->activity_about_to_start = 100;
-        activity_others(cdata.player(), use_item);
+        activity_sleep(cdata.player(), use_item);
         return TurnResult::turn_end;
     }
     if (use_item->id == "core.red_treasure_machine" ||
@@ -2436,8 +2434,7 @@ TurnResult do_use_command(ItemRef use_item)
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            game()->activity_about_to_start = 101;
-            activity_others(cdata.player(), use_item);
+            activity_build_shelter(cdata.player(), use_item);
             return TurnResult::turn_end;
         }
         if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
@@ -2456,8 +2453,7 @@ TurnResult do_use_command(ItemRef use_item)
                 }
             }
         }
-        game()->activity_about_to_start = 102;
-        activity_others(cdata.player(), use_item);
+        activity_enter_shelter(cdata.player(), use_item);
         break;
     case 11:
         if (moneybox(use_item->param2) > cdata.player().gold)
@@ -3200,12 +3196,11 @@ TurnResult do_movement_command()
     {
         if (cdata[game()->mount].activity)
         {
-            if (cdata[game()->mount].activity.turn > 0)
+            if (cdata[game()->mount].activity.turns > 0)
             {
                 txt(i18n::s.get(
                     "core.action.move.interrupt", cdata[game()->mount]));
-                cdata[game()->mount].activity.type = Activity::Type::none;
-                cdata[game()->mount].activity.turn = 0;
+                cdata[game()->mount].activity.finish();
             }
         }
     }
@@ -4002,7 +3997,7 @@ TurnResult do_spact_command()
 
 TurnResult try_interact_with_npc(Character& chara)
 {
-    if (chara.activity.turn != 0)
+    if (chara.activity.turns != 0)
     {
         txt(i18n::s.get("core.action.npc.is_busy_now", chara));
         update_screen();
@@ -4071,8 +4066,7 @@ bool read_textbook(Character& doer, ItemRef textbook)
             }
         }
     }
-    game()->activity_about_to_start = 104;
-    activity_others(doer, textbook);
+    activity_study(doer, textbook);
     return true;
 }
 
@@ -4116,19 +4110,19 @@ void do_rest(Character& chara)
 {
     if (!chara.activity)
     {
-        chara.activity.type = Activity::Type::sleep;
-        chara.activity.turn = 50;
+        chara.activity.id = "core.sleep";
+        chara.activity.turns = 50;
         txt(i18n::s.get("core.activity.rest.start"));
         update_screen();
         return;
     }
-    if (chara.activity.turn > 0)
+    if (chara.activity.turns > 0)
     {
-        if (chara.activity.turn % 2 == 0)
+        if (chara.activity.turns % 2 == 0)
         {
             heal_sp(chara, 1);
         }
-        if (chara.activity.turn % 3 == 0)
+        if (chara.activity.turns % 3 == 0)
         {
             heal_hp(chara, 1);
             heal_mp(chara, 1);
@@ -4181,7 +4175,7 @@ int decode_book(Character& reader, const ItemRef& book)
             }
             return 0;
         }
-        reader.activity.type = Activity::Type::read;
+        reader.activity.id = "core.read";
         if (book->id == "core.recipe")
         {
             p = 50;
@@ -4194,7 +4188,7 @@ int decode_book(Character& reader, const ItemRef& book)
         {
             p = the_ability_db[efid]->difficulty;
         }
-        reader.activity.turn =
+        reader.activity.turns =
             p / (2 + cdata.player().get_skill(150).level) + 1;
         reader.activity.item = book;
         if (is_in_fov(reader))
@@ -4204,7 +4198,7 @@ int decode_book(Character& reader, const ItemRef& book)
         item_separate(book);
         return 0;
     }
-    if (reader.activity.turn > 0)
+    if (reader.activity.turns > 0)
     {
         chara_gain_exp_literacy(cdata.player());
         if (book->id == "core.recipe")
@@ -5342,8 +5336,7 @@ PickUpItemResult pick_up_item(
                             "core.ui.inv.common.inventory_is_full"));
                         return {0, nullptr};
                     }
-                    game()->activity_about_to_start = 103;
-                    activity_others(*inv_owner_chara, item);
+                    activity_harvest(*inv_owner_chara, item);
                     return {-1, nullptr};
                 }
             }

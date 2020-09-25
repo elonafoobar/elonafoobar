@@ -763,9 +763,9 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
                     txt(i18n::s.get(
                         "core.ai.swap.displace", chara, cdata[enemy_index]));
                 }
-                if (cdata[enemy_index].activity.type == Activity::Type::eat)
+                if (cdata[enemy_index].activity.id == "core.eat")
                 {
-                    if (cdata[enemy_index].activity.turn > 0)
+                    if (cdata[enemy_index].activity.turns > 0)
                     {
                         if (is_in_fov(chara))
                         {

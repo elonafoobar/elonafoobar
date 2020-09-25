@@ -1056,8 +1056,8 @@ void activity_blending_start()
         "core.blending.started",
         cdata.player(),
         blending_get_recipe_name(rpid)));
-    cdata.player().activity.type = Activity::Type::blend;
-    cdata.player().activity.turn = rpref(2) % 10000;
+    cdata.player().activity.id = "core.blend";
+    cdata.player().activity.turns = rpref(2) % 10000;
 }
 
 
@@ -1077,7 +1077,7 @@ void activity_blending_end()
 {
     if (rpref(2) >= 10000)
     {
-        cdata.player().activity.turn = rpref(2) / 10000;
+        cdata.player().activity.turns = rpref(2) / 10000;
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
@@ -1092,8 +1092,8 @@ void activity_blending_end()
             redraw();
             await(g_config.animation_wait() * 5);
             game()->date.minute = 0;
-            --cdata.player().activity.turn;
-            if (cdata.player().activity.turn <= 0)
+            --cdata.player().activity.turns;
+            if (cdata.player().activity.turns <= 0)
             {
                 if (!has_required_materials())
                 {
@@ -1104,7 +1104,7 @@ void activity_blending_end()
                 blending_on_finish();
                 if (rpref(1) > 0)
                 {
-                    cdata.player().activity.turn = rpref(2) / 10000;
+                    cdata.player().activity.turns = rpref(2) / 10000;
                     cnt = 0 - 1;
                     continue;
                 }
@@ -1195,7 +1195,7 @@ void activity_blending()
     {
         activity_blending_start();
     }
-    else if (cdata.player().activity.turn > 0)
+    else if (cdata.player().activity.turns > 0)
     {
         activity_blending_doing();
     }

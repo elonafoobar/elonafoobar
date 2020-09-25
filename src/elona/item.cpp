@@ -418,8 +418,8 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
         {
             continue;
         }
-        if (chara.activity && chara.activity.type != Activity::Type::sex &&
-            chara.activity.turn > 0 && chara.activity.item == item)
+        if (chara.activity && chara.activity.id != "core.sex" &&
+            chara.activity.turns > 0 && chara.activity.item == item)
         {
             if (!disallow_pc || !chara.is_player())
             {

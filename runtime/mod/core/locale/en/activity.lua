@@ -1,8 +1,80 @@
+ELONA.i18n:add_data_text(
+   "core.activity",
+   {
+      eat = {
+         cancel_prompt = "Do you want to cancel eating? ",
+         canceled = "{name($1)} stop{s($1)} eating.",
+      },
+      read = {
+         cancel_prompt = "Do you want to cancel reading? ",
+         canceled = "{name($1)} stop{s($1)} reading.",
+      },
+      travel = {
+         cancel_prompt = "Do you want to cancel moving? ",
+         canceled = "{name($1)} stop{s($1)} moving.",
+      },
+      sleep = {
+         cancel_prompt = "Do you want to cancel resting? ",
+         canceled = "{name($1)} stop{s($1)} resting.",
+      },
+      dig_wall = {
+         cancel_prompt = "Do you want to cancel mining? ",
+         canceled = "{name($1)} stop{s($1)} mining.",
+      },
+      perform = {
+         cancel_prompt = "Do you want to cancel playing? ",
+         canceled = "{name($1)} stop{s($1)} playing.",
+      },
+      fish = {
+         cancel_prompt = "Do you want to cancel fishing? ",
+         canceled = "{name($1)} stop{s($1)} fishing.",
+      },
+      search_material = {
+         cancel_prompt = "Do you want to cancel collecting materials? ",
+         canceled = "{name($1)} stop{s($1)} collecting materials.",
+      },
+      dig_around = {
+         cancel_prompt = "Do you want to cancel searching? ",
+         canceled = "{name($1)} stop{s($1)} searching.",
+      },
+      sleep = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      build_shelter = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      enter_shelter = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      harvest = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      study = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      steal = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      sex = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+      blend = {
+         cancel_prompt = "Do you want to cancel current action? ",
+         canceled = "{name($1)} stop{s($1)} current action.",
+      },
+   }
+)
+
 ELONA.i18n:add {
    activity = {
       cancel = {
-         prompt = "Do you want to cancel {$1}? ",
-         normal = "{name($1)} stop{s($1)} {$2}.",
          item = "{name($1)} cancel{s($1)} {his($1)} action.",
       },
 

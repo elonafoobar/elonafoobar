@@ -777,23 +777,6 @@ ELONA.i18n:add {
          _11 = "Ammo",
       },
 
-      action = {
-         _0 = "current action",
-         _1 = "eating",
-         _2 = "reading",
-         _3 = "moving",
-         _4 = "resting",
-         _5 = "mining",
-         _6 = "playing",
-         _7 = "fishing",
-         _8 = "collecting materials",
-         _9 = "searching",
-         _10 = "current action",
-         _11 = "current action",
-         _12 = "current action",
-         _13 = "current action",
-      },
-
       cast_style = {
          _0 = " casts a spell.",
          _1 = " splits cobweb.",
