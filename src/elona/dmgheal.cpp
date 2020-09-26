@@ -1105,35 +1105,39 @@ int damage_hp(
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_fool = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_fool", true);
                     }
                     if (victim.id == CharaId::wynan)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_king = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_king", true);
                     }
                     if (victim.id == CharaId::quruiza)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_sage = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_sage", true);
                     }
                     if (victim.id == CharaId::rodlob)
                     {
-                        if (game()->quest_flags.novice_knight < 1000)
+                        if (story_quest_progress("core.novice_knight") < 1000)
                         {
-                            game()->quest_flags.novice_knight = 2;
+                            story_quest_set_progress("core.novice_knight", 2);
                             quest_update_journal_msg();
                         }
                     }
                     if (victim.id == CharaId::tuwen)
                     {
-                        if (game()->quest_flags.pyramid_trial < 1000)
+                        if (story_quest_progress("core.pyramid_trial") < 1000)
                         {
-                            game()->quest_flags.pyramid_trial = 1000;
+                            story_quest_set_progress(
+                                "core.pyramid_trial", 1000);
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.quest.completed"));
                             snd("core.complete1");
@@ -1141,9 +1145,9 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::ungaga)
                     {
-                        if (game()->quest_flags.minotaur_king < 1000)
+                        if (story_quest_progress("core.minotaur_king") < 1000)
                         {
-                            game()->quest_flags.minotaur_king = 2;
+                            story_quest_set_progress("core.minotaur_king", 2);
                             quest_update_journal_msg();
                         }
                     }
@@ -1153,12 +1157,14 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::little_sister)
                     {
-                        ++game()->quest_flags.kill_count_of_little_sister;
+                        story_quest_add_ext(
+                            "core.little_sister", "core.kill_count", 1);
                         txt(i18n::s.get(
                                 "core.talk.unique.strange_scientist.saved_count",
-                                game()->quest_flags.save_count_of_little_sister,
-                                game()
-                                    ->quest_flags.kill_count_of_little_sister),
+                                story_quest_get_ext<lua_int>(
+                                    "core.little_sister", "core.save_count"),
+                                story_quest_get_ext<lua_int>(
+                                    "core.little_sister", "core.kill_count")),
                             Message::color{ColorIndex::red});
                     }
                     if (game()->current_dungeon_level ==

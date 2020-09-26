@@ -94,6 +94,7 @@ set(ELONA_SOURCES
   talk.cpp
   talk_house_visitor.cpp
   talk_npc.cpp
+  story_quest.cpp
   talk_unique.cpp
   tcg.cpp
   testing.cpp

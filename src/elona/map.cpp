@@ -1413,7 +1413,7 @@ TurnResult exit_map()
                     if (area_data[game()->current_map].id ==
                         mdata_t::MapId::pyramid)
                     {
-                        if (game()->quest_flags.pyramid_trial == 0)
+                        if (story_quest_progress("core.pyramid_trial") == 0)
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.no_invitation_to_pyramid"));

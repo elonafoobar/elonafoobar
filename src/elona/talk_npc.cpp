@@ -1099,7 +1099,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         modify_karma(cdata.player(), -20);
         snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
-        game()->quest_flags.pael_and_her_mom = 1002;
+        story_quest_set_progress("core.pael_and_her_mom", 1002);
         const auto lily = chara_find("core.lily");
         assert(lily);
         lily->ai_calm = 3;
@@ -2288,7 +2288,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.role == Role::moyer)
     {
-        if (game()->quest_flags.pael_and_her_mom == 1000)
+        if (story_quest_progress("core.pael_and_her_mom") == 1000)
         {
             if (const auto lily = chara_find("core.lily"))
             {

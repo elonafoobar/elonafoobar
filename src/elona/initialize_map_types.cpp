@@ -1344,7 +1344,7 @@ static void _init_map_palmia()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.mias_dream == 1000)
+    if (story_quest_progress("core.mias_dream") == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 246, 42, 11))
@@ -1527,7 +1527,7 @@ static void _init_map_lumiest_town()
     map_init_static_map("lumiest");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.sewer_sweeping)
+    if (story_quest_progress("core.sewer_sweeping") != 0)
     {
         cell_featset(18, 45, tile_downstairs, 11, 20);
     }
@@ -1784,7 +1784,7 @@ static void _init_map_yowyn_town()
     map_init_static_map("yowyn");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.cat_house)
+    if (story_quest_progress("core.cat_house") != 0)
     {
         cell_featset(23, 22, tile_downstairs, 11, 3);
     }
@@ -2036,7 +2036,7 @@ static void _init_map_noyel()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.pael_and_her_mom != 1001)
+    if (story_quest_progress("core.pael_and_her_mom") != 1001)
     {
         flt();
         if (const auto chara = chara_create(-1, 222, 19, 2))
@@ -2414,7 +2414,8 @@ static void _init_map_port_kapul_doom_ground()
     map_data.refresh_type = 0;
     mdatan(0) = i18n::s.get("core.map.unique.doom_ground.name");
     game()->entrance_type = 4;
-    game()->quest_flags.duration_of_kamikaze_attack = 0;
+    story_quest_set_ext(
+        "core.kamikaze_attack", "core.elapsed_time", lua_int{0});
     map_place_player_and_allies();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -2455,7 +2456,7 @@ static void _init_map_vernis_town()
     map_init_static_map("vernis");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.thieves_hideout)
+    if (story_quest_progress("core.thieves_hideout") != 0)
     {
         cell_featset(48, 5, tile_downstairs, 11, 4);
     }
@@ -2491,7 +2492,7 @@ static void _init_map_vernis_town()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.puppys_cave == 1000)
+    if (story_quest_progress("core.puppys_cave") == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 225, 31, 4))
@@ -3013,7 +3014,7 @@ static void _init_map_lesimas()
             map_data.bgm = 66;
             mdatan(0) =
                 i18n::s.get_enum_property("core.map.unique", "the_depth", 3);
-            if (game()->quest_flags.main_quest < 170)
+            if (story_quest_progress("core.elona") < 170)
             {
                 event_add(3);
             }
@@ -3137,7 +3138,7 @@ static void _init_map_minotaurs_nest()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        if (game()->quest_flags.minotaur_king < 2)
+        if (story_quest_progress("core.minotaur_king") < 2)
         {
             flt();
             chara_create(-1, 300, -3, 0);
@@ -3153,7 +3154,7 @@ static void _init_map_yeeks_nest()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        if (game()->quest_flags.novice_knight < 2)
+        if (story_quest_progress("core.novice_knight") < 2)
         {
             flt();
             if (const auto rodlob = chara_create(-1, 242, -3, 0))

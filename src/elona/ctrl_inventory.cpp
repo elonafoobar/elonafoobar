@@ -1590,7 +1590,7 @@ OnEnterResult on_enter_external_inventory(
         }
         if (invctrl(1) == 4)
         {
-            ++game()->quest_flags.gift_count_of_little_sister;
+            story_quest_add_ext("core.little_sister", "core.gift_count", 1);
             invsubroutine = 0;
             result.succeeded = true;
             return OnEnterResult{result};

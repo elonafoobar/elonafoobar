@@ -2173,7 +2173,7 @@ void spot_mining_or_wall(Character& chara)
             }
         }
         if (f == 1 ||
-            (game()->quest_flags.tutorial == 2 &&
+            (story_quest_progress("core.tutorial") == 2 &&
              game()->current_map == mdata_t::MapId::your_home))
         {
             rtval = 0;
@@ -2198,7 +2198,7 @@ void spot_mining_or_wall(Character& chara)
             snd("core.crush1");
             BreakingAnimation({refx, refy}).play();
             txt(i18n::s.get("core.activity.dig_mining.finish.wall"));
-            if (game()->quest_flags.tutorial == 2 &&
+            if (story_quest_progress("core.tutorial") == 2 &&
                 game()->current_map == mdata_t::MapId::your_home)
             {
                 flt();
@@ -2207,7 +2207,7 @@ void spot_mining_or_wall(Character& chara)
                     item->curse_state = CurseState::cursed;
                 }
                 txt(i18n::s.get("core.activity.dig_mining.finish.find"));
-                game()->quest_flags.tutorial = 3;
+                story_quest_set_progress("core.tutorial", 3);
             }
             else if (
                 rtval != 0 && game()->current_map != mdata_t::MapId::shelter_)

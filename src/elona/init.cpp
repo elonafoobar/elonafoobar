@@ -527,7 +527,7 @@ void initialize_debug_globals()
         static_cast<int>(mdata_t::MapId::north_tyris);
     game()->destination_outer_map = area_data[game()->current_map].outer_map;
     game()->acquirable_feat_count = 2;
-    game()->quest_flags.save_count_of_little_sister = 1000;
+    story_quest_set_ext("core.little_sister", "core.save_count", lua_int{1000});
     game()->rights_to_succeed_to = 1000;
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
@@ -535,11 +535,11 @@ void initialize_debug_globals()
     cdata.player().god_id = core_god::int2godid(2);
     cdata.player().piety_point = 1000;
     cdata.player().praying_point = 1000;
-    game()->quest_flags.pael_and_her_mom = 1000;
+    story_quest_set_progress("core.pael_and_her_mom", 1000);
     earn_gold(cdata.player(), 1000000);
     cdata.player().platinum_coin = 30;
     cdata.player().fame = 65000;
-    game()->quest_flags.main_quest = 100;
+    story_quest_set_progress("core.elona", 100);
     chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;

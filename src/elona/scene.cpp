@@ -451,7 +451,7 @@ void play_the_last_scene_again()
         conquer_lesimas();
         return;
     }
-    game()->quest_flags.main_quest = 180;
+    story_quest_set_progress("core.elona", 180);
     update_screen();
 }
 

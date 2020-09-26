@@ -2581,7 +2581,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
         if (cdata.player().position.x != 33 || cdata.player().position.y != 16)
         {
-            if (game()->quest_flags.red_blossom_in_palmia == 1)
+            if (story_quest_progress("core.red_blossom_in_palmia") == 1)
             {
                 txt(i18n::s.get("core.action.use.nuke.not_quest_goal"));
                 if (!yes_no())
@@ -3061,28 +3061,28 @@ TurnResult do_use_stairs_command(int val0)
         f = 0;
         if (game()->current_dungeon_level == 3)
         {
-            if (game()->quest_flags.main_quest >= 65)
+            if (story_quest_progress("core.elona") >= 65)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 17)
         {
-            if (game()->quest_flags.main_quest >= 115)
+            if (story_quest_progress("core.elona") >= 115)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 25)
         {
-            if (game()->quest_flags.main_quest >= 125)
+            if (story_quest_progress("core.elona") >= 125)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 44)
         {
-            if (game()->quest_flags.main_quest >= 125)
+            if (story_quest_progress("core.elona") >= 125)
             {
                 f = 1;
             }

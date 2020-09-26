@@ -93,7 +93,7 @@ static void _map_events_port_kapul()
 {
     if (game()->current_dungeon_level == 25)
     {
-        ++game()->quest_flags.duration_of_kamikaze_attack;
+        story_quest_add_ext("core.kamikaze_attack", "core.elapsed_time", 1);
         x = 1;
         y = rnd(map_data.height);
         if (rnd(4) == 0)
@@ -112,31 +112,35 @@ static void _map_events_port_kapul()
             y = map_data.height - 2;
         }
         p = 237;
-        if (game()->quest_flags.duration_of_kamikaze_attack > 50)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 50)
         {
             if (rnd(10) == 0)
             {
                 p = 245;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack > 100)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 100)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack > 150)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 150)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack == 250)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") == 250)
         {
             quest_update_journal_msg();
-            game()->quest_flags.kamikaze_attack = 3;
+            story_quest_set_progress("core.kamikaze_attack", 3);
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.message"),
                 Message::color{ColorIndex::cyan});
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.stairs_appear"));

@@ -7,6 +7,7 @@
 #include "character_memory.hpp"
 #include "crafting_material.hpp"
 #include "item_memory.hpp"
+#include "story_quest.hpp"
 #include "version.hpp"
 
 
@@ -36,43 +37,6 @@ struct DateTime
     // It is for debugging, not for showing to end-users.
     // E.g., "518/02/03 14:56'30"
     std::string to_string() const;
-};
-
-
-
-struct QuestFlags
-{
-    int tutorial;
-
-    int main_quest;
-    int magic_stone_of_fool;
-    int magic_stone_of_sage;
-    int magic_stone_of_king;
-
-    int putit_attacks;
-    int thieves_hideout;
-    int nightmare;
-    int pael_and_her_mom;
-    int wife_collector;
-    int puppys_cave;
-    int cat_house;
-    int defense_line;
-    int novice_knight;
-    int kamikaze_attack;
-    int mias_dream;
-    int rare_books;
-    int pyramid_trial;
-    int red_blossom_in_palmia;
-    int ambitious_scientist;
-    int sewer_sweeping;
-    int minotaur_king;
-    int little_sister;
-    int blue_capsule_drug;
-
-    int duration_of_kamikaze_attack;
-    int kill_count_of_little_sister;
-    int save_count_of_little_sister;
-    int gift_count_of_little_sister;
 };
 
 
@@ -173,6 +137,13 @@ struct Game
 
 
 
+    /* Quests */
+
+    /// Story quests
+    StoryQuestTable story_quests{};
+
+
+
     int crowd_density;
     int pc_x_in_world_map;
     int pc_y_in_world_map;
@@ -269,7 +240,6 @@ struct Game
     int destination_outer_map;
     int lost_wallet_count;
 
-    QuestFlags quest_flags;
     GuildData guild;
 };
 

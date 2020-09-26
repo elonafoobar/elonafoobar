@@ -1952,7 +1952,10 @@ void generate_random_nefia()
     }
     if (map_data.refresh_type == 1)
     {
-        if (rnd(15 + game()->quest_flags.kill_count_of_little_sister * 2) == 0)
+        if (rnd(15 +
+                story_quest_get_ext<lua_int>(
+                    "core.little_sister", "core.kill_count") *
+                    2) == 0)
         {
             flt();
             chara_create(-1, 318, -3, 0);

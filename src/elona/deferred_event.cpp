@@ -554,7 +554,7 @@ void eh_lily_killed(const DeferredEvent& event)
     cdata[event.param1].set_state(Character::State::empty);
     flt();
     itemcreate_map_inv(55, cdata[event.param1].position, 4);
-    game()->quest_flags.pael_and_her_mom = 1001;
+    story_quest_set_progress("core.pael_and_her_mom", 1001);
     if (const auto pael = chara_find("core.pael"))
     {
         if (pael->state() == Character::State::alive)
@@ -760,9 +760,9 @@ void eh_nuclear_bomb(const DeferredEvent& event)
     }
     if (event.param1 == 33 && event.param2 == 16 &&
         game()->current_map == mdata_t::MapId::palmia &&
-        game()->quest_flags.red_blossom_in_palmia == 1)
+        story_quest_progress("core.red_blossom_in_palmia") == 1)
     {
-        game()->quest_flags.red_blossom_in_palmia = 2;
+        story_quest_set_progress("core.red_blossom_in_palmia", 2);
         quest_update_journal_msg();
     }
     if (map_is_town_or_guild())

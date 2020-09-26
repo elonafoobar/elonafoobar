@@ -319,17 +319,17 @@ void weather_changes()
         {
             supply_income();
         }
-        if (game()->quest_flags.pael_and_her_mom == 1 ||
-            game()->quest_flags.pael_and_her_mom == 3 ||
-            game()->quest_flags.pael_and_her_mom == 5 ||
-            game()->quest_flags.pael_and_her_mom == 7 ||
-            game()->quest_flags.pael_and_her_mom == 9)
+        if (story_quest_progress("core.pael_and_her_mom") == 1 ||
+            story_quest_progress("core.pael_and_her_mom") == 3 ||
+            story_quest_progress("core.pael_and_her_mom") == 5 ||
+            story_quest_progress("core.pael_and_her_mom") == 7 ||
+            story_quest_progress("core.pael_and_her_mom") == 9)
         {
             if (area_data[game()->current_map].id != mdata_t::MapId::noyel)
             {
                 if (rnd(20) == 0)
                 {
-                    ++game()->quest_flags.pael_and_her_mom;
+                    story_quest_add_progress("core.pael_and_her_mom", 1);
                     quest_update_journal_msg();
                 }
             }

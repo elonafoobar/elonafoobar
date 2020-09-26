@@ -136,9 +136,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.putit_attacks < 2)
+                if (story_quest_progress("core.putit_attacks") < 2)
                 {
-                    game()->quest_flags.putit_attacks = 2;
+                    story_quest_set_progress("core.putit_attacks", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -147,9 +147,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.thieves_hideout < 2)
+                if (story_quest_progress("core.thieves_hideout") < 2)
                 {
-                    game()->quest_flags.thieves_hideout = 2;
+                    story_quest_set_progress("core.thieves_hideout", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -158,9 +158,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.nightmare < 3)
+                if (story_quest_progress("core.nightmare") < 3)
                 {
-                    game()->quest_flags.nightmare = 3;
+                    story_quest_set_progress("core.nightmare", 3);
                     quest_update_journal_msg();
                 }
             }
@@ -172,9 +172,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.cat_house < 2)
+                if (story_quest_progress("core.cat_house") < 2)
                 {
-                    game()->quest_flags.cat_house = 2;
+                    story_quest_set_progress("core.cat_house", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -183,9 +183,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.defense_line < 3)
+                if (story_quest_progress("core.defense_line") < 3)
                 {
-                    game()->quest_flags.defense_line = 3;
+                    story_quest_set_progress("core.defense_line", 3);
                     quest_update_journal_msg();
                 }
             }
@@ -197,9 +197,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.sewer_sweeping < 2)
+                if (story_quest_progress("core.sewer_sweeping") < 2)
                 {
-                    game()->quest_flags.sewer_sweeping = 2;
+                    story_quest_set_progress("core.sewer_sweeping", 2);
                     quest_update_journal_msg();
                 }
             }

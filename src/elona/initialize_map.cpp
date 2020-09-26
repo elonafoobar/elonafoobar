@@ -350,7 +350,7 @@ void _proc_three_years_later()
 {
     if (game()->current_map == mdata_t::MapId::north_tyris)
     {
-        if (game()->quest_flags.main_quest == 180)
+        if (story_quest_progress("core.elona") == 180)
         {
             cdata.player().position = area_data[11].position;
             game()->player_next_move_direction = 1;
@@ -691,58 +691,60 @@ void _adjust_spawns()
 
 void _update_quest_flags_any()
 {
-    if (game()->quest_flags.main_quest == 9)
+    const auto count_acquired_magic_stones = []() {
+        const auto f =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_fool");
+        const auto k =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_king");
+        const auto s =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_sage");
+
+        return (f ? 1 : 0) + (k ? 1 : 0) + (s ? 1 : 0);
+    };
+
+    if (story_quest_progress("core.elona") == 9)
     {
         sceneid = 2;
         do_play_scene();
-        game()->quest_flags.main_quest = 10;
+        story_quest_set_progress("core.elona", 10);
     }
-    if (game()->quest_flags.main_quest == 60)
+    if (story_quest_progress("core.elona") == 60)
     {
         sceneid = 5;
         do_play_scene();
-        game()->quest_flags.main_quest = 65;
+        story_quest_set_progress("core.elona", 65);
     }
-    if (game()->quest_flags.main_quest == 110)
+    if (story_quest_progress("core.elona") == 110)
     {
         sceneid = 26;
         do_play_scene();
-        game()->quest_flags.main_quest = 115;
+        story_quest_set_progress("core.elona", 115);
     }
-    if (game()->quest_flags.main_quest == 115)
+    if (story_quest_progress("core.elona") == 115)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            1)
+        if (count_acquired_magic_stones() >= 1)
         {
             sceneid = 28;
             do_play_scene();
-            game()->quest_flags.main_quest = 116;
+            story_quest_set_progress("core.elona", 116);
         }
     }
-    if (game()->quest_flags.main_quest == 116)
+    if (story_quest_progress("core.elona") == 116)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            2)
+        if (count_acquired_magic_stones() >= 2)
         {
             sceneid = 29;
             do_play_scene();
-            game()->quest_flags.main_quest = 117;
+            story_quest_set_progress("core.elona", 117);
         }
     }
-    if (game()->quest_flags.main_quest == 117)
+    if (story_quest_progress("core.elona") == 117)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            3)
+        if (count_acquired_magic_stones() >= 3)
         {
             sceneid = 30;
             do_play_scene();
-            game()->quest_flags.main_quest = 120;
+            story_quest_set_progress("core.elona", 120);
         }
     }
 }
@@ -751,109 +753,109 @@ void _update_quest_flags_any()
 
 void _update_quest_flags_lesimas()
 {
-    if (game()->quest_flags.main_quest == 10)
+    if (story_quest_progress("core.elona") == 10)
     {
         sceneid = 3;
         do_play_scene();
-        game()->quest_flags.main_quest = 20;
+        story_quest_set_progress("core.elona", 20);
     }
     if (game()->current_dungeon_level == 4)
     {
-        if (game()->quest_flags.main_quest == 65)
+        if (story_quest_progress("core.elona") == 65)
         {
             sceneid = 7;
             do_play_scene();
-            game()->quest_flags.main_quest = 70;
+            story_quest_set_progress("core.elona", 70);
         }
     }
     if (game()->current_dungeon_level == 7)
     {
-        if (game()->quest_flags.main_quest == 70)
+        if (story_quest_progress("core.elona") == 70)
         {
             sceneid = 15;
             do_play_scene();
-            game()->quest_flags.main_quest = 75;
+            story_quest_set_progress("core.elona", 75);
         }
     }
     if (game()->current_dungeon_level == 10)
     {
-        if (game()->quest_flags.main_quest == 75)
+        if (story_quest_progress("core.elona") == 75)
         {
             sceneid = 16;
             do_play_scene();
-            game()->quest_flags.main_quest = 80;
+            story_quest_set_progress("core.elona", 80);
         }
     }
     if (game()->current_dungeon_level == 14)
     {
-        if (game()->quest_flags.main_quest == 80)
+        if (story_quest_progress("core.elona") == 80)
         {
             sceneid = 17;
             do_play_scene();
-            game()->quest_flags.main_quest = 85;
+            story_quest_set_progress("core.elona", 85);
         }
     }
     if (game()->current_dungeon_level == 16)
     {
-        if (game()->quest_flags.main_quest == 85)
+        if (story_quest_progress("core.elona") == 85)
         {
             sceneid = 24;
             do_play_scene();
-            game()->quest_flags.main_quest = 90;
+            story_quest_set_progress("core.elona", 90);
         }
     }
     if (game()->current_dungeon_level == 26)
     {
-        if (game()->quest_flags.main_quest == 125)
+        if (story_quest_progress("core.elona") == 125)
         {
             sceneid = 33;
             do_play_scene();
-            game()->quest_flags.main_quest = 130;
+            story_quest_set_progress("core.elona", 130);
         }
     }
     if (game()->current_dungeon_level == 28)
     {
-        if (game()->quest_flags.main_quest == 130)
+        if (story_quest_progress("core.elona") == 130)
         {
             sceneid = 35;
             do_play_scene();
-            game()->quest_flags.main_quest = 135;
+            story_quest_set_progress("core.elona", 135);
         }
     }
     if (game()->current_dungeon_level == 31)
     {
-        if (game()->quest_flags.main_quest == 135)
+        if (story_quest_progress("core.elona") == 135)
         {
             sceneid = 40;
             do_play_scene();
-            game()->quest_flags.main_quest = 140;
+            story_quest_set_progress("core.elona", 140);
         }
     }
     if (game()->current_dungeon_level == 35)
     {
-        if (game()->quest_flags.main_quest == 140)
+        if (story_quest_progress("core.elona") == 140)
         {
             sceneid = 60;
             do_play_scene();
-            game()->quest_flags.main_quest = 145;
+            story_quest_set_progress("core.elona", 145);
         }
     }
     if (game()->current_dungeon_level == 38)
     {
-        if (game()->quest_flags.main_quest == 145)
+        if (story_quest_progress("core.elona") == 145)
         {
             sceneid = 70;
             do_play_scene();
-            game()->quest_flags.main_quest = 150;
+            story_quest_set_progress("core.elona", 150);
         }
     }
     if (game()->current_dungeon_level == 42)
     {
-        if (game()->quest_flags.main_quest == 150)
+        if (story_quest_progress("core.elona") == 150)
         {
             sceneid = 90;
             do_play_scene();
-            game()->quest_flags.main_quest = 160;
+            story_quest_set_progress("core.elona", 160);
         }
     }
 }
@@ -864,7 +866,7 @@ void _update_paels_mom()
 {
     if (const auto lily = chara_find("core.lily"))
     {
-        if (game()->quest_flags.pael_and_her_mom >= 10)
+        if (story_quest_progress("core.pael_and_her_mom") >= 10)
         {
             lily->image = 360;
             lily->portrait = "";
@@ -903,11 +905,11 @@ void _proc_guild_entry_events()
 
 void _update_quest_flags_vernis()
 {
-    if (game()->quest_flags.main_quest == 0)
+    if (story_quest_progress("core.elona") == 0)
     {
         sceneid = 1;
         do_play_scene();
-        game()->quest_flags.main_quest = 9;
+        story_quest_set_progress("core.elona", 9);
     }
     if (game()->has_not_been_to_vernis == 0)
     {
@@ -920,17 +922,17 @@ void _update_quest_flags_vernis()
 
 void _update_quest_flags_palmia()
 {
-    if (game()->quest_flags.main_quest == 30)
+    if (story_quest_progress("core.elona") == 30)
     {
         sceneid = 4;
         do_play_scene();
-        game()->quest_flags.main_quest = 40;
+        story_quest_set_progress("core.elona", 40);
     }
-    if (game()->quest_flags.main_quest == 100)
+    if (story_quest_progress("core.elona") == 100)
     {
         sceneid = 25;
         do_play_scene();
-        game()->quest_flags.main_quest = 105;
+        story_quest_set_progress("core.elona", 105);
     }
 }
 
@@ -938,11 +940,11 @@ void _update_quest_flags_palmia()
 
 void _update_quest_flags_north_tyris()
 {
-    if (game()->quest_flags.main_quest == 180)
+    if (story_quest_progress("core.elona") == 180)
     {
         sceneid = 100;
         do_play_scene();
-        game()->quest_flags.main_quest = 200;
+        story_quest_set_progress("core.elona", 200);
         game()->date.year += 3;
     }
 }
@@ -1136,14 +1138,14 @@ void _proc_map_hooks_2()
 {
     if (game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game()->quest_flags.main_quest != 0)
+        if (story_quest_progress("core.elona") != 0)
         {
             _remove_lomias_and_larnneire();
         }
     }
     if (game()->current_map == mdata_t::MapId::palmia)
     {
-        if (game()->quest_flags.main_quest >= 90)
+        if (story_quest_progress("core.elona") >= 90)
         {
             _remove_xabi();
         }
