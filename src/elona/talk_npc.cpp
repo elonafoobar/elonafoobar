@@ -217,7 +217,9 @@ TalkResult talk_trade(Character& speaker)
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
-    MenuResult result = ctrl_inventory(speaker).menu_result;
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = speaker;
+    MenuResult result = ctrl_inventory(opts).menu_result;
     if (!result.succeeded)
     {
         buff = i18n::s.get("core.talk.npc.common.you_kidding", speaker);

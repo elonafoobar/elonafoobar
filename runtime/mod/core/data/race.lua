@@ -1,3 +1,19 @@
+-- Common body parts of human/demi-human races
+local humanoid_body_parts = {
+   "core.head",
+   "core.neck",
+   "core.body",
+   "core.back",
+   "core.hand",
+   "core.hand",
+   "core.ring",
+   "core.ring",
+   "core.arm",
+   "core.waist",
+   "core.leg",
+}
+
+
 ELONA.data:define_prototype("race")
 ELONA.data:add(
    "core.race",
@@ -29,7 +45,18 @@ ELONA.data:add(
             ["core.stealth"] = 2,
             ["core.magic_device"] = 3,
          },
-         body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       orc = {
          is_extra = true,
@@ -58,7 +85,17 @@ ELONA.data:add(
             ["core.heavy_armor"] = 3,
             ["core.shield"] = 3,
          },
-         body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       troll = {
          is_extra = true,
@@ -86,7 +123,15 @@ ELONA.data:add(
             ["core.martial_arts"] = 3,
             ["core.healing"] = 40,
          },
-         body_parts = {1, 4, 3, 5, 5, 7, 8},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.arm",
+            "core.waist",
+         },
       },
       lizardman = {
          is_extra = true,
@@ -116,7 +161,17 @@ ELONA.data:add(
             ["core.shield"] = 3,
             ["core.evasion"] = 2,
          },
-         body_parts = {1, 4, 3, 5, 5, 6, 7, 8, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       minotaur = {
          is_extra = true,
@@ -144,7 +199,15 @@ ELONA.data:add(
             ["core.tactics"] = 4,
             ["core.eye_of_mind"] = 3,
          },
-         body_parts = {1, 4, 5, 5, 6, 8, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.waist",
+            "core.leg",
+         },
       },
       yerles = {
          is_extra = false,
@@ -174,7 +237,7 @@ ELONA.data:add(
             ["core.negotiation"] = 2,
             ["core.throwing"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       norland = {
          is_extra = true,
@@ -204,7 +267,7 @@ ELONA.data:add(
             ["core.two_hand"] = 3,
             ["core.control_magic"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       eulderna = {
          is_extra = false,
@@ -233,7 +296,7 @@ ELONA.data:add(
             ["core.literacy"] = 3,
             ["core.magic_device"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       fairy = {
          is_extra = false,
@@ -272,7 +335,7 @@ ELONA.data:add(
             ["core.pickpocket"] = 3,
             ["core.light_armor"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       asura = {
          is_extra = true,
@@ -302,7 +365,13 @@ ELONA.data:add(
             ["core.greater_evasion"] = 6,
             ["core.anatomy"] = 4,
          },
-         body_parts = {5, 5, 5, 5, 2},
+         body_parts = {
+            "core.hand",
+            "core.hand",
+            "core.hand",
+            "core.hand",
+            "core.neck",
+         },
       },
       slime = {
          is_extra = true,
@@ -331,7 +400,9 @@ ELONA.data:add(
             ["core.evasion"] = 2,
             ["core.performer"] = 3,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       wolf = {
          is_extra = true,
@@ -360,7 +431,14 @@ ELONA.data:add(
             ["core.evasion"] = 2,
             ["core.greater_evasion"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 7, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.arm",
+            "core.leg",
+         },
       },
       dwarf = {
          is_extra = false,
@@ -389,7 +467,7 @@ ELONA.data:add(
             ["core.jeweler"] = 3,
             ["core.mining"] = 4,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       juere = {
          is_extra = false,
@@ -419,7 +497,7 @@ ELONA.data:add(
             ["core.negotiation"] = 2,
             ["core.throwing"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       zombie = {
          is_extra = true,
@@ -453,7 +531,16 @@ ELONA.data:add(
             ["core.cooking"] = 3,
             ["core.fishing"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 6, 7, 8},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+         },
       },
       elea = {
          is_extra = false,
@@ -482,7 +569,7 @@ ELONA.data:add(
             ["core.casting"] = 2,
             ["core.memorization"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       rabbit = {
          is_extra = true,
@@ -509,7 +596,13 @@ ELONA.data:add(
             ["core.martial_arts"] = 1,
             ["core.riding"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 7},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.arm",
+         },
       },
       sheep = {
          is_extra = true,
@@ -537,7 +630,14 @@ ELONA.data:add(
             ["core.healing"] = 3,
             ["core.anatomy"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 7, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.arm",
+            "core.leg",
+         },
       },
       frog = {
          is_extra = true,
@@ -565,7 +665,9 @@ ELONA.data:add(
             ["core.performer"] = 3,
             ["core.investing"] = 2,
          },
-         body_parts = {4},
+         body_parts = {
+            "core.body",
+         },
       },
       centipede = {
          is_extra = true,
@@ -592,7 +694,11 @@ ELONA.data:add(
             ["core.martial_arts"] = 1,
             ["core.eye_of_mind"] = 3,
          },
-         body_parts = {3, 6, 6},
+         body_parts = {
+            "core.back",
+            "core.ring",
+            "core.ring",
+         },
       },
       snail = {
          is_extra = false,
@@ -619,7 +725,9 @@ ELONA.data:add(
             ["core.martial_arts"] = 1,
             ["core.throwing"] = 5,
          },
-         body_parts = {3},
+         body_parts = {
+            "core.back",
+         },
       },
       mandrake = {
          is_extra = true,
@@ -648,7 +756,10 @@ ELONA.data:add(
             ["core.literacy"] = 2,
             ["core.magic_capacity"] = 3,
          },
-         body_parts = {1, 3},
+         body_parts = {
+            "core.head",
+            "core.back",
+         },
       },
       beetle = {
          is_extra = true,
@@ -677,7 +788,9 @@ ELONA.data:add(
             ["core.detection"] = 3,
             ["core.stealth"] = 3,
          },
-         body_parts = {2},
+         body_parts = {
+            "core.neck",
+         },
       },
       mushroom = {
          is_extra = true,
@@ -707,7 +820,10 @@ ELONA.data:add(
             ["core.tailoring"] = 3,
             ["core.alchemy"] = 2,
          },
-         body_parts = {1, 2},
+         body_parts = {
+            "core.head",
+            "core.neck",
+         },
       },
       bat = {
          is_extra = true,
@@ -736,7 +852,9 @@ ELONA.data:add(
             ["core.martial_arts"] = 2,
             ["core.greater_evasion"] = 3,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       ent = {
          is_extra = true,
@@ -764,7 +882,13 @@ ELONA.data:add(
             ["core.healing"] = 2,
             ["core.carpentry"] = 4,
          },
-         body_parts = {5, 6, 6, 7, 9},
+         body_parts = {
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.leg",
+         },
       },
       lich = {
          is_extra = false,
@@ -801,7 +925,7 @@ ELONA.data:add(
             ["core.magic_device"] = 3,
             ["core.casting"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       hound = {
          is_extra = true,
@@ -831,7 +955,13 @@ ELONA.data:add(
             ["core.detection"] = 4,
             ["core.performer"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.leg",
+         },
       },
       ghost = {
          is_extra = true,
@@ -867,7 +997,16 @@ ELONA.data:add(
             ["core.magic_capacity"] = 4,
             ["core.magic_device"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+         },
       },
       spirit = {
          is_extra = true,
@@ -895,7 +1034,16 @@ ELONA.data:add(
             ["core.casting"] = 3,
             ["core.control_magic"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+         },
       },
       eye = {
          is_extra = true,
@@ -924,7 +1072,9 @@ ELONA.data:add(
             ["core.detection"] = 3,
             ["core.anatomy"] = 3,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       wyvern = {
          is_extra = true,
@@ -953,7 +1103,12 @@ ELONA.data:add(
             ["core.literacy"] = 3,
             ["core.traveling"] = 3,
          },
-         body_parts = {2, 4, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.ring",
+            "core.ring",
+         },
       },
       wasp = {
          is_extra = true,
@@ -982,7 +1137,9 @@ ELONA.data:add(
             ["core.martial_arts"] = 2,
             ["core.greater_evasion"] = 2,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       giant = {
          is_extra = true,
@@ -1011,7 +1168,14 @@ ELONA.data:add(
             ["core.magic_device"] = 2,
             ["core.carpentry"] = 3,
          },
-         body_parts = {4, 3, 5, 5, 7, 9},
+         body_parts = {
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.arm",
+            "core.leg",
+         },
       },
       imp = {
          is_extra = true,
@@ -1041,7 +1205,15 @@ ELONA.data:add(
             ["core.memorization"] = 3,
             ["core.control_magic"] = 3,
          },
-         body_parts = {2, 4, 5, 5, 6, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.ring",
+         },
       },
       hand = {
          is_extra = true,
@@ -1068,7 +1240,13 @@ ELONA.data:add(
             ["core.martial_arts"] = 2,
             ["core.eye_of_mind"] = 4,
          },
-         body_parts = {5, 5, 6, 6, 7},
+         body_parts = {
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+         },
       },
       snake = {
          is_extra = true,
@@ -1096,7 +1274,9 @@ ELONA.data:add(
             ["core.martial_arts"] = 2,
             ["core.stealth"] = 4,
          },
-         body_parts = {4},
+         body_parts = {
+            "core.body",
+         },
       },
       drake = {
          is_extra = true,
@@ -1126,7 +1306,12 @@ ELONA.data:add(
             ["core.traveling"] = 3,
             ["core.fishing"] = 2,
          },
-         body_parts = {2, 4, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.ring",
+            "core.ring",
+         },
       },
       goblin = {
          is_extra = false,
@@ -1156,7 +1341,7 @@ ELONA.data:add(
             ["core.mining"] = 2,
             ["core.eye_of_mind"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       bear = {
          is_extra = true,
@@ -1186,7 +1371,15 @@ ELONA.data:add(
             ["core.performer"] = 2,
             ["core.eye_of_mind"] = 3,
          },
-         body_parts = {5, 5, 6, 6, 7, 8, 9},
+         body_parts = {
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       armor = {
          is_extra = true,
@@ -1216,7 +1409,16 @@ ELONA.data:add(
             ["core.lock_picking"] = 3,
             ["core.magic_device"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 7, 8},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.arm",
+            "core.waist",
+         },
       },
       medusa = {
          is_extra = true,
@@ -1245,7 +1447,15 @@ ELONA.data:add(
             ["core.magic_capacity"] = 3,
             ["core.control_magic"] = 3,
          },
-         body_parts = {4, 5, 5, 6, 6, 7, 9},
+         body_parts = {
+            "core.body",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.leg",
+         },
       },
       cupid = {
          is_extra = true,
@@ -1274,7 +1484,15 @@ ELONA.data:add(
             ["core.literacy"] = 4,
             ["core.control_magic"] = 3,
          },
-         body_parts = {2, 4, 5, 5, 6, 6, 7},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+         },
       },
       phantom = {
          is_extra = true,
@@ -1310,7 +1528,15 @@ ELONA.data:add(
             ["core.stealth"] = 3,
             ["core.disarm_trap"] = 3,
          },
-         body_parts = {2, 4, 5, 5, 6, 6, 7},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+         },
       },
       harpy = {
          is_extra = true,
@@ -1339,7 +1565,16 @@ ELONA.data:add(
             ["core.magic_capacity"] = 3,
             ["core.magic_device"] = 2,
          },
-         body_parts = {2, 5, 5, 6, 6, 7, 9, 9},
+         body_parts = {
+            "core.neck",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.leg",
+            "core.leg",
+         },
       },
       dragon = {
          is_extra = true,
@@ -1369,7 +1604,12 @@ ELONA.data:add(
             ["core.traveling"] = 3,
             ["core.jeweler"] = 3,
          },
-         body_parts = {2, 4, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.ring",
+            "core.ring",
+         },
       },
       dinosaur = {
          is_extra = true,
@@ -1399,7 +1639,12 @@ ELONA.data:add(
             ["core.traveling"] = 3,
             ["core.greater_evasion"] = 2,
          },
-         body_parts = {2, 4, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.ring",
+            "core.ring",
+         },
       },
       cerberus = {
          is_extra = true,
@@ -1428,7 +1673,15 @@ ELONA.data:add(
             ["core.detection"] = 3,
             ["core.tailoring"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 7, 9, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.arm",
+            "core.leg",
+            "core.leg",
+         },
       },
       spider = {
          is_extra = true,
@@ -1459,7 +1712,10 @@ ELONA.data:add(
             ["core.stealth"] = 3,
             ["core.anatomy"] = 5,
          },
-         body_parts = {6, 6},
+         body_parts = {
+            "core.ring",
+            "core.ring",
+         },
       },
       golem = {
          is_extra = false,
@@ -1489,7 +1745,7 @@ ELONA.data:add(
             ["core.weight_lifting"] = 5,
             ["core.mining"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       rock = {
          is_extra = true,
@@ -1519,7 +1775,9 @@ ELONA.data:add(
             ["core.weight_lifting"] = 3,
             ["core.mining"] = 3,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       crab = {
          is_extra = true,
@@ -1549,7 +1807,14 @@ ELONA.data:add(
             ["core.disarm_trap"] = 2,
             ["core.shield"] = 3,
          },
-         body_parts = {3, 5, 5, 6, 6, 9},
+         body_parts = {
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.leg",
+         },
       },
       skeleton = {
          is_extra = true,
@@ -1585,7 +1850,7 @@ ELONA.data:add(
             ["core.shield"] = 2,
             ["core.lock_picking"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       piece = {
          is_extra = true,
@@ -1615,7 +1880,18 @@ ELONA.data:add(
             ["core.magic_capacity"] = 2,
             ["core.literacy"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.waist",
+         },
       },
       cat = {
          is_extra = true,
@@ -1646,7 +1922,15 @@ ELONA.data:add(
             ["core.greater_evasion"] = 3,
             ["core.evasion"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 5, 9, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.leg",
+            "core.leg",
+         },
       },
       dog = {
          is_extra = true,
@@ -1676,7 +1960,15 @@ ELONA.data:add(
             ["core.performer"] = 2,
             ["core.detection"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 9, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.leg",
+            "core.leg",
+         },
       },
       roran = {
          is_extra = true,
@@ -1706,7 +1998,7 @@ ELONA.data:add(
             ["core.literacy"] = 4,
             ["core.investing"] = 2,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       rat = {
          is_extra = true,
@@ -1735,7 +2027,12 @@ ELONA.data:add(
             ["core.stealth"] = 3,
             ["core.anatomy"] = 2,
          },
-         body_parts = {3, 7, 8, 9},
+         body_parts = {
+            "core.back",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       shell = {
          is_extra = true,
@@ -1765,7 +2062,9 @@ ELONA.data:add(
             ["core.meditation"] = 3,
             ["core.sense_quality"] = 3,
          },
-         body_parts = {9},
+         body_parts = {
+            "core.leg",
+         },
       },
       catgod = {
          is_extra = true,
@@ -1796,7 +2095,15 @@ ELONA.data:add(
             ["core.greater_evasion"] = 3,
             ["core.eye_of_mind"] = 2,
          },
-         body_parts = {1, 2, 4, 5, 6, 7, 9},
+         body_parts = {
+            "core.head",
+            "core.neck",
+            "core.body",
+            "core.hand",
+            "core.ring",
+            "core.arm",
+            "core.leg",
+         },
       },
       machinegod = {
          is_extra = true,
@@ -1825,7 +2132,16 @@ ELONA.data:add(
             ["core.martial_arts"] = 5,
             ["core.firearm"] = 30,
          },
-         body_parts = {1, 4, 3, 5, 5, 7, 8, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.arm",
+            "core.waist",
+            "core.leg",
+         },
       },
       undeadgod = {
          is_extra = true,
@@ -1853,7 +2169,15 @@ ELONA.data:add(
             ["core.control_magic"] = 3,
             ["core.magic_capacity"] = 5,
          },
-         body_parts = {2, 4, 3, 5, 5, 6, 6},
+         body_parts = {
+            "core.neck",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+         },
       },
       machine = {
          is_extra = true,
@@ -1884,7 +2208,7 @@ ELONA.data:add(
             ["core.lock_picking"] = 3,
             ["core.disarm_trap"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       wisp = {
          is_extra = true,
@@ -1913,7 +2237,9 @@ ELONA.data:add(
             ["core.control_magic"] = 3,
             ["core.magic_capacity"] = 5,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       chicken = {
          is_extra = true,
@@ -1942,7 +2268,9 @@ ELONA.data:add(
             ["core.anatomy"] = 3,
             ["core.meditation"] = 3,
          },
-         body_parts = {1},
+         body_parts = {
+            "core.head",
+         },
       },
       stalker = {
          is_extra = true,
@@ -1978,7 +2306,14 @@ ELONA.data:add(
             ["core.eye_of_mind"] = 3,
             ["core.stealth"] = 4,
          },
-         body_parts = {2, 5, 5, 6, 6, 7},
+         body_parts = {
+            "core.neck",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+         },
       },
       catsister = {
          is_extra = true,
@@ -2007,7 +2342,7 @@ ELONA.data:add(
             ["core.two_hand"] = 6,
             ["core.tactics"] = 4,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       mutant = {
          is_extra = false,
@@ -2035,7 +2370,10 @@ ELONA.data:add(
             ["core.magic_capacity"] = 3,
             ["core.healing"] = 4,
          },
-         body_parts = {4, 5},
+         body_parts = {
+            "core.body",
+            "core.hand",
+         },
       },
       yeek = {
          is_extra = true,
@@ -2063,7 +2401,7 @@ ELONA.data:add(
             ["core.meditation"] = 3,
             ["core.negotiation"] = 4,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       yith = {
          is_extra = true,
@@ -2094,7 +2432,16 @@ ELONA.data:add(
             ["core.meditation"] = 3,
             ["core.faith"] = 4,
          },
-         body_parts = {5, 5, 5, 5, 6, 6, 6, 6},
+         body_parts = {
+            "core.hand",
+            "core.hand",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.ring",
+            "core.ring",
+         },
       },
       servant = {
          is_extra = true,
@@ -2127,7 +2474,7 @@ ELONA.data:add(
             ["core.firearm"] = 4,
             ["core.two_hand"] = 3,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
       horse = {
          is_extra = true,
@@ -2155,7 +2502,11 @@ ELONA.data:add(
             ["core.martial_arts"] = 1,
             ["core.healing"] = 4,
          },
-         body_parts = {4, 9, 9},
+         body_parts = {
+            "core.body",
+            "core.leg",
+            "core.leg",
+         },
       },
       god = {
          is_extra = true,
@@ -2191,7 +2542,10 @@ ELONA.data:add(
             ["core.two_hand"] = 5,
             ["core.tactics"] = 7,
          },
-         body_parts = {5, 5},
+         body_parts = {
+            "core.hand",
+            "core.hand",
+         },
       },
       quickling = {
          is_extra = true,
@@ -2224,7 +2578,17 @@ ELONA.data:add(
             ["core.evasion"] = 7,
             ["core.greater_evasion"] = 6,
          },
-         body_parts = {1, 4, 3, 5, 5, 6, 6, 7, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.ring",
+            "core.ring",
+            "core.arm",
+            "core.leg",
+         },
       },
       metal = {
          is_extra = true,
@@ -2258,7 +2622,11 @@ ELONA.data:add(
             ["core.magic_capacity"] = 4,
             ["core.greater_evasion"] = 6,
          },
-         body_parts = {1, 4, 3},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+         },
       },
       bike = {
          is_extra = true,
@@ -2290,7 +2658,16 @@ ELONA.data:add(
             ["core.lock_picking"] = 3,
             ["core.disarm_trap"] = 3,
          },
-         body_parts = {1, 4, 3, 5, 5, 8, 9, 9},
+         body_parts = {
+            "core.head",
+            "core.body",
+            "core.back",
+            "core.hand",
+            "core.hand",
+            "core.waist",
+            "core.leg",
+            "core.leg",
+         },
       },
       -- For debug
       slug = {
@@ -2311,7 +2688,7 @@ ELONA.data:add(
             ["core.attribute_speed"] = 500,
             ["core.mining"] = 100,
          },
-         body_parts = {1, 2, 4, 3, 5, 5, 6, 6, 7, 8, 9},
+         body_parts = humanoid_body_parts,
       },
    }
 )

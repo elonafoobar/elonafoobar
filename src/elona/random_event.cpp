@@ -375,19 +375,15 @@ void run_random_event(RandomEvent event)
         }
         else
         {
-            f = 0;
-            for (int i = 0; i < 30; ++i)
+            bool equip_any_equipments = false;
+            for (const auto& body_part : cdata.player().body_parts)
             {
-                if (!cdata.player().equipment_slots[i].equipment)
+                if (body_part.is_equip())
                 {
-                    continue;
-                }
-                else
-                {
-                    f = 1;
+                    equip_any_equipments = true;
                 }
             }
-            if (f)
+            if (equip_any_equipments)
             {
                 efid = 1114;
                 efp = 200;

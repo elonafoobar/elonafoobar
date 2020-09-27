@@ -27,10 +27,7 @@ void wear_most_valuable_equipment(Character& chara, ItemRef equipment);
 void supply_new_equipment(Character& chara);
 void supply_initial_equipments(Character& chara);
 
-void equip_item(
-    Character& chara,
-    size_t equipment_slot_index,
-    ItemRef equipment);
-void unequip_item(Character& chara, size_t equipment_slot_index);
+void equip_item(Character& chara, size_t body_part_index, ItemRef equipment);
+void unequip_item(Character& chara, size_t body_part_index);
 
 } // namespace elona

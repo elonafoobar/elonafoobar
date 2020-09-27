@@ -795,7 +795,7 @@ void blendig_menu_select_materials()
             draw_item_with_portrait_scale_height(
                 g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-            if (g_inv[p]->body_part != 0)
+            if (g_inv[p]->is_equipped())
             {
                 draw("core.equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             }
@@ -1004,7 +1004,7 @@ void blending_proc_on_success_events()
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
     inv_stack(inv_player(), item1);
-    if (item1->body_part != 0)
+    if (item1->is_equipped())
     {
         create_pcpic(cdata.player());
     }

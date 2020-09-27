@@ -104,7 +104,9 @@ void shop_sell_item(optional_ref<Character> shopkeeper)
             shoptrade = 1;
         }
     }
-    ctrl_inventory(shopkeeper);
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = shopkeeper;
+    ctrl_inventory(opts);
 }
 
 } // namespace elona

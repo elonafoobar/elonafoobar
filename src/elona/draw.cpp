@@ -118,24 +118,27 @@ void _set_pcc_depending_on_equipments(
     {
         item_appearance = 1;
     }
-    switch (iequiploc(equipment))
+
+    const auto body_part_id = iequiploc(equipment);
+    if (body_part_id == "core.back")
     {
-    case 3:
         pcc(4, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 4:
+    }
+    else if (body_part_id == "core.body")
+    {
         pcc(2, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 7:
+    }
+    else if (body_part_id == "core.arm")
+    {
         pcc(8, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 8:
+    }
+    else if (body_part_id == "core.waist")
+    {
         pcc(5, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 9:
+    }
+    else if (body_part_id == "core.leg")
+    {
         pcc(3, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    default: break;
     }
 }
 
@@ -655,11 +658,12 @@ void create_pcpic(Character& chara, bool with_equipments)
         pcc(3, idx) = 0;
         pcc(8, idx) = 0;
         pcc(5, idx) = 0;
-        for (const auto& [_type, equipment] : chara.equipment_slots)
+        for (const auto& body_part : chara.body_parts)
         {
-            if (equipment)
+            if (body_part.is_equip())
             {
-                _set_pcc_depending_on_equipments(chara, equipment.unwrap());
+                _set_pcc_depending_on_equipments(
+                    chara, body_part.equipment().unwrap());
             }
         }
     }

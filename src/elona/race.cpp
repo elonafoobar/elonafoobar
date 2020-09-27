@@ -47,18 +47,13 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         chara.breaks_into_debris() = true;
     }
 
+    // Body parts
+    for (const auto& body_part_id : data->body_parts)
     {
-        size_t index{};
-        for (const auto& limb : data->body_parts)
-        {
-            chara.equipment_slots[index] = EquipmentSlot{limb, nullptr};
-            ++index;
-        }
-        chara.equipment_slots[index] = EquipmentSlot{10, nullptr};
-        ++index;
-        chara.equipment_slots[index] = EquipmentSlot{11, nullptr};
-        ++index;
+        chara.body_parts.add(body_part_id);
     }
+    chara.body_parts.add("core.shoot");
+    chara.body_parts.add("core.ammo");
 
     for (const auto& pair : data->skills)
     {

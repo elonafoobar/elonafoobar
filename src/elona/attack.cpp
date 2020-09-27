@@ -150,20 +150,19 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 {
     OptionalItemRef weapon;
     OptionalItemRef ammo;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot")
         {
-            weapon = chara.equipment_slots[cnt].equipment;
+            weapon = body_part.equipment();
         }
-        if (chara.equipment_slots[cnt].type == 11)
+        else if (body_part.id == "core.ammo")
         {
-            ammo = chara.equipment_slots[cnt].equipment;
+            ammo = body_part.equipment();
         }
     }
     if (!weapon)
@@ -851,22 +850,17 @@ void try_to_melee_attack(Character& attacker, Character& target)
             target.paralyzed += rnd(3);
         }
     }
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : attacker.body_parts)
     {
-        body = 100 + cnt;
-        if (!attacker.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (attacker.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot" || body_part.id == "core.ammo")
         {
             continue;
         }
-        if (attacker.equipment_slots[cnt].type == 11)
-        {
-            continue;
-        }
-        const auto weapon = attacker.equipment_slots[cnt].equipment;
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;

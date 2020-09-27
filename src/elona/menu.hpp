@@ -4,6 +4,7 @@
 
 #include "eobject/eobject.hpp"
 #include "optional.hpp"
+#include "typedefs.hpp"
 
 
 
@@ -124,8 +125,15 @@ struct CtrlInventoryResult
     OptionalItemRef selected_item;
 };
 
-CtrlInventoryResult ctrl_inventory(
-    optional_ref<Character> inventory_owner = none);
+struct CtrlInventoryOptions
+{
+    optional_ref<Character> inventory_owner;
+    lua_index body_part_index;
+
+    CtrlInventoryOptions() = default;
+};
+
+CtrlInventoryResult ctrl_inventory(const CtrlInventoryOptions& opts = {});
 
 
 void menu_chat_dialog();

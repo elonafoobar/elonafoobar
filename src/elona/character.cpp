@@ -486,7 +486,6 @@ elona_vector1<std::string> usertxt;
 
 Character::Character()
     : growth_buffs(10)
-    , equipment_slots(30)
     , attr_adjs(10)
 {
 }
@@ -755,16 +754,16 @@ void chara_refresh(Character& chara)
         if (cdata.player().traits().level(
                 "core.cannot_wear_heavy_equipments") != 0)
         {
-            for (auto&& equipment_slot : chara.equipment_slots)
+            for (auto&& body_part : chara.body_parts)
             {
-                if (!equipment_slot.equipment)
+                if (!body_part.is_equip())
                 {
                     continue;
                 }
-                if (equipment_slot.equipment->weight >= 1000)
+                if (body_part.equipment()->weight >= 1000)
                 {
-                    equipment_slot.equipment->body_part = 0;
-                    equipment_slot.unequip();
+                    body_part.equipment()->equipped_slot = lua_index::nil();
+                    body_part.unequip();
                 }
             }
         }
@@ -801,13 +800,13 @@ void chara_refresh(Character& chara)
     chara.nullify_damage = 0;
     chara.cut_counterattack = 0;
 
-    for (const auto& equipment_slot : chara.equipment_slots)
+    for (const auto& body_part : chara.body_parts)
     {
-        if (!equipment_slot.equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        const auto equipment = equipment_slot.equipment;
+        const auto equipment = body_part.equipment().unwrap();
         chara.sum_of_equipment_weight += equipment->weight;
         if (equipment->skill == 168)
         {
@@ -822,7 +821,7 @@ void chara_refresh(Character& chara)
             chara.pv += equipment->bonus_value * 2 +
                 (equipment->curse_state == CurseState::blessed) * 2;
         }
-        else if (equipment_slot.type == 5)
+        else if (body_part.id == "core.hand")
         {
             ++attacknum;
         }
@@ -1498,9 +1497,9 @@ int chara_copy(const Character& source)
     destination.is_hung_on_sand_bag() = false;
 
     // Unequip all gears.
-    for (auto&& equipment_slot : destination.equipment_slots)
+    for (auto&& body_part : destination.body_parts)
     {
-        equipment_slot.unequip();
+        body_part.unequip();
     }
 
     // Increase crowd density.
@@ -1587,9 +1586,9 @@ void chara_relocate(
     }
 
     // Unequip all gears.
-    for (auto&& equipment_slot : destination.equipment_slots)
+    for (auto&& body_part : destination.body_parts)
     {
-        equipment_slot.unequip();
+        body_part.unequip();
     }
 
     if (mode == CharaRelocationMode::change)
@@ -2342,14 +2341,14 @@ void proc_one_equipment_with_negative_enchantments(
 
 void proc_negative_enchantments(Character& chara)
 {
-    for (const auto& [_type, equipment] : chara.equipment_slots)
+    for (const auto& body_part : chara.body_parts)
     {
-        if (!equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
         proc_one_equipment_with_negative_enchantments(
-            chara, equipment.unwrap());
+            chara, body_part.equipment().unwrap());
     }
 }
 
@@ -2681,24 +2680,6 @@ void move_character(Character& chara)
 {
     while (move_character_internal(chara))
         ;
-}
-
-
-
-void lost_body_part(int chara_index)
-{
-    for (auto&& equipment_slot : cdata[chara_index].equipment_slots)
-    {
-        if (equipment_slot.type == body)
-        {
-            if (!equipment_slot.equipment)
-            {
-                continue;
-            }
-            equipment_slot.equipment->body_part = 0;
-            equipment_slot.unequip();
-        }
-    }
 }
 
 

@@ -467,9 +467,12 @@ bool _magic_300(Character& subject, Character& target)
     snd("core.inv");
     // In Pickpocket spact, target == player means that you attempts to steal
     // items on the ground, not in someone's inventory.
-    ctrl_inventory(
-        target.is_player() ? optional_ref<Character>{}
-                           : optional_ref<Character>{target});
+    CtrlInventoryOptions opts;
+    if (!target.is_player())
+    {
+        opts.inventory_owner = target;
+    }
+    ctrl_inventory(opts);
     return true;
 }
 
@@ -1172,7 +1175,7 @@ bool _magic_412(Character& subject, Character& target)
         {
             p = p / 2 + 1;
         }
-        else if (item->body_part == 0)
+        else if (!item->is_equipped())
         {
             continue;
         }
@@ -2070,20 +2073,20 @@ bool _magic_645_1114(Character& subject, Character& target)
         }
     }
     std::vector<ItemRef> candidates;
-    for (const auto& [_type, equipment] : target.equipment_slots)
+    for (const auto& body_part : target.body_parts)
     {
-        if (!equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (equipment->curse_state == CurseState::blessed)
+        if (body_part.equipment()->curse_state == CurseState::blessed)
         {
             if (rnd(10))
             {
                 continue;
             }
         }
-        candidates.emplace_back(equipment.unwrap());
+        candidates.emplace_back(body_part.equipment().unwrap());
     }
     if (candidates.empty())
     {
@@ -2415,7 +2418,6 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
         return true;
     }
     randomize(hammer->param1);
-    equip = target_item->body_part;
     animeload(8, subject);
     target_item->quality = Quality::miracle;
     change_item_material(target_item, target_item->material);
@@ -2436,11 +2438,6 @@ bool _magic_49(Character& subject, const ItemRef& hammer)
     }
     randomize();
     txt(i18n::s.get("core.magic.garoks_hammer.apply", target_item));
-    if (equip != 0)
-    {
-        subject.equipment_slots[equip - 100].equip(target_item);
-        target_item->body_part = equip;
-    }
     chara_refresh(subject);
     fixmaterial = 0;
     objfix = 0;
@@ -2482,9 +2479,9 @@ bool _magic_21_1127(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        equip = target_item->body_part;
         if (target_item->quality == Quality::special)
         {
+            const auto equipped_slot_save = target_item->equipped_slot;
             if (efp < 350)
             {
                 txt(i18n::s.get(
@@ -2501,11 +2498,11 @@ bool _magic_21_1127(Character& subject)
             const auto reconstructed_artifact = itemcreate_player_inv(
                 the_item_db[target_item->id]->integer_id, 0);
             assert(reconstructed_artifact);
-            if (equip != 0)
+            if (!equipped_slot_save.is_nil())
             {
-                subject.equipment_slots[equip - 100].equip(
+                subject.body_parts[equipped_slot_save].equip(
                     reconstructed_artifact.unwrap());
-                reconstructed_artifact->body_part = equip;
+                reconstructed_artifact->equipped_slot = equipped_slot_save;
             }
         }
         else
@@ -2534,11 +2531,6 @@ bool _magic_21_1127(Character& subject)
                 subject,
                 s(0),
                 target_item));
-            if (equip != 0)
-            {
-                subject.equipment_slots[equip - 100].equip(target_item);
-                target_item->body_part = equip;
-            }
         }
     }
     else

@@ -442,20 +442,16 @@ optional<TurnResult> use_gene_machine()
 
     GeneEngineeringAnimation(cdata[original_character].position).play();
 
+    if (const auto body_part_id = gene_engineering_get_transplanted_body_part(
+            cdata[original_character], cdata[gene_chara_index]))
     {
-        int stat = transplant_body_parts(
-            cdata[original_character], cdata[gene_chara_index]);
-        if (stat != -1)
-        {
-            cdata[original_character].equipment_slots[stat - 100] =
-                EquipmentSlot{rtval, nullptr};
-            txt(i18n::s.get(
-                    "core.action.use.gene_machine.gains.body_part",
-                    cdata[original_character],
-                    i18n::s.get_enum("core.ui.body_part", rtval)),
-                Message::color{ColorIndex::green});
-            refresh_speed_correction_value(cdata[original_character]);
-        }
+        cdata[original_character].body_parts.add(*body_part_id);
+        txt(i18n::s.get(
+                "core.action.use.gene_machine.gains.body_part",
+                cdata[original_character],
+                i18n::s.get_data_text("core.body_part", *body_part_id, "name")),
+            Message::color{ColorIndex::green});
+        refresh_speed_correction_value(cdata[original_character]);
     }
 
     {
@@ -593,7 +589,9 @@ TurnResult do_give_command()
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory(cdata[target_chara_index]).menu_result;
+        CtrlInventoryOptions opts;
+        opts.inventory_owner = cdata[target_chara_index];
+        MenuResult mr = ctrl_inventory(opts).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -709,7 +707,9 @@ TurnResult do_interact_command()
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory(cdata[target_index]).menu_result;
+        CtrlInventoryOptions opts;
+        opts.inventory_owner = cdata[target_index];
+        MenuResult mr = ctrl_inventory(opts).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -1213,16 +1213,15 @@ TurnResult do_close_command()
 TurnResult do_change_ammo_command()
 {
     OptionalItemRef ammo_opt;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : cdata.player().body_parts)
     {
-        body = 100 + cnt;
-        if (!cdata.player().equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (cdata.player().equipment_slots[cnt].type == 11)
+        if (body_part.id == "core.ammo")
         {
-            ammo_opt = cdata.player().equipment_slots[cnt].equipment;
+            ammo_opt = body_part.equipment();
             break;
         }
     }
@@ -1761,7 +1760,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
         mix_item->modify_number(-1);
         mix_target->tint = mix_item->tint;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
-        if (mix_target->body_part != 0)
+        if (mix_target->is_equipped())
         {
             create_pcpic(cdata.player());
         }
@@ -4004,7 +4003,9 @@ TurnResult try_interact_with_npc(Character& chara)
     invally = 1;
     invctrl = 10;
     snd("core.inv");
-    MenuResult mr = ctrl_inventory(chara).menu_result;
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = chara;
+    MenuResult mr = ctrl_inventory(opts).menu_result;
     assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
 }

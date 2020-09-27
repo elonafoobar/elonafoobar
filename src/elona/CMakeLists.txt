@@ -10,6 +10,7 @@ set(ELONA_SOURCES
   audio.cpp
   autopick.cpp
   blending.cpp
+  body_part.cpp
   browser.cpp
   buff.cpp
   building.cpp

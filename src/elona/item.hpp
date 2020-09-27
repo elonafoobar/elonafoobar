@@ -87,7 +87,7 @@ public:
     lua_int pv{};
     int skill = 0;
     CurseState curse_state = CurseState::none;
-    int body_part = 0;
+    lua_index equipped_slot{};
     int function = 0;
     lua_int bonus_value{};
     OwnState own_state{};
@@ -155,6 +155,13 @@ public:
     bool operator!=(const Item& other) const noexcept
     {
         return !(*this == other);
+    }
+
+
+
+    bool is_equipped() const noexcept
+    {
+        return !equipped_slot.is_nil();
     }
 
 
@@ -587,7 +594,7 @@ enum class ItemDescriptionType : int
 size_t item_load_desc(const ItemRef& item);
 
 
-int iequiploc(const ItemRef& item);
+data::InstanceId iequiploc(const ItemRef& item);
 
 void item_db_set_basic_stats(const ItemRef& item, int integer_id);
 void item_db_get_description(const ItemRef& item, int integer_id);

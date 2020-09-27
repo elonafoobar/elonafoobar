@@ -92,18 +92,18 @@ void UIMenuFeats::_add_trait_desc(const std::string& trait_desc)
 void UIMenuFeats::_load_traits_by_enchantments()
 {
     std::vector<std::string> traits_by_enchantments;
-    for (const auto& [_type, equipment] : cdata[_chara_index].equipment_slots)
+    for (const auto& body_part : cdata[_chara_index].body_parts)
     {
-        if (equipment)
+        if (!body_part.is_equip())
+            continue;
+
+        for (const auto& enc : body_part.equipment()->enchantments)
         {
-            for (const auto& enc : equipment->enchantments)
+            get_enchantment_description(
+                enc.id, enc.power, ItemCategory::unidentified, true);
+            if (!s(0).empty())
             {
-                get_enchantment_description(
-                    enc.id, enc.power, ItemCategory::unidentified, true);
-                if (!s(0).empty())
-                {
-                    traits_by_enchantments.push_back(s);
-                }
+                traits_by_enchantments.push_back(s);
             }
         }
     }

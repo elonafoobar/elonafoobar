@@ -96,6 +96,7 @@ struct OnEnterResult
 
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
+    lua_index body_part_index,
     int selected_item_index,
     OptionalItemRef& citrade,
     OptionalItemRef& cidip,
@@ -248,6 +249,7 @@ void restore_cursor()
 
 void make_item_list(
     optional_ref<Character> inventory_owner,
+    lua_index body_part_index,
     OptionalItemRef& mainweapon,
     const OptionalItemRef& citrade,
     const OptionalItemRef& cidip)
@@ -371,18 +373,19 @@ void make_item_list(
 
             if (exclude_equipped_items(invctrl(0)))
             {
-                if (item->body_part != 0) // `item` is worn.
+                if (item->is_equipped()) // `item` is worn.
                 {
                     continue;
                 }
             }
 
             // (利き腕)表示用
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
                 if (reftype == 10000)
                 {
-                    if (!mainweapon || item->body_part < mainweapon->body_part)
+                    if (!mainweapon ||
+                        item->equipped_slot < mainweapon->equipped_slot)
                     {
                         mainweapon = item;
                     }
@@ -400,8 +403,9 @@ void make_item_list(
             }
             if (invctrl == 6)
             {
+                assert(!body_part_index.is_nil());
                 if (iequiploc(item) !=
-                    cdata.player().equipment_slots[body - 100].type)
+                    cdata.player().body_parts[body_part_index].id)
                 {
                     continue;
                 }
@@ -589,7 +593,7 @@ void make_item_list(
                 }
                 if (invctrl(1) == 4)
                 {
-                    if (item->body_part != 0)
+                    if (item->is_equipped())
                     {
                         continue;
                     }
@@ -705,7 +709,7 @@ void make_item_list(
             }
             if (invctrl == 1 || invctrl == 13)
             {
-                if (item->body_part != 0)
+                if (item->is_equipped())
                 {
                     list(1, listmax) -= 99999000;
                 }
@@ -956,7 +960,8 @@ on_shortcut(OptionalItemRef& citrade, OptionalItemRef& cidip, bool dropcontinue)
             result.turn_result = TurnResult::pc_turn_user_error;
             return OnEnterResult{result};
         }
-        return on_enter(none, p(0), citrade, cidip, dropcontinue);
+        return on_enter(
+            none, lua_index::nil(), p(0), citrade, cidip, dropcontinue);
     }
 
     return none;
@@ -1145,15 +1150,14 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
         mes(x, y, i18n::s.get("core.ui.inv.take_ally.window.equip"));
         x += 60;
 
-        for (const auto& equipment_slot : inventory_owner->equipment_slots)
+        for (const auto& body_part : inventory_owner->body_parts)
         {
-            if (!equipment_slot)
-            {
+            if (body_part.is_unequippable())
                 continue;
-            }
+
             std::string body_part_desc =
-                i18n::s.get_enum("core.ui.body_part", equipment_slot.type);
-            const auto text_color = equipment_slot.equipment
+                i18n::s.get_data_text("core.body_part", body_part.id, "name");
+            const auto text_color = body_part.is_equip()
                 ? snail::Color{50, 50, 200}
                 : snail::Color{100, 100, 100};
             mes(x, y, body_part_desc, text_color);
@@ -1238,7 +1242,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         draw_item_with_portrait_scale_height(
             g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-        if (g_inv[p]->body_part != 0)
+        if (g_inv[p]->is_equipped())
         {
             draw("core.equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             if (g_inv[p] == mainweapon)
@@ -1627,8 +1631,13 @@ OnEnterResult on_enter_eat(const ItemRef& selected_item, MenuResult& result)
 
 
 
-OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
+OnEnterResult on_enter_equip(
+    const ItemRef& selected_item,
+    MenuResult& result,
+    lua_index body_part_index)
 {
+    assert(!body_part_index.is_nil());
+
     if (cdata.player().traits().level("core.cannot_wear_heavy_equipments") != 0)
     {
         if (selected_item->weight >= 1000)
@@ -1637,7 +1646,7 @@ OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
             return OnEnterResult{2};
         }
     }
-    equip_item(cdata.player(), body - 100, selected_item);
+    equip_item(cdata.player(), *body_part_index.to_0_based(), selected_item);
     chara_refresh(cdata.player());
     screenupdate = -1;
     update_screen();
@@ -1658,7 +1667,7 @@ OnEnterResult on_enter_equip(const ItemRef& selected_item, MenuResult& result)
         txt(i18n::s.get("core.ui.inv.equip.blessed", cdata.player()));
         break;
     }
-    if (cdata.player().equipment_slots[body - 100].type == 5)
+    if (cdata.player().body_parts[body_part_index].id == "core.hand")
     {
         equip_melee_weapon(cdata.player());
     }
@@ -2049,11 +2058,10 @@ OnEnterResult on_enter_trade_target(
     citrade->is_quest_target = false;
     txt(i18n::s.get(
         "core.ui.inv.trade.you_receive", selected_item, citrade.unwrap()));
-    if (citrade->body_part != 0)
+    if (citrade->is_equipped())
     {
-        p = citrade->body_part;
-        inventory_owner.equipment_slots[p - 100].unequip();
-        citrade->body_part = 0;
+        inventory_owner.body_parts[citrade->equipped_slot].unequip();
+        citrade->equipped_slot = lua_index::nil();
     }
 
     if (inventory_owner.ai_item == citrade)
@@ -2186,16 +2194,15 @@ OnEnterResult on_enter_receive(
             Message::color{ColorIndex::blue});
         return OnEnterResult{2};
     }
-    if (selected_item->body_part != 0)
+    if (selected_item->is_equipped())
     {
         if (is_cursed(selected_item->curse_state))
         {
             txt(i18n::s.get("core.ui.inv.take_ally.cursed", selected_item));
             return OnEnterResult{1};
         }
-        p = selected_item->body_part;
-        inventory_owner.equipment_slots[p - 100].unequip();
-        selected_item->body_part = 0;
+        inventory_owner.body_parts[selected_item->equipped_slot].unequip();
+        selected_item->equipped_slot = lua_index::nil();
     }
     if (selected_item->id == "core.engagement_ring" ||
         selected_item->id == "core.engagement_amulet")
@@ -2327,6 +2334,7 @@ OnEnterResult on_enter_small_medal(const ItemRef& selected_item)
 
 OnEnterResult on_enter(
     optional_ref<Character> inventory_owner,
+    lua_index body_part_index,
     int selected_item_index,
     OptionalItemRef& citrade,
     OptionalItemRef& cidip,
@@ -2361,7 +2369,7 @@ OnEnterResult on_enter(
     }
     if (invctrl == 6)
     {
-        return on_enter_equip(selected_item, result);
+        return on_enter_equip(selected_item, result, body_part_index);
     }
     if (invctrl == 7)
     {
@@ -2658,8 +2666,10 @@ bool on_assign_shortcut(const std::string& action, int shortcut)
 
 
 
-CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
+CtrlInventoryResult ctrl_inventory(const CtrlInventoryOptions& opts)
 {
+    const auto [inventory_owner, body_part_index] = opts;
+
     OptionalItemRef mainweapon;
     OptionalItemRef citrade;
     OptionalItemRef cidip;
@@ -2678,7 +2688,8 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
             fallback_to_default_command_if_unavailable();
             restore_cursor();
             mainweapon = nullptr;
-            make_item_list(inventory_owner, mainweapon, citrade, cidip);
+            make_item_list(
+                inventory_owner, body_part_index, mainweapon, citrade, cidip);
             if (const auto result = check_command(inventory_owner, citrade))
             {
                 return {*result, nullptr};
@@ -2722,8 +2733,13 @@ CtrlInventoryResult ctrl_inventory(optional_ref<Character> inventory_owner)
         const auto action = get_action();
         if (p != -1)
         {
-            auto result =
-                on_enter(inventory_owner, p(0), citrade, cidip, dropcontinue);
+            auto result = on_enter(
+                inventory_owner,
+                body_part_index,
+                p(0),
+                citrade,
+                cidip,
+                dropcontinue);
             switch (result.type)
             {
             case 0: return {result.menu_result, result.selected_item};

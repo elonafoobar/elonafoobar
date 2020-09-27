@@ -754,21 +754,6 @@ ELONA.i18n:add {
          _29 = "Reserve",
       },
 
-      body_part = {
-         _0 = "",
-         _1 = "Head",
-         _2 = "Neck",
-         _3 = "Back",
-         _4 = "Body",
-         _5 = "Hand",
-         _6 = "Ring",
-         _7 = "Arm",
-         _8 = "Waist",
-         _9 = "Leg",
-         _10 = "Shoot",
-         _11 = "Ammo",
-      },
-
       cast_style = {
          _0 = " casts a spell.",
          _1 = " splits cobweb.",

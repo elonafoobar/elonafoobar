@@ -94,7 +94,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         pv == other.pv &&
         skill == other.skill &&
         curse_state == other.curse_state &&
-        body_part == other.body_part &&
+        equipped_slot == other.equipped_slot &&
         function == other.function &&
         bonus_value == other.bonus_value &&
         own_state == other.own_state &&
@@ -240,7 +240,7 @@ void Inventory::move_all(Inventory& src, Inventory& dst)
         {
             item->_inventory = &dst;
             item->_slot = static_cast<InventorySlot>(i);
-            item->body_part = 0;
+            item->equipped_slot = lua_index::nil();
         }
         ++i;
     }
@@ -713,14 +713,13 @@ ItemRef item_separate(const ItemRef& stacked_item)
 
 bool chara_unequip(const ItemRef& item)
 {
-    if (item->body_part == 0)
+    if (!item->is_equipped())
         return false;
 
-    int body_part = item->body_part;
     if (const auto owner = item_get_owner(item).as_character())
     {
-        owner->equipment_slots[body_part - 100].unequip();
-        item->body_part = 0;
+        owner->body_parts[item->equipped_slot].unequip();
+        item->equipped_slot = lua_index::nil();
         return true;
     }
     else
@@ -1664,21 +1663,17 @@ void item_acid(const Character& owner, OptionalItemRef item)
 {
     if (!item)
     {
-        for (const auto& equipment_slot : owner.equipment_slots)
+        for (const auto& body_part : owner.body_parts)
         {
-            if (!equipment_slot)
-            {
-                break;
-            }
-            if (!equipment_slot.equipment)
+            if (!body_part.is_equip())
             {
                 continue;
             }
-            if (equipment_slot.equipment->bonus_value >= -3)
+            if (body_part.equipment()->bonus_value >= -3)
             {
                 if (rnd(30) == 0)
                 {
-                    item = equipment_slot.equipment;
+                    item = body_part.equipment();
                     break;
                 }
             }
@@ -1798,7 +1793,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
             continue;
         }
 
-        if (item->body_part != 0)
+        if (item->is_equipped())
         {
             if (rnd(2))
             {
@@ -1856,7 +1851,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
         int p_ = rnd_capped(item->number()) / 2 + 1;
         if (const auto owner = inv_owner.as_character())
         {
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
                 if (is_in_fov(*owner))
                 {
@@ -1867,8 +1862,8 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
                             *owner),
                         Message::color{ColorIndex::purple});
                 }
-                owner->equipment_slots[item->body_part - 100].unequip();
-                item->body_part = 0;
+                owner->body_parts[item->equipped_slot].unequip();
+                item->equipped_slot = lua_index::nil();
                 chara_refresh(*owner);
             }
             else if (is_in_fov(*owner))
@@ -1995,7 +1990,7 @@ bool item_cold(const InventoryRef& inv, const OptionalItemRef& destroyed_item)
         {
             continue;
         }
-        if (item->quality >= Quality::miracle || item->body_part != 0)
+        if (item->quality >= Quality::miracle || item->is_equipped())
         {
             continue;
         }
@@ -2180,23 +2175,23 @@ void item_build_shelter(const ItemRef& shelter)
 
 
 
-int iequiploc(const ItemRef& item)
+data::InstanceId iequiploc(const ItemRef& item)
 {
     switch (the_item_db[item->id]->category)
     {
-    case ItemCategory::helm: return 1;
-    case ItemCategory::necklace: return 2;
-    case ItemCategory::cloak: return 3;
-    case ItemCategory::armor: return 4;
-    case ItemCategory::melee_weapon: return 5;
-    case ItemCategory::shield: return 5;
-    case ItemCategory::ring: return 6;
-    case ItemCategory::gloves: return 7;
-    case ItemCategory::boots: return 9;
-    case ItemCategory::ranged_weapon: return 10;
-    case ItemCategory::ammo: return 11;
-    case ItemCategory::belt: return 8;
-    default: return 0;
+    case ItemCategory::helm: return "core.head";
+    case ItemCategory::necklace: return "core.neck";
+    case ItemCategory::cloak: return "core.back";
+    case ItemCategory::armor: return "core.body";
+    case ItemCategory::melee_weapon: return "core.hand";
+    case ItemCategory::shield: return "core.hand";
+    case ItemCategory::ring: return "core.ring";
+    case ItemCategory::gloves: return "core.arm";
+    case ItemCategory::boots: return "core.leg";
+    case ItemCategory::ranged_weapon: return "core.shoot";
+    case ItemCategory::ammo: return "core.ammo";
+    case ItemCategory::belt: return "core.waist";
+    default: return "";
     }
 }
 
@@ -2327,7 +2322,7 @@ ItemRef item_convert_artifact(
     {
         return artifact; // is not a unique artifact.
     }
-    if (artifact->body_part != 0)
+    if (artifact->is_equipped())
     {
         return artifact; // is equipped.
     }
@@ -2488,18 +2483,17 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 void equip_melee_weapon(Character& chara)
 {
     attacknum = 0;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (chara.equipment_slots[cnt].type != 5)
+        if (body_part.id != "core.hand")
         {
             continue;
         }
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        const auto weapon = chara.equipment_slots[cnt].equipment.unwrap();
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls == 0)
         {
             continue;

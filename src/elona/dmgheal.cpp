@@ -1427,7 +1427,7 @@ void character_drops_item(Character& victim)
         {
             if (map_data.refresh_type == 0)
             {
-                if (item->body_part != 0)
+                if (item->is_equipped())
                 {
                     continue;
                 }
@@ -1461,7 +1461,7 @@ void character_drops_item(Character& victim)
                 }
             }
             f = 0;
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
                 if (rnd(10))
                 {
@@ -1500,10 +1500,10 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
-                victim.equipment_slots[item->body_part - 100].unequip();
-                item->body_part = 0;
+                victim.body_parts[item->equipped_slot].unequip();
+                item->equipped_slot = lua_index::nil();
             }
             f = 0;
             if (!item->is_precious)
@@ -1656,10 +1656,10 @@ void character_drops_item(Character& victim)
                 animeload(8, victim);
             }
         }
-        if (item->body_part != 0)
+        if (item->is_equipped())
         {
-            victim.equipment_slots[item->body_part - 100].unequip();
-            item->body_part = 0;
+            victim.body_parts[item->equipped_slot].unequip();
+            item->equipped_slot = lua_index::nil();
         }
         item->set_position(victim.position);
         itemturn(item);

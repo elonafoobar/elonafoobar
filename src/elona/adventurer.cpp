@@ -334,7 +334,7 @@ void adventurer_discover_equipment(Character& adv)
             f = 1;
             break;
         }
-        if (item->body_part != 0)
+        if (item->is_equipped())
         {
             continue;
         }

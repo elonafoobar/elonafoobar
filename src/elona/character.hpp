@@ -8,6 +8,7 @@
 #include "../util/range.hpp"
 #include "ability.hpp"
 #include "activity.hpp"
+#include "body_part.hpp"
 #include "buff.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
@@ -97,35 +98,6 @@ public:
 
 private:
     int _inner{};
-};
-
-
-
-struct EquipmentSlot
-{
-    int type = 0;
-    OptionalItemRef equipment;
-
-
-
-    explicit operator bool() const noexcept
-    {
-        return type != 0;
-    }
-
-
-
-    void equip(ItemRef item)
-    {
-        equipment = std::move(item);
-    }
-
-
-
-    void unequip()
-    {
-        equipment = nullptr;
-    }
 };
 
 
@@ -280,7 +252,7 @@ public:
     int choked = 0;
     int furious = 0;
     std::vector<int> growth_buffs;
-    std::vector<EquipmentSlot> equipment_slots;
+    BodyPartList body_parts;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
     BuffList buffs;
@@ -637,7 +609,6 @@ void make_sound(
 void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
-void lost_body_part(int);
 void lovemiracle(Character& chara);
 void monster_respawn();
 void move_character(Character& chara);

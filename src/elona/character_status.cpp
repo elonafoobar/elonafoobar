@@ -2,6 +2,7 @@
 
 #include <limits>
 
+#include "../util/scope_guard.hpp"
 #include "ability.hpp"
 #include "adventurer.hpp"
 #include "animation.hpp"
@@ -22,46 +23,6 @@
 
 namespace elona
 {
-
-namespace
-{
-
-int get_random_body_part()
-{
-    if (rnd(7) == 0)
-    {
-        return 2;
-    }
-    if (rnd(9) == 0)
-    {
-        return 3;
-    }
-    if (rnd(8) == 0)
-    {
-        return 5;
-    }
-    if (rnd(4) == 0)
-    {
-        return 6;
-    }
-    if (rnd(6) == 0)
-    {
-        return 7;
-    }
-    if (rnd(5) == 0)
-    {
-        return 8;
-    }
-    if (rnd(5) == 0)
-    {
-        return 9;
-    }
-    return 1;
-}
-
-} // namespace
-
-
 
 void modify_ether_disease_stage(int delta)
 {
@@ -127,18 +88,15 @@ void modify_ether_disease_stage(int delta)
                 txt(traitrefn(1), Message::color{ColorIndex::red});
                 if (tid == 203)
                 {
-                    body = 9;
-                    lost_body_part(0);
+                    body_part_make_unequippable(cdata.player(), "core.leg");
                 }
                 if (tid == 205)
                 {
-                    body = 3;
-                    lost_body_part(0);
+                    body_part_make_unequippable(cdata.player(), "core.back");
                 }
                 if (tid == 206)
                 {
-                    body = 2;
-                    lost_body_part(0);
+                    body_part_make_unequippable(cdata.player(), "core.neck");
                 }
                 break;
             }
@@ -190,6 +148,18 @@ void modify_ether_disease_stage(int delta)
                 txt(i18n::s.get("core.chara.corruption.remove"),
                     Message::color{ColorIndex::green});
                 txt(traitrefn(0), Message::color{ColorIndex::green});
+                if (tid == 203)
+                {
+                    body_part_make_equippable(cdata.player(), "core.leg");
+                }
+                if (tid == 205)
+                {
+                    body_part_make_equippable(cdata.player(), "core.back");
+                }
+                if (tid == 206)
+                {
+                    body_part_make_equippable(cdata.player(), "core.neck");
+                }
                 break;
             }
         }
@@ -428,14 +398,7 @@ void refresh_speed(Character& chara)
 
 void refresh_speed_correction_value(Character& chara)
 {
-    int number_of_body_parts{};
-    for (const auto& equipment_slot : chara.equipment_slots)
-    {
-        if (equipment_slot)
-        {
-            ++number_of_body_parts;
-        }
-    }
+    int number_of_body_parts = chara.body_parts.size();
     if (number_of_body_parts > 13)
     {
         chara.speed_correction_value = (number_of_body_parts - 13) * 5;
@@ -444,39 +407,6 @@ void refresh_speed_correction_value(Character& chara)
     {
         chara.speed_correction_value = 0;
     }
-}
-
-
-
-void gain_new_body_part(Character& chara)
-{
-    int slot = -1;
-    for (size_t i = 0; i < chara.equipment_slots.size(); ++i)
-    {
-        if (!chara.equipment_slots[i])
-        {
-            slot = static_cast<int>(i);
-            break;
-        }
-    }
-
-    if (slot == -1)
-    {
-        refresh_speed_correction_value(chara);
-        return;
-    }
-
-    const auto body_part = get_random_body_part();
-    chara.equipment_slots[slot] = EquipmentSlot{body_part, nullptr};
-    if (!cm)
-    {
-        txt(i18n::s.get(
-            "core.chara_status.gain_new_body_part",
-            chara,
-            i18n::s.get_enum("core.ui.body_part", body_part)));
-    }
-
-    refresh_speed_correction_value(chara);
 }
 
 
@@ -534,15 +464,10 @@ void gain_level(Character& chara)
         (chara.is_player() &&
          cdata.player().traits().level("core.changing_body") == 1))
     {
-        if (chara.level < 37)
+        if (chara.level < 37 && chara.level % 3 == 0 &&
+            chara.max_level < chara.level)
         {
-            if (chara.level % 3 == 0)
-            {
-                if (chara.max_level < chara.level)
-                {
-                    gain_new_body_part(chara);
-                }
-            }
+            body_part_gain_new_slot(chara, !cm);
         }
     }
     if (chara.max_level < chara.level)
@@ -673,106 +598,106 @@ int gain_skills_by_geen_engineering(
 
 
 
-int transplant_body_parts(
+optional<data::InstanceId> gene_engineering_get_transplanted_body_part(
     const Character& original_ally,
     const Character& gene_ally)
 {
-    int dbmax = 0;
-    s(1) = chara_db_get_filter(gene_ally.id);
-    if (strutil::contains(s(1), u8"/man/"))
-    {
-        return -1;
-    }
+    if (strutil::contains(chara_db_get_filter(gene_ally.id), u8"/man/"))
+        return none;
     if (gene_ally.splits() || gene_ally.splits2())
+        return none;
+
+    if (!body_part_has_empty_slot(original_ally))
+        return none;
+
+    std::vector<data::InstanceId> body_parts;
+    for (const auto& body_part : gene_ally.body_parts)
     {
-        return -1;
-    }
-    rtval(1) = -1;
-    for (size_t i = 0; i < original_ally.equipment_slots.size(); ++i)
-    {
-        if (!original_ally.equipment_slots[i])
-        {
-            rtval(1) = i + 100;
-        }
-    }
-    if (rtval(1) == -1)
-    {
-        return -1;
-    }
-    for (size_t cnt = 0; cnt < gene_ally.equipment_slots.size(); ++cnt)
-    {
-        f = gene_ally.equipment_slots[cnt].type;
-        if (f == 11 || f == 10 || f == 4)
+        const auto gene_body_part = body_part.id;
+        if (gene_body_part == "core.ammo" || gene_body_part == "core.shoot" ||
+            gene_body_part == "core.body")
         {
             continue;
         }
-        if (f != 0)
-        {
-            dblist(0, dbmax) = f;
-            ++dbmax;
-        }
+        body_parts.push_back(gene_body_part);
     }
-    if (dbmax == 0)
-    {
-        return -1;
-    }
+    if (body_parts.empty())
+        return none;
+
     randomize(charaid2int(gene_ally.id));
-    for (int cnt = 0; cnt < 3; ++cnt)
+    lib::scope_guard _reset_random_seed{[] { randomize(); }};
+
+    bool already_has = false;
+    data::InstanceId transplanted_body_part;
+    for (int _i = 0; _i < 3; ++_i)
     {
-        rtval = dblist(0, rnd(dbmax));
-        f = 0;
-        for (size_t i = 0; i < original_ally.equipment_slots.size(); ++i)
+        transplanted_body_part = choice(body_parts);
+        already_has = false;
+        for (const auto& body_part : original_ally.body_parts)
         {
-            if (!original_ally.equipment_slots[i])
+            const auto org_body_part = body_part.id;
+            if (org_body_part == transplanted_body_part)
             {
-                continue;
-            }
-            if (original_ally.equipment_slots[i].type == rtval)
-            {
-                f = 1;
+                already_has = true;
+                break;
             }
         }
-        if (f)
+        if (already_has)
         {
             break;
         }
     }
-    if (f == 0)
+
+    if (!already_has)
     {
-        randomize();
-        return rtval(1);
+        return transplanted_body_part;
     }
-    DIM3(dblist, 2, 800);
-    for (int i = 0; i < 30; ++i)
+
+    std::unordered_map<data::InstanceId, size_t> num_of_gene_body_parts;
+    for (const auto& body_part : gene_ally.body_parts)
     {
-        ++dblist(0, gene_ally.equipment_slots[i].type);
+        ++num_of_gene_body_parts[body_part.id];
     }
-    for (int cnt = 0; cnt < 25; ++cnt)
+
+    for (int _i = 0; _i < 25; ++_i)
     {
-        rtval = rnd(15) + 1;
-        f = 0;
-        for (int i = 0; i < 30; ++i)
         {
-            if (original_ally.equipment_slots[i].type == rtval)
+            // TODO
+            int n = rnd(15) + 1;
+            switch (n)
             {
-                ++f;
+            case 1: transplanted_body_part = "core.head"; break;
+            case 2: transplanted_body_part = "core.neck"; break;
+            case 3: transplanted_body_part = "core.back"; break;
+            case 4: transplanted_body_part = "core.body"; break;
+            case 5: transplanted_body_part = "core.hand"; break;
+            case 6: transplanted_body_part = "core.ring"; break;
+            case 7: transplanted_body_part = "core.arm"; break;
+            case 8: transplanted_body_part = "core.waist"; break;
+            case 9: transplanted_body_part = "core.leg"; break;
+            case 10: transplanted_body_part = "core.shoot"; break;
+            case 11: transplanted_body_part = "core.ammo"; break;
+            default: transplanted_body_part = "_invalid_"; break;
             }
         }
-        if (f < dblist(0, rtval))
+        size_t num_of_org_body_parts{};
+        for (const auto& body_part : original_ally.body_parts)
         {
-            f = -1;
-            break;
+            const auto org_body_part = body_part.id;
+            if (org_body_part == transplanted_body_part)
+            {
+                ++num_of_org_body_parts;
+                break;
+            }
+        }
+        if (num_of_org_body_parts <
+            num_of_gene_body_parts[transplanted_body_part])
+        {
+            return transplanted_body_part;
         }
     }
-    randomize();
-    if (f == -1)
-    {
-        return rtval(1);
-    }
-    else
-    {
-        return -1;
-    }
+
+    return none;
 }
 
 } // namespace elona

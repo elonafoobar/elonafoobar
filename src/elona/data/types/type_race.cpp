@@ -1,5 +1,6 @@
 #include "type_race.hpp"
 
+#include "../../../util/range.hpp"
 #include "../util.hpp"
 
 
@@ -28,7 +29,12 @@ RaceData RaceDB::convert(const lua::ConfigTable& data, const std::string& id)
     DATA_OPT_OR(special_attack_type, int, 0);
     DATA_OPT_OR(dv_multiplier, int, 100);
     DATA_OPT_OR(pv_multiplier, int, 100);
-    DATA_VEC(body_parts, int);
+    DATA_VEC(body_parts, std::string);
+
+    std::vector<data::InstanceId> body_parts_(body_parts.size());
+    range::transform(body_parts, body_parts_.begin(), [](const auto& s) {
+        return data::InstanceId{s};
+    });
 
     const auto skills = data::convert_id_number_table(data, "skills");
     const auto resistances = data::convert_id_number_table(data, "resistances");
@@ -49,7 +55,7 @@ RaceData RaceDB::convert(const lua::ConfigTable& data, const std::string& id)
         special_attack_type,
         dv_multiplier,
         pv_multiplier,
-        body_parts,
+        body_parts_,
         skills,
         resistances,
     };

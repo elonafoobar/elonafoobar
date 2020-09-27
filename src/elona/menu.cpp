@@ -1126,22 +1126,17 @@ void append_accuracy_info(const Character& chara, int val0)
     p(2) = 0;
     attackskill = 106;
     attacknum = 0;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot" || body_part.id == "core.ammo")
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 11)
-        {
-            continue;
-        }
-        const auto weapon = chara.equipment_slots[cnt].equipment;
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;

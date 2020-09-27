@@ -379,17 +379,16 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 
     if (_gene_engineering_original_character)
     {
+        if (const auto body_part_id =
+                gene_engineering_get_transplanted_body_part(
+                    *_gene_engineering_original_character, chara))
         {
-            int stat = transplant_body_parts(
-                *_gene_engineering_original_character, chara);
-            if (stat == -1)
-            {
-                ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
-            }
-            else
-            {
-                ally_info = i18n::s.get_enum("core.ui.body_part", rtval);
-            }
+            ally_info =
+                i18n::s.get_data_text("core.body_part", *body_part_id, "name");
+        }
+        else
+        {
+            ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
         }
         ally_info += u8"/"s;
         {

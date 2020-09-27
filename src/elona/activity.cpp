@@ -1150,12 +1150,11 @@ void activity_steal_end(Character& doer, const ItemRef& steal_target)
     }
     const auto slot = *slot_opt;
     steal_target->is_quest_target = false;
-    if (steal_target->body_part != 0)
+    if (steal_target->is_equipped())
     {
         auto& item_owner = *item_get_owner(steal_target).as_character();
-        p = steal_target->body_part;
-        item_owner.equipment_slots[p - 100].unequip();
-        steal_target->body_part = 0;
+        item_owner.body_parts[steal_target->equipped_slot].unequip();
+        steal_target->equipped_slot = lua_index::nil();
         chara_refresh(item_owner);
     }
 
