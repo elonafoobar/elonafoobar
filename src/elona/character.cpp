@@ -2198,7 +2198,7 @@ void revive_player(Character& chara)
         traveldone = 0;
         if (game()->executing_immediate_quest_type == 0)
         {
-            event_add(6);
+            deferred_event_add("core.player_died");
         }
     }
     if (chara.role == Role::guard)

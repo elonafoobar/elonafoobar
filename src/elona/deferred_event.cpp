@@ -38,83 +38,6 @@ namespace elona
 namespace
 {
 
-struct DeferredEvent
-{
-    int id;
-    int param1;
-    int param2;
-
-
-
-    DeferredEvent(int id, int param1, int param2)
-        : id(id)
-        , param1(param1)
-        , param2(param2)
-    {
-    }
-
-
-
-    DeferredEvent() noexcept = default;
-    DeferredEvent(const DeferredEvent&) noexcept = default;
-    DeferredEvent(DeferredEvent&&) noexcept = default;
-    DeferredEvent& operator=(const DeferredEvent&) noexcept = default;
-    DeferredEvent& operator=(DeferredEvent&&) noexcept = default;
-};
-
-
-
-class DeferredEventQueue
-{
-public:
-    DeferredEvent& front()
-    {
-        assert(!_queue.empty());
-        return _queue.front();
-    }
-
-
-
-    bool empty() const noexcept
-    {
-        return _queue.empty();
-    }
-
-
-
-    bool has(int event_type)
-    {
-        return range::find_if(_queue, [=](const auto& e) {
-                   return e.id == event_type;
-               }) != std::end(_queue);
-    }
-
-
-
-    void enqueue(int event_type, int param1, int param2)
-    {
-        _queue.emplace_back(event_type, param1, param2);
-    }
-
-
-
-    void dequeue()
-    {
-        _queue.pop_front();
-    }
-
-
-
-private:
-    std::deque<DeferredEvent> _queue;
-};
-
-
-
-DeferredEventQueue g_event_queue;
-
-
-
 namespace event_handlers
 {
 
@@ -404,12 +327,14 @@ void eh_quest_time_is_up(const DeferredEvent&)
 
 void eh_quest_failed(const DeferredEvent& event)
 {
-    // param1: The character ID of the man who you escort.
+    // core.client: The character ID of the man who you escort.
+    const auto client = event.ext.get<std::string>("core.client");
 
     for (int i = 0; i < game()->number_of_existing_quests; ++i)
     {
         if (quest_data[i].id == 1007 && quest_data[i].progress == 1 &&
-            quest_data[i].extra_info_2 == event.param1)
+            quest_data[i].extra_info_2 ==
+                the_character_db[data::InstanceId{client}]->integer_id)
         {
             quest_failed(i, quest_data[i].id);
             break;
@@ -421,13 +346,15 @@ void eh_quest_failed(const DeferredEvent& event)
 
 void eh_quest_escort_complete(const DeferredEvent& event)
 {
-    // param1: The quest index which you are about to complete.
-    // param2: The character index of the man who you escort.
+    // core.quest: The quest index which you are about to complete.
+    const auto quest = event.ext.get<int>("core.quest");
+    // core.client: The character index of the man who you escort.
+    const auto client = event.ext.get<int>("core.client");
 
     txt(i18n::s.get("core.quest.escort.complete"));
-    talk_to_npc(cdata[event.param2]);
-    quest_complete(event.param1);
-    chara_vanquish(cdata[event.param2]);
+    talk_to_npc(cdata[client]);
+    quest_complete(quest);
+    chara_vanquish(cdata[client]);
 }
 
 
@@ -483,7 +410,8 @@ void eh_okaeri(const DeferredEvent&)
 
 void eh_ragnarok(const DeferredEvent& event)
 {
-    // param1: The character index who causes Ragnarok.
+    // core.chara: The character index who causes Ragnarok.
+    const auto chara = event.ext.get<int>("core.chara");
 
     if (map_data.type == mdata_t::MapType::world_map)
         return;
@@ -509,8 +437,8 @@ void eh_ragnarok(const DeferredEvent& event)
             x = rnd(map_data.width);
             y = rnd(map_data.height);
         }
-        mef_add(x, y, 5, 24, rnd(15) + 20, 50, event.param1);
-        mapitem_fire(cdata[event.param1], x, y);
+        mef_add(x, y, 5, 24, rnd(15) + 20, 50, chara);
+        mapitem_fire(cdata[chara], x, y);
         if (i % 4 == 0)
         {
             flt(100, calcfixlv(Quality::good));
@@ -547,13 +475,14 @@ void eh_ragnarok(const DeferredEvent& event)
 
 void eh_lily_killed(const DeferredEvent& event)
 {
-    // param1: Lily's character index.
+    // core.lily: Lily's character index.
+    const auto lily = event.ext.get<int>("core.lily");
 
-    damage_hp(cdata[event.param1], 9999, -11);
-    cdata[event.param1].role = Role::none;
-    cdata[event.param1].set_state(Character::State::empty);
+    damage_hp(cdata[lily], 9999, -11);
+    cdata[lily].role = Role::none;
+    cdata[lily].set_state(Character::State::empty);
     flt();
-    itemcreate_map_inv(55, cdata[event.param1].position, 4);
+    itemcreate_map_inv(55, cdata[lily].position, 4);
     story_quest_set_progress("core.pael_and_her_mom", 1001);
     if (const auto pael = chara_find("core.pael"))
     {
@@ -572,7 +501,8 @@ void eh_lily_killed(const DeferredEvent& event)
 
 void eh_nuclear_bomb(const DeferredEvent& event)
 {
-    // param1, param2: The position (x, y) where the bomb explodes.
+    // core.bomb_position: The position where the bomb explodes.
+    const auto bomb_position = event.ext.get<Position>("core.bomb_position");
 
     if (map_data.type == mdata_t::MapType::world_map)
         return;
@@ -713,8 +643,8 @@ void eh_nuclear_bomb(const DeferredEvent& event)
     }
     gmode(2);
     update_entire_screen();
-    tlocx = event.param1;
-    tlocy = event.param2;
+    tlocx = bomb_position.x;
+    tlocy = bomb_position.x;
     range_ = 31;
     ele = 59;
     BallAnimation({tlocx, tlocy}, range_, BallAnimation::Type::atomic_bomb, ele)
@@ -758,7 +688,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
             }
         }
     }
-    if (event.param1 == 33 && event.param2 == 16 &&
+    if (bomb_position == Position{33, 16} &&
         game()->current_map == mdata_t::MapId::palmia &&
         story_quest_progress("core.red_blossom_in_palmia") == 1)
     {
@@ -782,11 +712,6 @@ void eh_nuclear_bomb(const DeferredEvent& event)
 
 void eh_guild_alarm(const DeferredEvent& event)
 {
-    // param1: The flag whether you belogs to the guild. (0: No / 1: Yes)
-
-    if (event.param1 != 0)
-        return;
-
     txt(i18n::s.get("core.event.alarm"), Message::color{ColorIndex::red});
     for (auto&& chara : cdata.others())
     {
@@ -811,7 +736,7 @@ void eh_rogue_party_ambush(const DeferredEvent&)
 
 
 
-void eh_init_economy(const DeferredEvent&)
+void eh_generate_game_world(const DeferredEvent&)
 {
     initeco = 1;
     initialize_economy();
@@ -1035,14 +960,16 @@ void eh_blaggers(const DeferredEvent&)
 
 void eh_little_sister(const DeferredEvent& event)
 {
-    // param1, param2: The position (x, y) where Big Daddy standed.
+    // core.big_daddy_position: The position where Big Daddy stood.
+    const auto big_daddy_position =
+        event.ext.get<Position>("core.big_daddy_position");
 
     if (game()->current_map == mdata_t::MapId::show_house)
     {
         return;
     }
     flt();
-    chara_create(-1, 319, event.param1, event.param2);
+    chara_create(-1, 319, big_daddy_position.x, big_daddy_position.y);
     txt(i18n::s.get("core.event.little_sister_slips"),
         Message::color{ColorIndex::blue});
 }
@@ -1051,13 +978,15 @@ void eh_little_sister(const DeferredEvent& event)
 
 void eh_god_inside_ehekatl(const DeferredEvent& event)
 {
-    // param1, param2: The position (x, y) where Ehekatl standed.
+    // core.ehekatl_position: The position where Ehekatl stood.
+    const auto ehekatl_position =
+        event.ext.get<Position>("core.ehekatl_position");
 
     txt(i18n::s.get("core.event.ehekatl"), Message::color{ColorIndex::orange});
     msg_halt();
     RagnarokAnimation().play();
     flt();
-    chara_create(-1, 336, event.param1, event.param2);
+    chara_create(-1, 336, ehekatl_position.x, ehekatl_position.x);
 }
 
 
@@ -1116,78 +1045,111 @@ void proc_one_event(const DeferredEvent& event)
 {
     using namespace event_handlers;
 
-    switch (event.id)
-    {
-    case 1: eh_conquer_lesimas(event); break;
-    case 2: eh_lomias_talks(event); break;
-    case 3: eh_zeome_talks(event); break;
-    case 4: eh_lord_of_normal_nefia(event); break;
-    case 5: eh_conquer_nefia(event); break;
-    case 6: eh_player_died(event); break;
-    case 8: eh_quest_all_target_killed(event); break;
-    case 10: eh_quest_update_deadline(event); break;
-    case 11: eh_wandering_vendor(event); break;
-    case 12: eh_reunoin_with_pets(event); break;
-    case 13: eh_marriage(event); break;
-    case 14: eh_quest_time_is_up(event); break;
-    case 15: eh_quest_failed(event); break;
-    case 16: eh_quest_escort_complete(event); break;
-    case 17: eh_okaeri(event); break;
-    case 18: eh_ragnarok(event); break;
-    case 20: eh_lily_killed(event); break;
-    case 21: eh_nuclear_bomb(event); break;
-    case 22: eh_guild_alarm(event); break;
-    case 23: eh_rogue_party_ambush(event); break;
-    case 24: eh_init_economy(event); break;
-    case 25: eh_guest_visit(event); break;
-    case 26: eh_blaggers(event); break;
-    case 27: eh_little_sister(event); break;
-    case 28: eh_god_inside_ehekatl(event); break;
-    case 29: eh_lord_of_void(event); break;
-    case 30: eh_snow_blindness(event); break;
-    default: assert(0); break;
-    }
+    if (event.id == "core.conquer_lesimas")
+        eh_conquer_lesimas(event);
+    else if (event.id == "core.lomias_talks")
+        eh_lomias_talks(event);
+    else if (event.id == "core.zeome_talks")
+        eh_zeome_talks(event);
+    else if (event.id == "core.lord_of_normal_nefia")
+        eh_lord_of_normal_nefia(event);
+    else if (event.id == "core.conquer_nefia")
+        eh_conquer_nefia(event);
+    else if (event.id == "core.player_died")
+        eh_player_died(event);
+    else if (event.id == "core.quest_all_target_killed")
+        eh_quest_all_target_killed(event);
+    else if (event.id == "core.quest_update_deadline")
+        eh_quest_update_deadline(event);
+    else if (event.id == "core.wandering_vendor")
+        eh_wandering_vendor(event);
+    else if (event.id == "core.reunoin_with_pets")
+        eh_reunoin_with_pets(event);
+    else if (event.id == "core.marriage")
+        eh_marriage(event);
+    else if (event.id == "core.quest_time_is_up")
+        eh_quest_time_is_up(event);
+    else if (event.id == "core.quest_failed")
+        eh_quest_failed(event);
+    else if (event.id == "core.quest_escort_complete")
+        eh_quest_escort_complete(event);
+    else if (event.id == "core.okaeri")
+        eh_okaeri(event);
+    else if (event.id == "core.ragnarok")
+        eh_ragnarok(event);
+    else if (event.id == "core.lily_killed")
+        eh_lily_killed(event);
+    else if (event.id == "core.nuclear_bomb")
+        eh_nuclear_bomb(event);
+    else if (event.id == "core.guild_alarm")
+        eh_guild_alarm(event);
+    else if (event.id == "core.rogue_party_ambush")
+        eh_rogue_party_ambush(event);
+    else if (event.id == "core.generate_game_world")
+        eh_generate_game_world(event);
+    else if (event.id == "core.guest_visit")
+        eh_guest_visit(event);
+    else if (event.id == "core.blaggers")
+        eh_blaggers(event);
+    else if (event.id == "core.little_sister")
+        eh_little_sister(event);
+    else if (event.id == "core.god_inside_ehekatl")
+        eh_god_inside_ehekatl(event);
+    else if (event.id == "core.lord_of_void")
+        eh_lord_of_void(event);
+    else if (event.id == "core.snow_blindness")
+        eh_snow_blindness(event);
+    else
+        assert(0);
 }
 
 } // namespace
 
 
 
-// TODO add serialization routines local to this file
-
-int event_processing_event()
+optional<data::InstanceId> deferred_event_processing_event()
 {
-    return g_event_queue.empty() ? -1 : g_event_queue.front().id;
+    if (game()->deferred_events.empty())
+        return none;
+    else
+        return game()->deferred_events.top().id;
 }
 
 
 
-bool event_has_pending_events()
+bool deferred_event_has_pending_events()
 {
-    return !g_event_queue.empty();
+    return !game()->deferred_events.empty();
 }
 
 
 
-bool event_find(int event_type)
+bool deferred_event_find(data::InstanceId id)
 {
-    return g_event_queue.has(event_type);
+    return game()->deferred_events.has(id);
 }
 
 
 
-void event_add(int event_type, int param1, int param2)
+void deferred_event_add(const DeferredEvent& event)
 {
-    g_event_queue.enqueue(event_type, param1, param2);
+    game()->deferred_events.push(event);
 }
 
 
 
-TurnResult event_start_proc()
+void deferred_event_add(data::InstanceId id)
 {
-    const auto event = g_event_queue.front();
+    deferred_event_add(DeferredEvent{id, lua_int{0}});
+}
+
+
+
+TurnResult deferred_event_start_proc()
+{
+    const auto event = game()->deferred_events.top();
     proc_one_event(event);
-    g_event_queue.dequeue();
+    game()->deferred_events.pop();
 
     if (chatteleport == 1)
     {

@@ -23,6 +23,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
@@ -1343,7 +1344,10 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         }
         if (enc_id == 37)
         {
-            event_add(18, eater.index);
+            deferred_event_add(DeferredEvent{
+                "core.ragnarok",
+                0,
+                lua::create_table("core.chara", eater.index)});
             continue;
         }
         if (enc_id == 40)

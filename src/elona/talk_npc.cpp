@@ -16,6 +16,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -752,7 +753,11 @@ TalkResult talk_slave_sell(Character& speaker)
             }
             if (cdata[stat].is_escorted() == 1)
             {
-                event_add(15, charaid2int(cdata[stat].id));
+                deferred_event_add(DeferredEvent{
+                    "core.quest_failed",
+                    0,
+                    lua::create_table(
+                        "core.client", cdata[stat].new_id().get())});
             }
             chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
@@ -792,7 +797,7 @@ TalkResult talk_ally_marriage(Character& speaker)
         }
     }
     marry = speaker.index;
-    event_add(13);
+    deferred_event_add("core.marriage");
     return TalkResult::talk_end;
 }
 
@@ -2133,7 +2138,7 @@ TalkResult talk_npc(Character& speaker)
         {
             if (!speaker.is_player_or_ally())
             {
-                if (!event_has_pending_events())
+                if (!deferred_event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         56, i18n::s.get("core.talk.npc.common.choices.sex"));
@@ -2143,7 +2148,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.id == CharaId::prostitute)
     {
-        if (!event_has_pending_events())
+        if (!deferred_event_has_pending_events())
         {
             ELONA_APPEND_RESPONSE(
                 60, i18n::s.get("core.talk.npc.prostitute.choices.buy"));
@@ -2280,7 +2285,8 @@ TalkResult talk_npc(Character& speaker)
         {
             if (speaker.role != Role::none)
             {
-                if (!is_guest(speaker.role) && !event_has_pending_events())
+                if (!is_guest(speaker.role) &&
+                    !deferred_event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         44, i18n::s.get("core.talk.npc.servant.choices.fire"));
@@ -2400,7 +2406,7 @@ TalkResult talk_npc(Character& speaker)
     case 58: {
         if (game()->left_turns_of_timestop == 0)
         {
-            event_add(25);
+            deferred_event_add("core.guest_visit");
         }
         return TalkResult::talk_end;
     }
@@ -2414,7 +2420,7 @@ TalkResult talk_npc(Character& speaker)
         return talk_guard_where_is(speaker, chatval_);
     }
 
-    if (event_processing_event() == 11)
+    if (deferred_event_processing_event() == "core.wandering_vendor")
     {
         levelexitby = 4;
         chatteleport = 1;

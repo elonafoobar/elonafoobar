@@ -293,7 +293,7 @@ void weather_changes()
             }
         }
         snd("core.night");
-        event_add(10);
+        deferred_event_add("core.quest_update_deadline");
         game()->play_days += game()->date.hour / 24;
         game()->date.day += game()->date.hour / 24;
         game()->date.hour = game()->date.hour % 24;

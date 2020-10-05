@@ -389,9 +389,9 @@ void run_random_event(RandomEvent event)
                 efp = 200;
                 magic(cdata.player(), cdata.player());
             }
-            else if (!event_has_pending_events())
+            else if (!deferred_event_has_pending_events())
             {
-                event_add(26);
+                deferred_event_add("core.blaggers");
             }
         }
         listmax = 1;

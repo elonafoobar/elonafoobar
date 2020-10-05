@@ -22,6 +22,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "lua_env/mod_manager.hpp"
@@ -682,7 +683,7 @@ void _adjust_spawns()
         area_data[game()->current_map].deepest_level = 10;
         area_data[game()->current_map].default_ai_calm = 1;
         map_data.designated_spawns = 1;
-        event_add(17);
+        deferred_event_add("core.okaeri");
         calccosthire();
     }
 }
@@ -882,21 +883,30 @@ void _proc_guild_entry_events()
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_mages_guild);
+            if (!game()->guild.belongs_to_mages_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::derphy)
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_thieves_guild);
+            if (!game()->guild.belongs_to_thieves_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::port_kapul)
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_fighters_guild);
+            if (!game()->guild.belongs_to_fighters_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
 }
@@ -914,7 +924,7 @@ void _update_quest_flags_vernis()
     if (game()->has_not_been_to_vernis == 0)
     {
         game()->has_not_been_to_vernis = 1;
-        event_add(12);
+        deferred_event_add("core.reunoin_with_pets");
     }
 }
 
@@ -1084,7 +1094,11 @@ void _update_quest_escort(int cnt2)
                 ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
                 quest_data[cnt2].extra_info_1 == game()->current_map)
             {
-                event_add(16, cnt2, ally.index);
+                deferred_event_add(DeferredEvent{
+                    "core.quest_escort_complete",
+                    0,
+                    lua::create_table(
+                        "core.quest", cnt2, "core.client", ally.index)});
                 ally.is_escorted() = false;
                 break;
             }
@@ -1485,7 +1499,7 @@ TurnResult initialize_map()
             screenupdate = -1;
             update_screen();
             lua::lua->get_event_manager().trigger(event);
-            if (event_has_pending_events())
+            if (deferred_event_has_pending_events())
             {
                 return TurnResult::turn_begin;
             }

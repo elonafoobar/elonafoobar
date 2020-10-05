@@ -6,6 +6,7 @@
 #include "blending_recipe_memory.hpp"
 #include "character_memory.hpp"
 #include "crafting_material.hpp"
+#include "deferred_event.hpp"
 #include "item_memory.hpp"
 #include "story_quest.hpp"
 #include "version.hpp"
@@ -142,6 +143,11 @@ struct Game
     /// Story quests
     StoryQuestTable story_quests{};
 
+
+    /* Miscellaneous */
+
+    /// Deferred events
+    DeferredEventQueue deferred_events{};
 
 
     int crowd_density;

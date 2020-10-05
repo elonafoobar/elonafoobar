@@ -19,11 +19,15 @@ namespace elona::lua::api::modules::module_World
  *
  * Gets the ID of the next deferred event that will run.
  *
- * @treturn num
+ * @treturn string
+ * @treturn nil
  */
-int World_deferred_event_id()
+sol::optional<std::string> World_deferred_event_id()
 {
-    return event_processing_event();
+    if (const auto ret = deferred_event_processing_event())
+        return ret->get();
+    else
+        return sol::nullopt;
 }
 
 
@@ -33,24 +37,18 @@ int World_deferred_event_id()
  *
  * Adds a deferred event.
  *
- * @tparam num event_id the event id
- * @tparam[opt] num param1 An extra parameter.
- * @tparam[opt] num param2 An extra parameter.
+ * @tparam string event_id the event id
+ * @tparam[opt] num priority the event priority. The larger it is, the earlier
+ * the event is fired. If not given, 0 is used.
+ * @tparam[opt] table ext extra parameters.
  */
 void World_add_deferred_event(
-    int event_id,
-    sol::optional<int> param1,
-    sol::optional<int> param2)
+    const std::string& event_id,
+    sol::optional<lua_int> priority,
+    sol::table ext)
 {
-    if (!param1)
-    {
-        param1 = 0;
-    }
-    if (!param2)
-    {
-        param2 = 0;
-    }
-    event_add(event_id, *param1, *param2);
+    deferred_event_add(
+        DeferredEvent{data::InstanceId{event_id}, priority.value_or(0), ext});
 }
 
 

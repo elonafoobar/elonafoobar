@@ -50,7 +50,7 @@ static void _init_map_nefia()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        event_add(4);
+        deferred_event_add("core.lord_of_normal_nefia");
     }
 }
 
@@ -411,7 +411,7 @@ static void _init_map_test_world_north_border()
     }
     map_data.bgm = 79;
     map_place_player_and_allies();
-    event_add(30);
+    deferred_event_add("core.snow_blindness");
 }
 
 
@@ -2834,7 +2834,7 @@ static void _init_map_fields_maybe_generate_encounter()
                 chara->name += u8" Lv"s + chara->level;
             }
         }
-        event_add(23);
+        deferred_event_add("core.rogue_party_ambush");
     }
     if (encounter == 3)
     {
@@ -2877,7 +2877,7 @@ static void _init_map_fields_maybe_generate_encounter()
                 gain_level(*chara);
             }
         }
-        event_add(11);
+        deferred_event_add("core.wandering_vendor");
         for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
@@ -2990,7 +2990,7 @@ static void _init_map_the_void()
     }
     if (game()->void_next_lord_floor <= game()->current_dungeon_level)
     {
-        event_add(29);
+        deferred_event_add("core.lord_of_void");
     }
     else
     {
@@ -3016,7 +3016,7 @@ static void _init_map_lesimas()
                 i18n::s.get_enum_property("core.map.unique", "the_depth", 3);
             if (story_quest_progress("core.elona") < 170)
             {
-                event_add(3);
+                deferred_event_add("core.zeome_talks");
             }
             x = 16;
             y = 13;

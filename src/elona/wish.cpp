@@ -428,7 +428,7 @@ bool grant_special_wishing(const std::string& wish)
     }
     else if (match_special_wish(wish, "ally", {"friend", "company", "ally"}))
     {
-        event_add(12);
+        deferred_event_add("core.reunoin_with_pets");
     }
     else if (match_special_wish(
                  wish, "gold", {"money", "gold", "wealth", "fortune"}))

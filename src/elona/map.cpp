@@ -1564,7 +1564,7 @@ TurnResult exit_map()
         {
             game()->entrance_type = area_data[game()->current_map].entrance;
         }
-        if (event_find(6))
+        if (deferred_event_find("core.player_died"))
         {
             Message::instance().buffered_message_append(
                 i18n::s.get("core.action.exit_map.delivered_to_your_home"));

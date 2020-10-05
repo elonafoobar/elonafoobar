@@ -139,7 +139,10 @@ Character::State dmgheal_set_death_status(Character& victim)
         victim.current_map = 0;
         if (victim.is_escorted() == 1)
         {
-            event_add(15, charaid2int(victim.id));
+            deferred_event_add(DeferredEvent{
+                "core.quest_failed",
+                0,
+                lua::create_table("core.client", victim.new_id().get())});
             new_state = Character::State::empty;
         }
         if (victim.is_escorted_in_sub_quest() == 1)
@@ -334,7 +337,8 @@ int damage_hp(
     {
         if (victim.hp < 0)
         {
-            if (event_has_pending_events() && event_processing_event() != 21)
+            if (deferred_event_has_pending_events() &&
+                deferred_event_processing_event() != "core.nuclear_bomb")
             {
                 victim.hp = 1;
             }
@@ -1098,7 +1102,7 @@ int damage_hp(
                 {
                     if (victim.id == CharaId::zeome)
                     {
-                        event_add(1);
+                        deferred_event_add("core.conquer_lesimas");
                     }
                     if (victim.id == CharaId::issizzle)
                     {
@@ -1153,7 +1157,11 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::big_daddy)
                     {
-                        event_add(27, victim.position.x, victim.position.y);
+                        deferred_event_add(DeferredEvent{
+                            "core.little_sister",
+                            0,
+                            lua::create_table(
+                                "core.big_daddy_position", victim.position)});
                     }
                     if (victim.id == CharaId::little_sister)
                     {
@@ -1175,14 +1183,18 @@ int damage_hp(
                                 victim.index &&
                             victim.is_lord_of_dungeon() == 1)
                         {
-                            event_add(5);
+                            deferred_event_add("core.conquer_nefia");
                         }
                     }
                     if (victim.id == CharaId::ehekatl)
                     {
                         if (rnd(4) == 0)
                         {
-                            event_add(28, victim.position.x, victim.position.y);
+                            deferred_event_add(DeferredEvent{
+                                "core.god_inside_ehekatl",
+                                0,
+                                lua::create_table(
+                                    "core.ehekatl_position", victim.position)});
                         }
                     }
                     quest_check();
@@ -1193,7 +1205,7 @@ int damage_hp(
                             victim.index &&
                         victim.is_lord_of_dungeon() == 1)
                     {
-                        event_add(5);
+                        deferred_event_add("core.conquer_nefia");
                     }
                 }
             }

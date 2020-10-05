@@ -572,8 +572,8 @@ void initialize_game()
         initialize_world();
         create_all_adventurers();
         mode = 2;
-        event_add(24);
-        event_add(2);
+        deferred_event_add("core.generate_game_world");
+        deferred_event_add("core.lomias_talks");
         sceneid = 0;
         do_play_scene();
     }

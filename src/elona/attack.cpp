@@ -18,6 +18,7 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
@@ -908,7 +909,10 @@ void proc_weapon_enchantments(
         {
             if (rnd(66) == 0)
             {
-                event_add(18, attacker.index);
+                deferred_event_add(DeferredEvent{
+                    "core.ragnarok",
+                    0,
+                    lua::create_table("core.chara", attacker.index)});
             }
             continue;
         }

@@ -223,7 +223,7 @@ void quest_check()
             }
             if (remaining_monsters == 0)
             {
-                event_add(8);
+                deferred_event_add("core.quest_all_target_killed");
             }
             else
             {
@@ -237,7 +237,7 @@ void quest_check()
             if (!chara_find(
                     the_character_db[quest_data.immediate().extra_info_1]->id))
             {
-                event_add(8);
+                deferred_event_add("core.quest_all_target_killed");
             }
         }
     }

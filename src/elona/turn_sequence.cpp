@@ -73,7 +73,8 @@ optional<TurnResult> proc_return_or_escape()
         txt(i18n::s.get("core.magic.return.prevented.normal"));
         return none;
     }
-    if (game()->is_returning_or_escaping <= 0 && !event_has_pending_events())
+    if (game()->is_returning_or_escaping <= 0 &&
+        !deferred_event_has_pending_events())
     {
         f = 0;
         for (const auto& chara : cdata.allies())
@@ -776,9 +777,9 @@ TurnResult turn_begin()
         gspd = 10;
     }
     turncost = (map_data.turn_cost - cdata.player().turn_cost) / gspd + 1;
-    if (event_has_pending_events())
+    if (deferred_event_has_pending_events())
     {
-        return event_start_proc(); // TODO avoid evnum side effect
+        return deferred_event_start_proc();
     }
     if (cdata.player().state() != Character::State::alive)
     {
@@ -841,7 +842,7 @@ TurnResult turn_begin()
             if (game()->left_minutes_of_executing_quest <= 0)
             {
                 game()->left_minutes_of_executing_quest = 0;
-                event_add(14);
+                deferred_event_add("core.quest_time_is_up");
             }
         }
         game()->date.second = game()->date.second % 60;

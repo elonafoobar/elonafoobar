@@ -10,6 +10,7 @@
 #include "game.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
@@ -43,7 +44,12 @@ void mef_delete(int mef_index)
 {
     if (mef(0, mef_index) == 7)
     {
-        event_add(21, mef(2, mef_index), mef(3, mef_index));
+        deferred_event_add(DeferredEvent{
+            "core.nuclear_bomb",
+            0,
+            lua::create_table(
+                "core.bomb_position",
+                Position{mef(2, mef_index), mef(3, mef_index)})});
     }
     cell_data.at(mef(2, mef_index), mef(3, mef_index)).mef_index_plus_one = 0;
     mef(0, mef_index) = 0;

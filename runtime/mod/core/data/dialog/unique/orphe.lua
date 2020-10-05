@@ -7,7 +7,7 @@ return {
 
    nodes = {
       __start = function()
-         if World.deferred_event_id() == 1 then
+         if World.deferred_event_id() == "core.conquer_lesimas" then
             return "dialog"
          end
 

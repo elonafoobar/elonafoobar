@@ -69,7 +69,7 @@ bool talk_setup_variables(Character& chara)
     chatesc = 1;
     if (chara.relationship <= -1)
     {
-        if (!event_has_pending_events())
+        if (!deferred_event_has_pending_events())
         {
             txt(i18n::s.get("core.talk.will_not_listen", chara));
             quest_teleport = false;
@@ -112,12 +112,12 @@ void talk_to_npc(Character& chara)
         chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
-    if (event_processing_event() == 2)
+    if (deferred_event_processing_event() == "core.lomias_talk")
     {
         talk_wrapper(chara, TalkResult::talk_game_begin);
         return;
     }
-    if (event_processing_event() == 16)
+    if (deferred_event_processing_event() == "core.quest_escort_complete")
     {
         talk_wrapper(chara, TalkResult::talk_finish_escort);
         return;
