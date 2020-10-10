@@ -385,7 +385,7 @@ void make_item_list(
                 if (reftype == 10000)
                 {
                     if (!mainweapon ||
-                        item->equipped_slot < mainweapon->equipped_slot)
+                        item->_equipped_slot < mainweapon->_equipped_slot)
                     {
                         mainweapon = item;
                     }
@@ -2060,8 +2060,8 @@ OnEnterResult on_enter_trade_target(
         "core.ui.inv.trade.you_receive", selected_item, citrade.unwrap()));
     if (citrade->is_equipped())
     {
-        inventory_owner.body_parts[citrade->equipped_slot].unequip();
-        citrade->equipped_slot = lua_index::nil();
+        inventory_owner.body_parts[citrade->_equipped_slot].unequip();
+        citrade->_equipped_slot = lua_index::nil();
     }
 
     if (inventory_owner.ai_item == citrade)
@@ -2201,8 +2201,8 @@ OnEnterResult on_enter_receive(
             txt(i18n::s.get("core.ui.inv.take_ally.cursed", selected_item));
             return OnEnterResult{1};
         }
-        inventory_owner.body_parts[selected_item->equipped_slot].unequip();
-        selected_item->equipped_slot = lua_index::nil();
+        inventory_owner.body_parts[selected_item->_equipped_slot].unequip();
+        selected_item->_equipped_slot = lua_index::nil();
     }
     if (selected_item->id == "core.engagement_ring" ||
         selected_item->id == "core.engagement_amulet")

@@ -1111,7 +1111,7 @@ TurnResult do_throw_command_internal(
                 thrower.index,
                 the_item_db[throw_item->id]->integer_id,
                 static_cast<int>(throw_item->curse_state), // TODO
-                throw_item->tint);
+                color_to_color_index(throw_item->tint));
             return TurnResult::turn_end;
         }
     }

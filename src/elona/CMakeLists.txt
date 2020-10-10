@@ -23,6 +23,7 @@ set(ELONA_SOURCES
   character_making.cpp
   character_status.cpp
   class.cpp
+  color.cpp
   command.cpp
   config.cpp
   config_menu.cpp

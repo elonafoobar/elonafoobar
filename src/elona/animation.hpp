@@ -1,5 +1,6 @@
 #pragma once
 
+#include "color.hpp"
 #include "optional.hpp"
 #include "position.hpp"
 
@@ -177,7 +178,7 @@ public:
         const Position& thrower_pos,
         const Position& target_pos,
         int item_chip,
-        int item_color)
+        const Color& item_color = {255, 255, 255})
         : thrower_pos(thrower_pos)
         , target_pos(target_pos)
         , item_chip(item_chip)
@@ -194,7 +195,7 @@ private:
     const Position& thrower_pos;
     const Position& target_pos;
     int item_chip;
-    int item_color;
+    const Color& item_color;
 };
 
 
@@ -238,7 +239,7 @@ public:
         Type type,
         int fired_item_subcategory = 0,
         int fired_item_image = 0,
-        int fired_item_color = 0)
+        const Color& fired_item_color = {255, 255, 255})
         : attacker_pos(attacker_pos)
         , target_pos(target_pos)
         , type(type)
@@ -259,7 +260,7 @@ private:
     Type type;
     int fired_item_subcategory;
     int fired_item_image;
-    int fired_item_color;
+    const Color& fired_item_color;
 };
 
 

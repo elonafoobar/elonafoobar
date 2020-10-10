@@ -122,23 +122,28 @@ void _set_pcc_depending_on_equipments(
     const auto body_part_id = iequiploc(equipment);
     if (body_part_id == "core.back")
     {
-        pcc(4, chara.index) = item_appearance + equipment->tint * 1000;
+        pcc(4, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
     else if (body_part_id == "core.body")
     {
-        pcc(2, chara.index) = item_appearance + equipment->tint * 1000;
+        pcc(2, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
     else if (body_part_id == "core.arm")
     {
-        pcc(8, chara.index) = item_appearance + equipment->tint * 1000;
+        pcc(8, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
     else if (body_part_id == "core.waist")
     {
-        pcc(5, chara.index) = item_appearance + equipment->tint * 1000;
+        pcc(5, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
     else if (body_part_id == "core.leg")
     {
-        pcc(3, chara.index) = item_appearance + equipment->tint * 1000;
+        pcc(3, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
 }
 
@@ -223,11 +228,19 @@ optional_ref<const Extent> draw_get_rect(data::FullyQualifiedId id)
 }
 
 
+
+optional_ref<const Extent> prepare_item_image(int id, int color_index)
+{
+    return prepare_item_image(id, color_index_to_color(color_index));
+}
+
+
+
 /**
  * Applies a color to the item sprite of ID @a id and copies it to the scratch
  * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
  */
-optional_ref<const Extent> prepare_item_image(int id, int color)
+optional_ref<const Extent> prepare_item_image(int id, const Color& color)
 {
     const auto rect = draw_get_rect_item(id);
 
@@ -236,11 +249,7 @@ optional_ref<const Extent> prepare_item_image(int id, int color)
 
     // The color modifier is applied to the source buffer before
     // copying it to the scratch region. It is restored after copying.
-    set_color_mod(
-        255 - c_col(0, color),
-        255 - c_col(1, color),
-        255 - c_col(2, color),
-        rect->buffer);
+    set_color_mod(color.r, color.g, color.b, rect->buffer);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255, rect->buffer);
 
@@ -258,7 +267,7 @@ optional_ref<const Extent> prepare_item_image(int id, int color)
  * sprite indicated by @a character_image to the appropriate location for each.
  */
 optional_ref<const Extent>
-prepare_item_image(int id, int color, int character_image)
+prepare_item_image(int id, const Color& color, int character_image)
 {
     if (id != 528 && id != 531)
     {
@@ -279,11 +288,7 @@ prepare_item_image(int id, int color, int character_image)
         gmode(2);
 
         // Modify color and restore it afterwards.
-        set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+        set_color_mod(color.r, color.g, color.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -350,11 +355,7 @@ prepare_item_image(int id, int color, int character_image)
 
         gmode(2, 192);
         // Modify color and restore it afterwards.
-        set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+        set_color_mod(color.r, color.g, color.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -1133,7 +1134,7 @@ void draw_chara_scale_height(int image_id, int x, int y)
  */
 void draw_item_material(int image_id, int x, int y)
 {
-    auto rect = prepare_item_image(image_id, 0);
+    auto rect = prepare_item_image(image_id);
 
     gmode(2);
 
@@ -1154,7 +1155,7 @@ void draw_item_with_portrait(const ItemRef& item, int x, int y)
  */
 void draw_item_with_portrait(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y)
@@ -1192,7 +1193,7 @@ void draw_item_with_portrait_scale_height(const ItemRef& item, int x, int y)
  */
 void draw_item_with_portrait_scale_height(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y)

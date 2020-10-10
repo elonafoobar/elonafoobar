@@ -1331,7 +1331,7 @@ void equip_item(Character& chara, size_t body_part_index, ItemRef equipment)
     {
         item_identify(equipment, IdentifyState::almost);
     }
-    equipment->equipped_slot = lua_index::from_0_based(body_part_index);
+    equipment->_equipped_slot = lua_index::from_0_based(body_part_index);
     body_part.equip(equipment);
 }
 
@@ -1344,7 +1344,7 @@ void unequip_item(Character& chara, size_t body_part_index)
     {
         return;
     }
-    body_part.equipment()->equipped_slot = lua_index::nil();
+    body_part.equipment()->_equipped_slot = lua_index::nil();
     inv_stack(chara.inventory(), body_part.equipment().unwrap());
     body_part.unequip();
 }

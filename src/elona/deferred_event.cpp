@@ -710,7 +710,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
 
 
 
-void eh_guild_alarm(const DeferredEvent& event)
+void eh_guild_alarm(const DeferredEvent&)
 {
     txt(i18n::s.get("core.event.alarm"), Message::color{ColorIndex::red});
     for (auto&& chara : cdata.others())

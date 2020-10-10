@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../snail/color.hpp"
+#include "color.hpp"
 #include "data/id.hpp"
 #include "eobject/forward.hpp"
 #include "optional.hpp"
@@ -56,9 +56,12 @@ optional_ref<const Extent> draw_get_rect_item(int);
 optional_ref<const Extent> draw_get_rect_portrait(const std::string&);
 optional_ref<const Extent> draw_get_rect(data::FullyQualifiedId id);
 
-optional_ref<const Extent> prepare_item_image(int id, int color);
+optional_ref<const Extent> prepare_item_image(int id, int color_index);
+optional_ref<const Extent> prepare_item_image(
+    int id,
+    const Color& color = {255, 255, 255});
 optional_ref<const Extent>
-prepare_item_image(int id, int color, int character_image);
+prepare_item_image(int id, const Color& color, int character_image);
 
 void set_color_mod(int r, int g, int b, int window_id = -1);
 
@@ -74,7 +77,7 @@ void initialize_damage_popups();
 void add_damage_popup(
     const std::string& text,
     int character,
-    const snail::Color& color);
+    const Color& color);
 void clear_damage_popups();
 void show_damage_popups();
 
@@ -101,8 +104,8 @@ void bmes(
     const std::string& message,
     int x,
     int y,
-    const snail::Color& text_color = {255, 255, 255, 255},
-    const snail::Color& shadow_color = {0, 0, 0, 255});
+    const Color& text_color = {255, 255, 255, 255},
+    const Color& shadow_color = {0, 0, 0, 255});
 
 
 void draw_chara(
@@ -119,7 +122,7 @@ void draw_item_material(int mat_id, int x, int y);
 void draw_item_with_portrait(const ItemRef& item, int x, int y);
 void draw_item_with_portrait(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y);
@@ -127,7 +130,7 @@ void draw_item_with_portrait(
 void draw_item_with_portrait_scale_height(const ItemRef& item, int x, int y);
 void draw_item_with_portrait_scale_height(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y);

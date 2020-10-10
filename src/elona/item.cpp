@@ -94,7 +94,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         pv == other.pv &&
         skill == other.skill &&
         curse_state == other.curse_state &&
-        equipped_slot == other.equipped_slot &&
+        _equipped_slot == other._equipped_slot &&
         function == other.function &&
         bonus_value == other.bonus_value &&
         own_state == other.own_state &&
@@ -240,7 +240,7 @@ void Inventory::move_all(Inventory& src, Inventory& dst)
         {
             item->_inventory = &dst;
             item->_slot = static_cast<InventorySlot>(i);
-            item->equipped_slot = lua_index::nil();
+            item->_equipped_slot = lua_index::nil();
         }
         ++i;
     }
@@ -718,8 +718,8 @@ bool chara_unequip(const ItemRef& item)
 
     if (const auto owner = item_get_owner(item).as_character())
     {
-        owner->body_parts[item->equipped_slot].unequip();
-        item->equipped_slot = lua_index::nil();
+        owner->body_parts[item->_equipped_slot].unequip();
+        item->_equipped_slot = lua_index::nil();
         return true;
     }
     else
@@ -1620,7 +1620,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 void remain_make(const ItemRef& remain, const Character& chara)
 {
     remain->subname = charaid2int(chara.id);
-    remain->tint = chara.image / 1000;
+    remain->tint = color_index_to_color(chara.image / 1000);
 
     if (remain->id == "core.corpse")
     {
@@ -1862,8 +1862,8 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
                             *owner),
                         Message::color{ColorIndex::purple});
                 }
-                owner->body_parts[item->equipped_slot].unequip();
-                item->equipped_slot = lua_index::nil();
+                owner->body_parts[item->_equipped_slot].unequip();
+                item->_equipped_slot = lua_index::nil();
                 chara_refresh(*owner);
             }
             else if (is_in_fov(*owner))

@@ -283,8 +283,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     item_db_set_full_stats(item, item_id);
     item_db_get_charge_level(item, item_id);
 
-    item->tint = generate_color(
-        the_item_db[item->id]->tint, the_item_db[item->id]->integer_id);
+    item->tint = color_index_to_color(generate_color(
+        the_item_db[item->id]->tint, the_item_db[item->id]->integer_id));
 
     if (item->id == "core.book_b" && item->param1 == 0)
     {
@@ -755,7 +755,7 @@ void determine_item_material(const ItemRef& item)
 
 void change_item_material(const ItemRef& item, data::InstanceId material)
 {
-    item->tint = 0;
+    item->tint = {255, 255, 255};
 
     fixlv = item->quality;
     if (item->material != "")
@@ -814,9 +814,9 @@ void apply_item_material(const ItemRef& item)
     {
         item->value = item->value * the_item_material_db[p]->value / 100;
     }
-    if (item->tint == 0)
+    if (item->tint == Color{255, 255, 255})
     {
-        item->tint = the_item_material_db[p]->tint;
+        item->tint = color_index_to_color(the_item_material_db[p]->tint);
     }
     p(1) = 120;
     p(2) = 80;

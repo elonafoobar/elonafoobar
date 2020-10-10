@@ -4,6 +4,7 @@
 #include "classes/class_LuaAbility.cpp"
 #include "classes/class_LuaArea.cpp"
 #include "classes/class_LuaCharacter.cpp"
+#include "classes/class_LuaColor.cpp"
 #include "classes/class_LuaDateTime.cpp"
 #include "classes/class_LuaGameData.cpp"
 #include "classes/class_LuaInventory.cpp"
@@ -27,6 +28,7 @@ void bind(sol::state& L)
     ELONA_LUA_API_BIND_CLASS(LuaAbility);
     ELONA_LUA_API_BIND_CLASS(LuaArea);
     ELONA_LUA_API_BIND_CLASS(LuaCharacter);
+    ELONA_LUA_API_BIND_CLASS(LuaColor);
     ELONA_LUA_API_BIND_CLASS(LuaDateTime);
     ELONA_LUA_API_BIND_CLASS(LuaGameData);
     ELONA_LUA_API_BIND_CLASS(LuaInventory);

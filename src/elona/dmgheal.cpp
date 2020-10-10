@@ -1514,8 +1514,8 @@ void character_drops_item(Character& victim)
             }
             if (item->is_equipped())
             {
-                victim.body_parts[item->equipped_slot].unequip();
-                item->equipped_slot = lua_index::nil();
+                victim.body_parts[item->_equipped_slot].unequip();
+                item->_equipped_slot = lua_index::nil();
             }
             f = 0;
             if (!item->is_precious)
@@ -1670,8 +1670,8 @@ void character_drops_item(Character& victim)
         }
         if (item->is_equipped())
         {
-            victim.body_parts[item->equipped_slot].unequip();
-            item->equipped_slot = lua_index::nil();
+            victim.body_parts[item->_equipped_slot].unequip();
+            item->_equipped_slot = lua_index::nil();
         }
         item->set_position(victim.position);
         itemturn(item);

@@ -6,6 +6,7 @@
 
 #include "../snail/color.hpp"
 #include "../util/namedparam.hpp"
+#include "../util/noncopyable.hpp"
 
 
 

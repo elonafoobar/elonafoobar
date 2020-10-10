@@ -762,7 +762,7 @@ void chara_refresh(Character& chara)
                 }
                 if (body_part.equipment()->weight >= 1000)
                 {
-                    body_part.equipment()->equipped_slot = lua_index::nil();
+                    body_part.equipment()->_equipped_slot = lua_index::nil();
                     body_part.unequip();
                 }
             }

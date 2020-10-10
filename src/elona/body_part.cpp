@@ -81,7 +81,7 @@ void body_part_make_unequippable(
         {
             if (body_part.is_equip())
             {
-                body_part.equipment()->equipped_slot = lua_index::nil();
+                body_part.equipment()->_equipped_slot = lua_index::nil();
             }
             body_part.make_unequippable();
         }

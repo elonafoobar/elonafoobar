@@ -296,20 +296,16 @@ void bind(sol::state& lua)
             }));
 
     /**
-     * @luadoc color field ColorIndex
+     * @luadoc tint field LuaColor
      *
-     * [RW] The color ID of the item.
+     * [RW] The tint of the item.
      */
     LuaItem.set(
-        "color",
+        "tint",
         sol::property(
-            [](const ItemRef& self) {
-                return LuaEnums::ColorIndexTable.convert_to_string(
-                    static_cast<ColorIndex>(self->tint));
-            },
-            [](const ItemRef& self, const EnumString& s) {
-                self->tint = static_cast<int>(
-                    LuaEnums::ColorIndexTable.ensure_from_string(s));
+            [](const ItemRef& self) { return self->tint; },
+            [](const ItemRef& self, const Color& new_value) {
+                self->tint = new_value;
             }));
 
     /**

@@ -129,13 +129,13 @@ void Animation_play_bolt(
  * @tparam LuaPosition thrower_pos The thrower's position.
  * @tparam LuaPosition target_pos The target's position.
  * @tparam number item_chip The item chip of the thrown object
- * @tparam number item_color The item color of the thrown object
+ * @tparam LuaColor item_color The item color of the thrown object
  */
 void Animation_play_throwing_object(
     const Position& thrower_pos,
     const Position& target_pos,
     int item_chip,
-    int item_color)
+    const Color& item_color)
 {
     ThrowingObjectAnimation(thrower_pos, target_pos, item_chip, item_color)
         .play();
@@ -167,7 +167,7 @@ void Animation_play_swarm(const Position& target_pos)
  * @tparam number kind The kind of the ranged attack
  * @tparam number fired_item_subcategory The fired item subcategory
  * @tparam number fired_item_image The fired item image
- * @tparam number fired_item_color The fired item color
+ * @tparam LuaColor fired_item_color The fired item color
  */
 void Animation_play_ranged_attack(
     const Position& attacker_pos,
@@ -175,7 +175,7 @@ void Animation_play_ranged_attack(
     int kind,
     int fired_item_subcategory,
     int fired_item_image,
-    int fired_item_color)
+    const Color& fired_item_color)
 {
     auto anim_type = static_cast<RangedAttackAnimation::Type>(kind);
     RangedAttackAnimation(

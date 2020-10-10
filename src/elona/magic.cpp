@@ -2481,7 +2481,7 @@ bool _magic_21_1127(Character& subject)
         const auto target_item = target_item_opt.unwrap();
         if (target_item->quality == Quality::special)
         {
-            const auto equipped_slot_save = target_item->equipped_slot;
+            const auto equipped_slot_save = target_item->_equipped_slot;
             if (efp < 350)
             {
                 txt(i18n::s.get(
@@ -2502,7 +2502,7 @@ bool _magic_21_1127(Character& subject)
             {
                 subject.body_parts[equipped_slot_save].equip(
                     reconstructed_artifact.unwrap());
-                reconstructed_artifact->equipped_slot = equipped_slot_save;
+                reconstructed_artifact->_equipped_slot = equipped_slot_save;
             }
         }
         else
