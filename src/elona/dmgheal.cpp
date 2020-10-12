@@ -326,10 +326,10 @@ int damage_hp(
                 heal_hp(
                     *attacker,
                     clamp(
-                        rnd_capped(
+                        lua_int{rnd_capped(
                             dmg_at_m141 * (150 + element_power * 2) / 1000 +
-                            10),
-                        1,
+                            10)},
+                        lua_int{1},
                         attacker->max_hp / 10 + rnd(5)));
             }
         }

@@ -332,7 +332,9 @@ void refresh_speed(Character& chara)
         if (game()->mount == chara.index)
         {
             chara.current_speed = clamp(
-                chara.get_skill(10).level + cdata.player().get_skill(301).level,
+                lua_int{
+                    chara.get_skill(10).level +
+                    cdata.player().get_skill(301).level},
                 lua_int{10},
                 mount_speed);
             return;

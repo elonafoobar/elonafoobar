@@ -82,7 +82,7 @@ std::string _set_pcc_info(Character& chara, int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            text = chara.portrait;
+            text = chara.portrait.get();
         }
         if (val0 == 2)
         {

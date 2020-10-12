@@ -214,10 +214,9 @@ optional_ref<const Extent> draw_get_rect_item(int id)
  * Obtains the window buffer and region where the portrait with ID @a key
  * is located, for use with @ref gcopy.
  */
-optional_ref<const Extent> draw_get_rect_portrait(const std::string& key)
+optional_ref<const Extent> draw_get_rect_portrait(data::InstanceId portrait_id)
 {
-    return draw_get_rect(
-        data::make_fqid("core.portrait", data::InstanceId{key}));
+    return draw_get_rect(data::make_fqid("core.portrait", portrait_id));
 }
 
 

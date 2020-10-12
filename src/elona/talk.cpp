@@ -561,8 +561,9 @@ int talk_window_query(const Character& chara)
 
     if (chara.portrait != "" || scenemode)
     {
-        const auto portrait_id =
-            scenemode ? actor(1, current_actor_index) : chara.portrait;
+        const auto portrait_id = scenemode
+            ? data::InstanceId{actor(1, current_actor_index)}
+            : chara.portrait;
         return talk_window_query(
             portrait_id, none, speaker_name, buff, impress_interest);
     }
@@ -576,7 +577,7 @@ int talk_window_query(const Character& chara)
 
 
 int talk_window_query(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,
@@ -673,7 +674,7 @@ void talk_window_init(std::string& text)
 
 
 void talk_window_show(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,

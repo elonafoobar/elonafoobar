@@ -778,8 +778,8 @@ bool quest_generate(int quest_idx)
         (game()->current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest.difficulty = clamp(
-            rnd_capped(cdata.player().get_skill(183).level + 10),
-            int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
+            lua_int{rnd_capped(cdata.player().get_skill(183).level + 10)},
+            lua_int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
             cdata.player().fame / 1000 + 10);
         quest.refresh_time =
             game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;

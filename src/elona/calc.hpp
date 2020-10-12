@@ -67,9 +67,9 @@ int calcattackdmg(
 
 struct CalcAttackProtectionResult
 {
-    int rate;
-    int dice_x;
-    int dice_y;
+    lua_int rate;
+    lua_int dice_x;
+    lua_int dice_y;
 };
 CalcAttackProtectionResult calc_attack_protection(const Character& chara);
 

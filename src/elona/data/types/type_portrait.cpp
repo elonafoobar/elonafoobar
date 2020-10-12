@@ -68,58 +68,58 @@ PortraitData _PortraitDBBase::convert(
 
 
 
-std::string PortraitDB::get_next_portrait(const std::string& current)
+data::InstanceId PortraitDB::get_next_portrait(data::InstanceId current)
 {
     if (sorted_portrait_table.empty())
     {
         // No portraits loaded.
-        return "";
+        return data::InstanceId{};
     }
 
-    const auto itr = sorted_portrait_table.find(current);
-    if (itr == std::end(sorted_portrait_table))
+    auto itr = sorted_portrait_table.find(current.get());
+    if (itr == sorted_portrait_table.end())
     {
         // Not found; returns the current value.
         return current;
     }
 
-    const auto next = std::next(itr, 1);
-    if (next == std::end(sorted_portrait_table))
+    const auto next = ++itr;
+    if (next == sorted_portrait_table.end())
     {
         // Reached the end; loops back to the beginning.
-        return *std::begin(sorted_portrait_table);
+        return data::InstanceId{*sorted_portrait_table.begin()};
     }
     else
     {
-        return *next;
+        return data::InstanceId{*next};
     }
 }
 
 
 
-std::string PortraitDB::get_previous_portrait(const std::string& current)
+data::InstanceId PortraitDB::get_previous_portrait(data::InstanceId current)
 {
     if (sorted_portrait_table.empty())
     {
         // No portraits loaded.
-        return "";
+        return data::InstanceId{};
     }
 
-    const auto itr = sorted_portrait_table.find(current);
+    auto itr = sorted_portrait_table.find(current.get());
     if (itr == std::end(sorted_portrait_table))
     {
         // Not found; returns the current value.
         return current;
     }
 
-    if (itr == std::begin(sorted_portrait_table))
+    if (itr == sorted_portrait_table.begin())
     {
         // Reached the beginning; loops back to the end.
-        return *std::prev(std::end(sorted_portrait_table), 1);
+        return data::InstanceId{*(--sorted_portrait_table.end())};
     }
     else
     {
-        return *std::prev(itr, 1);
+        return data::InstanceId{*(--itr)};
     }
 }
 
