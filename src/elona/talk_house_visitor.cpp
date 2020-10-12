@@ -1,4 +1,3 @@
-#include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
 #include "animation.hpp"
@@ -7,7 +6,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
@@ -18,6 +17,7 @@
 #include "mef.hpp"
 #include "message.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"
 #include "text.hpp"
@@ -238,11 +238,14 @@ void _adventurer_train_skill(int skill_id)
 {
     cdata.player().platinum -=
         calc_skill_training_cost(skill_id, cdata.player(), true);
-    modify_potential(
+    skill_add_potential(
         cdata.player(),
-        skill_id,
+        *the_skill_db.get_id_from_integer(skill_id),
         clamp(
-            15 - cdata.player().get_skill(skill_id).potential / 15,
+            15 -
+                cdata.player().skills().potential(
+                    *the_skill_db.get_id_from_integer(skill_id)) /
+                    15,
             2,
             15 - (skill_id < 18) * 10));
 }
@@ -257,11 +260,12 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     listn(0, listmax) =
         i18n::s.get("core.talk.visitor.adventurer.train.choices.pass");
     ++listmax;
-    if (cdata.player().get_skill(skill_id).base_level == 0)
+    if (cdata.player().skills().base_level(
+            *the_skill_db.get_id_from_integer(skill_id)) == 0)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.learn.dialog",
-            the_ability_db.get_text(skill_id, "name"),
+            the_skill_db.get_text(skill_id, "name"),
             std::to_string(
                 calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
@@ -279,7 +283,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
     {
         buff = i18n::s.get(
             "core.talk.visitor.adventurer.train.train.dialog",
-            the_ability_db.get_text(skill_id, "name"),
+            the_skill_db.get_text(skill_id, "name"),
             std::to_string(
                 calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
@@ -493,7 +497,7 @@ TalkResult _talk_hv_adventurer_favorite_skill(Character& speaker)
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_skill.dialog",
-        the_ability_db.get_text(skill_id, "name"),
+        the_skill_db.get_text(skill_id, "name"),
         speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -518,7 +522,7 @@ TalkResult _talk_hv_adventurer_favorite_stat(Character& speaker)
     listmax = 0;
     buff = i18n::s.get(
         "core.talk.visitor.adventurer.favorite_stat.dialog",
-        the_ability_db.get_text(skill_id, "name"),
+        the_skill_db.get_text(skill_id, "name"),
         speaker);
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.more");
@@ -716,9 +720,10 @@ void _trainer_do_training(int plat, int chatval_)
     txt(i18n::s.get(
             "core.talk.visitor.trainer.potential_expands",
             cdata.player(),
-            the_ability_db.get_text(chatval_, "name")),
+            the_skill_db.get_text(chatval_, "name")),
         Message::color{ColorIndex::green});
-    modify_potential(cdata.player(), chatval_, 10);
+    skill_add_potential(
+        cdata.player(), *the_skill_db.get_id_from_integer(chatval_), 10);
 }
 
 
@@ -766,7 +771,7 @@ TalkResult _talk_hv_trainer(Character& speaker)
             list(0, listmax) = p(cnt);
             listn(0, listmax) = i18n::s.get(
                 "core.talk.visitor.trainer.choices.improve",
-                the_ability_db.get_text(p(cnt), "name"));
+                the_skill_db.get_text(p(cnt), "name"));
             ++listmax;
         }
     }

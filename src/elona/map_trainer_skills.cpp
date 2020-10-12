@@ -1,7 +1,7 @@
-#include "ability.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "game.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -181,11 +181,12 @@ void map_get_trainer_skills(const Character& chara)
 
     for (const auto& skill_id : skills)
     {
-        if (chara.get_skill(skill_id).base_level == 0)
+        if (chara.skills().base_level(
+                *the_skill_db.get_id_from_integer(skill_id)) == 0)
         {
             list(0, listmax) = skill_id;
             list(1, listmax) =
-                the_ability_db[skill_id]->related_basic_attribute + 21000;
+                the_skill_db[skill_id]->related_basic_attribute + 21000;
             ++listmax;
         }
     }

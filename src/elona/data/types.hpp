@@ -1,6 +1,5 @@
 #pragma once
 
-#include "types/type_ability.hpp"
 #include "types/type_asset.hpp"
 #include "types/type_blending_recipe.hpp"
 #include "types/type_buff.hpp"
@@ -18,5 +17,6 @@
 #include "types/type_music.hpp"
 #include "types/type_portrait.hpp"
 #include "types/type_race.hpp"
+#include "types/type_skill.hpp"
 #include "types/type_sound.hpp"
 #include "types/type_trait.hpp"

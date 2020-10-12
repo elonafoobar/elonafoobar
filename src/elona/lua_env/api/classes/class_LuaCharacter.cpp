@@ -1,15 +1,15 @@
-#include "../../../ability.hpp"
 #include "../../../buff.hpp"
 #include "../../../character.hpp"
 #include "../../../character_status.hpp"
-#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_buff.hpp"
+#include "../../../data/types/type_skill.hpp"
 #include "../../../dmgheal.hpp"
 #include "../../../element.hpp"
 #include "../../../enums.hpp"
 #include "../../../food.hpp"
 #include "../../../god.hpp"
 #include "../../../map_cell.hpp"
+#include "../../../skill.hpp"
 #include "../../../status_ailment.hpp"
 #include "../../../text.hpp"
 #include "../../../ui.hpp"
@@ -18,7 +18,6 @@
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
 #include "../common.hpp"
-#include "class_LuaAbility.hpp"
 
 
 
@@ -258,33 +257,11 @@ void LuaCharacter_set_flag(Character& self, const EnumString& flag, bool value)
 
 
 /**
- * @luadoc get_skill
- *
- * Obtains the skill of the given ID.
- * @tparam string skill_id ID of type core.ability
- * @treturn LuaAbility
- */
-sol::optional<LuaAbility> LuaCharacter_get_skill(
-    Character& self,
-    const std::string& skill_id)
-{
-    auto data = the_ability_db[data::InstanceId{skill_id}];
-    if (!data)
-    {
-        return sol::nullopt;
-    }
-
-    return LuaAbility(data->integer_id, self.obj_id);
-}
-
-
-
-/**
  * @luadoc gain_skill
  *
  * Makes this character gain a new skill or spell. This only has an
  * effect if the character does not already know the skill/spell.
- * @tparam string skill_id the skill/spell ID of type core.ability
+ * @tparam string skill_id the skill/spell ID of type core.skill
  * @tparam num initial_level the intial skill/spell level
  * @tparam[opt] num initial_stock the initial spell stock for spells
  */
@@ -294,7 +271,7 @@ void LuaCharacter_gain_skill_stock(
     int initial_level,
     int initial_stock)
 {
-    auto data = the_ability_db[data::InstanceId{skill_id}];
+    auto data = the_skill_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -320,7 +297,7 @@ void LuaCharacter_gain_skill(
  *
  * Makes this character gain experience in a skill or spell. This only
  * has an effect if the character already knows the skill/spell.
- * @tparam string skill_id the skill/spell ID of type core.ability
+ * @tparam string skill_id the skill/spell ID of type core.skill
  * @tparam num amount the amount of experience
  */
 void LuaCharacter_gain_skill_exp(
@@ -328,7 +305,7 @@ void LuaCharacter_gain_skill_exp(
     const std::string& skill_id,
     int amount)
 {
-    auto data = the_ability_db[data::InstanceId{skill_id}];
+    auto data = the_skill_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -899,6 +876,14 @@ void bind(sol::state& lua)
                              "core.chara", self.new_id());
                      }));
 
+    /**
+     * @luadoc skills field LuaSkillTable
+     *
+     * [R] The skill table of the character.
+     */
+    LuaCharacter.set(
+        "skill", sol::property([](Character& self) { return self.skills(); }));
+
     // Methods
     LuaCharacter.set(
         "damage_hp",
@@ -915,7 +900,6 @@ void bind(sol::state& lua)
     LuaCharacter.set("recruit_as_ally", &LuaCharacter_recruit_as_ally);
     LuaCharacter.set("get_flag", &LuaCharacter_get_flag);
     LuaCharacter.set("set_flag", &LuaCharacter_set_flag);
-    LuaCharacter.set("get_skill", &LuaCharacter_get_skill);
     LuaCharacter.set(
         "gain_skill",
         sol::overload(

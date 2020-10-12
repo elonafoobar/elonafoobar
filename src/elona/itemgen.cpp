@@ -1,6 +1,5 @@
 #include "itemgen.hpp"
 
-#include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -16,6 +15,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -159,7 +159,7 @@ bool upgrade_item_quality(const InventoryRef& inv)
     if (owner_chara && !owner_chara->is_player())
         return false;
 
-    return cdata.player().get_skill(19).level > rnd(5000);
+    return cdata.player().skills().level("core.stat_luck") > rnd(5000);
 }
 
 
@@ -536,7 +536,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     {
         if (reftype < 50000)
         {
-            if (rnd_capped(cdata.player().get_skill(162).level + 1) > 5)
+            if (rnd_capped(
+                    cdata.player().skills().level("core.sense_quality") + 1) >
+                5)
             {
                 item->identify_state = IdentifyState::almost;
             }

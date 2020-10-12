@@ -2,7 +2,6 @@
 
 #include <cassert>
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -24,6 +23,7 @@
 #include "message.hpp"
 #include "net.hpp"
 #include "optional.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -254,7 +254,7 @@ void run_random_event(RandomEvent event)
 
     listmax = 0;
 
-    if (event.is_evadable(cdata.player().get_skill(19).level))
+    if (event.is_evadable(cdata.player().skills().level("core.stat_luck")))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
         event.id = 1;

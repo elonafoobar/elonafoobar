@@ -1,6 +1,5 @@
 #include "shop.hpp"
 
-#include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -14,6 +13,7 @@
 #include "map.hpp"
 #include "menu.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 

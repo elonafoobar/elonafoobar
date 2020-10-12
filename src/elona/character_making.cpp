@@ -1,11 +1,10 @@
 #include "character_making.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -17,6 +16,7 @@
 #include "race.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_charamake_alias.hpp"
@@ -268,11 +268,12 @@ static void _reroll_character()
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
     {
-        cdata.player().get_skill(cnt).base_level =
-            cmstats(cnt - 10) / 1'000'000;
-        cdata.player().get_skill(cnt).experience =
-            cmstats(cnt - 10) % 1'000'000 / 1'000;
-        cdata.player().get_skill(cnt).potential = cmstats(cnt - 10) % 1'000;
+        const auto id = *the_skill_db.get_id_from_integer(cnt);
+        cdata.player().skills().set_base_level(
+            id, cmstats(cnt - 10) / 1'000'000);
+        cdata.player().skills().set_experience(
+            id, cmstats(cnt - 10) % 1'000'000 / 1'000);
+        cdata.player().skills().set_potential(id, cmstats(cnt - 10) % 1'000);
     }
     initialize_character(cdata.player());
     initialize_pc_character();
@@ -447,37 +448,50 @@ void draw_race_or_class_info(const std::string& description)
             }
             r = cnt2 * 3 + cnt + 10;
             snail::Color text_color{0, 0, 0};
-            if (cdata.player().get_skill(r).base_level > 13)
+            if (cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 13)
             {
                 p = 1;
                 text_color = snail::Color{0, 0, 200};
             }
-            else if (cdata.player().get_skill(r).base_level > 11)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 11)
             {
                 p = 2;
                 text_color = snail::Color{0, 0, 200};
             }
-            else if (cdata.player().get_skill(r).base_level > 9)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 9)
             {
                 p = 3;
                 text_color = snail::Color{0, 0, 150};
             }
-            else if (cdata.player().get_skill(r).base_level > 7)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 7)
             {
                 p = 4;
                 text_color = snail::Color{0, 0, 150};
             }
-            else if (cdata.player().get_skill(r).base_level > 5)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 5)
             {
                 p = 5;
                 text_color = snail::Color{0, 0, 0};
             }
-            else if (cdata.player().get_skill(r).base_level > 3)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 3)
             {
                 p = 6;
                 text_color = snail::Color{150, 0, 0};
             }
-            else if (cdata.player().get_skill(r).base_level > 0)
+            else if (
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(r)) > 0)
             {
                 p = 7;
                 text_color = snail::Color{200, 0, 0};
@@ -499,7 +513,7 @@ void draw_race_or_class_info(const std::string& description)
             mes(cnt * 150 + tx + 32,
                 ty,
                 strutil::take_by_width(
-                    the_ability_db.get_text(r, "name"), jp ? 6 : 3) +
+                    the_skill_db.get_text(r, "name"), jp ? 6 : 3) +
                     u8": "s + s(p),
                 text_color);
         }
@@ -518,13 +532,14 @@ void draw_race_or_class_info(const std::string& description)
         "core.chara_making.select_race.race_info.trained_skill.proficient_in");
     for (int cnt = 100; cnt < 150; ++cnt)
     {
-        if (cdata.player().get_skill(cnt).base_level != 0)
+        if (cdata.player().skills().base_level(
+                *the_skill_db.get_id_from_integer(cnt)) != 0)
         {
             if (r != 0)
             {
                 s += u8","s;
             }
-            s += the_ability_db.get_text(cnt, "name");
+            s += the_skill_db.get_text(cnt, "name");
             ++r;
         }
     }
@@ -537,9 +552,10 @@ void draw_race_or_class_info(const std::string& description)
     }
     for (int cnt = 150; cnt < 600; ++cnt)
     {
-        if (cdata.player().get_skill(cnt).base_level != 0)
+        if (cdata.player().skills().base_level(
+                *the_skill_db.get_id_from_integer(cnt)) != 0)
         {
-            s = the_ability_db.get_text(cnt, "name");
+            s = the_skill_db.get_text(cnt, "name");
             if (jp)
             {
                 lenfix(s, 12);
@@ -551,14 +567,14 @@ void draw_race_or_class_info(const std::string& description)
             gmode(2);
             gcopy_c(
                 1,
-                (the_ability_db[cnt]->related_basic_attribute - 10) * inf_tiles,
+                (the_skill_db[cnt]->related_basic_attribute - 10) * inf_tiles,
                 672,
                 inf_tiles,
                 inf_tiles,
                 tx + 13,
                 ty + 6);
-            s(1) = the_ability_db.get_text_optional(cnt, "description")
-                       .value_or("");
+            s(1) =
+                the_skill_db.get_text_optional(cnt, "description").value_or("");
             if (en)
             {
                 if (strlen_u(s(1)) > 45)

@@ -1,5 +1,4 @@
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "attack.hpp"
 #include "audio.hpp"
@@ -28,6 +27,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1758,9 +1758,9 @@ OnEnterResult on_enter_give(
         return OnEnterResult{result};
     }
     f = 0;
-    p = inventory_owner.get_skill(10).level * 500 +
-        inventory_owner.get_skill(11).level * 500 +
-        inventory_owner.get_skill(153).level * 2500 + 25000;
+    p = inventory_owner.skills().level("core.stat_strength") * 500 +
+        inventory_owner.skills().level("core.stat_constitution") * 500 +
+        inventory_owner.skills().level("core.weight_lifting") * 2500 + 25000;
     if (inventory_owner.id == CharaId::golden_knight)
     {
         p *= 5;

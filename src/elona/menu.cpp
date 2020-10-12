@@ -3,7 +3,6 @@
 #include <iostream>
 #include <stack>
 
-#include "ability.hpp"
 #include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -14,10 +13,10 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
+#include "data/types/type_skill.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -36,6 +35,7 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -510,7 +510,7 @@ TurnResult show_skill_list()
 
 static std::string _make_buff_power_string(int skill_id)
 {
-    const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
+    const auto buff_id = the_skill_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
         *the_buff_db.get_id_from_integer(buff_id),
         calc_spell_power(cdata.player(), skill_id));
@@ -524,7 +524,7 @@ static std::string _make_buff_power_string(int skill_id)
 std::string make_spell_description(int skill_id)
 {
     std::string result = "";
-    if (the_ability_db[skill_id]->ability_type / 1000 == 1)
+    if (the_skill_db[skill_id]->ability_type / 1000 == 1)
     {
         return _make_buff_power_string(skill_id);
     }
@@ -570,7 +570,7 @@ std::string make_spell_description(int skill_id)
         result += u8" "s;
     }
     result +=
-        the_ability_db.get_text_optional(skill_id, "description").value_or("");
+        the_skill_db.get_text_optional(skill_id, "description").value_or("");
 
     return result;
 }
@@ -1364,7 +1364,8 @@ void screen_analyze_self()
     cdata.tmp().religion = cdata.player().religion;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        cdata.player().get_skill(cnt).level = 1;
+        cdata.player().skills().set_level(
+            *the_skill_db.get_id_from_integer(cnt), 1);
     }
     god_apply_blessing(cdata.tmp());
     if (cdata.player().religion != "")
@@ -1373,7 +1374,9 @@ void screen_analyze_self()
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = cdata.player().get_skill(cnt).level - 1;
+            p = cdata.player().skills().level(
+                    *the_skill_db.get_id_from_integer(cnt)) -
+                1;
             cnvbonus(cnt, p);
         }
     }

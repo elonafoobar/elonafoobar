@@ -6,7 +6,6 @@
 #include <vector>
 
 #include "../util/range.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "body_part.hpp"
 #include "buff.hpp"
@@ -19,6 +18,7 @@
 #include "spell.hpp"
 #include "time.hpp"
 #include "trait.hpp"
+#include "types/skill.hpp"
 
 
 
@@ -393,7 +393,8 @@ public:
 
 
 private:
-    SkillData _skills;
+    /// Skills.
+    SkillTable _skills;
 
     /// Spell stocks
     SpellStockTable _spell_stocks;
@@ -406,15 +407,15 @@ private:
 
 
 public:
-    Ability& get_skill(int id)
+    SkillTable& skills() noexcept
     {
-        return _skills.get(id);
+        return _skills;
     }
 
 
-    const Ability& get_skill(int id) const
+    const SkillTable& skills() const noexcept
     {
-        return _skills.get(id);
+        return _skills;
     }
 
 

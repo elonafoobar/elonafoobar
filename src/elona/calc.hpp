@@ -212,7 +212,7 @@ int calc_skill_related_attribute_exp(int experience, int divisor);
  *
  * @param base_experience The base experience coefficient
  * @param potential The skill's potential
- * @param skill_level The skill's level
+ * @param skills().level The skill's level
  *
  * @return The adjusted experience amount
  */

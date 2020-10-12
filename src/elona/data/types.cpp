@@ -1,4 +1,3 @@
-#include "types/type_ability.cpp"
 #include "types/type_asset.cpp"
 #include "types/type_blending_recipe.cpp"
 #include "types/type_buff.cpp"
@@ -16,5 +15,6 @@
 #include "types/type_music.cpp"
 #include "types/type_portrait.cpp"
 #include "types/type_race.cpp"
+#include "types/type_skill.cpp"
 #include "types/type_sound.cpp"
 #include "types/type_trait.cpp"

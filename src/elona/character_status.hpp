@@ -13,7 +13,6 @@ struct Character;
 
 
 void modify_ether_disease_stage(int delta);
-void modify_potential(Character& chara, int id, int delta);
 void modify_karma(Character& chara, int delta);
 void modify_weight(Character& chara, int delta, bool force = false);
 void modify_height(Character& chara, int delta);

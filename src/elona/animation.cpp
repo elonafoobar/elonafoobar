@@ -1,6 +1,5 @@
 #include "animation.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -13,6 +12,7 @@
 #include "item.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 

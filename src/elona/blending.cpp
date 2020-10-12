@@ -1,14 +1,13 @@
 #include "blending.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -26,6 +25,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -130,9 +130,9 @@ int calc_success_rate(
     for (const auto& [skill_id, required_level] :
          the_blending_recipe_db.ensure(recipe_id).required_skills)
     {
-        const auto integer_skill_id =
-            the_ability_db.ensure(skill_id).integer_id;
-        if (cdata.player().get_skill(integer_skill_id).level <= 0)
+        const auto integer_skill_id = the_skill_db.ensure(skill_id).integer_id;
+        if (cdata.player().skills().level(
+                *the_skill_db.get_id_from_integer(integer_skill_id)) <= 0)
         {
             rate -= 125;
             continue;
@@ -142,8 +142,10 @@ int calc_success_rate(
         {
             d = 1;
         }
-        int p =
-            (d * 200 / cdata.player().get_skill(integer_skill_id).level - 200) *
+        int p = (d * 200 /
+                     cdata.player().skills().level(
+                         *the_skill_db.get_id_from_integer(integer_skill_id)) -
+                 200) *
             -1;
         if (p > 0)
         {
@@ -475,17 +477,20 @@ void window_recipe(
              the_blending_recipe_db.ensure(rpid).required_skills)
         {
             const auto integer_skill_id =
-                the_ability_db.ensure(skill_id).integer_id;
+                the_skill_db.ensure(skill_id).integer_id;
             const auto text_color =
                 (required_level >
-                 cdata.player().get_skill(integer_skill_id).level)
+                 cdata.player().skills().level(
+                     *the_skill_db.get_id_from_integer(integer_skill_id)))
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                the_ability_db.get_text(skill_id, "name") + u8"  "s +
+                the_skill_db.get_text(skill_id, "name") + u8"  "s +
                     required_level + u8"("s +
-                    cdata.player().get_skill(integer_skill_id).level + u8")"s,
+                    cdata.player().skills().level(
+                        *the_skill_db.get_id_from_integer(integer_skill_id)) +
+                    u8")"s,
                 text_color);
             ++cnt;
         }
@@ -1033,7 +1038,7 @@ void blending_on_finish()
         {
             chara_gain_skill_exp(
                 cdata.player(),
-                the_ability_db.ensure(skill_id).integer_id,
+                the_skill_db.ensure(skill_id).integer_id,
                 50 + required_level + rpref(2) / 10000 * 25,
                 2,
                 50);

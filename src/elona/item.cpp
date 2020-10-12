@@ -5,7 +5,6 @@
 #include <type_traits>
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -15,10 +14,10 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
@@ -37,6 +36,7 @@
 #include "mef.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -842,10 +842,10 @@ void itemname_additional_info(const ItemRef& item)
         if (item->id == "core.textbook")
         {
             s_ += lang(
-                u8"《"s + the_ability_db.get_text(item->param1, "name") +
+                u8"《"s + the_skill_db.get_text(item->param1, "name") +
                     u8"》という題名の"s,
                 u8" titled <Art of "s +
-                    the_ability_db.get_text(item->param1, "name") + u8">"s);
+                    the_skill_db.get_text(item->param1, "name") + u8">"s);
         }
         else if (item->id == "core.book_of_rachel")
         {
@@ -1722,7 +1722,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (owner->get_skill(50).level / 50 >= 6 ||
+        if (owner->skills().level("core.element_fire") / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -1951,7 +1951,7 @@ bool item_cold(const InventoryRef& inv, const OptionalItemRef& destroyed_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (owner->get_skill(51).level / 50 >= 6 ||
+        if (owner->skills().level("core.element_cold") / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -2254,8 +2254,9 @@ void auto_identify()
             continue;
         }
 
-        const auto skill = cdata.player().get_skill(13).level +
-            cdata.player().get_skill(162).level * 5;
+        const auto skill =
+            cdata.player().skills().level("core.stat_perception") +
+            cdata.player().skills().level("core.sense_quality") * 5;
         const auto difficulty = 1500 + item->identify_level * 5;
         if (skill > rnd(difficulty * 5))
         {

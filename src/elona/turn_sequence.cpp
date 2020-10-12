@@ -1,6 +1,5 @@
 #include "turn_sequence.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "ai.hpp"
 #include "area.hpp"
@@ -13,6 +12,7 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "death.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
@@ -45,6 +45,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -1477,7 +1478,10 @@ void proc_turn_end(Character& chara)
     }
     if (chara.poisoned > 0)
     {
-        damage_hp(chara, rnd_capped(2 + chara.get_skill(11).level / 10), -4);
+        damage_hp(
+            chara,
+            rnd_capped(2 + chara.skills().level("core.stat_constitution") / 10),
+            -4);
         status_ailment_heal(chara, StatusAilment::poisoned, 1);
         if (chara.poisoned > 0)
         {
@@ -1533,7 +1537,10 @@ void proc_turn_end(Character& chara)
             if (!enchantment_find(chara, 60010 + p))
             {
                 chara.attr_adjs[p] -=
-                    chara.get_skill(10 + p).base_level / 25 + 1;
+                    chara.skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + p)) /
+                        25 +
+                    1;
                 chara_refresh(chara);
             }
         }
@@ -1725,11 +1732,16 @@ void proc_turn_end(Character& chara)
     {
         if (rnd(6) == 0)
         {
-            heal_hp(chara, rnd_capped(chara.get_skill(154).level / 3 + 1) + 1);
+            heal_hp(
+                chara,
+                rnd_capped(chara.skills().level("core.healing") / 3 + 1) + 1);
         }
         if (rnd(5) == 0)
         {
-            heal_mp(chara, rnd_capped(chara.get_skill(155).level / 2 + 1) + 1);
+            heal_mp(
+                chara,
+                rnd_capped(chara.skills().level("core.meditation") / 2 + 1) +
+                    1);
         }
     }
 }

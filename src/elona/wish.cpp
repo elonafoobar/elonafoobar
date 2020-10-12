@@ -4,15 +4,14 @@
 
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -28,6 +27,7 @@
 #include "optional.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -622,7 +622,7 @@ bool wish_for_skill(const std::string& input)
     BySimilaritySelector<int> selector;
     const auto wish = fix_wish(input);
 
-    for (const auto& ability_data : the_ability_db.values())
+    for (const auto& ability_data : the_skill_db.values())
     {
         const int id = ability_data.integer_id;
         const bool is_basic_attribute_excluding_life_and_mana =
@@ -634,7 +634,7 @@ bool wish_for_skill(const std::string& input)
             continue;
         }
 
-        auto name = the_ability_db.get_text(id, "name");
+        auto name = the_skill_db.get_text(id, "name");
         int similarity = 0;
         if (name == wish)
         {
@@ -663,10 +663,11 @@ bool wish_for_skill(const std::string& input)
     if (!selector.empty())
     {
         const auto id = selector.get_force();
-        const auto name = the_ability_db.get_text(id, "name");
+        const auto name = the_skill_db.get_text(id, "name");
         if (!name.empty())
         {
-            if (cdata.player().get_skill(id).base_level == 0)
+            if (cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(id)) == 0)
             {
                 txt(i18n::s.get("core.wish.you_learn_skill", name),
                     Message::color{ColorIndex::orange});
@@ -677,7 +678,8 @@ bool wish_for_skill(const std::string& input)
                 txt(i18n::s.get("core.wish.your_skill_improves", name),
                     Message::color{ColorIndex::orange});
                 chara_gain_fixed_skill_exp(cdata.player(), id, 1000);
-                modify_potential(cdata.player(), id, 25);
+                skill_add_potential(
+                    cdata.player(), *the_skill_db.get_id_from_integer(id), 25);
             }
         }
         else

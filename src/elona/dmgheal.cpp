@@ -1,6 +1,5 @@
 #include "dmgheal.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
@@ -13,6 +12,7 @@
 #include "character_status.hpp"
 #include "class.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -42,6 +42,7 @@
 #include "optional.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -203,7 +204,9 @@ int damage_hp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = victim.get_skill(element).level / 50;
+        int resistance =
+            victim.skills().level(*the_skill_db.get_id_from_integer(element)) /
+            50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -217,7 +220,8 @@ int damage_hp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (victim.get_skill(60).level / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 /
+            (victim.skills().level("core.element_magic") / 2 + 50);
     }
     if (attacker && attacker->is_player())
     {
@@ -1248,7 +1252,8 @@ int damage_hp(
             {
                 catitem = attacker->index;
             }
-            if (int(std::sqrt(attacker->get_skill(161).level)) > rnd(150))
+            if (int(std::sqrt(attacker->skills().level("core.anatomy"))) >
+                rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -1319,7 +1324,8 @@ void damage_mp(Character& chara, int delta)
     if (chara.mp < 0)
     {
         chara_gain_exp_mana_capacity(chara);
-        auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
+        auto damage = -chara.mp * 400 /
+            (100 + chara.skills().level("core.magic_capacity") * 10);
         if (chara.is_player())
         {
             if (cdata.player().traits().level("core.less_mana_reaction") == 1)
@@ -1395,7 +1401,8 @@ void damage_insanity(Character& chara, int delta)
     if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(chara.get_skill(54).level / 50, 1);
+    int resistance =
+        std::max(chara.skills().level("core.element_mind") / 50, lua_int{1});
     if (resistance > 10)
         return;
 
@@ -2066,11 +2073,12 @@ void character_drops_item(Character& victim)
             remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)
             {
-                if (cdata.player().get_skill(161).level != 0)
+                if (cdata.player().skills().level("core.anatomy") != 0)
                 {
-                    item->modify_number(rnd(
-                        1 +
-                        (cdata.player().get_skill(161).level > victim.level)));
+                    item->modify_number(
+                        rnd(1 +
+                            (cdata.player().skills().level("core.anatomy") >
+                             victim.level)));
                 }
             }
         }

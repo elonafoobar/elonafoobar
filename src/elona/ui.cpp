@@ -1,14 +1,13 @@
 #include "ui.hpp"
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "audio.hpp"
 #include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
@@ -19,6 +18,7 @@
 #include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -502,7 +502,8 @@ void render_basic_attributes_and_pv_dv()
                 : snail::Color{0, 0, 0};
             mes(x,
                 y,
-                std::to_string(cdata.player().get_skill(10 + i).level),
+                std::to_string(cdata.player().skills().level(
+                    *the_skill_db.get_id_from_integer(10 + i))),
                 text_color);
         }
         else if (i == 8)
@@ -697,13 +698,19 @@ void render_skill_trackers()
             continue;
         }
         bmes(
-            strutil::take_by_width(the_ability_db.get_text(skill, "name"), 6),
+            strutil::take_by_width(the_skill_db.get_text(skill, "name"), 6),
             16,
             inf_clocky + 107 + y * 16);
         bmes(
-            ""s + cdata[chara].get_skill(skill).base_level + u8"."s +
+            ""s +
+                cdata[chara].skills().base_level(
+                    *the_skill_db.get_id_from_integer(skill)) +
+                u8"."s +
                 std::to_string(
-                    1000 + cdata[chara].get_skill(skill).experience % 1000)
+                    1000 +
+                    cdata[chara].skills().experience(
+                        *the_skill_db.get_id_from_integer(skill)) %
+                        1000)
                     .substr(1),
             66,
             inf_clocky + 107 + y * 16);
@@ -711,20 +718,25 @@ void render_skill_trackers()
         {
             elona::snail::Color col{255, 130, 130};
 
-            if (cdata[chara].get_skill(skill).potential >
+            if (cdata[chara].skills().potential(
+                    *the_skill_db.get_id_from_integer(skill)) >
                 elona::g_config.enhanced_skill_upperbound())
             {
                 col = {130, 255, 130};
             }
             else if (
-                cdata[chara].get_skill(skill).potential >
+                cdata[chara].skills().potential(
+                    *the_skill_db.get_id_from_integer(skill)) >
                 elona::g_config.enhanced_skill_lowerbound())
             {
                 col = {255, 255, 130};
             }
 
             bmes(
-                ""s + cdata[chara].get_skill(skill).potential + u8"%"s,
+                ""s +
+                    cdata[chara].skills().potential(
+                        *the_skill_db.get_id_from_integer(skill)) +
+                    u8"%"s,
                 128,
                 inf_clocky + 107 + y * 16,
                 col);

@@ -1,11 +1,11 @@
 #include "fov.hpp"
 
-#include "ability.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "game.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -757,7 +757,7 @@ int breath_list(const Position& source_pos)
     breathw = 1;
     dx = source_pos.x;
     dy = source_pos.y;
-    for (int cnt = 0, cnt_end = cnt + (the_ability_db[efid]->range % 1000 + 1);
+    for (int cnt = 0, cnt_end = cnt + (the_skill_db[efid]->range % 1000 + 1);
          cnt < cnt_end;
          ++cnt)
     {

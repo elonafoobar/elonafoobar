@@ -1,14 +1,14 @@
 #include "ui_menu_spells.hpp"
 
-#include "../ability.hpp"
 #include "../audio.hpp"
 #include "../calc.hpp"
-#include "../data/types/type_ability.hpp"
+#include "../data/types/type_skill.hpp"
 #include "../game.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "../skill.hpp"
 #include "menu_cursor_history.hpp"
 
 
@@ -23,7 +23,7 @@ static void _populate_spell_list()
     for (int cnt = 0; cnt < 200; ++cnt)
     {
         const auto integer_spell_id = cnt + 400;
-        if (const auto data = the_ability_db[integer_spell_id])
+        if (const auto data = the_skill_db[integer_spell_id])
         {
             if (cdata.player().spell_stocks().amount(data->id) > 0)
             {
@@ -129,7 +129,7 @@ void UIMenuSpells::_draw_spell_attribute(int cnt, int spell_id)
     gmode(2);
     gcopy_c(
         1,
-        (the_ability_db[spell_id]->related_basic_attribute - 10) * inf_tiles,
+        (the_skill_db[spell_id]->related_basic_attribute - 10) * inf_tiles,
         672,
         inf_tiles,
         inf_tiles,
@@ -150,7 +150,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
     }
     cs_list(
         cs == cnt,
-        the_ability_db.get_text(spell_id, "name") + spell_shortcut,
+        the_skill_db.get_text(spell_id, "name") + spell_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
 }
@@ -160,7 +160,7 @@ void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
     std::string spell_cost = ""s +
         calc_spell_cost_mp(cdata.player(), spell_id) + u8" ("s +
         std::to_string(cdata.player().spell_stocks().amount(
-            *the_ability_db.get_id_from_integer(spell_id))) +
+            *the_skill_db.get_id_from_integer(spell_id))) +
         u8")"s;
     mes(wx + 328 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
@@ -173,8 +173,11 @@ void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
         strutil::take_by_width(make_spell_description(spell_id), 40);
     mes(wx + 340,
         wy + 66 + cnt * 19 + 2,
-        ""s + cdata.player().get_skill(spell_id).level + u8"/"s +
-            calc_spell_success_rate(cdata.player(), spell_id) + u8"%"s);
+        ""s +
+            cdata.player().skills().level(
+                *the_skill_db.get_id_from_integer(spell_id)) +
+            u8"/"s + calc_spell_success_rate(cdata.player(), spell_id) +
+            u8"%"s);
     mes(wx + 420, wy + 66 + cnt * 19 + 2, spell_power);
 }
 

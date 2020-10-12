@@ -1,8 +1,7 @@
-#include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "food.hpp"
@@ -12,6 +11,7 @@
 #include "message.hpp"
 #include "race.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -61,19 +61,9 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
     }
     chara.element_of_unarmed_attack = data->element_of_unarmed_attack;
 
-    for (const auto& pair : data->resistances)
+    for (const auto& [id, level] : data->resistances)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
-        {
-            chara.get_skill(ability_data->integer_id).level = pair.second;
-        }
-        else
-        {
-            // Skip the resistance if undefined.
-            ELONA_WARN(
-                "Data: undefined resistance ID: " + pair.first.get() +
-                " (character " + data->id.get() + ")");
-        }
+        chara.skills().set_level(id, level);
     }
 
     if (data->sex != -1)

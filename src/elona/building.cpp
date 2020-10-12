@@ -1,7 +1,6 @@
 #include "building.hpp"
 
 #include "../util/range.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "attack.hpp"
@@ -33,6 +32,7 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -130,7 +130,8 @@ int calc_num_of_shop_customers(int shop_level, const Character& shopkeeper)
     {
         ret += rnd(shop_level / 3 + 5);
     }
-    ret = ret * (80 + shopkeeper.get_skill(17).level * 3 / 2) / 100;
+    ret = ret * (80 + shopkeeper.skills().level("core.stat_charisma") * 3 / 2) /
+        100;
     if (ret < 1)
     {
         ret = 1;
@@ -215,7 +216,7 @@ std::vector<ItemForSale> list_items_for_sale()
 int calc_item_price_per_one(const ItemRef& item, const Character& shopkeeper)
 {
     const auto V = calcitemvalue(item, 2);
-    const auto I = shopkeeper.get_skill(156).level;
+    const auto I = shopkeeper.skills().level("core.negotiation");
 
     return V * static_cast<int>(10 + std::sqrt(I * 200)) / 100;
 }
@@ -1747,7 +1748,8 @@ void try_to_grow_plant(int val0)
             p = p * 2;
         }
     }
-    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(20) == 0)
+    if (cdata.player().skills().level("core.gardening") < rnd(p + 1) ||
+        rnd(20) == 0)
     {
         feat(3) += 50;
     }
@@ -1782,8 +1784,8 @@ void harvest_plant(int val)
     {
         p = p * 4 / 3;
     }
-    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(5) == 0 ||
-        feat(2) == 40)
+    if (cdata.player().skills().level("core.gardening") < rnd(p + 1) ||
+        rnd(5) == 0 || feat(2) == 40)
     {
         cell_data.at(cdata.player().position.x, cdata.player().position.y)
             .feats = 0;
@@ -1808,7 +1810,8 @@ void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd("core.bush1");
-    flt(cdata.player().get_skill(180).level / 2 + 15, Quality::good);
+    flt(cdata.player().skills().level("core.gardening") / 2 + 15,
+        Quality::good);
     int item_id = 0;
     if (feat(2) == 39)
     {

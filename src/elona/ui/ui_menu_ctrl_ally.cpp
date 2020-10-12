@@ -1,16 +1,16 @@
 #include "ui_menu_ctrl_ally.hpp"
 
-#include "../ability.hpp"
 #include "../area.hpp"
 #include "../audio.hpp"
 #include "../calc.hpp"
 #include "../character.hpp"
-#include "../data/types/type_ability.hpp"
+#include "../data/types/type_skill.hpp"
 #include "../draw.hpp"
 #include "../game.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "../skill.hpp"
 
 
 
@@ -269,7 +269,8 @@ snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
 {
     if (_operation == ControlAllyOperation::gene_engineer)
     {
-        if (chara.level > cdata.player().get_skill(151).level + 5)
+        if (chara.level >
+            cdata.player().skills().level("core.gene_engineer") + 5)
         {
             return {160, 10, 10};
         }
@@ -337,8 +338,8 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 
     if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
-        _s = u8"   "s + chara.get_skill(17).level + u8" / " +
-            chara.get_skill(156).level;
+        _s = u8"   "s + chara.skills().level("core.stat_charisma") + u8" / " +
+            chara.skills().level("core.negotiation");
     }
     else if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
@@ -401,11 +402,11 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
             }
             else
             {
-                ally_info += ""s + the_ability_db.get_text(rtval, "name");
+                ally_info += ""s + the_skill_db.get_text(rtval, "name");
                 if (rtval(1) != -1)
                 {
                     ally_info +=
-                        u8", "s + the_ability_db.get_text(rtval(1), "name");
+                        u8", "s + the_skill_db.get_text(rtval(1), "name");
                 }
             }
         }
@@ -527,7 +528,8 @@ void UIMenuCtrlAlly::draw()
 
 optional<UIMenuCtrlAlly::Result> UIMenuCtrlAlly::_select_gene_engineer(int _p)
 {
-    if (cdata[_p].level > cdata.player().get_skill(151).level + 5)
+    if (cdata[_p].level >
+        cdata.player().skills().level("core.gene_engineer") + 5)
     {
         snd("core.fail1");
         txt(i18n::s.get("core.ui.ally_list.gene_engineer.skill_too_low"));

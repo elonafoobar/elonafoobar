@@ -1,6 +1,5 @@
 # Source files
 set(ELONA_SOURCES
-  ability.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -94,10 +93,11 @@ set(ELONA_SOURCES
   shop.cpp
   status_ailment.cpp
   std.cpp
+  skill.cpp
+  story_quest.cpp
   talk.cpp
   talk_house_visitor.cpp
   talk_npc.cpp
-  story_quest.cpp
   talk_unique.cpp
   tcg.cpp
   testing.cpp

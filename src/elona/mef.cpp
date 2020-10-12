@@ -1,6 +1,5 @@
 #include "mef.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "deferred_event.hpp"
@@ -14,6 +13,7 @@
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -221,7 +221,7 @@ void mef_proc(Character& chara)
     {
         if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (chara.get_skill(63).level / 50 < 7)
+            if (chara.skills().level("core.element_acid") / 50 < 7)
             {
                 if (is_in_fov(chara))
                 {
@@ -325,8 +325,8 @@ bool mef_proc_from_movement(Character& chara)
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(
-                        chara.get_skill(10).level + chara.get_skill(12).level +
-                        1) ||
+                        chara.skills().level("core.stat_strength") +
+                        chara.skills().level("core.stat_dexterity") + 1) ||
                 chara.weight > 100)
             {
                 if (is_in_fov(chara))

@@ -1,6 +1,5 @@
 #include "casino.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "casino_card.hpp"
@@ -22,6 +21,7 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "tcg.hpp"
 #include "ui.hpp"
 
@@ -647,7 +647,7 @@ bool casino_blackjack()
             list(0, listmax) = 2;
             listn(0, listmax) = i18n::s.get(
                 "core.casino.blackjack.game.choices.cheat",
-                cdata.player().get_skill(12).level);
+                cdata.player().skills().level("core.stat_dexterity"));
             ++listmax;
         }
         chatesc = -1;
@@ -670,7 +670,8 @@ bool casino_blackjack()
                 {
                     if (pileremain() > 10)
                     {
-                        if (rnd_capped(cdata.player().get_skill(19).level) > 40)
+                        if (rnd_capped(cdata.player().skills().level(
+                                "core.stat_luck")) > 40)
                         {
                             txt(i18n::s.get(
                                 "core.casino.blackjack.game.bad_feeling"));
@@ -697,7 +698,8 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd_capped(cdata.player().get_skill(12).level) < rnd(p(0)))
+            if (rnd_capped(cdata.player().skills().level(
+                    "core.stat_dexterity")) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));

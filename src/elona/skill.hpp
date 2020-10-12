@@ -1,61 +1,19 @@
 #pragma once
 
-#include <cassert>
-
-#include <vector>
+#include "types/skill.hpp"
 
 
 
 namespace elona
 {
 
-struct Ability
-{
-    // NOTE: Don't add new fields unless you add them to serialization, which
-    // will break save compatibility.
-
-    int level = 0;
-
-    int base_level = 0;
-
-    int experience = 0;
-
-    int potential = 0;
-};
-
-
-
-class SkillData
-{
-public:
-    SkillData();
-
-    SkillData(const SkillData&) = default;
-    SkillData(SkillData&&) = default;
-    SkillData& operator=(const SkillData&) = default;
-    SkillData& operator=(SkillData&&) = default;
-
-
-    Ability& get(int id)
-    {
-        return _storage.at(id);
-    }
-
-
-    const Ability& get(int id) const
-    {
-        return _storage.at(id);
-    }
-
-
-
-private:
-    std::vector<Ability> _storage;
-};
-
-
-
 struct Character;
+
+
+
+/// Add @a chara's potential of @a id by @a delta.
+void skill_add_potential(Character& chara, data::InstanceId id, lua_int delta);
+
 
 void chara_init_skill(Character& chara, int id, int initial_level);
 void chara_init_common_skills(Character& chara);

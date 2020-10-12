@@ -58,7 +58,7 @@ ELONA.data:add(
          type = 1,
          required_turns = 4,
          required_skills = {
-            ["core.attribute_dexterity"] = 6,
+            ["core.stat_dexterity"] = 6,
          },
          materials = {
             "anything",
@@ -99,7 +99,7 @@ ELONA.data:add(
          type = 1,
          required_turns = 15,
          required_skills = {
-            ["core.attribute_dexterity"] = 18,
+            ["core.stat_dexterity"] = 18,
          },
          materials = {
             "anything",
@@ -124,7 +124,7 @@ ELONA.data:add(
          type = 1,
          required_turns = 15,
          required_skills = {
-            ["core.attribute_dexterity"] = 10,
+            ["core.stat_dexterity"] = 10,
          },
          materials = {
             "anything",
@@ -146,7 +146,7 @@ ELONA.data:add(
          required_turns = 10,
          required_skills = {
             ["core.fishing"] = 2,
-            ["core.attribute_dexterity"] = 10,
+            ["core.stat_dexterity"] = 10,
          },
          materials = {
             { id = "core.fishing_pole" },
@@ -171,7 +171,7 @@ ELONA.data:add(
          type = 1,
          required_turns = 5,
          required_skills = {
-            ["core.attribute_dexterity"] = 5,
+            ["core.stat_dexterity"] = 5,
          },
          materials = {
             "anything",
@@ -198,7 +198,7 @@ ELONA.data:add(
          type = 2,
          required_turns = 3,
          required_skills = {
-            ["core.attribute_dexterity"] = 3,
+            ["core.stat_dexterity"] = 3,
          },
          materials = {
             { category = 60001 },
@@ -235,7 +235,7 @@ ELONA.data:add(
          type = 2,
          required_turns = 16,
          required_skills = {
-            ["core.attribute_dexterity"] = 24,
+            ["core.stat_dexterity"] = 24,
          },
          materials = {
             { category = 60001 },
@@ -314,7 +314,7 @@ ELONA.data:add(
          required_skills = {
             ["core.disarm_trap"] = 4,
             ["core.door_creation"] = 20,
-            ["core.attribute_dexterity"] = 8,
+            ["core.stat_dexterity"] = 8,
          },
          materials = {
             { id = "core.sack_of_flour" },
@@ -361,7 +361,7 @@ ELONA.data:add(
          required_skills = {
             ["core.cooking"] = 10,
             ["core.alchemy"] = 65,
-            ["core.attribute_strength"] = 105,
+            ["core.stat_strength"] = 105,
          },
          materials = {
             { category = 10000 },

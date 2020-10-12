@@ -1,16 +1,17 @@
 #include <sstream>
 
-#include "ability.hpp"
 #include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "data/types/type_race.hpp"
+#include "data/types/type_skill.hpp"
 #include "game.hpp"
 #include "god.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "menu.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -100,11 +101,15 @@ void save_dump_player_info()
     ss << std::endl;
 
     s(1) = u8"生命力    : " +
-        std::to_string(cdata.player().get_skill(2).level) + u8"(" +
-        std::to_string(cdata.player().get_skill(2).base_level) + u8")";
+        std::to_string(cdata.player().skills().level("core.stat_life")) +
+        u8"(" +
+        std::to_string(cdata.player().skills().base_level("core.stat_life")) +
+        u8")";
     s(2) = u8"マナ      : " +
-        std::to_string(cdata.player().get_skill(3).level) + u8"(" +
-        std::to_string(cdata.player().get_skill(3).base_level) + u8")";
+        std::to_string(cdata.player().skills().level("core.stat_mana")) +
+        u8"(" +
+        std::to_string(cdata.player().skills().base_level("core.stat_mana")) +
+        u8")";
     s(3) = u8"狂気度    : " + std::to_string(cdata.player().insanity);
     s(4) = u8"速度      : " + std::to_string(cdata.player().current_speed);
     s(5) = u8"名声度    : " + std::to_string(cdata.player().fame);
@@ -116,7 +121,8 @@ void save_dump_player_info()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         s = "";
-        p = cdata.player().get_skill(10 + cnt).potential;
+        p = cdata.player().skills().potential(
+            *the_skill_db.get_id_from_integer(10 + cnt));
         if (p >= 200)
         {
             s += u8"superb"s;
@@ -140,8 +146,12 @@ void save_dump_player_info()
         s = fixtxt(s, 15);
         s = fixtxt(
                 i18n::s.get_enum("core.ui.attribute", cnt) + u8"    : "s +
-                    cdata.player().get_skill(10 + cnt).level + u8"("s +
-                    cdata.player().get_skill(10 + cnt).base_level + u8")"s,
+                    cdata.player().skills().level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) +
+                    u8"("s +
+                    cdata.player().skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) +
+                    u8")"s,
                 24) +
             s;
 

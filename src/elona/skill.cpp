@@ -1,11 +1,11 @@
-#include "ability.hpp"
+#include "skill.hpp"
 
 #include "../util/range.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "fov.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -52,25 +52,30 @@ void set_ability(
     int experience,
     int potential)
 {
-    chara.get_skill(id).base_level = clamp(base_level, 0, 2000);
-    chara.get_skill(id).experience = experience;
-    chara.get_skill(id).potential = potential;
+    chara.skills().set_base_level(
+        *the_skill_db.get_id_from_integer(id), clamp(base_level, 0, 2000));
+    chara.skills().set_experience(
+        *the_skill_db.get_id_from_integer(id), experience);
+    chara.skills().set_potential(
+        *the_skill_db.get_id_from_integer(id), potential);
 }
 
 } // namespace
 
 
 
-SkillData::SkillData()
-    : _storage(600)
+void skill_add_potential(Character& chara, data::InstanceId id, lua_int delta)
 {
+    chara.skills().set_potential(
+        id, clamp(chara.skills().potential(id) + delta, 2, 400));
 }
 
 
 
 void chara_init_skill(Character& chara, int skill_id, int initial_level)
 {
-    int base_level = chara.get_skill(skill_id).base_level;
+    int base_level =
+        chara.skills().base_level(*the_skill_db.get_id_from_integer(skill_id));
     int potential =
         calc_initial_skill_base_potential(skill_id, base_level, initial_level);
     int level;
@@ -97,8 +102,10 @@ void chara_init_skill(Character& chara, int skill_id, int initial_level)
     {
         level = 2000 - base_level;
     }
-    chara.get_skill(skill_id).base_level += clamp(level, 0, 2000);
-    chara.get_skill(skill_id).potential += potential;
+    chara.skills().add_base_level(
+        *the_skill_db.get_id_from_integer(skill_id), clamp(level, 0, 2000));
+    chara.skills().add_potential(
+        *the_skill_db.get_id_from_integer(skill_id), potential);
 }
 
 
@@ -108,10 +115,10 @@ void chara_init_common_skills(Character& chara)
     for (int element = 50; element < 61; ++element)
     {
         auto level = calc_initial_resistance_level(
-            chara, chara.get_skill(element).level, element);
-        chara.get_skill(element).base_level = clamp(level, 1, 2000);
-        chara.get_skill(element).experience = 0;
-        chara.get_skill(element).potential = 0;
+            chara,
+            chara.skills().level(*the_skill_db.get_id_from_integer(element)),
+            element);
+        set_ability(chara, element, level, 0, 0);
     }
 
     chara_init_skill(chara, 100, 4);
@@ -146,28 +153,35 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
         if (chara.is_player())
         {
             chara.spell_stocks().gain(
-                *the_ability_db.get_id_from_integer(id), stock);
-            modify_potential(chara, id, 1);
+                *the_skill_db.get_id_from_integer(id), stock);
+            skill_add_potential(
+                chara, *the_skill_db.get_id_from_integer(id), 1);
         }
     }
-    if (chara.get_skill(id).base_level != 0)
+    if (chara.skills().base_level(*the_skill_db.get_id_from_integer(id)) != 0)
     {
         if (id < 400)
         {
-            modify_potential(chara, id, 20);
+            skill_add_potential(
+                chara, *the_skill_db.get_id_from_integer(id), 20);
         }
         return;
     }
     if (id >= 400)
     {
-        modify_potential(chara, id, 200);
+        skill_add_potential(chara, *the_skill_db.get_id_from_integer(id), 200);
     }
     else
     {
-        modify_potential(chara, id, 50);
+        skill_add_potential(chara, *the_skill_db.get_id_from_integer(id), 50);
     }
-    chara.get_skill(id).base_level =
-        clamp(chara.get_skill(id).base_level + initial_level, 1, 2000);
+    chara.skills().set_base_level(
+        *the_skill_db.get_id_from_integer(id),
+        clamp(
+            chara.skills().base_level(*the_skill_db.get_id_from_integer(id)) +
+                initial_level,
+            1,
+            2000));
 
     chara_refresh(chara);
 }
@@ -176,14 +190,14 @@ void chara_gain_skill(Character& chara, int id, int initial_level, int stock)
 
 void gain_special_action()
 {
-    if (cdata.player().get_skill(174).base_level > 15)
+    if (cdata.player().skills().base_level("core.magic_device") > 15)
     {
         if (!cdata.player().spacts().has("core.draw_charge"))
         {
             cdata.player().spacts().gain("core.draw_charge");
             txt(i18n::s.get(
                     "core.skill.gained",
-                    the_ability_db.get_text("core.draw_charge", "name")),
+                    the_skill_db.get_text("core.draw_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
         if (!cdata.player().spacts().has("core.fill_charge"))
@@ -191,18 +205,18 @@ void gain_special_action()
             cdata.player().spacts().gain("core.fill_charge");
             txt(i18n::s.get(
                     "core.skill.gained",
-                    the_ability_db.get_text("core.fill_charge", "name")),
+                    the_skill_db.get_text("core.fill_charge", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
-    if (cdata.player().get_skill(152).base_level > 15)
+    if (cdata.player().skills().base_level("core.tactics") > 15)
     {
         if (!cdata.player().spacts().has("core.swarm"))
         {
             cdata.player().spacts().gain("core.swarm");
             txt(i18n::s.get(
                     "core.skill.gained",
-                    the_ability_db.get_text("core.swarm", "name")),
+                    the_skill_db.get_text("core.swarm", "name")),
                 Message::color{ColorIndex::orange});
         }
     }
@@ -212,9 +226,12 @@ void gain_special_action()
 
 void chara_gain_fixed_skill_exp(Character& chara, int id, int experience)
 {
-    auto lv = chara.get_skill(id).base_level;
-    auto exp = chara.get_skill(id).experience + experience;
-    auto potential = chara.get_skill(id).potential;
+    auto lv = chara.skills().base_level(*the_skill_db.get_id_from_integer(id));
+    auto exp =
+        chara.skills().experience(*the_skill_db.get_id_from_integer(id)) +
+        experience;
+    auto potential =
+        chara.skills().potential(*the_skill_db.get_id_from_integer(id));
 
     if (potential == 0)
         return;
@@ -282,23 +299,24 @@ void chara_gain_skill_exp(
     int experience_divisor_of_related_basic_attribute,
     int experience_divisor_of_character_level)
 {
-    if (chara.get_skill(id).base_level == 0)
+    if (chara.skills().base_level(*the_skill_db.get_id_from_integer(id)) == 0)
         return;
     if (experience == 0)
         return;
 
-    if (the_ability_db[id]->related_basic_attribute != 0)
+    if (the_skill_db[id]->related_basic_attribute != 0)
     {
         // Gain experience in the basic attribute the skill is related to.
         chara_gain_skill_exp(
             chara,
-            the_ability_db[id]->related_basic_attribute,
+            the_skill_db[id]->related_basic_attribute,
             calc_skill_related_attribute_exp(
                 experience, experience_divisor_of_related_basic_attribute));
     }
 
-    auto lv = chara.get_skill(id).base_level;
-    auto potential = chara.get_skill(id).potential;
+    auto lv = chara.skills().base_level(*the_skill_db.get_id_from_integer(id));
+    auto potential =
+        chara.skills().potential(*the_skill_db.get_id_from_integer(id));
     if (potential == 0)
         return;
 
@@ -348,7 +366,8 @@ void chara_gain_skill_exp(
         }
     }
 
-    int new_exp_level = exp + chara.get_skill(id).experience;
+    int new_exp_level =
+        exp + chara.skills().experience(*the_skill_db.get_id_from_integer(id));
     if (new_exp_level >= 1000)
     {
         const auto lv_delta = new_exp_level / 1000;
@@ -424,7 +443,7 @@ void chara_gain_exp_literacy(Character& chara)
 
 void chara_gain_exp_negotiation(Character& chara, int gold)
 {
-    const auto current_level = chara.get_skill(156).level;
+    const auto current_level = chara.skills().level("core.negotiation");
     if (gold >= calc_exp_gain_negotiation_gold_threshold(current_level))
     {
         chara_gain_skill_exp(

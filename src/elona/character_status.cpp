@@ -3,12 +3,12 @@
 #include <limits>
 
 #include "../util/scope_guard.hpp"
-#include "ability.hpp"
 #include "adventurer.hpp"
 #include "animation.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "fov.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -16,6 +16,7 @@
 #include "menu.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
 
@@ -171,14 +172,6 @@ void modify_ether_disease_stage(int delta)
 
 
 
-void modify_potential(Character& chara, int id, int delta)
-{
-    chara.get_skill(id).potential =
-        clamp(chara.get_skill(id).potential + delta, 2, 400);
-}
-
-
-
 void modify_karma(Character& chara, int delta)
 {
     if (cdata.player().traits().level("core.evil_man") && delta < 0)
@@ -301,7 +294,7 @@ void modify_height(Character& chara, int delta)
 
 void refresh_speed(Character& chara)
 {
-    chara.current_speed = chara.get_skill(18).level *
+    chara.current_speed = chara.skills().level("core.stat_speed") *
         clamp((100 - chara.speed_correction_value), 0, 100) / 100;
     if (chara.current_speed < 10)
     {
@@ -314,17 +307,21 @@ void refresh_speed(Character& chara)
 
     if (game()->mount != 0)
     {
-        const auto mount_speed = cdata[game()->mount].get_skill(18).level *
+        const auto mount_speed =
+            cdata[game()->mount].skills().level("core.stat_speed") *
             clamp(100 - cdata[game()->mount].speed_correction_value, 0, 100) /
             100;
 
-        cdata.player().current_speed = mount_speed * 100 /
-            clamp(100 + mount_speed -
-                      cdata[game()->mount].get_skill(10).level * 3 / 2 -
-                      cdata.player().get_skill(301).level * 2 -
-                      (cdata[game()->mount].is_suitable_for_mount() == 1) * 50,
-                  100,
-                  1000);
+        cdata.player().current_speed =
+            mount_speed * 100 /
+            clamp(
+                100 + mount_speed -
+                    cdata[game()->mount].skills().level("core.stat_strength") *
+                        3 / 2 -
+                    cdata.player().skills().level("core.riding") * 2 -
+                    (cdata[game()->mount].is_suitable_for_mount() == 1) * 50,
+                100,
+                1000);
         if (cdata[game()->mount].is_unsuitable_for_mount())
         {
             cdata.player().current_speed /= 10;
@@ -333,15 +330,15 @@ void refresh_speed(Character& chara)
         {
             chara.current_speed = clamp(
                 lua_int{
-                    chara.get_skill(10).level +
-                    cdata.player().get_skill(301).level},
+                    chara.skills().level("core.stat_strength") +
+                    cdata.player().skills().level("core.riding")},
                 lua_int{10},
                 mount_speed);
             return;
         }
     }
 
-    gspdorg = cdata.player().get_skill(18).base_level;
+    gspdorg = cdata.player().skills().base_level("core.stat_speed");
 
     if (game()->mount == 0)
     {
@@ -442,7 +439,7 @@ void gain_level(Character& chara)
     {
         adventurer_add_news(NewsType::growth, chara);
     }
-    p = 5 * (100 + chara.get_skill(14).base_level * 10) /
+    p = 5 * (100 + chara.skills().base_level("core.stat_learning") * 10) /
             (300 + chara.level * 15) +
         1;
     if (chara.is_player())
@@ -490,18 +487,24 @@ void grow_primary_skills(Character& chara)
 {
     for (int i = 10; i < 20; ++i)
     {
-        chara.get_skill(i).base_level += rnd(3);
-        if (chara.get_skill(i).base_level > 2000)
+        chara.skills().add_base_level(
+            *the_skill_db.get_id_from_integer(i), rnd(3));
+        if (chara.skills().base_level(*the_skill_db.get_id_from_integer(i)) >
+            2000)
         {
-            chara.get_skill(i).base_level = 2000;
+            chara.skills().set_base_level(
+                *the_skill_db.get_id_from_integer(i), 2000);
         }
     }
     for (const auto& skill : mainskill)
     {
-        chara.get_skill(skill).base_level += rnd(3);
-        if (chara.get_skill(skill).base_level > 2000)
+        chara.skills().add_base_level(
+            *the_skill_db.get_id_from_integer(skill), rnd(3));
+        if (chara.skills().base_level(
+                *the_skill_db.get_id_from_integer(skill)) > 2000)
         {
-            chara.get_skill(skill).base_level = 2000;
+            chara.skills().set_base_level(
+                *the_skill_db.get_id_from_integer(skill), 2000);
         }
     }
 }
@@ -568,9 +571,11 @@ int gain_skills_by_geen_engineering(
     for (int cnt = 0; cnt < 100; ++cnt)
     {
         rtval = rnd(40) + 150;
-        if (original_ally.get_skill(rtval).level == 0)
+        if (original_ally.skills().level(
+                *the_skill_db.get_id_from_integer(rtval)) == 0)
         {
-            if (gene_ally.get_skill(rtval).level > 0)
+            if (gene_ally.skills().level(
+                    *the_skill_db.get_id_from_integer(rtval)) > 0)
             {
                 dblist(0, dbmax) = rtval;
                 ++dbmax;

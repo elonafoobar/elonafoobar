@@ -1,7 +1,6 @@
 #include "command.hpp"
 
 #include "../snail/application.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
@@ -18,12 +17,12 @@
 #include "crafting.hpp"
 #include "crafting_material.hpp"
 #include "ctrl_file.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_crafting_material.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "data/types/type_music.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -52,6 +51,7 @@
 #include "save.hpp"
 #include "save_fs.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"
 #include "tcg.hpp"
@@ -471,7 +471,7 @@ optional<TurnResult> use_gene_machine()
                 txt(i18n::s.get(
                         "core.action.use.gene_machine.gains.ability",
                         cdata[original_character],
-                        the_ability_db.get_text(rtval(cnt), "name")),
+                        the_skill_db.get_text(rtval(cnt), "name")),
                     Message::color{ColorIndex::green});
             }
         }
@@ -497,8 +497,8 @@ optional<TurnResult> use_gene_machine()
         for (int cnt = 10; cnt < 18; ++cnt)
         {
             list(0, listmax) = cnt;
-            list(1, listmax) =
-                cdata[gene_chara_index].get_skill(cnt).base_level;
+            list(1, listmax) = cdata[gene_chara_index].skills().base_level(
+                *the_skill_db.get_id_from_integer(cnt));
             ++listmax;
         }
         sort_list_by_column1();
@@ -506,10 +506,12 @@ optional<TurnResult> use_gene_machine()
         {
             p = listmax - cnt - 1;
             i = list(0, p);
-            if (list(1, p) > cdata[original_character].get_skill(i).base_level)
+            if (list(1, p) > cdata[original_character].skills().base_level(
+                                 *the_skill_db.get_id_from_integer(i)))
             {
                 p = (list(1, p) -
-                     cdata[original_character].get_skill(i).base_level) *
+                     cdata[original_character].skills().base_level(
+                         *the_skill_db.get_id_from_integer(i))) *
                     500;
                 p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
                 chara_gain_fixed_skill_exp(cdata[original_character], i, p);
@@ -1091,7 +1093,7 @@ TurnResult do_throw_command_internal(
                 }
                 return TurnResult::turn_end;
             }
-            efp = 50 + thrower.get_skill(111).level * 10;
+            efp = 50 + thrower.skills().level("core.throwing") * 10;
             if (throw_item->id == "core.bottle_of_sulfuric")
             {
                 mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, thrower.index);
@@ -1139,8 +1141,8 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
         txt(i18n::s.get("core.action.throw.execute", thrower, throw_item));
     }
     if (dist(thrower.position, tlocx, tlocy) * 4 >
-            rnd_capped(thrower.get_skill(111).level + 10) +
-                thrower.get_skill(111).level / 4 ||
+            rnd_capped(thrower.skills().level("core.throwing") + 10) +
+                thrower.skills().level("core.throwing") / 4 ||
         rnd(10) == 0)
     {
         x = tlocx + rnd(2) - rnd(2);
@@ -3636,7 +3638,7 @@ TurnResult do_short_cut_command(int sc_)
         if (efid < 661)
         {
             if (!cdata.player().spacts().has(
-                    *the_ability_db.get_id_from_integer(efid)))
+                    *the_skill_db.get_id_from_integer(efid)))
             {
                 txt(i18n::s.get("core.action.shortcut.cannot_use_anymore"));
                 update_screen();
@@ -3655,7 +3657,7 @@ TurnResult do_short_cut_command(int sc_)
             return TurnResult::pc_turn_user_error;
         }
         if (cdata.player().spell_stocks().amount(
-                *the_ability_db.get_id_from_integer(efid)) <= 0)
+                *the_skill_db.get_id_from_integer(efid)) <= 0)
         {
             txt(i18n::s.get("core.action.shortcut.cannot_use_spell_anymore"),
                 Message::only_once{true});
@@ -3771,14 +3773,14 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
     {
         if (r3 == 0)
         {
-            r4 = caster.get_skill(16).level;
+            r4 = caster.skills().level("core.stat_magic");
         }
         else
         {
-            r4 = caster.get_skill(the_ability_db[r3]->related_basic_attribute)
-                     .level;
+            r4 = caster.skills().level(*the_skill_db.get_id_from_integer(
+                the_skill_db[r3]->related_basic_attribute));
         }
-        if (rnd_capped(caster.get_skill(150).level * r4 * 4 + 250) <
+        if (rnd_capped(caster.skills().level("core.literacy") * r4 * 4 + 250) <
             rnd_capped(r2 + 1))
         {
             if (rnd(7) == 0)
@@ -3882,7 +3884,8 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
 int try_to_reveal(Character& chara)
 {
     if (rnd_capped(
-            chara.get_skill(159).level * 15 + 20 + chara.get_skill(13).level) >
+            chara.skills().level("core.detection") * 15 + 20 +
+            chara.skills().level("core.stat_perception")) >
         rnd_capped(game()->current_dungeon_level * 8 + 60))
     {
         chara_gain_exp_detection(chara);
@@ -3902,7 +3905,8 @@ int can_evade_trap(Character& chara)
     if (chara.is_player_or_ally())
     {
         if (rnd_capped(refdiff + 1) <
-            chara.get_skill(13).level + chara.get_skill(159).level * 4)
+            chara.skills().level("core.stat_perception") +
+                chara.skills().level("core.detection") * 4)
         {
             return 1;
         }
@@ -3919,7 +3923,8 @@ int can_evade_trap(Character& chara)
 int try_to_disarm_trap(Character& chara)
 {
     if (rnd_capped(
-            chara.get_skill(175).level * 15 + 20 + chara.get_skill(12).level) >
+            chara.skills().level("core.disarm_trap") * 15 + 20 +
+            chara.skills().level("core.stat_dexterity")) >
         rnd_capped(game()->current_dungeon_level * 12 + 100))
     {
         chara_gain_exp_disarm_trap(chara);
@@ -3945,10 +3950,11 @@ bool try_to_perceive_npc(const Character& chara, const Character& enemy)
                 return true;
             }
             const auto d = dist(enemy.position, chara.position);
-            const auto p =
-                d * 150 + (enemy.get_skill(157).level * 100 + 150) + 1;
+            const auto p = d * 150 +
+                (enemy.skills().level("core.stealth") * 100 + 150) + 1;
             if (rnd_capped(p) <
-                rnd_capped(chara.get_skill(13).level * 60 + 150))
+                rnd_capped(
+                    chara.skills().level("core.stat_perception") * 60 + 150))
             {
                 return true;
             }
@@ -4057,7 +4063,8 @@ bool read_textbook(Character& doer, ItemRef textbook)
 {
     if (textbook->id == "core.textbook")
     {
-        if (cdata.player().get_skill(textbook->param1).base_level == 0)
+        if (cdata.player().skills().base_level(
+                *the_skill_db.get_id_from_integer(textbook->param1)) == 0)
         {
             txt(i18n::s.get("core.action.read.book.not_interested"));
             if (!yes_no())
@@ -4186,10 +4193,10 @@ int decode_book(Character& reader, const ItemRef& book)
         }
         else
         {
-            p = the_ability_db[efid]->difficulty;
+            p = the_skill_db[efid]->difficulty;
         }
         reader.activity.turns =
-            p / (2 + cdata.player().get_skill(150).level) + 1;
+            p / (2 + cdata.player().skills().level("core.literacy")) + 1;
         reader.activity.item = book;
         if (is_in_fov(reader))
         {
@@ -4212,7 +4219,7 @@ int decode_book(Character& reader, const ItemRef& book)
         }
         else
         {
-            r2 = the_ability_db[efid]->difficulty;
+            r2 = the_skill_db[efid]->difficulty;
             r3 = efid;
         }
         if (book->curse_state == CurseState::blessed)
@@ -4283,12 +4290,12 @@ int decode_book(Character& reader, const ItemRef& book)
             efid,
             1,
             (rnd(51) + 50) *
-                    (90 + reader.get_skill(165).level +
-                     (reader.get_skill(165).level > 0) * 20) /
+                    (90 + reader.skills().level("core.memorization") +
+                     (reader.skills().level("core.memorization") > 0) * 20) /
                     clamp(
                         (100 +
                          reader.spell_stocks().amount(
-                             *the_ability_db.get_id_from_integer(efid)) /
+                             *the_skill_db.get_id_from_integer(efid)) /
                              2),
                         50,
                         1000) +
@@ -4357,18 +4364,22 @@ int read_normal_book(Character& reader, ItemRef book)
 
 bool calc_magic_control(Character& caster, const Character& target)
 {
-    if (caster.get_skill(188).level != 0)
+    if (caster.skills().level("core.control_magic") != 0)
     {
         if (belong_to_same_team(caster, target))
         {
-            if (caster.get_skill(188).level * 5 > rnd_capped(dmg + 1))
+            if (caster.skills().level("core.control_magic") * 5 >
+                rnd_capped(dmg + 1))
             {
                 dmg = 0;
             }
             else
             {
                 dmg = rnd_capped(
-                    dmg * 100 / (100 + caster.get_skill(188).level * 10) + 1);
+                    dmg * 100 /
+                        (100 +
+                         caster.skills().level("core.control_magic") * 10) +
+                    1);
             }
             if (dmg < 1)
             {
@@ -4433,7 +4444,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     }
     if (!caster.is_player())
     {
-        if (the_ability_db[efid]->ability_type == 7)
+        if (the_skill_db[efid]->ability_type == 7)
         {
             if (caster.relationship == Relationship::ally ||
                 game()->current_map == mdata_t::MapId::pet_arena)
@@ -4452,7 +4463,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     if (caster.is_player())
     {
         caster.spell_stocks().lose(
-            *the_ability_db.get_id_from_integer(efid),
+            *the_skill_db.get_id_from_integer(efid),
             calc_spell_cost_stock(caster, efid));
     }
     mp = calc_spell_cost_mp(caster, efid);
@@ -4490,7 +4501,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
             txt(i18n::s.get(
                 "core.action.cast.self",
                 caster,
-                the_ability_db.get_text(efid, "name"),
+                the_skill_db.get_text(efid, "name"),
                 i18n::s.get_enum(
                     "core.ui.cast_style", caster.special_attack_type)));
         }
@@ -4534,8 +4545,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         efp = efp * (100 + *spell_enhancement / 10) / 100;
     }
     rapidmagic = 0;
-    if (caster.can_cast_rapid_magic() &&
-        the_ability_db[efid]->ability_type == 2)
+    if (caster.can_cast_rapid_magic() && the_skill_db[efid]->ability_type == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -4720,7 +4730,9 @@ int drink_well(Character& chara, const ItemRef& well)
             itemcreate_map_inv(
                 54,
                 chara.position,
-                rnd_capped(chara.get_skill(159).level / 2 * 50 + 100) + 1);
+                rnd_capped(
+                    chara.skills().level("core.detection") / 2 * 50 + 100) +
+                    1);
             txt(i18n::s.get("core.action.drink.well.effect.finds_gold", chara));
             break;
         }
@@ -4919,13 +4931,14 @@ bool do_zap_internal(Character& doer, const ItemRef& rod)
     }
 
     efp = efp *
-        (100 + doer.get_skill(174).level * 10 + doer.get_skill(16).level / 2 +
-         doer.get_skill(13).level / 2) /
+        (100 + doer.skills().level("core.magic_device") * 10 +
+         doer.skills().level("core.stat_magic") / 2 +
+         doer.skills().level("core.stat_perception") / 2) /
         100;
     if (efid >= 400 && efid < 467)
     {
         f = 0;
-        int skill = doer.get_skill(174).level * 20 + 100;
+        int skill = doer.skills().level("core.magic_device") * 20 + 100;
         if (rod->curse_state == CurseState::blessed)
         {
             skill = skill * 125 / 100;
@@ -4938,7 +4951,7 @@ bool do_zap_internal(Character& doer, const ItemRef& rod)
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid]->difficulty + 1)) / 2 <= skill)
+        if (rnd((the_skill_db[efid]->difficulty + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -5020,8 +5033,8 @@ int do_spact(Character& doer, int& enemy_index)
     {
         return 0;
     }
-    if (the_ability_db[efid]->range / 1000 * 1000 != 3000 &&
-        the_ability_db[efid]->range / 1000 * 1000 != 10000)
+    if (the_skill_db[efid]->range / 1000 * 1000 != 3000 &&
+        the_skill_db[efid]->range / 1000 * 1000 != 10000)
     {
         if (doer.confused != 0 || doer.blind != 0)
         {
@@ -5044,17 +5057,16 @@ int do_spact(Character& doer, int& enemy_index)
                 if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.magic.common.too_exhausted"));
-                    damage_sp(
-                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                     return 1;
                 }
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_skill_db[efid]->cost / 2 + 1) +
+                    the_skill_db[efid]->cost / 2 + 1);
             chara_gain_skill_exp(
-                doer, the_ability_db[efid]->related_basic_attribute, 25);
+                doer, the_skill_db[efid]->related_basic_attribute, 25);
         }
     }
     efp = calc_spell_power(doer, efid);
@@ -5086,7 +5098,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         enemy_index = caster.index;
         return 1;
     }
-    tg = the_ability_db[efid]->range / 1000 * 1000;
+    tg = the_skill_db[efid]->range / 1000 * 1000;
     if (efsource == 1)
     {
         if (tg == 3000)
@@ -5094,7 +5106,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
             tg = 8000;
         }
     }
-    if (the_ability_db[efid]->ability_type == 7)
+    if (the_skill_db[efid]->ability_type == 7)
     {
         if (caster.is_player())
         {
@@ -5125,7 +5137,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         else
         {
             if (dist(cdata[enemy_index].position, caster.position) >
-                the_ability_db[efid]->range % 1000 + 1)
+                the_skill_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -5182,10 +5194,10 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     {
         if (!caster.is_player())
         {
-            if (the_ability_db[efid]->ability_type == 3)
+            if (the_skill_db[efid]->ability_type == 3)
             {
                 if (dist(cdata[enemy_index].position, caster.position) >
-                    the_ability_db[efid]->range % 1000 + 1)
+                    the_skill_db[efid]->range % 1000 + 1)
                 {
                     return 0;
                 }
@@ -5222,7 +5234,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
             }
         }
         if (dist(cdata[enemy_index].position, caster.position) >
-            the_ability_db[efid]->range % 1000 + 1)
+            the_skill_db[efid]->range % 1000 + 1)
         {
             if (caster.is_player())
             {
@@ -5388,7 +5400,7 @@ PickUpItemResult pick_up_item(
                     if (efid >= 400 && efid < 467)
                     {
                         inv_owner_chara->spell_stocks().gain(
-                            *the_ability_db.get_id_from_integer(efid),
+                            *the_skill_db.get_id_from_integer(efid),
                             item->charges * 5 * item->number());
                     }
                     else
@@ -5692,7 +5704,7 @@ TurnResult do_bash(Character& chara)
                     cdata[bash_target_index]));
                 damage_hp(
                     cdata[bash_target_index],
-                    chara.get_skill(10).level * 5,
+                    chara.skills().level("core.stat_strength") * 5,
                     chara.index);
                 if (cdata[bash_target_index].state() == Character::State::alive)
                 {
@@ -5759,13 +5771,17 @@ TurnResult do_bash(Character& chara)
             {
                 p *= 20;
             }
-            if (rnd_capped(p(0)) < chara.get_skill(10).level && rnd(2))
+            if (rnd_capped(p(0)) < chara.skills().level("core.stat_strength") &&
+                rnd(2))
             {
                 txt(i18n::s.get("core.action.bash.door.destroyed"));
-                if (feat(2) > chara.get_skill(10).level)
+                if (feat(2) > chara.skills().level("core.stat_strength"))
                 {
                     chara_gain_skill_exp(
-                        chara, 10, (feat(2) - chara.get_skill(10).level) * 15);
+                        chara,
+                        10,
+                        (feat(2) - chara.skills().level("core.stat_strength")) *
+                            15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
                 return TurnResult::turn_end;
@@ -5958,12 +5974,13 @@ optional<bool> try_unlock_internal(int difficulty)
     {
         if (item_find("core.skeleton_key"))
         {
-            i = cdata.player().get_skill(158).level * 150 / 100 + 5;
+            i = cdata.player().skills().level("core.lock_picking") * 150 / 100 +
+                5;
             txt(i18n::s.get("core.action.unlock.use_skeleton_key"));
         }
         else
         {
-            i = cdata.player().get_skill(158).level;
+            i = cdata.player().skills().level("core.lock_picking");
         }
     }
     f = 0;
@@ -6364,7 +6381,8 @@ TurnResult try_to_open_locked_door(Character& chara)
     if (feat(2) > 0)
     {
         f = 0;
-        if (rnd(feat(2) * 20 + 150) < chara.get_skill(158).level * 20 + 20)
+        if (rnd(feat(2) * 20 + 150) <
+            chara.skills().level("core.lock_picking") * 20 + 20)
         {
             f = 1;
         }

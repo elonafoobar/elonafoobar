@@ -1,11 +1,11 @@
 #include "crafting.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "data/types/type_crafting_material.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -15,6 +15,7 @@
 #include "itemgen.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "ui/ui_menu_crafting.hpp"
 #include "variables.hpp"
@@ -92,12 +93,16 @@ static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 {
     Quality ret = Quality::good;
     if (rnd(200 + recipe.required_skill_level * 2) <
-        cdata.player().get_skill(recipe.skill_used).level + 20)
+        cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe.skill_used)) +
+            20)
     {
         ret = Quality::miracle;
     }
     if (rnd(100 + recipe.required_skill_level * 2) <
-        cdata.player().get_skill(recipe.skill_used).level + 20)
+        cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe.skill_used)) +
+            20)
     {
         ret = Quality::great;
     }
@@ -110,7 +115,8 @@ static Quality _determine_crafted_fixlv(const CraftingRecipe& recipe)
 static void _craft_item(int matid, const CraftingRecipe& recipe)
 {
     fixlv = _determine_crafted_fixlv(recipe);
-    flt(calcobjlv(cdata.player().get_skill(recipe.skill_used).level),
+    flt(calcobjlv(cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe.skill_used))),
         calcfixlv(fixlv));
     nostack = 1;
     if (const auto item = itemcreate_player_inv(matid, 0))

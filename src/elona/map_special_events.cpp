@@ -1,8 +1,8 @@
-#include "ability.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "food.hpp"
 #include "game.hpp"
@@ -12,7 +12,10 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "quest.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -78,7 +81,7 @@ static void _map_events_tower_of_fire()
 {
     if (rnd(5) == 0)
     {
-        r = cdata.player().get_skill(50).level / 50;
+        r = cdata.player().skills().level("core.element_fire") / 50;
         if (r < 6)
         {
             dmg = (6 - r) * (6 - r) * 2;
@@ -165,7 +168,8 @@ static void _map_events_jail()
             txt(i18n::s.get("core.misc.map.jail.repent_of_sin"));
             modify_karma(cdata.player(), 1);
             p = rnd(8) + 10;
-            if (cdata.player().get_skill(p).base_level >= 10)
+            if (cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(p)) >= 10)
             {
                 chara_gain_fixed_skill_exp(cdata.player(), p, -300);
             }

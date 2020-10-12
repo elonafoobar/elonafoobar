@@ -1,6 +1,5 @@
 #include "deferred_event.hpp"
 
-#include "ability.hpp"
 #include "animation.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -8,6 +7,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enums.hpp"
@@ -24,6 +24,7 @@
 #include "random_event.hpp"
 #include "save.hpp"
 #include "scene.hpp"
+#include "skill.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "time_utils.hpp"
@@ -148,7 +149,9 @@ void eh_player_died(const DeferredEvent&)
     {
         for (int i = 10; i < 18; ++i)
         {
-            if (cdata.player().get_skill(i).level != 0 && rnd(3) == 0)
+            if (cdata.player().skills().level(
+                    *the_skill_db.get_id_from_integer(i)) != 0 &&
+                rnd(3) == 0)
             {
                 chara_gain_skill_exp(cdata.player(), i, -500);
             }

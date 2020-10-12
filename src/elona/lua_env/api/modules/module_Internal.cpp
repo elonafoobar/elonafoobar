@@ -3,8 +3,8 @@
 #include "../../../character.hpp"
 #include "../../../character_status.hpp"
 #include "../../../crafting.hpp"
-#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_map.hpp"
+#include "../../../data/types/type_skill.hpp"
 #include "../../../game.hpp"
 #include "../../../i18n.hpp"
 #include "../../../inventory.hpp"
@@ -13,6 +13,7 @@
 #include "../../../map.hpp"
 #include "../../../menu.hpp"
 #include "../../../shop.hpp"
+#include "../../../skill.hpp"
 #include "../../../ui.hpp"
 #include "../../fmt.hpp"
 #include "../../interface.hpp"
@@ -231,7 +232,7 @@ void Internal_gain_spact()
     for (int i = 1; i < 61; ++i)
     {
         cdata.player().spacts().gain(
-            *the_ability_db.get_id_from_integer(i + 600));
+            *the_skill_db.get_id_from_integer(i + 600));
     }
 }
 

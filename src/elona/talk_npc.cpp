@@ -1,4 +1,3 @@
-#include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
@@ -6,8 +5,8 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "food.hpp"
@@ -26,6 +25,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -1247,8 +1247,8 @@ TalkResult talk_result_maid_chase_out(Character& speaker)
 
 TalkResult talk_prostitute_buy(Character& speaker)
 {
-    int sexvalue =
-        speaker.get_skill(17).level * 25 + 100 + cdata.player().fame / 10;
+    int sexvalue = speaker.skills().level("core.stat_charisma") * 25 + 100 +
+        cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
@@ -1479,7 +1479,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.training",
-            the_ability_db.get_text(selected_skill, "name"),
+            the_skill_db.get_text(selected_skill, "name"),
             calc_skill_training_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum >=
@@ -1495,7 +1495,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
-            the_ability_db.get_text(selected_skill, "name"),
+            the_skill_db.get_text(selected_skill, "name"),
             calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
         if (cdata.player().platinum >=
@@ -1519,12 +1519,14 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         {
             cdata.player().platinum -=
                 calc_skill_training_cost(selected_skill, cdata.player());
-            modify_potential(
+            skill_add_potential(
                 cdata.player(),
-                selected_skill,
+                *the_skill_db.get_id_from_integer(selected_skill),
                 clamp(
                     15 -
-                        cdata.player().get_skill(selected_skill).potential / 15,
+                        cdata.player().skills().potential(
+                            *the_skill_db.get_id_from_integer(selected_skill)) /
+                            15,
                     2,
                     15));
             buff =
@@ -1870,8 +1872,9 @@ TalkResult talk_npc(Character& speaker)
                         if (speaker.impression < 100)
                         {
                             if (rnd_capped(
-                                    cdata.player().get_skill(17).level + 1) >
-                                10)
+                                    cdata.player().skills().level(
+                                        "core.stat_charisma") +
+                                    1) > 10)
                             {
                                 chara_modify_impression(speaker, rnd(3));
                             }

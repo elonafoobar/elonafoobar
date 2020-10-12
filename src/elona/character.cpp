@@ -7,7 +7,6 @@
 #include "../util/fileutil.hpp"
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "animation.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -22,6 +21,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -49,6 +49,7 @@
 #include "random.hpp"
 #include "randomgen.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -746,10 +747,7 @@ void chara_refresh(Character& chara)
         game()->catches_god_signal = 0;
         game()->reveals_religion = 0;
     }
-    for (int cnt = 0; cnt < 600; ++cnt)
-    {
-        chara.get_skill(cnt).level = chara.get_skill(cnt).base_level;
-    }
+    chara.skills().clear_all_boosts();
     if (chara.is_player())
     {
         chara.clear_flags();
@@ -852,27 +850,37 @@ void chara_refresh(Character& chara)
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    chara.get_skill(rp3).level += enchantment.power / 50 + 1;
+                    chara.skills().add_level(
+                        *the_skill_db.get_id_from_integer(rp3),
+                        enchantment.power / 50 + 1);
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    chara.get_skill(rp3).level += enchantment.power / 2;
-                    if (chara.get_skill(rp3).level < 0)
+                    chara.skills().add_level(
+                        *the_skill_db.get_id_from_integer(rp3),
+                        enchantment.power / 2);
+                    if (chara.skills().level(
+                            *the_skill_db.get_id_from_integer(rp3)) < 0)
                     {
-                        chara.get_skill(rp3).level = 1;
+                        chara.skills().set_level(
+                            *the_skill_db.get_id_from_integer(rp3), 1);
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (chara.get_skill(rp3).base_level != 0)
+                    if (chara.skills().base_level(
+                            *the_skill_db.get_id_from_integer(rp3)) != 0)
                     {
-                        chara.get_skill(rp3).level +=
-                            enchantment.power / 50 + 1;
-                        if (chara.get_skill(rp3).level < 1)
+                        chara.skills().add_level(
+                            *the_skill_db.get_id_from_integer(rp3),
+                            enchantment.power / 50 + 1);
+                        if (chara.skills().level(
+                                *the_skill_db.get_id_from_integer(rp3)) < 1)
                         {
-                            chara.get_skill(rp3).level = 1;
+                            chara.skills().set_level(
+                                *the_skill_db.get_id_from_integer(rp3), 1);
                         }
                     }
                     continue;
@@ -898,7 +906,8 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 29)
                 {
-                    chara.get_skill(18).level += enchantment.power / 50 + 1;
+                    chara.skills().add_level(
+                        "core.stat_speed", enchantment.power / 50 + 1);
                     if (chara.is_player())
                     {
                         game()->seven_league_boot_effect +=
@@ -1026,13 +1035,20 @@ void chara_refresh(Character& chara)
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            cdata.tmp().get_skill(cnt).level = chara.get_skill(cnt).base_level;
-            if (cdata.tmp().get_skill(cnt).level != chara.get_skill(cnt).level)
+            cdata.tmp().skills().set_level(
+                *the_skill_db.get_id_from_integer(cnt),
+                chara.skills().base_level(
+                    *the_skill_db.get_id_from_integer(cnt)));
+            if (cdata.tmp().skills().level(
+                    *the_skill_db.get_id_from_integer(cnt)) !=
+                chara.skills().level(*the_skill_db.get_id_from_integer(cnt)))
             {
                 cnvbonus(
                     cnt,
-                    chara.get_skill(cnt).level -
-                        cdata.tmp().get_skill(cnt).level);
+                    chara.skills().level(
+                        *the_skill_db.get_id_from_integer(cnt)) -
+                        cdata.tmp().skills().level(
+                            *the_skill_db.get_id_from_integer(cnt)));
             }
         }
     }
@@ -1043,17 +1059,25 @@ void chara_refresh(Character& chara)
             if (chara.quality >= Quality::miracle)
             {
                 if (chara.attr_adjs[cnt] <
-                    chara.get_skill(10 + cnt).base_level / 5)
+                    chara.skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) /
+                        5)
                 {
                     chara.attr_adjs[cnt] =
-                        chara.get_skill(10 + cnt).base_level / 5;
+                        chara.skills().base_level(
+                            *the_skill_db.get_id_from_integer(10 + cnt)) /
+                        5;
                 }
             }
-            chara.get_skill(10 + cnt).level += chara.attr_adjs[cnt];
+            chara.skills().add_level(
+                *the_skill_db.get_id_from_integer(10 + cnt),
+                chara.attr_adjs[cnt]);
         }
-        if (chara.get_skill(10 + cnt).level < 1)
+        if (chara.skills().level(*the_skill_db.get_id_from_integer(10 + cnt)) <
+            1)
         {
-            chara.get_skill(10 + cnt).level = 1;
+            chara.skills().set_level(
+                *the_skill_db.get_id_from_integer(10 + cnt), 1);
         }
     }
     if (chara.is_player())
@@ -1075,7 +1099,9 @@ void chara_refresh(Character& chara)
         if (chara.pv > 0)
         {
             chara.pv = chara.pv *
-                (120 + int(std::sqrt(chara.get_skill(168).level)) * 2) / 100;
+                (120 +
+                 int(std::sqrt(chara.skills().level("core.shield"))) * 2) /
+                100;
         }
     }
     else if (attacknum == 1)
@@ -1086,27 +1112,29 @@ void chara_refresh(Character& chara)
     {
         chara.combat_style.set_dual_wield();
     }
-    chara.max_mp =
-        clamp(
-            ((chara.get_skill(16).level * 2 + chara.get_skill(15).level +
-              chara.get_skill(14).level / 3) *
-                 chara.level / 25 +
-             chara.get_skill(16).level),
-            1,
-            1000000) *
-        chara.get_skill(3).level / 100;
-    chara.max_hp =
-        clamp(
-            ((chara.get_skill(11).level * 2 + chara.get_skill(10).level +
-              chara.get_skill(15).level / 3) *
-                 chara.level / 25 +
-             chara.get_skill(11).level),
-            1,
-            1000000) *
-            chara.get_skill(2).level / 100 +
+    chara.max_mp = clamp(
+                       ((chara.skills().level("core.stat_magic") * 2 +
+                         chara.skills().level("core.stat_will") +
+                         chara.skills().level("core.stat_learning") / 3) *
+                            chara.level / 25 +
+                        chara.skills().level("core.stat_magic")),
+                       1,
+                       1000000) *
+        chara.skills().level("core.stat_mana") / 100;
+    chara.max_hp = clamp(
+                       ((chara.skills().level("core.stat_constitution") * 2 +
+                         chara.skills().level("core.stat_strength") +
+                         chara.skills().level("core.stat_will") / 3) *
+                            chara.level / 25 +
+                        chara.skills().level("core.stat_constitution")),
+                       1,
+                       1000000) *
+            chara.skills().level("core.stat_life") / 100 +
         5;
     chara.max_sp = 100 +
-        (chara.get_skill(15).level + chara.get_skill(11).level) / 5 +
+        (chara.skills().level("core.stat_will") +
+         chara.skills().level("core.stat_constitution")) /
+            5 +
         cdata.player().traits().level("core.stamina_feat") * 8;
     if (chara.max_mp < 1)
     {
@@ -1143,12 +1171,12 @@ void chara_refresh(Character& chara)
     if (chara.combat_style.dual_wield())
     {
         chara.extra_attack +=
-            int(std::sqrt(chara.get_skill(166).level)) * 3 / 2 + 4;
+            int(std::sqrt(chara.skills().level("core.dual_wield"))) * 3 / 2 + 4;
     }
-    if (chara.get_skill(186).level)
+    if (chara.skills().level("core.eye_of_mind"))
     {
         chara.rate_of_critical_hit +=
-            int(std::sqrt(chara.get_skill(186).level)) + 2;
+            int(std::sqrt(chara.skills().level("core.eye_of_mind"))) + 2;
     }
     if (chara.rate_of_critical_hit > 30)
     {
@@ -1241,8 +1269,8 @@ int chara_get_free_slot()
 
 int chara_get_free_slot_ally()
 {
-    const auto max_allies =
-        clamp(cdata.player().get_skill(17).level / 5 + 1, 2, 15);
+    const auto max_allies = clamp(
+        cdata.player().skills().level("core.stat_charisma") / 5 + 1, 2, 15);
     for (int i = 1; i < max_allies + 1; ++i)
     {
         if (cdata[i].state() != Character::State::empty)
@@ -1633,18 +1661,24 @@ void chara_relocate(
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (destination.get_skill(element).base_level >= 500 ||
-                destination.get_skill(element).base_level <= 100)
+            if (destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element)) >= 500 ||
+                destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element)) <= 100)
             {
-                resistance = destination.get_skill(element).base_level;
+                resistance = destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element));
             }
             if (resistance > 500)
             {
                 resistance = 500;
             }
-            destination.get_skill(element).base_level = resistance;
-            destination.get_skill(element).experience = 0;
-            destination.get_skill(element).potential = 0;
+            destination.skills().set_base_level(
+                *the_skill_db.get_id_from_integer(element), resistance);
+            destination.skills().set_experience(
+                *the_skill_db.get_id_from_integer(element), 0);
+            destination.skills().set_potential(
+                *the_skill_db.get_id_from_integer(element), 0);
         }
     }
 
@@ -1744,7 +1778,7 @@ void initialize_pc_character()
     {
         item->set_number(2);
     }
-    if (cdata.player().get_skill(150).level == 0)
+    if (cdata.player().skills().level("core.literacy") == 0)
     {
         flt();
         if (const auto item = itemcreate_player_inv(68, 0))
@@ -2078,9 +2112,9 @@ void refresh_burden_state()
          cdata.player().traits().level("core.feathers") * 20) /
         100;
     cdata.player().max_inventory_weight =
-        cdata.player().get_skill(10).level * 500 +
-        cdata.player().get_skill(11).level * 250 +
-        cdata.player().get_skill(153).level * 2000 + 45000;
+        cdata.player().skills().level("core.stat_strength") * 500 +
+        cdata.player().skills().level("core.stat_constitution") * 250 +
+        cdata.player().skills().level("core.weight_lifting") * 2000 + 45000;
     game()->cargo_weight = inv_cargo_weight(inv_player());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
@@ -2512,7 +2546,7 @@ bool move_character_internal(Character& chara)
         refdiff = refdiff / 3;
         if (chara.is_player())
         {
-            if (chara.get_skill(175).level != 0)
+            if (chara.skills().level("core.disarm_trap") != 0)
             {
                 if (try_to_disarm_trap(chara))
                 {

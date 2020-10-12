@@ -34,7 +34,7 @@ end
 
 function EatingEffects.horse(eater)
    eat_message(eater, "horse", "green")
-   eater:gain_skill_exp("core.attribute_constitution", 100)
+   eater:gain_skill_exp("core.stat_constitution", 100)
 end
 
 function EatingEffects.holy_one(eater)
@@ -72,12 +72,12 @@ end
 
 function EatingEffects.putit(eater)
    eat_message(eater, "putit", "green")
-   eater:gain_skill_exp("core.attribute_charisma", 150)
+   eater:gain_skill_exp("core.stat_charisma", 150)
 end
 
 function EatingEffects.cupid_of_love(eater)
    eat_message(eater, "cupid_of_love", "green")
-   eater:gain_skill_exp("core.attribute_charisma", 400)
+   eater:gain_skill_exp("core.stat_charisma", 400)
 end
 
 
@@ -107,7 +107,7 @@ end
 
 function EatingEffects.beetle(eater)
    eat_message(eater, "beetle", "green")
-   eater:gain_skill_exp("core.attribute_strength", 250)
+   eater:gain_skill_exp("core.stat_strength", 250)
 end
 
 function EatingEffects.mandrake(eater)
@@ -165,7 +165,7 @@ end
 local function eating_effect_giant(amount)
    return function(eater)
       eat_message(eater, "giant", "green")
-      eater:gain_skill_exp("core.attribute_constitution", amount)
+      eater:gain_skill_exp("core.stat_constitution", amount)
    end
 end
 
@@ -175,12 +175,12 @@ EatingEffects.titan = eating_effect_giant(800)
 
 function EatingEffects.imp(eater)
    eat_message(eater, "imp", "green")
-   eater:gain_skill_exp("core.attribute_magic", 500)
+   eater:gain_skill_exp("core.stat_magic", 500)
 end
 
 function EatingEffects.hand(eater)
    eat_message(eater, "strength", "green")
-   eater:gain_skill_exp("core.attribute_strength", 400)
+   eater:gain_skill_exp("core.stat_strength", 400)
 end
 
 function EatingEffects.mammoth(eater)
@@ -192,7 +192,7 @@ end
 local function eating_effect_ghost(amount)
    return function(eater)
       eat_message(eater, "ghost", "green")
-      eater:gain_skill_exp("core.attribute_will", amount);
+      eater:gain_skill_exp("core.stat_will", amount);
    end
 end
 
@@ -203,9 +203,9 @@ EatingEffects.nymph = eating_effect_ghost(400)
 function EatingEffects.quickling(eater)
    eat_message(eater, "quickling", "green")
 
-   local current = eater:get_skill("core.attribute_speed").level
+   local current = eater:get_skill("core.stat_speed").level
    local amount = math.clamp(2500 - current * current // 10, 20, 2500)
-   eater:gain_skill_exp("core.attribute_speed", amount);
+   eater:gain_skill_exp("core.stat_speed", amount);
 end
 
 function EatingEffects.alien(eater)

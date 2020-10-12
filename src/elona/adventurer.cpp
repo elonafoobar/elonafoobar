@@ -2,12 +2,11 @@
 
 #include <string>
 
-#include "ability.hpp"
 #include "area.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "equipment.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -17,6 +16,7 @@
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -119,7 +119,7 @@ int adventurer_favorite_skill(const Character& adv)
     while (skills.size() < 2)
     {
         const auto skill_id = rnd(300) + 100;
-        if (the_ability_db[skill_id])
+        if (the_skill_db[skill_id])
         {
             skills.push_back(skill_id);
         }

@@ -1,5 +1,6 @@
-#include "../../../ability.hpp"
 #include "../../../character.hpp"
+#include "../../../data/types/type_skill.hpp"
+#include "../../../skill.hpp"
 #include "../../enums/enums.hpp"
 #include "../../handle_manager.hpp"
 #include "../common.hpp"
@@ -30,7 +31,8 @@ int Skill_resistance(const EnumString& element, LuaCharacterHandle chara)
 {
     auto& chara_ref = lua::ref<Character>(chara);
     Element element_value = LuaEnums::ElementTable.ensure_from_string(element);
-    return chara_ref.get_skill(static_cast<int>(element_value)).level;
+    return chara_ref.skills().level(
+        *the_skill_db.get_id_from_integer(static_cast<int>(element_value)));
 }
 
 

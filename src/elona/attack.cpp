@@ -1,7 +1,6 @@
 #include "attack.hpp"
 
 #include "../snail/application.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
@@ -9,6 +8,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -22,6 +22,7 @@
 #include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -406,15 +407,17 @@ bool do_physical_attack_internal(
             chara_gain_skill_exp(attacker, 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > target.max_hp / 20 || rtdmg > target.get_skill(154).level ||
-            rnd(5) == 0)
+        if (rtdmg > target.max_hp / 20 ||
+            rtdmg > target.skills().level("core.healing") || rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 attacker,
                 attackskill,
                 clamp(
-                    (target.get_skill(173).level * 2 -
-                     attacker.get_skill(attackskill).level + 1),
+                    (target.skills().level("core.evasion") * 2 -
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) +
+                     1),
                     5,
                     50) /
                     expmodifer,
@@ -559,13 +562,14 @@ bool do_physical_attack_internal(
         {
             snd("core.miss");
         }
-        if (attacker.get_skill(attackskill).level >
-                target.get_skill(173).level ||
+        if (attacker.skills().level(*the_skill_db.get_id_from_integer(
+                attackskill)) > target.skills().level("core.evasion") ||
             rnd(5) == 0)
         {
             p = clamp(
-                    (attacker.get_skill(attackskill).level -
-                     target.get_skill(173).level / 2 + 1),
+                    (attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) -
+                     target.skills().level("core.evasion") / 2 + 1),
                     1,
                     20) /
                 expmodifer;
@@ -791,7 +795,10 @@ void do_ranged_attack(
         tlocx = ammox;
         tlocy = ammoy;
         efid = 460;
-        efp = attacker.get_skill(attackskill).level * 8 + 10;
+        efp = attacker.skills().level(
+                  *the_skill_db.get_id_from_integer(attackskill)) *
+                8 +
+            10;
         magic(cdata.player(), target);
     }
     ammoproc = -1;
@@ -834,7 +841,10 @@ void try_to_melee_attack(Character& attacker, Character& target)
     ele = 0;
     if (attacker.combat_style.shield())
     {
-        if (clamp(int(std::sqrt(attacker.get_skill(168).level) - 3), 1, 5) +
+        if (clamp(
+                int(std::sqrt(attacker.skills().level("core.shield")) - 3),
+                1,
+                5) +
                 attacker.has_power_bash() * 5 >
             rnd(100))
         {
@@ -845,12 +855,14 @@ void try_to_melee_attack(Character& attacker, Character& target)
             }
             damage_hp(
                 target,
-                rnd_capped(attacker.get_skill(168).level) + 1,
+                rnd_capped(attacker.skills().level("core.shield")) + 1,
                 attacker.index);
             status_ailment_damage(
                 target,
                 StatusAilment::dimmed,
-                50 + int(std::sqrt(attacker.get_skill(168).level)) * 15);
+                50 +
+                    int(std::sqrt(attacker.skills().level("core.shield"))) *
+                        15);
             target.paralyzed += rnd(3);
         }
     }
@@ -1009,8 +1021,10 @@ void proc_weapon_enchantments(
                 if (rnd(100) < p)
                 {
                     efid = enc_id;
-                    efp =
-                        enc.power + attacker.get_skill(attackskill).level * 10;
+                    efp = enc.power +
+                        attacker.skills().level(
+                            *the_skill_db.get_id_from_integer(attackskill)) *
+                            10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;
@@ -1034,7 +1048,10 @@ void proc_weapon_enchantments(
                 orgdmg * 2 / 3,
                 attacker.index,
                 rnd(11) + 50,
-                attacker.get_skill(attackskill).level * 10 + 100);
+                attacker.skills().level(
+                    *the_skill_db.get_id_from_integer(attackskill)) *
+                        10 +
+                    100);
         }
     }
 }

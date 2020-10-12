@@ -1,12 +1,12 @@
 #include "race.hpp"
 
-#include "ability.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -63,7 +63,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
 
     for (const auto& pair : data->skills)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
+        if (const auto ability_data = the_skill_db[pair.first])
         {
             chara_init_skill(chara, ability_data->integer_id, pair.second);
         }
@@ -76,19 +76,9 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         }
     }
 
-    for (const auto& pair : data->resistances)
+    for (const auto& [id, level] : data->resistances)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
-        {
-            chara.get_skill(ability_data->integer_id).level = pair.second;
-        }
-        else
-        {
-            // Skip the resistance if undefined.
-            ELONA_WARN(
-                "Data: undefined resistance ID: " + pair.first.get() +
-                " (race " + race_id.get() + ")");
-        }
+        chara.skills().set_level(id, level);
     }
 }
 

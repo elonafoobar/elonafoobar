@@ -136,7 +136,7 @@ ELONA.data:add(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
+            mod_skill_level(args, "core.stat_speed", self._effect(args.power))
          end,
          _effect = function(power)
             return math.modf(50 + math.sqrt(power // 5))
@@ -150,8 +150,8 @@ ELONA.data:add(
             return 8 + power // 30
          end,
          on_refresh = function(self, args)
-            args.chara:get_skill("core.attribute_speed").level =
-               args.chara:get_skill("core.attribute_speed").level - self._effect(args.power)
+            args.chara:get_skill("core.stat_speed").level =
+               args.chara:get_skill("core.stat_speed").level - self._effect(args.power)
          end,
          _effect = function(power)
             return math.min(20 + power // 20, 50)
@@ -167,8 +167,8 @@ ELONA.data:add(
             return 10 + power // 4
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_strength", self._effect(args.power))
-            mod_skill_level(args, "core.attribute_dexterity", self._effect(args.power))
+            mod_skill_level(args, "core.stat_strength", self._effect(args.power))
+            mod_skill_level(args, "core.stat_dexterity", self._effect(args.power))
             args.chara:heal_ailment("fear", 0)
             args.chara:heal_ailment("confused", 0)
          end,
@@ -247,8 +247,8 @@ ELONA.data:add(
          end,
          on_refresh = function(self, args)
             local a, b = self._effect(args.power)
-            mod_skill_level(args, "core.attribute_learning", a)
-            mod_skill_level(args, "core.attribute_magic", a)
+            mod_skill_level(args, "core.stat_learning", a)
+            mod_skill_level(args, "core.stat_magic", a)
             mod_skill_level(args, "core.literacy", b)
          end,
          _effect = function(power)
@@ -266,7 +266,7 @@ ELONA.data:add(
             return power
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_speed", -self._effect(args.power))
+            mod_skill_level(args, "core.stat_speed", -self._effect(args.power))
             if args.chara.pv > 1 then
                args.chara.pv = args.chara.pv // 5
             end
@@ -283,7 +283,7 @@ ELONA.data:add(
             return 7
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
+            mod_skill_level(args, "core.stat_speed", self._effect(args.power))
          end,
          _effect = function(power)
             return 155 + power // 5
@@ -352,11 +352,11 @@ ELONA.data:add(
             return 5
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_speed", self._effect(args.power))
-            args.chara:get_skill("core.attribute_strength").level =
-               args.chara:get_skill("core.attribute_strength").level * 150 // 100 + 10
-            args.chara:get_skill("core.attribute_dexterity").level =
-               args.chara:get_skill("core.attribute_dexterity").level * 150 // 100 + 10
+            mod_skill_level(args, "core.stat_speed", self._effect(args.power))
+            args.chara:get_skill("core.stat_strength").level =
+               args.chara:get_skill("core.stat_strength").level * 150 // 100 + 10
+            args.chara:get_skill("core.stat_dexterity").level =
+               args.chara:get_skill("core.stat_dexterity").level * 150 // 100 + 10
             mod_skill_level(args, "core.healing", 50)
             args.chara.pv = args.chara.pv * 150 // 100 + 25
             args.chara.dv = args.chara.dv * 150 // 100 + 25
@@ -395,7 +395,7 @@ ELONA.data:add(
             return 777
          end,
          on_refresh = function(self, args)
-            mod_skill_level(args, "core.attribute_luck", self._effect(args.power))
+            mod_skill_level(args, "core.stat_luck", self._effect(args.power))
          end,
          _effect = function(power)
             return power
@@ -405,18 +405,18 @@ ELONA.data:add(
    }
 )
 
-local function register_growth_buff(attribute_index, attribute_name)
+local function register_growth_buff(stat_index, stat_name)
    ELONA.data:add(
       "core.buff",
       {
-         ["grow_" .. attribute_name] = {
-            integer_id = attribute_index + 20,
+         ["grow_" .. stat_name] = {
+            integer_id = stat_index + 20,
             buff_type = "food",
             duration = function(power)
                return 10 + power // 10
             end,
             on_refresh = function(self, args)
-               args.chara:set_growth_buff(attribute_index, self._effect(args.power))
+               args.chara:set_growth_buff(stat_index, self._effect(args.power))
             end,
             _effect = function(power)
                return power

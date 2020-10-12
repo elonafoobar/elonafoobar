@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
@@ -17,6 +16,7 @@
 #include "magic.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -128,7 +128,8 @@ void god_modify_piety(int amount)
     }
 
     // Faith skill is not enough.
-    if (cdata.player().get_skill(181).level * 100 < cdata.player().piety_point)
+    if (cdata.player().skills().level("core.faith") * 100 <
+        cdata.player().piety_point)
     {
         txt(i18n::s.get("core.god.indifferent"));
         return;
@@ -164,208 +165,80 @@ void set_npc_religion(Character& chara)
 void god_apply_blessing(Character& believer)
 {
     const auto P = believer.piety_point;
-    const auto F = believer.get_skill(181).level;
+    const auto F = believer.skills().level("core.faith");
+
+    const auto boost = [&](data::InstanceId id, lua_int delta) {
+        if (believer.skills().level(id) > 0)
+        {
+            believer.skills().add_level(id, delta);
+        }
+    };
 
     if (believer.religion == "core.mani")
     {
-        if (believer.get_skill(12).level > 0)
-        {
-            believer.get_skill(12).level += clamp(P / 400, 1, 8 + F / 10);
-        }
-        if (believer.get_skill(13).level > 0)
-        {
-            believer.get_skill(13).level += clamp(P / 300, 1, 14 + F / 10);
-        }
-        if (believer.get_skill(154).level > 0)
-        {
-            believer.get_skill(154).level += clamp(P / 500, 1, 8 + F / 10);
-        }
-        if (believer.get_skill(110).level > 0)
-        {
-            believer.get_skill(110).level += clamp(P / 250, 1, 18 + F / 10);
-        }
-        if (believer.get_skill(159).level > 0)
-        {
-            believer.get_skill(159).level += clamp(P / 350, 1, 8 + F / 10);
-        }
-        if (believer.get_skill(158).level > 0)
-        {
-            believer.get_skill(158).level += clamp(P / 250, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(176).level > 0)
-        {
-            believer.get_skill(176).level += clamp(P / 300, 1, 10 + F / 10);
-        }
-        if (believer.get_skill(179).level > 0)
-        {
-            believer.get_skill(179).level += clamp(P / 350, 1, 12 + F / 10);
-        }
+        boost("core.stat_dexterity", clamp(P / 400, 1, 8 + F / 10));
+        boost("core.stat_perception", clamp(P / 300, 1, 14 + F / 10));
+        boost("core.healing", clamp(P / 500, 1, 8 + F / 10));
+        boost("core.firearm", clamp(P / 250, 1, 18 + F / 10));
+        boost("core.detection", clamp(P / 350, 1, 8 + F / 10));
+        boost("core.lock_picking", clamp(P / 250, 1, 16 + F / 10));
+        boost("core.carpentry", clamp(P / 300, 1, 10 + F / 10));
+        boost("core.jeweler", clamp(P / 350, 1, 12 + F / 10));
     }
     if (believer.religion == "core.lulwy")
     {
-        if (believer.get_skill(13).level > 0)
-        {
-            believer.get_skill(13).level += clamp(P / 450, 1, 10 + F / 10);
-        }
-        if (believer.get_skill(18).level > 0)
-        {
-            believer.get_skill(18).level += clamp(P / 350, 1, 30 + F / 10);
-        }
-        if (believer.get_skill(108).level > 0)
-        {
-            believer.get_skill(108).level += clamp(P / 350, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(109).level > 0)
-        {
-            believer.get_skill(109).level += clamp(P / 450, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(157).level > 0)
-        {
-            believer.get_skill(157).level += clamp(P / 450, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(174).level > 0)
-        {
-            believer.get_skill(174).level += clamp(P / 550, 1, 8 + F / 10);
-        }
+        boost("core.stat_perception", clamp(P / 450, 1, 10 + F / 10));
+        boost("core.stat_speed", clamp(P / 350, 1, 30 + F / 10));
+        boost("core.bow", clamp(P / 350, 1, 16 + F / 10));
+        boost("core.crossbow", clamp(P / 450, 1, 12 + F / 10));
+        boost("core.stealth", clamp(P / 450, 1, 12 + F / 10));
+        boost("core.magic_device", clamp(P / 550, 1, 8 + F / 10));
     }
     if (believer.religion == "core.itzpalt")
     {
-        if (believer.get_skill(16).level > 0)
-        {
-            believer.get_skill(16).level += clamp(P / 300, 1, 18 + F / 10);
-        }
-        if (believer.get_skill(155).level > 0)
-        {
-            believer.get_skill(155).level += clamp(P / 350, 1, 15 + F / 10);
-        }
-        if (believer.get_skill(50).level > 0)
-        {
-            believer.get_skill(50).level += clamp(P / 50, 1, 200 + F / 10);
-        }
-        if (believer.get_skill(51).level > 0)
-        {
-            believer.get_skill(51).level += clamp(P / 50, 1, 200 + F / 10);
-        }
-        if (believer.get_skill(52).level > 0)
-        {
-            believer.get_skill(52).level += clamp(P / 50, 1, 200 + F / 10);
-        }
+        boost("core.stat_magic", clamp(P / 300, 1, 18 + F / 10));
+        boost("core.meditation", clamp(P / 350, 1, 15 + F / 10));
+        boost("core.element_fire", clamp(P / 50, 1, 200 + F / 10));
+        boost("core.element_cold", clamp(P / 50, 1, 200 + F / 10));
+        boost("core.element_lightning", clamp(P / 50, 1, 200 + F / 10));
     }
     if (believer.religion == "core.ehekatl")
     {
-        if (believer.get_skill(17).level > 0)
-        {
-            believer.get_skill(17).level += clamp(P / 250, 1, 20 + F / 10);
-        }
-        if (believer.get_skill(19).level > 0)
-        {
-            believer.get_skill(19).level += clamp(P / 100, 1, 50 + F / 10);
-        }
-        if (believer.get_skill(173).level > 0)
-        {
-            believer.get_skill(173).level += clamp(P / 300, 1, 15 + F / 10);
-        }
-        if (believer.get_skill(164).level > 0)
-        {
-            believer.get_skill(164).level += clamp(P / 350, 1, 17 + F / 10);
-        }
-        if (believer.get_skill(185).level > 0)
-        {
-            believer.get_skill(185).level += clamp(P / 300, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(158).level > 0)
-        {
-            believer.get_skill(158).level += clamp(P / 450, 1, 8 + F / 10);
-        }
+        boost("core.stat_charisma", clamp(P / 250, 1, 20 + F / 10));
+        boost("core.stat_luck", clamp(P / 100, 1, 50 + F / 10));
+        boost("core.evasion", clamp(P / 300, 1, 15 + F / 10));
+        boost("core.magic_capacity", clamp(P / 350, 1, 17 + F / 10));
+        boost("core.fishing", clamp(P / 300, 1, 12 + F / 10));
+        boost("core.lock_picking", clamp(P / 450, 1, 8 + F / 10));
     }
     if (believer.religion == "core.opatos")
     {
-        if (believer.get_skill(10).level > 0)
-        {
-            believer.get_skill(10).level += clamp(P / 450, 1, 11 + F / 10);
-        }
-        if (believer.get_skill(11).level > 0)
-        {
-            believer.get_skill(11).level += clamp(P / 350, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(168).level > 0)
-        {
-            believer.get_skill(168).level += clamp(P / 350, 1, 15 + F / 10);
-        }
-        if (believer.get_skill(153).level > 0)
-        {
-            believer.get_skill(153).level += clamp(P / 300, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(163).level > 0)
-        {
-            believer.get_skill(163).level += clamp(P / 350, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(174).level > 0)
-        {
-            believer.get_skill(174).level += clamp(P / 450, 1, 8 + F / 10);
-        }
+        boost("core.stat_strength", clamp(P / 450, 1, 11 + F / 10));
+        boost("core.stat_constitution", clamp(P / 350, 1, 16 + F / 10));
+        boost("core.shield", clamp(P / 350, 1, 15 + F / 10));
+        boost("core.weight_lifting", clamp(P / 300, 1, 16 + F / 10));
+        boost("core.mining", clamp(P / 350, 1, 12 + F / 10));
+        boost("core.magic_device", clamp(P / 450, 1, 8 + F / 10));
     }
     if (believer.religion == "core.jure")
     {
-        if (believer.get_skill(15).level > 0)
-        {
-            believer.get_skill(15).level += clamp(P / 300, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(154).level > 0)
-        {
-            believer.get_skill(154).level += clamp(P / 250, 1, 18 + F / 10);
-        }
-        if (believer.get_skill(155).level > 0)
-        {
-            believer.get_skill(155).level += clamp(P / 400, 1, 10 + F / 10);
-        }
-        if (believer.get_skill(161).level > 0)
-        {
-            believer.get_skill(161).level += clamp(P / 400, 1, 9 + F / 10);
-        }
-        if (believer.get_skill(184).level > 0)
-        {
-            believer.get_skill(184).level += clamp(P / 450, 1, 8 + F / 10);
-        }
-        if (believer.get_skill(174).level > 0)
-        {
-            believer.get_skill(174).level += clamp(P / 400, 1, 10 + F / 10);
-        }
-        if (believer.get_skill(164).level > 0)
-        {
-            believer.get_skill(164).level += clamp(P / 400, 1, 12 + F / 10);
-        }
+        boost("core.stat_will", clamp(P / 300, 1, 16 + F / 10));
+        boost("core.healing", clamp(P / 250, 1, 18 + F / 10));
+        boost("core.meditation", clamp(P / 400, 1, 10 + F / 10));
+        boost("core.anatomy", clamp(P / 400, 1, 9 + F / 10));
+        boost("core.cooking", clamp(P / 450, 1, 8 + F / 10));
+        boost("core.magic_device", clamp(P / 400, 1, 10 + F / 10));
+        boost("core.magic_capacity", clamp(P / 400, 1, 12 + F / 10));
     }
     if (believer.religion == "core.kumiromi")
     {
-        if (believer.get_skill(13).level > 0)
-        {
-            believer.get_skill(13).level += clamp(P / 400, 1, 8 + F / 10);
-        }
-        if (believer.get_skill(12).level > 0)
-        {
-            believer.get_skill(12).level += clamp(P / 350, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(14).level > 0)
-        {
-            believer.get_skill(14).level += clamp(P / 250, 1, 16 + F / 10);
-        }
-        if (believer.get_skill(180).level > 0)
-        {
-            believer.get_skill(180).level += clamp(P / 300, 1, 12 + F / 10);
-        }
-        if (believer.get_skill(178).level > 0)
-        {
-            believer.get_skill(178).level += clamp(P / 350, 1, 10 + F / 10);
-        }
-        if (believer.get_skill(177).level > 0)
-        {
-            believer.get_skill(177).level += clamp(P / 350, 1, 9 + F / 10);
-        }
-        if (believer.get_skill(150).level > 0)
-        {
-            believer.get_skill(150).level += clamp(P / 350, 1, 8 + F / 10);
-        }
+        boost("core.stat_perception", clamp(P / 400, 1, 8 + F / 10));
+        boost("core.stat_dexterity", clamp(P / 350, 1, 12 + F / 10));
+        boost("core.stat_learning", clamp(P / 250, 1, 16 + F / 10));
+        boost("core.gardening", clamp(P / 300, 1, 12 + F / 10));
+        boost("core.alchemy", clamp(P / 350, 1, 10 + F / 10));
+        boost("core.tailoring", clamp(P / 350, 1, 9 + F / 10));
+        boost("core.literacy", clamp(P / 350, 1, 8 + F / 10));
     }
 }
 

@@ -1,7 +1,6 @@
 #include <stack>
 
 #include "../util/scope_guard.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
@@ -16,11 +15,11 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "crafting_material.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -46,6 +45,7 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -453,14 +453,14 @@ bool _magic_300(Character& subject, Character& target)
             if (cdata.player().sp < rnd(75))
             {
                 txt(i18n::s.get("core.magic.common.too_exhausted"));
-                damage_sp(cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                 return true;
             }
         }
         damage_sp(
             cdata.player(),
-            rnd(the_ability_db[efid]->cost / 2 + 1) +
-                the_ability_db[efid]->cost / 2 + 1);
+            rnd(the_skill_db[efid]->cost / 2 + 1) +
+                the_skill_db[efid]->cost / 2 + 1);
     }
     invsubroutine = 1;
     invctrl(0) = 27;
@@ -489,14 +489,14 @@ bool _magic_301(Character& subject, Character& target)
             if (cdata.player().sp < rnd(75))
             {
                 txt(i18n::s.get("core.magic.common.too_exhausted"));
-                damage_sp(cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                 return true;
             }
         }
         damage_sp(
             cdata.player(),
-            rnd(the_ability_db[efid]->cost / 2 + 1) +
-                the_ability_db[efid]->cost / 2 + 1);
+            rnd(the_skill_db[efid]->cost / 2 + 1) +
+                the_skill_db[efid]->cost / 2 + 1);
     }
     if (game()->mount != 0)
     {
@@ -580,7 +580,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             return false;
         }
     }
-    if (subject.get_skill(183).level == 0)
+    if (subject.skills().level("core.performer") == 0)
     {
         if (is_in_fov(subject))
         {
@@ -595,14 +595,14 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
             if (cdata.player().sp < rnd(75))
             {
                 txt(i18n::s.get("core.magic.common.too_exhausted"));
-                damage_sp(cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                 return true;
             }
         }
         damage_sp(
             cdata.player(),
-            rnd(the_ability_db[efid]->cost / 2 + 1) +
-                the_ability_db[efid]->cost / 2 + 1);
+            rnd(the_skill_db[efid]->cost / 2 + 1) +
+                the_skill_db[efid]->cost / 2 + 1);
     }
     activity_perform(subject, instrument.unwrap());
     return true;
@@ -613,7 +613,7 @@ bool _magic_183(Character& subject, OptionalItemRef instrument)
 // Cooking
 bool _magic_184(Character& subject, const ItemRef& cook_tool)
 {
-    if (cdata.player().get_skill(184).level == 0)
+    if (cdata.player().skills().level("core.cooking") == 0)
     {
         txt(i18n::s.get("core.magic.cook.do_not_know"));
         return false;
@@ -635,14 +635,14 @@ bool _magic_184(Character& subject, const ItemRef& cook_tool)
             if (cdata.player().sp < rnd(75))
             {
                 txt(i18n::s.get("core.magic.common.too_exhausted"));
-                damage_sp(cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                 return true;
             }
         }
         damage_sp(
             cdata.player(),
-            rnd(the_ability_db[efid]->cost / 2 + 1) +
-                the_ability_db[efid]->cost / 2 + 1);
+            rnd(the_skill_db[efid]->cost / 2 + 1) +
+                the_skill_db[efid]->cost / 2 + 1);
     }
     food_cook(subject, cook_tool, food);
     return true;
@@ -653,7 +653,7 @@ bool _magic_184(Character& subject, const ItemRef& cook_tool)
 // Fishing
 bool _magic_185(Character& subject, const ItemRef& rod)
 {
-    if (cdata.player().get_skill(185).level == 0)
+    if (cdata.player().skills().level("core.fishing") == 0)
     {
         txt(i18n::s.get("core.magic.fish.do_not_know"));
         return false;
@@ -741,14 +741,14 @@ bool _magic_185(Character& subject, const ItemRef& rod)
             if (cdata.player().sp < rnd(75))
             {
                 txt(i18n::s.get("core.magic.common.too_exhausted"));
-                damage_sp(cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                 return true;
             }
         }
         damage_sp(
             cdata.player(),
-            rnd(the_ability_db[efid]->cost / 2 + 1) +
-                the_ability_db[efid]->cost / 2 + 1);
+            rnd(the_skill_db[efid]->cost / 2 + 1) +
+                the_skill_db[efid]->cost / 2 + 1);
     }
     item_separate(rod);
     --rod->charges;
@@ -1289,7 +1289,7 @@ bool _magic_1104(Character& target)
                     continue;
                 }
             }
-            if (!the_ability_db[p])
+            if (!the_skill_db[p])
             {
                 continue;
             }
@@ -1307,7 +1307,7 @@ bool _magic_1104(Character& target)
                 txt(s +
                         i18n::s.get(
                             "core.magic.gain_knowledge.gain",
-                            the_ability_db.get_text(p, "name")),
+                            the_skill_db.get_text(p, "name")),
                     Message::color{ColorIndex::green});
                 snd("core.ding2");
                 f = 1;
@@ -1316,14 +1316,14 @@ bool _magic_1104(Character& target)
             else
             {
                 if (target.spell_stocks().amount(
-                        *the_ability_db.get_id_from_integer(p)) > 0)
+                        *the_skill_db.get_id_from_integer(p)) > 0)
                 {
                     target.spell_stocks().set_amount(
-                        *the_ability_db.get_id_from_integer(p), 0);
+                        *the_skill_db.get_id_from_integer(p), 0);
                     txt(i18n::s.get("core.magic.common.it_is_cursed"));
                     txt(i18n::s.get(
                             "core.magic.gain_knowledge.lose",
-                            the_ability_db.get_text(p, "name")),
+                            the_skill_db.get_text(p, "name")),
                         Message::color{ColorIndex::red});
                     snd("core.curse3");
                     animeload(14, cdata.player());
@@ -1381,7 +1381,8 @@ bool _magic_1143(Character& target)
             {
                 if (cnt <= 17)
                 {
-                    if (target.get_skill(cnt).level != 0)
+                    if (target.skills().level(
+                            *the_skill_db.get_id_from_integer(cnt)) != 0)
                     {
                         chara_gain_skill_exp(target, cnt, -1000);
                     }
@@ -1402,13 +1403,14 @@ bool _magic_1105(Character& target)
     for (int cnt = 0;; ++cnt)
     {
         p = rnd(300) + 100;
-        if (the_ability_db[p])
+        if (the_skill_db[p])
         {
             if (!is_cursed(efstatus))
             {
                 if (cnt < efstatusfix(0, 0, 100, 2000))
                 {
-                    if (target.get_skill(p).level != 0)
+                    if (target.skills().level(
+                            *the_skill_db.get_id_from_integer(p)) != 0)
                     {
                         continue;
                     }
@@ -1420,14 +1422,15 @@ bool _magic_1105(Character& target)
                     txt(i18n::s.get(
                             "core.magic.gain_skill",
                             target,
-                            the_ability_db.get_text(p, "name")),
+                            the_skill_db.get_text(p, "name")),
                         Message::color{ColorIndex::green});
                 }
                 break;
             }
             else
             {
-                if (target.get_skill(p).level == 0)
+                if (target.skills().level(
+                        *the_skill_db.get_id_from_integer(p)) == 0)
                 {
                     continue;
                 }
@@ -1505,14 +1508,17 @@ bool _magic_1119(Character& target)
         while (1)
         {
             p = rnd(300) + 100;
-            if (the_ability_db[p])
+            if (the_skill_db[p])
             {
-                if (target.get_skill(p).base_level == 0)
+                if (target.skills().base_level(
+                        *the_skill_db.get_id_from_integer(p)) == 0)
                 {
                     continue;
                 }
-                modify_potential(
-                    target, p, efp * efstatusfix(-4, -2, 5, 5) / 100);
+                skill_add_potential(
+                    target,
+                    *the_skill_db.get_id_from_integer(p),
+                    efp * efstatusfix(-4, -2, 5, 5) / 100);
                 if (cnt2 == 0)
                 {
                     s = i18n::s.get("core.magic.gain_skill_potential.the");
@@ -1531,7 +1537,7 @@ bool _magic_1119(Character& target)
                                 i18n::s.get(
                                     "core.magic.gain_skill_potential.increases",
                                     target,
-                                    the_ability_db.get_text(p, "name")),
+                                    the_skill_db.get_text(p, "name")),
                             Message::color{ColorIndex::green});
                     }
                 }
@@ -1541,7 +1547,7 @@ bool _magic_1119(Character& target)
                     txt(i18n::s.get(
                             "core.magic.gain_skill_potential.decreases",
                             target,
-                            the_ability_db.get_text(p, "name")),
+                            the_skill_db.get_text(p, "name")),
                         Message::color{ColorIndex::red});
                 }
                 break;
@@ -1575,7 +1581,7 @@ bool _magic_1139(Character& target)
     chara_gain_skill_exp(target, 18, efstatusfix(-4000, -1000, 8000, 12000));
     if (efstatus == CurseState::blessed)
     {
-        modify_potential(target, 18, 15);
+        skill_add_potential(target, "core.stat_speed", 15);
         txt(i18n::s.get("core.magic.troll_blood.blessed"),
             Message::color{ColorIndex::green});
     }
@@ -1592,8 +1598,14 @@ bool _magic_1113(Character& target)
     {
         for (int cnt = 10; cnt < 18; ++cnt)
         {
-            modify_potential(
-                target, cnt, rnd(target.get_skill(cnt).potential / 20 + 3) + 1);
+            skill_add_potential(
+                target,
+                *the_skill_db.get_id_from_integer(cnt),
+                rnd(target.skills().potential(
+                        *the_skill_db.get_id_from_integer(cnt)) /
+                        20 +
+                    3) +
+                    1);
         }
         txt(i18n::s.get("core.magic.gain_potential.blessed", target));
         MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
@@ -1602,23 +1614,34 @@ bool _magic_1113(Character& target)
     else
     {
         i = rnd(8) + 10;
-        const auto valn = the_ability_db.get_text(i, "name");
+        const auto valn = the_skill_db.get_text(i, "name");
         if (efstatus == CurseState::none)
         {
             txt(i18n::s.get(
                 "core.magic.gain_potential.increases", target, valn));
-            modify_potential(
-                target, i, rnd(target.get_skill(i).potential / 10 + 10) + 1);
+            skill_add_potential(
+                target,
+                *the_skill_db.get_id_from_integer(i),
+                rnd(target.skills().potential(
+                        *the_skill_db.get_id_from_integer(i)) /
+                        10 +
+                    10) +
+                    1);
             snd("core.ding2");
         }
         else
         {
             txt(i18n::s.get(
                 "core.magic.gain_potential.decreases", target, valn));
-            modify_potential(
+            skill_add_potential(
                 target,
-                i,
-                (rnd(target.get_skill(i).potential / 10 + 10) + 1) * -1);
+                *the_skill_db.get_id_from_integer(i),
+                (rnd(target.skills().potential(
+                         *the_skill_db.get_id_from_integer(i)) /
+                         10 +
+                     10) +
+                 1) *
+                    -1);
             snd("core.curse3");
         }
     }
@@ -1827,7 +1850,10 @@ bool _magic_440_439(Character& target)
             if (target.quality <= Quality::great)
             {
                 target.attr_adjs[attr] -=
-                    rnd(target.get_skill(p(cnt)).base_level) / 5 + rnd(5);
+                    rnd(target.skills().base_level(
+                        *the_skill_db.get_id_from_integer(p(cnt)))) /
+                        5 +
+                    rnd(5);
                 continue;
             }
         }
@@ -1838,7 +1864,10 @@ bool _magic_440_439(Character& target)
         if (efstatus == CurseState::blessed)
         {
             target.attr_adjs[attr] =
-                target.get_skill(p(cnt)).base_level / 10 + 5;
+                target.skills().base_level(
+                    *the_skill_db.get_id_from_integer(p(cnt))) /
+                    10 +
+                5;
         }
     }
     chara_refresh(target);
@@ -2056,7 +2085,7 @@ bool _magic_645_1114(Character& subject, Character& target)
             txt(i18n::s.get("core.magic.curse.spell", subject, target));
         }
     }
-    int p = 75 + target.get_skill(19).level;
+    int p = 75 + target.skills().level("core.stat_luck");
     if (const auto anticurse = enchantment_find(target, 43))
     {
         p += *anticurse / 2;
@@ -2152,7 +2181,8 @@ bool _magic_1118(Character& target)
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         p = rnd(11) + 50;
-        if (target.get_skill(p).base_level >= 150)
+        if (target.skills().base_level(*the_skill_db.get_id_from_integer(p)) >=
+            150)
         {
             ++f;
             chara_gain_registance(target, p, 50 * -1);
@@ -3079,7 +3109,7 @@ bool _magic_631(Character& subject)
         dx = cnt.position.x;
         dy = cnt.position.y;
         if (dist(subject.position, dx, dy) >
-            the_ability_db[631]->range % 1000 + 1)
+            the_skill_db[631]->range % 1000 + 1)
         {
             continue;
         }
@@ -3198,7 +3228,7 @@ bool _magic_465(Character& subject)
             }
             if (cell_data.at(dx, dy).chara_index_plus_one != 0)
             {
-                dmg = subject.get_skill(16).level * efp / 10;
+                dmg = subject.skills().level("core.stat_magic") * efp / 10;
                 damage_hp(
                     cdata[cell_data.at(dx, dy).chara_index_plus_one - 1],
                     dmg,
@@ -3244,7 +3274,7 @@ bool _magic_656(Character& subject)
         dx = cnt.position.x;
         dy = cnt.position.y;
         if (dist(subject.position, dx, dy) >
-            the_ability_db[656]->range % 1000 + 1)
+            the_skill_db[656]->range % 1000 + 1)
         {
             continue;
         }
@@ -3260,13 +3290,13 @@ bool _magic_656(Character& subject)
         buff_add(
             cnt,
             "core.speed",
-            subject.get_skill(17).level * 5 + 50,
+            subject.skills().level("core.stat_charisma") * 5 + 50,
             15,
             subject);
         buff_add(
             cnt,
             "core.hero",
-            subject.get_skill(17).level * 5 + 100,
+            subject.skills().level("core.stat_charisma") * 5 + 100,
             60,
             subject);
         buff_add(cnt, "core.contingency", 1500, 30, subject);
@@ -3528,7 +3558,7 @@ int _calc_ball_spell_range(Character& subject)
 {
     (void)subject;
 
-    int ret = the_ability_db[efid]->range % 1000 + 1;
+    int ret = the_skill_db[efid]->range % 1000 + 1;
     if (efid == 644)
     {
         ret = 2;
@@ -3778,16 +3808,16 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
     int efidprev = 0;
 
     f = 0;
-    if (the_ability_db[efid]->ability_type / 1000 == 1)
+    if (the_skill_db[efid]->ability_type / 1000 == 1)
     {
         f = 1;
-        p = the_ability_db[efid]->ability_type % 1000;
+        p = the_skill_db[efid]->ability_type % 1000;
         if (the_buff_db[p]->type == BuffType::hex)
         {
             efbad = 1;
         }
     }
-    if (the_ability_db[efid]->ability_type == 7)
+    if (the_skill_db[efid]->ability_type == 7)
     {
         efbad = 1;
     }
@@ -3922,7 +3952,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         dice2 = dice2 * 4 / 5 + 1;
         bonus = bonus * 4 / 5 + 1;
     }
-    switch (the_ability_db[efid]->ability_type)
+    switch (the_skill_db[efid]->ability_type)
     {
     default: return none;
     case 10:
@@ -3942,7 +3972,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
     }
         {
-            int distance = the_ability_db[efid]->range % 1000 + 1;
+            int distance = the_skill_db[efid]->range % 1000 + 1;
             BoltAnimation(subject.position, {tlocx, tlocy}, ele, distance)
                 .play();
         }
@@ -3960,7 +3990,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 continue;
             }
             if (dist(dx, dy, subject.position) >
-                the_ability_db[efid]->range % 1000 + 1)
+                the_skill_db[efid]->range % 1000 + 1)
             {
                 break;
             }
@@ -4092,7 +4122,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                     txt(i18n::s.get(
                         "core.magic.special_attack.self",
                         subject,
-                        the_ability_db.get_text(efid, "name"),
+                        the_skill_db.get_text(efid, "name"),
                         i18n::s.get_enum(
                             "core.ui.cast_style",
                             subject.special_attack_type)));
@@ -4190,7 +4220,9 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             }
             if (p != -1)
             {
-                i = target.get_skill(10 + p).base_level + target.attr_adjs[p];
+                i = target.skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + p)) +
+                    target.attr_adjs[p];
                 if (i > 0)
                 {
                     i = i * efp / 2000 + 1;
@@ -4354,8 +4386,10 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
                 return true;
             }
             p = rnd_capped(cdata[target_index].gold / 10 + 1);
-            if (rnd_capped(cdata[target_index].get_skill(13).level) >
-                    rnd_capped(subject.get_skill(12).level * 4) ||
+            if (rnd_capped(cdata[target_index].skills().level(
+                    "core.stat_perception")) >
+                    rnd_capped(
+                        subject.skills().level("core.stat_dexterity") * 4) ||
                 cdata[target_index].is_protected_from_thieves() == 1)
             {
                 txt(i18n::s.get(
@@ -4484,8 +4518,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         if (ele)
         {
             valn = i18n::s.get(
-                "core.magic.breath.named",
-                the_ability_db.get_text(ele, "name"));
+                "core.magic.breath.named", the_skill_db.get_text(ele, "name"));
         }
         else
         {

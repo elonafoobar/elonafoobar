@@ -1,6 +1,5 @@
 #include "ai.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "attack.hpp"
@@ -9,6 +8,7 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "fov.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -20,6 +20,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -341,11 +342,13 @@ void _ally_trains(Character& chara)
         while (true)
         {
             const auto skill_id = rnd(4) == 0 ? rnd(8) + 10 : rnd(300) + 100;
-            if (chara.get_skill(skill_id).base_level == 0)
+            if (chara.skills().base_level(
+                    *the_skill_db.get_id_from_integer(skill_id)) == 0)
             {
                 continue;
             }
-            modify_potential(chara, skill_id, 4);
+            skill_add_potential(
+                chara, *the_skill_db.get_id_from_integer(skill_id), 4);
             break;
         }
     }

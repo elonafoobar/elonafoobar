@@ -1,6 +1,5 @@
 #include "map.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -36,6 +35,7 @@
 #include "quest.hpp"
 #include "save.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -2035,7 +2035,7 @@ void map_global_proc_travel_events(Character& chara)
         }
         chara.activity.turns = chara.activity.turns * 100 /
             (100 + game()->seven_league_boot_effect +
-             cdata.player().get_skill(182).level);
+             cdata.player().skills().level("core.traveling"));
         return;
     }
     if (cdata.player().nutrition <= 5000)

@@ -1,6 +1,5 @@
 #include "activity.hpp"
 
-#include "ability.hpp"
 #include "animation.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -12,7 +11,7 @@
 #include "config.hpp"
 #include "crafting.hpp"
 #include "crafting_material.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
@@ -33,6 +32,7 @@
 #include "optional.hpp"
 #include "random_event.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -124,7 +124,7 @@ void search_material_spot()
     cell_featread(cdata.player().position.x, cdata.player().position.y);
     if (feat(1) == 27)
     {
-        atxlv += cdata.player().get_skill(161).level / 3;
+        atxlv += cdata.player().skills().level("core.anatomy") / 3;
         atxspot = 16;
     }
     if (feat(1) == 26)
@@ -146,7 +146,7 @@ void search_material_spot()
             i = 5;
             if (atxspot == 14)
             {
-                if (cdata.player().get_skill(163).level <
+                if (cdata.player().skills().level("core.mining") <
                         rnd_capped(atxlv * 2 + 1) ||
                     rnd(10) == 0)
                 {
@@ -158,7 +158,7 @@ void search_material_spot()
             }
             if (atxspot == 13)
             {
-                if (cdata.player().get_skill(185).level <
+                if (cdata.player().skills().level("core.fishing") <
                         rnd_capped(atxlv * 2 + 1) ||
                     rnd(10) == 0)
                 {
@@ -170,7 +170,7 @@ void search_material_spot()
             }
             if (atxspot == 15)
             {
-                if (cdata.player().get_skill(180).level <
+                if (cdata.player().skills().level("core.gardening") <
                         rnd_capped(atxlv * 2 + 1) ||
                     rnd(10) == 0)
                 {
@@ -216,7 +216,7 @@ int calc_performance_tips(const Character& performer, const Character& audience)
     // Instrument factor
     const auto I = performer.activity.item->param1;
 
-    const auto max = performer.get_skill(183).level * 100;
+    const auto max = performer.skills().level("core.performer") * 100;
 
     const auto m = Q * Q * (100 + I / 5) / 100 / 1000 + rnd(10);
     auto ret = clamp(audience.gold * clamp(m, 1, 100) / 125, 0, max);
@@ -369,7 +369,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     Character& performer,
     Character& audience)
 {
-    const auto performer_skill = performer.get_skill(183).level;
+    const auto performer_skill = performer.skills().level("core.performer");
     const auto& instrument = performer.activity.item.unwrap();
 
     if (audience.state() != Character::State::alive)
@@ -639,8 +639,8 @@ void activity_perform_end(Character& performer)
 
     performer.activity.finish();
 
-    const auto experience =
-        performer.quality_of_performance - performer.get_skill(183).level + 50;
+    const auto experience = performer.quality_of_performance -
+        performer.skills().level("core.performer") + 50;
     if (experience > 0)
     {
         chara_gain_skill_exp(performer, 183, experience, 0, 0);
@@ -784,8 +784,9 @@ void activity_harvest_start(Character& doer, const ItemRef& crop)
     txt(i18n::s.get("core.activity.dig", crop));
     doer.activity.turns = 10 +
         clamp(crop->weight /
-                  (1 + cdata.player().get_skill(10).level * 10 +
-                   cdata.player().get_skill(180).level * 40),
+                  (1 +
+                   cdata.player().skills().level("core.stat_strength") * 10 +
+                   cdata.player().skills().level("core.gardening") * 40),
               1,
               100);
 
@@ -802,21 +803,21 @@ void activity_harvest_doing(Character& doer, const ItemRef&)
     }
     if (rnd(6) == 0)
     {
-        if (rnd(55) > doer.get_skill(10).base_level + 25)
+        if (rnd(55) > doer.skills().base_level("core.stat_strength") + 25)
         {
             chara_gain_skill_exp(doer, 10, 50);
         }
     }
     if (rnd(8) == 0)
     {
-        if (rnd(55) > doer.get_skill(11).base_level + 28)
+        if (rnd(55) > doer.skills().base_level("core.stat_constitution") + 28)
         {
             chara_gain_skill_exp(doer, 11, 50);
         }
     }
     if (rnd(10) == 0)
     {
-        if (rnd(55) > doer.get_skill(15).base_level + 30)
+        if (rnd(55) > doer.skills().base_level("core.stat_will") + 30)
         {
             chara_gain_skill_exp(doer, 15, 50);
         }
@@ -860,7 +861,7 @@ void activity_study_start(Character& doer, const ItemRef& textbook)
     {
         txt(i18n::s.get(
             "core.activity.study.start.studying",
-            the_ability_db.get_text(textbook->param1, "name")));
+            the_skill_db.get_text(textbook->param1, "name")));
     }
     else
     {
@@ -917,7 +918,7 @@ void activity_study_end(Character& doer, const ItemRef& textbook)
     {
         txt(i18n::s.get(
             "core.activity.study.finish.studying",
-            the_ability_db.get_text(textbook->param1, "name")));
+            the_skill_db.get_text(textbook->param1, "name")));
     }
     else
     {
@@ -974,8 +975,8 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
             f2 = 1;
         }
     }
-    i = cdata.player().get_skill(300).level * 5 +
-        cdata.player().get_skill(12).level + 25;
+    i = cdata.player().skills().level("core.pickpocket") * 5 +
+        cdata.player().skills().level("core.stat_dexterity") + 25;
     const auto t = game_time();
     if (19 <= t.hour() || t.hour() < 7)
     {
@@ -1019,7 +1020,8 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
         {
             p = p * 2 / 3;
         }
-        if (rnd_capped(cdata[cnt].get_skill(13).level + 1) > p)
+        if (rnd_capped(cdata[cnt].skills().level("core.stat_perception") + 1) >
+            p)
         {
             if (is_in_fov(cdata[cnt]))
             {
@@ -1102,7 +1104,8 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
             f = 1;
         }
     }
-    if (steal_target->weight >= cdata.player().get_skill(10).level * 500)
+    if (steal_target->weight >=
+        cdata.player().skills().level("core.stat_strength") * 500)
     {
         if (f != 1)
         {
@@ -1525,7 +1528,8 @@ void activity_sex(Character& chara_a, optional_ref<Character> chara_b)
             250 + (cdata[target_index].is_map_local()) * 1000);
     }
 
-    int sexvalue = chara_a.get_skill(17).level * (50 + rnd(50)) + 100;
+    int sexvalue =
+        chara_a.skills().level("core.stat_charisma") * (50 + rnd(50)) + 100;
 
     std::string dialog_head;
     std::string dialog_tail;
@@ -1961,7 +1965,7 @@ void spot_fishing(Character& fisher, OptionalItemRef rod)
                 }
             }
             if (the_fish_db[fish]->difficulty >=
-                rnd_capped(cdata.player().get_skill(185).level + 1))
+                rnd_capped(cdata.player().skills().level("core.fishing") + 1))
             {
                 fishstat = 0;
             }
@@ -2144,12 +2148,12 @@ void spot_mining_or_wall(Character& chara)
         f = 0;
         if (chip_data.for_cell(refx, refy).kind == 6)
         {
-            if (rnd(12000) <
-                chara.get_skill(10).level + chara.get_skill(163).level * 10)
+            if (rnd(12000) < chara.skills().level("core.stat_strength") +
+                    chara.skills().level("core.mining") * 10)
             {
                 f = 1;
             }
-            p = 30 - chara.get_skill(163).level / 2;
+            p = 30 - chara.skills().level("core.mining") / 2;
             if (p > 0)
             {
                 if (countdig <= p)
@@ -2160,12 +2164,12 @@ void spot_mining_or_wall(Character& chara)
         }
         else
         {
-            if (rnd(1500) <
-                chara.get_skill(10).level + chara.get_skill(163).level * 10)
+            if (rnd(1500) < chara.skills().level("core.stat_strength") +
+                    chara.skills().level("core.mining") * 10)
             {
                 f = 1;
             }
-            p = 20 - chara.get_skill(163).level / 2;
+            p = 20 - chara.skills().level("core.mining") / 2;
             if (p > 0)
             {
                 if (countdig <= p)
@@ -2389,7 +2393,8 @@ void sleep_start(const OptionalItemRef& bed)
         i = 0;
         for (int cnt = 10; cnt < 18; ++cnt)
         {
-            i += cdata.player().get_skill(cnt).base_level;
+            i += cdata.player().skills().base_level(
+                *the_skill_db.get_id_from_integer(cnt));
         }
         i = clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
@@ -2406,7 +2411,10 @@ void sleep_start(const OptionalItemRef& bed)
             {
                 break;
             }
-            modify_potential(cdata.player(), 10 + rnd(8), 1);
+            skill_add_potential(
+                cdata.player(),
+                *the_skill_db.get_id_from_integer(10 + rnd(8)),
+                1);
             ++grown;
             if (cnt > 6)
             {

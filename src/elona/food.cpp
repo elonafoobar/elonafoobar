@@ -1,7 +1,6 @@
 #include "food.hpp"
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "buff_utils.hpp"
@@ -9,9 +8,9 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -28,6 +27,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -399,18 +399,18 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     const auto item_name_prev = itemname(food);
 
-    int dish_rank = rnd_capped(cook.get_skill(184).level + 6) +
+    int dish_rank = rnd_capped(cook.skills().level("core.cooking") + 6) +
         rnd(cook_tool->param1 / 50 + 1);
-    if (dish_rank > cook.get_skill(184).level / 5 + 7)
+    if (dish_rank > cook.skills().level("core.cooking") / 5 + 7)
     {
-        dish_rank = cook.get_skill(184).level / 5 + 7;
+        dish_rank = cook.skills().level("core.cooking") / 5 + 7;
     }
     dish_rank = rnd(dish_rank + 1);
     if (dish_rank > 3)
     {
         dish_rank = rnd(dish_rank);
     }
-    if (cook.get_skill(184).level >= 5)
+    if (cook.skills().level("core.cooking") >= 5)
     {
         if (dish_rank < 3)
         {
@@ -420,7 +420,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
             }
         }
     }
-    if (cook.get_skill(184).level >= 10)
+    if (cook.skills().level("core.cooking") >= 10)
     {
         if (dish_rank < 3)
         {
@@ -861,8 +861,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 10, 2);
-        modify_potential(eater, 11, 2);
+        skill_add_potential(eater, "core.stat_strength", 2);
+        skill_add_potential(eater, "core.stat_constitution", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.morgia"),
@@ -921,8 +921,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 16, 2);
-        modify_potential(eater, 15, 2);
+        skill_add_potential(eater, "core.stat_magic", 2);
+        skill_add_potential(eater, "core.stat_will", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.mareilon"),
@@ -980,8 +980,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             fdlist(1, fdmax) = 10;
             ++fdmax;
         }
-        modify_potential(eater, 12, 2);
-        modify_potential(eater, 13, 2);
+        skill_add_potential(eater, "core.stat_dexterity", 2);
+        skill_add_potential(eater, "core.stat_perception", 2);
         nutrition = 500;
         if (eater.is_player())
         {
@@ -1041,8 +1041,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 17, 2);
-        modify_potential(eater, 14, 2);
+        skill_add_potential(eater, "core.stat_charisma", 2);
+        skill_add_potential(eater, "core.stat_learning", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.alraunia"),
@@ -1225,28 +1225,30 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             txt(i18n::s.get("core.food.effect.little_sister", eater),
                 Message::color{ColorIndex::green});
             if (rnd_capped(
-                    eater.get_skill(2).base_level *
-                        eater.get_skill(2).base_level +
+                    eater.skills().base_level("core.stat_life") *
+                        eater.skills().base_level("core.stat_life") +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 2, 1000);
             }
             if (rnd_capped(
-                    eater.get_skill(3).base_level *
-                        eater.get_skill(3).base_level +
+                    eater.skills().base_level("core.stat_mana") *
+                        eater.skills().base_level("core.stat_mana") +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 3, 1000);
             }
             for (int cnt = 100; cnt < 400; ++cnt)
             {
-                if (!the_ability_db[cnt] ||
-                    the_ability_db[cnt]->related_basic_attribute == 0 ||
-                    eater.get_skill(cnt).base_level == 0)
+                if (!the_skill_db[cnt] ||
+                    the_skill_db[cnt]->related_basic_attribute == 0 ||
+                    eater.skills().base_level(
+                        *the_skill_db.get_id_from_integer(cnt)) == 0)
                 {
                     continue;
                 }
-                modify_potential(eater, cnt, rnd(10) + 1);
+                skill_add_potential(
+                    eater, *the_skill_db.get_id_from_integer(cnt), rnd(10) + 1);
             }
         }
     }
@@ -1374,14 +1376,14 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         txt(i18n::s.get(
                             "core.food.effect.ability.develops",
                             eater,
-                            the_ability_db.get_text(enc_id, "name")));
+                            the_skill_db.get_text(enc_id, "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.food.effect.ability.deteriorates",
                             eater,
-                            the_ability_db.get_text(enc_id, "name")));
+                            the_skill_db.get_text(enc_id, "name")));
                     }
                 }
                 chara_gain_skill_exp(

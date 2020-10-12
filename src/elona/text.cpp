@@ -5,7 +5,7 @@
 #include "area.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -466,14 +466,14 @@ std::string txtskillchange(const Character& chara, int id, bool increase)
             return i18n::s.get(
                 "core.skill.default.increase",
                 chara,
-                the_ability_db.get_text(id, "name"));
+                the_skill_db.get_text(id, "name"));
         }
         else
         {
             return i18n::s.get(
                 "core.skill.default.decrease",
                 chara,
-                the_ability_db.get_text(id, "name"));
+                the_skill_db.get_text(id, "name"));
         }
     }
 }
@@ -2617,13 +2617,13 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"耐性に <green>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"耐性に <red>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のマイナス修正\n"s;
         }
@@ -2632,12 +2632,12 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"に <green>+"s + bonus + u8"<col> のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"に <red>"s + bonus + u8"<col> のマイナス修正\n"s;
         }
     }

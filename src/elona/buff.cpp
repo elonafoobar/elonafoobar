@@ -1,7 +1,6 @@
 #include "buff.hpp"
 
 #include "../util/range.hpp"
-#include "ability.hpp"
 #include "character.hpp"
 #include "data/types/type_buff.hpp"
 #include "draw.hpp"
@@ -11,6 +10,7 @@
 #include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -156,15 +156,16 @@ void buff_add(
     if (buff_data.type == BuffType::hex)
     {
         bool resists{};
-        if (chara.get_skill(60).level / 2 > rnd_capped(power * 2 + 100))
+        if (chara.skills().level("core.element_magic") / 2 >
+            rnd_capped(power * 2 + 100))
         {
             resists = true;
         }
-        if (power * 3 < chara.get_skill(60).level)
+        if (power * 3 < chara.skills().level("core.element_magic"))
         {
             resists = true;
         }
-        if (power / 3 > chara.get_skill(60).level)
+        if (power / 3 > chara.skills().level("core.element_magic"))
         {
             resists = false;
         }

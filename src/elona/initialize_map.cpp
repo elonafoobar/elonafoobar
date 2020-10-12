@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "ability.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "building.hpp"
@@ -36,6 +35,7 @@
 #include "random.hpp"
 #include "save_fs.hpp"
 #include "scene.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -1031,7 +1031,7 @@ void _notify_distance_traveled()
         cnvdate(game()->departure_time.from_epoch().hours(), false)));
     p = 0;
     exp = cdata.player().level * game()->travel_distance *
-            cdata.player().get_skill(182).level / 100 +
+            cdata.player().skills().level("core.traveling") / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
     {

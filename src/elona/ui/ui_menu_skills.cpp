@@ -1,13 +1,13 @@
 #include "ui_menu_skills.hpp"
 
-#include "../ability.hpp"
 #include "../audio.hpp"
-#include "../data/types/type_ability.hpp"
+#include "../data/types/type_skill.hpp"
 #include "../game.hpp"
 #include "../i18n.hpp"
 #include "../keybind/keybind.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
+#include "../skill.hpp"
 #include "menu_cursor_history.hpp"
 
 
@@ -21,22 +21,23 @@ static void _populate_skill_list()
 {
     for (int cnt = 300; cnt < 400; ++cnt)
     {
-        if (cdata.player().get_skill(cnt).level > 0)
+        if (cdata.player().skills().level(
+                *the_skill_db.get_id_from_integer(cnt)) > 0)
         {
             list(0, listmax) = cnt;
             list(1, listmax) =
-                the_ability_db[cnt]->related_basic_attribute * 1000 + cnt;
+                the_skill_db[cnt]->related_basic_attribute * 1000 + cnt;
             ++listmax;
         }
     }
     for (int cnt = 1; cnt < 61; ++cnt)
     {
         if (cdata.player().spacts().has(
-                *the_ability_db.get_id_from_integer(cnt + 600)))
+                *the_skill_db.get_id_from_integer(cnt + 600)))
         {
             list(0, listmax) = cnt + 600;
             list(1, listmax) =
-                the_ability_db[cnt + 600]->related_basic_attribute * 1000 + cnt;
+                the_skill_db[cnt + 600]->related_basic_attribute * 1000 + cnt;
             ++listmax;
         }
     }
@@ -132,7 +133,7 @@ void UIMenuSkills::_draw_skill_attribute(int cnt, int skill_id)
     gmode(2);
     gcopy_c(
         1,
-        (the_ability_db[skill_id]->related_basic_attribute - 10) * inf_tiles,
+        (the_skill_db[skill_id]->related_basic_attribute - 10) * inf_tiles,
         672,
         inf_tiles,
         inf_tiles,
@@ -153,14 +154,14 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
     }
     cs_list(
         cs == cnt,
-        the_ability_db.get_text(skill_id, "name") + skill_shortcut,
+        the_skill_db.get_text(skill_id, "name") + skill_shortcut,
         wx + 84,
         wy + 66 + cnt * 19 - 1);
 }
 
 void UIMenuSkills::_draw_spell_cost(int cnt, int skill_id)
 {
-    std::string spell_cost = ""s + the_ability_db[skill_id]->cost + u8" Sp"s;
+    std::string spell_cost = ""s + the_skill_db[skill_id]->cost + u8" Sp"s;
     mes(wx + 288 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
         spell_cost);

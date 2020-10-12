@@ -1,18 +1,16 @@
-#include "type_ability.hpp"
+#include "type_skill.hpp"
 
 
 
 namespace elona
 {
 
-AbilityDB the_ability_db;
-const constexpr char* data::DatabaseTraits<AbilityDB>::type_id;
+SkillDB the_skill_db;
+const constexpr char* data::DatabaseTraits<SkillDB>::type_id;
 
 
 
-AbilityData AbilityDB::convert(
-    const lua::ConfigTable& data,
-    const std::string& id)
+SkillData SkillDB::convert(const lua::ConfigTable& data, const std::string& id)
 {
     DATA_INTEGER_ID();
     DATA_OPT_OR(related_basic_attribute, int, 0);
@@ -21,7 +19,7 @@ AbilityData AbilityDB::convert(
     DATA_OPT_OR(range, int, 0);
     DATA_OPT_OR(difficulty, int, 0);
 
-    return AbilityData{
+    return SkillData{
         data::InstanceId{id},
         integer_id,
         related_basic_attribute,
