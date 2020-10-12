@@ -68,9 +68,10 @@ void build_target_list(const Character& attacker)
             {
                 continue;
             }
-            if (attacker.is_player() || attacker.relationship >= 0)
+            if (attacker.is_player() ||
+                attacker.relationship >= Relationship::friendly)
             {
-                if (cnt.relationship == 10)
+                if (cnt.relationship == Relationship::ally)
                 {
                     if (cnt.is_player())
                     {
@@ -758,9 +759,10 @@ void do_ranged_attack(
                 break;
             }
             const auto shot_target = list(0, rnd(listmax));
-            if (attacker.is_player() || attacker.relationship >= 0)
+            if (attacker.is_player() ||
+                attacker.relationship >= Relationship::friendly)
             {
-                if (cdata[shot_target].relationship >= 0)
+                if (cdata[shot_target].relationship >= Relationship::friendly)
                 {
                     if (cnt != 0)
                     {
@@ -769,7 +771,7 @@ void do_ranged_attack(
                     }
                 }
             }
-            else if (cdata[shot_target].relationship == -3)
+            else if (cdata[shot_target].relationship == Relationship::enemy)
             {
                 cnt = cnt + (rnd(5) == 0) - 1;
                 continue;
@@ -1054,7 +1056,8 @@ int find_enemy_target(Character& chara, bool silent)
         if (listmax != 0)
         {
             f = 0;
-            if (chara.is_player() || chara.relationship >= 0)
+            if (chara.is_player() ||
+                chara.relationship >= Relationship::friendly)
             {
                 p(0) = -3;
                 p(1) = -1;
@@ -1066,12 +1069,12 @@ int find_enemy_target(Character& chara, bool silent)
                 p(1) = 0;
                 p(2) = 0;
             }
-            for (int cnt = 0; cnt < 3; ++cnt)
+            for (int cnt2 = 0; cnt2 < 3; ++cnt2)
             {
-                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata[list(0, cnt)].relationship <= p(cnt2))
+                    if (cdata[list(0, cnt)].relationship <=
+                        static_cast<Relationship>(p(cnt2)))
                     {
                         chara.enemy_id = list(0, cnt);
                         f = 1;

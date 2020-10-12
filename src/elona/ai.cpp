@@ -88,9 +88,9 @@ bool _ai_check(Character& chara, Direction direction, int p)
         }
         if (cellchara != -1)
         {
-            if (chara.relationship == 10)
+            if (chara.relationship == Relationship::ally)
             {
-                if (cdata[cellchara].relationship == -3)
+                if (cdata[cellchara].relationship == Relationship::enemy)
                 {
                     chara.enemy_id = cellchara;
                 }
@@ -99,9 +99,9 @@ bool _ai_check(Character& chara, Direction direction, int p)
                     _blockedbychara = true;
                 }
             }
-            if (chara.relationship == -3)
+            if (chara.relationship == Relationship::enemy)
             {
-                if (cdata[cellchara].relationship == 10)
+                if (cdata[cellchara].relationship == Relationship::ally)
                 {
                     chara.enemy_id = cellchara;
                 }
@@ -365,8 +365,8 @@ bool _is_valid_position(int x, int y)
 bool _will_crush_wall(const Character& chara, int x, int y)
 {
     return !chara.is_player_or_ally() && chara.quality >= Quality::miracle &&
-        chara.relationship <= -2 && _is_valid_position(x, y) &&
-        (chip_data.for_cell(x, y).effect & 4);
+        chara.relationship <= Relationship::unfriendly &&
+        _is_valid_position(x, y) && (chip_data.for_cell(x, y).effect & 4);
 }
 
 
@@ -744,7 +744,7 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
     if (cellchara != -1)
     {
         enemy_index = cellchara;
-        if (relation_between(chara, cdata[enemy_index]) == -3)
+        if (relation_between(chara, cdata[enemy_index]) == Relationship::enemy)
         {
             chara.enemy_id = enemy_index;
             chara.hate += 4;
@@ -913,7 +913,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
         }
     }
 
-    if (!chara.ai_item && chara.relationship != 10)
+    if (!chara.ai_item && chara.relationship != Relationship::ally)
     {
         if (game()->current_map == mdata_t::MapId::quest &&
             game()->executing_immediate_quest_type == 1009)

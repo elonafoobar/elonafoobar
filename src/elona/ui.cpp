@@ -371,11 +371,11 @@ void highlight_characters_in_pet_arena()
         if (chara.is_player())
             continue;
         snail::Color color{0};
-        if (chara.relationship == 10)
+        if (chara.relationship == Relationship::ally)
         {
             color = {127, 127, 255, 32};
         }
-        else if (chara.relationship == -3)
+        else if (chara.relationship == Relationship::enemy)
         {
             color = {255, 127, 127, 32};
         }

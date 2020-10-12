@@ -409,7 +409,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0);
     }
-    if (audience.relationship == -3)
+    if (audience.relationship == Relationship::enemy)
     {
         if (audience.hate == 0)
         {
@@ -968,7 +968,7 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
     auto steal_target_owner = item_get_owner(steal_target);
     if (const auto owner = steal_target_owner.as_character())
     {
-        if (owner->original_relationship == -3)
+        if (owner->original_relationship == Relationship::enemy)
         {
             f2 = 1;
         }
@@ -1054,7 +1054,7 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
             {
                 if (owner->sleep == 0)
                 {
-                    owner->relationship = -2;
+                    owner->relationship = Relationship::unfriendly;
                     chara_act_hostile_action(cdata.player(), *owner);
                     chara_modify_impression(*owner, -20);
                 }
@@ -1652,7 +1652,7 @@ void activity_eating_finish(Character& eater, const ItemRef& food)
                 damage_hp(eater, 999, -12);
                 if (eater.state() != Character::State::alive)
                 {
-                    if (eater.relationship > 0)
+                    if (eater.relationship > Relationship::friendly)
                     {
                         modify_karma(cdata.player(), -5);
                     }

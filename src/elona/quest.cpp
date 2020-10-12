@@ -104,7 +104,7 @@ void quest_place_target()
         if (cnt.state() == Character::State::alive)
         {
             cnt.is_quest_target() = true;
-            cnt.relationship = -3;
+            cnt.relationship = Relationship::enemy;
         }
     }
 }
@@ -603,7 +603,7 @@ bool quest_generate(int quest_idx)
             {
                 continue;
             }
-            if (cdata[chara_index].relationship != 0 ||
+            if (cdata[chara_index].relationship != Relationship::friendly ||
                 (cdata[chara_index].role != Role::citizen &&
                  cdata[chara_index].role != Role::guard))
             {

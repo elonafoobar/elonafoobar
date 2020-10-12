@@ -1638,7 +1638,7 @@ void remain_make(const ItemRef& remain, const Character& chara)
         remain->weight = 20 * (chara.weight + 500) / 500;
         remain->value = chara.level * 40 + 600;
         if (the_character_db[charaid2int(chara.id)]->rarity / 1000 < 20 &&
-            chara.original_relationship < -1)
+            chara.original_relationship < Relationship::neutral)
         {
             remain->value *= clamp(
                 4 - the_character_db[charaid2int(chara.id)]->rarity / 1000 / 5,

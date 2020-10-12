@@ -1165,20 +1165,20 @@ void chara_refresh(Character& chara)
 
 
 
-int relation_between(const Character& a, const Character& b)
+Relationship relation_between(const Character& a, const Character& b)
 {
-    if (a.relationship >= -2)
+    if (a.relationship >= Relationship::unfriendly)
     {
-        if (b.relationship <= -3)
+        if (b.relationship <= Relationship::enemy)
         {
-            return -3;
+            return Relationship::enemy;
         }
     }
-    else if (b.relationship >= -2)
+    else if (b.relationship >= Relationship::unfriendly)
     {
-        return -3;
+        return Relationship::enemy;
     }
-    return 0;
+    return Relationship::friendly;
 }
 
 
@@ -1404,7 +1404,7 @@ void chara_modify_impression(Character& chara, int delta)
     }
     else if (level2 > level1)
     {
-        if (chara.relationship != -3)
+        if (chara.relationship != Relationship::enemy)
         {
             txt(i18n::s.get(
                     "core.chara.impression.gain",
@@ -1489,7 +1489,7 @@ int chara_copy(const Character& source)
     // Reset some fields which should not be copied.
     destination.impression = 0;
     destination.gold = 0;
-    destination.original_relationship = -3;
+    destination.original_relationship = Relationship::enemy;
     destination.has_own_sprite() = false;
     destination.is_livestock() = false;
     destination.is_married() = false;
@@ -1543,8 +1543,8 @@ void chara_relocate(
     // Backups for changing
     Position position;
     Position initial_position;
-    int relationship;
-    int original_relationship;
+    Relationship relationship;
+    Relationship original_relationship;
     int hate;
     int enemy_id;
     int hp;
@@ -1697,9 +1697,12 @@ int chara_breed_power(const Character& chara)
 
 bool belong_to_same_team(const Character& c1, const Character& c2)
 {
-    return (c1.relationship >= 0 && c2.relationship >= 0) ||
-        (c1.relationship == -1 && c2.relationship == -1) ||
-        (c1.relationship <= -2 && c2.relationship <= -2);
+    return (c1.relationship >= Relationship::friendly &&
+            c2.relationship >= Relationship::friendly) ||
+        (c1.relationship == Relationship::neutral &&
+         c2.relationship == Relationship::neutral) ||
+        (c1.relationship <= Relationship::unfriendly &&
+         c2.relationship <= Relationship::unfriendly);
 }
 
 
@@ -1723,8 +1726,8 @@ void chara_add_quality_parens(Character& chara)
 void initialize_pc_character()
 {
     cdata.player().quality = Quality::good;
-    cdata.player().relationship = 10;
-    cdata.player().original_relationship = 10;
+    cdata.player().relationship = Relationship::ally;
+    cdata.player().original_relationship = Relationship::ally;
     cdata.player().has_own_sprite() = true;
     flt();
     if (const auto item = itemcreate_player_inv(333, 0))
@@ -1801,7 +1804,7 @@ void go_hostile()
         if (chara.role == Role::guard || chara.role == Role::shop_guard ||
             chara.role == Role::wandering_vendor)
         {
-            chara.relationship = -3;
+            chara.relationship = Relationship::enemy;
             chara.hate = 80;
             chara.emotion_icon = 218;
         }
@@ -1852,7 +1855,7 @@ void turn_aggro(Character& chara, Character& target, int hate)
 {
     if (target.is_player_or_ally())
     {
-        chara.relationship = -3;
+        chara.relationship = Relationship::enemy;
     }
     chara.hate = hate;
     chara.emotion_icon = 218;
@@ -1913,18 +1916,18 @@ void chara_act_hostile_action(Character& attacker, Character& target)
     {
         return;
     }
-    if (target.relationship != -3)
+    if (target.relationship != Relationship::enemy)
     {
         target.emotion_icon = 418;
     }
-    if (target.relationship == 10)
+    if (target.relationship == Relationship::ally)
     {
         txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
             Message::color{ColorIndex::purple});
     }
     else
     {
-        if (target.relationship == 0)
+        if (target.relationship == Relationship::friendly)
         {
             modify_karma(cdata.player(), -2);
         }
@@ -1938,21 +1941,21 @@ void chara_act_hostile_action(Character& attacker, Character& target)
                 return;
             }
         }
-        if (target.relationship > -2)
+        if (target.relationship > Relationship::unfriendly)
         {
             txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
                 Message::color{ColorIndex::purple});
-            target.relationship = -2;
+            target.relationship = Relationship::unfriendly;
         }
         else
         {
-            if (target.relationship != -3)
+            if (target.relationship != Relationship::enemy)
             {
                 txt(i18n::s.get(
                         "core.misc.hostile_action.gets_furious", target),
                     Message::color{ColorIndex::purple});
             }
-            target.relationship = -3;
+            target.relationship = Relationship::enemy;
             target.hate = 80;
             target.enemy_id = attacker.index;
         }
@@ -2016,9 +2019,9 @@ void incognitobegin()
         {
             continue;
         }
-        if (cdata[cnt].original_relationship >= -2)
+        if (cdata[cnt].original_relationship >= Relationship::unfriendly)
         {
-            if (cdata[cnt].relationship <= -2)
+            if (cdata[cnt].relationship <= Relationship::unfriendly)
             {
                 cdata[cnt].hate = 0;
                 cdata[cnt].relationship = cdata[cnt].original_relationship;
@@ -2042,7 +2045,7 @@ void incognitoend()
         {
             if (cdata.player().karma < -30)
             {
-                cdata[cnt].relationship = -3;
+                cdata[cnt].relationship = Relationship::enemy;
                 cdata[cnt].hate = 80;
                 cdata[cnt].emotion_icon = 218;
             }
@@ -2967,8 +2970,8 @@ optional_ref<Character> new_ally_joins(Character& new_ally)
     auto& slot = cdata[slot_index];
 
     chara_relocate(new_ally, slot);
-    slot.relationship = 10;
-    slot.original_relationship = 10;
+    slot.relationship = Relationship::ally;
+    slot.original_relationship = Relationship::ally;
     slot.role = Role::none;
     slot.is_quest_target() = false;
     slot.is_not_attacked_by_enemy() = false;

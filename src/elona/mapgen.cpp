@@ -2009,8 +2009,8 @@ void initialize_random_nefia_rdtype6()
         map_set_chara_generation_filter();
         if (const auto chara = chara_create(-1, 0, -3, 0))
         {
-            chara->relationship = -3;
-            chara->original_relationship = -3;
+            chara->relationship = Relationship::enemy;
+            chara->original_relationship = Relationship::enemy;
         }
     }
     for (int cnt = 0, cnt_end = (10 + rnd(10)); cnt < cnt_end; ++cnt)
@@ -2699,8 +2699,8 @@ int initialize_quest_map_party()
                     -1, list(rnd(3), roomdiff), rnd(rw) + rx, rnd(rh) + ry))
             {
                 chara->role = Role::other;
-                chara->relationship = -1;
-                chara->original_relationship = -1;
+                chara->relationship = Relationship::neutral;
+                chara->original_relationship = Relationship::neutral;
                 chara->gold = chara->level * (20 + rnd(20));
             }
         }
@@ -2735,29 +2735,29 @@ int initialize_quest_map_party()
     if (const auto chara = chara_create(-1, 29, -3, 0))
     {
         chara->role = Role::other;
-        chara->relationship = -1;
-        chara->original_relationship = -1;
+        chara->relationship = Relationship::neutral;
+        chara->original_relationship = Relationship::neutral;
     }
     flt();
     if (const auto chara = chara_create(-1, 231, -3, 0))
     {
         chara->role = Role::other;
-        chara->relationship = -1;
-        chara->original_relationship = -1;
+        chara->relationship = Relationship::neutral;
+        chara->original_relationship = Relationship::neutral;
     }
     flt();
     if (const auto chara = chara_create(-1, 31, -3, 0))
     {
         chara->role = Role::other;
-        chara->relationship = -1;
-        chara->original_relationship = -1;
+        chara->relationship = Relationship::neutral;
+        chara->original_relationship = Relationship::neutral;
     }
     flt();
     if (const auto chara = chara_create(-1, 247, -3, 0))
     {
         chara->role = Role::other;
-        chara->relationship = -1;
-        chara->original_relationship = -1;
+        chara->relationship = Relationship::neutral;
+        chara->original_relationship = Relationship::neutral;
     }
     if (rnd(10) == 0)
     {
@@ -2765,8 +2765,8 @@ int initialize_quest_map_party()
         if (const auto chara = chara_create(-1, 34, -3, 0))
         {
             chara->role = Role::other;
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     if (rnd(10) == 0)
@@ -2775,8 +2775,8 @@ int initialize_quest_map_party()
         if (const auto chara = chara_create(-1, 28, -3, 0))
         {
             chara->role = Role::other;
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     if (rnd(10) == 0)
@@ -2785,8 +2785,8 @@ int initialize_quest_map_party()
         if (const auto chara = chara_create(-1, 223, -3, 0))
         {
             chara->role = Role::other;
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     if (rnd(10) == 0)
@@ -2795,8 +2795,8 @@ int initialize_quest_map_party()
         if (const auto chara = chara_create(-1, 252, -3, 0))
         {
             chara->role = Role::other;
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     if (rnd(10) == 0)
@@ -2805,8 +2805,8 @@ int initialize_quest_map_party()
         if (const auto chara = chara_create(-1, 322, -3, 0))
         {
             chara->role = Role::other;
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     for (const auto& item : *inv_map())
@@ -2837,8 +2837,8 @@ void initialize_quest_map_town()
         if (const auto chara =
                 chara_create(-1, quest_data.immediate().extra_info_1, -3, 0))
         {
-            chara->relationship = -3;
-            chara->original_relationship = -3;
+            chara->relationship = Relationship::enemy;
+            chara->original_relationship = Relationship::enemy;
             quest_data.immediate().extra_info_2 = chara->index;
         }
     }
@@ -2852,8 +2852,8 @@ void initialize_quest_map_town()
             if (const auto chara = chara_create(
                     -1, quest_data.immediate().extra_info_1, -3, 0))
             {
-                chara->relationship = -3;
-                chara->original_relationship = -3;
+                chara->relationship = Relationship::enemy;
+                chara->original_relationship = Relationship::enemy;
             }
         }
     }

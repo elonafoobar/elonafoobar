@@ -291,9 +291,10 @@ TurnResult _pre_proc_movement_event(Character& chara)
 
 TurnResult _bump_into_character(Character& chara)
 {
-    if (chara.relationship >= 10 ||
-        (chara.relationship == -1 && !g_config.attack_neutral_npcs()) ||
-        (chara.relationship == 0 &&
+    if (chara.relationship >= Relationship::ally ||
+        (chara.relationship == Relationship::neutral &&
+         !g_config.attack_neutral_npcs()) ||
+        (chara.relationship == Relationship::friendly &&
          (area_data[game()->current_map].is_museum_or_shop() ||
           is_modifier_pressed(snail::ModKey::shift))))
     {
@@ -346,12 +347,12 @@ TurnResult _bump_into_character(Character& chara)
     }
     if (running)
     {
-        if (chara.relationship >= -2 || keybd_wait >= 40)
+        if (chara.relationship >= Relationship::unfriendly || keybd_wait >= 40)
         {
             return TurnResult::pc_turn_user_error;
         }
     }
-    if (chara.relationship <= -1)
+    if (chara.relationship <= Relationship::neutral)
     {
         cdata.player().enemy_id = chara.index;
         if (chara.is_invisible() == 1)
@@ -3399,7 +3400,7 @@ TurnResult do_fire_command()
         return TurnResult::pc_turn_user_error;
     }
     const auto target_chara_index = cdata.player().enemy_id;
-    if (cdata[target_chara_index].relationship >= 0)
+    if (cdata[target_chara_index].relationship >= Relationship::friendly)
     {
         int stat = prompt_really_attack(cdata[target_chara_index]);
         if (stat == 0)
@@ -3856,10 +3857,10 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
             if (const auto chara =
                     chara_create(-1, 0, caster.position.x, caster.position.y))
             {
-                if (caster.relationship <= -3)
+                if (caster.relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
         }
@@ -4433,7 +4434,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     {
         if (the_ability_db[efid]->ability_type == 7)
         {
-            if (caster.relationship == 10 ||
+            if (caster.relationship == Relationship::ally ||
                 game()->current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
@@ -4552,7 +4553,8 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
                 else
                 {
                     enemy_index = caster.enemy_id;
-                    if (relation_between(caster, cdata[enemy_index]) != -3)
+                    if (relation_between(caster, cdata[enemy_index]) !=
+                        Relationship::enemy)
                     {
                         break;
                     }
@@ -4996,13 +4998,13 @@ int do_spact(Character& doer, int& enemy_index)
     {
         if (cdata[enemy_index].is_sentenced_daeth() == 1)
         {
-            if (doer.relationship == -3)
+            if (doer.relationship == Relationship::enemy)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
                     if (cdata[cnt].state() == Character::State::alive)
                     {
-                        if (cdata[cnt].relationship == 10)
+                        if (cdata[cnt].relationship == Relationship::ally)
                         {
                             doer.enemy_id = cnt;
                             break;
@@ -5208,7 +5210,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
                 return 0;
             }
             enemy_index = cdata.player().enemy_id;
-            if (cdata[enemy_index].relationship >= 0)
+            if (cdata[enemy_index].relationship >= Relationship::friendly)
             {
                 int stat = prompt_really_attack(cdata[enemy_index]);
                 if (stat == 0)
@@ -5670,7 +5672,8 @@ TurnResult do_bash(Character& chara)
         {
             if (chara.is_player())
             {
-                if (cdata[bash_target_index].relationship >= 0)
+                if (cdata[bash_target_index].relationship >=
+                    Relationship::friendly)
                 {
                     int stat = prompt_really_attack(cdata[bash_target_index]);
                     if (stat == 0)
@@ -6257,10 +6260,10 @@ void open_new_year_gift(const ItemRef& box)
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
-                if (cdata.player().relationship <= -3)
+                if (cdata.player().relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
             return;
@@ -6307,10 +6310,10 @@ void open_new_year_gift(const ItemRef& box)
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
-                if (cdata.player().relationship <= -3)
+                if (cdata.player().relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
         }

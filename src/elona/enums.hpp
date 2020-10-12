@@ -356,4 +356,29 @@ enum class OwnState : int
 
 ENUMUTIL_DEFINE_COMPARISON_OPERATORS(OwnState)
 
+
+
+// TODO rename
+/// Relationship between characters.
+enum class Relationship : int
+{
+    /// Your enemy. Mainly dungeon monsters.
+    enemy = -3,
+
+    /// A town citizen who you attacked once.
+    unfriendly = -2,
+
+    /// Not enemy, not your ally. E.g., little girl, cat, Gwen-chan
+    neutral = -1,
+
+    /// Friendly person. Town citizen.
+    friendly = 0,
+
+    /// Your ally.
+    ally = 10,
+};
+
+
+ENUMUTIL_DEFINE_COMPARISON_OPERATORS(Relationship)
+
 } // namespace elona

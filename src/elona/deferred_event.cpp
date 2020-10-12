@@ -371,7 +371,7 @@ void eh_okaeri(const DeferredEvent&)
             cdata[chara_index].role != Role::other)
         {
             if (cdata[chara_index].role != Role::none ||
-                cdata[chara_index].relationship == 0 ||
+                cdata[chara_index].relationship == Relationship::friendly ||
                 cdata[chara_index].current_map == game()->current_map)
             {
                 cdata[chara_index].emotion_icon = 2006;
@@ -491,7 +491,7 @@ void eh_lily_killed(const DeferredEvent& event)
         {
             txt(i18n::s.get("core.event.pael"),
                 Message::color{ColorIndex::blue});
-            pael->relationship = -3;
+            pael->relationship = Relationship::enemy;
             pael->hate = 1000;
             pael->enemy_id = 0;
         }
@@ -718,7 +718,7 @@ void eh_guild_alarm(const DeferredEvent&)
     {
         if (chara.state() == Character::State::alive)
         {
-            chara.relationship = -3;
+            chara.relationship = Relationship::enemy;
             chara.enemy_id = 0;
             chara.hate = 250;
         }
@@ -806,8 +806,8 @@ void eh_guest_visit(const DeferredEvent&)
         }
 
         assert(guest);
-        guest->relationship = 0;
-        guest->original_relationship = 0;
+        guest->relationship = Relationship::friendly;
+        guest->original_relationship = Relationship::friendly;
         guest->is_temporary() = true;
     }
     else
@@ -821,7 +821,7 @@ void eh_guest_visit(const DeferredEvent&)
                     Character::State::adventurer_in_other_map &&
                 !adventurer.is_contracting() &&
                 adventurer.current_map != game()->current_map &&
-                adventurer.relationship >= 0)
+                adventurer.relationship >= Relationship::friendly)
             {
                 if (rnd(25) < p)
                 {
@@ -1007,8 +1007,8 @@ void eh_lord_of_void(const DeferredEvent&)
     if (const auto lord = chara_create(-1, c, -3, 0))
     {
         lord->is_lord_of_dungeon() = true;
-        lord->relationship = -3;
-        lord->original_relationship = -3;
+        lord->relationship = Relationship::enemy;
+        lord->original_relationship = Relationship::enemy;
         area_data[game()->current_map].has_been_conquered = lord->index;
         txt(i18n::s.get(
                 "core.event.guarded_by_lord",

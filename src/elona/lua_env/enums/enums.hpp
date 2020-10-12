@@ -53,7 +53,6 @@ extern EnumMap<mdata_t::MapType> MapTypeTable;
 extern EnumMap<int> MapEntranceTypeTable;
 extern EnumMap<int> MapTilesetTable;
 extern EnumMap<int> GenderTable;
-extern EnumMap<int> RelationshipTable;
 extern EnumMap<int> CharaFlagTable;
 extern EnumMap<int> TraitTypeTable;
 extern EnumMap<CharaFindLocation> CharaFindLocationTable;

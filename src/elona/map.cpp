@@ -923,8 +923,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 239, 25, 8))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
@@ -936,8 +936,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 24, 22))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
@@ -958,8 +958,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 28, 9))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;
@@ -971,8 +971,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 29, 24))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;

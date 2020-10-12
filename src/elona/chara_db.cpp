@@ -50,8 +50,7 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
             i18n::s.get("core.chara.job.own_name", chara.name, random_name());
         chara.has_own_name() = true;
     }
-    chara.original_relationship = chara.relationship =
-        data->original_relationship;
+    chara.original_relationship = chara.relationship = data->relationship;
     if (data->race_id != "")
     {
         race_init_chara(chara, data->race_id);

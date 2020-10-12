@@ -67,7 +67,7 @@ bool talk_setup_variables(Character& chara)
     }
     cs = 0;
     chatesc = 1;
-    if (chara.relationship <= -1)
+    if (chara.relationship <= Relationship::neutral)
     {
         if (!deferred_event_has_pending_events())
         {

@@ -121,7 +121,7 @@ struct CharacterData
     int image;
     int level;
     int male_image;
-    int original_relationship;
+    Relationship relationship;
     std::string portrait_male;
     std::string portrait_female;
     data::InstanceId race_id;

@@ -800,9 +800,9 @@ int damage_hp(
         if (attacker)
         {
             bool apply_hate = false;
-            if (victim.relationship <= -3)
+            if (victim.relationship <= Relationship::enemy)
             {
-                if (attacker->original_relationship > -3)
+                if (attacker->original_relationship > Relationship::enemy)
                 {
                     if (victim.hate == 0 || rnd(4) == 0)
                     {
@@ -810,7 +810,7 @@ int damage_hp(
                     }
                 }
             }
-            else if (attacker->original_relationship <= -3)
+            else if (attacker->original_relationship <= Relationship::enemy)
             {
                 if (victim.hate == 0 || rnd(4) == 0)
                 {
@@ -1575,7 +1575,7 @@ void character_drops_item(Character& victim)
                 create_pcpic(victim);
             }
         }
-        if (victim.relationship == 10)
+        if (victim.relationship == Relationship::ally)
         {
             return;
         }
@@ -2103,7 +2103,8 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
 
     int karma = 0;
     ++killer_chara->kill_count;
-    if (killer_chara->is_player() || killer_chara->relationship >= 10)
+    if (killer_chara->is_player() ||
+        killer_chara->relationship >= Relationship::ally)
     {
         if (!victim.is_player_or_ally())
         {
@@ -2115,7 +2116,7 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
                     --game()->guild.fighters_guild_quota;
                 }
             }
-            if (victim.original_relationship >= 0)
+            if (victim.original_relationship >= Relationship::friendly)
             {
                 karma = -2;
             }
@@ -2141,7 +2142,7 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
             }
         }
     }
-    if (killer_chara->relationship >= 10)
+    if (killer_chara->relationship >= Relationship::ally)
     {
         if (!killer_chara->is_player())
         {

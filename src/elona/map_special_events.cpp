@@ -64,8 +64,8 @@ static void _map_events_quest_party()
                 objlv = 1;
                 if (const auto chara = chara_create(-1, chara_id, -3, 0))
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                     chara->hate = 100;
                     chara->enemy_id = quest_data.immediate().extra_info_2;
                 }

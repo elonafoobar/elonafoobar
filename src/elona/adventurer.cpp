@@ -76,8 +76,8 @@ void create_adventurer(Character& adv)
     p(2) = 160;
     novoidlv = 1;
     chara_create(adv.index, p(rnd(3)), -1, -1);
-    adv.relationship = 0;
-    adv.original_relationship = 0;
+    adv.relationship = Relationship::friendly;
+    adv.original_relationship = Relationship::friendly;
     adv._156 = 100;
     adv.set_state(Character::State::adventurer_in_other_map);
     adv.image = rnd(33) * 2 + 1 + adv.sex;
@@ -211,7 +211,7 @@ void adventurer_update()
             {
                 adv.hire_limit_time = time::Instant::epoch();
                 adv.is_contracting() = false;
-                adv.relationship = 0;
+                adv.relationship = Relationship::friendly;
                 txt(i18n::s.get("core.chara.contract_expired", adv));
             }
         }

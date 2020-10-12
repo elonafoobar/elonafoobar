@@ -866,9 +866,7 @@ void bind(sol::state& lua)
      *
      * [RW] The relationship of the character to the player.
      */
-    LuaCharacter.set(
-        "relationship",
-        LUA_API_ENUM_PROPERTY(Character, relationship, Relationship));
+    LuaCharacter.set("relationship", &Character::relationship);
 
     /**
      * @luadoc original_relationship field Relationship
@@ -876,8 +874,7 @@ void bind(sol::state& lua)
      * [RW] The original relationship of the character to the player.
      */
     LuaCharacter.set(
-        "original_relationship",
-        LUA_API_ENUM_PROPERTY(Character, original_relationship, Relationship));
+        "original_relationship", &Character::original_relationship);
 
     /**
      * @luadoc quality field Quality

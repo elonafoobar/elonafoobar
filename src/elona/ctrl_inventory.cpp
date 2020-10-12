@@ -775,7 +775,7 @@ optional<MenuResult> check_command(
     {
         if (inventory_owner)
         {
-            if (inventory_owner->relationship == 10)
+            if (inventory_owner->relationship == Relationship::ally)
             {
                 txt(i18n::s.get("core.ui.inv.steal.do_not_rob_ally"));
                 f = 1;
@@ -1791,7 +1791,7 @@ OnEnterResult on_enter_give(
         return OnEnterResult{2};
     }
     f = 0;
-    if (inventory_owner.relationship == 10)
+    if (inventory_owner.relationship == Relationship::ally)
     {
         f = 1;
     }

@@ -381,20 +381,20 @@ static void _init_map_test_world_north_border()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 160, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 161, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     flt();
@@ -460,20 +460,20 @@ static void _init_map_tyris_border()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 160, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 161, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     flt();
@@ -566,14 +566,14 @@ static void _init_map_the_smoke_and_pipe()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 36, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         chara_create(-1, 8, -3, 0);
@@ -787,7 +787,7 @@ static void _init_map_arena()
     {
         if (chara.state() == Character::State::alive)
         {
-            if (chara.relationship == 10)
+            if (chara.relationship == Relationship::ally)
             {
                 if (!chara.is_player())
                 {
@@ -808,9 +808,9 @@ static void _init_map_arena()
                 cdata.player().position.y - 4))
         {
             chara->hate = 30;
-            chara->relationship = -3;
-            chara->relationship = -3;
-            chara->original_relationship = -3;
+            chara->relationship = Relationship::enemy;
+            chara->relationship = Relationship::enemy;
+            chara->original_relationship = Relationship::enemy;
             chara->is_lord_of_dungeon() = true;
         }
     }
@@ -825,8 +825,8 @@ static void _init_map_arena()
                     cdata.player().position.x - 1,
                     cdata.player().position.y - 5))
             {
-                chara->relationship = -3;
-                chara->original_relationship = -3;
+                chara->relationship = Relationship::enemy;
+                chara->original_relationship = Relationship::enemy;
                 chara->hate = 30;
                 chara->is_lord_of_dungeon() = true;
                 if (chara->level > arenaop(1))
@@ -882,7 +882,7 @@ static void _init_map_pet_arena()
                     f = 0;
                 }
             }
-            if (chara->relationship != -3)
+            if (chara->relationship != Relationship::enemy)
             {
                 f = 0;
             }
@@ -906,7 +906,7 @@ static void _init_map_pet_arena()
     }
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.relationship == -3)
+        if (cnt.relationship == Relationship::enemy)
         {
             cnt.has_been_used_stethoscope() = true;
         }
@@ -1962,8 +1962,8 @@ static void _init_map_yowyn_battle_field()
         flt();
         if (const auto chara = chara_create(-1, 233 + 2 * (cnt > 22), 11, 16))
         {
-            chara->relationship = 10;
-            chara->original_relationship = 10;
+            chara->relationship = Relationship::ally;
+            chara->original_relationship = Relationship::ally;
             chara->hate = 100;
             p = list(0, rnd(listmax));
             chara->enemy_id = p;
@@ -2423,8 +2423,8 @@ static void _init_map_port_kapul_doom_ground()
         if (const auto chara = chara_create(
                 -1, 204, cdata.player().position.x, cdata.player().position.y))
         {
-            chara->relationship = 10;
-            chara->original_relationship = 10;
+            chara->relationship = Relationship::ally;
+            chara->original_relationship = Relationship::ally;
         }
     }
     noaggrorefresh = 1;
@@ -2855,8 +2855,8 @@ static void _init_map_fields_maybe_generate_encounter()
                     cdata.player().position.y))
             {
                 chara->hate = 30;
-                chara->relationship = -3;
-                chara->original_relationship = -3;
+                chara->relationship = Relationship::enemy;
+                chara->original_relationship = Relationship::enemy;
             }
         }
     }

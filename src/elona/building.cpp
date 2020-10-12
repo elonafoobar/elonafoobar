@@ -834,7 +834,7 @@ void prompt_move_ally()
         {
             break;
         }
-        if (cdata[stat].relationship <= -3)
+        if (cdata[stat].relationship <= Relationship::enemy)
         {
             Message::instance().linebreak();
             txt(i18n::s.get(

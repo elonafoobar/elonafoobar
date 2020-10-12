@@ -64,4 +64,24 @@ Enums.Quality = Enums.new_enum {
    SPECIAL = 6,
 }
 
+--- @enum Relationship
+---
+--- The relationship between characters
+Enums.Relationship = new_enum {
+   -- Your enemy. Mainly dungeon monsters.
+   ENEMY = -3,
+
+   -- A town citizen who you attacked once.
+   UNFRIENDLY = -2,
+
+   -- Not enemy, not your ally. E.g., little girl, cat, Gwen-chan
+   NEUTRAL = -1,
+
+   -- Friendly person. Town citizen.
+   FRIENDLY = 0,
+
+   -- Your ally.
+   ALLY = 10,
+}
+
 return Enums

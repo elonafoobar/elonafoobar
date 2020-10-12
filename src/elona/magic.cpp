@@ -2216,7 +2216,8 @@ bool _magic_1138_1123_1122_1137(Character& subject)
 // Dominate
 bool _magic_435(Character& subject, Character& target)
 {
-    if (!subject.is_player() || target.is_player() || target.relationship == 10)
+    if (!subject.is_player() || target.is_player() ||
+        target.relationship == Relationship::ally)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -3580,14 +3581,17 @@ optional_ref<Character> _ball_spell_internal(
             if (efid == 404)
             {
                 f = 0;
-                if (subject.is_player() || subject.relationship >= 0)
+                if (subject.is_player() ||
+                    subject.relationship >= Relationship::friendly)
                 {
-                    if (cdata[target_index].relationship >= 0)
+                    if (cdata[target_index].relationship >=
+                        Relationship::friendly)
                     {
                         f = 1;
                     }
                 }
-                else if (cdata[target_index].relationship <= -1)
+                else if (
+                    cdata[target_index].relationship <= Relationship::neutral)
                 {
                     f = 1;
                 }
@@ -3609,14 +3613,17 @@ optional_ref<Character> _ball_spell_internal(
             if (efid == 637)
             {
                 f = 0;
-                if (subject.is_player() || subject.relationship >= 0)
+                if (subject.is_player() ||
+                    subject.relationship >= Relationship::friendly)
                 {
-                    if (cdata[target_index].relationship >= 0)
+                    if (cdata[target_index].relationship >=
+                        Relationship::friendly)
                     {
                         f = 1;
                     }
                 }
-                else if (cdata[target_index].relationship <= -1)
+                else if (
+                    cdata[target_index].relationship <= Relationship::neutral)
                 {
                     f = 1;
                 }

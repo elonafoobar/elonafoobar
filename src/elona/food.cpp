@@ -1301,7 +1301,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             if (!eater.is_player())
             {
-                if (eater.relationship >= 0)
+                if (eater.relationship >= Relationship::friendly)
                 {
                     modify_karma(cdata.player(), -1);
                 }

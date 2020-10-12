@@ -91,7 +91,7 @@ int Internal_generate_fighters_guild_target(int level)
         {
             continue;
         }
-        if (cdata.tmp().relationship != -3)
+        if (cdata.tmp().relationship != Relationship::enemy)
         {
             continue;
         }

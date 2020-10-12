@@ -188,17 +188,17 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     }
 
     // Enemy
-    if (chara.relationship >= 10)
+    if (chara.relationship >= Relationship::ally)
     {
         --chara.hate;
         if (chara.enemy_id == 0 || chara.hate <= 0 ||
-            (cdata[chara.enemy_id].relationship >= -2 &&
+            (cdata[chara.enemy_id].relationship >= Relationship::unfriendly &&
              cdata[chara.enemy_id].enemy_id != chara.index))
         {
             chara.enemy_id = 0;
             if (pcattacker != 0)
             {
-                if (cdata[pcattacker].relationship <= -3 &&
+                if (cdata[pcattacker].relationship <= Relationship::enemy &&
                     cdata[pcattacker].state() == Character::State::alive)
                 {
                     if (fov_los(chara.position, cdata[pcattacker].position))
@@ -211,7 +211,8 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             if (chara.enemy_id == 0)
             {
                 if (cdata.player().enemy_id != 0 &&
-                    cdata[cdata.player().enemy_id].relationship <= -3 &&
+                    cdata[cdata.player().enemy_id].relationship <=
+                        Relationship::enemy &&
                     cdata[cdata.player().enemy_id].state() ==
                         Character::State::alive)
                 {
@@ -246,7 +247,8 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     // Pet arena
     if (game()->current_map == mdata_t::MapId::pet_arena)
     {
-        if (chara.relationship != -3 && chara.relationship != 10)
+        if (chara.relationship != Relationship::enemy &&
+            chara.relationship != Relationship::ally)
         {
             if (rnd(40) == 0)
             {
@@ -256,7 +258,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             return ai_proc_misc_map_events(chara, enemy_index);
         }
         chara.hate = 100;
-        if (chara.relationship == 10)
+        if (chara.relationship == Relationship::ally)
         {
             p(0) = -3;
             p(1) = enemyteam;
@@ -269,7 +271,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             p(2) = 16;
         }
         i = chara.enemy_id;
-        if (cdata[i].relationship == p &&
+        if (cdata[i].relationship == static_cast<Relationship>(p(0)) &&
             cdata[i].state() == Character::State::alive && i >= p(1) &&
             i < p(1) + p(2))
         {
@@ -285,14 +287,15 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             i = rnd(p(2)) + p(1);
             if (cdata[i].state() == Character::State::alive)
             {
-                if (cdata[i].relationship == p)
+                if (cdata[i].relationship == static_cast<Relationship>(p(0)))
                 {
                     chara.enemy_id = i;
                     break;
                 }
             }
         }
-        if (cdata[chara.enemy_id].relationship != p ||
+        if (cdata[chara.enemy_id].relationship !=
+                static_cast<Relationship>(p(0)) ||
             cdata[chara.enemy_id].state() != Character::State::alive)
         {
             f = 0;
@@ -300,7 +303,8 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             {
                 if (cdata[cnt].state() == Character::State::alive)
                 {
-                    if (cdata[cnt].relationship == p)
+                    if (cdata[cnt].relationship ==
+                        static_cast<Relationship>(p(0)))
                     {
                         chara.enemy_id = cnt;
                         f = 1;
@@ -310,7 +314,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             }
             if (f == 0)
             {
-                if (chara.relationship == 10)
+                if (chara.relationship == Relationship::ally)
                 {
                     petarenawin = 1;
                 }
@@ -355,7 +359,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         }
         if (chara.enemy_id == 0)
         {
-            if (chara.relationship <= -2)
+            if (chara.relationship <= Relationship::unfriendly)
             {
                 if (rnd(3) == 0)
                 {
@@ -405,7 +409,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     }
 
     // Choked
-    if (chara.relationship >= 0)
+    if (chara.relationship >= Relationship::friendly)
     {
         if (cdata.player().choked)
         {
@@ -454,7 +458,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
         chara.ai_item = nullptr;
         return none;
     }
-    if (chara.relationship != 0)
+    if (chara.relationship != Relationship::friendly)
     {
         chara.ai_item = nullptr;
     }
@@ -462,7 +466,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
     const auto category = the_item_db[ai_item->id]->category;
     if (category == ItemCategory::food)
     {
-        if (chara.relationship != 10 || chara.nutrition <= 6000)
+        if (chara.relationship != Relationship::ally || chara.nutrition <= 6000)
         {
             return do_eat_command(chara, ai_item);
         }
@@ -485,7 +489,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
 
 TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
 {
-    if (chara.hate > 0 || chara.relationship == 10)
+    if (chara.hate > 0 || chara.relationship == Relationship::ally)
     {
         distance = dist(cdata[enemy_index].position, chara.position);
         if (chara.blind != 0)
@@ -502,7 +506,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 return ai_proc_misc_map_events(chara, enemy_index);
             }
         }
-        if (chara.relationship == 10 && enemy_index == 0)
+        if (chara.relationship == Relationship::ally && enemy_index == 0)
         {
             if (const auto item_opt = cell_get_item_if_only_one(chara.position))
             {
@@ -610,9 +614,9 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 {
                     continue;
                 }
-                if (chara.original_relationship <= -3)
+                if (chara.original_relationship <= Relationship::enemy)
                 {
-                    if (cdata[c].relationship > -3)
+                    if (cdata[c].relationship > Relationship::enemy)
                     {
                         if (!cdata[c].is_not_attacked_by_enemy())
                         {
@@ -623,7 +627,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
                 }
                 else if (c >= 57)
                 {
-                    if (cdata[c].original_relationship <= -3)
+                    if (cdata[c].original_relationship <= Relationship::enemy)
                     {
                         if (!cdata[c].is_not_attacked_by_enemy())
                         {
@@ -651,7 +655,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
         r2 = chara.index;
         if (try_to_perceive_npc(chara, cdata[enemy_index]))
         {
-            if (chara.relationship == -3)
+            if (chara.relationship == Relationship::enemy)
             {
                 chara.hate = 30;
             }
@@ -1184,7 +1188,8 @@ optional<TurnResult> pc_turn_pet_arena()
     bool pet_exists = false;
     for (const auto& ally : cdata.allies())
     {
-        if (ally.state() == Character::State::alive && ally.relationship == 10)
+        if (ally.state() == Character::State::alive &&
+            ally.relationship == Relationship::ally)
         {
             pet_exists = true;
             break;
@@ -1240,7 +1245,7 @@ optional<TurnResult> pc_turn_pet_arena()
             {
                 continue;
             }
-            if (cdata[p].relationship != 10)
+            if (cdata[p].relationship != Relationship::ally)
             {
                 continue;
             }

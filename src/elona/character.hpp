@@ -145,7 +145,10 @@ public:
     int vision_flag = 0;
     int image = 0;
     int sex = 0;
-    int relationship = 0;
+
+    Relationship relationship{};
+    Relationship original_relationship{};
+
     int turn_cost = 0;
     int current_speed = 0;
     OptionalItemRef ai_item;
@@ -204,7 +207,6 @@ public:
     int rate_to_pierce = 0;
     int rate_of_critical_hit = 0;
     int speed_correction_value = 0;
-    int original_relationship = 0;
     int pv = 0;
     int dv = 0;
     int hit_bonus = 0;
@@ -624,7 +626,7 @@ void proc_negative_enchantments(Character& chara);
 void proc_pregnant(Character& chara);
 void wake_up();
 bool try_to_perceive_npc(const Character& chara, const Character& enemy);
-int relation_between(const Character& a, const Character& b);
+Relationship relation_between(const Character& a, const Character& b);
 
 } // namespace elona
 

@@ -295,7 +295,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             {
                 continue;
             }
-            if (chara->original_relationship != -3)
+            if (chara->original_relationship != Relationship::enemy)
             {
                 continue;
             }
@@ -1029,7 +1029,7 @@ TalkResult talk_adventurer_hire(Character& speaker)
     {
         snd("core.paygold1");
         cdata.player().gold -= calc_adventurer_hire_cost(speaker);
-        speaker.relationship = 10;
+        speaker.relationship = Relationship::ally;
         speaker.is_contracting() = true;
         speaker.hire_limit_time = game_now() + 7_days;
         ++speaker.hire_count;
@@ -1108,7 +1108,7 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         const auto lily = chara_find("core.lily");
         assert(lily);
         lily->ai_calm = 3;
-        lily->relationship = 0;
+        lily->relationship = Relationship::friendly;
         lily->initial_position.x = 48;
         lily->initial_position.y = 18;
         cell_movechara(*lily, 48, 18);
@@ -1861,7 +1861,7 @@ TalkResult talk_npc(Character& speaker)
         }
         if (speaker.interest > 0)
         {
-            if (speaker.relationship != 10)
+            if (speaker.relationship != Relationship::ally)
             {
                 if (!speaker.is_player_or_ally())
                 {

@@ -373,7 +373,7 @@ void _update_adventurer(Character& adv)
     }
     if (adv.is_contracting())
     {
-        adv.relationship = 10;
+        adv.relationship = Relationship::ally;
         adv.current_map = game()->current_map;
     }
     else
@@ -563,7 +563,7 @@ void _refresh_map_character_other(Character& chara)
             if (cdata.player().is_incognito() == 0)
             {
                 chara.hate = 200;
-                chara.relationship = -3;
+                chara.relationship = Relationship::enemy;
             }
         }
     }
@@ -1144,8 +1144,8 @@ void _set_livestock_relations()
         if (cnt.is_livestock() == 1)
         {
             cnt.hate = 0;
-            cnt.relationship = -1;
-            cnt.original_relationship = -1;
+            cnt.relationship = Relationship::neutral;
+            cnt.original_relationship = Relationship::neutral;
         }
     }
 }
