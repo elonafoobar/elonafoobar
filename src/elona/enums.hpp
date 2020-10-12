@@ -124,7 +124,7 @@ enum class ItemCategory : int
     bodyparts = 62000,
     junk = 64000,
     gold_piece = 68000,
-    platinum_coin = 69000,
+    platinum = 69000,
     chest = 72000,
     ore = 77000,
     tree = 80000,

@@ -435,7 +435,7 @@ void make_item_list(
             if (invctrl == 11)
             {
                 if (item->id == "core.gold_piece" ||
-                    item->id == "core.platinum_coin")
+                    item->id == "core.platinum")
                 {
                     continue;
                 }
@@ -541,7 +541,7 @@ void make_item_list(
             if (invctrl == 20)
             {
                 if (item->id == "core.gold_piece" ||
-                    item->id == "core.platinum_coin")
+                    item->id == "core.platinum")
                 {
                     continue;
                 }
@@ -1144,7 +1144,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
         mes(x + 16,
             y + 35,
             i18n::s.get("core.ui.inv.take_ally.window.equip_weight") + ":" +
-                cnvweight(inventory_owner->sum_of_equipment_weight) + ""s +
+                cnvweight(inventory_owner->equipment_weight) + ""s +
                 get_armor_class_name(*inventory_owner));
         x = wx + 40;
         y = wy + wh - 65 - wh % 8;

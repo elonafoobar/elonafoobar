@@ -1235,7 +1235,7 @@ void _update_aggro_and_crowd_density()
             cnt.enemy_id = 0;
             cnt.hate = 0;
         }
-        cnt.vision_flag = 0;
+        cnt.fov_flag = 0;
         if (cnt.state() != Character::State::empty)
         {
             modify_crowd_density(cnt.index, 1);

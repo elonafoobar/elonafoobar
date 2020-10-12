@@ -513,8 +513,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         item->identify_state = IdentifyState::completely;
     }
     if (category == ItemCategory::gold_piece ||
-        category == ItemCategory::platinum_coin ||
-        item->id == "core.small_medal" || item->id == "core.music_ticket" ||
+        category == ItemCategory::platinum || item->id == "core.small_medal" ||
+        item->id == "core.music_ticket" ||
         item->id == "core.token_of_friendship" || item->id == "core.bill")
     {
         item->curse_state = CurseState::none;

@@ -375,13 +375,13 @@ std::pair<bool, int> activity_perform_proc_audience(
     {
         return std::make_pair(false, 0);
     }
-    if (game_now() >= audience.interest_renewal_time)
+    if (game_now() >= audience.interest_reset_time)
     {
         audience.interest = 100;
     }
     if (is_in_fov(performer))
     {
-        if (audience.vision_flag != msync)
+        if (audience.fov_flag != msync)
         {
             return std::make_pair(false, 0);
         }
@@ -424,7 +424,7 @@ std::pair<bool, int> activity_perform_proc_audience(
     if (performer.is_player())
     {
         audience.interest -= rnd(15);
-        audience.interest_renewal_time = game_now() + 12_hours;
+        audience.interest_reset_time = game_now() + 12_hours;
     }
     if (audience.interest <= 0)
     {
@@ -2052,7 +2052,7 @@ void spot_digging(Character& chara)
     }
     if (chara.activity.turns > 0)
     {
-        if (chara.turn % 5 == 0)
+        if (chara.turns % 5 == 0)
         {
             txt(i18n::s.get("core.activity.dig_spot.sound"),
                 Message::color{ColorIndex::blue});
@@ -2230,7 +2230,7 @@ void spot_mining_or_wall(Character& chara)
             chara_gain_exp_digging(cdata.player());
             chara.activity.finish();
         }
-        else if (chara.turn % 5 == 0)
+        else if (chara.turns % 5 == 0)
         {
             txt(i18n::s.get("core.activity.dig_spot.sound"),
                 Message::color{ColorIndex::blue});
@@ -2271,7 +2271,7 @@ void sleep_start(const OptionalItemRef& bed)
     }
     if (game()->catches_god_signal)
     {
-        txtgod(cdata.player().god_id, 10);
+        txtgod(cdata.player().religion, 10);
     }
     load_sleep_background();
     play_music("core.mcCoda", false);

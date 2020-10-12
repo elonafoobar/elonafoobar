@@ -227,8 +227,9 @@ MainMenuResult character_making_customize_appearance()
     if (cdata.player().portrait == "")
     {
         // TODO: if neither "core.woman1" nor "core.man1" exists, what happens?
-        cdata.player().portrait =
-            cdata.player().sex ? "core.woman1" : "core.man1";
+        cdata.player().portrait = cdata.player().sex
+            ? data::InstanceId{"core.woman1"}
+            : data::InstanceId{"core.man1"};
     }
 
     while (true)

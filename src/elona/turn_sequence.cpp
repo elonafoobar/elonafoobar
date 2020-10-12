@@ -94,7 +94,7 @@ optional<TurnResult> proc_return_or_escape()
             txt(i18n::s.get("core.magic.return.prevented.ally"));
             return none;
         }
-        if (1 && cdata.player().inventory_weight_type >= 4)
+        if (1 && cdata.player().burden_state >= 4)
         {
             txt(i18n::s.get("core.magic.return.prevented.overweight"));
             return none;
@@ -391,7 +391,7 @@ optional<TurnResult> npc_turn_misc(Character& chara, int& enemy_index)
             cdata.player().position.y < chara.position.y + 10 &&
             cdata.player().activity.id != "core.perform")
         {
-            if (chara.turn % 5 == 0)
+            if (chara.turns % 5 == 0)
             {
                 if (rnd(4) == 0)
                 {
@@ -590,7 +590,7 @@ TurnResult npc_turn_ai_main(Character& chara, int& enemy_index)
         return ai_proc_basic(chara, enemy_index);
     }
 
-    if (chara.turn % 10 == 1)
+    if (chara.turns % 10 == 1)
     {
         constexpr auto searchfov = 5;
         f = 0;
@@ -856,13 +856,13 @@ TurnResult pass_one_turn(bool time_passing)
     }
 
     cdata[ct].speed_percentage = cdata[ct].speed_percentage_in_next_turn;
-    ++cdata[ct].turn;
+    ++cdata[ct].turns;
     update_emoicon(cdata[ct]);
     if (ct == 0)
     {
         Message::instance().new_turn();
         refresh_speed(cdata.player());
-        switch (cdata.player().turn % 10)
+        switch (cdata.player().turns % 10)
         {
         case 1:
             for (auto&& chara : cdata.player_and_allies())
@@ -1040,7 +1040,7 @@ TurnResult pass_one_turn(bool time_passing)
     {
         activity_handle_damage(cdata[ct]);
     }
-    if (cdata[ct].turn % 25 == 0)
+    if (cdata[ct].turns % 25 == 0)
     {
         if (cdata[ct].curse_power != 0)
         {
@@ -1125,7 +1125,7 @@ TurnResult turn_end()
                 activity_sleep(cdata[ct], nullptr);
             }
         }
-        if (cdata.player().inventory_weight_type >= 3)
+        if (cdata.player().burden_state >= 3)
         {
             if (rnd(20) == 0)
             {
@@ -1309,7 +1309,7 @@ optional<TurnResult> pc_turn_advance_time()
     {
         if (rnd(1000) == 0)
         {
-            txtgod(player.god_id, 12);
+            txtgod(player.religion, 12);
         }
     }
     g_player_is_changing_equipment = false;
@@ -1405,7 +1405,7 @@ TurnResult pc_turn(bool advance_time)
         {
             if (game()->catches_god_signal)
             {
-                txtgod(cdata.player().god_id, 11);
+                txtgod(cdata.player().religion, 11);
             }
             firstturn = 0;
         }
@@ -1704,7 +1704,7 @@ void proc_turn_end(Character& chara)
         }
         if (quest_data[p].progress != 0)
         {
-            if (chara.turn % 2 == 1)
+            if (chara.turns % 2 == 1)
             {
                 chara.emotion_icon = 123;
             }

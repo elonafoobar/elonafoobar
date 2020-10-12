@@ -77,7 +77,7 @@ bool talk_setup_variables(Character& chara)
             return false;
         }
     }
-    if (game_now() >= chara.interest_renewal_time)
+    if (game_now() >= chara.interest_reset_time)
     {
         chara.interest = 100;
     }
@@ -541,7 +541,7 @@ std::string talk_get_speaker_name(const Character& chara)
     }
     if (game()->reveals_religion)
     {
-        speaker_name += u8" ("s + god_name(chara.god_id) + u8")"s;
+        speaker_name += u8" ("s + god_name(chara.religion) + u8")"s;
     }
 
     return speaker_name;

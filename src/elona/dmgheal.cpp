@@ -280,7 +280,7 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.is_player() && cdata.player().god_id == core_god::opatos)
+    if (victim.is_player() && cdata.player().religion == core_god::opatos)
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
@@ -1279,7 +1279,7 @@ int damage_hp(
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata.player().god_id, 9);
+                    txtgod(cdata.player().religion, 9);
                 }
             }
         }
@@ -1609,8 +1609,7 @@ void character_drops_item(Character& victim)
         {
             break;
         }
-        if (item->quality > Quality::miracle ||
-            item->id == "core.platinum_coin")
+        if (item->quality > Quality::miracle || item->id == "core.platinum")
         {
             f = 1;
         }

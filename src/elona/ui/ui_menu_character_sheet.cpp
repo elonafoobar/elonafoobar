@@ -464,7 +464,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
     s(0) = ""s + _chara.level;
     s(1) = ""s + _chara.experience;
     s(2) = ""s + _chara.required_experience;
-    s(3) = god_name(_chara.god_id);
+    s(3) = god_name(_chara.religion);
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {
@@ -644,7 +644,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
     s(0) = cnvweight(game()->cargo_weight);
     s(1) = cnvweight(game()->max_cargo_weight);
-    s(2) = cnvweight(_chara.sum_of_equipment_weight) + u8" "s +
+    s(2) = cnvweight(_chara.equipment_weight) + u8" "s +
         get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",

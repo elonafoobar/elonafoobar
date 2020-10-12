@@ -1304,16 +1304,16 @@ void show_city_chart()
 
 
 
-void begin_to_believe_god(int god_id)
+void begin_to_believe_god(int religion)
 {
-    bool already_believing = cdata.player().god_id != core_god::eyth;
+    bool already_believing = cdata.player().religion != core_god::eyth;
 
-    auto result = ui::UIMenuGod(god_id, already_believing).show();
+    auto result = ui::UIMenuGod(religion, already_believing).show();
 
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty(core_god::int2godid(god_id));
+        god_proc_switching_penalty(core_god::int2godid(religion));
     }
 }
 
@@ -1360,15 +1360,15 @@ void screen_analyze_self()
     notesel(buff);
     chara_delete(cdata.tmp());
     cdata.tmp().piety_point = cdata.player().piety_point;
-    cdata.tmp().god_id = cdata.player().god_id;
+    cdata.tmp().religion = cdata.player().religion;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
         cdata.player().get_skill(cnt).level = 1;
     }
     god_apply_blessing(cdata.tmp());
-    if (cdata.player().god_id != core_god::eyth)
+    if (cdata.player().religion != core_god::eyth)
     {
-        buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
+        buff += u8"<title1>◆ "s + god_name(cdata.player().religion) +
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

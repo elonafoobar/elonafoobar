@@ -538,7 +538,7 @@ void show_damage_popups()
                 continue;
             }
             if (dist(cdata.player().position, chara.position) >
-                cdata.player().vision_distance / 2)
+                cdata.player().fov_range / 2)
             {
                 ++damage_popup.frame;
                 continue;

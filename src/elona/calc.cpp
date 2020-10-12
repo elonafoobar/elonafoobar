@@ -1833,7 +1833,7 @@ int calc_exp_gain_stealth()
 
 int calc_exp_gain_weight_lifting(const Character& chara)
 {
-    if (chara.inventory_weight_type == 0)
+    if (chara.burden_state == 0)
     {
         return 0;
     }

@@ -494,7 +494,7 @@ void _change_nutrition(Character& chara)
 
 void _proc_hungry(Character& chara)
 {
-    if (chara.vision_flag != msync || rnd(5))
+    if (chara.fov_flag != msync || rnd(5))
     {
         _change_nutrition(chara);
     }

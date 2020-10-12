@@ -1062,7 +1062,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                 s2_ = u8"対の"s;
             }
             if (category == ItemCategory::gold_piece ||
-                category == ItemCategory::platinum_coin ||
+                category == ItemCategory::platinum ||
                 item->id == "core.small_medal" ||
                 item->id == "core.music_ticket" ||
                 item->id == "core.token_of_friendship")
@@ -2131,7 +2131,7 @@ void item_drop(
         if (const auto altar = item_find(ItemCategory::altar))
         {
             // The altar is your god's.
-            if (core_god::int2godid(altar->param1) == cdata.player().god_id)
+            if (core_god::int2godid(altar->param1) == cdata.player().religion)
             {
                 if (dropped_item->curse_state != CurseState::blessed)
                 {

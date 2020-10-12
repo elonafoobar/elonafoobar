@@ -226,7 +226,7 @@ int _adventurer_get_trained_skill(Character& speaker)
 
 void _adventurer_learn_skill(int skill_id)
 {
-    cdata.player().platinum_coin -=
+    cdata.player().platinum -=
         calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
     ++game()->number_of_learned_skills_by_trainer;
@@ -236,7 +236,7 @@ void _adventurer_learn_skill(int skill_id)
 
 void _adventurer_train_skill(int skill_id)
 {
-    cdata.player().platinum_coin -=
+    cdata.player().platinum -=
         calc_skill_training_cost(skill_id, cdata.player(), true);
     modify_potential(
         cdata.player(),
@@ -266,7 +266,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
                 calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_learning_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 1;
@@ -284,7 +284,7 @@ TalkResult _talk_hv_adventurer_train(Character& speaker)
                 calc_skill_learning_cost(skill_id, cdata.player(), true)) +
                 i18n::s.get("core.ui.platinum"),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_training_cost(skill_id, cdata.player(), true))
         {
             list(0, listmax) = 2;
@@ -711,7 +711,7 @@ int _trainer_calc_skills(Character& speaker)
 
 void _trainer_do_training(int plat, int chatval_)
 {
-    cdata.player().platinum_coin -= plat;
+    cdata.player().platinum -= plat;
     snd("core.ding3");
     txt(i18n::s.get(
             "core.talk.visitor.trainer.potential_expands",
@@ -755,7 +755,7 @@ TalkResult _talk_hv_trainer(Character& speaker)
     listn(0, listmax) =
         i18n::s.get("core.talk.visitor.trainer.choices.not_today");
     ++listmax;
-    if (cdata.player().platinum_coin >= plat)
+    if (cdata.player().platinum >= plat)
     {
         for (int cnt = 0; cnt < 8; ++cnt)
         {

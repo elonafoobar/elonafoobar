@@ -2863,8 +2863,7 @@ void txttargetnpc(int x, int y)
     dy_ = 0;
     font(14 - en * 2);
     if (!fov_los(cdata.player().position, {x, y}) ||
-        dist(cdata.player().position, x, y) >
-            cdata.player().vision_distance / 2)
+        dist(cdata.player().position, x, y) > cdata.player().fov_range / 2)
     {
         bmes(
             i18n::s.get("core.action.target.out_of_sight"),

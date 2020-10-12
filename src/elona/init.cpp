@@ -536,12 +536,12 @@ void initialize_debug_globals()
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
     game()->charge_power = 1000;
-    cdata.player().god_id = core_god::int2godid(2);
+    cdata.player().religion = core_god::int2godid(2);
     cdata.player().piety_point = 1000;
-    cdata.player().praying_point = 1000;
+    cdata.player().prayer_point = 1000;
     story_quest_set_progress("core.pael_and_her_mom", 1000);
     earn_gold(cdata.player(), 1000000);
-    cdata.player().platinum_coin = 30;
+    cdata.player().platinum = 30;
     cdata.player().fame = 65000;
     story_quest_set_progress("core.elona", 100);
     chara_refresh(cdata.player());

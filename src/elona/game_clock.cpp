@@ -226,7 +226,7 @@ void on_hour_changed(
             {
                 --cdata.player().piety_point;
             }
-            cdata.player().praying_point += 4;
+            cdata.player().prayer_point += 4;
         }
         else
         {
@@ -234,7 +234,7 @@ void on_hour_changed(
             {
                 --cdata.player().piety_point;
             }
-            cdata.player().praying_point += 32;
+            cdata.player().prayer_point += 32;
         }
     }
     if (cdata.player().piety_point < 0)

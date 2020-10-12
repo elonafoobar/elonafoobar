@@ -19,9 +19,9 @@ struct Item;
 
 struct SkillDamage
 {
-    int dice_x;
-    int dice_y;
-    int damage_bonus;
+    lua_int dice_x;
+    lua_int dice_y;
+    lua_int damage_bonus;
     int element;
     int element_power;
 };

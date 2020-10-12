@@ -560,7 +560,7 @@ bool wish_for_item(Character& chara, const std::string& input)
             item->set_number(
                 cdata.player().level * cdata.player().level * 50 + 20000);
         }
-        else if (item->id == "core.platinum_coin")
+        else if (item->id == "core.platinum")
         {
             item->set_number(8 + rnd(5));
         }

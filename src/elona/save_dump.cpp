@@ -64,7 +64,7 @@ void save_dump_player_info()
               u8"種族       : " +
                   the_race_db.get_text(cdata.player().race, "name"),
               30)
-       << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
+       << fixtxt(u8"信仰      : " + god_name(cdata.player().religion), 32)
        << std::endl;
     ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
@@ -81,8 +81,7 @@ void save_dump_player_info()
               u8"殺害数    : " + std::to_string(game()->total_kill_count), 32)
        << std::endl;
     ss << fixtxt(
-              u8"プラチナ   : " + std::to_string(cdata.player().platinum_coin),
-              30)
+              u8"プラチナ   : " + std::to_string(cdata.player().platinum), 30)
        << fixtxt(
               u8"最深到達  : " +
                   std::to_string(game()->deepest_dungeon_danger_level) +
@@ -165,7 +164,7 @@ void save_dump_player_info()
     ss << std::endl;
 
     ss << u8"------------------------------ 装備品 合計重量"
-       << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
+       << cnvweight(cdata.player().equipment_weight) << u8" "
        << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 

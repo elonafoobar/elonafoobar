@@ -139,27 +139,62 @@ private:
     Character::State state_ = Character::State::empty;
 
 public:
-    Position position;
-    Position next_position;
-    time::Instant revival_time{};
-    int vision_flag = 0;
-    int image = 0;
-    int sex = 0;
+    /// Character's current position.
+    Position position{};
 
+    /// Character's next position.
+    Position next_position{};
+
+    /// Character's initial position.
+    Position initial_position{};
+
+    /// Character ID
+    CharaId id = CharaId::none;
+
+    /// FOV flag
+    lua_int fov_flag{};
+
+    /// FOV range. It is a diameter in tiles.
+    lua_int fov_range{};
+
+    /// Image
+    lua_int image{};
+
+    /// Portrait
+    data::InstanceId portrait{};
+
+    /// Gender
+    lua_int sex{};
+
+    /// When the character revives.
+    time::Instant revival_time{};
+
+    /// Relationship to the player
     Relationship relationship{};
+
+    /// Original relationship to the player
     Relationship original_relationship{};
 
-    int turn_cost = 0;
-    int current_speed = 0;
-    OptionalItemRef ai_item;
-    std::string portrait;
-    int interest = 0;
-    time::Instant interest_renewal_time{};
-    int personality = 0;
-    int impression = 0;
-    int talk_type = 0;
-    int height = 0;
-    int weight = 0;
+    /// Interest to the player.
+    lua_int interest{};
+
+    /// When `interest` is reset.
+    time::Instant interest_reset_time{};
+
+    /// Personality
+    lua_int personality{};
+
+    /// Talk type
+    lua_int talk_type{};
+
+    /// Impression to the player.
+    lua_int impression{};
+
+    /// Height (in cm)
+    lua_int height{};
+
+    /// Weight (in kg)
+    lua_int weight{};
 
     /// Birthday. Because Date class does not have default constructor (both
     /// month of 0th and day of 0th are invalid), a dummy value is assgiend
@@ -168,99 +203,167 @@ public:
     /// http://elonagather.wiki.fc2.com/wiki/%E4%B8%BB%E8%A6%81%E3%81%AA%E4%BA%BA%E7%89%A9
     time::Date birthday{493, 12, 26};
 
-    int nutrition = 0;
-    int can_talk = 0;
-    Quality quality = Quality::none;
-    int turn = 0;
-    CharaId id = CharaId::none;
-    int vision_distance = 0;
-    int enemy_id = 0;
-    int gold = 0;
-    int platinum_coin = 0;
-    CombatStyle combat_style;
-    int melee_attack_type = 0;
-    int fame = 0;
-    int experience = 0;
-    int required_experience = 0;
-    int speed_percentage = 0;
-    int level = 0;
-    int speed_percentage_in_next_turn = 0;
-    int skill_bonus = 0;
-    int total_skill_bonus = 0;
-    int inventory_weight = 0;
-    int max_inventory_weight = 0;
-    int inventory_weight_type = 0;
-    int max_level = 0;
-    int karma = 0;
-    int hp = 0;
-    int max_hp = 0;
-    int sp = 0;
-    int max_sp = 0;
-    int mp = 0;
-    int max_mp = 0;
-    int heal_value_per_nether_attack = 0;
-    GodId god_id;
-    int piety_point = 0;
-    int praying_point = 0;
-    int sum_of_equipment_weight = 0;
-    int special_attack_type = 0;
-    int rate_to_pierce = 0;
-    int rate_of_critical_hit = 0;
-    int speed_correction_value = 0;
-    int pv = 0;
-    int dv = 0;
-    int hit_bonus = 0;
-    int damage_bonus = 0;
-    int pv_correction_value = 0;
-    int dv_correction_value = 0;
-    int damage_reaction_info = 0;
-    int emotion_icon = 0;
-    int current_map = 0;
-    int current_dungeon_level = 0;
-    int related_quest_id = 0;
-    int direction = 0;
+    /// Hunger
+    lua_int nutrition{};
+
+    /// Quality
+    Quality quality{};
+
+    /// Turns
+    lua_int turns{};
+
+    /// Gold
+    lua_int gold{};
+
+    /// Platinum
+    lua_int platinum{};
+
+    /// Combat style
+    CombatStyle combat_style{};
+
+    /// Fame
+    lua_int fame{};
+
+    /// Karma
+    lua_int karma{};
+
+    /// Current level
+    lua_int level{};
+
+    /// Maximum level
+    lua_int max_level{};
+
+    /// Experience
+    lua_int experience{};
+
+    /// Required experience to the next level
+    lua_int required_experience{};
+
+    lua_int turn_cost{};
+    lua_int current_speed{};
+    lua_int speed_percentage{};
+    lua_int speed_percentage_in_next_turn{};
+    lua_int speed_correction_value{};
+
+    /// Current skill bonus
+    lua_int skill_bonus{};
+
+    /// Total amount of skill bonuses which the character earned ever.
+    lua_int total_skill_bonus{};
+
+    /// Inventory weight
+    lua_int inventory_weight{};
+
+    /// Maximum inventory weight
+    lua_int max_inventory_weight{};
+
+    /// Equipment weight
+    lua_int equipment_weight{};
+
+    /// Burden state
+    lua_int burden_state{};
+
+    /// Current HP, hit point
+    lua_int hp{};
+
+    /// Maximum HP, hit point
+    lua_int max_hp{};
+
+    /// Current MP, mana point
+    lua_int mp{};
+
+    /// Maximum MP, mana point
+    lua_int max_mp{};
+
+    /// Current SP, stamina point
+    lua_int sp{};
+
+    /// Maximum SP, stamina point
+    lua_int max_sp{};
+
+    /// Religion
+    GodId religion;
+
+    /// Piety point
+    lua_int piety_point{};
+
+    /// Prayer point
+    lua_int prayer_point{};
+
+    /// PV, protection value
+    lua_int pv{};
+
+    /// PV bonus
+    lua_int pv_bonus{};
+
+    // DV, defense value
+    lua_int dv{};
+
+    /// DV bonus
+    lua_int dv_bonus{};
+
+    /// Hit bonus
+    lua_int hit_bonus{};
+
+    /// Damage bonus
+    lua_int damage_bonus{};
+
+    OptionalItemRef ai_item;
+
+    lua_int can_talk{};
+    lua_int enemy_id{};
+    lua_int melee_attack_type{};
+    lua_int heal_value_per_nether_attack{};
+    lua_int special_attack_type{};
+    lua_int rate_to_pierce{};
+    lua_int rate_of_critical_hit{};
+    lua_int damage_reaction_info{};
+    lua_int emotion_icon{};
+    lua_int current_map{};
+    lua_int current_dungeon_level{};
+    lua_int related_quest_id{};
+    lua_int direction{};
     time::Instant hire_limit_time{};
-    int hire_count = 0;
-    int insanity = 0;
-    int curse_power = 0;
-    int extra_attack = 0;
-    int extra_shot = 0;
-    int decrease_physical_damage = 0;
-    int nullify_damage = 0;
-    int cut_counterattack = 0;
-    int anorexia_count = 0;
+    lua_int hire_count{};
+    lua_int insanity{};
+    lua_int curse_power{};
+    lua_int extra_attack{};
+    lua_int extra_shot{};
+    lua_int decrease_physical_damage{};
+    lua_int nullify_damage{};
+    lua_int cut_counterattack{};
+    lua_int anorexia_count{};
     Activity activity;
-    int quality_of_performance = 0;
-    int tip_gold = 0;
+    lua_int quality_of_performance{};
+    lua_int tip_gold{};
     Role role = Role::none;
-    int shop_rank = 0;
-    int activity_target = 0;
-    int shop_store_id = 0;
+    lua_int shop_rank{};
+    lua_int activity_target{};
+    lua_int shop_store_id{};
     time::Instant shop_restock_time{};
-    int cnpc_id = 0;
-    Position initial_position;
-    int hate = 0;
-    int ai_calm = 0;
-    int ai_move = 0;
-    int ai_dist = 0;
-    int ai_act_sub_freq = 0;
-    int ai_heal = 0;
-    int element_of_unarmed_attack = 0;
-    int poisoned = 0;
-    int sleep = 0;
-    int paralyzed = 0;
-    int blind = 0;
-    int confused = 0;
-    int fear = 0;
-    int dimmed = 0;
-    int drunk = 0;
-    int bleeding = 0;
-    int wet = 0;
-    int insane = 0;
-    int sick = 0;
-    int gravity = 0;
-    int choked = 0;
-    int furious = 0;
+    lua_int cnpc_id{};
+    lua_int hate{};
+    lua_int ai_calm{};
+    lua_int ai_move{};
+    lua_int ai_dist{};
+    lua_int ai_act_sub_freq{};
+    lua_int ai_heal{};
+    lua_int element_of_unarmed_attack{};
+    lua_int poisoned{};
+    lua_int sleep{};
+    lua_int paralyzed{};
+    lua_int blind{};
+    lua_int confused{};
+    lua_int fear{};
+    lua_int dimmed{};
+    lua_int drunk{};
+    lua_int bleeding{};
+    lua_int wet{};
+    lua_int insane{};
+    lua_int sick{};
+    lua_int gravity{};
+    lua_int choked{};
+    lua_int furious{};
     std::vector<int> growth_buffs;
     BodyPartList body_parts;
     std::vector<int> normal_actions;
@@ -268,8 +371,8 @@ public:
     BuffList buffs;
     std::vector<int> attr_adjs;
     std::bitset<sizeof(int) * 8 * 50> _flags;
-    int _156 = 0;
-    int _203 = 0;
+    int _156{};
+    int _203{};
     Position target_position;
 
 

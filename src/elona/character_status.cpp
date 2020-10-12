@@ -333,7 +333,7 @@ void refresh_speed(Character& chara)
         {
             chara.current_speed = clamp(
                 chara.get_skill(10).level + cdata.player().get_skill(301).level,
-                10,
+                lua_int{10},
                 mount_speed);
             return;
         }
@@ -365,15 +365,15 @@ void refresh_speed(Character& chara)
             cdata.player().speed_percentage_in_next_turn -= 10;
         }
     }
-    if (cdata.player().inventory_weight_type >= 3)
+    if (cdata.player().burden_state >= 3)
     {
         cdata.player().speed_percentage_in_next_turn -= 50;
     }
-    if (cdata.player().inventory_weight_type == 2)
+    if (cdata.player().burden_state == 2)
     {
         cdata.player().speed_percentage_in_next_turn -= 30;
     }
-    if (cdata.player().inventory_weight_type == 1)
+    if (cdata.player().burden_state == 1)
     {
         cdata.player().speed_percentage_in_next_turn -= 10;
     }
@@ -539,16 +539,15 @@ void earn_gold(Character& chara, int delta)
 
 void earn_platinum(Character& chara, int delta)
 {
-    constexpr auto max =
-        std::numeric_limits<decltype(chara.platinum_coin)>::max();
+    constexpr auto max = std::numeric_limits<decltype(chara.platinum)>::max();
 
-    if (chara.platinum_coin > max - delta)
+    if (chara.platinum > max - delta)
     {
-        chara.platinum_coin = max;
+        chara.platinum = max;
     }
     else
     {
-        chara.platinum_coin += delta;
+        chara.platinum += delta;
     }
 }
 

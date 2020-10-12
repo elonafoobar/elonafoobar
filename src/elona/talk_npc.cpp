@@ -1482,7 +1482,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
             the_ability_db.get_text(selected_skill, "name"),
             calc_skill_training_cost(selected_skill, cdata.player()),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_training_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
@@ -1498,7 +1498,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
             the_ability_db.get_text(selected_skill, "name"),
             calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_learning_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
@@ -1517,7 +1517,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         snd("core.paygold1");
         if (is_training)
         {
-            cdata.player().platinum_coin -=
+            cdata.player().platinum -=
                 calc_skill_training_cost(selected_skill, cdata.player());
             modify_potential(
                 cdata.player(),
@@ -1532,7 +1532,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         }
         else
         {
-            cdata.player().platinum_coin -=
+            cdata.player().platinum -=
                 calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
             ++game()->number_of_learned_skills_by_trainer;
@@ -1882,7 +1882,7 @@ TalkResult talk_npc(Character& speaker)
                         }
                     }
                     speaker.interest -= rnd(30);
-                    speaker.interest_renewal_time = game_now() + 8_hours;
+                    speaker.interest_reset_time = game_now() + 8_hours;
                 }
             }
         }

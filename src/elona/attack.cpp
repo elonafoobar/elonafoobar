@@ -197,7 +197,7 @@ bool do_physical_attack_internal(
     const OptionalItemRef& weapon,
     const OptionalItemRef& ammo)
 {
-    int attackdmg;
+    lua_int attackdmg;
 
     if (attacker.state() != Character::State::alive)
     {
@@ -497,7 +497,8 @@ bool do_physical_attack_internal(
                         }
                         damage_hp(
                             attacker,
-                            clamp(attackdmg / 10, 1, target.max_hp / 10),
+                            clamp(
+                                attackdmg / 10, lua_int{1}, target.max_hp / 10),
                             target.index,
                             p,
                             target.damage_reaction_info / 1000);

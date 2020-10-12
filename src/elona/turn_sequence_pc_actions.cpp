@@ -293,7 +293,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         if (p == 3)
         {
-            if (cdata.player().god_id == core_god::eyth)
+            if (cdata.player().religion == core_god::eyth)
             {
                 action = "pray";
             }

@@ -746,7 +746,7 @@ void render_cloud()
 
 void draw_hp_bar(const Character& chara, int x, int y)
 {
-    const int ratio = std::min(chara.hp * 30 / chara.max_hp, 30);
+    const int ratio = std::min(chara.hp * 30 / chara.max_hp, lua_int{30});
     if (ratio <= 0)
         return;
 
@@ -1543,7 +1543,7 @@ void cell_draw()
                     }
                     else
                     {
-                        ani_ = cdata.player().turn % 4 * 32;
+                        ani_ = cdata.player().turns % 4 * 32;
                     }
                     if (map_data.type == mdata_t::MapType::world_map)
                     {

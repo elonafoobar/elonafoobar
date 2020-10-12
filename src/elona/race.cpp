@@ -24,8 +24,8 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
 
     chara.melee_attack_type = data->melee_attack_type;
     chara.special_attack_type = data->special_attack_type;
-    chara.dv_correction_value = data->dv_multiplier;
-    chara.pv_correction_value = data->pv_multiplier;
+    chara.dv_bonus = data->dv_multiplier;
+    chara.pv_bonus = data->pv_multiplier;
 
     {
         const auto age = rnd(data->max_age - data->min_age + 1) + data->min_age;

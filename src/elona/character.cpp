@@ -413,7 +413,7 @@ bool chara_place_internal(
             }
             if (enemy_respawn && i < 20)
             {
-                const auto threshold = cdata.player().vision_distance / 2;
+                const auto threshold = cdata.player().fov_range / 2;
                 if (std::abs(cdata.player().position.x - x) <= threshold &&
                     std::abs(cdata.player().position.y - x) <= threshold)
                 {
@@ -630,7 +630,7 @@ void initialize_character(Character& chara)
     }
     chara.interest = 100;
     chara.impression = 50;
-    chara.vision_distance = 14;
+    chara.fov_range = 14;
     if (chara.id == CharaId::maid)
     {
         chara.image = rnd(33) * 2 + chara.sex + 1;
@@ -652,7 +652,7 @@ void initialize_character(Character& chara)
     {
         const auto index = std::to_string(1 + rnd(32));
         const auto man_or_woman = chara.sex ? "woman" : "man";
-        chara.portrait = "core."s + man_or_woman + index;
+        chara.portrait = data::InstanceId{"core."s + man_or_woman + index};
     }
     chara.personality = rnd(4);
     chara.talk_type = rnd(7);
@@ -796,7 +796,7 @@ void chara_refresh(Character& chara)
     chara.curse_power = 0;
     chara.extra_attack = 0;
     chara.extra_shot = 0;
-    chara.sum_of_equipment_weight = 0;
+    chara.equipment_weight = 0;
     chara.decrease_physical_damage = 0;
     chara.nullify_damage = 0;
     chara.cut_counterattack = 0;
@@ -808,7 +808,7 @@ void chara_refresh(Character& chara)
             continue;
         }
         const auto equipment = body_part.equipment().unwrap();
-        chara.sum_of_equipment_weight += equipment->weight;
+        chara.equipment_weight += equipment->weight;
         if (equipment->skill == 168)
         {
             chara.combat_style.set_shield();
@@ -1117,12 +1117,11 @@ void chara_refresh(Character& chara)
     }
     if (chara.index >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
-        chara.dv = chara.level / 2 +
-            chara.dv * chara.dv_correction_value / 100 +
-            chara.dv_correction_value - 100;
+        chara.dv = chara.level / 2 + chara.dv * chara.dv_bonus / 100 +
+            chara.dv_bonus - 100;
         chara.pv = chara.level +
-            (chara.pv + chara.level / 2 + chara.pv_correction_value / 25) *
-                chara.pv_correction_value / 100;
+            (chara.pv + chara.level / 2 + chara.pv_bonus / 25) *
+                chara.pv_bonus / 100;
         if (chara.quality == Quality::great)
         {
             chara.max_hp = chara.max_hp * 3 / 2;
@@ -1671,11 +1670,11 @@ void chara_set_ai_item(Character& chara, ItemRef item)
 
 int chara_armor_class(const Character& chara)
 {
-    if (chara.sum_of_equipment_weight >= 35000)
+    if (chara.equipment_weight >= 35000)
     {
         return 169;
     }
-    else if (chara.sum_of_equipment_weight >= 15000)
+    else if (chara.equipment_weight >= 15000)
     {
         return 170;
     }
@@ -2087,28 +2086,28 @@ void refresh_burden_state()
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight * 2)
         {
-            cdata.player().inventory_weight_type = 4;
+            cdata.player().burden_state = 4;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight)
         {
-            cdata.player().inventory_weight_type = 3;
+            cdata.player().burden_state = 3;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight / 4 * 3)
         {
-            cdata.player().inventory_weight_type = 2;
+            cdata.player().burden_state = 2;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight / 2)
         {
-            cdata.player().inventory_weight_type = 1;
+            cdata.player().burden_state = 1;
             break;
         }
-        cdata.player().inventory_weight_type = 0;
+        cdata.player().burden_state = 0;
     }
     refresh_speed(cdata.player());
 }

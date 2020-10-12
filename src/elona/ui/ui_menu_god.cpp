@@ -11,23 +11,23 @@ namespace ui
 
 const constexpr int _cancel_choice = 2;
 
-static std::string _get_choice_name(bool already_believing, int god_id)
+static std::string _get_choice_name(bool already_believing, int religion)
 {
     if (already_believing)
     {
-        if (god_id == 0)
+        if (religion == 0)
         {
             return i18n::s.get("core.god.desc.window.abandon");
         }
         else
         {
             return i18n::s.get(
-                "core.god.desc.window.convert", god_name(god_id));
+                "core.god.desc.window.convert", god_name(religion));
         }
     }
     else
     {
-        return i18n::s.get("core.god.desc.window.believe", god_name(god_id));
+        return i18n::s.get("core.god.desc.window.believe", god_name(religion));
     }
 }
 
@@ -73,22 +73,23 @@ void UIMenuGod::update()
     }
 }
 
-static std::string _get_god_description(int god_id)
+static std::string _get_god_description(int religion)
 {
     std::string buff = u8" "s;
 
-    if (god_id != 0)
+    if (religion != 0)
     {
-        buff = i18n::s.get_enum_property("core.god.desc", "text", god_id);
+        buff = i18n::s.get_enum_property("core.god.desc", "text", religion);
 
         buff += i18n::s.get("core.god.desc.offering") + u8": ";
-        buff += i18n::s.get_enum_property("core.god.desc", "offering", god_id);
+        buff +=
+            i18n::s.get_enum_property("core.god.desc", "offering", religion);
 
         buff += i18n::s.get("core.god.desc.bonus") + u8": ";
-        buff += i18n::s.get_enum_property("core.god.desc", "bonus", god_id);
+        buff += i18n::s.get_enum_property("core.god.desc", "bonus", religion);
 
         buff += i18n::s.get("core.god.desc.ability") + u8": ";
-        buff += i18n::s.get_enum_property("core.god.desc", "ability", god_id);
+        buff += i18n::s.get_enum_property("core.god.desc", "ability", religion);
     }
 
     return buff;
@@ -109,18 +110,18 @@ void UIMenuGod::_draw_window()
     window2(wx, wy, dx, dy, 4, 6);
 }
 
-void UIMenuGod::_draw_title(int god_id)
+void UIMenuGod::_draw_title(int religion)
 {
     font(18 - en * 2, snail::Font::Style::bold);
     bmes(
-        i18n::s.get("core.god.desc.window.title", god_name(god_id)),
+        i18n::s.get("core.god.desc.window.title", god_name(religion)),
         wx + 20,
         wy + 20);
 }
 
-void UIMenuGod::_draw_desc(int god_id)
+void UIMenuGod::_draw_desc(int religion)
 {
-    std::string _buff = _get_god_description(god_id);
+    std::string _buff = _get_god_description(religion);
     gmes(_buff, wx + 23, wy + 60, dx - 60, {30, 30, 30}, true);
 }
 

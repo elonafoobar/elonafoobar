@@ -2180,7 +2180,7 @@ void sense_map_feats_on_move(Character& chara)
             addefmap(chara.position.x, chara.position.y, 3, 10, dirsub, rnd(2));
             if (keybd_wait <=
                     g_config.walk_wait() * g_config.start_run_wait() ||
-                cdata.player().turn % 2 == 0 ||
+                cdata.player().turns % 2 == 0 ||
                 map_data.type == mdata_t::MapType::world_map)
             {
                 sound_footstep2(foot);

@@ -1456,7 +1456,7 @@ bool _magic_1107(Character& target)
         obvious = 0;
         return true;
     }
-    if (cdata.player().god_id == core_god::eyth)
+    if (cdata.player().religion == core_god::eyth)
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
@@ -1470,7 +1470,8 @@ bool _magic_1107(Character& target)
         chara_gain_skill_exp(cdata.player(), 181, -1000);
         return true;
     }
-    txt(i18n::s.get("core.magic.faith.apply", god_name(cdata.player().god_id)),
+    txt(i18n::s.get(
+            "core.magic.faith.apply", god_name(cdata.player().religion)),
         Message::color{ColorIndex::green});
     if (efstatus == CurseState::blessed)
     {
@@ -1478,7 +1479,7 @@ bool _magic_1107(Character& target)
     }
     MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
     snd("core.pray2");
-    cdata.player().praying_point += 500;
+    cdata.player().prayer_point += 500;
     god_modify_piety(75);
     chara_gain_skill_exp(
         cdata.player(),

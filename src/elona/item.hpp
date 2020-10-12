@@ -122,11 +122,11 @@ public:
     /// Hit bonus.
     lua_int hit_bonus{};
 
-    /// DV, defense value
-    lua_int dv{};
-
     /// PV, protection value
     lua_int pv{};
+
+    /// DV, defense value
+    lua_int dv{};
 
     /// Bonus value.
     lua_int bonus_value{};

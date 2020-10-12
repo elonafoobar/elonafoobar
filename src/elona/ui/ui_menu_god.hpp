@@ -9,8 +9,8 @@ namespace ui
 class UIMenuGod : public UIMenu<int>
 {
 public:
-    UIMenuGod(int god_id, bool already_believing)
-        : _god_id(god_id)
+    UIMenuGod(int religion, bool already_believing)
+        : _god_id(religion)
         , _already_believing(already_believing)
     {
     }

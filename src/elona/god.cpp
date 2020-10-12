@@ -107,7 +107,7 @@ void god_modify_piety(int amount)
         if (cdata.player().piety_point >= 4000)
         {
             ++game()->god_rank;
-            txtgod(cdata.player().god_id, 8);
+            txtgod(cdata.player().religion, 8);
         }
     }
     if (game()->god_rank == 2)
@@ -115,7 +115,7 @@ void god_modify_piety(int amount)
         if (cdata.player().piety_point >= 2500)
         {
             ++game()->god_rank;
-            txtgod(cdata.player().god_id, 7);
+            txtgod(cdata.player().religion, 7);
         }
     }
     if (game()->god_rank == 0)
@@ -123,7 +123,7 @@ void god_modify_piety(int amount)
         if (cdata.player().piety_point >= 1500)
         {
             ++game()->god_rank;
-            txtgod(cdata.player().god_id, 7);
+            txtgod(cdata.player().religion, 7);
         }
     }
 
@@ -146,15 +146,15 @@ void god_modify_piety(int amount)
 
 void set_npc_religion(Character& chara)
 {
-    if (chara.god_id != core_god::eyth || chara.has_learned_words() ||
+    if (chara.religion != core_god::eyth || chara.has_learned_words() ||
         chara.is_player())
     {
         return;
     }
     randomize(game()->random_seed + game()->current_map);
-    chara.god_id = core_god::int2godid(rnd(8));
+    chara.religion = core_god::int2godid(rnd(8));
     randomize();
-    if (chara.god_id == core_god::eyth || rnd(4) == 0)
+    if (chara.religion == core_god::eyth || rnd(4) == 0)
     {
         chara.has_learned_words() = true;
     }
@@ -167,7 +167,7 @@ void god_apply_blessing(Character& believer)
     const auto P = believer.piety_point;
     const auto F = believer.get_skill(181).level;
 
-    if (believer.god_id == core_god::mani)
+    if (believer.religion == core_god::mani)
     {
         if (believer.get_skill(12).level > 0)
         {
@@ -202,7 +202,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(179).level += clamp(P / 350, 1, 12 + F / 10);
         }
     }
-    if (believer.god_id == core_god::lulwy)
+    if (believer.religion == core_god::lulwy)
     {
         if (believer.get_skill(13).level > 0)
         {
@@ -229,7 +229,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(174).level += clamp(P / 550, 1, 8 + F / 10);
         }
     }
-    if (believer.god_id == core_god::itzpalt)
+    if (believer.religion == core_god::itzpalt)
     {
         if (believer.get_skill(16).level > 0)
         {
@@ -252,7 +252,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(52).level += clamp(P / 50, 1, 200 + F / 10);
         }
     }
-    if (believer.god_id == core_god::ehekatl)
+    if (believer.religion == core_god::ehekatl)
     {
         if (believer.get_skill(17).level > 0)
         {
@@ -279,7 +279,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(158).level += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (believer.god_id == core_god::opatos)
+    if (believer.religion == core_god::opatos)
     {
         if (believer.get_skill(10).level > 0)
         {
@@ -306,7 +306,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(174).level += clamp(P / 450, 1, 8 + F / 10);
         }
     }
-    if (believer.god_id == core_god::jure)
+    if (believer.religion == core_god::jure)
     {
         if (believer.get_skill(15).level > 0)
         {
@@ -337,7 +337,7 @@ void god_apply_blessing(Character& believer)
             believer.get_skill(164).level += clamp(P / 400, 1, 12 + F / 10);
         }
     }
-    if (believer.god_id == core_god::kumiromi)
+    if (believer.religion == core_god::kumiromi)
     {
         if (believer.get_skill(13).level > 0)
         {
@@ -381,13 +381,13 @@ void god_proc_switching_penalty(const GodId& new_religion)
         gmode(2);
         render_hud();
         redraw();
-        if (cdata.player().god_id != core_god::eyth)
+        if (cdata.player().religion != core_god::eyth)
         {
             mode = 9;
             txt(i18n::s.get(
-                    "core.god.enraged", god_name(cdata.player().god_id)),
+                    "core.god.enraged", god_name(cdata.player().religion)),
                 Message::color{ColorIndex::purple});
-            txtgod(cdata.player().god_id, 1);
+            txtgod(cdata.player().religion, 1);
             redraw();
             efid = 622;
             efp = 10000;
@@ -396,7 +396,7 @@ void god_proc_switching_penalty(const GodId& new_religion)
             mode = 0;
             await(g_config.animation_wait() * 20);
         }
-        cdata.player().god_id = new_religion;
+        cdata.player().religion = new_religion;
         switch_religion();
         msg_halt();
     }
@@ -408,12 +408,12 @@ void god_proc_switching_penalty(const GodId& new_religion)
 void switch_religion()
 {
     cdata.player().piety_point = 0;
-    cdata.player().praying_point = 500;
+    cdata.player().prayer_point = 500;
     game()->god_rank = 0;
     cdata.player().spacts().lose("core.prayer_of_jure");
     cdata.player().spacts().lose("core.absorb_magic");
     cdata.player().spacts().lose("core.lulwys_trick");
-    if (cdata.player().god_id == core_god::eyth)
+    if (cdata.player().religion == core_god::eyth)
     {
         txt(i18n::s.get("core.god.switch.unbeliever"),
             Message::color{ColorIndex::orange});
@@ -424,21 +424,21 @@ void switch_religion()
             .play();
         snd("core.complete1");
         txt(i18n::s.get(
-                "core.god.switch.follower", god_name(cdata.player().god_id)),
+                "core.god.switch.follower", god_name(cdata.player().religion)),
             Message::color{ColorIndex::orange});
-        if (cdata.player().god_id == core_god::itzpalt)
+        if (cdata.player().religion == core_god::itzpalt)
         {
             cdata.player().spacts().gain("core.absorb_magic");
         }
-        if (cdata.player().god_id == core_god::jure)
+        if (cdata.player().religion == core_god::jure)
         {
             cdata.player().spacts().gain("core.prayer_of_jure");
         }
-        if (cdata.player().god_id == core_god::lulwy)
+        if (cdata.player().religion == core_god::lulwy)
         {
             cdata.player().spacts().gain("core.lulwys_trick");
         }
-        txtgod(cdata.player().god_id, 5);
+        txtgod(cdata.player().religion, 5);
     }
 }
 
@@ -446,7 +446,7 @@ void switch_religion()
 
 TurnResult do_pray()
 {
-    if (cdata.player().god_id == core_god::eyth)
+    if (cdata.player().religion == core_god::eyth)
     {
         txt(i18n::s.get("core.god.pray.do_not_believe"));
         return TurnResult::turn_end;
@@ -459,11 +459,11 @@ TurnResult do_pray()
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get(
-        "core.god.pray.you_pray_to", god_name(cdata.player().god_id)));
-    if (cdata.player().piety_point < 200 || cdata.player().praying_point < 1000)
+        "core.god.pray.you_pray_to", god_name(cdata.player().religion)));
+    if (cdata.player().piety_point < 200 || cdata.player().prayer_point < 1000)
     {
         txt(i18n::s.get(
-            "core.god.pray.indifferent", god_name(cdata.player().god_id)));
+            "core.god.pray.indifferent", god_name(cdata.player().religion)));
         return TurnResult::turn_end;
     }
     MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
@@ -474,11 +474,11 @@ TurnResult do_pray()
     efid = 451;
     efp = 200;
     magic(cdata.player(), cdata.player());
-    cdata.player().praying_point = 0;
+    cdata.player().prayer_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
     if (game()->god_rank % 2 == 1)
     {
-        txtgod(cdata.player().god_id, 6);
+        txtgod(cdata.player().religion, 6);
         if (game()->god_rank == 1)
         {
             f = 0;
@@ -518,43 +518,43 @@ TurnResult do_pray()
             }
             flt();
             int chara_id = 0;
-            if (cdata.player().god_id == core_god::mani)
+            if (cdata.player().religion == core_god::mani)
             {
                 chara_id = 262;
                 txt(i18n::s.get("core.god.pray.servant.desc.mani"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::lulwy)
+            if (cdata.player().religion == core_god::lulwy)
             {
                 chara_id = 263;
                 txt(i18n::s.get("core.god.pray.servant.desc.lulwy"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::itzpalt)
+            if (cdata.player().religion == core_god::itzpalt)
             {
                 chara_id = 264;
                 txt(i18n::s.get("core.god.pray.servant.desc.itzpalt"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::ehekatl)
+            if (cdata.player().religion == core_god::ehekatl)
             {
                 chara_id = 260;
                 txt(i18n::s.get("core.god.pray.servant.desc.ehekatl"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::opatos)
+            if (cdata.player().religion == core_god::opatos)
             {
                 chara_id = 265;
                 txt(i18n::s.get("core.god.pray.servant.desc.opatos"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::jure)
+            if (cdata.player().religion == core_god::jure)
             {
                 chara_id = 266;
                 txt(i18n::s.get("core.god.pray.servant.desc.jure"),
                     Message::color{ColorIndex::blue});
             }
-            if (cdata.player().god_id == core_god::kumiromi)
+            if (cdata.player().religion == core_god::kumiromi)
             {
                 chara_id = 261;
                 txt(i18n::s.get("core.god.pray.servant.desc.kumiromi"),
@@ -568,19 +568,19 @@ TurnResult do_pray()
         {
             flt();
             int item_id = 0;
-            if (cdata.player().god_id == core_god::lulwy)
+            if (cdata.player().religion == core_god::lulwy)
             {
                 item_id = 680;
             }
-            if (cdata.player().god_id == core_god::jure)
+            if (cdata.player().religion == core_god::jure)
             {
                 item_id = 681;
             }
-            if (cdata.player().god_id == core_god::kumiromi)
+            if (cdata.player().religion == core_god::kumiromi)
             {
                 item_id = 682;
             }
-            if (cdata.player().god_id == core_god::mani)
+            if (cdata.player().religion == core_god::mani)
             {
                 item_id = 683;
             }
@@ -599,21 +599,21 @@ TurnResult do_pray()
                 if (const auto item =
                         itemcreate_map_inv(672, cdata.player().position, 0))
                 {
-                    if (cdata.player().god_id == core_god::itzpalt)
+                    if (cdata.player().religion == core_god::itzpalt)
                     {
                         item->param1 = 165;
                     }
-                    if (cdata.player().god_id == core_god::ehekatl)
+                    if (cdata.player().religion == core_god::ehekatl)
                     {
                         item->param1 = 163;
                     }
-                    if (cdata.player().god_id == core_god::opatos)
+                    if (cdata.player().religion == core_god::opatos)
                     {
                         item->param1 = 164;
                     }
                 }
             }
-            if (cdata.player().god_id == core_god::jure)
+            if (cdata.player().religion == core_god::jure)
             {
                 flt();
                 nostack = 1;
@@ -629,31 +629,31 @@ TurnResult do_pray()
         {
             flt();
             int item_id = 0;
-            if (cdata.player().god_id == core_god::mani)
+            if (cdata.player().religion == core_god::mani)
             {
                 item_id = 674;
             }
-            if (cdata.player().god_id == core_god::lulwy)
+            if (cdata.player().religion == core_god::lulwy)
             {
                 item_id = 673;
             }
-            if (cdata.player().god_id == core_god::itzpalt)
+            if (cdata.player().religion == core_god::itzpalt)
             {
                 item_id = 676;
             }
-            if (cdata.player().god_id == core_god::ehekatl)
+            if (cdata.player().religion == core_god::ehekatl)
             {
                 item_id = 678;
             }
-            if (cdata.player().god_id == core_god::opatos)
+            if (cdata.player().religion == core_god::opatos)
             {
                 item_id = 679;
             }
-            if (cdata.player().god_id == core_god::jure)
+            if (cdata.player().religion == core_god::jure)
             {
                 item_id = 677;
             }
-            if (cdata.player().god_id == core_god::kumiromi)
+            if (cdata.player().religion == core_god::kumiromi)
             {
                 item_id = 675;
             }

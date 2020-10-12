@@ -82,7 +82,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     food_make_rotten(food);
     food->image = 336;
 
-    if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)
+    if (chara_idx == 0 && cdata.player().religion == core_god::kumiromi)
     {
         if (rnd(3) == 0)
         {
@@ -1200,7 +1200,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 eater,
                 rnd(3) + 1,
                 eater.nutrition >= 20000 &&
-                    rnd(30000 / std::max(1, eater.nutrition) + 2) == 0);
+                    rnd(30000 / std::max(lua_int{1}, eater.nutrition) + 2) ==
+                        0);
         }
     }
     if (eater.id == CharaId::cute_fairy)

@@ -565,10 +565,10 @@ void render_gold()
 void render_platinum()
 {
     _render_gold_or_platinum(
-        cdata.player().platinum_coin,
+        cdata.player().platinum,
         windoww - 120,
         inf_ver - 16,
-        "core.platinum_coin",
+        "core.platinum",
         "pp");
 }
 
@@ -1053,7 +1053,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        cdata.player().inventory_weight_type,
+        cdata.player().burden_state,
         x,
         y,
         [](auto state) { return state != 0; },
@@ -1781,7 +1781,7 @@ void update_slight()
                 if (cell_data.at(sx, sy).chara_index_plus_one != 0)
                 {
                     cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
-                        .vision_flag = msync;
+                        .fov_flag = msync;
                 }
                 if (cell_data.at(sx, sy).chip_id_memory !=
                     cell_data.at(sx, sy).chip_id_actual)
@@ -2021,7 +2021,7 @@ void render_fishing_animation()
     fishdir(2) = 3;
     fishdir(3) = 2;
     fishdir = fishdir(cdata.player().direction);
-    randomize(cdata.player().turn / 3);
+    randomize(cdata.player().turns / 3);
     gmode(2);
     if (fishanime == 4)
     {
