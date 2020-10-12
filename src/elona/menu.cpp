@@ -23,6 +23,7 @@
 #include "enchantment.hpp"
 #include "equipment.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -1306,14 +1307,14 @@ void show_city_chart()
 
 void begin_to_believe_god(int religion)
 {
-    bool already_believing = cdata.player().religion != core_god::eyth;
+    bool already_believing = cdata.player().religion != "";
 
     auto result = ui::UIMenuGod(religion, already_believing).show();
 
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty(core_god::int2godid(religion));
+        god_proc_switching_penalty(god_integer_to_god_id(religion));
     }
 }
 
@@ -1366,7 +1367,7 @@ void screen_analyze_self()
         cdata.player().get_skill(cnt).level = 1;
     }
     god_apply_blessing(cdata.tmp());
-    if (cdata.player().religion != core_god::eyth)
+    if (cdata.player().religion != "")
     {
         buff += u8"<title1>◆ "s + god_name(cdata.player().religion) +
             u8"による能力の恩恵<def>\n"s;

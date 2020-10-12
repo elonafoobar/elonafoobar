@@ -7,6 +7,7 @@
 #include "class.hpp"
 #include "data/types/type_race.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "menu.hpp"

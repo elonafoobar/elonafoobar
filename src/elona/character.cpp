@@ -30,6 +30,7 @@
 #include "equipment.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"

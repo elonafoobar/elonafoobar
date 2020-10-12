@@ -14,6 +14,7 @@
 #include "../draw.hpp"
 #include "../enchantment.hpp"
 #include "../game.hpp"
+#include "../god.hpp"
 #include "../keybind/keybind.hpp"
 #include "../map.hpp"
 #include "../menu.hpp"

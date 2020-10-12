@@ -18,6 +18,7 @@
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "item.hpp"
@@ -536,7 +537,7 @@ void initialize_debug_globals()
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
     game()->charge_power = 1000;
-    cdata.player().religion = core_god::int2godid(2);
+    cdata.player().religion = god_integer_to_god_id(2);
     cdata.player().piety_point = 1000;
     cdata.player().prayer_point = 1000;
     story_quest_set_progress("core.pael_and_her_mom", 1000);

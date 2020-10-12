@@ -82,7 +82,7 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     food_make_rotten(food);
     food->image = 336;
 
-    if (chara_idx == 0 && cdata.player().religion == core_god::kumiromi)
+    if (chara_idx == 0 && cdata.player().religion == "core.kumiromi")
     {
         if (rnd(3) == 0)
         {

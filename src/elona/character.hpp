@@ -13,7 +13,6 @@
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
-#include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "spact.hpp"
@@ -282,7 +281,7 @@ public:
     lua_int max_sp{};
 
     /// Religion
-    GodId religion;
+    data::InstanceId religion;
 
     /// Piety point
     lua_int piety_point{};

@@ -25,6 +25,7 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "itemgen.hpp"
@@ -2131,7 +2132,7 @@ void item_drop(
         if (const auto altar = item_find(ItemCategory::altar))
         {
             // The altar is your god's.
-            if (core_god::int2godid(altar->param1) == cdata.player().religion)
+            if (god_integer_to_god_id(altar->param1) == cdata.player().religion)
             {
                 if (dropped_item->curse_state != CurseState::blessed)
                 {

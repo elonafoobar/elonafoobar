@@ -546,7 +546,7 @@ void LuaCharacter_switch_religion(Character& self, const std::string& religion)
 {
     the_god_db.ensure(data::InstanceId{religion});
 
-    self.religion = religion;
+    self.religion = data::InstanceId{religion};
     elona::switch_religion();
 }
 
@@ -659,7 +659,13 @@ void bind(sol::state& lua)
      *
      * [RW] The character's worshipped god.
      */
-    LuaCharacter.set("god", &Character::religion);
+    LuaCharacter.set(
+        "religion",
+        sol::property(
+            [](const Character& self) { self.religion.get(); },
+            [](Character& self, const std::string& new_value) {
+                self.religion = data::InstanceId{new_value};
+            }));
 
     /**
      * @luadoc position field LuaPosition

@@ -32,6 +32,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -235,7 +236,7 @@ void _search_surroundings(Character& chara)
 void _proc_manis_disassembly(Character& chara)
 {
     if (feat(1) == 14 && feat(0) == tile_trap && chara.is_player() &&
-        chara.religion == core_god::mani)
+        chara.religion == "core.mani")
     {
         disarm_trap(chara, chara.position.x, chara.position.y);
     }
@@ -891,7 +892,7 @@ TurnResult do_pray_command()
     if (const auto altar = item_find(ItemCategory::altar))
     {
         int god_id_int = altar->param1;
-        if (core_god::int2godid(god_id_int) != cdata.player().religion)
+        if (god_integer_to_god_id(god_id_int) != cdata.player().religion)
         {
             begin_to_believe_god(god_id_int);
             return TurnResult::turn_end;
@@ -1305,7 +1306,7 @@ TurnResult do_change_ammo_command()
 
 TurnResult do_offer_command(const ItemRef& offering)
 {
-    if (cdata.player().religion == core_god::eyth)
+    if (cdata.player().religion == "")
     {
         txt(i18n::s.get("core.action.offer.do_not_believe"));
         return TurnResult::turn_end;
@@ -1341,7 +1342,7 @@ TurnResult do_offer_command(const ItemRef& offering)
         i = 25;
     }
 
-    if (core_god::int2godid(altar->param1) != cdata.player().religion)
+    if (god_integer_to_god_id(altar->param1) != cdata.player().religion)
     {
         f = 0;
         if (altar->param1 == 0)
@@ -1382,13 +1383,13 @@ TurnResult do_offer_command(const ItemRef& offering)
                     altar),
                 Message::color{ColorIndex::orange});
             txtgod(cdata.player().religion, 2);
-            altar->param1 = core_god::godid2int(cdata.player().religion);
+            altar->param1 = god_god_id_to_integer(cdata.player().religion);
         }
         else
         {
             txt(i18n::s.get(
                 "core.action.offer.take_over.fail", god_name(altar->param1)));
-            txtgod(core_god::int2godid(altar->param1), 3);
+            txtgod(god_integer_to_god_id(altar->param1), 3);
             god_fail_to_take_over_penalty();
         }
     }
@@ -4084,7 +4085,7 @@ TurnResult do_enter_strange_gate()
 void disarm_trap(Character& chara, int x, int y)
 {
     cell_featset(x, y, 0);
-    if (chara.religion == core_god::mani)
+    if (chara.religion == "core.mani")
     {
         txt(i18n::s.get("core.action.move.trap.disarm.dismantle"));
         for (int _i = 0, n = rnd(3) + 1; _i < n; ++_i)
@@ -4457,7 +4458,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     mp = calc_spell_cost_mp(caster, efid);
     if (caster.is_player())
     {
-        if (cdata.player().religion == core_god::ehekatl)
+        if (cdata.player().religion == "core.ehekatl")
         {
             mp = rnd(mp * 140 / 100 + 1) + 1;
         }

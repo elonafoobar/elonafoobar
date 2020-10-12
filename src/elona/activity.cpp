@@ -21,6 +21,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "game_clock.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"

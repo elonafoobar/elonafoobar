@@ -17,6 +17,7 @@
 #include "food.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"

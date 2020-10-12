@@ -16,76 +16,57 @@ enum class TurnResult;
 
 
 
-using GodId = std::string;
-
-
-
-namespace core_god
-{
-
-constexpr const char* eyth = ""; // 0
-constexpr const char* mani = "core.mani"; // 1
-constexpr const char* lulwy = "core.lulwy"; // 2
-constexpr const char* itzpalt = "core.itzpalt"; // 3
-constexpr const char* ehekatl = "core.ehekatl"; // 4
-constexpr const char* opatos = "core.opatos"; // 5
-constexpr const char* jure = "core.jure"; // 6
-constexpr const char* kumiromi = "core.kumiromi"; // 7
-
-
-inline GodId int2godid(int n)
+inline data::InstanceId god_integer_to_god_id(int n)
 {
     switch (n)
     {
-    case 0: return eyth;
-    case 1: return mani;
-    case 2: return lulwy;
-    case 3: return itzpalt;
-    case 4: return ehekatl;
-    case 5: return opatos;
-    case 6: return jure;
-    case 7: return kumiromi;
+    case 0: return "";
+    case 1: return "core.mani";
+    case 2: return "core.lulwy";
+    case 3: return "core.itzpalt";
+    case 4: return "core.ehekatl";
+    case 5: return "core.opatos";
+    case 6: return "core.jure";
+    case 7: return "core.kumiromi";
     default: return "";
     }
 }
 
 
-inline int godid2int(const GodId& id)
+inline int god_god_id_to_integer(data::InstanceId id)
 {
-    if (id == eyth)
+    if (id == "")
         return 0;
-    if (id == mani)
+    if (id == "core.mani")
         return 1;
-    if (id == lulwy)
+    if (id == "core.lulwy")
         return 2;
-    if (id == itzpalt)
+    if (id == "core.itzpalt")
         return 3;
-    if (id == ehekatl)
+    if (id == "core.ehekatl")
         return 4;
-    if (id == opatos)
+    if (id == "core.opatos")
         return 5;
-    if (id == jure)
+    if (id == "core.jure")
         return 6;
-    if (id == kumiromi)
+    if (id == "core.kumiromi")
         return 7;
     else
         return 0;
 }
 
-} // namespace core_god
 
 
-
-void txtgod(const GodId& id, int type);
+void txtgod(data::InstanceId id, int type);
 void god_modify_piety(int amount);
 void set_npc_religion(Character& chara);
 void god_apply_blessing(Character& believer);
 std::string get_god_description(int);
-void god_proc_switching_penalty(const GodId& new_religion);
+void god_proc_switching_penalty(data::InstanceId new_religion);
 void switch_religion();
 TurnResult do_pray();
 TurnResult do_offer();
-std::string god_name(const GodId& id);
+std::string god_name(data::InstanceId id);
 std::string god_name(int integer_god_id);
 
 void god_fail_to_take_over_penalty();

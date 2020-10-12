@@ -2,6 +2,7 @@
 
 #include "../audio.hpp"
 #include "../draw.hpp"
+#include "../god.hpp"
 #include "../i18n.hpp"
 
 namespace elona

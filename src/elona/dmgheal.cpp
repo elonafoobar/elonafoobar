@@ -24,6 +24,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -280,7 +281,7 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.is_player() && cdata.player().religion == core_god::opatos)
+    if (victim.is_player() && cdata.player().religion == "core.opatos")
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }

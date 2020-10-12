@@ -24,6 +24,7 @@
 #include "game.hpp"
 #include "game_clock.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
 #include "initialize_map.hpp"

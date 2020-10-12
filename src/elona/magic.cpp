@@ -31,6 +31,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "inventory.hpp"
@@ -1456,7 +1457,7 @@ bool _magic_1107(Character& target)
         obvious = 0;
         return true;
     }
-    if (cdata.player().religion == core_god::eyth)
+    if (cdata.player().religion == "")
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         obvious = 0;
