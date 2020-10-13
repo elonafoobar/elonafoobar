@@ -125,10 +125,12 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         is_handmade == other.is_handmade &&
         is_showroom_only == other.is_showroom_only &&
         range::equal(enchantments, other.enchantments) &&
+        /* TODO */
         __cooldown_time == other.__cooldown_time &&
         __expiration_time == other.__expiration_time &&
         __expiration_duration == other.__expiration_duration &&
         __is_rotten == other.__is_rotten &&
+        __god == other.__god &&
         true;
     /* clang-format on */
 }
@@ -861,11 +863,11 @@ void itemname_additional_info(const ItemRef& item)
     }
     if (category == ItemCategory::altar)
     {
-        if (item->param1 != 0)
+        if (item->__god != "")
         {
             s_ += lang(
-                god_name(item->param1) + u8"の"s,
-                u8" <"s + god_name(item->param1) + u8">"s);
+                god_get_name(item->__god) + u8"の"s,
+                u8" <"s + god_get_name(item->__god) + u8">"s);
         }
     }
     if (category == ItemCategory::food)
@@ -2132,7 +2134,7 @@ void item_drop(
         if (const auto altar = item_find(ItemCategory::altar))
         {
             // The altar is your god's.
-            if (god_integer_to_god_id(altar->param1) == cdata.player().religion)
+            if (altar->__god == cdata.player().religion)
             {
                 if (dropped_item->curse_state != CurseState::blessed)
                 {

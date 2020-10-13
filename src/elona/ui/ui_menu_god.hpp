@@ -9,7 +9,7 @@ namespace ui
 class UIMenuGod : public UIMenu<int>
 {
 public:
-    UIMenuGod(int religion, bool already_believing)
+    UIMenuGod(data::InstanceId religion, bool already_believing)
         : _god_id(religion)
         , _already_believing(already_believing)
     {
@@ -23,12 +23,12 @@ protected:
 
 private:
     void _draw_window();
-    void _draw_title(int);
-    void _draw_desc(int);
+    void _draw_title(data::InstanceId);
+    void _draw_desc(data::InstanceId);
     void _draw_choice(int, const std::string&);
     void _draw_choices();
 
-    int _god_id;
+    data::InstanceId _god_id;
     bool _already_believing;
 };
 

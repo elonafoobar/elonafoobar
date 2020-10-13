@@ -82,7 +82,6 @@ ELONA_EXTERN(int tile_dooropen);
 ELONA_EXTERN(int tile_downlocked);
 ELONA_EXTERN(int tile_re);
 ELONA_EXTERN(int tile_plant);
-ELONA_EXTERN(elona_vector1<int> isetgod);
 ELONA_EXTERN(elona_vector1<int> isetcrop);
 ELONA_EXTERN(int rdtry);
 

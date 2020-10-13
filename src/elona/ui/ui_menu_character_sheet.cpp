@@ -468,7 +468,7 @@ void UIMenuCharacterSheet::_draw_first_page_text_level()
     s(0) = ""s + _chara.level;
     s(1) = ""s + _chara.experience;
     s(2) = ""s + _chara.required_experience;
-    s(3) = god_name(_chara.religion);
+    s(3) = god_get_name(_chara.religion);
     s(4) = guildname();
     for (int cnt = 0; cnt < 5; ++cnt)
     {

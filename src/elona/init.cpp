@@ -537,7 +537,7 @@ void initialize_debug_globals()
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
     game()->charge_power = 1000;
-    cdata.player().religion = god_integer_to_god_id(2);
+    cdata.player().religion = "core.lulwy";
     cdata.player().piety_point = 1000;
     cdata.player().prayer_point = 1000;
     story_quest_set_progress("core.pael_and_her_mom", 1000);
@@ -939,14 +939,6 @@ void initialize_set_of_random_generation()
     isetcrop(4) = 183;
     isetcrop(5) = 188;
     isetcrop(6) = 200;
-    isetgod(0) = 0;
-    isetgod(1) = 1;
-    isetgod(2) = 2;
-    isetgod(3) = 3;
-    isetgod(4) = 4;
-    isetgod(5) = 5;
-    isetgod(6) = 6;
-    isetgod(7) = 7;
     asettown(0) = 5;
     asettown(1) = 11;
     asettown(2) = 14;

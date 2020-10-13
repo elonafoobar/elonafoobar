@@ -1475,7 +1475,7 @@ bool _magic_1107(Character& target)
         return true;
     }
     txt(i18n::s.get(
-            "core.magic.faith.apply", god_name(cdata.player().religion)),
+            "core.magic.faith.apply", god_get_name(cdata.player().religion)),
         Message::color{ColorIndex::green});
     if (efstatus == CurseState::blessed)
     {
@@ -1484,7 +1484,7 @@ bool _magic_1107(Character& target)
     MiracleAnimation(MiracleAnimation::Mode::target_one, target).play();
     snd("core.pray2");
     cdata.player().prayer_point += 500;
-    god_modify_piety(75);
+    god_add_piety(cdata.player(), 75);
     chara_gain_skill_exp(
         cdata.player(),
         181,

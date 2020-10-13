@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "data/id.hpp"
 #include "eobject/eobject.hpp"
 #include "optional.hpp"
 #include "typedefs.hpp"
@@ -109,7 +110,7 @@ int show_hire_menu(HireOperation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
-void begin_to_believe_god(int);
+void begin_to_believe_god(data::InstanceId religion);
 void screen_analyze_self();
 int ctrl_ally(
     ControlAllyOperation,

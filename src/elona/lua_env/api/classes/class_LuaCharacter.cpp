@@ -513,23 +513,6 @@ void LuaCharacter_move_to(Character& self, Position& pos)
 
 
 /**
- * @luadoc switch_religion
- *
- * Changes the worshipped god of this character without invoking the god
- * switching penalty.
- * @tparam string religion ID of type core.god.
- */
-void LuaCharacter_switch_religion(Character& self, const std::string& religion)
-{
-    the_god_db.ensure(data::InstanceId{religion});
-
-    self.religion = data::InstanceId{religion};
-    elona::switch_religion();
-}
-
-
-
-/**
  * @luadoc get_ailment
  *
  * Returns the duration of an ailment on this character.
@@ -919,7 +902,6 @@ void bind(sol::state& lua)
     LuaCharacter.set(
         "move_to",
         sol::overload(&LuaCharacter_move_to, &LuaCharacter_move_to_xy));
-    LuaCharacter.set("switch_religion", &LuaCharacter_switch_religion);
     LuaCharacter.set("get_ailment", &LuaCharacter_get_ailment);
 
     LuaCharacter.set("__tostring", &LuaCharacter_metamethod_tostring);

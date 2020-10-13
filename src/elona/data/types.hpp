@@ -8,7 +8,6 @@
 #include "types/type_class.hpp"
 #include "types/type_crafting_material.hpp"
 #include "types/type_fish.hpp"
-#include "types/type_god.hpp"
 #include "types/type_item.hpp"
 #include "types/type_item_chip.hpp"
 #include "types/type_item_material.hpp"

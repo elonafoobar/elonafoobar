@@ -1305,7 +1305,7 @@ void show_city_chart()
 
 
 
-void begin_to_believe_god(int religion)
+void begin_to_believe_god(data::InstanceId religion)
 {
     bool already_believing = cdata.player().religion != "";
 
@@ -1314,7 +1314,7 @@ void begin_to_believe_god(int religion)
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty(god_integer_to_god_id(religion));
+        god_proc_switching_penalty(religion);
     }
 }
 
@@ -1370,7 +1370,7 @@ void screen_analyze_self()
     god_apply_blessing(cdata.tmp());
     if (cdata.player().religion != "")
     {
-        buff += u8"<title1>◆ "s + god_name(cdata.player().religion) +
+        buff += u8"<title1>◆ "s + god_get_name(cdata.player().religion) +
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {

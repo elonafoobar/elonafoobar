@@ -25,6 +25,14 @@
 namespace elona
 {
 
+data::InstanceId god_get_random_god_or_eyth()
+{
+    return data::InstanceId{lua::call_with_result(
+        "core.God.get_random_god_or_eyth", std::string{})};
+}
+
+
+
 void txtgod(data::InstanceId id, int type)
 {
     if (id == "")
@@ -36,59 +44,56 @@ void txtgod(data::InstanceId id, int type)
     switch (type)
     {
     case 12:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "random")
+        message = i18n::s.get_data_text_optional("core.god", id, "random")
                       .value_or("");
         break;
     case 9:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "kill")
-                      .value_or("");
+        message =
+            i18n::s.get_data_text_optional("core.god", id, "kill").value_or("");
         break;
     case 10:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "night")
+        message = i18n::s.get_data_text_optional("core.god", id, "night")
                       .value_or("");
         break;
     case 11:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "welcome")
+        message = i18n::s.get_data_text_optional("core.god", id, "welcome")
                       .value_or("");
         break;
     case 5:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "believe")
+        message = i18n::s.get_data_text_optional("core.god", id, "believe")
                       .value_or("");
         break;
     case 1:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "betray")
+        message = i18n::s.get_data_text_optional("core.god", id, "betray")
                       .value_or("");
         break;
     case 2:
-        message =
-            the_god_db.get_text_optional(data::InstanceId{id}, "take_over")
-                .value_or("");
+        message = i18n::s.get_data_text_optional("core.god", id, "take_over")
+                      .value_or("");
         break;
     case 3:
         message =
-            the_god_db
-                .get_text_optional(data::InstanceId{id}, "fail_to_take_over")
+            i18n::s.get_data_text_optional("core.god", id, "fail_to_take_over")
                 .value_or("");
         break;
     case 4:
-        message = the_god_db.get_text_optional(data::InstanceId{id}, "offer")
+        message = i18n::s.get_data_text_optional("core.god", id, "offer")
                       .value_or("");
         break;
     case 6:
-        message =
-            the_god_db.get_text_optional(data::InstanceId{id}, "receive_gift")
-                .value_or("");
-        break;
-    case 7:
-        message = the_god_db
-                      .get_text_optional(
-                          data::InstanceId{id}, "ready_to_receive_gift")
+        message = i18n::s.get_data_text_optional("core.god", id, "receive_gift")
                       .value_or("");
         break;
+    case 7:
+        message =
+            i18n::s
+                .get_data_text_optional("core.god", id, "ready_to_receive_gift")
+                .value_or("");
+        break;
     case 8:
-        message = the_god_db
-                      .get_text_optional(
-                          data::InstanceId{id}, "ready_to_receive_gift2")
+        message = i18n::s
+                      .get_data_text_optional(
+                          "core.god", id, "ready_to_receive_gift2")
                       .value_or("");
         break;
     default: assert(0);
@@ -99,48 +104,9 @@ void txtgod(data::InstanceId id, int type)
 
 
 
-void god_modify_piety(int amount)
+void god_add_piety(Character& chara, lua_int amount)
 {
-    // Check the degree of the piety.
-    if (game()->god_rank == 4)
-    {
-        if (cdata.player().piety_point >= 4000)
-        {
-            ++game()->god_rank;
-            txtgod(cdata.player().religion, 8);
-        }
-    }
-    if (game()->god_rank == 2)
-    {
-        if (cdata.player().piety_point >= 2500)
-        {
-            ++game()->god_rank;
-            txtgod(cdata.player().religion, 7);
-        }
-    }
-    if (game()->god_rank == 0)
-    {
-        if (cdata.player().piety_point >= 1500)
-        {
-            ++game()->god_rank;
-            txtgod(cdata.player().religion, 7);
-        }
-    }
-
-    // Faith skill is not enough.
-    if (cdata.player().skills().level("core.faith") * 100 <
-        cdata.player().piety_point)
-    {
-        txt(i18n::s.get("core.god.indifferent"));
-        return;
-    }
-
-    // Modify the piety.
-    if (game()->current_map == mdata_t::MapId::show_house)
-    {
-        amount /= 10;
-    }
-    cdata.player().piety_point += amount;
+    lua::call("core.God.add_piety", lua::handle(chara), amount);
 }
 
 
@@ -152,7 +118,7 @@ void set_npc_religion(Character& chara)
         return;
     }
     randomize(game()->random_seed + game()->current_map);
-    chara.religion = god_integer_to_god_id(rnd(8));
+    chara.religion = god_get_random_god_or_eyth();
     randomize();
     if (chara.religion == "" || rnd(4) == 0)
     {
@@ -164,82 +130,7 @@ void set_npc_religion(Character& chara)
 
 void god_apply_blessing(Character& believer)
 {
-    const auto P = believer.piety_point;
-    const auto F = believer.skills().level("core.faith");
-
-    const auto boost = [&](data::InstanceId id, lua_int delta) {
-        if (believer.skills().level(id) > 0)
-        {
-            believer.skills().add_level(id, delta);
-        }
-    };
-
-    if (believer.religion == "core.mani")
-    {
-        boost("core.stat_dexterity", clamp(P / 400, 1, 8 + F / 10));
-        boost("core.stat_perception", clamp(P / 300, 1, 14 + F / 10));
-        boost("core.healing", clamp(P / 500, 1, 8 + F / 10));
-        boost("core.firearm", clamp(P / 250, 1, 18 + F / 10));
-        boost("core.detection", clamp(P / 350, 1, 8 + F / 10));
-        boost("core.lock_picking", clamp(P / 250, 1, 16 + F / 10));
-        boost("core.carpentry", clamp(P / 300, 1, 10 + F / 10));
-        boost("core.jeweler", clamp(P / 350, 1, 12 + F / 10));
-    }
-    if (believer.religion == "core.lulwy")
-    {
-        boost("core.stat_perception", clamp(P / 450, 1, 10 + F / 10));
-        boost("core.stat_speed", clamp(P / 350, 1, 30 + F / 10));
-        boost("core.bow", clamp(P / 350, 1, 16 + F / 10));
-        boost("core.crossbow", clamp(P / 450, 1, 12 + F / 10));
-        boost("core.stealth", clamp(P / 450, 1, 12 + F / 10));
-        boost("core.magic_device", clamp(P / 550, 1, 8 + F / 10));
-    }
-    if (believer.religion == "core.itzpalt")
-    {
-        boost("core.stat_magic", clamp(P / 300, 1, 18 + F / 10));
-        boost("core.meditation", clamp(P / 350, 1, 15 + F / 10));
-        boost("core.element_fire", clamp(P / 50, 1, 200 + F / 10));
-        boost("core.element_cold", clamp(P / 50, 1, 200 + F / 10));
-        boost("core.element_lightning", clamp(P / 50, 1, 200 + F / 10));
-    }
-    if (believer.religion == "core.ehekatl")
-    {
-        boost("core.stat_charisma", clamp(P / 250, 1, 20 + F / 10));
-        boost("core.stat_luck", clamp(P / 100, 1, 50 + F / 10));
-        boost("core.evasion", clamp(P / 300, 1, 15 + F / 10));
-        boost("core.magic_capacity", clamp(P / 350, 1, 17 + F / 10));
-        boost("core.fishing", clamp(P / 300, 1, 12 + F / 10));
-        boost("core.lock_picking", clamp(P / 450, 1, 8 + F / 10));
-    }
-    if (believer.religion == "core.opatos")
-    {
-        boost("core.stat_strength", clamp(P / 450, 1, 11 + F / 10));
-        boost("core.stat_constitution", clamp(P / 350, 1, 16 + F / 10));
-        boost("core.shield", clamp(P / 350, 1, 15 + F / 10));
-        boost("core.weight_lifting", clamp(P / 300, 1, 16 + F / 10));
-        boost("core.mining", clamp(P / 350, 1, 12 + F / 10));
-        boost("core.magic_device", clamp(P / 450, 1, 8 + F / 10));
-    }
-    if (believer.religion == "core.jure")
-    {
-        boost("core.stat_will", clamp(P / 300, 1, 16 + F / 10));
-        boost("core.healing", clamp(P / 250, 1, 18 + F / 10));
-        boost("core.meditation", clamp(P / 400, 1, 10 + F / 10));
-        boost("core.anatomy", clamp(P / 400, 1, 9 + F / 10));
-        boost("core.cooking", clamp(P / 450, 1, 8 + F / 10));
-        boost("core.magic_device", clamp(P / 400, 1, 10 + F / 10));
-        boost("core.magic_capacity", clamp(P / 400, 1, 12 + F / 10));
-    }
-    if (believer.religion == "core.kumiromi")
-    {
-        boost("core.stat_perception", clamp(P / 400, 1, 8 + F / 10));
-        boost("core.stat_dexterity", clamp(P / 350, 1, 12 + F / 10));
-        boost("core.stat_learning", clamp(P / 250, 1, 16 + F / 10));
-        boost("core.gardening", clamp(P / 300, 1, 12 + F / 10));
-        boost("core.alchemy", clamp(P / 350, 1, 10 + F / 10));
-        boost("core.tailoring", clamp(P / 350, 1, 9 + F / 10));
-        boost("core.literacy", clamp(P / 350, 1, 8 + F / 10));
-    }
+    lua::call("core.God.apply_blessing", lua::handle(believer));
 }
 
 
@@ -257,7 +148,7 @@ void god_proc_switching_penalty(data::InstanceId new_religion)
         {
             mode = 9;
             txt(i18n::s.get(
-                    "core.god.enraged", god_name(cdata.player().religion)),
+                    "core.god.enraged", god_get_name(cdata.player().religion)),
                 Message::color{ColorIndex::purple});
             txtgod(cdata.player().religion, 1);
             redraw();
@@ -268,50 +159,13 @@ void god_proc_switching_penalty(data::InstanceId new_religion)
             mode = 0;
             await(g_config.animation_wait() * 20);
         }
-        cdata.player().religion = new_religion;
-        switch_religion();
+        lua::call(
+            "core.God.switch_religion",
+            lua::handle(cdata.player()),
+            new_religion);
         msg_halt();
     }
     chara_refresh(cdata.player());
-}
-
-
-
-void switch_religion()
-{
-    cdata.player().piety_point = 0;
-    cdata.player().prayer_point = 500;
-    game()->god_rank = 0;
-    cdata.player().spacts().lose("core.prayer_of_jure");
-    cdata.player().spacts().lose("core.absorb_magic");
-    cdata.player().spacts().lose("core.lulwys_trick");
-    if (cdata.player().religion == "")
-    {
-        txt(i18n::s.get("core.god.switch.unbeliever"),
-            Message::color{ColorIndex::orange});
-    }
-    else
-    {
-        MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
-            .play();
-        snd("core.complete1");
-        txt(i18n::s.get(
-                "core.god.switch.follower", god_name(cdata.player().religion)),
-            Message::color{ColorIndex::orange});
-        if (cdata.player().religion == "core.itzpalt")
-        {
-            cdata.player().spacts().gain("core.absorb_magic");
-        }
-        if (cdata.player().religion == "core.jure")
-        {
-            cdata.player().spacts().gain("core.prayer_of_jure");
-        }
-        if (cdata.player().religion == "core.lulwy")
-        {
-            cdata.player().spacts().gain("core.lulwys_trick");
-        }
-        txtgod(cdata.player().religion, 5);
-    }
 }
 
 
@@ -331,11 +185,12 @@ TurnResult do_pray()
         return TurnResult::pc_turn_user_error;
     }
     txt(i18n::s.get(
-        "core.god.pray.you_pray_to", god_name(cdata.player().religion)));
+        "core.god.pray.you_pray_to", god_get_name(cdata.player().religion)));
     if (cdata.player().piety_point < 200 || cdata.player().prayer_point < 1000)
     {
         txt(i18n::s.get(
-            "core.god.pray.indifferent", god_name(cdata.player().religion)));
+            "core.god.pray.indifferent",
+            god_get_name(cdata.player().religion)));
         return TurnResult::turn_end;
     }
     MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player()).play();
@@ -544,23 +399,9 @@ TurnResult do_pray()
 
 
 
-std::string god_name(data::InstanceId id)
+std::string god_get_name(data::InstanceId id)
 {
-    if (id == "")
-    {
-        return the_god_db.get_text("core.eyth", "name");
-    }
-    else
-    {
-        return the_god_db.get_text(data::InstanceId{id}, "name");
-    }
-}
-
-
-
-std::string god_name(int integer_god_id)
-{
-    return god_name(god_integer_to_god_id(integer_god_id));
+    return lua::call_with_result("core.God.get_name", id.get(), ""s);
 }
 
 
@@ -590,7 +431,7 @@ void god_fail_to_take_over_penalty()
 bool god_is_offerable(const ItemRef& offering, Character& believer)
 {
     return lua::call_with_result(
-        "core.Impl.God.is_offerable", false, offering, lua::handle(believer));
+        "core.God.is_offerable", false, offering, lua::handle(believer));
 }
 
 } // namespace elona

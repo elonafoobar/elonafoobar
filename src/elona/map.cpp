@@ -20,6 +20,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "game_clock.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -106,7 +107,7 @@ void _map_randsite()
                 if (const auto item = itemcreate_map_inv(172, *pos, 0))
                 {
                     item->own_state = OwnState::town;
-                    item->param1 = choice(isetgod);
+                    item->__god = god_get_random_god_or_eyth();
                 }
                 return;
             }
@@ -858,7 +859,7 @@ void map_reload_noyel()
         flt();
         if (const auto item = itemcreate_map_inv(171, 29, 17, 0))
         {
-            item->param1 = 6;
+            item->__god = "core.jure";
             item->own_state = OwnState::town;
         }
         flt();

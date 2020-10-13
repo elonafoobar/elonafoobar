@@ -135,4 +135,5 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * [minizip](https://github.com/mnoinvaz/minizip): see [license file](src/thirdparty/minizip/LICENSE).
 * [json5](https://github.com/ki-foobar/json5): see [license file](src/thirdparty/json5/LICENSE).
 * [inspect.lua](https://github.com/kikito/inspect.lua): see [license file](runtime/data/script/prelude/inspect.lua).
+* [LuaFun](https://github.com/luafun/luafun): see [license file](runtime/data/script/prelude/luafun/COPYING.md).
 * [msgpack-c](https://github.com/msgpack/msgpack-c): see [license file](src/thirdparty/msgpack-c/LICENSE_1_0.txt).

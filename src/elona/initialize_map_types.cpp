@@ -226,43 +226,43 @@ static void _init_map_truce_ground()
     flt();
     if (const auto item = itemcreate_map_inv(171, 10, 8, 0))
     {
-        item->param1 = 1;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 8, 0))
     {
-        item->param1 = 2;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 10, 13, 0))
     {
-        item->param1 = 5;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 13, 0))
     {
-        item->param1 = 4;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 8, 0))
     {
-        item->param1 = 3;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 23, 8, 0))
     {
-        item->param1 = 7;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 13, 0))
     {
-        item->param1 = 6;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
@@ -661,7 +661,7 @@ static void _init_map_cyber_dome()
     flt();
     if (const auto item = itemcreate_map_inv(171, 19, 5, 0))
     {
-        item->param1 = 1;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();

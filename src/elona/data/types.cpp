@@ -6,7 +6,6 @@
 #include "types/type_class.cpp"
 #include "types/type_crafting_material.cpp"
 #include "types/type_fish.cpp"
-#include "types/type_god.cpp"
 #include "types/type_item.cpp"
 #include "types/type_item_chip.cpp"
 #include "types/type_item_material.cpp"

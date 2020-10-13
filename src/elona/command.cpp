@@ -893,10 +893,9 @@ TurnResult do_pray_command()
 {
     if (const auto altar = item_find(ItemCategory::altar))
     {
-        int god_id_int = altar->param1;
-        if (god_integer_to_god_id(god_id_int) != cdata.player().religion)
+        if (altar->__god != cdata.player().religion)
         {
-            begin_to_believe_god(god_id_int);
+            begin_to_believe_god(altar->__god);
             return TurnResult::turn_end;
         }
     }
@@ -1318,7 +1317,7 @@ TurnResult do_offer_command(const ItemRef& offering)
     txt(i18n::s.get(
         "core.action.offer.execute",
         offering,
-        god_name(cdata.player().religion)));
+        god_get_name(cdata.player().religion)));
     snd("core.offer2");
     BrightAuraAnimation(
         cdata.player().position, BrightAuraAnimation::Type::offering)
@@ -1344,21 +1343,22 @@ TurnResult do_offer_command(const ItemRef& offering)
         i = 25;
     }
 
-    if (god_integer_to_god_id(altar->param1) != cdata.player().religion)
+    if (altar->__god != cdata.player().religion)
     {
         f = 0;
-        if (altar->param1 == 0)
+        if (altar->__god == "")
         {
             f = 1;
             txt(i18n::s.get(
-                "core.action.offer.claim", god_name(cdata.player().religion)));
+                "core.action.offer.claim",
+                god_get_name(cdata.player().religion)));
         }
         else
         {
             txt(i18n::s.get(
                 "core.action.offer.take_over.attempt",
-                god_name(cdata.player().religion),
-                god_name(altar->param1)));
+                god_get_name(cdata.player().religion),
+                god_get_name(altar->__god)));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1370,28 +1370,29 @@ TurnResult do_offer_command(const ItemRef& offering)
         }
         if (f == 1)
         {
-            god_modify_piety(i * 5);
+            god_add_piety(cdata.player(), i * 5);
             cdata.player().prayer_point += i * 30;
             MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
                 .play();
             snd("core.pray2");
-            if (altar->param1 != 0)
+            if (altar->__god != "")
             {
                 txt(i18n::s.get("core.action.offer.take_over.shadow"));
             }
             txt(i18n::s.get(
                     "core.action.offer.take_over.succeed",
-                    god_name(cdata.player().religion),
+                    god_get_name(cdata.player().religion),
                     altar),
                 Message::color{ColorIndex::orange});
             txtgod(cdata.player().religion, 2);
-            altar->param1 = god_god_id_to_integer(cdata.player().religion);
+            altar->__god = cdata.player().religion;
         }
         else
         {
             txt(i18n::s.get(
-                "core.action.offer.take_over.fail", god_name(altar->param1)));
-            txtgod(god_integer_to_god_id(altar->param1), 3);
+                "core.action.offer.take_over.fail",
+                god_get_name(altar->__god)));
+            txtgod(altar->__god, 3);
             god_fail_to_take_over_penalty();
         }
     }
@@ -1418,7 +1419,7 @@ TurnResult do_offer_command(const ItemRef& offering)
             txt(i18n::s.get("core.action.offer.result.poor", offering),
                 Message::color{ColorIndex::green});
         }
-        god_modify_piety(i);
+        god_add_piety(cdata.player(), i);
         cdata.player().prayer_point += i * 7;
     }
     offering->remove();

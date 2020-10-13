@@ -542,7 +542,7 @@ std::string talk_get_speaker_name(const Character& chara)
     }
     if (game()->reveals_religion)
     {
-        speaker_name += u8" ("s + god_name(chara.religion) + u8")"s;
+        speaker_name += u8" ("s + god_get_name(chara.religion) + u8")"s;
     }
 
     return speaker_name;

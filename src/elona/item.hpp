@@ -216,6 +216,7 @@ public:
     time::Instant __expiration_time{};
     time::Duration __expiration_duration{};
     bool __is_rotten{};
+    data::InstanceId __god{};
 
 
 

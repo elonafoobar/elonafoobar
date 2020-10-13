@@ -66,7 +66,7 @@ void save_dump_player_info()
               u8"種族       : " +
                   the_race_db.get_text(cdata.player().race, "name"),
               30)
-       << fixtxt(u8"信仰      : " + god_name(cdata.player().religion), 32)
+       << fixtxt(u8"信仰      : " + god_get_name(cdata.player().religion), 32)
        << std::endl;
     ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
