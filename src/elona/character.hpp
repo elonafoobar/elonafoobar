@@ -376,10 +376,42 @@ public:
 
 
     /// Death count
-    lua_int death_count;
+    lua_int death_count{};
 
     /// Kill count
-    lua_int kill_count;
+    lua_int kill_count{};
+
+    /// Next level where Kumiromi's experience becomes available.
+    lua_int kumiromi_experience_level{};
+
+    /// Number of skills larned from town trainers
+    lua_int learned_skills{};
+
+    /// Sleepiness
+    lua_int sleepiness{};
+
+    /// Current Ether disease stage
+    lua_int ether_disease_stage{};
+
+    /// Ether disease history. It records the order of the diseases which the
+    /// character currently has. If the character is healthy, this list is
+    /// empty. It is ordered by the time, e.g., the most recent symptom is at
+    /// the end of the list.
+    std::vector<data::InstanceId> ether_disease_history{};
+
+    /// Extra ether disease progress. It is to be added to `ether_disease_stage`
+    /// when the disease progresses.
+    lua_int extra_ether_disease_progress{};
+
+    /// Number of acquirable feats
+    lua_int acquirable_feats{};
+
+    /// Experience which is consumed during sleeping.
+    lua_int sleep_experience{};
+
+    /// Piety rank. It controls whether the god the character believes gives
+    /// them special rewards.
+    lua_int piety_rank{};
 
 
     std::string name;

@@ -740,7 +740,7 @@ void chara_refresh(Character& chara)
     if (chara.is_player())
     {
         game()->seven_league_boot_effect = 0;
-        game()->ether_disease_speed = 0;
+        cdata.player().extra_ether_disease_progress = 0;
         game()->protects_from_etherwind = 0;
         game()->protects_from_bad_weather = 0;
         game()->light = 70;
@@ -837,7 +837,7 @@ void chara_refresh(Character& chara)
         {
             if (chara.is_player())
             {
-                game()->ether_disease_speed += 5;
+                cdata.player().extra_ether_disease_progress += 5;
             }
         }
 

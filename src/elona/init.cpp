@@ -531,7 +531,7 @@ void initialize_debug_globals()
     area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
         static_cast<int>(mdata_t::MapId::north_tyris);
     game()->destination_outer_map = area_data[game()->current_map].outer_map;
-    game()->acquirable_feat_count = 2;
+    cdata.player().acquirable_feats = 2;
     story_quest_set_ext("core.little_sister", "core.save_count", lua_int{1000});
     game()->inheritance_rights = 1000;
     game()->home_scale = 0;

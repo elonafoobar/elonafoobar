@@ -1915,7 +1915,7 @@ TurnResult do_use_command(ItemRef use_item)
     }
     if (item_data->subcategory == 60004)
     {
-        if (game()->continuous_active_hours < 15)
+        if (cdata.player().sleepiness < 15)
         {
             txt(i18n::s.get("core.action.use.not_sleepy"));
             update_screen();
@@ -2640,9 +2640,7 @@ TurnResult do_use_command(ItemRef use_item)
         magic(cdata.player(), cdata.player());
         break;
     case 41:
-        if (game()
-                ->next_level_minus_one_kumiromis_experience_becomes_available >
-            cdata.player().level)
+        if (cdata.player().kumiromi_experience_level > cdata.player().level)
         {
             txt(i18n::s.get(
                 "core.action.use.secret_experience.kumiromi.not_enough_exp"));
@@ -2650,10 +2648,9 @@ TurnResult do_use_command(ItemRef use_item)
             return TurnResult::pc_turn_user_error;
         }
         snd("core.pray1");
-        game()->next_level_minus_one_kumiromis_experience_becomes_available +=
-            10;
+        cdata.player().kumiromi_experience_level += 10;
         use_item->modify_number(-1);
-        ++game()->acquirable_feat_count;
+        ++cdata.player().acquirable_feats;
         txt(i18n::s.get(
             "core.action.use.secret_experience.kumiromi.use.dialog"));
         txt(i18n::s.get("core.action.use.secret_experience.kumiromi.use.text"),
@@ -4137,10 +4134,10 @@ void do_rest(Character& chara)
         }
         return;
     }
-    if (game()->continuous_active_hours >= 30)
+    if (chara.sleepiness >= 30)
     {
         f = 0;
-        if (game()->continuous_active_hours >= 50)
+        if (chara.sleepiness >= 50)
         {
             f = 1;
         }

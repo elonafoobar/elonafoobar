@@ -116,24 +116,24 @@ void on_hour_changed(
     {
         if (rnd(3) == 0)
         {
-            ++game()->continuous_active_hours;
+            ++cdata.player().sleepiness;
         }
         if (rnd(15) == 0)
         {
             if (mode == 0)
             {
                 txt(i18n::s.get("core.action.move.global.nap"));
-                game()->continuous_active_hours -= 3;
-                if (game()->continuous_active_hours < 0)
+                cdata.player().sleepiness -= 3;
+                if (cdata.player().sleepiness < 0)
                 {
-                    game()->continuous_active_hours = 0;
+                    cdata.player().sleepiness = 0;
                 }
             }
         }
     }
     else if (game()->current_map != mdata_t::MapId::shelter_)
     {
-        ++game()->continuous_active_hours;
+        ++cdata.player().sleepiness;
     }
 
     const auto date_time = game_date_time();
@@ -142,7 +142,7 @@ void on_hour_changed(
         txt(i18n::s.get("core.action.day_breaks"),
             Message::color{ColorIndex::orange});
     }
-    if (game()->continuous_active_hours >= 15)
+    if (cdata.player().sleepiness >= 15)
     {
         maybe_show_ex_help(9);
     }

@@ -207,9 +207,9 @@ static void _map_events_shelter()
                 show_eating_message(cdata.player());
             }
         }
-        if (game()->continuous_active_hours >= 15)
+        if (cdata.player().sleepiness >= 15)
         {
-            game()->continuous_active_hours = 13;
+            cdata.player().sleepiness = 13;
         }
         map_data.turn_cost = 1000000;
     }

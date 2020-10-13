@@ -375,25 +375,6 @@ void LuaCharacter_modify_karma(Character& self, int delta)
 
 
 /**
- * @luadoc modify_corruption
- *
- * Modifies this character's ether corruption. Currently only has an
- * effect if the character is the player.
- * @tparam num delta the amount of increase/decrease (can be negative)
- */
-void LuaCharacter_modify_corruption(Character& self, int delta)
-{
-    if (!self.is_player())
-    {
-        return;
-    }
-
-    elona::modify_ether_disease_stage(delta);
-}
-
-
-
-/**
  * @luadoc make_pregnant
  *
  * Makes this character pregnant. Only has an effect if the character
@@ -891,7 +872,6 @@ void bind(sol::state& lua)
     LuaCharacter.set("modify_resistance", &LuaCharacter_modify_resistance);
     LuaCharacter.set("modify_sanity", &LuaCharacter_modify_sanity);
     LuaCharacter.set("modify_karma", &LuaCharacter_modify_karma);
-    LuaCharacter.set("modify_corruption", &LuaCharacter_modify_corruption);
     LuaCharacter.set("make_pregnant", &LuaCharacter_make_pregnant);
     LuaCharacter.set("eat_rotten_food", &LuaCharacter_eat_rotten_food);
     LuaCharacter.set("vanquish", &LuaCharacter_vanquish);

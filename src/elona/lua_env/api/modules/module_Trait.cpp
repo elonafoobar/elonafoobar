@@ -162,6 +162,21 @@ void Trait_modify(int trait_id, int delta)
 
 
 
+/**
+ * @luadoc progress_ether_disease_stage
+ *
+ * Modifies this character's ether corruption.
+ *
+ * @tparam LuaCharacter chara
+ * @tparam num delta the amount of increase/decrease (can be negative)
+ */
+void Trait_progress_ether_disease_stage(Character& chara, lua_int delta)
+{
+    elona::trait_progress_ether_disease_stage(chara, delta);
+}
+
+
+
 void bind(sol::table api_table)
 {
     /* clang-format off */
@@ -171,6 +186,7 @@ void bind(sol::table api_table)
     ELONA_LUA_API_BIND_FUNCTION("max", Trait_max);
     ELONA_LUA_API_BIND_FUNCTION("set", Trait_set);
     ELONA_LUA_API_BIND_FUNCTION("modify", Trait_modify);
+    ELONA_LUA_API_BIND_FUNCTION("progress_ether_disease_stage", Trait_progress_ether_disease_stage);
 
     /* clang-format on */
 }

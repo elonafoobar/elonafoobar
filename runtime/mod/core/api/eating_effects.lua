@@ -2,8 +2,9 @@ local Chara = ELONA.require("core.Chara")
 local FOV = ELONA.require("core.FOV")
 local GUI = ELONA.require("core.GUI")
 local I18N = ELONA.require("core.I18N")
-local math = math
 local Rand = ELONA.require("core.Rand")
+local Trait = ELONA.require("core.Trait")
+local math = math
 
 local EatingEffects = {}
 
@@ -158,7 +159,7 @@ function EatingEffects.ether(eater)
       return
    end
    eat_message(eater, "ether", "purple")
-   eater:modify_corruption(1000)
+   Trait.progress_ether_disease_stage(eater, 1000)
 end
 
 

@@ -203,10 +203,10 @@ TurnResult do_pray()
     magic(cdata.player(), cdata.player());
     cdata.player().prayer_point = 0;
     cdata.player().piety_point = cdata.player().piety_point * 85 / 100;
-    if (game()->god_rank % 2 == 1)
+    if (cdata.player().piety_rank % 2 == 1)
     {
         txtgod(cdata.player().religion, 6);
-        if (game()->god_rank == 1)
+        if (cdata.player().piety_rank == 1)
         {
             f = 0;
             p = 0;
@@ -239,7 +239,7 @@ TurnResult do_pray()
                 txt(i18n::s.get("core.god.pray.servant.prompt_decline"));
                 if (yes_no())
                 {
-                    ++game()->god_rank;
+                    ++cdata.player().piety_rank;
                 }
                 return TurnResult::turn_end;
             }
@@ -291,7 +291,7 @@ TurnResult do_pray()
             chara_create(56, chara_id, -3, 0);
             new_ally_joins(cdata.tmp());
         }
-        if (game()->god_rank == 3)
+        if (cdata.player().piety_rank == 3)
         {
             flt();
             int item_id = 0;
@@ -352,7 +352,7 @@ TurnResult do_pray()
             }
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
-        if (game()->god_rank == 5)
+        if (cdata.player().piety_rank == 5)
         {
             flt();
             int item_id = 0;
@@ -392,7 +392,7 @@ TurnResult do_pray()
             itemcreate_map_inv(item_id, cdata.player().position, 0);
             txt(i18n::s.get("core.common.something_is_put_on_the_ground"));
         }
-        ++game()->god_rank;
+        ++cdata.player().piety_rank;
     }
     return TurnResult::turn_end;
 }

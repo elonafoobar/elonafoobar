@@ -690,7 +690,8 @@ int damage_hp(
             {
                 if (victim.is_player())
                 {
-                    modify_ether_disease_stage(rnd_capped(element_power + 1));
+                    trait_progress_ether_disease_stage(
+                        victim, rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
@@ -1090,7 +1091,7 @@ int damage_hp(
             attacker->experience += gained_exp;
             if (attacker->is_player())
             {
-                game()->sleep_experience += gained_exp;
+                attacker->sleep_experience += gained_exp;
             }
             attacker->hate = 0;
             if (attacker->is_player_or_ally())
@@ -2228,7 +2229,7 @@ void heal_completely(Character& target)
     target.dimmed = 0;
     target.drunk = 0;
     target.bleeding = 0;
-    game()->continuous_active_hours = 0;
+    target.sleepiness = 0;
     target.hp = target.max_hp;
     target.mp = target.max_mp;
     target.sp = target.max_sp;

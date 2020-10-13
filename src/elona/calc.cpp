@@ -1351,9 +1351,8 @@ int calc_skill_learning_cost(
     bool discount)
 {
     (void)skill_id;
-    (void)chara;
 
-    int platinum = 15 + 3 * game()->number_of_learned_skills_by_trainer;
+    int platinum = 15 + 3 * chara.learned_skills;
     return discount ? platinum * 2 / 3 : platinum;
 }
 

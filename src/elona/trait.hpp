@@ -111,4 +111,6 @@ void trait_load_desc(Character& chara);
 
 void clear_trait_data();
 
+void trait_progress_ether_disease_stage(Character& chara, lua_int delta);
+
 } // namespace elona

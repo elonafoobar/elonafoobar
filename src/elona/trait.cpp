@@ -1,11 +1,13 @@
 #include "trait.hpp"
 
 #include "../util/range.hpp"
+#include "animation.hpp"
 #include "character.hpp"
 #include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
+#include "menu.hpp"
 #include "optional.hpp"
 #include "skill.hpp"
 #include "ui.hpp"
@@ -710,7 +712,7 @@ void trait_load_desc(Character& chara)
     int featrq = 0;
 
     listmax = 0;
-    if (chara.is_player() && game()->acquirable_feat_count > 0)
+    if (chara.is_player() && chara.acquirable_feats > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
@@ -732,7 +734,7 @@ void trait_load_desc(Character& chara)
         {
             if (traitref == 0)
             {
-                if (game()->acquirable_feat_count > 0)
+                if (chara.acquirable_feats > 0)
                 {
                     list(0, listmax) = cnt;
                     list(1, listmax) = cnt + 1;
@@ -863,9 +865,9 @@ void trait_load_desc(Character& chara)
                 "core.trait.body_is_complicated", chara.speed_correction_value);
         ++listmax;
     }
-    if (chara.is_player() && game()->ether_disease_speed != 0)
+    if (chara.is_player() && chara.extra_ether_disease_progress != 0)
     {
-        if (game()->ether_disease_speed > 0)
+        if (chara.extra_ether_disease_progress > 0)
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
@@ -893,6 +895,120 @@ void clear_trait_data()
     DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
+}
+
+
+
+void trait_progress_ether_disease_stage(Character& chara, lua_int delta)
+{
+    if (delta == 0)
+        return;
+
+    const auto original_amount = chara.ether_disease_stage / 1000;
+    if (delta > 0)
+    {
+        delta += chara.extra_ether_disease_progress;
+        if (chara.traits().level("core.slow_ether_disease_progress") != 0)
+        {
+            delta = delta * 100 / 150;
+        }
+    }
+    chara.ether_disease_stage =
+        clamp(chara.ether_disease_stage + delta, 0, 20000);
+    const auto mod_amount = chara.ether_disease_stage / 1000 - original_amount;
+
+    if (mod_amount > 0)
+    {
+        if (original_amount == 0)
+        {
+            txt(i18n::s.get("core.chara.corruption.symptom"),
+                Message::color{ColorIndex::purple});
+            maybe_show_ex_help(15);
+        }
+        for (int cnt2 = 0; cnt2 < mod_amount; ++cnt2)
+        {
+            if (original_amount + cnt2 > 20)
+            {
+                break;
+            }
+            for (int cnt = 0; cnt < 100000; ++cnt)
+            {
+                int tid = rnd(17) + 200;
+                int stat = trait_get_info(0, tid);
+                if (stat == 0 || traitref != 3)
+                {
+                    continue;
+                }
+                if (chara.traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) <= traitref(1))
+                {
+                    continue;
+                }
+                chara.traits().sub(*the_trait_db.get_id_from_integer(tid), 1);
+                chara.ether_disease_history.push_back(
+                    *the_trait_db.get_id_from_integer(tid));
+                txt(i18n::s.get("core.chara.corruption.add"),
+                    Message::color{ColorIndex::purple});
+                txt(traitrefn(1), Message::color{ColorIndex::red});
+                if (tid == 203)
+                {
+                    body_part_make_unequippable(chara, "core.leg");
+                }
+                if (tid == 205)
+                {
+                    body_part_make_unequippable(chara, "core.back");
+                }
+                if (tid == 206)
+                {
+                    body_part_make_unequippable(chara, "core.neck");
+                }
+                break;
+            }
+        }
+        animeload(8, chara);
+        chara_refresh(chara);
+    }
+    else if (mod_amount < 0)
+    {
+        for (int cnt2 = 0; cnt2 < std::abs(mod_amount); ++cnt2)
+        {
+            for (int cnt = 0; cnt < 100000; ++cnt)
+            {
+                int tid =
+                    the_trait_db.ensure(chara.ether_disease_history.back())
+                        .integer_id;
+                int stat = trait_get_info(0, tid);
+                if (stat == 0 || traitref != 3)
+                {
+                    continue;
+                }
+                if (chara.traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) >= 0)
+                {
+                    continue;
+                }
+                chara.traits().add(*the_trait_db.get_id_from_integer(tid), 1);
+                txt(i18n::s.get("core.chara.corruption.remove"),
+                    Message::color{ColorIndex::green});
+                txt(traitrefn(0), Message::color{ColorIndex::green});
+                if (tid == 203)
+                {
+                    body_part_make_equippable(chara, "core.leg");
+                }
+                if (tid == 205)
+                {
+                    body_part_make_equippable(chara, "core.back");
+                }
+                if (tid == 206)
+                {
+                    body_part_make_equippable(chara, "core.neck");
+                }
+                break;
+            }
+        }
+        animeload(10, chara);
+        chara_refresh(chara);
+    }
 }
 
 } // namespace elona

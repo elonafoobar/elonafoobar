@@ -1025,7 +1025,7 @@ void render_status_ailments()
         {0, 80, 80});
 
     y = render_one_status_ailment(
-        game()->continuous_active_hours,
+        cdata.player().sleepiness,
         x,
         y,
         [](auto hours) { return hours >= 15; },

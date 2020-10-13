@@ -209,7 +209,6 @@ struct Game
     int player_next_move_direction;
     int played_scene;
     int torch;
-    int number_of_learned_skills_by_trainer;
     ArrayType<20> skill_shortcuts;
     int player_x_on_map_leave;
     int player_y_on_map_leave;
@@ -233,12 +232,7 @@ struct Game
     int reset_world_map_in_diastrophism_flag;
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
-    int ether_disease_stage;
     int light;
-    int continuous_active_hours;
-    int activity_about_to_start;
-    int sleep_experience;
-    int acquirable_feat_count;
     int version;
     int character_and_status_for_gene; // the ally who is about to make gene
                                        // with you + (0 if activity not started,
@@ -259,17 +253,13 @@ struct Game
     int released_fire_giant;
     int fire_giant;
     int diastrophism_flag;
-    ArrayType<20> ether_disease_history;
     ArrayType<10> tracked_skills;
-    int ether_disease_speed;
     int time_when_uploding_becomes_available;
-    int god_rank;
     int tcg_used_deck;
     int number_of_waiting_guests;
     int politics_map_id;
     int politics_tax_amount;
     time::Instant last_time_when_trainer_visited;
-    int next_level_minus_one_kumiromis_experience_becomes_available;
     ArrayType<5> tcg_decks;
     int destination_outer_map;
 

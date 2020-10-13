@@ -229,7 +229,7 @@ void _adventurer_learn_skill(int skill_id)
     cdata.player().platinum -=
         calc_skill_learning_cost(skill_id, cdata.player(), true);
     chara_gain_skill(cdata.player(), skill_id);
-    ++game()->number_of_learned_skills_by_trainer;
+    ++cdata.player().learned_skills;
 }
 
 

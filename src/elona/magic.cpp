@@ -3319,13 +3319,13 @@ bool _magic_1131(Character& target)
     {
         txt(i18n::s.get("core.magic.cure_corruption.apply"),
             Message::color{ColorIndex::green});
-        modify_ether_disease_stage(efp * -10);
+        trait_progress_ether_disease_stage(target, efp * -10);
     }
     else
     {
         txt(i18n::s.get("core.magic.cure_corruption.cursed"),
             Message::color{ColorIndex::purple});
-        modify_ether_disease_stage(200);
+        trait_progress_ether_disease_stage(target, 200);
     }
     return true;
 }
@@ -3341,7 +3341,7 @@ bool _magic_633(Character& subject, Character& target)
     }
     txt(i18n::s.get("core.magic.eye_of_ether", subject),
         Message::color{ColorIndex::purple});
-    modify_ether_disease_stage(100);
+    trait_progress_ether_disease_stage(target, 100);
     return true;
 }
 

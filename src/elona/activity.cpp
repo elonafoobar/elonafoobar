@@ -2299,7 +2299,7 @@ void sleep_start(const OptionalItemRef& bed)
         cdata[cnt].dimmed = 0;
         cdata[cnt].drunk = 0;
         cdata[cnt].bleeding = 0;
-        game()->continuous_active_hours = 0;
+        cdata[cnt].sleepiness = 0;
         cdata[cnt].hp = cdata[cnt].max_hp;
         cdata[cnt].mp = cdata[cnt].max_mp;
         cdata[cnt].sp = cdata[cnt].max_sp;
@@ -2333,7 +2333,7 @@ void sleep_start(const OptionalItemRef& bed)
             load_sleep_background();
             mode = 9;
         }
-        game()->continuous_active_hours = 0;
+        cdata.player().sleepiness = 0;
         {
             // Backward time travel might cause time paradox!
             const auto min = game_time().minute();
@@ -2398,14 +2398,14 @@ void sleep_start(const OptionalItemRef& bed)
         }
         i = clamp(i / 6, 10, 1000);
         exp = i * i * i / 10;
-        game()->sleep_experience =
-            game()->sleep_experience * (*bed_quality) / 100;
+        cdata.player().sleep_experience =
+            cdata.player().sleep_experience * (*bed_quality) / 100;
         grown = 0;
         for (int cnt = 0;; ++cnt)
         {
-            if (game()->sleep_experience >= exp)
+            if (cdata.player().sleep_experience >= exp)
             {
-                game()->sleep_experience -= exp;
+                cdata.player().sleep_experience -= exp;
             }
             else if (cnt != 0)
             {
@@ -2420,7 +2420,7 @@ void sleep_start(const OptionalItemRef& bed)
             {
                 if (rnd(5) == 0)
                 {
-                    game()->sleep_experience = 0;
+                    cdata.player().sleep_experience = 0;
                     break;
                 }
             }

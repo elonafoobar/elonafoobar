@@ -907,12 +907,13 @@ TurnResult pass_one_turn(bool time_passing)
                 {
                     if (game()->protects_from_etherwind == 0)
                     {
-                        modify_ether_disease_stage(
+                        trait_progress_ether_disease_stage(
+                            cdata.player(),
                             5 + clamp(game()->play_turns / 20000, 0, 15));
                     }
                     else if (rnd(10) == 0)
                     {
-                        modify_ether_disease_stage(5);
+                        trait_progress_ether_disease_stage(cdata.player(), 5);
                     }
                 }
                 if (game()->protects_from_etherwind == 0 || rnd(4) == 0)
@@ -932,7 +933,7 @@ TurnResult pass_one_turn(bool time_passing)
                     mdata_t::MapId::your_home &&
                 game()->current_map != mdata_t::MapId::shelter_)
             {
-                modify_ether_disease_stage(10);
+                trait_progress_ether_disease_stage(cdata.player(), 10);
             }
         }
     }
@@ -1325,7 +1326,7 @@ optional<TurnResult> pc_turn_advance_time()
         cell_data.at(player.position.x, player.position.y)
             .chara_index_plus_one = 1;
     }
-    if (game()->ether_disease_stage >= 20000)
+    if (cdata.player().ether_disease_stage >= 20000)
     {
         damage_hp(player, 999999, -14);
     }
@@ -1682,11 +1683,11 @@ void proc_turn_end(Character& chara)
             }
             regen = 0;
         }
-        if (game()->continuous_active_hours >= 30)
+        if (chara.sleepiness >= 30)
         {
             if (debug_has_wizard_flag("core.wizard.no_sleepy"))
             {
-                game()->continuous_active_hours = 0;
+                chara.sleepiness = 0;
             }
             if (game()->play_turns % 100 == 0)
             {
@@ -1696,7 +1697,7 @@ void proc_turn_end(Character& chara)
             {
                 regen = 0;
             }
-            if (game()->continuous_active_hours >= 50)
+            if (chara.sleepiness >= 50)
             {
                 regen = 0;
                 damage_sp(chara, 1);

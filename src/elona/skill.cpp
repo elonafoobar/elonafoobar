@@ -360,7 +360,7 @@ void chara_gain_skill_exp(
                 chara.experience += lvl_exp;
                 if (chara.is_player())
                 {
-                    game()->sleep_experience += lvl_exp;
+                    chara.sleep_experience += lvl_exp;
                 }
             }
         }

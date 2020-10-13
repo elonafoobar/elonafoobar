@@ -165,9 +165,9 @@ void eh_player_died(const DeferredEvent&)
     {
         txt(i18n::s.get("core.event.death_penalty_not_applied"));
     }
-    if (game()->ether_disease_stage >= 20000)
+    if (cdata.player().ether_disease_stage >= 20000)
     {
-        modify_ether_disease_stage(-2000);
+        trait_progress_ether_disease_stage(cdata.player(), -2000);
     }
     txt(i18n::s.get("core.event.you_lost_some_money"));
     cdata.player().gold -= cdata.player().gold / 3;

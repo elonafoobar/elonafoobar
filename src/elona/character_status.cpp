@@ -4,7 +4,6 @@
 
 #include "../util/scope_guard.hpp"
 #include "adventurer.hpp"
-#include "animation.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -13,164 +12,15 @@
 #include "game.hpp"
 #include "i18n.hpp"
 #include "map.hpp"
-#include "menu.hpp"
 #include "message.hpp"
 #include "random.hpp"
 #include "skill.hpp"
-#include "trait.hpp"
 #include "variables.hpp"
 
 
 
 namespace elona
 {
-
-void modify_ether_disease_stage(int delta)
-{
-    int original_amount = 0;
-    int add_amount = 0;
-    int mod_amount = 0;
-    int cnt2_at_m134 = 0;
-    int i_at_m134 = 0;
-    original_amount = game()->ether_disease_stage / 1000;
-    add_amount = delta + (delta > 0) * game()->ether_disease_speed;
-    if (cdata.player().traits().level("core.slow_ether_disease_progress"))
-    {
-        if (delta > 0)
-        {
-            add_amount = add_amount * 100 / 150;
-        }
-    }
-    game()->ether_disease_stage =
-        clamp(game()->ether_disease_stage + add_amount, 0, 20000);
-    mod_amount = game()->ether_disease_stage / 1000 - original_amount;
-    if (mod_amount > 0)
-    {
-        if (original_amount == 0)
-        {
-            txt(i18n::s.get("core.chara.corruption.symptom"),
-                Message::color{ColorIndex::purple});
-            maybe_show_ex_help(15);
-        }
-        if (original_amount + mod_amount >= 20)
-        {
-            add_amount = 20 - original_amount;
-        }
-        else
-        {
-            add_amount = mod_amount;
-        }
-        for (int cnt = 0, cnt_end = (add_amount); cnt < cnt_end; ++cnt)
-        {
-            cnt2_at_m134 = cnt;
-            if (original_amount + cnt2_at_m134 > 20)
-            {
-                break;
-            }
-            for (int cnt = 0; cnt < 100000; ++cnt)
-            {
-                int tid = rnd(17) + 200;
-                int stat = trait_get_info(0, tid);
-                if (stat == 0 || traitref != 3)
-                {
-                    continue;
-                }
-                if (cdata.player().traits().level(
-                        *the_trait_db.get_id_from_integer(tid)) <= traitref(1))
-                {
-                    continue;
-                }
-                cdata.player().traits().sub(
-                    *the_trait_db.get_id_from_integer(tid), 1);
-                i_at_m134 = original_amount + cnt2_at_m134;
-                game()->ether_disease_history.at(i_at_m134) = tid;
-                txt(i18n::s.get("core.chara.corruption.add"),
-                    Message::color{ColorIndex::purple});
-                txt(traitrefn(1), Message::color{ColorIndex::red});
-                if (tid == 203)
-                {
-                    body_part_make_unequippable(cdata.player(), "core.leg");
-                }
-                if (tid == 205)
-                {
-                    body_part_make_unequippable(cdata.player(), "core.back");
-                }
-                if (tid == 206)
-                {
-                    body_part_make_unequippable(cdata.player(), "core.neck");
-                }
-                break;
-            }
-        }
-        animeload(8, cdata.player());
-        chara_refresh(cdata.player());
-        return;
-    }
-    if (mod_amount < 0)
-    {
-        if (original_amount + mod_amount < 0)
-        {
-            add_amount = original_amount;
-        }
-        else
-        {
-            add_amount = std::abs(mod_amount);
-        }
-        if (add_amount < 0)
-        {
-            add_amount = 0;
-        }
-        for (int cnt = 0, cnt_end = (add_amount); cnt < cnt_end; ++cnt)
-        {
-            cnt2_at_m134 = cnt;
-            for (int cnt = 0; cnt < 100000; ++cnt)
-            {
-                int tid = rnd(17) + 200;
-                if (cnt == 0)
-                {
-                    i_at_m134 = original_amount - cnt2_at_m134 - 1;
-                    if (game()->ether_disease_history.at(i_at_m134) != 0)
-                    {
-                        tid = game()->ether_disease_history.at(i_at_m134);
-                    }
-                }
-                int stat = trait_get_info(0, tid);
-                if (stat == 0 || traitref != 3)
-                {
-                    continue;
-                }
-                if (cdata.player().traits().level(
-                        *the_trait_db.get_id_from_integer(tid)) >= 0)
-                {
-                    continue;
-                }
-                cdata.player().traits().add(
-                    *the_trait_db.get_id_from_integer(tid), 1);
-                txt(i18n::s.get("core.chara.corruption.remove"),
-                    Message::color{ColorIndex::green});
-                txt(traitrefn(0), Message::color{ColorIndex::green});
-                if (tid == 203)
-                {
-                    body_part_make_equippable(cdata.player(), "core.leg");
-                }
-                if (tid == 205)
-                {
-                    body_part_make_equippable(cdata.player(), "core.back");
-                }
-                if (tid == 206)
-                {
-                    body_part_make_equippable(cdata.player(), "core.neck");
-                }
-                break;
-            }
-        }
-        animeload(10, cdata.player());
-        chara_refresh(cdata.player());
-        return;
-    }
-}
-
-
 
 void modify_karma(Character& chara, int delta)
 {
@@ -444,15 +294,10 @@ void gain_level(Character& chara)
         1;
     if (chara.is_player())
     {
-        if (chara.level % 5 == 0)
+        if (chara.level % 5 == 0 && chara.max_level < chara.level &&
+            chara.level <= 50)
         {
-            if (chara.max_level < chara.level)
-            {
-                if (chara.level <= 50)
-                {
-                    ++game()->acquirable_feat_count;
-                }
-            }
+            ++chara.acquirable_feats;
         }
         gain_special_action();
         p += cdata.player().traits().level("core.more_bonus_points");

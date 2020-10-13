@@ -1537,7 +1537,7 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
             cdata.player().platinum -=
                 calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
-            ++game()->number_of_learned_skills_by_trainer;
+            ++cdata.player().learned_skills;
             buff =
                 i18n::s.get("core.talk.npc.trainer.finish.learning", speaker);
         }
@@ -1961,7 +1961,7 @@ TalkResult talk_npc(Character& speaker)
                         i18n::s.get(
                             "core.talk.npc.ally.choices.ask_for_marriage"));
                 }
-                else if (game()->continuous_active_hours >= 15)
+                else if (cdata.player().sleepiness >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
                         39,
