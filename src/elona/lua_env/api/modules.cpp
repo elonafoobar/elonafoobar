@@ -17,6 +17,7 @@
 #include "modules/module_Inventory.cpp"
 #include "modules/module_Item.cpp"
 #include "modules/module_JSON5.cpp"
+#include "modules/module_Log.cpp"
 #include "modules/module_Magic.cpp"
 #include "modules/module_Map.cpp"
 #include "modules/module_Pos.cpp"
@@ -36,6 +37,11 @@ void bind(sol::table core)
 #define ELONA_LUA_API_BIND_MODULE(ModuleName) \
     { \
         sol::table api_table = core.create_named(#ModuleName); \
+        module_##ModuleName::bind(api_table); \
+    }
+#define ELONA_LUA_API_BIND_HIDDEN_MODULE(ModuleName) \
+    { \
+        sol::table api_table = core.create_named("__" #ModuleName); \
         module_##ModuleName::bind(api_table); \
     }
 
@@ -63,6 +69,9 @@ void bind(sol::table core)
     ELONA_LUA_API_BIND_MODULE(Trait);
     ELONA_LUA_API_BIND_MODULE(Wish);
     ELONA_LUA_API_BIND_MODULE(World);
+
+    // TODO
+    ELONA_LUA_API_BIND_HIDDEN_MODULE(Log);
 
 #undef ELONA_LUA_API_BIND_MODULE
 }
