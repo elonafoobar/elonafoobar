@@ -34,7 +34,7 @@ return {
                   Chara.player().position,
                   {
                      level = Map.data.current_dungeon_level,
-                     quality = Enums.Quality.bad,
+                     quality = Enums.Quality.BAD,
                      flttypemajor = Internal.filter_set_dungeon()
                   }
                )

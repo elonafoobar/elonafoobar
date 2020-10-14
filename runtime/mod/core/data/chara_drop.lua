@@ -149,7 +149,7 @@ ELONA.data:add(
                                             {
                                                level = args.chara.level,
                                                flttypemajor = 92000,
-                                               quality = Enums.Quality.good,
+                                               quality = Enums.Quality.GOOD,
                                                nostack = true
                                             }
                      )

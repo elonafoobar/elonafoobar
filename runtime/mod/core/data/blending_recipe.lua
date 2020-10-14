@@ -182,13 +182,13 @@ ELONA.data:add(
             local target, water = args.materials[1], args.materials[2]
 
             GUI.txt(I18N.get("core.action.dip.result.blessed_item", target, water), "green")
-            if water.curse_state == Enums.CurseState.blessed then
+            if water.curse_state == Enums.CurseState.BLESSED then
                GUI.txt(I18N.get("core.action.dip.result.becomes_blessed", target), "orange")
-               target.curse_state = Enums.CurseState.blessed
+               target.curse_state = Enums.CurseState.BLESSED
             end
-            if water.curse_state == Enums.CurseState.cursed or water.curse_state == Enums.CurseState.doomed then
+            if water.curse_state == Enums.CurseState.CURSED or water.curse_state == Enums.CurseState.DOOMED then
                GUI.txt(I18N.get("core.action.dip.result.becomes_cursed", target), "purple")
-               target.curse_state = Enums.CurseState.cursed
+               target.curse_state = Enums.CurseState.CURSED
             end
             GUI.play_sound("core.drink1")
          end,
@@ -259,7 +259,7 @@ ELONA.data:add(
                World.data.holy_well_count = World.data.holy_well_count - 1
                natural_potion = Item.create(-1, -1, { id = "core.bottle_of_water", inventory = Inventory.player() })
                if natural_potion then
-                  natural_potion.curse_state = Enums.CurseState.blessed
+                  natural_potion.curse_state = Enums.CurseState.BLESSED
                end
             else
                well.param1 = well.param1 - 3
