@@ -121,12 +121,6 @@ struct CharacterMemoryTable
 
 
 
-    // for integration with legacy codebase.
-    void pack_to(elona_vector2<int>& legacy_npcmemory) const;
-    void unpack_from(elona_vector2<int>& legacy_npcmemory);
-
-
-
 private:
     std::unordered_map<data::InstanceId, CharacterMemory> _memories;
 };

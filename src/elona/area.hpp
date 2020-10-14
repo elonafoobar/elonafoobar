@@ -52,19 +52,6 @@ struct Area
     bool is_museum_or_shop();
     bool is_hidden_in_world_map();
 
-
-    /**
-     * Moves this struct's fields into `adata` so they can be serialized, for
-     * compatibility. To be called before serializing `adata`.
-     */
-    void pack_to(elona_vector2<int>& legacy_adata, int area_id);
-
-    /**
-     * Moves `adata` fields into this struct. To be called after deserializing
-     * `adata`.
-     */
-    void unpack_from(elona_vector2<int>& legacy_adata, int area_id);
-
     /**
      * Clear this Area.
      */
@@ -95,14 +82,6 @@ struct AreaData
      * Clear the whole of areas.
      */
     void clear();
-
-
-    // Helper method to pack whole of `area_data` to `adata`.
-    void pack_to(elona_vector2<int>& legacy_adata);
-
-
-    // Helper method to unpack whole of `area_data` from `adata`.
-    void unpack_from(elona_vector2<int>& legacy_adata);
 
 
     Area& current();

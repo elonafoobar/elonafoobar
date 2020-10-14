@@ -24,8 +24,6 @@
 #include "random_event.hpp"
 #include "save.hpp"
 #include "scene.hpp"
-#include "serialization/serialization.hpp"
-#include "serialization/utils.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -62,18 +60,6 @@ struct DeferredEvent
     DeferredEvent(DeferredEvent&&) noexcept = default;
     DeferredEvent& operator=(const DeferredEvent&) noexcept = default;
     DeferredEvent& operator=(DeferredEvent&&) noexcept = default;
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(id);
-        ar(param1);
-        ar(param2);
-        /* clang-format on */
-    }
 };
 
 
@@ -115,16 +101,6 @@ public:
     void dequeue()
     {
         _queue.pop_front();
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(_queue);
-        /* clang-format on */
     }
 
 
@@ -1219,20 +1195,6 @@ TurnResult event_start_proc()
         return TurnResult::exit_map;
     }
     return TurnResult::turn_begin;
-}
-
-
-
-void event_load(const fs::path& path)
-{
-    serialization::binary::load(path, g_event_queue);
-}
-
-
-
-void event_save(const fs::path& path)
-{
-    serialization::binary::save(path, g_event_queue);
 }
 
 } // namespace elona

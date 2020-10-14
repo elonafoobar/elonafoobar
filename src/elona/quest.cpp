@@ -66,75 +66,11 @@ int quest_gen_scale_by_level(const Quest& quest, int factor)
 
 QuestData quest_data;
 
-#define QDATA_PACK(x, ident) legacy_qdata(x, quest_id) = ident;
-#define QDATA_UNPACK(x, ident) ident = legacy_qdata(x, quest_id);
-
-#define SERIALIZE_ALL() \
-    SERIALIZE(0, client_chara_index); \
-    SERIALIZE(1, originating_map_id); \
-    SERIALIZE(2, deadline_hours); \
-    SERIALIZE(3, id); \
-    SERIALIZE(4, escort_difficulty); \
-    SERIALIZE(5, difficulty); \
-    SERIALIZE(6, reward_gold); \
-    SERIALIZE(7, reward_item_id); \
-    SERIALIZE(8, progress); \
-    SERIALIZE(9, deadline_days); \
-    SERIALIZE(10, target_chara_index); \
-    SERIALIZE(11, target_item_id); \
-    SERIALIZE(12, extra_info_1); \
-    SERIALIZE(13, extra_info_2); \
-    SERIALIZE(15, delivery_has_package_flag);
-
-
-#define SERIALIZE QDATA_PACK
-void Quest::pack_to(elona_vector2<int>& legacy_qdata, int quest_id)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-
-
-#define SERIALIZE QDATA_UNPACK
-void Quest::unpack_from(elona_vector2<int>& legacy_qdata, int quest_id)
-{
-    SERIALIZE_ALL();
-}
-#undef SERIALIZE
-
 
 
 Quest& QuestData::immediate()
 {
     return quest_data[game()->executing_immediate_quest];
-}
-
-
-
-void QuestData::pack_to(elona_vector2<int>& legacy_qdata)
-{
-    assert(legacy_qdata.j_size() == quests.size());
-
-    int i{};
-    for (auto&& quest : quests)
-    {
-        quest.pack_to(legacy_qdata, i);
-        ++i;
-    }
-}
-
-
-
-void QuestData::unpack_from(elona_vector2<int>& legacy_qdata)
-{
-    assert(legacy_qdata.j_size() == quests.size());
-
-    int i{};
-    for (auto&& quest : quests)
-    {
-        quest.unpack_from(legacy_qdata, i);
-        ++i;
-    }
 }
 
 

@@ -383,24 +383,6 @@ public:
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        if constexpr (serialization::concepts::is_iarchive_v<Archive>)
-        {
-            Id obj_id;
-            ar(obj_id);
-            internal::_pending_ids<T>.emplace_back(this, obj_id);
-        }
-        else
-        {
-            Id obj_id = is_null() ? Id::nil() : get_raw_ptr()->obj_id;
-            ar(obj_id);
-        }
-    }
-
-
-
 private:
     Ref<T> _ref;
 };

@@ -70,18 +70,6 @@ struct Dice
         else
             return xdy + std::to_string(bonus);
     }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(rolls);
-        ar(faces);
-        ar(bonus);
-        /* clang-format on */
-    }
 };
 
 } // namespace elona

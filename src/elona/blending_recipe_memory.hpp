@@ -82,12 +82,6 @@ struct BlendingRecipeMemoryTable
 
 
 
-    // for integration with legacy codebase.
-    void pack_to(elona_vector1<int>& legacy_recipememory) const;
-    void unpack_from(elona_vector1<int>& legacy_recipememory);
-
-
-
 private:
     std::unordered_map<data::InstanceId, BlendingRecipeMemory> _memories;
 };

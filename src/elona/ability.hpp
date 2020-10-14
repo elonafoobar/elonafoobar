@@ -21,19 +21,6 @@ struct Ability
     int experience = 0;
 
     int potential = 0;
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(level);
-        ar(base_level);
-        ar(experience);
-        ar(potential);
-        /* clang-format on */
-    }
 };
 
 
@@ -58,16 +45,6 @@ public:
     const Ability& get(int id) const
     {
         return _storage.at(id);
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(_storage);
-        /* clang-format on */
     }
 
 

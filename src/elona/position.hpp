@@ -48,17 +48,6 @@ struct Position
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(x);
-        ar(y);
-        /* clang-format on */
-    }
-
-
-
     friend std::ostream& operator<<(std::ostream& out, const Position& pos);
 };
 

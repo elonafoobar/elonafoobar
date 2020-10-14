@@ -46,22 +46,6 @@ struct Version
     {
         return u8"Elona_foobar/" + short_string() + "+" + revision + " (" + platform + ")";
     }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(major);
-        ar(minor);
-        ar(patch);
-        ar(serial_id);
-        ar(revision);
-        ar(timestamp);
-        ar(platform);
-        /* clang-format on */
-    }
 };
 
 

@@ -84,14 +84,6 @@ public:
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(_inner);
-    }
-
-
-
 private:
     boost::uuids::uuid _inner;
 

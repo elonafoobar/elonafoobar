@@ -248,20 +248,6 @@ public:
     {
         return _crafting_materials;
     }
-
-
-
-    /**
-     * Moves this struct's fields into `gdata` so they can be serialized,
-     * for compatibility. To be called before serializing `gdata`.
-     */
-    void pack_to(elona_vector1<int>&);
-
-    /**
-     * Moves `gdata` fields into this struct. To be called after
-     * deserializing `gdata`.
-     */
-    void unpack_from(elona_vector1<int>&);
 };
 
 

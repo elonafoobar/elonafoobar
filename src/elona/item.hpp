@@ -174,62 +174,6 @@ private:
     Item(Item&&) = default;
     Item& operator=(const Item&) = default;
     Item& operator=(Item&&) = default;
-
-
-
-public:
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(obj_id);
-        ar(_number);
-        ar(value);
-        ar(image);
-        ar(id);
-        ar(quality);
-        ar(_position);
-        ar(weight);
-        ar(identify_state);
-        ar(charges);
-        ar(dice);
-        ar(hit_bonus);
-        ar(dv);
-        ar(pv);
-        ar(skill);
-        ar(curse_state);
-        ar(body_part);
-        ar(function);
-        ar(bonus_value);
-        ar(own_state);
-        ar(tint);
-        ar(subname);
-        ar(material);
-        ar(param1);
-        ar(param2);
-        ar(param3);
-        ar(param4);
-        ar(identify_level);
-        ar(turn);
-        ar(is_acidproof);
-        ar(is_fireproof);
-        ar(is_coldproof);
-        ar(is_precious);
-        ar(has_charges);
-        ar(has_cooldown_time);
-        ar(is_aphrodisiac);
-        ar(is_poisoned);
-        ar(is_blessed_by_ehekatl);
-        ar(is_stolen);
-        ar(is_quest_target);
-        ar(is_no_drop);
-        ar(is_alive);
-        ar(is_eternal_force);
-        ar(is_handmade);
-        ar(is_showroom_only);
-        ar(enchantments);
-        /* clang-format on */
-    }
 };
 
 

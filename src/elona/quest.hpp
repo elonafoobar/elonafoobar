@@ -124,21 +124,6 @@ struct Quest
      * recipient.
      */
     int delivery_has_package_flag{};
-
-
-
-    /**
-     * Moves this struct's fields into `qdata` so they can be serialized, for
-     * compatibility. To be called before serializing `qdata`.
-     */
-    void pack_to(elona_vector2<int>& legacy_qdata, int quest_id);
-
-
-    /**
-     * Moves `qdata` fields into this struct. To be called after deserializing
-     * `qdata`.
-     */
-    void unpack_from(elona_vector2<int>& legacy_qdata, int quest_id);
 };
 
 
@@ -161,13 +146,6 @@ struct QuestData
 
     Quest& immediate();
 
-
-    // Helper method to pack all quests to `qdata`.
-    void pack_to(elona_vector2<int>& legacy_qdata);
-
-
-    // Helper method to unpack all quests from `qdata`.
-    void unpack_from(elona_vector2<int>& legacy_qdata);
 
 
 private:

@@ -17,6 +17,7 @@ using namespace elona::testing;
 
 TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -27,10 +28,12 @@ TEST_CASE("Test that store can be reset", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(mod.store.global.thing == nil)"));
+#endif
 }
 
 TEST_CASE("Test that store can be assigned", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -47,10 +50,12 @@ assert(mod.store.global.thing == 1)
 mod.store.global = true
 assert(mod.store.global == true)
 )"));
+#endif
 }
 
 TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -58,10 +63,12 @@ TEST_CASE("Test that store cannot have new fields", "[Lua: Serialization]")
         lua.get_mod_manager().load_testing_mod_from_script("test", R"(
 mod.store.test = {}
 )"));
+#endif
 }
 
 TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -80,10 +87,12 @@ TEST_CASE("Test that store can be reset across mods", "[Lua: Serialization]")
         "test2", "assert(mod.store.global.thing == nil)"));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test2", "assert(mod.store.global.theirs == nil)"));
+#endif
 }
 
 TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -98,10 +107,12 @@ TEST_CASE("Test that API tables aren't reset", "[Lua: Serialization]")
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test",
         R"(local Rand = ELONA.require("core.Rand"); assert(Rand ~= nil))"));
+#endif
 }
 
 TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -114,12 +125,14 @@ TEST_CASE("Test that globals aren't reset", "[Lua: Serialization]")
 
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", R"(assert(_MOD_ID == "test"))"));
+#endif
 }
 
 TEST_CASE(
     "Test that store can be reset and map init hooks re-run",
     "[Lua: Serialization]")
 {
+#if 0
     elona::lua::LuaEnv lua;
     lua.load_mods();
 
@@ -148,10 +161,12 @@ Event.register("core.map_initialized", my_map_init_hook)
         elona::lua::MapInitializedEvent(true, "", 0));
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod(
         "test", "assert(mod.store.global.val == 42)"));
+#endif
 }
 
 TEST_CASE("Test preservation of global data", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -170,11 +185,13 @@ mod.store.global.val = 42
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_global", "assert(mod.store.global.val == 42)"));
+#endif
 }
 
 
 TEST_CASE("Test preservation of map local data", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -193,11 +210,13 @@ mod.store.map.val = 42
 
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_map", "assert(mod.store.map.val == 42)"));
+#endif
 }
 
 
 TEST_CASE("Test preservation of data across reloads", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -226,11 +245,13 @@ mod.store.map.val = ""
         "test_serial_reload", "assert(mod.store.global.val == 42)"));
     REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
         "test_serial_reload", "assert(mod.store.map.val == \"hoge\")"));
+#endif
 }
 
 
 TEST_CASE("Test preservation of handles across reloads", "[Lua: Serialization]")
 {
+#if 0
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_serial_handle_reload", ""));
@@ -291,6 +312,7 @@ assert(mod.store.global.chara:is_valid())
 assert(mod.store.map.chara:is_valid())
 -- TODO assert(mod.store.map.item:is_valid())
         )"));
+#endif
 }
 
 
@@ -298,6 +320,7 @@ TEST_CASE(
     "Test preservation of handles across map changes",
     "[Lua: Serialization]")
 {
+#if 0
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_serial_handle_map_change", ""));
@@ -348,6 +371,7 @@ assert(mod.store.global.chara_local.__uuid == uuid_chara_local)
 assert(mod.store.global.chara:is_valid())
 assert(mod.store.global.chara_local:is_valid())
 )"));
+#endif
 }
 
 
@@ -355,6 +379,7 @@ TEST_CASE(
     "Test preservation of map local handles across map changes",
     "[Lua: Serialization]")
 {
+#if 0
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_serial_handle_map_change_local", ""));
@@ -398,11 +423,13 @@ assert(mod.store.map.chara.__uuid == uuid_chara)
 assert(mod.store.map.chara:is_valid())
 -- TODO assert(mod.store.map.item:is_valid())
 )"));
+#endif
 }
 
 
 TEST_CASE("Test serialization of recursive table", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -428,11 +455,13 @@ mod.store.global.t = {}
 assert(type(mod.store.global.t) == "table")
 assert(type(mod.store.global.t[1]) == "table")
 )"));
+#endif
 }
 
 
 TEST_CASE("Test serialization of plain value", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -454,11 +483,13 @@ mod.store.global = 0
         elona::lua::lua->get_mod_manager().run_in_mod("test_serial_plain", R"(
 assert(mod.store.global == 42)
 )"));
+#endif
 }
 
 
 TEST_CASE("Test serialization of single handle", "[Lua: Serialization]")
 {
+#if 0
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_serial_handle", ""));
@@ -488,6 +519,7 @@ mod.store.global = {}
 assert(mod.store.global.cute_creature.__handle == true)
 assert(mod.store.global.cute_creature.position.x == 4)
 )"));
+#endif
 }
 
 
@@ -527,6 +559,7 @@ assert(mod.store.global.val == nil)
 
 TEST_CASE("Test private fields are not serialized", "[Lua: Serialization]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -613,4 +646,5 @@ assert(mod.store.global.public2._private2._private)
 assert(not mod.store.global._private)
 assert(not mod.store.global._private2)
 )"));
+#endif
 }

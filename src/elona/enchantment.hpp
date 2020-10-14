@@ -30,17 +30,6 @@ struct Enchantment
     {
         return id == other.id && power == other.power;
     }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(id);
-        ar(power);
-        /* clang-format on */
-    }
 };
 
 
@@ -191,16 +180,6 @@ struct EnchantmentList
     const_iterator cend() const noexcept
     {
         return _enchantments.cend();
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(_enchantments);
-        /* clang-format on */
     }
 
 

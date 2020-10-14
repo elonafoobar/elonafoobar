@@ -100,12 +100,6 @@ struct CraftingMaterialBag
 
 
 
-    // for integration with legacy codebase.
-    void pack_to(elona_vector1<int>& legacy_mat) const;
-    void unpack_from(elona_vector1<int>& legacy_mat);
-
-
-
 private:
     std::unordered_map<data::InstanceId, lua_int> _materials;
 };
