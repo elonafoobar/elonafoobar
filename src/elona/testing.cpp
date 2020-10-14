@@ -168,7 +168,7 @@ void run_in_temporary_map(int map, int dungeon_level, std::function<void()> f)
 
 void pre_init()
 {
-    log::Logger::instance().init();
+    log::init(filesystem::dirs::log(), log::LogLevel::debug);
     profile::ProfileManager::instance().init(u8"testing");
 
     const fs::path source_config_file = get_test_data_path() / "config.json";

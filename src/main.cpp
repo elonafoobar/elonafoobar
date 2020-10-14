@@ -6,6 +6,7 @@
 #include <SDL.h>
 
 #include "elona/defines.hpp"
+#include "elona/filesystem.hpp"
 #include "elona/log.hpp"
 #include "snail/application.hpp"
 #include "spider/http/core.hpp"
@@ -27,8 +28,7 @@ void report_error(const char* what)
     MessageBoxA(NULL, what, "Error", MB_OK | MB_ICONSTOP);
 #endif
 
-    ELONA_FATAL("system") << what;
-    std::cerr << "Error: " << what << std::endl;
+    ELONA_ERROR(what);
 }
 
 } // namespace
@@ -41,8 +41,8 @@ int main(int argc, char** argv)
 
     lib::setup_backtrace();
 
-    log::Logger::instance().init();
-    ELONA_LOG("system") << latest_version.long_string();
+    log::init(filesystem::dirs::log(), log::LogLevel::info);
+    ELONA_LOG(latest_version.long_string());
 
     spider::http::init();
 

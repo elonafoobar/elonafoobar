@@ -49,9 +49,9 @@ public:
             sol::object data = pair.second.get_store(store_type);
             save(data, putit_archive);
 
-            ELONA_LOG("lua.mod")
-                << "Saved " << get_store_name(store_type) << " store data for "
-                << mod_id << " " << mod_version.to_string();
+            ELONA_LOG(
+                "Lua.mod: saved " + get_store_name(store_type) +
+                " store data for " + mod_id + " " + mod_version.to_string());
         }
     }
 
@@ -77,9 +77,9 @@ public:
             if (!mod)
             {
                 // Skip this piece of data.
-                ELONA_WARN("lua.mod")
-                    << "WARNING: skipping mod store loading as mod wasn't loaded: "
-                    << mod_id;
+                ELONA_WARN(
+                    "Mod: skipping mod store loading as mod wasn't loaded: " +
+                    mod_id);
 
                 std::string raw_data;
                 putit_archive(raw_data);
@@ -89,18 +89,18 @@ public:
             if (mod->manifest.version != mod_version)
             {
                 // TODO: implement migration
-                ELONA_WARN("lua.mod")
-                    << "WARNING: skipping mod store loading as mod is upgraded or downgraded: "
-                    << mod_id;
+                ELONA_WARN(
+                    "Mod: skipping mod store loading as mod is upgraded or downgraded: " +
+                    mod_id);
 
                 std::string raw_data;
                 putit_archive(raw_data);
 
                 continue;
             }
-            ELONA_LOG("lua.mod")
-                << "Loaded " << get_store_name(store_type) << " store data for "
-                << mod_id << " " << mod_version.to_string();
+            ELONA_LOG(
+                "Lua.mod: loaded " + get_store_name(store_type) +
+                " store data for " + mod_id + " " + mod_version.to_string());
 
             sol::object data = load(putit_archive);
 

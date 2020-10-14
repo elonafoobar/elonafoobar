@@ -108,7 +108,7 @@ void setup_sandbox(sol::state& state, sol::table table)
 void report_error(sol::error err)
 {
     std::string what = err.what();
-    ELONA_ERROR("lua.mod") << what;
+    ELONA_ERROR("Mod: " + what);
 }
 
 } // namespace
@@ -175,16 +175,14 @@ void ModManager::toggle_mod(
         // Disable
         assert(can_disable_mod(id));
         assert(*current_version == version);
-        ELONA_LOG("lua.mod")
-            << "Disable mod " << id << "-" << version.to_string();
+        ELONA_LOG("Lua.mod: disable mod " + id + "-" + version.to_string());
 
         mod_list.mods().erase(id);
     }
     else
     {
         // Enable
-        ELONA_LOG("lua.mod")
-            << "Enable mod " << id << "-" << version.to_string();
+        ELONA_LOG("Lua.mod: enable mod " + id + "-" + version.to_string());
 
         mod_list.mods().emplace(
             id, semver::VersionRequirement::from_version(version));
@@ -208,7 +206,7 @@ void ModManager::load_mods(const ResolvedModList& resolved_mod_list)
     {
         auto& mod = _mods.at(id);
         init_mod(mod);
-        ELONA_LOG("lua.mod") << "Loaded mod " << mod.manifest.id;
+        ELONA_LOG("Lua.mod: Loaded mod " + mod.manifest.id);
     }
 
     lua().get_event_manager().trigger(BaseEvent("core.all_mods_loaded"));
@@ -243,8 +241,8 @@ void ModManager::run_startup_script(const fs::path& script_filename)
     safe_script_file(
         filesystem::dirs::user_script() / script_filename, script_mod.env);
 
-    ELONA_LOG("lua.mod") << "Loaded startup script "
-                         << script_filename.to_u8string();
+    ELONA_LOG(
+        "Lua.mod: loaded startup script " + script_filename.to_u8string());
     txt(i18n::s.get("core.mod.loaded_script", script_filename.to_u8string()),
         Message::color{ColorIndex::purple});
     Message::instance().linebreak();
@@ -468,7 +466,7 @@ ModEnv& ModManager::create_mod_env_from_script(const std::string& id)
 
 ModEnv& ModManager::create_mod_env_manifest(const ModManifest& manifest)
 {
-    ELONA_LOG("lua.mod") << "Found mod " << manifest.id;
+    ELONA_LOG("Lua.mod: found mod " + manifest.id);
 
     const auto emplace_result = _mods.emplace(
         std::piecewise_construct,

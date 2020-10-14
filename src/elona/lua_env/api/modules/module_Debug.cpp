@@ -16,44 +16,6 @@ namespace elona::lua::api::modules::module_Debug
 {
 
 /**
- * @luadoc log
- *
- * Logs a message to log.txt.
- *
- * @tparam string message the message to log
- */
-void Debug_log(const std::string& message)
-{
-    ELONA_LOG("lua.debug") << message;
-}
-
-
-
-/**
- * @luadoc report_error
- *
- * Reports an error to the game console and log file.
- *
- * @tparam string message the error message to report
- */
-void Debug_report_error(const std::string& message)
-{
-    std::istringstream sstream(message);
-    std::string line;
-
-    txt("Script error: ", Message::color{ColorIndex::red});
-    while (getline(sstream, line, '\n'))
-    {
-        txt(line + "  ", Message::color{ColorIndex::red});
-    }
-
-    ELONA_ERROR("lua.debug") << "Script error: " << message;
-    std::cerr << "Script error: " << message << std::endl;
-}
-
-
-
-/**
  * @luadoc enable_wizard
  *
  * Enable Wizard mode. It is equivalent to turn `core.wizard.is_enabled` on.
@@ -61,7 +23,7 @@ void Debug_report_error(const std::string& message)
 void Debug_enable_wizard()
 {
     elona::debug_enable_wizard();
-    ELONA_ERROR("lua.debug") << "Enable Wizard mode";
+    ELONA_LOG("Debug.enable_wizard: enabled");
 }
 
 
@@ -74,7 +36,7 @@ void Debug_enable_wizard()
 void Debug_disable_wizard()
 {
     elona::debug_disable_wizard();
-    ELONA_ERROR("lua.debug") << "Disable Wizard mode";
+    ELONA_LOG("Debug.disable_wizard: disabled");
 }
 
 
@@ -134,8 +96,6 @@ void bind(sol::table api_table)
 {
     /* clang-format off */
 
-    ELONA_LUA_API_BIND_FUNCTION("log", Debug_log);
-    ELONA_LUA_API_BIND_FUNCTION("report_error", Debug_report_error);
     ELONA_LUA_API_BIND_FUNCTION("enable_wizard", Debug_enable_wizard);
     ELONA_LUA_API_BIND_FUNCTION("disable_wizard", Debug_disable_wizard);
     ELONA_LUA_API_BIND_FUNCTION("is_wizard", Debug_is_wizard);

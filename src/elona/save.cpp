@@ -32,7 +32,7 @@ bool will_autosave = false;
 
 void _do_save_game()
 {
-    ELONA_LOG("save") << "Save: " << playerid;
+    ELONA_LOG("Save: save: " + playerid);
 
     if (game()->current_map == mdata_t::MapId::show_house)
     {
@@ -54,7 +54,7 @@ void _do_save_game()
     ctrl_file_global_write(save_dir);
     save_fs_clear();
 
-    ELONA_LOG("save") << "Save end:" << playerid;
+    ELONA_LOG("Save: save end:" + playerid);
 }
 
 } // namespace
@@ -80,7 +80,7 @@ void save_save_game(bool no_message, bool silent)
 
 void save_load_game()
 {
-    ELONA_LOG("save") << "Load: " << playerid;
+    ELONA_LOG("Save: load: " + playerid);
 
     save_fs_clear();
 
@@ -103,7 +103,7 @@ void save_load_game()
 
     time_begin = timeGetTime() / 1000;
 
-    ELONA_LOG("save") << "Load end: " << playerid;
+    ELONA_LOG("Save: load end: " + playerid);
 }
 
 

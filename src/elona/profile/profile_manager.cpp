@@ -11,11 +11,11 @@ namespace profile
 
 void ProfileManager::init(const ProfileId& profile_id)
 {
-    ELONA_LOG("profile") << "Initialize with '" << profile_id << "'.";
+    ELONA_LOG("Profile: initialize with '" + profile_id + "'.");
 
     if (!exists(profile_id))
     {
-        ELONA_LOG("profile") << "Not found '" << profile_id << "'.";
+        ELONA_LOG("Profile: not found '" + profile_id + "'.");
         create(profile_id);
     }
 
@@ -26,7 +26,7 @@ void ProfileManager::init(const ProfileId& profile_id)
 
 void ProfileManager::load(const ProfileId& profile_id)
 {
-    ELONA_LOG("profile") << "Load '" << profile_id << "'.";
+    ELONA_LOG("Profile: load '" + profile_id + "'.");
 
     filesystem::dirs::set_profile_directory(get_dir_for(profile_id));
 }
@@ -43,7 +43,7 @@ ProfileManager& ProfileManager::instance()
 
 void ProfileManager::create(const ProfileId& new_profile_id)
 {
-    ELONA_LOG("profile") << "Create '" << new_profile_id << "'.";
+    ELONA_LOG("Profile: create '" + new_profile_id + "'.");
 
     const auto to = get_dir_for(new_profile_id);
     fs::create_directory(to);

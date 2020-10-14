@@ -42,8 +42,7 @@ EventResult EventManager::trigger(const BaseEvent& event)
         auto message =
             "Error triggering event "s + event.id + ":" + error.what();
         // txt(message, Message::color{ColorIndex::red});
-        std::cerr << message << std::endl;
-        ELONA_ERROR("lua.event") << message;
+        ELONA_ERROR("Event: " + message);
 
         return EventResult{lua_state()->create_table()};
     }

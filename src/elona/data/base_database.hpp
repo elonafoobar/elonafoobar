@@ -210,8 +210,7 @@ private:
             std::string message = "Error initializing "s +
                 make_fqid(PrototypeId{Traits::type_id}, id).get() + ": " +
                 e.what();
-            ELONA_WARN("lua.data") << message;
-            std::cerr << message << std::endl;
+            ELONA_WARN("Data: " + message);
 
             _errors.emplace(id, e.what());
             return none;
