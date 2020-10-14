@@ -72,26 +72,6 @@ struct _Id
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        if constexpr (serialization::concepts::is_iarchive_v<Archive>)
-        {
-            std::string tmp;
-            ar(tmp);
-            _inner = tmp;
-        }
-        else
-        {
-            std::string tmp = _inner.get();
-            ar(tmp);
-        }
-        /* clang-format on */
-    }
-
-
-
 private:
     SharedId _inner;
 };

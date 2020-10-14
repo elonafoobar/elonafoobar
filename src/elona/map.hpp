@@ -52,18 +52,6 @@ struct MapData
     int play_campfire_sound{};
 
 
-    /**
-     * Moves this struct's fields into `mdata` so they can be serialized, for
-     * compatibility. To be called before serializing `mdata`.
-     */
-    void pack_to(elona_vector1<int>& legacy_mdata);
-
-    /**
-     * Moves `mdata` fields into this struct. To be called after deserializing
-     * `mdata`.
-     */
-    void unpack_from(elona_vector1<int>& legacy_mdata);
-
     void clear();
 };
 
@@ -239,14 +227,6 @@ struct Cell
 
 
 
-        template <typename Archive>
-        void serialize(Archive& ar)
-        {
-            ar(_inner);
-        }
-
-
-
     private:
         uint64_t _inner = 0;
     };
@@ -282,37 +262,6 @@ struct Cell
      * light of level 11.
      */
     int light{};
-
-
-    /**
-     * Moves this struct's fields into `map` so they can be serialized, for
-     * compatibility. To be called before serializing `map`.
-     */
-    void pack_to(elona_vector3<int>& legacy_map, int x, int y);
-
-    /**
-     * Moves `map` fields into this struct. To be called after deserializing
-     * `map`.
-     */
-    void unpack_from(elona_vector3<int>& legacy_map, int x, int y);
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(chip_id_actual);
-        ar(chip_id_memory);
-        ar(chara_index_plus_one);
-        ar(item_info_actual);
-        ar(item_info_memory);
-        ar(feats);
-        ar(blood_and_fragments);
-        ar(mef_index_plus_one);
-        ar(light);
-        /* clang-format on */
-    }
 };
 
 
@@ -352,18 +301,6 @@ struct CellData
      * @ref width_ times @ref height_.
      */
     void load_tile_grid(const std::vector<int>& tile_grid);
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(width_);
-        ar(height_);
-        ar(cells);
-        /* clang-format on */
-    }
 
 
 

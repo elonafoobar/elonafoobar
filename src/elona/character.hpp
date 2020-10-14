@@ -39,18 +39,6 @@ struct Buff
     int id = 0;
     int power = 0;
     int turns = 0;
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(id);
-        ar(power);
-        ar(turns);
-        /* clang-format on */
-    }
 };
 
 
@@ -102,18 +90,6 @@ struct Activity
         type = Activity::Type::none;
         turn = 0;
         item = nullptr;
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(type);
-        ar(turn);
-        ar(item);
-        /* clang-format on */
     }
 };
 
@@ -178,14 +154,6 @@ public:
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        ar(_inner);
-    }
-
-
-
 private:
     int _inner{};
 };
@@ -216,17 +184,6 @@ struct EquipmentSlot
     void unequip()
     {
         equipment = nullptr;
-    }
-
-
-
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(type);
-        ar(equipment);
-        /* clang-format on */
     }
 };
 
@@ -554,148 +511,6 @@ private:
     Character(Character&&) = default;
     Character& operator=(const Character&) = default;
     Character& operator=(Character&&) = default;
-
-
-
-public:
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(obj_id);
-        ar(state_);
-        ar(position);
-        ar(next_position);
-        ar(time_to_revive);
-        ar(vision_flag);
-        ar(image);
-        ar(sex);
-        ar(relationship);
-        ar(turn_cost);
-        ar(current_speed);
-        ar(ai_item);
-        ar(portrait);
-        ar(interest);
-        ar(time_interest_revive);
-        ar(personality);
-        ar(impression);
-        ar(talk_type);
-        ar(height);
-        ar(weight);
-        ar(birth_year);
-        ar(nutrition);
-        ar(can_talk);
-        ar(quality);
-        ar(turn);
-        ar(id);
-        ar(vision_distance);
-        ar(enemy_id);
-        ar(gold);
-        ar(platinum_coin);
-        ar(combat_style);
-        ar(melee_attack_type);
-        ar(fame);
-        ar(experience);
-        ar(required_experience);
-        ar(speed_percentage);
-        ar(level);
-        ar(speed_percentage_in_next_turn);
-        ar(skill_bonus);
-        ar(total_skill_bonus);
-        ar(inventory_weight);
-        ar(max_inventory_weight);
-        ar(inventory_weight_type);
-        ar(max_level);
-        ar(karma);
-        ar(hp);
-        ar(max_hp);
-        ar(sp);
-        ar(max_sp);
-        ar(mp);
-        ar(max_mp);
-        ar(heal_value_per_nether_attack);
-        ar(god_id);
-        ar(piety_point);
-        ar(praying_point);
-        ar(sum_of_equipment_weight);
-        ar(special_attack_type);
-        ar(rate_to_pierce);
-        ar(rate_of_critical_hit);
-        ar(speed_correction_value);
-        ar(original_relationship);
-        ar(pv);
-        ar(dv);
-        ar(hit_bonus);
-        ar(damage_bonus);
-        ar(pv_correction_value);
-        ar(dv_correction_value);
-        ar(damage_reaction_info);
-        ar(emotion_icon);
-        ar(current_map);
-        ar(current_dungeon_level);
-        ar(related_quest_id);
-        ar(direction);
-        ar(period_of_contract);
-        ar(hire_count);
-        ar(insanity);
-        ar(curse_power);
-        ar(extra_attack);
-        ar(extra_shot);
-        ar(decrease_physical_damage);
-        ar(nullify_damage);
-        ar(cut_counterattack);
-        ar(anorexia_count);
-        ar(activity);
-        ar(stops_activity_if_damaged);
-        ar(quality_of_performance);
-        ar(tip_gold);
-        ar(role);
-        ar(shop_rank);
-        ar(activity_target);
-        ar(shop_store_id);
-        ar(time_to_restore);
-        ar(cnpc_id);
-        ar(initial_position);
-        ar(hate);
-        ar(ai_calm);
-        ar(ai_move);
-        ar(ai_dist);
-        ar(ai_act_sub_freq);
-        ar(ai_heal);
-        ar(element_of_unarmed_attack);
-        ar(poisoned);
-        ar(sleep);
-        ar(paralyzed);
-        ar(blind);
-        ar(confused);
-        ar(fear);
-        ar(dimmed);
-        ar(drunk);
-        ar(bleeding);
-        ar(wet);
-        ar(insane);
-        ar(sick);
-        ar(gravity);
-        ar(choked);
-        ar(furious);
-        ar(growth_buffs);
-        ar(equipment_slots);
-        ar(normal_actions);
-        ar(special_actions);
-        ar(buffs);
-        ar(attr_adjs);
-        ar(_flags);
-        ar(_156);
-        ar(_203);
-        ar(target_position);
-        ar(name);
-        ar(alias);
-        ar(race);
-        ar(class_);
-        ar(talk);
-        ar(_skills);
-        /* clang-format on */
-    }
 };
 
 

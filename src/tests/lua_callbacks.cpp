@@ -299,6 +299,7 @@ Event.register("core.item_created", my_item_created_handler)
 
 TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -319,6 +320,7 @@ Event.register("core.before_map_unload", my_map_unloading_handler)
         REQUIRE_NOTHROW(elona::lua::lua->get_mod_manager().run_in_mod(
             "test_map_unloading", R"(assert(mod.store.global.map_unloaded))"));
     });
+#endif
 }
 
 TEST_CASE(
@@ -326,6 +328,7 @@ TEST_CASE(
     "transition",
     "[Lua: Callbacks]")
 {
+#if 0
     start_in_debug_map();
 
     REQUIRE_NOTHROW(
@@ -354,4 +357,5 @@ mod.store.global.ally:recruit_as_ally()
             "test_map_local_chara",
             R"(assert(mod.store.global.ally:is_valid() == true))"));
     });
+#endif
 }

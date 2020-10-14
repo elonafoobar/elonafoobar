@@ -22,40 +22,6 @@
 #include <windows.h> // MessageBoxA
 #endif
 
-namespace
-{
-
-
-
-size_t read_binary(std::istream& in, size_t size, char* buffer)
-{
-    assert(in);
-
-    std::fill_n(buffer, size, 0);
-    in.read(buffer, size);
-    if (in.eof())
-    {
-        in.clear();
-    }
-
-    assert(in);
-
-    return size;
-}
-
-
-
-std::pair<std::unique_ptr<char[]>, size_t> read_binary(
-    std::istream& in,
-    size_t size)
-{
-    std::unique_ptr<char[]> buf{new char[size]};
-    return {std::move(buf), read_binary(in, size, buf.get())};
-}
-
-
-
-} // namespace
 
 
 namespace elona

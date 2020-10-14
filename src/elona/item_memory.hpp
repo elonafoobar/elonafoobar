@@ -172,12 +172,6 @@ struct ItemMemoryTable
 
 
 
-    // for integration with legacy codebase.
-    void pack_to(elona_vector2<int>& legacy_itemmemory) const;
-    void unpack_from(elona_vector2<int>& legacy_itemmemory);
-
-
-
 private:
     std::unordered_map<data::InstanceId, ItemMemory> _memories;
 };

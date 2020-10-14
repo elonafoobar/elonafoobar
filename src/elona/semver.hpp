@@ -152,18 +152,6 @@ struct Version
 
 
 
-    template <typename Archive>
-    void serialize(Archive& ar)
-    {
-        /* clang-format off */
-        ar(major);
-        ar(minor);
-        ar(patch);
-        /* clang-format on */
-    }
-
-
-
 private:
     friend VersionRequirement;
 

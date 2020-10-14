@@ -16,6 +16,7 @@ using namespace elona::testing;
 
 TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
 {
+#if 0
     start_in_debug_map();
     const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 4, 8);
     REQUIRE_SOME(chara);
@@ -28,10 +29,12 @@ TEST_CASE("Test character saving and reloading", "[C++: Serialization]")
     REQUIRE(chara->position.y == 8);
     REQUIRE(chara->id == PUTIT_PROTO_ID);
     REQUIRE(chara->is_floating() == true);
+#endif
 }
 
 TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
 {
+#if 0
     start_in_debug_map();
     int index;
     {
@@ -56,10 +59,12 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);
     REQUIRE(elona::g_inv[index]->is_aphrodisiac);
     REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");
+#endif
 }
 
 TEST_CASE("Test party character index preservation", "[C++: Serialization]")
 {
+#if 0
     start_in_debug_map();
     const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
     REQUIRE_SOME(chara);
@@ -70,10 +75,12 @@ TEST_CASE("Test party character index preservation", "[C++: Serialization]")
     save_and_reload();
 
     REQUIRE(elona::cdata[index].index == index);
+#endif
 }
 
 TEST_CASE("Test other character index preservation", "[C++: Serialization]")
 {
+#if 0
     start_in_debug_map();
     const auto chara = chara_create(-1, charaid2int(PUTIT_PROTO_ID), 0, 0);
     REQUIRE_SOME(chara);
@@ -82,38 +89,48 @@ TEST_CASE("Test other character index preservation", "[C++: Serialization]")
     save_and_reload();
 
     REQUIRE(elona::cdata[index].index == index);
+#endif
 }
 
 TEST_CASE("Test character data compatibility", "[C++: Serialization]")
 {
+#if 0
     int player_idx = 0;
     load_previous_savefile();
     REQUIRE(elona::cdata[player_idx].index == player_idx);
     REQUIRE(elona::cdata[player_idx].name == u8"foobar_test");
+#endif
 }
 
 TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
 {
+#if 0
     int chara_idx = 57;
     load_previous_savefile();
     REQUIRE(elona::cdata[chara_idx].index == chara_idx);
     REQUIRE(elona::cdata[chara_idx].name == u8"風を聴く者『ラーネイレ』");
+#endif
 }
 
 TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
+#if 0
     load_previous_savefile();
     REQUIRE(elona::itemname(g_inv[1 << 18]) == u8"ブロンズの兜 [0,1]");
+#endif
 }
 
 TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
+#if 0
     load_previous_savefile();
     REQUIRE(elona::itemname(g_inv[0]) == u8"割れたつぼ");
+#endif
 }
 
 TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
 {
+#if 0
     int ability_idx = 170; // Medium Armor
     int chara_idx = 57;
     load_previous_savefile();
@@ -121,4 +138,5 @@ TEST_CASE("Test ability data compatibility", "[C++: Serialization]")
     REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).base_level == 28);
     REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).experience == 0);
     REQUIRE(elona::cdata[chara_idx].get_skill(ability_idx).potential == 22);
+#endif
 }
