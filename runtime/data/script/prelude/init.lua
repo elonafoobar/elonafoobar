@@ -33,7 +33,7 @@ exports.inspect = require("prelude.inspect")
 -- Miscellaneous
 
 local pairs, print, type, setmetatable, deepcopy, mathtype, inspect =
-   exports.pairs, exports.print, exports.type, exports.setmetatable, exports.table.deepcopy, exports.math.type, exports.inspect
+   exports.pairs, exports.print, exports.type, _ENV.setmetatable, exports.table.deepcopy, exports.math.type, exports.inspect
 
 
 function exports.class(name, Super)
