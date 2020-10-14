@@ -9,7 +9,7 @@ local map = require("map/static.lua")
 
 local function chara_filter_town(callbacks)
    return function()
-      local opts = { level = 10, quality = Enums.Quality.bad, fltselect = 5 }
+      local opts = { level = 10, quality = Enums.Quality.BAD, fltselect = 5 }
 
       if callbacks == nil then
          return opts
@@ -490,7 +490,7 @@ ELONA.data:add(
          can_return_to = true,
          shows_floor_count_in_name = true,
          chara_filter = function()
-            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = Enums.Quality.bad }
+            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = Enums.Quality.BAD }
 
             if Map.current_dungeon_level() < 4 and opts.objlv > 5 then
                opts.objlv = 5
@@ -518,7 +518,7 @@ ELONA.data:add(
          can_return_to = true,
          prevents_domination = true,
          chara_filter = function()
-            return { level = math.modf(Map.current_dungeon_level(), 50) + 5, quality = Enums.Quality.bad }
+            return { level = math.modf(Map.current_dungeon_level(), 50) + 5, quality = Enums.Quality.BAD }
          end
       },
       tower_of_fire = {
@@ -538,7 +538,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.bad, fltn = "fire" }
+            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, fltn = "fire" }
          end
       },
       crypt_of_the_damned = {
@@ -558,7 +558,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.bad, fltn = "undead" }
+            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, fltn = "undead" }
          end
       },
       ancient_castle = {
@@ -578,7 +578,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.bad }
+            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "man"
@@ -604,7 +604,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.bad }
+            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
          end
       },
       mountain_pass = {
@@ -658,7 +658,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.bad }
+            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "mino"
@@ -684,7 +684,7 @@ ELONA.data:add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.bad }
+            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "yeek"
@@ -711,7 +711,7 @@ ELONA.data:add(
 
          prevents_teleport = true,
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.bad, flttypemajor = 13 }
+            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, flttypemajor = 13 }
          end
       },
       lumiest_graveyard = {
@@ -731,7 +731,7 @@ ELONA.data:add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 20, quality = Enums.Quality.bad, fltselect = 4 }
+            return { level = 20, quality = Enums.Quality.BAD, fltselect = 4 }
          end
       },
       truce_ground = {
@@ -751,7 +751,7 @@ ELONA.data:add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 20, quality = Enums.Quality.bad, fltselect = 4 }
+            return { level = 20, quality = Enums.Quality.BAD, fltselect = 4 }
          end
       },
       jail = {
@@ -791,7 +791,7 @@ ELONA.data:add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 10, quality = Enums.Quality.bad, fltn = "sf" }
+            return { level = 10, quality = Enums.Quality.BAD, fltn = "sf" }
          end
       },
       larna = {
@@ -1010,7 +1010,7 @@ local function chara_filter_museum_shop()
       fltselect = 7
    end
 
-   return { level = 100, quality = Enums.Quality.bad, fltselect = fltselect }
+   return { level = 100, quality = Enums.Quality.BAD, fltselect = fltselect }
 end
 
 -- These maps are player-created.
@@ -1068,7 +1068,7 @@ ELONA.data:add(
          is_fixed = false,
 
          chara_filter = function()
-            return { level = Map.data.current_dungeon_level, quality = Enums.Quality.bad }
+            return { level = Map.data.current_dungeon_level, quality = Enums.Quality.BAD }
          end,
 
          -- The following fields are required for loading the data but

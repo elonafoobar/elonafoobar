@@ -61,7 +61,7 @@ local function query(talk, text, choices, default_choice)
       image = talk.speaker.image
    end
    local show_impress = true
-   if talk.speaker.quality == Enums.Quality.special and not Chara.is_ally(talk.speaker) then
+   if talk.speaker.quality == Enums.Quality.SPECIAL and not Chara.is_ally(talk.speaker) then
       show_impress = false
    end
 
