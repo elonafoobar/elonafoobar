@@ -72,6 +72,10 @@ ELONA.i18n:add {
             download = "[ダウンロード]",
             installed = "[インストール済み]",
          },
+
+         toggle = {
+            cannot_disable = "MOD '{$1}' はゲームの動作に必要です。無効化はできません。",
+         },
       },
 
       mod_develop = {

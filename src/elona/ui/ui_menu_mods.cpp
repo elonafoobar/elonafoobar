@@ -252,8 +252,9 @@ void UIMenuMods::_try_to_toggle_mod(ModDescription& desc)
 {
     if (!lua::lua->get_mod_manager().can_disable_mod(desc.manifest.id))
     {
-        NotificationPrompt(
-            i18n::s.get("core.main_menu.mod_list.toggle.cannot_disable"))
+        NotificationPrompt(i18n::s.get(
+                               "core.main_menu.mod_list.toggle.cannot_disable",
+                               desc.manifest.id))
             .query();
     }
     else
