@@ -17,14 +17,13 @@ namespace
 // Data cache.
 void _initialize_iterable_dbs(lua::DataTable& data)
 {
-    the_ability_db.initialize(data);
+    the_skill_db.initialize(data);
     the_blending_recipe_db.initialize(data);
     the_buff_db.initialize(data);
     the_character_db.initialize(data);
     the_class_db.initialize(data);
     the_crafting_material_db.initialize(data);
     the_fish_db.initialize(data);
-    the_god_db.initialize(data);
     the_item_db.initialize(data);
     the_item_material_db.initialize(data);
     the_mapdef_db.initialize(data);

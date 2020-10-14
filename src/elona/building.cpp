@@ -1,7 +1,6 @@
 #include "building.hpp"
 
 #include "../util/range.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "attack.hpp"
@@ -33,6 +32,7 @@
 #include "random.hpp"
 #include "save.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -130,7 +130,8 @@ int calc_num_of_shop_customers(int shop_level, const Character& shopkeeper)
     {
         ret += rnd(shop_level / 3 + 5);
     }
-    ret = ret * (80 + shopkeeper.get_skill(17).level * 3 / 2) / 100;
+    ret = ret * (80 + shopkeeper.skills().level("core.stat_charisma") * 3 / 2) /
+        100;
     if (ret < 1)
     {
         ret = 1;
@@ -215,7 +216,7 @@ std::vector<ItemForSale> list_items_for_sale()
 int calc_item_price_per_one(const ItemRef& item, const Character& shopkeeper)
 {
     const auto V = calcitemvalue(item, 2);
-    const auto I = shopkeeper.get_skill(156).level;
+    const auto I = shopkeeper.skills().level("core.negotiation");
 
     return V * static_cast<int>(10 + std::sqrt(I * 200)) / 100;
 }
@@ -615,7 +616,8 @@ void prompt_hiring()
     }
     for (int cnt = 0; cnt < 10; ++cnt)
     {
-        randomize(game()->date.day + cnt);
+        const auto seed = game_date().day() + cnt;
+        randomize(seed);
         if (rnd(2))
         {
             continue;
@@ -629,7 +631,7 @@ void prompt_hiring()
             hire = rnd(isethire.size());
         }
         const auto chara_id = isethire.at(hire).first;
-        randomize(game()->date.day + cnt);
+        randomize(seed);
         flt(20);
         const auto servant = chara_create(-1, chara_id, -3, 0);
         if (!servant)
@@ -833,7 +835,7 @@ void prompt_move_ally()
         {
             break;
         }
-        if (cdata[stat].relationship <= -3)
+        if (cdata[stat].relationship <= Relationship::enemy)
         {
             Message::instance().linebreak();
             txt(i18n::s.get(
@@ -1046,7 +1048,7 @@ void show_shop_log()
                 {
                     continue;
                 }
-                if (!chara.activity || chara.activity.turn == 0)
+                if (!chara.activity || chara.activity.turns == 0)
                 {
                     continue;
                 }
@@ -1626,7 +1628,7 @@ void supply_income()
         }
         save_trigger_autosaving();
     }
-    if (game()->date.day == 1)
+    if (game_date().day() == 1)
     {
         if (cdata.player().level > 5)
         {
@@ -1643,13 +1645,13 @@ void supply_income()
                 item->subname = item->subname * (100 + rnd(20)) / 100;
             }
             mode = 0;
-            ++game()->left_bill;
+            ++game()->left_bills;
             txt(i18n::s.get("core.misc.tax.bill"));
-            if (game()->left_bill > 1)
+            if (game()->left_bills > 1)
             {
-                if (game()->left_bill <= 4)
+                if (game()->left_bills <= 4)
                 {
-                    if (game()->left_bill > 3)
+                    if (game()->left_bills > 3)
                     {
                         s(0) = i18n::s.get("core.misc.tax.warning");
                         s(1) = i18n::s.get("core.misc.tax.have_to_go_embassy");
@@ -1662,14 +1664,15 @@ void supply_income()
                     txt(s +
                             i18n::s.get(
                                 "core.misc.tax.left_bills",
-                                game()->left_bill - 1) +
+                                game()->left_bills - 1) +
                             s(1),
                         Message::color{ColorIndex::red});
                 }
             }
-            if (game()->left_bill > 4)
+            if (game()->left_bills > 4)
             {
-                txt(i18n::s.get("core.misc.tax.accused", game()->left_bill - 1),
+                txt(i18n::s.get(
+                        "core.misc.tax.accused", game()->left_bills - 1),
                     Message::color{ColorIndex::red});
                 int stat = decrease_fame(cdata.player(), 50);
                 p = stat;
@@ -1739,12 +1742,14 @@ void try_to_grow_plant(int val0)
     }
     if (feat == tile_plant)
     {
-        if (game()->weather < 3)
+        if (game()->weather != "core.rain" &&
+            game()->weather != "core.hard_rain")
         {
             p = p * 2;
         }
     }
-    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(20) == 0)
+    if (cdata.player().skills().level("core.gardening") < rnd(p + 1) ||
+        rnd(20) == 0)
     {
         feat(3) += 50;
     }
@@ -1775,12 +1780,12 @@ void harvest_plant(int val)
     {
         p = p * 2;
     }
-    if (game()->weather < 3)
+    if (game()->weather != "core.rain" && game()->weather != "core.hard_rain")
     {
         p = p * 4 / 3;
     }
-    if (cdata.player().get_skill(180).level < rnd(p + 1) || rnd(5) == 0 ||
-        feat(2) == 40)
+    if (cdata.player().skills().level("core.gardening") < rnd(p + 1) ||
+        rnd(5) == 0 || feat(2) == 40)
     {
         cell_data.at(cdata.player().position.x, cdata.player().position.y)
             .feats = 0;
@@ -1805,7 +1810,8 @@ void create_harvested_item()
 {
     chara_gain_skill_exp(cdata.player(), 180, 75);
     snd("core.bush1");
-    flt(cdata.player().get_skill(180).level / 2 + 15, Quality::good);
+    flt(cdata.player().skills().level("core.gardening") / 2 + 15,
+        Quality::good);
     int item_id = 0;
     if (feat(2) == 39)
     {

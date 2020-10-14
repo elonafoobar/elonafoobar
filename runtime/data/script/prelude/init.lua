@@ -27,6 +27,7 @@ exports.utf8 = require("prelude.utf8_ext")
 
 -- Additional libraries
 exports.inspect = require("prelude.inspect")
+exports.fun = require("prelude.luafun.fun")
 
 
 

@@ -6,16 +6,19 @@
 #include <vector>
 
 #include "../util/range.hpp"
-#include "ability.hpp"
+#include "activity.hpp"
+#include "body_part.hpp"
+#include "buff.hpp"
 #include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
-#include "god.hpp"
 #include "lua_env/wrapped_function.hpp"
 #include "position.hpp"
 #include "spact.hpp"
 #include "spell.hpp"
+#include "time.hpp"
 #include "trait.hpp"
+#include "types/skill.hpp"
 
 
 
@@ -31,67 +34,6 @@ namespace elona
 struct Item;
 struct Inventory;
 using InventoryRef = Inventory*;
-
-
-
-struct Buff
-{
-    int id = 0;
-    int power = 0;
-    int turns = 0;
-};
-
-
-
-struct Activity
-{
-    enum class Type : int
-    {
-        none,
-        eat,
-        read,
-        travel,
-        sleep,
-        dig_wall,
-        perform,
-        fish,
-        search_material,
-        dig_ground,
-        others,
-        sex,
-        blend,
-    };
-
-    Type type = Activity::Type::none;
-    int turn = 0;
-    OptionalItemRef item;
-
-
-    bool is_doing_nothing() const
-    {
-        return type == Activity::Type::none;
-    }
-
-
-    bool is_doing_something() const
-    {
-        return !is_doing_nothing();
-    }
-
-
-    explicit operator bool() const
-    {
-        return is_doing_something();
-    }
-
-
-    void finish()
-    {
-        type = Activity::Type::none;
-        turn = 0;
-        item = nullptr;
-    }
-};
 
 
 
@@ -160,35 +102,6 @@ private:
 
 
 
-struct EquipmentSlot
-{
-    int type = 0;
-    OptionalItemRef equipment;
-
-
-
-    explicit operator bool() const noexcept
-    {
-        return type != 0;
-    }
-
-
-
-    void equip(ItemRef item)
-    {
-        equipment = std::move(item);
-    }
-
-
-
-    void unequip()
-    {
-        equipment = nullptr;
-    }
-};
-
-
-
 struct Character
 {
     enum class State : int
@@ -225,130 +138,281 @@ private:
     Character::State state_ = Character::State::empty;
 
 public:
-    Position position;
-    Position next_position;
-    int time_to_revive = 0;
-    int vision_flag = 0;
-    int image = 0;
-    int sex = 0;
-    int relationship = 0;
-    int turn_cost = 0;
-    int current_speed = 0;
-    OptionalItemRef ai_item;
-    std::string portrait;
-    int interest = 0;
-    int time_interest_revive = 0;
-    int personality = 0;
-    int impression = 0;
-    int talk_type = 0;
-    int height = 0;
-    int weight = 0;
-    int birth_year = 0;
-    int nutrition = 0;
-    int can_talk = 0;
-    Quality quality = Quality::none;
-    int turn = 0;
+    /// Character's current position.
+    Position position{};
+
+    /// Character's next position.
+    Position next_position{};
+
+    /// Character's initial position.
+    Position initial_position{};
+
+    /// Character ID
     CharaId id = CharaId::none;
-    int vision_distance = 0;
-    int enemy_id = 0;
-    int gold = 0;
-    int platinum_coin = 0;
-    CombatStyle combat_style;
-    int melee_attack_type = 0;
-    int fame = 0;
-    int experience = 0;
-    int required_experience = 0;
-    int speed_percentage = 0;
-    int level = 0;
-    int speed_percentage_in_next_turn = 0;
-    int skill_bonus = 0;
-    int total_skill_bonus = 0;
-    int inventory_weight = 0;
-    int max_inventory_weight = 0;
-    int inventory_weight_type = 0;
-    int max_level = 0;
-    int karma = 0;
-    int hp = 0;
-    int max_hp = 0;
-    int sp = 0;
-    int max_sp = 0;
-    int mp = 0;
-    int max_mp = 0;
-    int heal_value_per_nether_attack = 0;
-    GodId god_id;
-    int piety_point = 0;
-    int praying_point = 0;
-    int sum_of_equipment_weight = 0;
-    int special_attack_type = 0;
-    int rate_to_pierce = 0;
-    int rate_of_critical_hit = 0;
-    int speed_correction_value = 0;
-    int original_relationship = 0;
-    int pv = 0;
-    int dv = 0;
-    int hit_bonus = 0;
-    int damage_bonus = 0;
-    int pv_correction_value = 0;
-    int dv_correction_value = 0;
-    int damage_reaction_info = 0;
-    int emotion_icon = 0;
-    int current_map = 0;
-    int current_dungeon_level = 0;
-    int related_quest_id = 0;
-    int direction = 0;
-    int period_of_contract = 0;
-    int hire_count = 0;
-    int insanity = 0;
-    int curse_power = 0;
-    int extra_attack = 0;
-    int extra_shot = 0;
-    int decrease_physical_damage = 0;
-    int nullify_damage = 0;
-    int cut_counterattack = 0;
-    int anorexia_count = 0;
+
+    /// FOV flag
+    lua_int fov_flag{};
+
+    /// FOV range. It is a diameter in tiles.
+    lua_int fov_range{};
+
+    /// Image
+    lua_int image{};
+
+    /// Portrait
+    data::InstanceId portrait{};
+
+    /// Gender
+    lua_int sex{};
+
+    /// When the character revives.
+    time::Instant revival_time{};
+
+    /// Relationship to the player
+    Relationship relationship{};
+
+    /// Original relationship to the player
+    Relationship original_relationship{};
+
+    /// Interest to the player.
+    lua_int interest{};
+
+    /// When `interest` is reset.
+    time::Instant interest_reset_time{};
+
+    /// Personality
+    lua_int personality{};
+
+    /// Talk type
+    lua_int talk_type{};
+
+    /// Impression to the player.
+    lua_int impression{};
+
+    /// Height (in cm)
+    lua_int height{};
+
+    /// Weight (in kg)
+    lua_int weight{};
+
+    /// Birthday. Because Date class does not have default constructor (both
+    /// month of 0th and day of 0th are invalid), a dummy value is assgiend
+    /// until character initialization completes. The dummy value is the
+    /// birthday of the green-haired Elea.
+    /// http://elonagather.wiki.fc2.com/wiki/%E4%B8%BB%E8%A6%81%E3%81%AA%E4%BA%BA%E7%89%A9
+    time::Date birthday{493, 12, 26};
+
+    /// Hunger
+    lua_int nutrition{};
+
+    /// Quality
+    Quality quality{};
+
+    /// Turns
+    lua_int turns{};
+
+    /// Gold
+    lua_int gold{};
+
+    /// Platinum
+    lua_int platinum{};
+
+    /// Combat style
+    CombatStyle combat_style{};
+
+    /// Fame
+    lua_int fame{};
+
+    /// Karma
+    lua_int karma{};
+
+    /// Current level
+    lua_int level{};
+
+    /// Maximum level
+    lua_int max_level{};
+
+    /// Experience
+    lua_int experience{};
+
+    /// Required experience to the next level
+    lua_int required_experience{};
+
+    lua_int turn_cost{};
+    lua_int current_speed{};
+    lua_int speed_percentage{};
+    lua_int speed_percentage_in_next_turn{};
+    lua_int speed_correction_value{};
+
+    /// Current skill bonus
+    lua_int skill_bonus{};
+
+    /// Total amount of skill bonuses which the character earned ever.
+    lua_int total_skill_bonus{};
+
+    /// Inventory weight
+    lua_int inventory_weight{};
+
+    /// Maximum inventory weight
+    lua_int max_inventory_weight{};
+
+    /// Equipment weight
+    lua_int equipment_weight{};
+
+    /// Burden state
+    lua_int burden_state{};
+
+    /// Current HP, hit point
+    lua_int hp{};
+
+    /// Maximum HP, hit point
+    lua_int max_hp{};
+
+    /// Current MP, mana point
+    lua_int mp{};
+
+    /// Maximum MP, mana point
+    lua_int max_mp{};
+
+    /// Current SP, stamina point
+    lua_int sp{};
+
+    /// Maximum SP, stamina point
+    lua_int max_sp{};
+
+    /// Religion
+    data::InstanceId religion;
+
+    /// Piety point
+    lua_int piety_point{};
+
+    /// Prayer point
+    lua_int prayer_point{};
+
+    /// PV, protection value
+    lua_int pv{};
+
+    /// PV bonus
+    lua_int pv_bonus{};
+
+    // DV, defense value
+    lua_int dv{};
+
+    /// DV bonus
+    lua_int dv_bonus{};
+
+    /// Hit bonus
+    lua_int hit_bonus{};
+
+    /// Damage bonus
+    lua_int damage_bonus{};
+
+    OptionalItemRef ai_item;
+
+    lua_int can_talk{};
+    lua_int enemy_id{};
+    lua_int melee_attack_type{};
+    lua_int heal_value_per_nether_attack{};
+    lua_int special_attack_type{};
+    lua_int rate_to_pierce{};
+    lua_int rate_of_critical_hit{};
+    lua_int damage_reaction_info{};
+    lua_int emotion_icon{};
+    lua_int current_map{};
+    lua_int current_dungeon_level{};
+    lua_int related_quest_id{};
+    lua_int direction{};
+    time::Instant hire_limit_time{};
+    lua_int hire_count{};
+    lua_int insanity{};
+    lua_int curse_power{};
+    lua_int extra_attack{};
+    lua_int extra_shot{};
+    lua_int decrease_physical_damage{};
+    lua_int nullify_damage{};
+    lua_int cut_counterattack{};
+    lua_int anorexia_count{};
     Activity activity;
-    int stops_activity_if_damaged = 0;
-    int quality_of_performance = 0;
-    int tip_gold = 0;
+    lua_int quality_of_performance{};
+    lua_int tip_gold{};
     Role role = Role::none;
-    int shop_rank = 0;
-    int activity_target = 0;
-    int shop_store_id = 0;
-    int time_to_restore = 0;
-    int cnpc_id = 0;
-    Position initial_position;
-    int hate = 0;
-    int ai_calm = 0;
-    int ai_move = 0;
-    int ai_dist = 0;
-    int ai_act_sub_freq = 0;
-    int ai_heal = 0;
-    int element_of_unarmed_attack = 0;
-    int poisoned = 0;
-    int sleep = 0;
-    int paralyzed = 0;
-    int blind = 0;
-    int confused = 0;
-    int fear = 0;
-    int dimmed = 0;
-    int drunk = 0;
-    int bleeding = 0;
-    int wet = 0;
-    int insane = 0;
-    int sick = 0;
-    int gravity = 0;
-    int choked = 0;
-    int furious = 0;
+    lua_int shop_rank{};
+    lua_int activity_target{};
+    lua_int shop_store_id{};
+    time::Instant shop_restock_time{};
+    lua_int cnpc_id{};
+    lua_int hate{};
+    lua_int ai_calm{};
+    lua_int ai_move{};
+    lua_int ai_dist{};
+    lua_int ai_act_sub_freq{};
+    lua_int ai_heal{};
+    lua_int element_of_unarmed_attack{};
+    lua_int poisoned{};
+    lua_int sleep{};
+    lua_int paralyzed{};
+    lua_int blind{};
+    lua_int confused{};
+    lua_int fear{};
+    lua_int dimmed{};
+    lua_int drunk{};
+    lua_int bleeding{};
+    lua_int wet{};
+    lua_int insane{};
+    lua_int sick{};
+    lua_int gravity{};
+    lua_int choked{};
+    lua_int furious{};
     std::vector<int> growth_buffs;
-    std::vector<EquipmentSlot> equipment_slots;
+    BodyPartList body_parts;
     std::vector<int> normal_actions;
     std::vector<int> special_actions;
-    std::vector<Buff> buffs;
+    BuffList buffs;
     std::vector<int> attr_adjs;
     std::bitset<sizeof(int) * 8 * 50> _flags;
-    int _156 = 0;
-    int _203 = 0;
+    int _156{};
+    int _203{};
     Position target_position;
+
+
+    /// Death count
+    lua_int death_count{};
+
+    /// Kill count
+    lua_int kill_count{};
+
+    /// Next level where Kumiromi's experience becomes available.
+    lua_int kumiromi_experience_level{};
+
+    /// Number of skills larned from town trainers
+    lua_int learned_skills{};
+
+    /// Sleepiness
+    lua_int sleepiness{};
+
+    /// Current Ether disease stage
+    lua_int ether_disease_stage{};
+
+    /// Ether disease history. It records the order of the diseases which the
+    /// character currently has. If the character is healthy, this list is
+    /// empty. It is ordered by the time, e.g., the most recent symptom is at
+    /// the end of the list.
+    std::vector<data::InstanceId> ether_disease_history{};
+
+    /// Extra ether disease progress. It is to be added to `ether_disease_stage`
+    /// when the disease progresses.
+    lua_int extra_ether_disease_progress{};
+
+    /// Number of acquirable feats
+    lua_int acquirable_feats{};
+
+    /// Experience which is consumed during sleeping.
+    lua_int sleep_experience{};
+
+    /// Piety rank. It controls whether the god the character believes gives
+    /// them special rewards.
+    lua_int piety_rank{};
+
 
     std::string name;
     std::string alias;
@@ -361,7 +425,8 @@ public:
 
 
 private:
-    SkillData _skills;
+    /// Skills.
+    SkillTable _skills;
 
     /// Spell stocks
     SpellStockTable _spell_stocks;
@@ -374,15 +439,15 @@ private:
 
 
 public:
-    Ability& get_skill(int id)
+    SkillTable& skills() noexcept
     {
-        return _skills.get(id);
+        return _skills;
     }
 
 
-    const Ability& get_skill(int id) const
+    const SkillTable& skills() const noexcept
     {
-        return _skills.get(id);
+        return _skills;
     }
 
 
@@ -689,7 +754,6 @@ void make_sound(
 void incognitobegin();
 void incognitoend();
 void initialize_pc_character();
-void lost_body_part(int);
 void lovemiracle(Character& chara);
 void monster_respawn();
 void move_character(Character& chara);
@@ -697,7 +761,7 @@ void proc_negative_enchantments(Character& chara);
 void proc_pregnant(Character& chara);
 void wake_up();
 bool try_to_perceive_npc(const Character& chara, const Character& enemy);
-int relation_between(const Character& a, const Character& b);
+Relationship relation_between(const Character& a, const Character& b);
 
 } // namespace elona
 

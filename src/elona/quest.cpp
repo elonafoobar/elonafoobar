@@ -1,6 +1,5 @@
 #include "quest.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -24,6 +23,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 #include "world.hpp"
@@ -104,7 +104,7 @@ void quest_place_target()
         if (cnt.state() == Character::State::alive)
         {
             cnt.is_quest_target() = true;
-            cnt.relationship = -3;
+            cnt.relationship = Relationship::enemy;
         }
     }
 }
@@ -136,9 +136,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.putit_attacks < 2)
+                if (story_quest_progress("core.putit_attacks") < 2)
                 {
-                    game()->quest_flags.putit_attacks = 2;
+                    story_quest_set_progress("core.putit_attacks", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -147,9 +147,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.thieves_hideout < 2)
+                if (story_quest_progress("core.thieves_hideout") < 2)
                 {
-                    game()->quest_flags.thieves_hideout = 2;
+                    story_quest_set_progress("core.thieves_hideout", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -158,9 +158,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.nightmare < 3)
+                if (story_quest_progress("core.nightmare") < 3)
                 {
-                    game()->quest_flags.nightmare = 3;
+                    story_quest_set_progress("core.nightmare", 3);
                     quest_update_journal_msg();
                 }
             }
@@ -172,9 +172,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.cat_house < 2)
+                if (story_quest_progress("core.cat_house") < 2)
                 {
-                    game()->quest_flags.cat_house = 2;
+                    story_quest_set_progress("core.cat_house", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -183,9 +183,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.defense_line < 3)
+                if (story_quest_progress("core.defense_line") < 3)
                 {
-                    game()->quest_flags.defense_line = 3;
+                    story_quest_set_progress("core.defense_line", 3);
                     quest_update_journal_msg();
                 }
             }
@@ -197,9 +197,9 @@ void quest_check()
         {
             if (!quest_targets_remaining())
             {
-                if (game()->quest_flags.sewer_sweeping < 2)
+                if (story_quest_progress("core.sewer_sweeping") < 2)
                 {
-                    game()->quest_flags.sewer_sweeping = 2;
+                    story_quest_set_progress("core.sewer_sweeping", 2);
                     quest_update_journal_msg();
                 }
             }
@@ -223,7 +223,7 @@ void quest_check()
             }
             if (remaining_monsters == 0)
             {
-                event_add(8);
+                deferred_event_add("core.quest_all_target_killed");
             }
             else
             {
@@ -237,7 +237,7 @@ void quest_check()
             if (!chara_find(
                     the_character_db[quest_data.immediate().extra_info_1]->id))
             {
-                event_add(8);
+                deferred_event_add("core.quest_all_target_killed");
             }
         }
     }
@@ -548,7 +548,7 @@ void quest_refresh_list()
         }
         if (quest_data[cnt].progress == 0)
         {
-            if (quest_data[cnt].deadline_hours < game()->date.hours())
+            if (quest_data[cnt].refresh_time <= game_now())
             {
                 const auto generated = quest_generate(cnt);
                 if (generated)
@@ -578,7 +578,8 @@ bool quest_generate(int quest_idx)
 
     quest.id = 0;
     quest.progress = 0;
-    quest.deadline_hours = (rnd(3) + 1) * 24 + game()->date.hours();
+    quest.refresh_time =
+        game_now() + time::Duration::from_days(rnd(3) + 1) + 1_hour;
     quest.reward_item_id = 0;
 
     if (rnd(3) == 0)
@@ -602,7 +603,7 @@ bool quest_generate(int quest_idx)
             {
                 continue;
             }
-            if (cdata[chara_index].relationship != 0 ||
+            if (cdata[chara_index].relationship != Relationship::friendly ||
                 (cdata[chara_index].role != Role::citizen &&
                  cdata[chara_index].role != Role::guard))
             {
@@ -666,7 +667,8 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+            quest.refresh_time =
+                game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
             quest.id = 1010;
             quest.escort_difficulty = 0;
@@ -701,7 +703,8 @@ bool quest_generate(int quest_idx)
                 break;
             }
             quest.extra_info_1 = charaid2int(cdata.tmp().id);
-            quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+            quest.refresh_time =
+                game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
             quest.id = 1008;
             quest.escort_difficulty = 0;
@@ -714,7 +717,8 @@ bool quest_generate(int quest_idx)
 
     if (rnd(11) == 0)
     {
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.id = 1007;
         quest.escort_difficulty = rnd(3);
         quest.target_chara_index = 0;
@@ -774,10 +778,15 @@ bool quest_generate(int quest_idx)
         (game()->current_map == mdata_t::MapId::palmia && rnd(8) == 0))
     {
         quest.difficulty = clamp(
-            rnd_capped(cdata.player().get_skill(183).level + 10),
-            int(1.5 * std::sqrt(cdata.player().get_skill(183).level)) + 1,
+            lua_int{rnd_capped(
+                cdata.player().skills().level("core.performer") + 10)},
+            lua_int(
+                1.5 *
+                std::sqrt(cdata.player().skills().level("core.performer"))) +
+                1,
             cdata.player().fame / 1000 + 10);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.reward_item_id = 0;
         quest.id = 1009;
         quest.escort_difficulty = 0;
@@ -797,7 +806,8 @@ bool quest_generate(int quest_idx)
                 rnd_capped(cdata.player().fame / 800 + 1) + 1,
             1,
             50);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.id = 1006;
         quest.escort_difficulty = 0;
         quest.reward_item_id = 5;
@@ -816,7 +826,8 @@ bool quest_generate(int quest_idx)
             1,
             80);
         quest.difficulty = roundmargin(quest.difficulty, cdata.player().level);
-        quest.deadline_hours = (rnd(6) + 2) * 24 + game()->date.hours();
+        quest.refresh_time =
+            game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
         quest.reward_item_id = 0;
         quest.id = 1001;
         quest.escort_difficulty = 0;

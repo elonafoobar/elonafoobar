@@ -16,6 +16,13 @@ namespace snail
 namespace
 {
 
+::SDL_Color to_sdl_color(const Color& c) noexcept
+{
+    return ::SDL_Color{c.r, c.g, c.b, c.a};
+}
+
+
+
 template <typename F>
 Rect _render_text_base(
     F draw,
@@ -42,7 +49,7 @@ Rect _render_text_base(
                                               : &::TTF_RenderUTF8_Solid;
 
     auto surface = detail::enforce_ttf(
-        render_func(font.ptr(), text.c_str(), detail::to_sdl_color(color)));
+        render_func(font.ptr(), text.c_str(), to_sdl_color(color)));
     auto texture =
         detail::enforce_sdl(::SDL_CreateTextureFromSurface(ptr, surface));
     detail::enforce_sdl(::SDL_SetTextureAlphaMod(texture, color.a));

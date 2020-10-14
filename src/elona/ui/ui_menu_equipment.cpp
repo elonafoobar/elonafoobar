@@ -5,6 +5,7 @@
 #include "../game.hpp"
 #include "../globals.hpp"
 #include "../item.hpp"
+#include "../lua_env/data_manager.hpp"
 #include "../menu.hpp"
 #include "../message.hpp"
 
@@ -15,57 +16,27 @@ namespace elona
 namespace ui
 {
 
-static bool _should_show_entry(const EquipmentSlot& equipment_slot)
-{
-    if (!equipment_slot)
-    {
-        return false;
-    }
-    if (cdata.player().traits().level("core.thick_neck") !=
-        0) // Your neck is extremely thick.
-    {
-        if (equipment_slot.type == 2)
-        {
-            return false;
-        }
-    }
-    if (cdata.player().traits().level("core.hooves") !=
-        0) // Your feet transformed into hooves.
-    {
-        if (equipment_slot.type == 9)
-        {
-            return false;
-        }
-    }
-    if (cdata.player().traits().level("core.feathers") !=
-        0) // You have grown feather.
-    {
-        if (equipment_slot.type == 3)
-        {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 static int _load_equipment_list(const Character& chara)
 {
     int mainhand = 0;
 
-    for (size_t i = 0; i < chara.equipment_slots.size(); ++i)
+    for (size_t i = 0; i < chara.body_parts.size(); ++i)
     {
-        if (_should_show_entry(chara.equipment_slots[i]))
+        if (!chara.body_parts[i].is_unequippable())
         {
             if (mainhand == 0)
             {
-                if (chara.equipment_slots[i].type == 5)
+                if (chara.body_parts[i].id == "core.hand")
                 {
-                    mainhand = i + 100;
+                    mainhand = i + 1;
                 }
             }
-            list(0, listmax) = i + 100;
-            list(1, listmax) = chara.equipment_slots[i].type;
+            list(0, listmax) = i + 1;
+            list(1, listmax) =
+                lua::lua->get_data_manager()
+                    .get()
+                    .raw("core.body_part", chara.body_parts[i].id)
+                    ->get<lua_int>("integer_id");
             ++listmax;
         }
     }
@@ -155,7 +126,7 @@ void UIMenuEquipment::_draw_window_headers()
 {
     display_note(
         i18n::s.get("core.ui.equip.equip_weight") + ": " +
-        cnvweight(cdata.player().sum_of_equipment_weight) +
+        cnvweight(cdata.player().equipment_weight) +
         get_armor_class_name(cdata.player()) + " " +
         i18n::s.get("core.ui.equip.hit_bonus") + ":" +
         cdata.player().hit_bonus + " " +
@@ -185,7 +156,11 @@ void UIMenuEquipment::_draw_key(int cnt, int p_, bool is_main_hand)
     }
     else
     {
-        body_part_name = i18n::s.get_enum("core.ui.body_part", list(1, p_));
+        body_part_name = i18n::s.get_data_text(
+            "core.body_part",
+            *lua::lua->get_data_manager().get().by_integer(
+                "core.body_part", list(1, p_)),
+            "name");
     }
 
     draw_indexed(
@@ -221,8 +196,7 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
 {
     display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
 
-    const auto& equipment =
-        cdata.player().equipment_slots[list_item - 100].equipment;
+    const auto equipment = cdata.player().body_parts[list_item - 1].equipment();
     std::string item_name = u8"-    "s;
     std::string item_weight = u8"-"s;
 
@@ -286,22 +260,22 @@ void UIMenuEquipment::draw()
 
 
 
-static void _unequip_item()
+static void _unequip_item(int index)
 {
     g_player_is_changing_equipment = true;
-    const auto equipment = cdata.player().equipment_slots[body - 100].equipment;
+    const auto equipment =
+        cdata.player().body_parts[index - 1].equipment().unwrap();
     if (is_cursed(equipment->curse_state))
     {
-        txt(i18n::s.get(
-            "core.ui.equip.cannot_be_taken_off", equipment.unwrap()));
+        txt(i18n::s.get("core.ui.equip.cannot_be_taken_off", equipment));
         return;
     }
-    unequip_item(cdata.player(), body - 100);
+    unequip_item(cdata.player(), index - 1);
     chara_refresh(cdata.player());
     snd("core.equip1");
     Message::instance().linebreak();
-    txt(i18n::s.get("core.ui.equip.you_unequip", equipment.unwrap()));
-    if (cdata.player().equipment_slots[body - 100].type == 5)
+    txt(i18n::s.get("core.ui.equip.you_unequip", equipment));
+    if (cdata.player().body_parts[index - 1].id == "core.hand")
     {
         equip_melee_weapon(cdata.player());
     }
@@ -309,7 +283,7 @@ static void _unequip_item()
 
 
 
-static void _equip_item()
+static void _equip_item(int index)
 {
     // Push equipment selection screen onto call stack and pop it off
     // after.
@@ -317,28 +291,28 @@ static void _equip_item()
     menucycle = 0;
     invctrl = 6;
     snd("core.inv");
-    ctrl_inventory();
+    CtrlInventoryOptions opts;
+    opts.body_part_index = lua_index::from_0_based(index);
+    ctrl_inventory(opts);
 }
 
 static bool _on_list_entry_select(int index)
 {
-    body = index;
-
-    if (cdata.player().equipment_slots[body - 100].equipment)
+    if (cdata.player().body_parts[index - 1].is_equip())
     {
-        _unequip_item();
+        _unequip_item(index);
         render_hud();
         return false;
     }
 
-    _equip_item();
+    _equip_item(index);
     return true;
 }
 
 static void _show_item_desc(int body_)
 {
     item_show_description(
-        cdata.player().equipment_slots[body_ - 100].equipment.unwrap());
+        cdata.player().body_parts[body_ - 1].equipment().unwrap());
     nowindowanime = 1;
     returnfromidentify = 0;
     screenupdate = -1;
@@ -368,7 +342,7 @@ optional<UIMenuEquipment::ResultType> UIMenuEquipment::on_key(
     else if (action == "identify")
     {
         int body_ = list(0, pagesize * page + cs);
-        if (cdata.player().equipment_slots[body_ - 100].equipment)
+        if (cdata.player().body_parts[body_ - 1].is_equip())
         {
             _cs_prev = cs;
             _show_item_desc(body_);

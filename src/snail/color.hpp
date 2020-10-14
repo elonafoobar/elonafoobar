@@ -2,25 +2,28 @@
 
 #include <cstdint>
 
-#include "detail/sdl.hpp"
 
 
-
-namespace elona
-{
-namespace snail
+namespace elona::snail
 {
 
-
+/**
+ * RGBA color
+ */
 struct Color
 {
+    /// Red
     uint8_t r;
+    /// Green
     uint8_t g;
+    /// Blue
     uint8_t b;
+    /// Alpha
     uint8_t a;
 
 
-    constexpr Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255)
+
+    constexpr Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 255) noexcept
         : r(r)
         , g(g)
         , b(b)
@@ -30,23 +33,23 @@ struct Color
 
 
     // Grayscale
-    explicit constexpr Color(uint8_t v, uint8_t a = 255)
+    constexpr explicit Color(uint8_t v, uint8_t a = 255) noexcept
         : Color(v, v, v, a)
     {
     }
+
+
+    constexpr bool operator==(const Color& other) const noexcept
+    {
+        return r == other.r && g == other.g && b == other.b && a == other.a;
+    }
+
+
+    constexpr bool operator!=(const Color& other) const noexcept
+    {
+        return !(*this == other);
+    }
 };
-
-
-inline bool operator==(const Color& x, const Color& y)
-{
-    return x.r == y.r && x.g == y.g && x.b == y.b && x.a == y.a;
-}
-
-
-inline bool operator!=(const Color& x, const Color& y)
-{
-    return !(x == y);
-}
 
 
 
@@ -56,18 +59,4 @@ constexpr Color black = {0, 0, 0, 255};
 constexpr Color white = {255, 255, 255, 255};
 } // namespace palette
 
-
-
-namespace detail
-{
-
-inline ::SDL_Color to_sdl_color(const Color& c)
-{
-    return ::SDL_Color{c.r, c.g, c.b, c.a};
-}
-
-} // namespace detail
-
-
-} // namespace snail
-} // namespace elona
+} // namespace elona::snail

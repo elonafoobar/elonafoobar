@@ -4,7 +4,6 @@
 
 #include <chrono>
 
-#include "../version.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "game.hpp"
@@ -12,6 +11,7 @@
 #include "race.hpp"
 #include "serialization/serialization.hpp"
 #include "text.hpp"
+#include "version.hpp"
 
 
 
@@ -37,7 +37,25 @@ int64_t now_unix_time()
 
 int64_t get_played_seconds()
 {
-    return game()->play_time;
+    return game()->play_seconds_in_real_world;
+}
+
+
+
+std::string ingame_time_to_string()
+{
+    // TODO: localize
+    const auto dt = game_date_time();
+
+    const auto Y = std::to_string(dt.year());
+    const auto m = std::to_string(dt.month());
+    const auto d = std::to_string(dt.day());
+    const auto H = std::to_string(dt.hour());
+    const auto M = std::to_string(dt.minute());
+    const auto s = std::to_string(dt.second());
+    const auto ms = std::to_string(dt.millisecond());
+
+    return Y + "/" + m + "/" + d + " " + H + ":" + M + ":" + s + "'" + ms;
 }
 
 
@@ -197,7 +215,7 @@ SaveHeader SaveHeader::current_state()
     h.race = the_race_db.get_text(cdata.player().race, "name");
     h.class_ = class_get_name(cdata.player().class_);
     h.location = mdatan(0) + maplevel();
-    h.ingame_time = game()->date.to_string(); // TODO localize
+    h.ingame_time = ingame_time_to_string(); // TODO localize
     h.last_played_at = now;
     h.play_seconds = play_seconds;
 

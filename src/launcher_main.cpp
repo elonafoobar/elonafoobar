@@ -3,12 +3,12 @@
 #include "elona/filesystem.hpp"
 #include "elona/log.hpp"
 #include "elona/profile/profile_manager.hpp"
+#include "elona/version.hpp"
 #include "snail/application.hpp"
 #include "snail/input.hpp"
 #include "util/natural_order_comparator.hpp"
 #include "util/range.hpp"
 #include "util/tinyargparser.hpp"
-#include "version.hpp"
 
 using namespace elona;
 

@@ -2,7 +2,6 @@
 
 #include "../snail/application.hpp"
 #include "../snail/surface.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "attack.hpp"
 #include "audio.hpp"
@@ -16,6 +15,7 @@
 #include "draw.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
@@ -30,6 +30,7 @@
 #include "message.hpp"
 #include "optional.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "tcg.hpp"
 #include "ui.hpp"
 #include "wish.hpp"
@@ -131,8 +132,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         if (action == "wizard_advance_time")
         {
             dbg_skipevent = 1;
-            ++game()->date.hour;
-            weather_changes();
+            game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
             dbg_skipevent = 0;
             mode = 0;
             return TurnResult::turn_end;
@@ -293,7 +293,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         if (p == 3)
         {
-            if (cdata.player().god_id == core_god::eyth)
+            if (cdata.player().religion == "")
             {
                 action = "pray";
             }

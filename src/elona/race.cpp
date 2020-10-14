@@ -1,12 +1,12 @@
 #include "race.hpp"
 
-#include "ability.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -24,11 +24,17 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
 
     chara.melee_attack_type = data->melee_attack_type;
     chara.special_attack_type = data->special_attack_type;
-    chara.dv_correction_value = data->dv_multiplier;
-    chara.pv_correction_value = data->pv_multiplier;
+    chara.dv_bonus = data->dv_multiplier;
+    chara.pv_bonus = data->pv_multiplier;
 
-    chara.birth_year = game()->date.year -
-        (rnd(data->max_age - data->min_age + 1) + data->min_age);
+    {
+        const auto age = rnd(data->max_age - data->min_age + 1) + data->min_age;
+        const auto today = game_date();
+        const auto y = today.year();
+        const auto m = today.month();
+        const auto d = today.day();
+        chara.birthday = time::Date{y - age, m, d};
+    }
     chara.height = data->height;
 
     if (mode == 1)
@@ -47,22 +53,17 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         chara.breaks_into_debris() = true;
     }
 
+    // Body parts
+    for (const auto& body_part_id : data->body_parts)
     {
-        size_t index{};
-        for (const auto& limb : data->body_parts)
-        {
-            chara.equipment_slots[index] = EquipmentSlot{limb, nullptr};
-            ++index;
-        }
-        chara.equipment_slots[index] = EquipmentSlot{10, nullptr};
-        ++index;
-        chara.equipment_slots[index] = EquipmentSlot{11, nullptr};
-        ++index;
+        chara.body_parts.add(body_part_id);
     }
+    chara.body_parts.add("core.shoot");
+    chara.body_parts.add("core.ammo");
 
     for (const auto& pair : data->skills)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
+        if (const auto ability_data = the_skill_db[pair.first])
         {
             chara_init_skill(chara, ability_data->integer_id, pair.second);
         }
@@ -75,19 +76,9 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         }
     }
 
-    for (const auto& pair : data->resistances)
+    for (const auto& [id, level] : data->resistances)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
-        {
-            chara.get_skill(ability_data->integer_id).level = pair.second;
-        }
-        else
-        {
-            // Skip the resistance if undefined.
-            ELONA_WARN(
-                "Data: undefined resistance ID: " + pair.first.get() +
-                " (race " + race_id.get() + ")");
-        }
+        chara.skills().set_level(id, level);
     }
 }
 

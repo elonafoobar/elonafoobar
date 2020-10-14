@@ -1,6 +1,5 @@
 #include <iostream>
 
-#include "ability.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "building.hpp"
@@ -15,6 +14,7 @@
 #include "elona.hpp"
 #include "food.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "globals.hpp"
 #include "i18n.hpp"
 #include "initialize_map_types.hpp"
@@ -22,6 +22,7 @@
 #include "item.hpp"
 #include "itemgen.hpp"
 #include "lua_env/event_manager.hpp"
+#include "lua_env/interface.hpp"
 #include "lua_env/lua_env.hpp"
 #include "lua_env/lua_event/lua_event_map_initialized.hpp"
 #include "lua_env/mod_manager.hpp"
@@ -34,6 +35,7 @@
 #include "random.hpp"
 #include "save_fs.hpp"
 #include "scene.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -67,11 +69,13 @@ void _update_dungeon_level()
         game()->current_dungeon_level =
             area_data[game()->current_map].danger_level;
     }
-    if (game()->deepest_dungeon_level < game()->current_dungeon_level)
+    // TODO danger level
+    if (game()->deepest_dungeon_danger_level < game()->current_dungeon_level)
     {
         if (game()->current_map != mdata_t::MapId::shelter_)
         {
-            game()->deepest_dungeon_level = game()->current_dungeon_level;
+            game()->deepest_dungeon_danger_level =
+                game()->current_dungeon_level;
         }
     }
     if (area_data[game()->current_map].visited_deepest_level <
@@ -116,7 +120,7 @@ void _prompt_initialize_map()
 
 void _clear_map_and_objects()
 {
-    map_data.next_regenerate_date = 0;
+    map_data.next_regenerate_date = time::Instant{};
     for (auto&& cnt : cdata.others())
     {
         cnt.set_state(Character::State::empty);
@@ -348,7 +352,7 @@ void _proc_three_years_later()
 {
     if (game()->current_map == mdata_t::MapId::north_tyris)
     {
-        if (game()->quest_flags.main_quest == 180)
+        if (story_quest_progress("core.elona") == 180)
         {
             cdata.player().position = area_data[11].position;
             game()->player_next_move_direction = 1;
@@ -369,7 +373,7 @@ void _update_adventurer(Character& adv)
     }
     if (adv.is_contracting())
     {
-        adv.relationship = 10;
+        adv.relationship = Relationship::ally;
         adv.current_map = game()->current_map;
     }
     else
@@ -424,8 +428,9 @@ void _update_adventurers()
 
 bool _should_regenerate_map()
 {
-    return game()->date.hours() >= map_data.next_regenerate_date &&
-        map_data.should_regenerate == 0 && map_data.next_regenerate_date != 0 &&
+    return game_now() >= map_data.next_regenerate_date &&
+        map_data.should_regenerate == 0 &&
+        !map_data.next_regenerate_date.is_epoch() &&
         game()->current_dungeon_level == 1;
 }
 
@@ -459,7 +464,7 @@ void _regenerate_map()
     }
     if (game()->current_map == mdata_t::MapId::noyel)
     {
-        if (game()->date.month == 12)
+        if (game_date().month() == 12)
         {
             if (!area_data[game()->current_map].christmas_festival)
             {
@@ -558,14 +563,15 @@ void _refresh_map_character_other(Character& chara)
             if (cdata.player().is_incognito() == 0)
             {
                 chara.hate = 200;
-                chara.relationship = -3;
+                chara.relationship = Relationship::enemy;
             }
         }
     }
     if (map_is_town_or_guild())
     {
         chara.sleep = 0;
-        if (game()->date.hour >= 22 || game()->date.hour < 7)
+        const auto t = game_time();
+        if (22 <= t.hour() || t.hour() < 7)
         {
             if (rnd(6) == 0)
             {
@@ -607,7 +613,7 @@ void _refresh_map_character(Character& cnt)
     }
     if (cnt.state() == Character::State::villager_dead)
     {
-        if (game()->date.hours() >= cnt.time_to_revive)
+        if (game_now() >= cnt.revival_time)
         {
             revive_player(cnt);
         }
@@ -680,7 +686,7 @@ void _adjust_spawns()
         area_data[game()->current_map].deepest_level = 10;
         area_data[game()->current_map].default_ai_calm = 1;
         map_data.designated_spawns = 1;
-        event_add(17);
+        deferred_event_add("core.okaeri");
         calccosthire();
     }
 }
@@ -689,58 +695,60 @@ void _adjust_spawns()
 
 void _update_quest_flags_any()
 {
-    if (game()->quest_flags.main_quest == 9)
+    const auto count_acquired_magic_stones = []() {
+        const auto f =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_fool");
+        const auto k =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_king");
+        const auto s =
+            story_quest_get_ext<bool>("core.elona", "core.magic_stone_of_sage");
+
+        return (f ? 1 : 0) + (k ? 1 : 0) + (s ? 1 : 0);
+    };
+
+    if (story_quest_progress("core.elona") == 9)
     {
         sceneid = 2;
         do_play_scene();
-        game()->quest_flags.main_quest = 10;
+        story_quest_set_progress("core.elona", 10);
     }
-    if (game()->quest_flags.main_quest == 60)
+    if (story_quest_progress("core.elona") == 60)
     {
         sceneid = 5;
         do_play_scene();
-        game()->quest_flags.main_quest = 65;
+        story_quest_set_progress("core.elona", 65);
     }
-    if (game()->quest_flags.main_quest == 110)
+    if (story_quest_progress("core.elona") == 110)
     {
         sceneid = 26;
         do_play_scene();
-        game()->quest_flags.main_quest = 115;
+        story_quest_set_progress("core.elona", 115);
     }
-    if (game()->quest_flags.main_quest == 115)
+    if (story_quest_progress("core.elona") == 115)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            1)
+        if (count_acquired_magic_stones() >= 1)
         {
             sceneid = 28;
             do_play_scene();
-            game()->quest_flags.main_quest = 116;
+            story_quest_set_progress("core.elona", 116);
         }
     }
-    if (game()->quest_flags.main_quest == 116)
+    if (story_quest_progress("core.elona") == 116)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            2)
+        if (count_acquired_magic_stones() >= 2)
         {
             sceneid = 29;
             do_play_scene();
-            game()->quest_flags.main_quest = 117;
+            story_quest_set_progress("core.elona", 117);
         }
     }
-    if (game()->quest_flags.main_quest == 117)
+    if (story_quest_progress("core.elona") == 117)
     {
-        if (game()->quest_flags.magic_stone_of_fool +
-                game()->quest_flags.magic_stone_of_king +
-                game()->quest_flags.magic_stone_of_sage >=
-            3)
+        if (count_acquired_magic_stones() >= 3)
         {
             sceneid = 30;
             do_play_scene();
-            game()->quest_flags.main_quest = 120;
+            story_quest_set_progress("core.elona", 120);
         }
     }
 }
@@ -749,109 +757,109 @@ void _update_quest_flags_any()
 
 void _update_quest_flags_lesimas()
 {
-    if (game()->quest_flags.main_quest == 10)
+    if (story_quest_progress("core.elona") == 10)
     {
         sceneid = 3;
         do_play_scene();
-        game()->quest_flags.main_quest = 20;
+        story_quest_set_progress("core.elona", 20);
     }
     if (game()->current_dungeon_level == 4)
     {
-        if (game()->quest_flags.main_quest == 65)
+        if (story_quest_progress("core.elona") == 65)
         {
             sceneid = 7;
             do_play_scene();
-            game()->quest_flags.main_quest = 70;
+            story_quest_set_progress("core.elona", 70);
         }
     }
     if (game()->current_dungeon_level == 7)
     {
-        if (game()->quest_flags.main_quest == 70)
+        if (story_quest_progress("core.elona") == 70)
         {
             sceneid = 15;
             do_play_scene();
-            game()->quest_flags.main_quest = 75;
+            story_quest_set_progress("core.elona", 75);
         }
     }
     if (game()->current_dungeon_level == 10)
     {
-        if (game()->quest_flags.main_quest == 75)
+        if (story_quest_progress("core.elona") == 75)
         {
             sceneid = 16;
             do_play_scene();
-            game()->quest_flags.main_quest = 80;
+            story_quest_set_progress("core.elona", 80);
         }
     }
     if (game()->current_dungeon_level == 14)
     {
-        if (game()->quest_flags.main_quest == 80)
+        if (story_quest_progress("core.elona") == 80)
         {
             sceneid = 17;
             do_play_scene();
-            game()->quest_flags.main_quest = 85;
+            story_quest_set_progress("core.elona", 85);
         }
     }
     if (game()->current_dungeon_level == 16)
     {
-        if (game()->quest_flags.main_quest == 85)
+        if (story_quest_progress("core.elona") == 85)
         {
             sceneid = 24;
             do_play_scene();
-            game()->quest_flags.main_quest = 90;
+            story_quest_set_progress("core.elona", 90);
         }
     }
     if (game()->current_dungeon_level == 26)
     {
-        if (game()->quest_flags.main_quest == 125)
+        if (story_quest_progress("core.elona") == 125)
         {
             sceneid = 33;
             do_play_scene();
-            game()->quest_flags.main_quest = 130;
+            story_quest_set_progress("core.elona", 130);
         }
     }
     if (game()->current_dungeon_level == 28)
     {
-        if (game()->quest_flags.main_quest == 130)
+        if (story_quest_progress("core.elona") == 130)
         {
             sceneid = 35;
             do_play_scene();
-            game()->quest_flags.main_quest = 135;
+            story_quest_set_progress("core.elona", 135);
         }
     }
     if (game()->current_dungeon_level == 31)
     {
-        if (game()->quest_flags.main_quest == 135)
+        if (story_quest_progress("core.elona") == 135)
         {
             sceneid = 40;
             do_play_scene();
-            game()->quest_flags.main_quest = 140;
+            story_quest_set_progress("core.elona", 140);
         }
     }
     if (game()->current_dungeon_level == 35)
     {
-        if (game()->quest_flags.main_quest == 140)
+        if (story_quest_progress("core.elona") == 140)
         {
             sceneid = 60;
             do_play_scene();
-            game()->quest_flags.main_quest = 145;
+            story_quest_set_progress("core.elona", 145);
         }
     }
     if (game()->current_dungeon_level == 38)
     {
-        if (game()->quest_flags.main_quest == 145)
+        if (story_quest_progress("core.elona") == 145)
         {
             sceneid = 70;
             do_play_scene();
-            game()->quest_flags.main_quest = 150;
+            story_quest_set_progress("core.elona", 150);
         }
     }
     if (game()->current_dungeon_level == 42)
     {
-        if (game()->quest_flags.main_quest == 150)
+        if (story_quest_progress("core.elona") == 150)
         {
             sceneid = 90;
             do_play_scene();
-            game()->quest_flags.main_quest = 160;
+            story_quest_set_progress("core.elona", 160);
         }
     }
 }
@@ -862,7 +870,7 @@ void _update_paels_mom()
 {
     if (const auto lily = chara_find("core.lily"))
     {
-        if (game()->quest_flags.pael_and_her_mom >= 10)
+        if (story_quest_progress("core.pael_and_her_mom") >= 10)
         {
             lily->image = 360;
             lily->portrait = "";
@@ -878,21 +886,30 @@ void _proc_guild_entry_events()
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_mages_guild);
+            if (!game()->guild.belongs_to_mages_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::derphy)
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_thieves_guild);
+            if (!game()->guild.belongs_to_thieves_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::port_kapul)
     {
         if (game()->current_dungeon_level == 3)
         {
-            event_add(22, game()->guild.belongs_to_fighters_guild);
+            if (!game()->guild.belongs_to_fighters_guild)
+            {
+                deferred_event_add("core.guild_alarm");
+            }
         }
     }
 }
@@ -901,16 +918,16 @@ void _proc_guild_entry_events()
 
 void _update_quest_flags_vernis()
 {
-    if (game()->quest_flags.main_quest == 0)
+    if (story_quest_progress("core.elona") == 0)
     {
         sceneid = 1;
         do_play_scene();
-        game()->quest_flags.main_quest = 9;
+        story_quest_set_progress("core.elona", 9);
     }
     if (game()->has_not_been_to_vernis == 0)
     {
         game()->has_not_been_to_vernis = 1;
-        event_add(12);
+        deferred_event_add("core.reunoin_with_pets");
     }
 }
 
@@ -918,17 +935,17 @@ void _update_quest_flags_vernis()
 
 void _update_quest_flags_palmia()
 {
-    if (game()->quest_flags.main_quest == 30)
+    if (story_quest_progress("core.elona") == 30)
     {
         sceneid = 4;
         do_play_scene();
-        game()->quest_flags.main_quest = 40;
+        story_quest_set_progress("core.elona", 40);
     }
-    if (game()->quest_flags.main_quest == 100)
+    if (story_quest_progress("core.elona") == 100)
     {
         sceneid = 25;
         do_play_scene();
-        game()->quest_flags.main_quest = 105;
+        story_quest_set_progress("core.elona", 105);
     }
 }
 
@@ -936,12 +953,12 @@ void _update_quest_flags_palmia()
 
 void _update_quest_flags_north_tyris()
 {
-    if (game()->quest_flags.main_quest == 180)
+    if (story_quest_progress("core.elona") == 180)
     {
         sceneid = 100;
         do_play_scene();
-        game()->quest_flags.main_quest = 200;
-        game()->date.year += 3;
+        story_quest_set_progress("core.elona", 200);
+        game_advance_clock(3_years, GameAdvanceClockEvents::none);
     }
 }
 
@@ -1004,16 +1021,17 @@ void _proc_map_hooks_1()
 
 void _notify_distance_traveled()
 {
-    p = game()->date.hours() - game()->departure_date;
+    const auto elapsed_duration = game_now() - game()->departure_time;
     txt(i18n::s.get(
         "core.map.since_leaving.time_passed",
-        p / 24,
-        p % 24,
+        elapsed_duration.days(),
+        (elapsed_duration - time::Duration::from_days(elapsed_duration.days()))
+            .hours(),
         mapname(game()->left_town_map),
-        cnvdate(game()->departure_date, false)));
+        cnvdate(game()->departure_time.from_epoch().hours(), false)));
     p = 0;
-    exp = cdata.player().level * game()->distance_between_town *
-            cdata.player().get_skill(182).level / 100 +
+    exp = cdata.player().level * game()->travel_distance *
+            cdata.player().skills().level("core.traveling") / 100 +
         1;
     for (auto&& chara : cdata.player_and_allies())
     {
@@ -1031,22 +1049,17 @@ void _notify_distance_traveled()
     if (p == 1)
     {
         txt(i18n::s.get(
-            "core.map.since_leaving.walked.you",
-            game()->distance_between_town));
+            "core.map.since_leaving.walked.you", game()->travel_distance));
     }
     else
     {
         txt(i18n::s.get(
             "core.map.since_leaving.walked.you_and_allies",
-            game()->distance_between_town));
+            game()->travel_distance));
     }
     chara_gain_skill_exp(
-        cdata.player(),
-        182,
-        25 + game()->distance_between_town * 2 / 3,
-        0,
-        1000);
-    game()->distance_between_town = 0;
+        cdata.player(), 182, 25 + game()->travel_distance * 2 / 3, 0, 1000);
+    game()->travel_distance = 0;
 }
 
 
@@ -1085,7 +1098,11 @@ void _update_quest_escort(int cnt2)
                 ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
                 quest_data[cnt2].extra_info_1 == game()->current_map)
             {
-                event_add(16, cnt2, ally.index);
+                deferred_event_add(DeferredEvent{
+                    "core.quest_escort_complete",
+                    0,
+                    lua::create_table(
+                        "core.quest", cnt2, "core.client", ally.index)});
                 ally.is_escorted() = false;
                 break;
             }
@@ -1127,8 +1144,8 @@ void _set_livestock_relations()
         if (cnt.is_livestock() == 1)
         {
             cnt.hate = 0;
-            cnt.relationship = -1;
-            cnt.original_relationship = -1;
+            cnt.relationship = Relationship::neutral;
+            cnt.original_relationship = Relationship::neutral;
         }
     }
 }
@@ -1139,14 +1156,14 @@ void _proc_map_hooks_2()
 {
     if (game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game()->quest_flags.main_quest != 0)
+        if (story_quest_progress("core.elona") != 0)
         {
             _remove_lomias_and_larnneire();
         }
     }
     if (game()->current_map == mdata_t::MapId::palmia)
     {
-        if (game()->quest_flags.main_quest >= 90)
+        if (story_quest_progress("core.elona") >= 90)
         {
             _remove_xabi();
         }
@@ -1190,7 +1207,7 @@ void _proc_map_hooks_2()
     if (map_is_town_or_guild() ||
         game()->current_map == mdata_t::MapId::your_home)
     {
-        if (game()->distance_between_town >= 16)
+        if (game()->travel_distance >= 16)
         {
             _notify_distance_traveled();
         }
@@ -1218,7 +1235,7 @@ void _update_aggro_and_crowd_density()
             cnt.enemy_id = 0;
             cnt.hate = 0;
         }
-        cnt.vision_flag = 0;
+        cnt.fov_flag = 0;
         if (cnt.state() != Character::State::empty)
         {
             modify_crowd_density(cnt.index, 1);
@@ -1486,7 +1503,7 @@ TurnResult initialize_map()
             screenupdate = -1;
             update_screen();
             lua::lua->get_event_manager().trigger(event);
-            if (event_has_pending_events())
+            if (deferred_event_has_pending_events())
             {
                 return TurnResult::turn_begin;
             }

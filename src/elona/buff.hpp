@@ -2,6 +2,7 @@
 
 #include "data/id.hpp"
 #include "optional.hpp"
+#include "typedefs.hpp"
 
 
 
@@ -9,7 +10,95 @@ namespace elona
 {
 
 struct Character;
-struct Buff;
+
+
+
+struct Buff
+{
+    /// ID
+    data::InstanceId id{};
+
+    /// Power
+    lua_int power{};
+
+    /// Left turns
+    lua_int turns{};
+};
+
+
+
+struct BuffList
+{
+    using storage_type = std::vector<Buff>;
+    using iterator = storage_type::iterator;
+    using const_iterator = storage_type::const_iterator;
+
+
+
+    size_t size() const noexcept
+    {
+        return _buffs.size();
+    }
+
+
+    Buff& operator[](size_t index)
+    {
+        return _buffs.at(index);
+    }
+
+    const Buff& operator[](size_t index) const
+    {
+        return _buffs.at(index);
+    }
+
+
+    void push_back(const Buff& buff)
+    {
+        _buffs.push_back(buff);
+    }
+
+
+    iterator erase(iterator pos)
+    {
+        return _buffs.erase(pos);
+    }
+
+
+    iterator begin()
+    {
+        return _buffs.begin();
+    }
+
+    iterator end()
+    {
+        return _buffs.end();
+    }
+
+    const_iterator begin() const
+    {
+        return _buffs.begin();
+    }
+
+    const_iterator end() const
+    {
+        return _buffs.end();
+    }
+
+    const_iterator cbegin() const
+    {
+        return _buffs.cbegin();
+    }
+
+    const_iterator cend() const
+    {
+        return _buffs.cend();
+    }
+
+
+
+private:
+    std::vector<Buff> _buffs;
+};
 
 
 
@@ -36,7 +125,7 @@ void buff_add(
     int turns,
     optional_ref<const Character> doer = none);
 
-/// Deletes @a chara 's buff at @a slot.
-void buff_delete(Character& chara, int slot);
+/// Remove @a chara 's buff at @a itr.
+BuffList::iterator buff_remove_at(Character& chara, BuffList::iterator itr);
 
 } // namespace elona

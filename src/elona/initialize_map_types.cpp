@@ -50,7 +50,7 @@ static void _init_map_nefia()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        event_add(4);
+        deferred_event_add("core.lord_of_normal_nefia");
     }
 }
 
@@ -226,43 +226,43 @@ static void _init_map_truce_ground()
     flt();
     if (const auto item = itemcreate_map_inv(171, 10, 8, 0))
     {
-        item->param1 = 1;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 8, 0))
     {
-        item->param1 = 2;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 10, 13, 0))
     {
-        item->param1 = 5;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 13, 13, 0))
     {
-        item->param1 = 4;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 8, 0))
     {
-        item->param1 = 3;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 23, 8, 0))
     {
-        item->param1 = 7;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
     if (const auto item = itemcreate_map_inv(171, 20, 13, 0))
     {
-        item->param1 = 6;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
@@ -381,20 +381,20 @@ static void _init_map_test_world_north_border()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 160, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 161, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     flt();
@@ -411,7 +411,7 @@ static void _init_map_test_world_north_border()
     }
     map_data.bgm = 79;
     map_place_player_and_allies();
-    event_add(30);
+    deferred_event_add("core.snow_blindness");
 }
 
 
@@ -460,20 +460,20 @@ static void _init_map_tyris_border()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 160, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 161, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
     }
     flt();
@@ -566,14 +566,14 @@ static void _init_map_the_smoke_and_pipe()
         flt();
         if (const auto chara = chara_create(-1, 159, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         if (const auto chara = chara_create(-1, 36, -3, 0))
         {
-            chara->relationship = -1;
-            chara->original_relationship = -1;
+            chara->relationship = Relationship::neutral;
+            chara->original_relationship = Relationship::neutral;
         }
         flt();
         chara_create(-1, 8, -3, 0);
@@ -661,7 +661,7 @@ static void _init_map_cyber_dome()
     flt();
     if (const auto item = itemcreate_map_inv(171, 19, 5, 0))
     {
-        item->param1 = 1;
+        item->__god = "core.mani";
         item->own_state = OwnState::town;
     }
     flt();
@@ -787,7 +787,7 @@ static void _init_map_arena()
     {
         if (chara.state() == Character::State::alive)
         {
-            if (chara.relationship == 10)
+            if (chara.relationship == Relationship::ally)
             {
                 if (!chara.is_player())
                 {
@@ -808,9 +808,9 @@ static void _init_map_arena()
                 cdata.player().position.y - 4))
         {
             chara->hate = 30;
-            chara->relationship = -3;
-            chara->relationship = -3;
-            chara->original_relationship = -3;
+            chara->relationship = Relationship::enemy;
+            chara->relationship = Relationship::enemy;
+            chara->original_relationship = Relationship::enemy;
             chara->is_lord_of_dungeon() = true;
         }
     }
@@ -825,8 +825,8 @@ static void _init_map_arena()
                     cdata.player().position.x - 1,
                     cdata.player().position.y - 5))
             {
-                chara->relationship = -3;
-                chara->original_relationship = -3;
+                chara->relationship = Relationship::enemy;
+                chara->original_relationship = Relationship::enemy;
                 chara->hate = 30;
                 chara->is_lord_of_dungeon() = true;
                 if (chara->level > arenaop(1))
@@ -882,7 +882,7 @@ static void _init_map_pet_arena()
                     f = 0;
                 }
             }
-            if (chara->relationship != -3)
+            if (chara->relationship != Relationship::enemy)
             {
                 f = 0;
             }
@@ -906,7 +906,7 @@ static void _init_map_pet_arena()
     }
     for (auto&& cnt : cdata.others())
     {
-        if (cnt.relationship == -3)
+        if (cnt.relationship == Relationship::enemy)
         {
             cnt.has_been_used_stethoscope() = true;
         }
@@ -1344,7 +1344,7 @@ static void _init_map_palmia()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.mias_dream == 1000)
+    if (story_quest_progress("core.mias_dream") == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 246, 42, 11))
@@ -1527,7 +1527,7 @@ static void _init_map_lumiest_town()
     map_init_static_map("lumiest");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.sewer_sweeping)
+    if (story_quest_progress("core.sewer_sweeping") != 0)
     {
         cell_featset(18, 45, tile_downstairs, 11, 20);
     }
@@ -1784,7 +1784,7 @@ static void _init_map_yowyn_town()
     map_init_static_map("yowyn");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.cat_house)
+    if (story_quest_progress("core.cat_house") != 0)
     {
         cell_featset(23, 22, tile_downstairs, 11, 3);
     }
@@ -1962,8 +1962,8 @@ static void _init_map_yowyn_battle_field()
         flt();
         if (const auto chara = chara_create(-1, 233 + 2 * (cnt > 22), 11, 16))
         {
-            chara->relationship = 10;
-            chara->original_relationship = 10;
+            chara->relationship = Relationship::ally;
+            chara->original_relationship = Relationship::ally;
             chara->hate = 100;
             p = list(0, rnd(listmax));
             chara->enemy_id = p;
@@ -2036,7 +2036,7 @@ static void _init_map_noyel()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.pael_and_her_mom != 1001)
+    if (story_quest_progress("core.pael_and_her_mom") != 1001)
     {
         flt();
         if (const auto chara = chara_create(-1, 222, 19, 2))
@@ -2414,7 +2414,8 @@ static void _init_map_port_kapul_doom_ground()
     map_data.refresh_type = 0;
     mdatan(0) = i18n::s.get("core.map.unique.doom_ground.name");
     game()->entrance_type = 4;
-    game()->quest_flags.duration_of_kamikaze_attack = 0;
+    story_quest_set_ext(
+        "core.kamikaze_attack", "core.elapsed_time", lua_int{0});
     map_place_player_and_allies();
     for (int cnt = 0; cnt < 10; ++cnt)
     {
@@ -2422,8 +2423,8 @@ static void _init_map_port_kapul_doom_ground()
         if (const auto chara = chara_create(
                 -1, 204, cdata.player().position.x, cdata.player().position.y))
         {
-            chara->relationship = 10;
-            chara->original_relationship = 10;
+            chara->relationship = Relationship::ally;
+            chara->original_relationship = Relationship::ally;
         }
     }
     noaggrorefresh = 1;
@@ -2455,7 +2456,7 @@ static void _init_map_vernis_town()
     map_init_static_map("vernis");
     map_place_player_and_allies();
     map_data.user_map_flag = 0;
-    if (game()->quest_flags.thieves_hideout)
+    if (story_quest_progress("core.thieves_hideout") != 0)
     {
         cell_featset(48, 5, tile_downstairs, 11, 4);
     }
@@ -2491,7 +2492,7 @@ static void _init_map_vernis_town()
     {
         chara->role = Role::other;
     }
-    if (game()->quest_flags.puppys_cave == 1000)
+    if (story_quest_progress("core.puppys_cave") == 1000)
     {
         flt();
         if (const auto chara = chara_create(-1, 225, 31, 4))
@@ -2833,7 +2834,7 @@ static void _init_map_fields_maybe_generate_encounter()
                 chara->name += u8" Lv"s + chara->level;
             }
         }
-        event_add(23);
+        deferred_event_add("core.rogue_party_ambush");
     }
     if (encounter == 3)
     {
@@ -2854,8 +2855,8 @@ static void _init_map_fields_maybe_generate_encounter()
                     cdata.player().position.y))
             {
                 chara->hate = 30;
-                chara->relationship = -3;
-                chara->original_relationship = -3;
+                chara->relationship = Relationship::enemy;
+                chara->original_relationship = Relationship::enemy;
             }
         }
     }
@@ -2876,7 +2877,7 @@ static void _init_map_fields_maybe_generate_encounter()
                 gain_level(*chara);
             }
         }
-        event_add(11);
+        deferred_event_add("core.wandering_vendor");
         for (int cnt = 0, cnt_end = (6 + rnd(6)); cnt < cnt_end; ++cnt)
         {
             flt();
@@ -2898,7 +2899,7 @@ static void _init_map_fields_maybe_generate_encounter()
         for (int cnt = 0, cnt_end = (2 + p); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(encounterlv), calcfixlv(Quality::bad));
-            if (game()->weather == 1)
+            if (game()->weather == "core.etherwind")
             {
                 if ((33 > game()->stood_world_map_tile ||
                      game()->stood_world_map_tile >= 66) &&
@@ -2989,7 +2990,7 @@ static void _init_map_the_void()
     }
     if (game()->void_next_lord_floor <= game()->current_dungeon_level)
     {
-        event_add(29);
+        deferred_event_add("core.lord_of_void");
     }
     else
     {
@@ -3013,21 +3014,21 @@ static void _init_map_lesimas()
             map_data.bgm = 66;
             mdatan(0) =
                 i18n::s.get_enum_property("core.map.unique", "the_depth", 3);
-            if (game()->quest_flags.main_quest < 170)
+            if (story_quest_progress("core.elona") < 170)
             {
-                event_add(3);
+                deferred_event_add("core.zeome_talks");
             }
             x = 16;
             y = 13;
             cell_featset(x, y, tile_upstairs, 10);
             map_data.stair_up_pos = y * 1000 + x;
             map_place_player_and_allies();
-            if (game()->character_memories().kill_count("core.zeome") == 0)
+            if (game()->character_memories.kill_count("core.zeome") == 0)
             {
                 flt();
                 chara_create(-1, 2, 16, 6);
             }
-            else if (game()->character_memories().kill_count("core.orphe") == 0)
+            else if (game()->character_memories.kill_count("core.orphe") == 0)
             {
                 flt();
                 chara_create(-1, 23, 16, 6);
@@ -3137,7 +3138,7 @@ static void _init_map_minotaurs_nest()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        if (game()->quest_flags.minotaur_king < 2)
+        if (story_quest_progress("core.minotaur_king") < 2)
         {
             flt();
             chara_create(-1, 300, -3, 0);
@@ -3153,7 +3154,7 @@ static void _init_map_yeeks_nest()
     if (game()->current_dungeon_level ==
         area_data[game()->current_map].deepest_level)
     {
-        if (game()->quest_flags.novice_knight < 2)
+        if (story_quest_progress("core.novice_knight") < 2)
         {
             flt();
             if (const auto rodlob = chara_create(-1, 242, -3, 0))

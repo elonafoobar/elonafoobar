@@ -6,6 +6,7 @@
 
 #include "data/types/type_map_chip.hpp"
 #include "pic_loader/extent.hpp"
+#include "time.hpp"
 
 
 
@@ -32,7 +33,7 @@ struct MapData
     int width{};
     int height{};
     int atlas_number{};
-    int next_regenerate_date{};
+    time::Instant next_regenerate_date{};
     int stair_down_pos{};
     int stair_up_pos{};
     int type{};
@@ -45,7 +46,7 @@ struct MapData
     int bgm{};
     int indoors_flag{};
     int user_map_flag{};
-    int next_restock_date{};
+    time::Instant next_restock_date{};
     int should_regenerate{};
     int max_item_count{};
     int regenerate_count{};

@@ -1,15 +1,15 @@
-#include "../../../ability.hpp"
 #include "../../../buff.hpp"
 #include "../../../character.hpp"
 #include "../../../character_status.hpp"
-#include "../../../data/types/type_ability.hpp"
 #include "../../../data/types/type_buff.hpp"
+#include "../../../data/types/type_skill.hpp"
 #include "../../../dmgheal.hpp"
 #include "../../../element.hpp"
 #include "../../../enums.hpp"
 #include "../../../food.hpp"
 #include "../../../god.hpp"
 #include "../../../map_cell.hpp"
+#include "../../../skill.hpp"
 #include "../../../status_ailment.hpp"
 #include "../../../text.hpp"
 #include "../../../ui.hpp"
@@ -18,7 +18,6 @@
 #include "../../enums/enums.hpp"
 #include "../../interface.hpp"
 #include "../common.hpp"
-#include "class_LuaAbility.hpp"
 
 
 
@@ -258,33 +257,11 @@ void LuaCharacter_set_flag(Character& self, const EnumString& flag, bool value)
 
 
 /**
- * @luadoc get_skill
- *
- * Obtains the skill of the given ID.
- * @tparam string skill_id ID of type core.ability
- * @treturn LuaAbility
- */
-sol::optional<LuaAbility> LuaCharacter_get_skill(
-    Character& self,
-    const std::string& skill_id)
-{
-    auto data = the_ability_db[data::InstanceId{skill_id}];
-    if (!data)
-    {
-        return sol::nullopt;
-    }
-
-    return LuaAbility(data->integer_id, self.obj_id);
-}
-
-
-
-/**
  * @luadoc gain_skill
  *
  * Makes this character gain a new skill or spell. This only has an
  * effect if the character does not already know the skill/spell.
- * @tparam string skill_id the skill/spell ID of type core.ability
+ * @tparam string skill_id the skill/spell ID of type core.skill
  * @tparam num initial_level the intial skill/spell level
  * @tparam[opt] num initial_stock the initial spell stock for spells
  */
@@ -294,7 +271,7 @@ void LuaCharacter_gain_skill_stock(
     int initial_level,
     int initial_stock)
 {
-    auto data = the_ability_db[data::InstanceId{skill_id}];
+    auto data = the_skill_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -320,7 +297,7 @@ void LuaCharacter_gain_skill(
  *
  * Makes this character gain experience in a skill or spell. This only
  * has an effect if the character already knows the skill/spell.
- * @tparam string skill_id the skill/spell ID of type core.ability
+ * @tparam string skill_id the skill/spell ID of type core.skill
  * @tparam num amount the amount of experience
  */
 void LuaCharacter_gain_skill_exp(
@@ -328,7 +305,7 @@ void LuaCharacter_gain_skill_exp(
     const std::string& skill_id,
     int amount)
 {
-    auto data = the_ability_db[data::InstanceId{skill_id}];
+    auto data = the_skill_db[data::InstanceId{skill_id}];
     if (!data)
     {
         return;
@@ -393,25 +370,6 @@ void LuaCharacter_modify_karma(Character& self, int delta)
     }
 
     elona::modify_karma(self, delta);
-}
-
-
-
-/**
- * @luadoc modify_corruption
- *
- * Modifies this character's ether corruption. Currently only has an
- * effect if the character is the player.
- * @tparam num delta the amount of increase/decrease (can be negative)
- */
-void LuaCharacter_modify_corruption(Character& self, int delta)
-{
-    if (!self.is_player())
-    {
-        return;
-    }
-
-    elona::modify_ether_disease_stage(delta);
 }
 
 
@@ -536,23 +494,6 @@ void LuaCharacter_move_to(Character& self, Position& pos)
 
 
 /**
- * @luadoc switch_religion
- *
- * Changes the worshipped god of this character without invoking the god
- * switching penalty.
- * @tparam string god_id ID of type core.god.
- */
-void LuaCharacter_switch_religion(Character& self, const std::string& god_id)
-{
-    the_god_db.ensure(data::InstanceId{god_id});
-
-    self.god_id = god_id;
-    elona::switch_religion();
-}
-
-
-
-/**
  * @luadoc get_ailment
  *
  * Returns the duration of an ailment on this character.
@@ -659,7 +600,13 @@ void bind(sol::state& lua)
      *
      * [RW] The character's worshipped god.
      */
-    LuaCharacter.set("god", &Character::god_id);
+    LuaCharacter.set(
+        "religion",
+        sol::property(
+            [](const Character& self) { self.religion.get(); },
+            [](Character& self, const std::string& new_value) {
+                self.religion = data::InstanceId{new_value};
+            }));
 
     /**
      * @luadoc position field LuaPosition
@@ -866,9 +813,7 @@ void bind(sol::state& lua)
      *
      * [RW] The relationship of the character to the player.
      */
-    LuaCharacter.set(
-        "relationship",
-        LUA_API_ENUM_PROPERTY(Character, relationship, Relationship));
+    LuaCharacter.set("relationship", &Character::relationship);
 
     /**
      * @luadoc original_relationship field Relationship
@@ -876,8 +821,7 @@ void bind(sol::state& lua)
      * [RW] The original relationship of the character to the player.
      */
     LuaCharacter.set(
-        "original_relationship",
-        LUA_API_ENUM_PROPERTY(Character, original_relationship, Relationship));
+        "original_relationship", &Character::original_relationship);
 
     /**
      * @luadoc quality field Quality
@@ -896,6 +840,14 @@ void bind(sol::state& lua)
                              "core.chara", self.new_id());
                      }));
 
+    /**
+     * @luadoc skills field LuaSkillTable
+     *
+     * [R] The skill table of the character.
+     */
+    LuaCharacter.set(
+        "skill", sol::property([](Character& self) { return self.skills(); }));
+
     // Methods
     LuaCharacter.set(
         "damage_hp",
@@ -912,7 +864,6 @@ void bind(sol::state& lua)
     LuaCharacter.set("recruit_as_ally", &LuaCharacter_recruit_as_ally);
     LuaCharacter.set("get_flag", &LuaCharacter_get_flag);
     LuaCharacter.set("set_flag", &LuaCharacter_set_flag);
-    LuaCharacter.set("get_skill", &LuaCharacter_get_skill);
     LuaCharacter.set(
         "gain_skill",
         sol::overload(
@@ -921,7 +872,6 @@ void bind(sol::state& lua)
     LuaCharacter.set("modify_resistance", &LuaCharacter_modify_resistance);
     LuaCharacter.set("modify_sanity", &LuaCharacter_modify_sanity);
     LuaCharacter.set("modify_karma", &LuaCharacter_modify_karma);
-    LuaCharacter.set("modify_corruption", &LuaCharacter_modify_corruption);
     LuaCharacter.set("make_pregnant", &LuaCharacter_make_pregnant);
     LuaCharacter.set("eat_rotten_food", &LuaCharacter_eat_rotten_food);
     LuaCharacter.set("vanquish", &LuaCharacter_vanquish);
@@ -932,7 +882,6 @@ void bind(sol::state& lua)
     LuaCharacter.set(
         "move_to",
         sol::overload(&LuaCharacter_move_to, &LuaCharacter_move_to_xy));
-    LuaCharacter.set("switch_religion", &LuaCharacter_switch_religion);
     LuaCharacter.set("get_ailment", &LuaCharacter_get_ailment);
 
     LuaCharacter.set("__tostring", &LuaCharacter_metamethod_tostring);

@@ -1,7 +1,6 @@
 #include "attack.hpp"
 
 #include "../snail/application.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
@@ -9,6 +8,7 @@
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -18,9 +18,11 @@
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "magic.hpp"
 #include "map.hpp"
 #include "mef.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -67,9 +69,10 @@ void build_target_list(const Character& attacker)
             {
                 continue;
             }
-            if (attacker.is_player() || attacker.relationship >= 0)
+            if (attacker.is_player() ||
+                attacker.relationship >= Relationship::friendly)
             {
-                if (cnt.relationship == 10)
+                if (cnt.relationship == Relationship::ally)
                 {
                     if (cnt.is_player())
                     {
@@ -150,20 +153,19 @@ CanDoRangedAttackResult can_do_ranged_attack(const Character& chara)
 {
     OptionalItemRef weapon;
     OptionalItemRef ammo;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot")
         {
-            weapon = chara.equipment_slots[cnt].equipment;
+            weapon = body_part.equipment();
         }
-        if (chara.equipment_slots[cnt].type == 11)
+        else if (body_part.id == "core.ammo")
         {
-            ammo = chara.equipment_slots[cnt].equipment;
+            ammo = body_part.equipment();
         }
     }
     if (!weapon)
@@ -196,7 +198,7 @@ bool do_physical_attack_internal(
     const OptionalItemRef& weapon,
     const OptionalItemRef& ammo)
 {
-    int attackdmg;
+    lua_int attackdmg;
 
     if (attacker.state() != Character::State::alive)
     {
@@ -405,15 +407,17 @@ bool do_physical_attack_internal(
             chara_gain_skill_exp(attacker, 186, 60 / expmodifer, 2);
             critical = 0;
         }
-        if (rtdmg > target.max_hp / 20 || rtdmg > target.get_skill(154).level ||
-            rnd(5) == 0)
+        if (rtdmg > target.max_hp / 20 ||
+            rtdmg > target.skills().level("core.healing") || rnd(5) == 0)
         {
             chara_gain_skill_exp(
                 attacker,
                 attackskill,
                 clamp(
-                    (target.get_skill(173).level * 2 -
-                     attacker.get_skill(attackskill).level + 1),
+                    (target.skills().level("core.evasion") * 2 -
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) +
+                     1),
                     5,
                     50) /
                     expmodifer,
@@ -496,7 +500,8 @@ bool do_physical_attack_internal(
                         }
                         damage_hp(
                             attacker,
-                            clamp(attackdmg / 10, 1, target.max_hp / 10),
+                            clamp(
+                                attackdmg / 10, lua_int{1}, target.max_hp / 10),
                             target.index,
                             p,
                             target.damage_reaction_info / 1000);
@@ -557,13 +562,14 @@ bool do_physical_attack_internal(
         {
             snd("core.miss");
         }
-        if (attacker.get_skill(attackskill).level >
-                target.get_skill(173).level ||
+        if (attacker.skills().level(*the_skill_db.get_id_from_integer(
+                attackskill)) > target.skills().level("core.evasion") ||
             rnd(5) == 0)
         {
             p = clamp(
-                    (attacker.get_skill(attackskill).level -
-                     target.get_skill(173).level / 2 + 1),
+                    (attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) -
+                     target.skills().level("core.evasion") / 2 + 1),
                     1,
                     20) /
                 expmodifer;
@@ -758,9 +764,10 @@ void do_ranged_attack(
                 break;
             }
             const auto shot_target = list(0, rnd(listmax));
-            if (attacker.is_player() || attacker.relationship >= 0)
+            if (attacker.is_player() ||
+                attacker.relationship >= Relationship::friendly)
             {
-                if (cdata[shot_target].relationship >= 0)
+                if (cdata[shot_target].relationship >= Relationship::friendly)
                 {
                     if (cnt != 0)
                     {
@@ -769,7 +776,7 @@ void do_ranged_attack(
                     }
                 }
             }
-            else if (cdata[shot_target].relationship == -3)
+            else if (cdata[shot_target].relationship == Relationship::enemy)
             {
                 cnt = cnt + (rnd(5) == 0) - 1;
                 continue;
@@ -788,7 +795,10 @@ void do_ranged_attack(
         tlocx = ammox;
         tlocy = ammoy;
         efid = 460;
-        efp = attacker.get_skill(attackskill).level * 8 + 10;
+        efp = attacker.skills().level(
+                  *the_skill_db.get_id_from_integer(attackskill)) *
+                8 +
+            10;
         magic(cdata.player(), target);
     }
     ammoproc = -1;
@@ -831,7 +841,10 @@ void try_to_melee_attack(Character& attacker, Character& target)
     ele = 0;
     if (attacker.combat_style.shield())
     {
-        if (clamp(int(std::sqrt(attacker.get_skill(168).level) - 3), 1, 5) +
+        if (clamp(
+                int(std::sqrt(attacker.skills().level("core.shield")) - 3),
+                1,
+                5) +
                 attacker.has_power_bash() * 5 >
             rnd(100))
         {
@@ -842,31 +855,28 @@ void try_to_melee_attack(Character& attacker, Character& target)
             }
             damage_hp(
                 target,
-                rnd_capped(attacker.get_skill(168).level) + 1,
+                rnd_capped(attacker.skills().level("core.shield")) + 1,
                 attacker.index);
             status_ailment_damage(
                 target,
                 StatusAilment::dimmed,
-                50 + int(std::sqrt(attacker.get_skill(168).level)) * 15);
+                50 +
+                    int(std::sqrt(attacker.skills().level("core.shield"))) *
+                        15);
             target.paralyzed += rnd(3);
         }
     }
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : attacker.body_parts)
     {
-        body = 100 + cnt;
-        if (!attacker.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (attacker.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot" || body_part.id == "core.ammo")
         {
             continue;
         }
-        if (attacker.equipment_slots[cnt].type == 11)
-        {
-            continue;
-        }
-        const auto weapon = attacker.equipment_slots[cnt].equipment;
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;
@@ -914,19 +924,22 @@ void proc_weapon_enchantments(
         {
             if (rnd(66) == 0)
             {
-                event_add(18, attacker.index);
+                deferred_event_add(DeferredEvent{
+                    "core.ragnarok",
+                    0,
+                    lua::create_table("core.chara", attacker.index)});
             }
             continue;
         }
         if (enc_id == 40)
         {
-            if (game()->left_turns_of_timestop == 0)
+            if (game()->frozen_turns == 0)
             {
                 if (rnd(25) == 0)
                 {
                     txt(i18n::s.get("core.action.time_stop.begins", attacker),
                         Message::color{ColorIndex::cyan});
-                    game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
+                    game()->frozen_turns = enc.power / 100 + 2;
                 }
                 continue;
             }
@@ -1008,8 +1021,10 @@ void proc_weapon_enchantments(
                 if (rnd(100) < p)
                 {
                     efid = enc_id;
-                    efp =
-                        enc.power + attacker.get_skill(attackskill).level * 10;
+                    efp = enc.power +
+                        attacker.skills().level(
+                            *the_skill_db.get_id_from_integer(attackskill)) *
+                            10;
                     magic(attacker, cdata[invoke_target]);
                 }
                 continue;
@@ -1021,7 +1036,7 @@ void proc_weapon_enchantments(
     {
         txt(i18n::s.get("core.action.time_stop.begins", attacker),
             Message::color{ColorIndex::cyan});
-        game()->left_turns_of_timestop = 4;
+        game()->frozen_turns = 4;
     }
     if (ammoproc == 3)
     {
@@ -1033,7 +1048,10 @@ void proc_weapon_enchantments(
                 orgdmg * 2 / 3,
                 attacker.index,
                 rnd(11) + 50,
-                attacker.get_skill(attackskill).level * 10 + 100);
+                attacker.skills().level(
+                    *the_skill_db.get_id_from_integer(attackskill)) *
+                        10 +
+                    100);
         }
     }
 }
@@ -1056,7 +1074,8 @@ int find_enemy_target(Character& chara, bool silent)
         if (listmax != 0)
         {
             f = 0;
-            if (chara.is_player() || chara.relationship >= 0)
+            if (chara.is_player() ||
+                chara.relationship >= Relationship::friendly)
             {
                 p(0) = -3;
                 p(1) = -1;
@@ -1068,12 +1087,12 @@ int find_enemy_target(Character& chara, bool silent)
                 p(1) = 0;
                 p(2) = 0;
             }
-            for (int cnt = 0; cnt < 3; ++cnt)
+            for (int cnt2 = 0; cnt2 < 3; ++cnt2)
             {
-                int cnt2 = cnt;
                 for (int cnt = 0, cnt_end = (listmax); cnt < cnt_end; ++cnt)
                 {
-                    if (cdata[list(0, cnt)].relationship <= p(cnt2))
+                    if (cdata[list(0, cnt)].relationship <=
+                        static_cast<Relationship>(p(cnt2)))
                     {
                         chara.enemy_id = list(0, cnt);
                         f = 1;

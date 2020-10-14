@@ -7,11 +7,11 @@
 #include "../util/fileutil.hpp"
 #include "../util/range.hpp"
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "animation.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character_status.hpp"
@@ -21,6 +21,7 @@
 #include "ctrl_file.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -29,6 +30,7 @@
 #include "equipment.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -47,6 +49,7 @@
 #include "random.hpp"
 #include "randomgen.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -83,7 +86,7 @@ int _get_random_npc_id()
         if (fltselect != data.fltselect)
             continue;
         if (fltselect == 2 &&
-            game()->character_memories().generate_count(id) != 0)
+            game()->character_memories.generate_count(id) != 0)
             continue;
         if (flttypemajor != 0 && flttypemajor != data.category)
             continue;
@@ -164,7 +167,7 @@ optional<int> chara_create_internal(int slot, int chara_id)
 
     cm = slot + 1;
     cmshade = 0;
-    game()->character_memories().increment_generate_count(
+    game()->character_memories.increment_generate_count(
         *the_character_db.get_id_from_integer(chara_id));
     if (chara_id == 323)
     {
@@ -412,7 +415,7 @@ bool chara_place_internal(
             }
             if (enemy_respawn && i < 20)
             {
-                const auto threshold = cdata.player().vision_distance / 2;
+                const auto threshold = cdata.player().fov_range / 2;
                 if (std::abs(cdata.player().position.x - x) <= threshold &&
                     std::abs(cdata.player().position.y - x) <= threshold)
                 {
@@ -459,7 +462,8 @@ void failed_to_place_character(Character& chara)
     if (chara.role == Role::adventurer)
     {
         chara.set_state(Character::State::adventurer_dead);
-        chara.time_to_revive = game()->date.hours() + 24 + rnd(12);
+        chara.revival_time =
+            game_now() + time::Duration::from_hours(24 + rnd(12));
     }
 }
 
@@ -485,8 +489,6 @@ elona_vector1<std::string> usertxt;
 
 Character::Character()
     : growth_buffs(10)
-    , equipment_slots(30)
-    , buffs(16)
     , attr_adjs(10)
 {
 }
@@ -630,7 +632,7 @@ void initialize_character(Character& chara)
     }
     chara.interest = 100;
     chara.impression = 50;
-    chara.vision_distance = 14;
+    chara.fov_range = 14;
     if (chara.id == CharaId::maid)
     {
         chara.image = rnd(33) * 2 + chara.sex + 1;
@@ -652,7 +654,7 @@ void initialize_character(Character& chara)
     {
         const auto index = std::to_string(1 + rnd(32));
         const auto man_or_woman = chara.sex ? "woman" : "man";
-        chara.portrait = "core."s + man_or_woman + index;
+        chara.portrait = data::InstanceId{"core."s + man_or_woman + index};
     }
     chara.personality = rnd(4);
     chara.talk_type = rnd(7);
@@ -664,8 +666,8 @@ void initialize_character(Character& chara)
     chara.sp = chara.max_sp;
     if (chara.is_player())
     {
-        game()->initial_cart_limit = 80000;
-        game()->current_cart_limit = game()->initial_cart_limit;
+        game()->initial_max_cargo_weight = 80000;
+        game()->max_cargo_weight = game()->initial_max_cargo_weight;
     }
     if (chara.has_lay_hand())
     {
@@ -702,7 +704,7 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
         if (*result == 56)
         {
             cdata[*result].set_state(Character::State::empty);
-            game()->character_memories().decrement_generate_count(
+            game()->character_memories.decrement_generate_count(
                 cdata[*result].new_id());
             return cdata.tmp();
         }
@@ -738,33 +740,30 @@ void chara_refresh(Character& chara)
     if (chara.is_player())
     {
         game()->seven_league_boot_effect = 0;
-        game()->ether_disease_speed = 0;
+        cdata.player().extra_ether_disease_progress = 0;
         game()->protects_from_etherwind = 0;
         game()->protects_from_bad_weather = 0;
         game()->light = 70;
         game()->catches_god_signal = 0;
         game()->reveals_religion = 0;
     }
-    for (int cnt = 0; cnt < 600; ++cnt)
-    {
-        chara.get_skill(cnt).level = chara.get_skill(cnt).base_level;
-    }
+    chara.skills().clear_all_boosts();
     if (chara.is_player())
     {
         chara.clear_flags();
         if (cdata.player().traits().level(
                 "core.cannot_wear_heavy_equipments") != 0)
         {
-            for (auto&& equipment_slot : chara.equipment_slots)
+            for (auto&& body_part : chara.body_parts)
             {
-                if (!equipment_slot.equipment)
+                if (!body_part.is_equip())
                 {
                     continue;
                 }
-                if (equipment_slot.equipment->weight >= 1000)
+                if (body_part.equipment()->weight >= 1000)
                 {
-                    equipment_slot.equipment->body_part = 0;
-                    equipment_slot.unequip();
+                    body_part.equipment()->_equipped_slot = lua_index::nil();
+                    body_part.unequip();
                 }
             }
         }
@@ -796,19 +795,19 @@ void chara_refresh(Character& chara)
     chara.curse_power = 0;
     chara.extra_attack = 0;
     chara.extra_shot = 0;
-    chara.sum_of_equipment_weight = 0;
+    chara.equipment_weight = 0;
     chara.decrease_physical_damage = 0;
     chara.nullify_damage = 0;
     chara.cut_counterattack = 0;
 
-    for (const auto& equipment_slot : chara.equipment_slots)
+    for (const auto& body_part : chara.body_parts)
     {
-        if (!equipment_slot.equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        const auto equipment = equipment_slot.equipment;
-        chara.sum_of_equipment_weight += equipment->weight;
+        const auto equipment = body_part.equipment().unwrap();
+        chara.equipment_weight += equipment->weight;
         if (equipment->skill == 168)
         {
             chara.combat_style.set_shield();
@@ -822,7 +821,7 @@ void chara_refresh(Character& chara)
             chara.pv += equipment->bonus_value * 2 +
                 (equipment->curse_state == CurseState::blessed) * 2;
         }
-        else if (equipment_slot.type == 5)
+        else if (body_part.id == "core.hand")
         {
             ++attacknum;
         }
@@ -838,7 +837,7 @@ void chara_refresh(Character& chara)
         {
             if (chara.is_player())
             {
-                game()->ether_disease_speed += 5;
+                cdata.player().extra_ether_disease_progress += 5;
             }
         }
 
@@ -851,27 +850,37 @@ void chara_refresh(Character& chara)
                 rp2 = rp2 / 10000;
                 if (rp2 == 1)
                 {
-                    chara.get_skill(rp3).level += enchantment.power / 50 + 1;
+                    chara.skills().add_level(
+                        *the_skill_db.get_id_from_integer(rp3),
+                        enchantment.power / 50 + 1);
                     continue;
                 }
                 if (rp2 == 2)
                 {
-                    chara.get_skill(rp3).level += enchantment.power / 2;
-                    if (chara.get_skill(rp3).level < 0)
+                    chara.skills().add_level(
+                        *the_skill_db.get_id_from_integer(rp3),
+                        enchantment.power / 2);
+                    if (chara.skills().level(
+                            *the_skill_db.get_id_from_integer(rp3)) < 0)
                     {
-                        chara.get_skill(rp3).level = 1;
+                        chara.skills().set_level(
+                            *the_skill_db.get_id_from_integer(rp3), 1);
                     }
                     continue;
                 }
                 if (rp2 == 3)
                 {
-                    if (chara.get_skill(rp3).base_level != 0)
+                    if (chara.skills().base_level(
+                            *the_skill_db.get_id_from_integer(rp3)) != 0)
                     {
-                        chara.get_skill(rp3).level +=
-                            enchantment.power / 50 + 1;
-                        if (chara.get_skill(rp3).level < 1)
+                        chara.skills().add_level(
+                            *the_skill_db.get_id_from_integer(rp3),
+                            enchantment.power / 50 + 1);
+                        if (chara.skills().level(
+                                *the_skill_db.get_id_from_integer(rp3)) < 1)
                         {
-                            chara.get_skill(rp3).level = 1;
+                            chara.skills().set_level(
+                                *the_skill_db.get_id_from_integer(rp3), 1);
                         }
                     }
                     continue;
@@ -897,7 +906,8 @@ void chara_refresh(Character& chara)
                 }
                 if (rp2 == 29)
                 {
-                    chara.get_skill(18).level += enchantment.power / 50 + 1;
+                    chara.skills().add_level(
+                        "core.stat_speed", enchantment.power / 50 + 1);
                     if (chara.is_player())
                     {
                         game()->seven_league_boot_effect +=
@@ -1025,13 +1035,20 @@ void chara_refresh(Character& chara)
         buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            cdata.tmp().get_skill(cnt).level = chara.get_skill(cnt).base_level;
-            if (cdata.tmp().get_skill(cnt).level != chara.get_skill(cnt).level)
+            cdata.tmp().skills().set_level(
+                *the_skill_db.get_id_from_integer(cnt),
+                chara.skills().base_level(
+                    *the_skill_db.get_id_from_integer(cnt)));
+            if (cdata.tmp().skills().level(
+                    *the_skill_db.get_id_from_integer(cnt)) !=
+                chara.skills().level(*the_skill_db.get_id_from_integer(cnt)))
             {
                 cnvbonus(
                     cnt,
-                    chara.get_skill(cnt).level -
-                        cdata.tmp().get_skill(cnt).level);
+                    chara.skills().level(
+                        *the_skill_db.get_id_from_integer(cnt)) -
+                        cdata.tmp().skills().level(
+                            *the_skill_db.get_id_from_integer(cnt)));
             }
         }
     }
@@ -1042,17 +1059,25 @@ void chara_refresh(Character& chara)
             if (chara.quality >= Quality::miracle)
             {
                 if (chara.attr_adjs[cnt] <
-                    chara.get_skill(10 + cnt).base_level / 5)
+                    chara.skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) /
+                        5)
                 {
                     chara.attr_adjs[cnt] =
-                        chara.get_skill(10 + cnt).base_level / 5;
+                        chara.skills().base_level(
+                            *the_skill_db.get_id_from_integer(10 + cnt)) /
+                        5;
                 }
             }
-            chara.get_skill(10 + cnt).level += chara.attr_adjs[cnt];
+            chara.skills().add_level(
+                *the_skill_db.get_id_from_integer(10 + cnt),
+                chara.attr_adjs[cnt]);
         }
-        if (chara.get_skill(10 + cnt).level < 1)
+        if (chara.skills().level(*the_skill_db.get_id_from_integer(10 + cnt)) <
+            1)
         {
-            chara.get_skill(10 + cnt).level = 1;
+            chara.skills().set_level(
+                *the_skill_db.get_id_from_integer(10 + cnt), 1);
         }
     }
     if (chara.is_player())
@@ -1074,7 +1099,9 @@ void chara_refresh(Character& chara)
         if (chara.pv > 0)
         {
             chara.pv = chara.pv *
-                (120 + int(std::sqrt(chara.get_skill(168).level)) * 2) / 100;
+                (120 +
+                 int(std::sqrt(chara.skills().level("core.shield"))) * 2) /
+                100;
         }
     }
     else if (attacknum == 1)
@@ -1085,27 +1112,29 @@ void chara_refresh(Character& chara)
     {
         chara.combat_style.set_dual_wield();
     }
-    chara.max_mp =
-        clamp(
-            ((chara.get_skill(16).level * 2 + chara.get_skill(15).level +
-              chara.get_skill(14).level / 3) *
-                 chara.level / 25 +
-             chara.get_skill(16).level),
-            1,
-            1000000) *
-        chara.get_skill(3).level / 100;
-    chara.max_hp =
-        clamp(
-            ((chara.get_skill(11).level * 2 + chara.get_skill(10).level +
-              chara.get_skill(15).level / 3) *
-                 chara.level / 25 +
-             chara.get_skill(11).level),
-            1,
-            1000000) *
-            chara.get_skill(2).level / 100 +
+    chara.max_mp = clamp(
+                       ((chara.skills().level("core.stat_magic") * 2 +
+                         chara.skills().level("core.stat_will") +
+                         chara.skills().level("core.stat_learning") / 3) *
+                            chara.level / 25 +
+                        chara.skills().level("core.stat_magic")),
+                       1,
+                       1000000) *
+        chara.skills().level("core.stat_mana") / 100;
+    chara.max_hp = clamp(
+                       ((chara.skills().level("core.stat_constitution") * 2 +
+                         chara.skills().level("core.stat_strength") +
+                         chara.skills().level("core.stat_will") / 3) *
+                            chara.level / 25 +
+                        chara.skills().level("core.stat_constitution")),
+                       1,
+                       1000000) *
+            chara.skills().level("core.stat_life") / 100 +
         5;
     chara.max_sp = 100 +
-        (chara.get_skill(15).level + chara.get_skill(11).level) / 5 +
+        (chara.skills().level("core.stat_will") +
+         chara.skills().level("core.stat_constitution")) /
+            5 +
         cdata.player().traits().level("core.stamina_feat") * 8;
     if (chara.max_mp < 1)
     {
@@ -1117,12 +1146,11 @@ void chara_refresh(Character& chara)
     }
     if (chara.index >= ELONA_MAX_PARTY_CHARACTERS || false)
     {
-        chara.dv = chara.level / 2 +
-            chara.dv * chara.dv_correction_value / 100 +
-            chara.dv_correction_value - 100;
+        chara.dv = chara.level / 2 + chara.dv * chara.dv_bonus / 100 +
+            chara.dv_bonus - 100;
         chara.pv = chara.level +
-            (chara.pv + chara.level / 2 + chara.pv_correction_value / 25) *
-                chara.pv_correction_value / 100;
+            (chara.pv + chara.level / 2 + chara.pv_bonus / 25) *
+                chara.pv_bonus / 100;
         if (chara.quality == Quality::great)
         {
             chara.max_hp = chara.max_hp * 3 / 2;
@@ -1136,24 +1164,19 @@ void chara_refresh(Character& chara)
     {
         chara.max_hp += 10;
     }
-    for (auto&& buff : chara.buffs)
+    for (const auto& buff : chara.buffs)
     {
-        if (buff.id == 0)
-        {
-            break;
-        }
-        buff_apply(
-            chara, *the_buff_db.get_id_from_integer(buff.id), buff.power);
+        buff_apply(chara, buff.id, buff.power);
     }
     if (chara.combat_style.dual_wield())
     {
         chara.extra_attack +=
-            int(std::sqrt(chara.get_skill(166).level)) * 3 / 2 + 4;
+            int(std::sqrt(chara.skills().level("core.dual_wield"))) * 3 / 2 + 4;
     }
-    if (chara.get_skill(186).level)
+    if (chara.skills().level("core.eye_of_mind"))
     {
         chara.rate_of_critical_hit +=
-            int(std::sqrt(chara.get_skill(186).level)) + 2;
+            int(std::sqrt(chara.skills().level("core.eye_of_mind"))) + 2;
     }
     if (chara.rate_of_critical_hit > 30)
     {
@@ -1170,20 +1193,20 @@ void chara_refresh(Character& chara)
 
 
 
-int relation_between(const Character& a, const Character& b)
+Relationship relation_between(const Character& a, const Character& b)
 {
-    if (a.relationship >= -2)
+    if (a.relationship >= Relationship::unfriendly)
     {
-        if (b.relationship <= -3)
+        if (b.relationship <= Relationship::enemy)
         {
-            return -3;
+            return Relationship::enemy;
         }
     }
-    else if (b.relationship >= -2)
+    else if (b.relationship >= Relationship::unfriendly)
     {
-        return -3;
+        return Relationship::enemy;
     }
-    return 0;
+    return Relationship::friendly;
 }
 
 
@@ -1246,8 +1269,8 @@ int chara_get_free_slot()
 
 int chara_get_free_slot_ally()
 {
-    const auto max_allies =
-        clamp(cdata.player().get_skill(17).level / 5 + 1, 2, 15);
+    const auto max_allies = clamp(
+        cdata.player().skills().level("core.stat_charisma") / 5 + 1, 2, 15);
     for (int i = 1; i < max_allies + 1; ++i)
     {
         if (cdata[i].state() != Character::State::empty)
@@ -1409,7 +1432,7 @@ void chara_modify_impression(Character& chara, int delta)
     }
     else if (level2 > level1)
     {
-        if (chara.relationship != -3)
+        if (chara.relationship != Relationship::enemy)
         {
             txt(i18n::s.get(
                     "core.chara.impression.gain",
@@ -1494,7 +1517,7 @@ int chara_copy(const Character& source)
     // Reset some fields which should not be copied.
     destination.impression = 0;
     destination.gold = 0;
-    destination.original_relationship = -3;
+    destination.original_relationship = Relationship::enemy;
     destination.has_own_sprite() = false;
     destination.is_livestock() = false;
     destination.is_married() = false;
@@ -1503,15 +1526,15 @@ int chara_copy(const Character& source)
     destination.is_hung_on_sand_bag() = false;
 
     // Unequip all gears.
-    for (auto&& equipment_slot : destination.equipment_slots)
+    for (auto&& body_part : destination.body_parts)
     {
-        equipment_slot.unequip();
+        body_part.unequip();
     }
 
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    game()->character_memories().increment_generate_count(destination.new_id());
+    game()->character_memories.increment_generate_count(destination.new_id());
 
     return slot;
 }
@@ -1548,8 +1571,8 @@ void chara_relocate(
     // Backups for changing
     Position position;
     Position initial_position;
-    int relationship;
-    int original_relationship;
+    Relationship relationship;
+    Relationship original_relationship;
     int hate;
     int enemy_id;
     int hp;
@@ -1592,9 +1615,9 @@ void chara_relocate(
     }
 
     // Unequip all gears.
-    for (auto&& equipment_slot : destination.equipment_slots)
+    for (auto&& body_part : destination.body_parts)
     {
-        equipment_slot.unequip();
+        body_part.unequip();
     }
 
     if (mode == CharaRelocationMode::change)
@@ -1638,18 +1661,24 @@ void chara_relocate(
         for (int element = 50; element < 61; ++element)
         {
             auto resistance = 100;
-            if (destination.get_skill(element).base_level >= 500 ||
-                destination.get_skill(element).base_level <= 100)
+            if (destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element)) >= 500 ||
+                destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element)) <= 100)
             {
-                resistance = destination.get_skill(element).base_level;
+                resistance = destination.skills().base_level(
+                    *the_skill_db.get_id_from_integer(element));
             }
             if (resistance > 500)
             {
                 resistance = 500;
             }
-            destination.get_skill(element).base_level = resistance;
-            destination.get_skill(element).experience = 0;
-            destination.get_skill(element).potential = 0;
+            destination.skills().set_base_level(
+                *the_skill_db.get_id_from_integer(element), resistance);
+            destination.skills().set_experience(
+                *the_skill_db.get_id_from_integer(element), 0);
+            destination.skills().set_potential(
+                *the_skill_db.get_id_from_integer(element), 0);
         }
     }
 
@@ -1676,11 +1705,11 @@ void chara_set_ai_item(Character& chara, ItemRef item)
 
 int chara_armor_class(const Character& chara)
 {
-    if (chara.sum_of_equipment_weight >= 35000)
+    if (chara.equipment_weight >= 35000)
     {
         return 169;
     }
-    else if (chara.sum_of_equipment_weight >= 15000)
+    else if (chara.equipment_weight >= 15000)
     {
         return 170;
     }
@@ -1702,9 +1731,12 @@ int chara_breed_power(const Character& chara)
 
 bool belong_to_same_team(const Character& c1, const Character& c2)
 {
-    return (c1.relationship >= 0 && c2.relationship >= 0) ||
-        (c1.relationship == -1 && c2.relationship == -1) ||
-        (c1.relationship <= -2 && c2.relationship <= -2);
+    return (c1.relationship >= Relationship::friendly &&
+            c2.relationship >= Relationship::friendly) ||
+        (c1.relationship == Relationship::neutral &&
+         c2.relationship == Relationship::neutral) ||
+        (c1.relationship <= Relationship::unfriendly &&
+         c2.relationship <= Relationship::unfriendly);
 }
 
 
@@ -1728,8 +1760,8 @@ void chara_add_quality_parens(Character& chara)
 void initialize_pc_character()
 {
     cdata.player().quality = Quality::good;
-    cdata.player().relationship = 10;
-    cdata.player().original_relationship = 10;
+    cdata.player().relationship = Relationship::ally;
+    cdata.player().original_relationship = Relationship::ally;
     cdata.player().has_own_sprite() = true;
     flt();
     if (const auto item = itemcreate_player_inv(333, 0))
@@ -1746,7 +1778,7 @@ void initialize_pc_character()
     {
         item->set_number(2);
     }
-    if (cdata.player().get_skill(150).level == 0)
+    if (cdata.player().skills().level("core.literacy") == 0)
     {
         flt();
         if (const auto item = itemcreate_player_inv(68, 0))
@@ -1806,7 +1838,7 @@ void go_hostile()
         if (chara.role == Role::guard || chara.role == Role::shop_guard ||
             chara.role == Role::wandering_vendor)
         {
-            chara.relationship = -3;
+            chara.relationship = Relationship::enemy;
             chara.hate = 80;
             chara.emotion_icon = 218;
         }
@@ -1857,7 +1889,7 @@ void turn_aggro(Character& chara, Character& target, int hate)
 {
     if (target.is_player_or_ally())
     {
-        chara.relationship = -3;
+        chara.relationship = Relationship::enemy;
     }
     chara.hate = hate;
     chara.emotion_icon = 218;
@@ -1918,18 +1950,18 @@ void chara_act_hostile_action(Character& attacker, Character& target)
     {
         return;
     }
-    if (target.relationship != -3)
+    if (target.relationship != Relationship::enemy)
     {
         target.emotion_icon = 418;
     }
-    if (target.relationship == 10)
+    if (target.relationship == Relationship::ally)
     {
         txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
             Message::color{ColorIndex::purple});
     }
     else
     {
-        if (target.relationship == 0)
+        if (target.relationship == Relationship::friendly)
         {
             modify_karma(cdata.player(), -2);
         }
@@ -1943,21 +1975,21 @@ void chara_act_hostile_action(Character& attacker, Character& target)
                 return;
             }
         }
-        if (target.relationship > -2)
+        if (target.relationship > Relationship::unfriendly)
         {
             txt(i18n::s.get("core.misc.hostile_action.glares_at_you", target),
                 Message::color{ColorIndex::purple});
-            target.relationship = -2;
+            target.relationship = Relationship::unfriendly;
         }
         else
         {
-            if (target.relationship != -3)
+            if (target.relationship != Relationship::enemy)
             {
                 txt(i18n::s.get(
                         "core.misc.hostile_action.gets_furious", target),
                     Message::color{ColorIndex::purple});
             }
-            target.relationship = -3;
+            target.relationship = Relationship::enemy;
             target.hate = 80;
             target.enemy_id = attacker.index;
         }
@@ -1987,7 +2019,8 @@ void chara_act_hostile_action(Character& attacker, Character& target)
 
 void wake_up()
 {
-    if (game()->date.hour >= 7 && game()->date.hour <= 22)
+    const auto t = game_time();
+    if (7 <= t.hour() && t.hour() <= 22)
     {
         for (auto&& cnt : cdata.others())
         {
@@ -2020,9 +2053,9 @@ void incognitobegin()
         {
             continue;
         }
-        if (cdata[cnt].original_relationship >= -2)
+        if (cdata[cnt].original_relationship >= Relationship::unfriendly)
         {
-            if (cdata[cnt].relationship <= -2)
+            if (cdata[cnt].relationship <= Relationship::unfriendly)
             {
                 cdata[cnt].hate = 0;
                 cdata[cnt].relationship = cdata[cnt].original_relationship;
@@ -2046,7 +2079,7 @@ void incognitoend()
         {
             if (cdata.player().karma < -30)
             {
-                cdata[cnt].relationship = -3;
+                cdata[cnt].relationship = Relationship::enemy;
                 cdata[cnt].hate = 80;
                 cdata[cnt].emotion_icon = 218;
             }
@@ -2079,37 +2112,37 @@ void refresh_burden_state()
          cdata.player().traits().level("core.feathers") * 20) /
         100;
     cdata.player().max_inventory_weight =
-        cdata.player().get_skill(10).level * 500 +
-        cdata.player().get_skill(11).level * 250 +
-        cdata.player().get_skill(153).level * 2000 + 45000;
+        cdata.player().skills().level("core.stat_strength") * 500 +
+        cdata.player().skills().level("core.stat_constitution") * 250 +
+        cdata.player().skills().level("core.weight_lifting") * 2000 + 45000;
     game()->cargo_weight = inv_cargo_weight(inv_player());
     for (int cnt = 0; cnt < 1; ++cnt)
     {
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight * 2)
         {
-            cdata.player().inventory_weight_type = 4;
+            cdata.player().burden_state = 4;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight)
         {
-            cdata.player().inventory_weight_type = 3;
+            cdata.player().burden_state = 3;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight / 4 * 3)
         {
-            cdata.player().inventory_weight_type = 2;
+            cdata.player().burden_state = 2;
             break;
         }
         if (cdata.player().inventory_weight >
             cdata.player().max_inventory_weight / 2)
         {
-            cdata.player().inventory_weight_type = 1;
+            cdata.player().burden_state = 1;
             break;
         }
-        cdata.player().inventory_weight_type = 0;
+        cdata.player().burden_state = 0;
     }
     refresh_speed(cdata.player());
 }
@@ -2188,23 +2221,8 @@ void chara_clear_status_effects(Character& chara)
     {
         chara.attr_adjs[cnt] = 0;
     }
-    if (chara.buffs[0].id != 0)
-    {
-        for (int cnt = 0; cnt < 16; ++cnt)
-        {
-            if (chara.buffs[cnt].id == 0)
-            {
-                break;
-            }
-            if (chara.buffs[cnt].id == 13)
-            {
-                continue;
-            }
-            buff_delete(chara, cnt);
-            --cnt;
-            continue;
-        }
-    }
+    buff_remove_if(
+        chara, [](const auto& buff) { return buff.id != "core.punishment"; });
     chara_refresh(chara);
 }
 
@@ -2219,7 +2237,7 @@ void revive_player(Character& chara)
         traveldone = 0;
         if (game()->executing_immediate_quest_type == 0)
         {
-            event_add(6);
+            deferred_event_add("core.player_died");
         }
     }
     if (chara.role == Role::guard)
@@ -2362,14 +2380,14 @@ void proc_one_equipment_with_negative_enchantments(
 
 void proc_negative_enchantments(Character& chara)
 {
-    for (const auto& [_type, equipment] : chara.equipment_slots)
+    for (const auto& body_part : chara.body_parts)
     {
-        if (!equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
         proc_one_equipment_with_negative_enchantments(
-            chara, equipment.unwrap());
+            chara, body_part.equipment().unwrap());
     }
 }
 
@@ -2528,7 +2546,7 @@ bool move_character_internal(Character& chara)
         refdiff = refdiff / 3;
         if (chara.is_player())
         {
-            if (chara.get_skill(175).level != 0)
+            if (chara.skills().level("core.disarm_trap") != 0)
             {
                 if (try_to_disarm_trap(chara))
                 {
@@ -2705,24 +2723,6 @@ void move_character(Character& chara)
 
 
 
-void lost_body_part(int chara_index)
-{
-    for (auto&& equipment_slot : cdata[chara_index].equipment_slots)
-    {
-        if (equipment_slot.type == body)
-        {
-            if (!equipment_slot.equipment)
-            {
-                continue;
-            }
-            equipment_slot.equipment->body_part = 0;
-            equipment_slot.unequip();
-        }
-    }
-}
-
-
-
 TurnResult proc_movement_event(Character& chara)
 {
     auto result = lua::lua->get_event_manager().trigger(
@@ -2835,14 +2835,14 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounter = 1;
                 }
-                if (game()->weather == 4)
+                if (game()->weather == "core.hard_rain")
                 {
                     if (rnd(10) == 0)
                     {
                         encounter = 1;
                     }
                 }
-                if (game()->weather == 1)
+                if (game()->weather == "core.etherwind")
                 {
                     if (rnd(13) == 0)
                     {
@@ -2864,7 +2864,7 @@ TurnResult proc_movement_event(Character& chara)
                         220 + cdata.player().level * 10 -
                         clamp(
                             game()->cargo_weight * 150 /
-                                (game()->current_cart_limit + 1),
+                                (game()->max_cargo_weight + 1),
                             0,
                             (210 + cdata.player().level * 10))) == 0)
                 {
@@ -2929,7 +2929,7 @@ TurnResult proc_movement_event(Character& chara)
                 {
                     encounterlv /= 2;
                 }
-                else if (game()->weather == 1)
+                else if (game()->weather == "core.etherwind")
                 {
                     encounterlv = encounterlv * 3 / 2 + 10;
                 }
@@ -3004,8 +3004,8 @@ optional_ref<Character> new_ally_joins(Character& new_ally)
     auto& slot = cdata[slot_index];
 
     chara_relocate(new_ally, slot);
-    slot.relationship = 10;
-    slot.original_relationship = 10;
+    slot.relationship = Relationship::ally;
+    slot.original_relationship = Relationship::ally;
     slot.role = Role::none;
     slot.is_quest_target() = false;
     slot.is_not_attacked_by_enemy() = false;

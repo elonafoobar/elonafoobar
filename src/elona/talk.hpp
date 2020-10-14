@@ -2,6 +2,7 @@
 
 #include <string>
 
+#include "data/id.hpp"
 #include "optional.hpp"
 
 
@@ -37,7 +38,7 @@ void talk_window_init(std::string& text);
 std::string talk_get_speaker_name(const Character& chara);
 
 void talk_window_show(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,
@@ -45,7 +46,7 @@ void talk_window_show(
 
 int talk_window_query(const Character& chara);
 int talk_window_query(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,

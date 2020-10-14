@@ -1,6 +1,5 @@
 #include "map.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -20,6 +19,8 @@
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -35,6 +36,7 @@
 #include "quest.hpp"
 #include "save.hpp"
 #include "save_fs.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -88,7 +90,7 @@ void _map_randsite()
 
     if (mdata_t::is_nefia(map_data.type))
     {
-        if (map_data.next_regenerate_date == 0)
+        if (map_data.next_regenerate_date.is_epoch())
         {
             if (rnd(25) == 0)
             {
@@ -105,7 +107,7 @@ void _map_randsite()
                 if (const auto item = itemcreate_map_inv(172, *pos, 0))
                 {
                     item->own_state = OwnState::town;
-                    item->param1 = choice(isetgod);
+                    item->__god = god_get_random_god_or_eyth();
                 }
                 return;
             }
@@ -530,7 +532,7 @@ void map_calc_trade_goods_price()
         trate(6) = 100;
         trate(7) = 70;
     }
-    randomize(game()->date.hours() / 100);
+    randomize(game_now().from_epoch().hours() / 100);
     for (int cnt = 0; cnt < 10; ++cnt)
     {
         trate(cnt) += rnd(15) - rnd(15);
@@ -564,7 +566,7 @@ static void _map_update_arena_random_seed()
 {
     area_data[game()->current_map].arena_random_seed = rnd(10000);
     area_data[game()->current_map].time_of_next_update_of_arena_random_seed =
-        game()->date.hours() + 24;
+        game_now() + 1_day;
 }
 
 
@@ -660,7 +662,7 @@ static void _map_regenerate()
 {
     if (map_data.should_regenerate == 0)
     {
-        if (map_data.next_regenerate_date != 0)
+        if (!map_data.next_regenerate_date.is_epoch())
         {
             _clear_material_spots();
             _modify_items_on_regenerate();
@@ -670,7 +672,7 @@ static void _map_regenerate()
 
         _set_feats_on_regenerate();
     }
-    map_data.next_regenerate_date = game()->date.hours() + 120;
+    map_data.next_regenerate_date = game_now() + 5_days;
 }
 
 
@@ -776,14 +778,13 @@ static void _map_restock_regenerate()
 
 static void _map_restock()
 {
-    if (map_data.next_restock_date == 0)
+    if (map_data.next_restock_date.is_epoch())
     {
         renewmulti = 1;
     }
     else
     {
-        renewmulti =
-            (game()->date.hours() - map_data.next_restock_date) / 24 + 1;
+        renewmulti = (game_now() - map_data.next_restock_date).days() + 1;
     }
     if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
@@ -809,22 +810,22 @@ static void _map_restock()
     {
         _map_restock_regenerate();
     }
-    map_data.next_restock_date = game()->date.hours() + 24;
+    map_data.next_restock_date = game_now() + 1_day;
 }
 
 
 void map_proc_regen_and_update()
 {
-    if (game()->date.hours() >=
+    if (game_now() >=
         area_data[game()->current_map].time_of_next_update_of_arena_random_seed)
     {
         _map_update_arena_random_seed();
     }
-    if (game()->date.hours() >= map_data.next_regenerate_date)
+    if (game_now() >= map_data.next_regenerate_date)
     {
         _map_regenerate();
     }
-    if (game()->date.hours() >= map_data.next_restock_date)
+    if (game_now() >= map_data.next_restock_date)
     {
         _map_restock();
     }
@@ -858,7 +859,7 @@ void map_reload_noyel()
         flt();
         if (const auto item = itemcreate_map_inv(171, 29, 17, 0))
         {
-            item->param1 = 6;
+            item->__god = "core.jure";
             item->own_state = OwnState::town;
         }
         flt();
@@ -923,8 +924,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 239, 25, 8))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
@@ -936,8 +937,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 24, 22))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::souvenir_vendor;
             chara->shop_rank = 30;
@@ -958,8 +959,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 28, 9))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;
@@ -971,8 +972,8 @@ void map_reload_noyel()
         if (const auto chara = chara_create(-1, 271, 29, 24))
         {
             chara->ai_calm = 3;
-            chara->relationship = 0;
-            chara->original_relationship = 0;
+            chara->relationship = Relationship::friendly;
+            chara->original_relationship = Relationship::friendly;
             chara->only_christmas() = true;
             chara->role = Role::street_vendor;
             chara->shop_rank = 30;
@@ -1413,7 +1414,7 @@ TurnResult exit_map()
                     if (area_data[game()->current_map].id ==
                         mdata_t::MapId::pyramid)
                     {
-                        if (game()->quest_flags.pyramid_trial == 0)
+                        if (story_quest_progress("core.pyramid_trial") == 0)
                         {
                             txt(i18n::s.get(
                                 "core.action.exit_map.no_invitation_to_pyramid"));
@@ -1529,10 +1530,10 @@ TurnResult exit_map()
     {
         if (map_is_town_or_guild() ||
             previous_map == mdata_t::MapId::your_home ||
-            game()->departure_date == 0)
+            game()->departure_time.is_epoch())
         {
-            game()->departure_date = game()->date.hours();
-            game()->distance_between_town = 0;
+            game()->departure_time = game_now();
+            game()->travel_distance = 0;
             game()->left_town_map = previous_map;
         }
         if (area_data[game()->current_map].type !=
@@ -1564,7 +1565,7 @@ TurnResult exit_map()
         {
             game()->entrance_type = area_data[game()->current_map].entrance;
         }
-        if (event_find(6))
+        if (deferred_event_find("core.player_died"))
         {
             Message::instance().buffered_message_append(
                 i18n::s.get("core.action.exit_map.delivered_to_your_home"));
@@ -1586,7 +1587,7 @@ TurnResult exit_map()
             Message::instance().buffered_message_append(i18n::s.get(
                 "core.action.exit_map.left", mapname(previous_map)));
         }
-        if (game()->cargo_weight > game()->current_cart_limit)
+        if (game()->cargo_weight > game()->max_cargo_weight)
         {
             if (area_data[game()->current_map].type ==
                     mdata_t::MapType::world_map ||
@@ -1669,7 +1670,7 @@ TurnResult exit_map()
         {
             if (cnt.state() != Character::State::empty)
             {
-                game()->character_memories().decrement_generate_count(
+                game()->character_memories.decrement_generate_count(
                     cnt.new_id());
             }
         }
@@ -2014,28 +2015,28 @@ void map_global_proc_travel_events(Character& chara)
 {
     if (!chara.activity)
     {
-        chara.activity.type = Activity::Type::travel;
-        chara.activity.turn = 20;
-        if (game()->weather == 3)
+        chara.activity.id = "core.travel";
+        chara.activity.turns = 20;
+        if (game()->weather == "core.rain")
         {
-            chara.activity.turn = chara.activity.turn * 13 / 10;
+            chara.activity.turns = chara.activity.turns * 13 / 10;
         }
-        if (game()->weather == 4)
+        if (game()->weather == "core.hard_rain")
         {
-            chara.activity.turn = chara.activity.turn * 16 / 10;
+            chara.activity.turns = chara.activity.turns * 16 / 10;
         }
-        if (game()->weather == 2 ||
+        if (game()->weather == "core.snow" ||
             chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
         {
-            chara.activity.turn = chara.activity.turn * 22 / 10;
+            chara.activity.turns = chara.activity.turns * 22 / 10;
         }
-        if (game()->weather == 1)
+        if (game()->weather == "core.etherwind")
         {
-            chara.activity.turn = chara.activity.turn * 5 / 10;
+            chara.activity.turns = chara.activity.turns * 5 / 10;
         }
-        chara.activity.turn = chara.activity.turn * 100 /
+        chara.activity.turns = chara.activity.turns * 100 /
             (100 + game()->seven_league_boot_effect +
-             cdata.player().get_skill(182).level);
+             cdata.player().skills().level("core.traveling"));
         return;
     }
     if (cdata.player().nutrition <= 5000)
@@ -2053,7 +2054,7 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game()->weather == 2 ||
+    if (game()->weather == "core.snow" ||
         chip_data.for_cell(chara.position.x, chara.position.y).kind == 4)
     {
         if (game()->protects_from_bad_weather == 0)
@@ -2066,14 +2067,14 @@ void map_global_proc_travel_events(Character& chara)
                     txt(i18n::s.get(
                             "core.action.move.global.weather.snow.sound"),
                         Message::color{ColorIndex::cyan});
-                    chara.activity.turn += 10;
+                    chara.activity.turns += 10;
                 }
             }
             if (rnd(1000) == 0)
             {
                 txt(i18n::s.get("core.action.move.global.weather.snow.message"),
                     Message::color{ColorIndex::purple});
-                chara.activity.turn += 50;
+                chara.activity.turns += 50;
             }
         }
         if (cdata.player().nutrition <= 2000)
@@ -2089,7 +2090,7 @@ void map_global_proc_travel_events(Character& chara)
             }
         }
     }
-    if (game()->weather == 4)
+    if (game()->weather == "core.hard_rain")
     {
         if (game()->protects_from_bad_weather == 0)
         {
@@ -2101,7 +2102,7 @@ void map_global_proc_travel_events(Character& chara)
                     txt(i18n::s.get(
                             "core.action.move.global.weather.heavy_rain.sound"),
                         Message::color{ColorIndex::cyan});
-                    chara.activity.turn += 5;
+                    chara.activity.turns += 5;
                 }
             }
             if (cdata.player().confused == 0)
@@ -2121,13 +2122,13 @@ void map_global_proc_travel_events(Character& chara)
         }
         cdata.player().blind = 3;
     }
-    if (chara.activity.turn > 0)
+    if (chara.activity.turns > 0)
     {
-        ++game()->date.minute;
+        game_advance_clock(1_minute, GameAdvanceClockEvents::none);
         return;
     }
     traveldone = 1;
-    game()->distance_between_town += 4;
+    game()->travel_distance += 4;
     chara.activity.finish();
 }
 
@@ -2180,7 +2181,7 @@ void sense_map_feats_on_move(Character& chara)
             addefmap(chara.position.x, chara.position.y, 3, 10, dirsub, rnd(2));
             if (keybd_wait <=
                     g_config.walk_wait() * g_config.start_run_wait() ||
-                cdata.player().turn % 2 == 0 ||
+                cdata.player().turns % 2 == 0 ||
                 map_data.type == mdata_t::MapType::world_map)
             {
                 sound_footstep2(foot);

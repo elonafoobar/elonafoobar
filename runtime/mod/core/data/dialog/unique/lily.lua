@@ -125,7 +125,7 @@ return {
             {"progress.end_life.end"},
          },
          on_finish = function(t)
-            World.add_deferred_event(20, t.speaker.index)
+            World.add_deferred_event("core.lily_killed", 0, { ["core.lily"] = t.speaker.index })
          end
       },
       end_life_leave = {

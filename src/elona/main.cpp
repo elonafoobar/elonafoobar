@@ -1,7 +1,6 @@
 #include "main.hpp"
 
 #include "../util/tinyargparser.hpp"
-#include "../version.hpp"
 #include "config.hpp"
 #include "init.hpp"
 #include "lua_env/event_manager.hpp"
@@ -11,6 +10,7 @@
 #include "save_header.hpp"
 #include "turn_sequence.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 using namespace elona;
 

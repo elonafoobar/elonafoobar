@@ -123,7 +123,7 @@ InventorySlot inv_make_free_slot_force(const InventoryRef& inv)
         const auto item = inv->at(slot).unwrap();
         const auto owner_chara = owner.as_character();
         assert(owner_chara);
-        if (item->body_part == 0)
+        if (!item->is_equipped())
         {
             if (owner_chara->ai_item == item)
             {

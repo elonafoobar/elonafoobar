@@ -39,4 +39,10 @@ std::string foodname(int, const std::string&, int = 0, int = 0);
 
 void foods_get_rotten();
 
+/// Determines if @a food is rotten.
+bool food_is_rotten(const ItemRef& food);
+
+/// Make @a food rotten.
+void food_make_rotten(const ItemRef& food);
+
 } // namespace elona

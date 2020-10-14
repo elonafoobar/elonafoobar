@@ -746,7 +746,7 @@ void render_cloud()
 
 void draw_hp_bar(const Character& chara, int x, int y)
 {
-    const int ratio = std::min(chara.hp * 30 / chara.max_hp, 30);
+    const int ratio = std::min(chara.hp * 30 / chara.max_hp, lua_int{30});
     if (ratio <= 0)
         return;
 
@@ -852,16 +852,6 @@ void draw_character_sprite(
         y + dy + 8,
         pcc_size(24, 32),
         pcc_size(40, 48));
-}
-
-
-
-snail::Color color_index_to_snail_color(int color_index)
-{
-    const uint8_t r = 255 - c_col(0, color_index);
-    const uint8_t g = 255 - c_col(1, color_index);
-    const uint8_t b = 255 - c_col(2, color_index);
-    return {r, g, b};
 }
 
 
@@ -996,7 +986,7 @@ void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_chara_chip_sprite_in_world_map(
-            ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
+            ext, color_index_to_color(color_index), dx, dy, offset_y);
 
         if (chara.emotion_icon != 0)
         {
@@ -1008,12 +998,12 @@ void draw_npc_chara_chip(const Character& chara, int dx, int dy, int ground_)
         if (chip_data[ground_].kind == 3)
         {
             draw_chara_chip_sprite_in_water(
-                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
+                ext, color_index_to_color(color_index), dx, dy, offset_y);
         }
         else
         {
             draw_chara_chip_sprite(
-                ext, color_index_to_snail_color(color_index), dx, dy, offset_y);
+                ext, color_index_to_color(color_index), dx, dy, offset_y);
         }
 
         if (chara.furious != 0)
@@ -1052,7 +1042,8 @@ bool hp_bar_visible(const Character& chara)
 
 bool is_night()
 {
-    return game()->date.hour > 17 || game()->date.hour < 6;
+    const auto t = game_time();
+    return t.hour() > 17 || t.hour() < 6;
 }
 
 
@@ -1288,12 +1279,13 @@ void draw_one_item(
     int dx,
     int dy,
     int item_chip_id,
-    int color_id,
+    const Color& item_tint,
     int chara_chip_id,
     int stack_height,
     int scrturn_)
 {
-    const auto rect = prepare_item_image(item_chip_id, color_id, chara_chip_id);
+    const auto rect =
+        prepare_item_image(item_chip_id, item_tint, chara_chip_id);
     if (map_data.type == mdata_t::MapType::world_map)
     {
         draw_item_chip_in_world_map(
@@ -1338,7 +1330,7 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
                 dx,
                 dy,
                 bag_icon,
-                0,
+                {255, 255, 255},
                 0,
                 i * item_chips[bag_icon].stack_height,
                 scrturn_);
@@ -1364,13 +1356,13 @@ void draw_items(int x, int y, int dx, int dy, int scrturn_)
             }
 
             const auto item_chip_id = item->image;
-            const auto color_id = item->tint;
+            const auto item_tint = item->tint;
             const auto chara_chip_id = item->param1;
             draw_one_item(
                 dx,
                 dy,
                 item_chip_id,
-                color_id,
+                item_tint,
                 chara_chip_id,
                 stack_height,
                 scrturn_);
@@ -1545,13 +1537,13 @@ void cell_draw()
 
                 if (py_ < windowh - inf_verh - 24)
                 {
-                    if (cdata.player().activity.type == Activity::Type::fish)
+                    if (cdata.player().activity.id == "core.fish")
                     {
                         ani_ = 0;
                     }
                     else
                     {
-                        ani_ = cdata.player().turn % 4 * 32;
+                        ani_ = cdata.player().turns % 4 * 32;
                     }
                     if (map_data.type == mdata_t::MapType::world_map)
                     {

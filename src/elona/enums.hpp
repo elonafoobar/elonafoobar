@@ -124,7 +124,7 @@ enum class ItemCategory : int
     bodyparts = 62000,
     junk = 64000,
     gold_piece = 68000,
-    platinum_coin = 69000,
+    platinum = 69000,
     chest = 72000,
     ore = 77000,
     tree = 80000,
@@ -355,5 +355,30 @@ enum class OwnState : int
 
 
 ENUMUTIL_DEFINE_COMPARISON_OPERATORS(OwnState)
+
+
+
+// TODO rename
+/// Relationship between characters.
+enum class Relationship : int
+{
+    /// Your enemy. Mainly dungeon monsters.
+    enemy = -3,
+
+    /// A town citizen who you attacked once.
+    unfriendly = -2,
+
+    /// Not enemy, not your ally. E.g., little girl, cat, Gwen-chan
+    neutral = -1,
+
+    /// Friendly person. Town citizen.
+    friendly = 0,
+
+    /// Your ally.
+    ally = 10,
+};
+
+
+ENUMUTIL_DEFINE_COMPARISON_OPERATORS(Relationship)
 
 } // namespace elona

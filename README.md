@@ -52,8 +52,11 @@
 
 ## Steps
 
-1. Extract `elona122.zip` (from [here](http://ylvania.style.coocan.jp/file/elona122.zip)) to the `deps` directory, so `deps\elona` exists. This will allow for automatically copying the required assets.
-2. Follow the platform-specific instructions below.
+1. Clone this repository or your forked one: `git clone https://github.com/elonafoobar/elonafoobar`
+2. Clone submodules as well: `git submodule update --init`
+3. Download the original Elona (from [here](http://ylvania.style.coocan.jp/file/elona122.zip)).
+4. Extract `elona122.zip` to the `deps` directory, so `deps\elona` exists. This will allow for automatically copying the required assets.
+5. Follow the platform-specific instructions below.
 
 ### macOS
 
@@ -132,3 +135,5 @@ For files under [runtime/graphic](runtime/graphic/) folder of the repository, se
 * [minizip](https://github.com/mnoinvaz/minizip): see [license file](src/thirdparty/minizip/LICENSE).
 * [json5](https://github.com/ki-foobar/json5): see [license file](src/thirdparty/json5/LICENSE).
 * [inspect.lua](https://github.com/kikito/inspect.lua): see [license file](runtime/data/script/prelude/inspect.lua).
+* [LuaFun](https://github.com/luafun/luafun): see [license file](runtime/data/script/prelude/luafun/COPYING.md).
+* [msgpack-c](https://github.com/msgpack/msgpack-c): see [license file](src/thirdparty/msgpack-c/LICENSE_1_0.txt).

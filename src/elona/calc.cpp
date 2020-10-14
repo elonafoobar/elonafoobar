@@ -1,11 +1,10 @@
 #include "calc.hpp"
 
-#include "ability.hpp"
 #include "area.hpp"
 #include "buff.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
@@ -17,6 +16,7 @@
 #include "message.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -89,8 +89,8 @@ int rangedist = 0;
 optional<SkillDamage>
 calc_skill_damage(const Character& chara, int skill, int power)
 {
-    int x =
-        chara.get_skill(the_ability_db[skill]->related_basic_attribute).level;
+    int x = chara.skills().level(*the_skill_db.get_id_from_integer(
+        the_skill_db[skill]->related_basic_attribute));
 
     switch (skill)
     {
@@ -397,7 +397,10 @@ int calc_rate_to_pierce(int id)
 
 std::string calc_age(const Character& chara)
 {
-    int n = game()->date.year - chara.birth_year;
+    // Note: In vanilla, `Character::birthday` field contains only year. To
+    // emulate vanilla's behavior, this function intentionally ignores month
+    // and day property.
+    const auto n = game_date().year() - chara.birthday.year();
     return n >= 0 ? std::to_string(n) : i18n::s.get("core.chara.age_unknown");
 }
 
@@ -412,8 +415,8 @@ int calcexpalive(int level)
 
 int calc_evasion(const Character& chara)
 {
-    return chara.get_skill(13).level / 3 + chara.get_skill(173).level +
-        chara.dv + 25;
+    return chara.skills().level("core.stat_perception") / 3 +
+        chara.skills().level("core.evasion") + chara.dv + 25;
 }
 
 
@@ -430,21 +433,28 @@ int calc_accuracy(
 
     if (attackskill == 106)
     {
-        accuracy = attacker.get_skill(12).level / 5 +
-            attacker.get_skill(10).level / 2 +
-            attacker.get_skill(attackskill).level + 50;
+        accuracy = attacker.skills().level("core.stat_dexterity") / 5 +
+            attacker.skills().level("core.stat_strength") / 2 +
+            attacker.skills().level(
+                *the_skill_db.get_id_from_integer(attackskill)) +
+            50;
         if (attacker.combat_style.shield())
         {
             accuracy = accuracy * 100 / 130;
         }
-        accuracy += attacker.get_skill(12).level / 5 +
-            attacker.get_skill(10).level / 10 + attacker.hit_bonus;
+        accuracy += attacker.skills().level("core.stat_dexterity") / 5 +
+            attacker.skills().level("core.stat_strength") / 10 +
+            attacker.hit_bonus;
     }
     else
     {
-        accuracy = attacker.get_skill(12).level / 4 +
-            attacker.get_skill(weapon->skill).level / 3 +
-            attacker.get_skill(attackskill).level + 50;
+        accuracy = attacker.skills().level("core.stat_dexterity") / 4 +
+            attacker.skills().level(
+                *the_skill_db.get_id_from_integer(weapon->skill)) /
+                3 +
+            attacker.skills().level(
+                *the_skill_db.get_id_from_integer(attackskill)) +
+            50;
         accuracy += attacker.hit_bonus + weapon->hit_bonus;
         if (ammo)
         {
@@ -472,7 +482,7 @@ int calc_accuracy(
                 accuracy += 25;
                 if (weapon->weight >= 4000)
                 {
-                    accuracy += attacker.get_skill(167).level;
+                    accuracy += attacker.skills().level("core.two_hand");
                 }
             }
             else if (attacker.combat_style.dual_wield())
@@ -482,13 +492,14 @@ int calc_accuracy(
                     if (weapon->weight >= 4000)
                     {
                         accuracy -= (weapon->weight - 4000 + 400) /
-                            (10 + attacker.get_skill(166).level / 5);
+                            (10 +
+                             attacker.skills().level("core.dual_wield") / 5);
                     }
                 }
                 else if (weapon->weight > 1500)
                 {
                     accuracy -= (weapon->weight - 1500 + 100) /
-                        (10 + attacker.get_skill(166).level / 5);
+                        (10 + attacker.skills().level("core.dual_wield") / 5);
                 }
             }
         }
@@ -499,23 +510,27 @@ int calc_accuracy(
         if (attacker.is_player())
         {
             accuracy = accuracy * 100 /
-                clamp((150 - attacker.get_skill(301).level / 2), 115, 150);
+                clamp((150 - attacker.skills().level("core.riding") / 2),
+                      115,
+                      150);
             if (attackskill != 106 && attackrange == 0 &&
                 weapon->weight >= 4000)
             {
                 accuracy -= (weapon->weight - 4000 + 400) /
-                    (10 + attacker.get_skill(301).level / 5);
+                    (10 + attacker.skills().level("core.riding") / 5);
             }
         }
         if (attacker.index == game()->mount)
         {
             accuracy = accuracy * 100 /
-                clamp((150 - attacker.get_skill(10).level / 2), 115, 150);
+                clamp((150 - attacker.skills().level("core.stat_strength") / 2),
+                      115,
+                      150);
             if (attackskill != 106 && attackrange == 0 &&
                 weapon->weight >= 4000)
             {
                 accuracy -= (weapon->weight - 4000 + 400) /
-                    (10 + attacker.get_skill(10).level / 10);
+                    (10 + attacker.skills().level("core.stat_strength") / 10);
             }
         }
     }
@@ -524,7 +539,8 @@ int calc_accuracy(
     {
         int twohit = 100 -
             (attacknum - 1) *
-                (10000 / (100 + attacker.get_skill(166).level * 10));
+                (10000 /
+                 (100 + attacker.skills().level("core.dual_wield") * 10));
         if (accuracy > 0)
         {
             accuracy = accuracy * twohit / 100;
@@ -577,35 +593,42 @@ int calcattackhit(
             tohit = tohit / 3 * 2;
         }
     }
-    if (target.get_skill(187).level != 0)
+    if (target.skills().level("core.greater_evasion") != 0)
     {
-        if (tohit < target.get_skill(187).level * 10 && tohit > 0)
+        if (tohit < target.skills().level("core.greater_evasion") * 10 &&
+            tohit > 0)
         {
             int evaderef = evasion * 100 / clamp(tohit, 1, tohit);
             if (evaderef > 300)
             {
-                if (rnd_capped(target.get_skill(187).level + 250) > 100)
+                if (rnd_capped(
+                        target.skills().level("core.greater_evasion") + 250) >
+                    100)
                 {
                     return -2;
                 }
             }
             if (evaderef > 200)
             {
-                if (rnd_capped(target.get_skill(187).level + 250) > 150)
+                if (rnd_capped(
+                        target.skills().level("core.greater_evasion") + 250) >
+                    150)
                 {
                     return -2;
                 }
             }
             if (evaderef > 150)
             {
-                if (rnd_capped(target.get_skill(187).level + 250) > 200)
+                if (rnd_capped(
+                        target.skills().level("core.greater_evasion") + 250) >
+                    200)
                 {
                     return -2;
                 }
             }
         }
     }
-    if (rnd(5000) < attacker.get_skill(13).level + 50)
+    if (rnd(5000) < attacker.skills().level("core.stat_perception") + 50)
     {
         critical = 1;
         return 1;
@@ -652,17 +675,25 @@ int calcattackdmg(
     int pierce;
     if (attackskill == 106)
     {
-        dmgfix = attacker.get_skill(10).level / 8 +
-            attacker.get_skill(106).level / 8 + attacker.damage_bonus;
+        dmgfix = attacker.skills().level("core.stat_strength") / 8 +
+            attacker.skills().level("core.martial_arts") / 8 +
+            attacker.damage_bonus;
         dice1 = 2;
-        dice2 = attacker.get_skill(106).level / 8 + 5;
+        dice2 = attacker.skills().level("core.martial_arts") / 8 + 5;
         dmgmulti = 0.5 +
             double(
-                (attacker.get_skill(10).level +
-                 attacker.get_skill(attackskill).level / 5 +
-                 attacker.get_skill(152).level * 2)) /
+                (attacker.skills().level("core.stat_strength") +
+                 attacker.skills().level(
+                     *the_skill_db.get_id_from_integer(attackskill)) /
+                     5 +
+                 attacker.skills().level("core.tactics") * 2)) /
                 40;
-        pierce = clamp(attacker.get_skill(attackskill).level / 5, 5, 50);
+        pierce = clamp(
+            attacker.skills().level(
+                *the_skill_db.get_id_from_integer(attackskill)) /
+                5,
+            5,
+            50);
     }
     else
     {
@@ -676,20 +707,28 @@ int calcattackdmg(
                 ammo->dice.bonus + ammo->dice.rolls * ammo->dice.faces / 2;
             dmgmulti = 0.5 +
                 double(
-                    (attacker.get_skill(13).level +
-                     attacker.get_skill(weapon->skill).level / 5 +
-                     attacker.get_skill(attackskill).level / 5 +
-                     attacker.get_skill(189).level * 3 / 2)) /
+                    (attacker.skills().level("core.stat_perception") +
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(weapon->skill)) /
+                         5 +
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) /
+                         5 +
+                     attacker.skills().level("core.marksman") * 3 / 2)) /
                     40;
         }
         else
         {
             dmgmulti = 0.6 +
                 double(
-                    (attacker.get_skill(10).level +
-                     attacker.get_skill(weapon->skill).level / 5 +
-                     attacker.get_skill(attackskill).level / 5 +
-                     attacker.get_skill(152).level * 2)) /
+                    (attacker.skills().level("core.stat_strength") +
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(weapon->skill)) /
+                         5 +
+                     attacker.skills().level(
+                         *the_skill_db.get_id_from_integer(attackskill)) /
+                         5 +
+                     attacker.skills().level("core.tactics") * 2)) /
                     45;
         }
         pierce = calc_rate_to_pierce(the_item_db[weapon->id]->integer_id);
@@ -713,7 +752,7 @@ int calcattackdmg(
         {
             dmgmulti *= 1.2;
         }
-        dmgmulti += 0.03 * attacker.get_skill(167).level;
+        dmgmulti += 0.03 * attacker.skills().level("core.two_hand");
     }
     if (attacker.is_player())
     {
@@ -828,8 +867,9 @@ int calcattackdmg(
 CalcAttackProtectionResult calc_attack_protection(const Character& chara)
 {
     const auto rate = chara.pv +
-        chara.get_skill(chara_armor_class(chara)).level +
-        chara.get_skill(12).level / 10;
+        chara.skills().level(
+            *the_skill_db.get_id_from_integer(chara_armor_class(chara))) +
+        chara.skills().level("core.stat_dexterity") / 10;
     if (rate <= 0)
     {
         return {0, 1, 1};
@@ -996,7 +1036,8 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     if (calc_mode == 0)
     {
         int max = ret / 2;
-        ret = ret * 100 / (100 + cdata.player().get_skill(156).level);
+        ret = ret * 100 /
+            (100 + cdata.player().skills().level("core.negotiation"));
         if (game()->guild.belongs_to_mages_guild != 0)
         {
             if (category == ItemCategory::spellbook)
@@ -1011,12 +1052,15 @@ int calcitemvalue(const ItemRef& item, int calc_mode)
     }
     if (calc_mode == 1)
     {
-        int max = cdata.player().get_skill(156).level * 250 + 5000;
+        int max =
+            cdata.player().skills().level("core.negotiation") * 250 + 5000;
         if (ret / 3 < max)
         {
             max = ret / 3;
         }
-        ret = ret * (100 + cdata.player().get_skill(156).level * 5) / 1000;
+        ret = ret *
+            (100 + cdata.player().skills().level("core.negotiation") * 5) /
+            1000;
         if (is_equipment(category))
         {
             ret /= 20;
@@ -1070,7 +1114,9 @@ int calcinvestvalue(const Character& shopkeeper)
     {
         ret = 500'000;
     }
-    return ret * 100 / (100 + cdata.player().get_skill(160).level * 10) + 200;
+    return ret * 100 /
+        (100 + cdata.player().skills().level("core.investing") * 10) +
+        200;
 }
 
 
@@ -1246,7 +1292,8 @@ int calccargoupdate()
 
 int calccargoupdatecost()
 {
-    return (game()->current_cart_limit - game()->initial_cart_limit) / 10000 +
+    return (game()->max_cargo_weight - game()->initial_max_cargo_weight) /
+        10000 +
         1;
 }
 
@@ -1276,7 +1323,8 @@ int calcidentifyvalue(int type)
             cost = cost * need_to_identify * 70 / 100;
         }
     }
-    cost = cost * 100 / (100 + cdata.player().get_skill(156).level * 2);
+    cost = cost * 100 /
+        (100 + cdata.player().skills().level("core.negotiation") * 2);
 
     return game()->guild.belongs_to_fighters_guild ? cost / 2 : cost;
 }
@@ -1288,7 +1336,10 @@ int calc_skill_training_cost(
     const Character& chara,
     bool discount)
 {
-    int platinum = chara.get_skill(skill_id).base_level / 5 + 2;
+    int platinum =
+        chara.skills().base_level(*the_skill_db.get_id_from_integer(skill_id)) /
+            5 +
+        2;
     return discount ? platinum / 2 : platinum;
 }
 
@@ -1300,9 +1351,8 @@ int calc_skill_learning_cost(
     bool discount)
 {
     (void)skill_id;
-    (void)chara;
 
-    int platinum = 15 + 3 * game()->number_of_learned_skills_by_trainer;
+    int platinum = 15 + 3 * chara.learned_skills;
     return discount ? platinum * 2 / 3 : platinum;
 }
 
@@ -1319,7 +1369,8 @@ int calc_resurrection_value(const Character& chara)
 
 int calc_slave_value(const Character& chara)
 {
-    int value = chara.get_skill(10).level * chara.get_skill(11).level +
+    int value = chara.skills().level("core.stat_strength") *
+            chara.skills().level("core.stat_constitution") +
         chara.level * chara.level + 1000;
     if (value > 50'000)
     {
@@ -1367,10 +1418,10 @@ int calc_spell_power(const Character& caster, int id)
 {
     if (id >= 600)
     {
-        if (the_ability_db[id]->related_basic_attribute != 0)
+        if (the_skill_db[id]->related_basic_attribute != 0)
         {
-            return caster.get_skill(the_ability_db[id]->related_basic_attribute)
-                       .level *
+            return caster.skills().level(*the_skill_db.get_id_from_integer(
+                       the_skill_db[id]->related_basic_attribute)) *
                 6 +
                 10;
         }
@@ -1378,13 +1429,16 @@ int calc_spell_power(const Character& caster, int id)
     }
     if (caster.is_player())
     {
-        return caster.get_skill(id).level * 10 + 50;
+        return caster.skills().level(*the_skill_db.get_id_from_integer(id)) *
+            10 +
+            50;
     }
-    if (caster.get_skill(172).level == 0 && !caster.is_player_or_ally())
+    if (caster.skills().level("core.casting") == 0 &&
+        !caster.is_player_or_ally())
     {
         return caster.level * 6 + 10;
     }
-    return caster.get_skill(172).level * 6 + 10;
+    return caster.skills().level("core.casting") * 6 + 10;
 }
 
 
@@ -1401,7 +1455,9 @@ int calc_spell_success_rate(const Character& caster, int id)
         if (game()->mount == caster.index)
         {
             return 95 -
-                clamp(30 - cdata.player().get_skill(301).level / 2, 0, 30);
+                clamp(30 - cdata.player().skills().level("core.riding") / 2,
+                      0,
+                      30);
         }
         else
         {
@@ -1414,11 +1470,11 @@ int calc_spell_success_rate(const Character& caster, int id)
     int armor_skill = chara_armor_class(caster);
     if (armor_skill == 169)
     {
-        penalty = 17 - caster.get_skill(169).level / 5;
+        penalty = 17 - caster.skills().level("core.heavy_armor") / 5;
     }
     else if (armor_skill == 170)
     {
-        penalty = 12 - caster.get_skill(170).level / 5;
+        penalty = 12 - caster.skills().level("core.medium_armor") / 5;
     }
     if (penalty < 4)
     {
@@ -1430,16 +1486,18 @@ int calc_spell_success_rate(const Character& caster, int id)
     }
     if (id == 441) // Wish
     {
-        penalty += caster.get_skill(id).level;
+        penalty += caster.skills().level(*the_skill_db.get_id_from_integer(id));
     }
     if (id == 464) // Harvest
     {
-        penalty += caster.get_skill(id).level / 3;
+        penalty +=
+            caster.skills().level(*the_skill_db.get_id_from_integer(id)) / 3;
     }
 
-    int percentage = 90 + caster.get_skill(id).level -
-        the_ability_db[id]->difficulty * penalty /
-            (5 + caster.get_skill(172).level * 4);
+    int percentage = 90 +
+        caster.skills().level(*the_skill_db.get_id_from_integer(id)) -
+        the_skill_db[id]->difficulty * penalty /
+            (5 + caster.skills().level("core.casting") * 4);
     if (armor_skill == 169)
     {
         if (percentage > 80)
@@ -1485,18 +1543,22 @@ int calc_spell_cost_mp(const Character& caster, int id)
         if (id == 413 || id == 461 || id == 457 || id == 438 || id == 409 ||
             id == 408 || id == 410 || id == 466)
         {
-            return the_ability_db[id]->cost;
+            return the_skill_db[id]->cost;
         }
         else
         {
-            return the_ability_db[id]->cost *
-                (100 + caster.get_skill(id).level * 3) / 100 +
-                caster.get_skill(id).level / 8;
+            return the_skill_db[id]->cost *
+                (100 +
+                 caster.skills().level(*the_skill_db.get_id_from_integer(id)) *
+                     3) /
+                100 +
+                caster.skills().level(*the_skill_db.get_id_from_integer(id)) /
+                8;
         }
     }
     else
     {
-        return the_ability_db[id]->cost * (50 + caster.level * 3) / 100;
+        return the_skill_db[id]->cost * (50 + caster.level * 3) / 100;
     }
 }
 
@@ -1507,11 +1569,12 @@ int calc_spell_cost_stock(const Character& caster, int id)
     if (debug_has_wizard_flag("core.wizard.no_spellstock_cost"))
         return 1;
 
-    int cost =
-        the_ability_db[id]->cost * 200 / (caster.get_skill(id).level * 3 + 100);
-    if (cost < the_ability_db[id]->cost / 5)
+    int cost = the_skill_db[id]->cost * 200 /
+        (caster.skills().level(*the_skill_db.get_id_from_integer(id)) * 3 +
+         100);
+    if (cost < the_skill_db[id]->cost / 5)
     {
-        cost = the_ability_db[id]->cost / 5;
+        cost = the_skill_db[id]->cost / 5;
     }
     cost = rnd(cost / 2 + 1) + cost / 2;
     if (cost < 1)
@@ -1523,16 +1586,17 @@ int calc_spell_cost_stock(const Character& caster, int id)
 
 
 
-int calcscore()
+lua_int calcscore()
 {
-    int score = cdata.player().level * cdata.player().level +
-        game()->deepest_dungeon_level * game()->deepest_dungeon_level +
-        game()->kill_count;
-    if (game()->death_count > 1)
-    {
-        score = score / 10 + 1;
-    }
-    return score;
+    const auto L = cdata.player().level;
+    const auto D = game()->deepest_dungeon_danger_level;
+    const auto K = game()->total_kill_count;
+
+    const auto S = L * L + D * D + K;
+    if (cdata.player().death_count <= 1)
+        return S;
+    else
+        return S / 10 + 1;
 }
 
 
@@ -1774,12 +1838,12 @@ int calc_exp_gain_detection(int dungeon_level)
 
 int calc_spell_exp_gain(int spell_id)
 {
-    return the_ability_db[spell_id]->cost * 4 + 20;
+    return the_skill_db[spell_id]->cost * 4 + 20;
 }
 
 int calc_exp_gain_casting(int spell_id)
 {
-    return the_ability_db[spell_id]->cost + 10;
+    return the_skill_db[spell_id]->cost + 10;
 }
 
 int calc_exp_gain_mana_capacity(const Character& chara)
@@ -1791,9 +1855,10 @@ int calc_exp_gain_healing(const Character& chara)
 {
     if (chara.hp != chara.max_hp)
     {
-        if (chara.get_skill(154).level < chara.get_skill(11).level)
+        if (chara.skills().level("core.healing") <
+            chara.skills().level("core.stat_constitution"))
         {
-            return 5 + chara.get_skill(154).level / 5;
+            return 5 + chara.skills().level("core.healing") / 5;
         }
     }
 
@@ -1804,9 +1869,10 @@ int calc_exp_gain_meditation(const Character& chara)
 {
     if (chara.mp != chara.max_mp)
     {
-        if (chara.get_skill(155).level < chara.get_skill(16).level)
+        if (chara.skills().level("core.meditation") <
+            chara.skills().level("core.stat_magic"))
         {
-            return 5 + chara.get_skill(155).level / 5;
+            return 5 + chara.skills().level("core.meditation") / 5;
         }
     }
 
@@ -1828,7 +1894,7 @@ int calc_exp_gain_stealth()
 
 int calc_exp_gain_weight_lifting(const Character& chara)
 {
-    if (chara.inventory_weight_type == 0)
+    if (chara.burden_state == 0)
     {
         return 0;
     }
@@ -1845,7 +1911,7 @@ int calc_exp_gain_weight_lifting(const Character& chara)
 
 int calc_exp_gain_memorization(int spell_id)
 {
-    return 10 + the_ability_db[spell_id]->difficulty / 5;
+    return 10 + the_skill_db[spell_id]->difficulty / 5;
 }
 
 int calc_exp_gain_crafting(int mat_amount)

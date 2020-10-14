@@ -1,6 +1,5 @@
 # Source files
 set(ELONA_SOURCES
-  ability.cpp
   activity.cpp
   adventurer.cpp
   ai.cpp
@@ -10,6 +9,7 @@ set(ELONA_SOURCES
   audio.cpp
   autopick.cpp
   blending.cpp
+  body_part.cpp
   browser.cpp
   buff.cpp
   building.cpp
@@ -22,6 +22,7 @@ set(ELONA_SOURCES
   character_making.cpp
   character_status.cpp
   class.cpp
+  color.cpp
   command.cpp
   config.cpp
   config_menu.cpp
@@ -44,6 +45,7 @@ set(ELONA_SOURCES
   food.cpp
   fov.cpp
   game.cpp
+  game_clock.cpp
   get_card_info.cpp
   globals.cpp
   god.cpp
@@ -76,7 +78,6 @@ set(ELONA_SOURCES
   message.cpp
   message_log.cpp
   net.cpp
-  position.cpp
   quest.cpp
   race.cpp
   random.cpp
@@ -92,6 +93,8 @@ set(ELONA_SOURCES
   shop.cpp
   status_ailment.cpp
   std.cpp
+  skill.cpp
+  story_quest.cpp
   talk.cpp
   talk_house_visitor.cpp
   talk_npc.cpp

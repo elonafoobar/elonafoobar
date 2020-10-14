@@ -24,10 +24,17 @@ bool UIMenuJournal::init()
     cs = 0;
     keyrange = 0;
     key_list(0) = keybind_get_bound_key_name("enter");
-    buff = newsbuff;
-    if (newsbuff == ""s)
+    if (game()->adventurer_logs.empty())
     {
         buff = u8"No news"s;
+    }
+    else
+    {
+        buff = "";
+        for (const auto& log : game()->adventurer_logs)
+        {
+            buff += log.headline + log.content + "\n";
+        }
     }
     notesel(buff);
     noteadd(u8" - News - "s, 0);
@@ -112,7 +119,7 @@ bool UIMenuJournal::init()
     noteadd(i18n::s.get(
         "core.ui.journal.rank.arena",
         game()->ex_arena_wins,
-        cnvrank(game()->ex_arena_level)));
+        cnvrank(game()->ex_arena_highest_level)));
     noteadd(""s);
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
@@ -137,7 +144,7 @@ bool UIMenuJournal::init()
         (game()->cost_to_hire + calccostbuilding() + calccosttax())));
     noteadd(""s);
     noteadd(
-        i18n::s.get("core.ui.journal.income.bills.unpaid", game()->left_bill));
+        i18n::s.get("core.ui.journal.income.bills.unpaid", game()->left_bills));
     for (int cnt = 0,
              cnt_end = cnt + (pagesize / 2 - noteinfo() % (pagesize / 2));
          cnt < cnt_end;

@@ -1,9 +1,10 @@
 // @noluadoc
 #include "classes.hpp"
 
-#include "classes/class_LuaAbility.cpp"
 #include "classes/class_LuaArea.cpp"
 #include "classes/class_LuaCharacter.cpp"
+#include "classes/class_LuaColor.cpp"
+#include "classes/class_LuaDate.cpp"
 #include "classes/class_LuaDateTime.cpp"
 #include "classes/class_LuaGameData.cpp"
 #include "classes/class_LuaInventory.cpp"
@@ -11,6 +12,8 @@
 #include "classes/class_LuaMapData.cpp"
 #include "classes/class_LuaMapGenerator.cpp"
 #include "classes/class_LuaPosition.cpp"
+#include "classes/class_LuaSkill.cpp"
+#include "classes/class_LuaTime.cpp"
 
 
 
@@ -24,9 +27,11 @@ void bind(sol::state& L)
         class_##ClassName::bind(L); \
     }
 
-    ELONA_LUA_API_BIND_CLASS(LuaAbility);
     ELONA_LUA_API_BIND_CLASS(LuaArea);
     ELONA_LUA_API_BIND_CLASS(LuaCharacter);
+    ELONA_LUA_API_BIND_CLASS(LuaColor);
+    ELONA_LUA_API_BIND_CLASS(LuaDate);
+    ELONA_LUA_API_BIND_CLASS(LuaDateTime);
     ELONA_LUA_API_BIND_CLASS(LuaDateTime);
     ELONA_LUA_API_BIND_CLASS(LuaGameData);
     ELONA_LUA_API_BIND_CLASS(LuaInventory);
@@ -34,6 +39,8 @@ void bind(sol::state& L)
     ELONA_LUA_API_BIND_CLASS(LuaMapData);
     ELONA_LUA_API_BIND_CLASS(LuaMapGenerator);
     ELONA_LUA_API_BIND_CLASS(LuaPosition);
+    ELONA_LUA_API_BIND_CLASS(LuaSkill);
+    ELONA_LUA_API_BIND_CLASS(LuaTime);
 
 #undef ELONA_LUA_API_BIND_CLASS
 }

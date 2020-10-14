@@ -1,15 +1,15 @@
 #include "element.hpp"
 
-#include "ability.hpp"
 #include "animation.hpp"
 #include "audio.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
 #include "i18n.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -26,13 +26,13 @@ int randomele()
     p_at_m45 = rnd(11) + 50;
     if (p_at_m45 != 1)
     {
-        for (int cnt = 0, cnt_end = (the_ability_db[p_at_m45]->difficulty);
+        for (int cnt = 0, cnt_end = (the_skill_db[p_at_m45]->difficulty);
              cnt < cnt_end;
              ++cnt)
         {
             i_at_m45 = rnd(11) + 50;
-            if (the_ability_db[i_at_m45]->difficulty <
-                the_ability_db[p_at_m45]->difficulty)
+            if (the_skill_db[i_at_m45]->difficulty <
+                the_skill_db[p_at_m45]->difficulty)
             {
                 if (rnd(2) == 0)
                 {
@@ -108,8 +108,14 @@ void chara_gain_registance(Character& chara, int element, int delta)
             Message::color{ColorIndex::purple});
     }
 
-    chara.get_skill(element).base_level =
-        clamp(chara.get_skill(element).base_level + delta, 50, 200);
+    chara.skills().set_base_level(
+        *the_skill_db.get_id_from_integer(element),
+        clamp(
+            chara.skills().base_level(
+                *the_skill_db.get_id_from_integer(element)) +
+                delta,
+            50,
+            200));
     snd("core.atk_elec");
     animeload(15, chara);
 

@@ -18,6 +18,7 @@
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "item.hpp"
@@ -82,13 +83,23 @@ void initialize_screen(const PreinitConfigOptions& opts)
 
 
 
+void init_game_clock()
+{
+    game()->epoch_year = 0;
+
+    // 517/08/12 16:10
+    game()->universal_clock.advance(517_years);
+    game()->universal_clock.advance(8_months);
+    game()->universal_clock.advance(12_days);
+    game()->universal_clock.advance(16_hours);
+    game()->universal_clock.advance(10_minutes);
+}
+
+
+
 void initialize_world()
 {
-    game()->date.year = 517;
-    game()->date.month = 8;
-    game()->date.day = 12;
-    game()->date.hour = 16;
-    game()->date.minute = 10;
+    init_game_clock();
 
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
@@ -104,8 +115,8 @@ void initialize_world()
 
     initialize_adata();
 
-    game()->weather = 3;
-    game()->hours_until_weather_changes = 6;
+    game()->weather = "core.rain";
+    game()->weather_change_count = 6;
 
     for (int cnt = 0; cnt < 9; ++cnt)
     {
@@ -310,8 +321,6 @@ void initialize_elona()
 
     SDIM3(key_list, 2, 20);
     SDIM2(playerheader, 100);
-    artifactlocation.clear();
-    SDIM1(newsbuff);
     DIM3(slight, inf_screenw + 4, inf_screenh + 4);
 
     keybind_regenerate_key_select();
@@ -497,7 +506,7 @@ void initialize_debug_globals()
     }
     game()->version = 1220;
     game()->next_inventory_serial_id = 1000;
-    game()->next_shelter_serial_id = 100;
+    game()->next_shelter_serial_number = 100;
     game()->pc_x_in_world_map = 22;
     game()->pc_y_in_world_map = 21;
     game()->random_seed = 1 + rnd(2000000000);
@@ -516,30 +525,26 @@ void initialize_debug_globals()
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    game()->date.year = 517;
-    game()->date.month = 12;
-    game()->date.day = 30;
-    game()->date.hour = 1;
-    game()->date.minute = 10;
+    init_game_clock();
     game()->played_scene = 50;
     game()->has_not_been_to_vernis = 1;
     area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =
         static_cast<int>(mdata_t::MapId::north_tyris);
     game()->destination_outer_map = area_data[game()->current_map].outer_map;
-    game()->acquirable_feat_count = 2;
-    game()->quest_flags.save_count_of_little_sister = 1000;
-    game()->rights_to_succeed_to = 1000;
+    cdata.player().acquirable_feats = 2;
+    story_quest_set_ext("core.little_sister", "core.save_count", lua_int{1000});
+    game()->inheritance_rights = 1000;
     game()->home_scale = 0;
     game()->number_of_waiting_guests = 2;
     game()->charge_power = 1000;
-    cdata.player().god_id = core_god::int2godid(2);
+    cdata.player().religion = "core.lulwy";
     cdata.player().piety_point = 1000;
-    cdata.player().praying_point = 1000;
-    game()->quest_flags.pael_and_her_mom = 1000;
+    cdata.player().prayer_point = 1000;
+    story_quest_set_progress("core.pael_and_her_mom", 1000);
     earn_gold(cdata.player(), 1000000);
-    cdata.player().platinum_coin = 30;
+    cdata.player().platinum = 30;
     cdata.player().fame = 65000;
-    game()->quest_flags.main_quest = 100;
+    story_quest_set_progress("core.elona", 100);
     chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
@@ -547,7 +552,7 @@ void initialize_debug_globals()
     refresh_burden_state();
     for (const auto& [id, _] : the_crafting_material_db)
     {
-        game()->crafting_materials().set_amount(id, 200);
+        game()->crafting_materials.set_amount(id, 200);
     }
     create_all_adventurers();
     create_pcpic(cdata.player());
@@ -572,8 +577,8 @@ void initialize_game()
         initialize_world();
         create_all_adventurers();
         mode = 2;
-        event_add(24);
-        event_add(2);
+        deferred_event_add("core.generate_game_world");
+        deferred_event_add("core.lomias_talks");
         sceneid = 0;
         do_play_scene();
     }
@@ -588,7 +593,7 @@ void initialize_game()
     if (mode == 2)
     {
         game()->next_inventory_serial_id = 1000;
-        game()->next_shelter_serial_id = 100;
+        game()->next_shelter_serial_number = 100;
         blending_clear_recipe_memory();
     }
     if (mode == 3)
@@ -660,11 +665,7 @@ void init()
     config_save();
 
     // It is necessary to calculate PC's birth year correctly.
-    game()->date.year = 517;
-    game()->date.month = 8;
-    game()->date.day = 12;
-    game()->date.hour = 16;
-    game()->date.minute = 10;
+    init_game_clock();
 
     quickpage = 1;
 
@@ -938,14 +939,6 @@ void initialize_set_of_random_generation()
     isetcrop(4) = 183;
     isetcrop(5) = 188;
     isetcrop(6) = 200;
-    isetgod(0) = 0;
-    isetgod(1) = 1;
-    isetgod(2) = 2;
-    isetgod(3) = 3;
-    isetgod(4) = 4;
-    isetgod(5) = 5;
-    isetgod(6) = 6;
-    isetgod(7) = 7;
     asettown(0) = 5;
     asettown(1) = 11;
     asettown(2) = 14;

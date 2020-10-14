@@ -92,18 +92,18 @@ void UIMenuFeats::_add_trait_desc(const std::string& trait_desc)
 void UIMenuFeats::_load_traits_by_enchantments()
 {
     std::vector<std::string> traits_by_enchantments;
-    for (const auto& [_type, equipment] : cdata[_chara_index].equipment_slots)
+    for (const auto& body_part : cdata[_chara_index].body_parts)
     {
-        if (equipment)
+        if (!body_part.is_equip())
+            continue;
+
+        for (const auto& enc : body_part.equipment()->enchantments)
         {
-            for (const auto& enc : equipment->enchantments)
+            get_enchantment_description(
+                enc.id, enc.power, ItemCategory::unidentified, true);
+            if (!s(0).empty())
             {
-                get_enchantment_description(
-                    enc.id, enc.power, ItemCategory::unidentified, true);
-                if (!s(0).empty())
-                {
-                    traits_by_enchantments.push_back(s);
-                }
+                traits_by_enchantments.push_back(s);
             }
         }
     }
@@ -267,7 +267,8 @@ void UIMenuFeats::_draw_acquirable_trait_number(int tc_)
     if (tc_ == 0)
     {
         note = i18n::s.get(
-            "core.trait.window.you_can_acquire", game()->acquirable_feat_count);
+            "core.trait.window.you_can_acquire",
+            cdata.player().acquirable_feats);
     }
     else
     {
@@ -417,7 +418,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
         return false;
     }
 
-    --game()->acquirable_feat_count;
+    --cdata.player().acquirable_feats;
     cs = -10000 + tid;
     snd("core.ding3");
     cdata.player().traits().add(*the_trait_db.get_id_from_integer(tid), 1);
@@ -430,7 +431,7 @@ bool UIMenuFeats::_gain_trait(int p_, bool show_text)
 
 bool UIMenuFeats::_can_select_trait(int p_)
 {
-    return game()->acquirable_feat_count > 0 && list(1, p_) < 10000 &&
+    return cdata.player().acquirable_feats > 0 && list(1, p_) < 10000 &&
         _chara_index == 0;
 }
 
@@ -480,7 +481,7 @@ optional<UIMenuFeats::ResultType> UIMenuFeats::on_key(const std::string& action)
         {
             if (_operation == Operation::character_making)
             {
-                if (game()->acquirable_feat_count == 0)
+                if (cdata.player().acquirable_feats == 0)
                 {
                     return UIMenuFeats::Result::finish(
                         UIMenuCompositeCharacterResult{FeatsResult::confirmed});

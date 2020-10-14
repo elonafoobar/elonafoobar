@@ -2,7 +2,7 @@ ELONA.data:define_prototype("ability")
 ELONA.data:add(
    "core.ability",
    {
-      attribute_life = {
+      stat_life = {
          integer_id = 2,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -10,7 +10,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_mana = {
+      stat_mana = {
          integer_id = 3,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -18,7 +18,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_strength = {
+      stat_strength = {
          integer_id = 10,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -26,7 +26,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_constitution = {
+      stat_constitution = {
          integer_id = 11,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -34,7 +34,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_dexterity = {
+      stat_dexterity = {
          integer_id = 12,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -42,7 +42,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_perception = {
+      stat_perception = {
          integer_id = 13,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -50,7 +50,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_learning = {
+      stat_learning = {
          integer_id = 14,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -58,7 +58,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_will = {
+      stat_will = {
          integer_id = 15,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -66,7 +66,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_magic = {
+      stat_magic = {
          integer_id = 16,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -74,7 +74,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_charisma = {
+      stat_charisma = {
          integer_id = 17,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -82,7 +82,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_speed = {
+      stat_speed = {
          integer_id = 18,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -90,7 +90,7 @@ ELONA.data:add(
          range = 0,
          difficulty = 0,
       },
-      attribute_luck = {
+      stat_luck = {
          integer_id = 19,
          related_basic_attribute = 0,
          ability_type = 0,
@@ -316,6 +316,14 @@ ELONA.data:add(
       },
       element_cut = {
          integer_id = 61,
+         related_basic_attribute = 0,
+         ability_type = 0,
+         cost = 0,
+         range = 0,
+         difficulty = 0,
+      },
+      element_acid = {
+         integer_id = 63,
          related_basic_attribute = 0,
          ability_type = 0,
          cost = 0,

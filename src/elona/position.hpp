@@ -2,8 +2,9 @@
 
 #include <cmath>
 
-#include <iosfwd>
 #include <string>
+
+#include "typedefs.hpp"
 
 
 
@@ -12,29 +13,30 @@ namespace elona
 
 struct Position
 {
-    int x = 0;
-    int y = 0;
+    lua_int x{};
+    lua_int y{};
 
-    Position()
+
+
+    constexpr Position() noexcept = default;
+
+
+    constexpr Position(lua_int x, lua_int y) noexcept
+        : x(x)
+        , y(y)
     {
     }
 
-    Position(int _x, int _y)
-        : x(_x)
-        , y(_y)
-    {
-    }
 
 
-
-    bool operator==(const Position& other) const noexcept
+    constexpr bool operator==(const Position& other) const noexcept
     {
         return x == other.x && y == other.y;
     }
 
 
 
-    bool operator!=(const Position& other) const noexcept
+    constexpr bool operator!=(const Position& other) const noexcept
     {
         return !(*this == other);
     }
@@ -45,15 +47,21 @@ struct Position
     {
         return "(" + std::to_string(x) + ", " + std::to_string(y) + ")";
     }
-
-
-
-    friend std::ostream& operator<<(std::ostream& out, const Position& pos);
 };
 
 
 
-int direction(int = 0, int = 0, int = 0, int = 0);
+inline int direction(int x1, int y1, int x2, int y2)
+{
+    if (std::abs(x1 - x2) > std::abs(y1 - y2))
+    {
+        return x1 > x2 ? 1 : 2;
+    }
+    else
+    {
+        return y1 > y2 ? 3 : 0;
+    }
+}
 
 
 
@@ -66,7 +74,7 @@ int direction(int = 0, int = 0, int = 0, int = 0);
  * @param y2 The Y coordinate of the end position.
  * @return The distance between the two positions.
  */
-inline double fdist(int x1, int y1, int x2, int y2)
+inline double fdist(lua_int x1, lua_int y1, lua_int x2, lua_int y2)
 {
     // TODO potential overflow
     const double dx = x1 - x2;
@@ -84,7 +92,7 @@ inline double fdist(int x1, int y1, int x2, int y2)
  * @param p2 The end position.
  * @return The distance between the two positions.
  */
-inline double fdist(int x1, int y1, const Position& p2)
+inline double fdist(lua_int x1, lua_int y1, const Position& p2)
 {
     return fdist(x1, y1, p2.x, p2.y);
 }
@@ -99,7 +107,7 @@ inline double fdist(int x1, int y1, const Position& p2)
  * @param y2 The Y coordinate of the end position.
  * @return The distance between the two positions.
  */
-inline double fdist(const Position& p1, int x2, int y2)
+inline double fdist(const Position& p1, lua_int x2, lua_int y2)
 {
     return fdist(p1.x, p1.y, x2, y2);
 }
@@ -129,9 +137,9 @@ inline double fdist(const Position& p1, const Position& p2)
  * @param y2 The Y coordinate of the end position.
  * @return The distance between the two positions in tiles.
  */
-inline int dist(int x1, int y1, int x2, int y2)
+inline lua_int dist(lua_int x1, lua_int y1, lua_int x2, lua_int y2)
 {
-    return static_cast<int>(fdist(x1, y1, x2, y2));
+    return static_cast<lua_int>(fdist(x1, y1, x2, y2));
 }
 
 
@@ -144,7 +152,7 @@ inline int dist(int x1, int y1, int x2, int y2)
  * @param p2 The end position.
  * @return The distance between the two positions in tiles.
  */
-inline int dist(int x1, int y1, const Position& p2)
+inline lua_int dist(lua_int x1, lua_int y1, const Position& p2)
 {
     return dist(x1, y1, p2.x, p2.y);
 }
@@ -159,7 +167,7 @@ inline int dist(int x1, int y1, const Position& p2)
  * @param y2 The Y coordinate of the end position.
  * @return The distance between the two positions in tiles.
  */
-inline int dist(const Position& p1, int x2, int y2)
+inline lua_int dist(const Position& p1, lua_int x2, lua_int y2)
 {
     return dist(p1.x, p1.y, x2, y2);
 }
@@ -173,7 +181,7 @@ inline int dist(const Position& p1, int x2, int y2)
  * @param p2 The end position.
  * @return The distance between the two positions in tiles.
  */
-inline int dist(const Position& p1, const Position& p2)
+inline lua_int dist(const Position& p1, const Position& p2)
 {
     return dist(p1.x, p1.y, p2.x, p2.y);
 }

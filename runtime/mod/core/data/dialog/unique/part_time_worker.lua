@@ -1,6 +1,7 @@
 local Chara = ELONA.require("core.Chara")
-local Map = ELONA.require("core.Map")
+local God = ELONA.require("core.God")
 local Item = ELONA.require("core.Item")
+local Map = ELONA.require("core.Map")
 
 return {
    root = "core.talk.unique.part_time_worker",
@@ -9,7 +10,7 @@ return {
          if not (Map.id() == "core.noyel" and Map.area().christmas_festival) then
             return "__END__"
          end
-         if Chara.player().god == "core.jure" then
+         if Chara.player().religion == "core.jure" then
             return "already_believe_in_jure"
          end
 
@@ -46,7 +47,7 @@ return {
          },
          on_finish = function()
             Item.create(Chara.player().position, "core.jures_body_pillow", 0)
-            Chara.player():switch_religion("core.jure")
+            God.switch_religion(Chara.player(), "core.jure")
          end
       },
       no = {

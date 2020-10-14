@@ -1,6 +1,5 @@
 #include "ai.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "attack.hpp"
@@ -9,6 +8,7 @@
 #include "character_status.hpp"
 #include "command.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "fov.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
@@ -20,6 +20,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -88,9 +89,9 @@ bool _ai_check(Character& chara, Direction direction, int p)
         }
         if (cellchara != -1)
         {
-            if (chara.relationship == 10)
+            if (chara.relationship == Relationship::ally)
             {
-                if (cdata[cellchara].relationship == -3)
+                if (cdata[cellchara].relationship == Relationship::enemy)
                 {
                     chara.enemy_id = cellchara;
                 }
@@ -99,9 +100,9 @@ bool _ai_check(Character& chara, Direction direction, int p)
                     _blockedbychara = true;
                 }
             }
-            if (chara.relationship == -3)
+            if (chara.relationship == Relationship::enemy)
             {
-                if (cdata[cellchara].relationship == 10)
+                if (cdata[cellchara].relationship == Relationship::ally)
                 {
                     chara.enemy_id = cellchara;
                 }
@@ -341,11 +342,13 @@ void _ally_trains(Character& chara)
         while (true)
         {
             const auto skill_id = rnd(4) == 0 ? rnd(8) + 10 : rnd(300) + 100;
-            if (chara.get_skill(skill_id).base_level == 0)
+            if (chara.skills().base_level(
+                    *the_skill_db.get_id_from_integer(skill_id)) == 0)
             {
                 continue;
             }
-            modify_potential(chara, skill_id, 4);
+            skill_add_potential(
+                chara, *the_skill_db.get_id_from_integer(skill_id), 4);
             break;
         }
     }
@@ -365,8 +368,8 @@ bool _is_valid_position(int x, int y)
 bool _will_crush_wall(const Character& chara, int x, int y)
 {
     return !chara.is_player_or_ally() && chara.quality >= Quality::miracle &&
-        chara.relationship <= -2 && _is_valid_position(x, y) &&
-        (chip_data.for_cell(x, y).effect & 4);
+        chara.relationship <= Relationship::unfriendly &&
+        _is_valid_position(x, y) && (chip_data.for_cell(x, y).effect & 4);
 }
 
 
@@ -395,7 +398,8 @@ void _proc_drunk_cat(Character& chara)
 
 bool _is_at_night()
 {
-    return game()->date.hour >= 22 || game()->date.hour < 7;
+    const auto t = game_time();
+    return 22 <= t.hour() || t.hour() < 7;
 }
 
 
@@ -493,7 +497,7 @@ void _change_nutrition(Character& chara)
 
 void _proc_hungry(Character& chara)
 {
-    if (chara.vision_flag != msync || rnd(5))
+    if (chara.fov_flag != msync || rnd(5))
     {
         _change_nutrition(chara);
     }
@@ -743,7 +747,7 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
     if (cellchara != -1)
     {
         enemy_index = cellchara;
-        if (relation_between(chara, cdata[enemy_index]) == -3)
+        if (relation_between(chara, cdata[enemy_index]) == Relationship::enemy)
         {
             chara.enemy_id = enemy_index;
             chara.hate += 4;
@@ -763,9 +767,9 @@ proc_npc_movement_event(Character& chara, int& enemy_index, bool retreat)
                     txt(i18n::s.get(
                         "core.ai.swap.displace", chara, cdata[enemy_index]));
                 }
-                if (cdata[enemy_index].activity.type == Activity::Type::eat)
+                if (cdata[enemy_index].activity.id == "core.eat")
                 {
-                    if (cdata[enemy_index].activity.turn > 0)
+                    if (cdata[enemy_index].activity.turns > 0)
                     {
                         if (is_in_fov(chara))
                         {
@@ -912,7 +916,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
         }
     }
 
-    if (!chara.ai_item && chara.relationship != 10)
+    if (!chara.ai_item && chara.relationship != Relationship::ally)
     {
         if (game()->current_map == mdata_t::MapId::quest &&
             game()->executing_immediate_quest_type == 1009)

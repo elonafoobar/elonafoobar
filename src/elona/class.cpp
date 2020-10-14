@@ -1,10 +1,10 @@
 #include "class.hpp"
 
-#include "ability.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -24,7 +24,7 @@ void class_init_chara(Character& chara, data::InstanceId class_id)
     chara.class_ = class_id;
     for (const auto& pair : data->skills)
     {
-        if (const auto ability_data = the_ability_db[pair.first])
+        if (const auto ability_data = the_skill_db[pair.first])
         {
             chara_init_skill(chara, ability_data->integer_id, pair.second);
         }

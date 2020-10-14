@@ -3,11 +3,16 @@
 #include <array>
 #include <memory>
 
-#include "../version.hpp"
+#include "adventurer_log.hpp"
+#include "artifact_log.hpp"
 #include "blending_recipe_memory.hpp"
 #include "character_memory.hpp"
 #include "crafting_material.hpp"
+#include "deferred_event.hpp"
 #include "item_memory.hpp"
+#include "story_quest.hpp"
+#include "time.hpp"
+#include "version.hpp"
 
 
 
@@ -16,64 +21,6 @@ namespace elona
 
 template <typename T>
 struct elona_vector1;
-
-
-
-struct DateTime
-{
-    int year;
-    int month;
-    int day;
-    int hour;
-    int minute;
-    int second;
-
-    int hours()
-    {
-        return hour + (day * 24) + (month * 24 * 30) + (year * 24 * 30 * 12);
-    }
-
-    // It is for debugging, not for showing to end-users.
-    // E.g., "518/02/03 14:56'30"
-    std::string to_string() const;
-};
-
-
-
-struct QuestFlags
-{
-    int tutorial;
-
-    int main_quest;
-    int magic_stone_of_fool;
-    int magic_stone_of_sage;
-    int magic_stone_of_king;
-
-    int putit_attacks;
-    int thieves_hideout;
-    int nightmare;
-    int pael_and_her_mom;
-    int wife_collector;
-    int puppys_cave;
-    int cat_house;
-    int defense_line;
-    int novice_knight;
-    int kamikaze_attack;
-    int mias_dream;
-    int rare_books;
-    int pyramid_trial;
-    int red_blossom_in_palmia;
-    int ambitious_scientist;
-    int sewer_sweeping;
-    int minotaur_king;
-    int little_sister;
-    int blue_capsule_drug;
-
-    int duration_of_kamikaze_attack;
-    int kill_count_of_little_sister;
-    int save_count_of_little_sister;
-    int gift_count_of_little_sister;
-};
 
 
 
@@ -107,33 +54,161 @@ struct Game
     template <size_t N>
     using ArrayType = std::array<int, N>;
 
-    int death_count;
-    int deepest_dungeon_level;
-    int kill_count;
+
+    /* Game statistics */
+
+    /// The deepest dungeon danger level the player have visited.
+    lua_int deepest_dungeon_danger_level{};
+
+    /// Total death count of player and your allies.
+    lua_int total_death_count{};
+
+    /// Total kill count of player and your allies.
+    lua_int total_kill_count{};
+
+    /// Play turns
+    lua_int play_turns{};
+
+    /// Play time in seconds (in the real world)
+    lua_int play_seconds_in_real_world{};
+
+    /// Ex arena stats: number of your team's wins
+    lua_int ex_arena_wins{};
+
+    /// Ex arena stats: the highest character level which your team has beated
+    lua_int ex_arena_highest_level{};
+
+
+    /* Time */
+
+    /// Universal clock
+    time::Clock universal_clock{};
+
+    /// The Epoch Year of the game world. E.g., year 123 is 123 years later
+    /// since the epoch.
+    lua_int epoch_year{};
+
+    /// Frozen turn counter during Time Stop caused by some means.
+    lua_int frozen_turns{};
+
+
+    /* Memories */
+
+    /// Character memories
+    CharacterMemoryTable character_memories;
+
+    /// Item memories
+    ItemMemoryTable item_memories;
+
+    /// Blending recipe memories
+    BlendingRecipeMemoryTable blending_recipe_memories;
+
+
+    /* Weather */
+
+    /// Current weather
+    data::InstanceId weather{"core.sunny"};
+
+    /// Weather change count. When it reaches zero, weather may change.
+    /// Normally, it is decremented every 1 hour.
+    lua_int weather_change_count{};
+
+    /// Time when Etherwind blew last.
+    time::Instant last_etherwind_time{};
+
+
+    /* Player state */
+
+    /// Total weight of cargo items on the cart.
+    lua_int cargo_weight{};
+
+    /// Maximum weight of cargo items on the cart.
+    lua_int max_cargo_weight{};
+
+    /// Initial value of @ref max_cargo_weight.
+    lua_int initial_max_cargo_weight{};
+
+    /// Travel distance between towns. (in miles)
+    lua_int travel_distance{};
+
+    /// Next time when the player can study with textbooks.
+    time::Instant next_studying_time{};
+
+    // Crafting material bag
+    CraftingMaterialBag crafting_materials{};
+
+
+    /* Quests */
+
+    /// Story quests
+    StoryQuestTable story_quests{};
+
+
+    /* Game Log */
+
+    /// Artifact generation logs
+    ArtifactLogList artifact_logs{};
+
+    /// Other adventurers' logs.
+    AdventurerLogList adventurer_logs{};
+
+
+    /* Miscellaneous */
+
+    /// Deferred events
+    DeferredEventQueue deferred_events{};
+
+    /// Amount of the water which the holy well holds.
+    lua_int holy_well_amount{};
+
+    /// Wish count
+    lua_int wish_count{};
+
+    /// Lost wallet count
+    lua_int lost_wallet_count{};
+
+    /// Flag for Easter Egg event (Angband's "Qy@")
+    lua_int angband_flag{};
+
+    /// Left bills
+    lua_int left_bills{};
+
+    /// Number of inheritance rights you currently have
+    lua_int inheritance_rights{};
+
+    /// Whether you used casino at least once or not
+    bool used_casino_once{};
+
+    /// Next `Item::_z_order`. See documentation of `Item::_z_order`.
+    lua_int next_item_z_order{};
+
+    /// Next shelter serial number
+    lua_int next_shelter_serial_number{};
+
+    /// Time when you left a town most recently
+    time::Instant departure_time{};
+
+    /// Next time of alias voting;
+    time::Instant next_voting_time{};
+
+
     int crowd_density;
-    int play_turns;
     int pc_x_in_world_map;
     int pc_y_in_world_map;
     int play_days;
     int random_seed;
     int random_seed_offset;
-    DateTime date;
     int next_inventory_serial_id;
-    int weather;
-    int hours_until_weather_changes;
     int current_map;
     int current_dungeon_level;
     int home_scale;
     int charge_power;
     int entrance_type;
-    int next_shelter_serial_id;
     int seven_league_boot_effect;
     int protects_from_etherwind;
     int player_next_move_direction;
     int played_scene;
     int torch;
-    int angband_flag;
-    int number_of_learned_skills_by_trainer;
     ArrayType<20> skill_shortcuts;
     int player_x_on_map_leave;
     int player_y_on_map_leave;
@@ -155,33 +230,18 @@ struct Game
     int total_deco_value;
     int total_heirloom_value;
     int reset_world_map_in_diastrophism_flag;
-    int cargo_weight;
-    int initial_cart_limit;
-    int current_cart_limit;
     int protects_from_bad_weather;
     int left_minutes_of_executing_quest;
-    int ether_disease_stage;
-    int time_when_textbook_becomes_available;
     int light;
-    int continuous_active_hours;
-    int activity_about_to_start;
-    int sleep_experience;
-    int acquirable_feat_count;
-    int wish_count;
     int version;
-    int rights_to_succeed_to;
     int character_and_status_for_gene; // the ally who is about to make gene
                                        // with you + (0 if activity not started,
                                        // 10000 if so)
-    int next_voting_time;
     ArrayType<20> ranks;
     ArrayType<9> rank_deadlines;
     ArrayType<5> taken_quests;
     int cost_to_hire;
     int rogue_boss_encountered;
-    int left_bill;
-    int distance_between_town;
-    int departure_date;
     int left_town_map;
     int mount;
     int map_regenerate_count;
@@ -189,65 +249,21 @@ struct Game
     int void_next_lord_floor;
     int reveals_religion;
     ArrayType<18> exhelp_flags;
-    int used_casino_once;
     int has_not_been_to_vernis;
     int released_fire_giant;
     int fire_giant;
-    int holy_well_count;
     int diastrophism_flag;
-    ArrayType<20> ether_disease_history;
     ArrayType<10> tracked_skills;
-    int ether_disease_speed;
-    int left_turns_of_timestop;
-    int ex_arena_wins;
-    int ex_arena_level;
     int time_when_uploding_becomes_available;
-    int play_time;
-    int last_etherwind_month;
-    int god_rank;
     int tcg_used_deck;
     int number_of_waiting_guests;
     int politics_map_id;
     int politics_tax_amount;
-    int last_month_when_trainer_visited;
-    int item_turns;
-    int next_level_minus_one_kumiromis_experience_becomes_available;
+    time::Instant last_time_when_trainer_visited;
     ArrayType<5> tcg_decks;
     int destination_outer_map;
-    int lost_wallet_count;
 
-    QuestFlags quest_flags;
     GuildData guild;
-
-private:
-    BlendingRecipeMemoryTable _blending_recipe_memories;
-    CharacterMemoryTable _character_memories;
-    ItemMemoryTable _item_memories;
-    CraftingMaterialBag _crafting_materials;
-
-public:
-    BlendingRecipeMemoryTable& blending_recipe_memories() noexcept
-    {
-        return _blending_recipe_memories;
-    }
-
-
-    CharacterMemoryTable& character_memories() noexcept
-    {
-        return _character_memories;
-    }
-
-
-    ItemMemoryTable& item_memories() noexcept
-    {
-        return _item_memories;
-    }
-
-
-    CraftingMaterialBag& crafting_materials() noexcept
-    {
-        return _crafting_materials;
-    }
 };
 
 
@@ -261,5 +277,12 @@ const std::unique_ptr<Game>& game();
 
 // TODO: Make gdata class and make this function method.
 void modify_crowd_density(int chara_index, int delta);
+
+
+
+time::Instant game_now();
+time::Date game_date(optional<time::Instant> instant = none);
+time::Time game_time(optional<time::Instant> instant = none);
+time::DateTime game_date_time(optional<time::Instant> instant = none);
 
 } // namespace elona

@@ -1,4 +1,3 @@
-#include "ability.hpp"
 #include "activity.hpp"
 #include "adventurer.hpp"
 #include "area.hpp"
@@ -6,8 +5,8 @@
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "deferred_event.hpp"
 #include "elona.hpp"
 #include "food.hpp"
@@ -16,6 +15,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "macro.hpp"
 #include "magic.hpp"
 #include "map.hpp"
@@ -25,6 +25,7 @@
 #include "quest.hpp"
 #include "random.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "ui.hpp"
@@ -217,7 +218,9 @@ TalkResult talk_trade(Character& speaker)
     }
     invctrl(0) = 20;
     invctrl(1) = 0;
-    MenuResult result = ctrl_inventory(speaker).menu_result;
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = speaker;
+    MenuResult result = ctrl_inventory(opts).menu_result;
     if (!result.succeeded)
     {
         buff = i18n::s.get("core.talk.npc.common.you_kidding", speaker);
@@ -255,11 +258,12 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
                 100 +
             2);
     listmax = 0;
-    randomize(area_data[game()->current_map].time_of_next_arena);
+    // vanilla bug?
+    randomize(
+        area_data[game()->current_map].time_of_next_arena.from_epoch().hours());
     if (chatval_ == 21)
     {
-        if (area_data[game()->current_map].time_of_next_arena >
-            game()->date.hours())
+        if (area_data[game()->current_map].time_of_next_arena > game_now())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
@@ -291,7 +295,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             {
                 continue;
             }
-            if (chara->original_relationship != -3)
+            if (chara->original_relationship != Relationship::enemy)
             {
                 continue;
             }
@@ -305,8 +309,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     else
     {
-        if (area_data[game()->current_map].time_of_next_rumble >
-            game()->date.hours())
+        if (area_data[game()->current_map].time_of_next_rumble > game_now())
         {
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.game_is_over", speaker);
@@ -334,13 +337,11 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
     }
     if (arenaop == 0)
     {
-        area_data[game()->current_map].time_of_next_arena =
-            game()->date.hours() + 24;
+        area_data[game()->current_map].time_of_next_arena = game_now() + 1_day;
     }
     if (arenaop == 1)
     {
-        area_data[game()->current_map].time_of_next_rumble =
-            game()->date.hours() + 24;
+        area_data[game()->current_map].time_of_next_rumble = game_now() + 1_day;
     }
     game()->executing_immediate_quest_type = 1;
     game()->executing_immediate_quest_show_hunt_remain = 1;
@@ -750,7 +751,11 @@ TalkResult talk_slave_sell(Character& speaker)
             }
             if (cdata[stat].is_escorted() == 1)
             {
-                event_add(15, charaid2int(cdata[stat].id));
+                deferred_event_add(DeferredEvent{
+                    "core.quest_failed",
+                    0,
+                    lua::create_table(
+                        "core.client", cdata[stat].new_id().get())});
             }
             chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
@@ -790,7 +795,7 @@ TalkResult talk_ally_marriage(Character& speaker)
         }
     }
     marry = speaker.index;
-    event_add(13);
+    deferred_event_add("core.marriage");
     return TalkResult::talk_end;
 }
 
@@ -1024,9 +1029,9 @@ TalkResult talk_adventurer_hire(Character& speaker)
     {
         snd("core.paygold1");
         cdata.player().gold -= calc_adventurer_hire_cost(speaker);
-        speaker.relationship = 10;
+        speaker.relationship = Relationship::ally;
         speaker.is_contracting() = true;
-        speaker.period_of_contract = game()->date.hours() + 168;
+        speaker.hire_limit_time = game_now() + 7_days;
         ++speaker.hire_count;
         snd("core.pray1");
         txt(i18n::s.get("core.talk.npc.adventurer.hire.you_hired", speaker),
@@ -1099,11 +1104,11 @@ TalkResult talk_moyer_sell_paels_mom(Character& speaker)
         modify_karma(cdata.player(), -20);
         snd("core.getgold1");
         earn_gold(cdata.player(), 50000);
-        game()->quest_flags.pael_and_her_mom = 1002;
+        story_quest_set_progress("core.pael_and_her_mom", 1002);
         const auto lily = chara_find("core.lily");
         assert(lily);
         lily->ai_calm = 3;
-        lily->relationship = 0;
+        lily->relationship = Relationship::friendly;
         lily->initial_position.x = 48;
         lily->initial_position.y = 18;
         cell_movechara(*lily, 48, 18);
@@ -1242,8 +1247,8 @@ TalkResult talk_result_maid_chase_out(Character& speaker)
 
 TalkResult talk_prostitute_buy(Character& speaker)
 {
-    int sexvalue =
-        speaker.get_skill(17).level * 25 + 100 + cdata.player().fame / 10;
+    int sexvalue = speaker.skills().level("core.stat_charisma") * 25 + 100 +
+        cdata.player().fame / 10;
     if (cdata.player().gold >= sexvalue)
     {
         ELONA_APPEND_RESPONSE(
@@ -1474,10 +1479,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.training",
-            the_ability_db.get_text(selected_skill, "name"),
+            the_skill_db.get_text(selected_skill, "name"),
             calc_skill_training_cost(selected_skill, cdata.player()),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_training_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
@@ -1490,10 +1495,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
     {
         buff = i18n::s.get(
             "core.talk.npc.trainer.cost.learning",
-            the_ability_db.get_text(selected_skill, "name"),
+            the_skill_db.get_text(selected_skill, "name"),
             calc_skill_learning_cost(selected_skill, cdata.player()),
             speaker);
-        if (cdata.player().platinum_coin >=
+        if (cdata.player().platinum >=
             calc_skill_learning_cost(selected_skill, cdata.player()))
         {
             list(0, listmax) = 1;
@@ -1512,14 +1517,16 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         snd("core.paygold1");
         if (is_training)
         {
-            cdata.player().platinum_coin -=
+            cdata.player().platinum -=
                 calc_skill_training_cost(selected_skill, cdata.player());
-            modify_potential(
+            skill_add_potential(
                 cdata.player(),
-                selected_skill,
+                *the_skill_db.get_id_from_integer(selected_skill),
                 clamp(
                     15 -
-                        cdata.player().get_skill(selected_skill).potential / 15,
+                        cdata.player().skills().potential(
+                            *the_skill_db.get_id_from_integer(selected_skill)) /
+                            15,
                     2,
                     15));
             buff =
@@ -1527,10 +1534,10 @@ TalkResult talk_trainer(Character& speaker, bool is_training)
         }
         else
         {
-            cdata.player().platinum_coin -=
+            cdata.player().platinum -=
                 calc_skill_learning_cost(selected_skill, cdata.player());
             chara_gain_skill(cdata.player(), selected_skill);
-            ++game()->number_of_learned_skills_by_trainer;
+            ++cdata.player().learned_skills;
             buff =
                 i18n::s.get("core.talk.npc.trainer.finish.learning", speaker);
         }
@@ -1856,7 +1863,7 @@ TalkResult talk_npc(Character& speaker)
         }
         if (speaker.interest > 0)
         {
-            if (speaker.relationship != 10)
+            if (speaker.relationship != Relationship::ally)
             {
                 if (!speaker.is_player_or_ally())
                 {
@@ -1865,8 +1872,9 @@ TalkResult talk_npc(Character& speaker)
                         if (speaker.impression < 100)
                         {
                             if (rnd_capped(
-                                    cdata.player().get_skill(17).level + 1) >
-                                10)
+                                    cdata.player().skills().level(
+                                        "core.stat_charisma") +
+                                    1) > 10)
                             {
                                 chara_modify_impression(speaker, rnd(3));
                             }
@@ -1877,7 +1885,7 @@ TalkResult talk_npc(Character& speaker)
                         }
                     }
                     speaker.interest -= rnd(30);
-                    speaker.time_interest_revive = game()->date.hours() + 8;
+                    speaker.interest_reset_time = game_now() + 8_hours;
                 }
             }
         }
@@ -1953,7 +1961,7 @@ TalkResult talk_npc(Character& speaker)
                         i18n::s.get(
                             "core.talk.npc.ally.choices.ask_for_marriage"));
                 }
-                else if (game()->continuous_active_hours >= 15)
+                else if (cdata.player().sleepiness >= 15)
                 {
                     ELONA_APPEND_RESPONSE(
                         39,
@@ -1992,8 +2000,9 @@ TalkResult talk_npc(Character& speaker)
             13,
             i18n::s.get("core.talk.npc.innkeeper.choices.eat") + u8" ("s +
                 calcmealvalue() + i18n::s.get("core.ui.gold") + u8")"s);
-        if (game()->weather == 1 || game()->weather == 4 ||
-            game()->weather == 2)
+        if (game()->weather == "core.etherwind" ||
+            game()->weather == "core.hard_rain" ||
+            game()->weather == "core.snow")
         {
             ELONA_APPEND_RESPONSE(
                 43,
@@ -2130,7 +2139,7 @@ TalkResult talk_npc(Character& speaker)
         {
             if (!speaker.is_player_or_ally())
             {
-                if (!event_has_pending_events())
+                if (!deferred_event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         56, i18n::s.get("core.talk.npc.common.choices.sex"));
@@ -2140,7 +2149,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.id == CharaId::prostitute)
     {
-        if (!event_has_pending_events())
+        if (!deferred_event_has_pending_events())
         {
             ELONA_APPEND_RESPONSE(
                 60, i18n::s.get("core.talk.npc.prostitute.choices.buy"));
@@ -2277,7 +2286,8 @@ TalkResult talk_npc(Character& speaker)
         {
             if (speaker.role != Role::none)
             {
-                if (!is_guest(speaker.role) && !event_has_pending_events())
+                if (!is_guest(speaker.role) &&
+                    !deferred_event_has_pending_events())
                 {
                     ELONA_APPEND_RESPONSE(
                         44, i18n::s.get("core.talk.npc.servant.choices.fire"));
@@ -2287,7 +2297,7 @@ TalkResult talk_npc(Character& speaker)
     }
     if (speaker.role == Role::moyer)
     {
-        if (game()->quest_flags.pael_and_her_mom == 1000)
+        if (story_quest_progress("core.pael_and_her_mom") == 1000)
         {
             if (const auto lily = chara_find("core.lily"))
             {
@@ -2395,9 +2405,9 @@ TalkResult talk_npc(Character& speaker)
     case 55: return talk_spell_writer_reserve(speaker);
     case 56: return talk_sex(speaker);
     case 58: {
-        if (game()->left_turns_of_timestop == 0)
+        if (game()->frozen_turns == 0)
         {
-            event_add(25);
+            deferred_event_add("core.guest_visit");
         }
         return TalkResult::talk_end;
     }
@@ -2411,7 +2421,7 @@ TalkResult talk_npc(Character& speaker)
         return talk_guard_where_is(speaker, chatval_);
     }
 
-    if (event_processing_event() == 11)
+    if (deferred_event_processing_event() == "core.wandering_vendor")
     {
         levelexitby = 4;
         chatteleport = 1;

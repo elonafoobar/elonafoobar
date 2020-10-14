@@ -14,7 +14,7 @@ namespace elona
 
 void crafting_material_gain(data::InstanceId id, int amount, int spot_type)
 {
-    game()->crafting_materials().gain(id, amount);
+    game()->crafting_materials.gain(id, amount);
     snd("core.alert1");
 
     std::string verb;
@@ -37,7 +37,7 @@ void crafting_material_gain(data::InstanceId id, int amount, int spot_type)
             verb,
             amount,
             the_crafting_material_db.get_text(id, "name")) +
-            u8"("s + game()->crafting_materials().amount(id) + u8") "s,
+            u8"("s + game()->crafting_materials.amount(id) + u8") "s,
         Message::color{ColorIndex::blue});
 }
 
@@ -45,14 +45,14 @@ void crafting_material_gain(data::InstanceId id, int amount, int spot_type)
 
 void crafting_material_lose(data::InstanceId id, int amount)
 {
-    game()->crafting_materials().lose(id, amount);
+    game()->crafting_materials.lose(id, amount);
     txt(i18n::s.get(
         "core.activity.material.lose",
         the_crafting_material_db.get_text(id, "name"),
         amount));
     txt(i18n::s.get(
             "core.activity.material.lose_total",
-            game()->crafting_materials().amount(id)),
+            game()->crafting_materials.amount(id)),
         Message::color{ColorIndex::blue});
 }
 

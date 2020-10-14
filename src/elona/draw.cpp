@@ -118,24 +118,32 @@ void _set_pcc_depending_on_equipments(
     {
         item_appearance = 1;
     }
-    switch (iequiploc(equipment))
+
+    const auto body_part_id = iequiploc(equipment);
+    if (body_part_id == "core.back")
     {
-    case 3:
-        pcc(4, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 4:
-        pcc(2, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 7:
-        pcc(8, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 8:
-        pcc(5, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    case 9:
-        pcc(3, chara.index) = item_appearance + equipment->tint * 1000;
-        break;
-    default: break;
+        pcc(4, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
+    }
+    else if (body_part_id == "core.body")
+    {
+        pcc(2, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
+    }
+    else if (body_part_id == "core.arm")
+    {
+        pcc(8, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
+    }
+    else if (body_part_id == "core.waist")
+    {
+        pcc(5, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
+    }
+    else if (body_part_id == "core.leg")
+    {
+        pcc(3, chara.index) =
+            item_appearance + color_to_color_index(equipment->tint) * 1000;
     }
 }
 
@@ -206,10 +214,9 @@ optional_ref<const Extent> draw_get_rect_item(int id)
  * Obtains the window buffer and region where the portrait with ID @a key
  * is located, for use with @ref gcopy.
  */
-optional_ref<const Extent> draw_get_rect_portrait(const std::string& key)
+optional_ref<const Extent> draw_get_rect_portrait(data::InstanceId portrait_id)
 {
-    return draw_get_rect(
-        data::make_fqid("core.portrait", data::InstanceId{key}));
+    return draw_get_rect(data::make_fqid("core.portrait", portrait_id));
 }
 
 
@@ -220,11 +227,19 @@ optional_ref<const Extent> draw_get_rect(data::FullyQualifiedId id)
 }
 
 
+
+optional_ref<const Extent> prepare_item_image(int id, int color_index)
+{
+    return prepare_item_image(id, color_index_to_color(color_index));
+}
+
+
+
 /**
  * Applies a color to the item sprite of ID @a id and copies it to the scratch
  * window (ID 1) at coordinates [0, 960], so it can be copied with @ref gcopy.
  */
-optional_ref<const Extent> prepare_item_image(int id, int color)
+optional_ref<const Extent> prepare_item_image(int id, const Color& color)
 {
     const auto rect = draw_get_rect_item(id);
 
@@ -233,11 +248,7 @@ optional_ref<const Extent> prepare_item_image(int id, int color)
 
     // The color modifier is applied to the source buffer before
     // copying it to the scratch region. It is restored after copying.
-    set_color_mod(
-        255 - c_col(0, color),
-        255 - c_col(1, color),
-        255 - c_col(2, color),
-        rect->buffer);
+    set_color_mod(color.r, color.g, color.b, rect->buffer);
     gcopy(rect->buffer, rect->x, rect->y, rect->width, rect->height, 0, 960);
     set_color_mod(255, 255, 255, rect->buffer);
 
@@ -255,7 +266,7 @@ optional_ref<const Extent> prepare_item_image(int id, int color)
  * sprite indicated by @a character_image to the appropriate location for each.
  */
 optional_ref<const Extent>
-prepare_item_image(int id, int color, int character_image)
+prepare_item_image(int id, const Color& color, int character_image)
 {
     if (id != 528 && id != 531)
     {
@@ -276,11 +287,7 @@ prepare_item_image(int id, int color, int character_image)
         gmode(2);
 
         // Modify color and restore it afterwards.
-        set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+        set_color_mod(color.r, color.g, color.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -347,11 +354,7 @@ prepare_item_image(int id, int color, int character_image)
 
         gmode(2, 192);
         // Modify color and restore it afterwards.
-        set_color_mod(
-            255 - c_col(0, color),
-            255 - c_col(1, color),
-            255 - c_col(2, color),
-            item_rect->buffer);
+        set_color_mod(color.r, color.g, color.b, item_rect->buffer);
         gcopy(
             item_rect->buffer,
             item_rect->x,
@@ -534,7 +537,7 @@ void show_damage_popups()
                 continue;
             }
             if (dist(cdata.player().position, chara.position) >
-                cdata.player().vision_distance / 2)
+                cdata.player().fov_range / 2)
             {
                 ++damage_popup.frame;
                 continue;
@@ -655,11 +658,12 @@ void create_pcpic(Character& chara, bool with_equipments)
         pcc(3, idx) = 0;
         pcc(8, idx) = 0;
         pcc(5, idx) = 0;
-        for (const auto& [_type, equipment] : chara.equipment_slots)
+        for (const auto& body_part : chara.body_parts)
         {
-            if (equipment)
+            if (body_part.is_equip())
             {
-                _set_pcc_depending_on_equipments(chara, equipment.unwrap());
+                _set_pcc_depending_on_equipments(
+                    chara, body_part.equipment().unwrap());
             }
         }
     }
@@ -811,41 +815,40 @@ static int _get_map_chip_shadow()
 
     if (map_data.indoors_flag == 2)
     {
-        if (game()->date.hour >= 24 ||
-            (game()->date.hour >= 0 && game()->date.hour < 4))
+        const auto h = game_time().hour();
+        if (h < 4)
         {
             shadow = 110;
         }
-        if (game()->date.hour >= 4 && game()->date.hour < 10)
+        else if (h < 10)
         {
-            shadow = std::min(10, 70 - (game()->date.hour - 3) * 10);
+            shadow = std::min(10, 70 - (h - 3) * 10);
         }
-        if (game()->date.hour >= 10 && game()->date.hour < 12)
+        else if (h < 12)
         {
             shadow = 10;
         }
-        if (game()->date.hour >= 12 && game()->date.hour < 17)
+        else if (h < 17)
         {
             shadow = 1;
         }
-        if (game()->date.hour >= 17 && game()->date.hour < 21)
+        else if (h < 21)
         {
-            shadow = (game()->date.hour - 17) * 20;
+            shadow = (h - 17) * 20;
         }
-        if (game()->date.hour >= 21 && game()->date.hour < 24)
+        else
         {
-            shadow = 80 + (game()->date.hour - 21) * 10;
+            shadow = 80 + (h - 21) * 10;
         }
-        if (game()->weather == 3 && shadow < 40)
+        if (game()->weather == "core.rain" && shadow < 40)
         {
             shadow = 40;
         }
-        if (game()->weather == 4 && shadow < 65)
+        if (game()->weather == "core.hard_rain" && shadow < 65)
         {
             shadow = 65;
         }
-        if (game()->current_map == mdata_t::MapId::noyel &&
-            (game()->date.hour >= 17 || game()->date.hour < 7))
+        if (game()->current_map == mdata_t::MapId::noyel && (h >= 17 || h < 7))
         {
             shadow += 35;
         }
@@ -1129,7 +1132,7 @@ void draw_chara_scale_height(int image_id, int x, int y)
  */
 void draw_item_material(int image_id, int x, int y)
 {
-    auto rect = prepare_item_image(image_id, 0);
+    auto rect = prepare_item_image(image_id);
 
     gmode(2);
 
@@ -1150,7 +1153,7 @@ void draw_item_with_portrait(const ItemRef& item, int x, int y)
  */
 void draw_item_with_portrait(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y)
@@ -1188,7 +1191,7 @@ void draw_item_with_portrait_scale_height(const ItemRef& item, int x, int y)
  */
 void draw_item_with_portrait_scale_height(
     int image_id,
-    int color,
+    const Color& color,
     optional<int> chara_chip_id,
     int x,
     int y)

@@ -1,19 +1,19 @@
 #include "blending.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "audio.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "game_clock.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -25,6 +25,7 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -129,9 +130,9 @@ int calc_success_rate(
     for (const auto& [skill_id, required_level] :
          the_blending_recipe_db.ensure(recipe_id).required_skills)
     {
-        const auto integer_skill_id =
-            the_ability_db.ensure(skill_id).integer_id;
-        if (cdata.player().get_skill(integer_skill_id).level <= 0)
+        const auto integer_skill_id = the_skill_db.ensure(skill_id).integer_id;
+        if (cdata.player().skills().level(
+                *the_skill_db.get_id_from_integer(integer_skill_id)) <= 0)
         {
             rate -= 125;
             continue;
@@ -141,8 +142,10 @@ int calc_success_rate(
         {
             d = 1;
         }
-        int p =
-            (d * 200 / cdata.player().get_skill(integer_skill_id).level - 200) *
+        int p = (d * 200 /
+                     cdata.player().skills().level(
+                         *the_skill_db.get_id_from_integer(integer_skill_id)) -
+                 200) *
             -1;
         if (p > 0)
         {
@@ -474,17 +477,20 @@ void window_recipe(
              the_blending_recipe_db.ensure(rpid).required_skills)
         {
             const auto integer_skill_id =
-                the_ability_db.ensure(skill_id).integer_id;
+                the_skill_db.ensure(skill_id).integer_id;
             const auto text_color =
                 (required_level >
-                 cdata.player().get_skill(integer_skill_id).level)
+                 cdata.player().skills().level(
+                     *the_skill_db.get_id_from_integer(integer_skill_id)))
                 ? snail::Color{150, 0, 0}
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                the_ability_db.get_text(skill_id, "name") + u8"  "s +
+                the_skill_db.get_text(skill_id, "name") + u8"  "s +
                     required_level + u8"("s +
-                    cdata.player().get_skill(integer_skill_id).level + u8")"s,
+                    cdata.player().skills().level(
+                        *the_skill_db.get_id_from_integer(integer_skill_id)) +
+                    u8")"s,
                 text_color);
             ++cnt;
         }
@@ -795,7 +801,7 @@ void blendig_menu_select_materials()
             draw_item_with_portrait_scale_height(
                 g_inv[p], wx + 37, wy + 69 + cnt * 19);
 
-            if (g_inv[p]->body_part != 0)
+            if (g_inv[p]->is_equipped())
             {
                 draw("core.equipped", wx + 46, wy + 72 + cnt * 18 - 3);
             }
@@ -1004,7 +1010,7 @@ void blending_proc_on_success_events()
     the_blending_recipe_db.ensure(rpid).on_success.call(on_success_args);
 
     inv_stack(inv_player(), item1);
-    if (item1->body_part != 0)
+    if (item1->is_equipped())
     {
         create_pcpic(cdata.player());
     }
@@ -1032,7 +1038,7 @@ void blending_on_finish()
         {
             chara_gain_skill_exp(
                 cdata.player(),
-                the_ability_db.ensure(skill_id).integer_id,
+                the_skill_db.ensure(skill_id).integer_id,
                 50 + required_level + rpref(2) / 10000 * 25,
                 2,
                 50);
@@ -1056,8 +1062,8 @@ void activity_blending_start()
         "core.blending.started",
         cdata.player(),
         blending_get_recipe_name(rpid)));
-    cdata.player().activity.type = Activity::Type::blend;
-    cdata.player().activity.turn = rpref(2) % 10000;
+    cdata.player().activity.id = "core.blend";
+    cdata.player().activity.turns = rpref(2) % 10000;
 }
 
 
@@ -1077,12 +1083,11 @@ void activity_blending_end()
 {
     if (rpref(2) >= 10000)
     {
-        cdata.player().activity.turn = rpref(2) / 10000;
+        cdata.player().activity.turns = rpref(2) / 10000;
         for (int cnt = 0;; ++cnt)
         {
             mode = 12;
-            ++game()->date.hour;
-            weather_changes();
+            game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
             render_hud();
             if (cnt % 5 == 0)
             {
@@ -1091,9 +1096,14 @@ void activity_blending_end()
             }
             redraw();
             await(g_config.animation_wait() * 5);
-            game()->date.minute = 0;
-            --cdata.player().activity.turn;
-            if (cdata.player().activity.turn <= 0)
+            {
+                // Backward time travel might cause time paradox!
+                const auto min = game_time().minute();
+                game()->universal_clock.turn_back(
+                    time::Duration::from_minutes(min));
+            }
+            --cdata.player().activity.turns;
+            if (cdata.player().activity.turns <= 0)
             {
                 if (!has_required_materials())
                 {
@@ -1104,7 +1114,7 @@ void activity_blending_end()
                 blending_on_finish();
                 if (rpref(1) > 0)
                 {
-                    cdata.player().activity.turn = rpref(2) / 10000;
+                    cdata.player().activity.turns = rpref(2) / 10000;
                     cnt = 0 - 1;
                     continue;
                 }
@@ -1175,7 +1185,7 @@ void blending_clear_recipe_memory()
     {
         if (recipe_data.known)
         {
-            game()->blending_recipe_memories().set_read_count(id, 1);
+            game()->blending_recipe_memories.set_read_count(id, 1);
         }
     }
 }
@@ -1195,7 +1205,7 @@ void activity_blending()
     {
         activity_blending_start();
     }
-    else if (cdata.player().activity.turn > 0)
+    else if (cdata.player().activity.turns > 0)
     {
         activity_blending_doing();
     }
@@ -1266,7 +1276,7 @@ TurnResult blending_menu()
             listmax = 0;
             for (const auto& [id, recipe_data] : the_blending_recipe_db)
             {
-                if (game()->blending_recipe_memories().read_count(id) > 0)
+                if (game()->blending_recipe_memories.read_count(id) > 0)
                 {
                     list(0, listmax) = recipe_data.integer_id;
                     list(1, listmax) = recipe_data.integer_id;

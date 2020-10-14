@@ -1,17 +1,18 @@
 #include "dmgheal.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
 #include "class.hpp"
 #include "config.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -23,6 +24,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "item.hpp"
@@ -40,6 +42,7 @@
 #include "optional.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "variables.hpp"
 
@@ -123,12 +126,13 @@ Character::State dmgheal_set_death_status(Character& victim)
     else if (victim.role == Role::adventurer)
     {
         new_state = Character::State::adventurer_dead;
-        victim.time_to_revive = game()->date.hours() + 24 + rnd(12);
+        victim.revival_time =
+            game_now() + time::Duration::from_hours(24 + rnd(12));
     }
     else
     {
         new_state = Character::State::villager_dead;
-        victim.time_to_revive = game()->date.hours() + 48;
+        victim.revival_time = game_now() + 3_days;
     }
 
     if (victim.is_ally())
@@ -138,7 +142,10 @@ Character::State dmgheal_set_death_status(Character& victim)
         victim.current_map = 0;
         if (victim.is_escorted() == 1)
         {
-            event_add(15, charaid2int(victim.id));
+            deferred_event_add(DeferredEvent{
+                "core.quest_failed",
+                0,
+                lua::create_table("core.client", victim.new_id().get())});
             new_state = Character::State::empty;
         }
         if (victim.is_escorted_in_sub_quest() == 1)
@@ -197,7 +204,9 @@ int damage_hp(
     }
     if (element != 0 && element < 61)
     {
-        int resistance = victim.get_skill(element).level / 50;
+        int resistance =
+            victim.skills().level(*the_skill_db.get_id_from_integer(element)) /
+            50;
         if (resistance < 3)
         {
             dmg_at_m141 =
@@ -211,7 +220,8 @@ int damage_hp(
         {
             dmg_at_m141 = 0;
         }
-        dmg_at_m141 = dmg_at_m141 * 100 / (victim.get_skill(60).level / 2 + 50);
+        dmg_at_m141 = dmg_at_m141 * 100 /
+            (victim.skills().level("core.element_magic") / 2 + 50);
     }
     if (attacker && attacker->is_player())
     {
@@ -275,7 +285,7 @@ int damage_hp(
     }
     rtdmg = dmg_at_m141;
 
-    if (victim.is_player() && cdata.player().god_id == core_god::opatos)
+    if (victim.is_player() && cdata.player().religion == "core.opatos")
     {
         dmg_at_m141 = dmg_at_m141 * 90 / 100;
     }
@@ -321,10 +331,10 @@ int damage_hp(
                 heal_hp(
                     *attacker,
                     clamp(
-                        rnd_capped(
+                        lua_int{rnd_capped(
                             dmg_at_m141 * (150 + element_power * 2) / 1000 +
-                            10),
-                        1,
+                            10)},
+                        lua_int{1},
                         attacker->max_hp / 10 + rnd(5)));
             }
         }
@@ -333,7 +343,8 @@ int damage_hp(
     {
         if (victim.hp < 0)
         {
-            if (event_has_pending_events() && event_processing_event() != 21)
+            if (deferred_event_has_pending_events() &&
+                deferred_event_processing_event() != "core.nuclear_bomb")
             {
                 victim.hp = 1;
             }
@@ -679,7 +690,8 @@ int damage_hp(
             {
                 if (victim.is_player())
                 {
-                    modify_ether_disease_stage(rnd_capped(element_power + 1));
+                    trait_progress_ether_disease_stage(
+                        victim, rnd_capped(element_power + 1));
                 }
             }
             if (element == 63)
@@ -794,9 +806,9 @@ int damage_hp(
         if (attacker)
         {
             bool apply_hate = false;
-            if (victim.relationship <= -3)
+            if (victim.relationship <= Relationship::enemy)
             {
-                if (attacker->original_relationship > -3)
+                if (attacker->original_relationship > Relationship::enemy)
                 {
                     if (victim.hate == 0 || rnd(4) == 0)
                     {
@@ -804,7 +816,7 @@ int damage_hp(
                     }
                 }
             }
-            else if (attacker->original_relationship <= -3)
+            else if (attacker->original_relationship <= Relationship::enemy)
             {
                 if (victim.hate == 0 || rnd(4) == 0)
                 {
@@ -1049,9 +1061,10 @@ int damage_hp(
             animeblood(victim, 0, element);
             spillblood(victim.position.x, victim.position.y, 4);
         }
-        if (victim.is_player())
+        ++victim.death_count;
+        if (victim.is_player_or_ally())
         {
-            ++game()->death_count;
+            ++game()->total_death_count;
         }
         if (victim.index == g_chara_last_attacked_by_player)
         {
@@ -1078,7 +1091,7 @@ int damage_hp(
             attacker->experience += gained_exp;
             if (attacker->is_player())
             {
-                game()->sleep_experience += gained_exp;
+                attacker->sleep_experience += gained_exp;
             }
             attacker->hate = 0;
             if (attacker->is_player_or_ally())
@@ -1096,42 +1109,46 @@ int damage_hp(
                 {
                     if (victim.id == CharaId::zeome)
                     {
-                        event_add(1);
+                        deferred_event_add("core.conquer_lesimas");
                     }
                     if (victim.id == CharaId::issizzle)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_fool = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_fool", true);
                     }
                     if (victim.id == CharaId::wynan)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_king = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_king", true);
                     }
                     if (victim.id == CharaId::quruiza)
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
                         snd("core.complete1");
-                        game()->quest_flags.magic_stone_of_sage = 1;
+                        story_quest_set_ext(
+                            "core.elona", "core.magic_stone_of_sage", true);
                     }
                     if (victim.id == CharaId::rodlob)
                     {
-                        if (game()->quest_flags.novice_knight < 1000)
+                        if (story_quest_progress("core.novice_knight") < 1000)
                         {
-                            game()->quest_flags.novice_knight = 2;
+                            story_quest_set_progress("core.novice_knight", 2);
                             quest_update_journal_msg();
                         }
                     }
                     if (victim.id == CharaId::tuwen)
                     {
-                        if (game()->quest_flags.pyramid_trial < 1000)
+                        if (story_quest_progress("core.pyramid_trial") < 1000)
                         {
-                            game()->quest_flags.pyramid_trial = 1000;
+                            story_quest_set_progress(
+                                "core.pyramid_trial", 1000);
                             quest_update_journal_msg();
                             txt(i18n::s.get("core.quest.completed"));
                             snd("core.complete1");
@@ -1139,24 +1156,30 @@ int damage_hp(
                     }
                     if (victim.id == CharaId::ungaga)
                     {
-                        if (game()->quest_flags.minotaur_king < 1000)
+                        if (story_quest_progress("core.minotaur_king") < 1000)
                         {
-                            game()->quest_flags.minotaur_king = 2;
+                            story_quest_set_progress("core.minotaur_king", 2);
                             quest_update_journal_msg();
                         }
                     }
                     if (victim.id == CharaId::big_daddy)
                     {
-                        event_add(27, victim.position.x, victim.position.y);
+                        deferred_event_add(DeferredEvent{
+                            "core.little_sister",
+                            0,
+                            lua::create_table(
+                                "core.big_daddy_position", victim.position)});
                     }
                     if (victim.id == CharaId::little_sister)
                     {
-                        ++game()->quest_flags.kill_count_of_little_sister;
+                        story_quest_add_ext(
+                            "core.little_sister", "core.kill_count", 1);
                         txt(i18n::s.get(
                                 "core.talk.unique.strange_scientist.saved_count",
-                                game()->quest_flags.save_count_of_little_sister,
-                                game()
-                                    ->quest_flags.kill_count_of_little_sister),
+                                story_quest_get_ext<lua_int>(
+                                    "core.little_sister", "core.save_count"),
+                                story_quest_get_ext<lua_int>(
+                                    "core.little_sister", "core.kill_count")),
                             Message::color{ColorIndex::red});
                     }
                     if (game()->current_dungeon_level ==
@@ -1167,14 +1190,18 @@ int damage_hp(
                                 victim.index &&
                             victim.is_lord_of_dungeon() == 1)
                         {
-                            event_add(5);
+                            deferred_event_add("core.conquer_nefia");
                         }
                     }
                     if (victim.id == CharaId::ehekatl)
                     {
                         if (rnd(4) == 0)
                         {
-                            event_add(28, victim.position.x, victim.position.y);
+                            deferred_event_add(DeferredEvent{
+                                "core.god_inside_ehekatl",
+                                0,
+                                lua::create_table(
+                                    "core.ehekatl_position", victim.position)});
                         }
                     }
                     quest_check();
@@ -1185,14 +1212,14 @@ int damage_hp(
                             victim.index &&
                         victim.is_lord_of_dungeon() == 1)
                     {
-                        event_add(5);
+                        deferred_event_add("core.conquer_nefia");
                     }
                 }
             }
         }
         if (!victim.is_player())
         {
-            game()->character_memories().increment_kill_count(victim.new_id());
+            game()->character_memories.increment_kill_count(victim.new_id());
             chara_custom_talk(victim, 102);
             if (victim.is_player_or_ally())
             {
@@ -1226,7 +1253,8 @@ int damage_hp(
             {
                 catitem = attacker->index;
             }
-            if (int(std::sqrt(attacker->get_skill(161).level)) > rnd(150))
+            if (int(std::sqrt(attacker->skills().level("core.anatomy"))) >
+                rnd(150))
             {
                 rollanatomy = 1;
             }
@@ -1249,19 +1277,7 @@ int damage_hp(
                 {
                     continue;
                 }
-                for (int buff_index = 0; buff_index < 16; ++buff_index)
-                {
-                    if (chara.buffs[buff_index].id == 0)
-                    {
-                        break;
-                    }
-                    if (chara.buffs[buff_index].id == 16)
-                    {
-                        buff_delete(chara, buff_index);
-                        --buff_index;
-                        continue;
-                    }
-                }
+                buff_remove(chara, "core.death_word");
             }
         }
         if (attacker && attacker->is_player())
@@ -1270,7 +1286,7 @@ int damage_hp(
             {
                 if (rnd(20) == 0)
                 {
-                    txtgod(cdata.player().god_id, 9);
+                    txtgod(cdata.player().religion, 9);
                 }
             }
         }
@@ -1309,7 +1325,8 @@ void damage_mp(Character& chara, int delta)
     if (chara.mp < 0)
     {
         chara_gain_exp_mana_capacity(chara);
-        auto damage = -chara.mp * 400 / (100 + chara.get_skill(164).level * 10);
+        auto damage = -chara.mp * 400 /
+            (100 + chara.skills().level("core.magic_capacity") * 10);
         if (chara.is_player())
         {
             if (cdata.player().traits().level("core.less_mana_reaction") == 1)
@@ -1385,7 +1402,8 @@ void damage_insanity(Character& chara, int delta)
     if (chara.quality >= Quality::miracle)
         return;
 
-    int resistance = std::max(chara.get_skill(54).level / 50, 1);
+    int resistance =
+        std::max(chara.skills().level("core.element_mind") / 50, lua_int{1});
     if (resistance > 10)
         return;
 
@@ -1431,7 +1449,7 @@ void character_drops_item(Character& victim)
         {
             if (map_data.refresh_type == 0)
             {
-                if (item->body_part != 0)
+                if (item->is_equipped())
                 {
                     continue;
                 }
@@ -1465,7 +1483,7 @@ void character_drops_item(Character& victim)
                 }
             }
             f = 0;
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
                 if (rnd(10))
                 {
@@ -1504,10 +1522,10 @@ void character_drops_item(Character& victim)
             {
                 continue;
             }
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
-                victim.equipment_slots[item->body_part - 100].unequip();
-                item->body_part = 0;
+                victim.body_parts[item->_equipped_slot].unequip();
+                item->_equipped_slot = lua_index::nil();
             }
             f = 0;
             if (!item->is_precious)
@@ -1566,7 +1584,7 @@ void character_drops_item(Character& victim)
                 create_pcpic(victim);
             }
         }
-        if (victim.relationship == 10)
+        if (victim.relationship == Relationship::ally)
         {
             return;
         }
@@ -1600,8 +1618,7 @@ void character_drops_item(Character& victim)
         {
             break;
         }
-        if (item->quality > Quality::miracle ||
-            item->id == "core.platinum_coin")
+        if (item->quality > Quality::miracle || item->id == "core.platinum")
         {
             f = 1;
         }
@@ -1660,10 +1677,10 @@ void character_drops_item(Character& victim)
                 animeload(8, victim);
             }
         }
-        if (item->body_part != 0)
+        if (item->is_equipped())
         {
-            victim.equipment_slots[item->body_part - 100].unequip();
-            item->body_part = 0;
+            victim.body_parts[item->_equipped_slot].unequip();
+            item->_equipped_slot = lua_index::nil();
         }
         item->set_position(victim.position);
         itemturn(item);
@@ -2057,11 +2074,12 @@ void character_drops_item(Character& victim)
             remain_make(item.unwrap(), victim);
             if (victim.is_livestock() == 1)
             {
-                if (cdata.player().get_skill(161).level != 0)
+                if (cdata.player().skills().level("core.anatomy") != 0)
                 {
-                    item->modify_number(rnd(
-                        1 +
-                        (cdata.player().get_skill(161).level > victim.level)));
+                    item->modify_number(
+                        rnd(1 +
+                            (cdata.player().skills().level("core.anatomy") >
+                             victim.level)));
                 }
             }
         }
@@ -2093,11 +2111,13 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
     }
 
     int karma = 0;
-    if (killer_chara->is_player() || killer_chara->relationship >= 10)
+    ++killer_chara->kill_count;
+    if (killer_chara->is_player() ||
+        killer_chara->relationship >= Relationship::ally)
     {
         if (!victim.is_player_or_ally())
         {
-            ++game()->kill_count;
+            ++game()->total_kill_count;
             if (victim.id == int2charaid(game()->guild.fighters_guild_target))
             {
                 if (game()->guild.fighters_guild_quota > 0)
@@ -2105,7 +2125,7 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
                     --game()->guild.fighters_guild_quota;
                 }
             }
-            if (victim.original_relationship >= 0)
+            if (victim.original_relationship >= Relationship::friendly)
             {
                 karma = -2;
             }
@@ -2131,7 +2151,7 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
             }
         }
     }
-    if (killer_chara->relationship >= 10)
+    if (killer_chara->relationship >= Relationship::ally)
     {
         if (!killer_chara->is_player())
         {
@@ -2209,7 +2229,7 @@ void heal_completely(Character& target)
     target.dimmed = 0;
     target.drunk = 0;
     target.bleeding = 0;
-    game()->continuous_active_hours = 0;
+    target.sleepiness = 0;
     target.hp = target.max_hp;
     target.mp = target.max_mp;
     target.sp = target.max_sp;

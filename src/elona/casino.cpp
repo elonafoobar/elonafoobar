@@ -1,6 +1,5 @@
 #include "casino.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "calc.hpp"
 #include "casino_card.hpp"
@@ -22,6 +21,7 @@
 #include "message.hpp"
 #include "random.hpp"
 #include "save.hpp"
+#include "skill.hpp"
 #include "tcg.hpp"
 #include "ui.hpp"
 
@@ -401,25 +401,25 @@ bool casino_start()
     noteadd(i18n::s.get_enum("core.casino.window.desc", 0));
     noteadd(i18n::s.get_enum("core.casino.window.desc", 1));
     noteadd(i18n::s.get_enum("core.casino.window.desc", 2));
-    if (game()->used_casino_once == 0)
+    if (!game()->used_casino_once)
     {
         noteadd(""s);
         noteadd(i18n::s.get_enum("core.casino.window.first", 0));
         noteadd(i18n::s.get_enum("core.casino.window.first", 1));
-        game()->used_casino_once = 1;
+        game()->used_casino_once = true;
         snd("core.get3");
-        game()->crafting_materials().gain("core.casino_chip", 10);
+        game()->crafting_materials.gain("core.casino_chip", 10);
         noteadd(
             "@BL" +
             i18n::s.get(
                 "core.casino.you_get",
                 10,
                 the_crafting_material_db.get_text("core.casino_chip", "name"),
-                game()->crafting_materials().amount("core.casino_chip")));
+                game()->crafting_materials.amount("core.casino_chip")));
     }
     atxinfon(1) = i18n::s.get(
         "core.casino.chips_left",
-        game()->crafting_materials().amount("core.casino_chip"));
+        game()->crafting_materials.amount("core.casino_chip"));
     atxinfon(2) = "";
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.casino.window.choices.leave");
@@ -462,9 +462,9 @@ bool casino_blackjack()
     noteadd(i18n::s.get_enum("core.casino.blackjack.desc", 3));
     atxinfon(1) = i18n::s.get(
         "core.casino.chips_left",
-        game()->crafting_materials().amount("core.casino_chip"));
+        game()->crafting_materials.amount("core.casino_chip"));
     atxinfon(2) = "";
-    if (game()->crafting_materials().amount("core.casino_chip") <= 0)
+    if (game()->crafting_materials.amount("core.casino_chip") <= 0)
     {
         noteadd(""s);
         noteadd(i18n::s.get("core.casino.blackjack.no_chips"));
@@ -472,19 +472,19 @@ bool casino_blackjack()
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.quit");
     ++listmax;
-    if (game()->crafting_materials().amount("core.casino_chip") >= 1)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 1)
     {
         list(0, listmax) = 1;
         listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.bet", 1);
         ++listmax;
     }
-    if (game()->crafting_materials().amount("core.casino_chip") >= 5)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 5)
     {
         list(0, listmax) = 5;
         listn(0, listmax) = i18n::s.get("core.casino.blackjack.choices.bet", 5);
         ++listmax;
     }
-    if (game()->crafting_materials().amount("core.casino_chip") >= 20)
+    if (game()->crafting_materials.amount("core.casino_chip") >= 20)
     {
         list(0, listmax) = 20;
         listn(0, listmax) =
@@ -510,12 +510,12 @@ bool casino_blackjack()
         atxinit();
         if (cnt == 0)
         {
-            game()->crafting_materials().lose("core.casino_chip", stake);
+            game()->crafting_materials.lose("core.casino_chip", stake);
             noteadd(i18n::s.get(
                 "core.casino.you_lose",
                 stake,
                 the_crafting_material_db.get_text("core.casino_chip", "name"),
-                game()->crafting_materials().amount("core.casino_chip")));
+                game()->crafting_materials.amount("core.casino_chip")));
         }
         if (cardround == 0)
         {
@@ -597,7 +597,7 @@ bool casino_blackjack()
         }
         atxinfon(1) = i18n::s.get(
             "core.casino.chips_left",
-            game()->crafting_materials().amount("core.casino_chip"));
+            game()->crafting_materials.amount("core.casino_chip"));
         atxinfon(2) = i18n::s.get("core.casino.blackjack.game.bets", stake) +
             " " + i18n::s.get("core.casino.blackjack.game.wins", winrow);
         if (cardround == -1)
@@ -647,7 +647,7 @@ bool casino_blackjack()
             list(0, listmax) = 2;
             listn(0, listmax) = i18n::s.get(
                 "core.casino.blackjack.game.choices.cheat",
-                cdata.player().get_skill(12).level);
+                cdata.player().skills().level("core.stat_dexterity"));
             ++listmax;
         }
         chatesc = -1;
@@ -670,7 +670,8 @@ bool casino_blackjack()
                 {
                     if (pileremain() > 10)
                     {
-                        if (rnd_capped(cdata.player().get_skill(19).level) > 40)
+                        if (rnd_capped(cdata.player().skills().level(
+                                "core.stat_luck")) > 40)
                         {
                             txt(i18n::s.get(
                                 "core.casino.blackjack.game.bad_feeling"));
@@ -697,13 +698,14 @@ bool casino_blackjack()
             {
                 p = 60;
             }
-            if (rnd_capped(cdata.player().get_skill(12).level) < rnd(p(0)))
+            if (rnd_capped(cdata.player().skills().level(
+                    "core.stat_dexterity")) < rnd(p(0)))
             {
                 atxinit();
                 noteadd(i18n::s.get("core.casino.blackjack.game.cheat.dialog"));
                 atxinfon(1) = i18n::s.get(
                     "core.casino.chips_left",
-                    game()->crafting_materials().amount("core.casino_chip"));
+                    game()->crafting_materials.amount("core.casino_chip"));
                 atxinfon(2) =
                     i18n::s.get("core.casino.blackjack.game.bets", stake) +
                     " " +

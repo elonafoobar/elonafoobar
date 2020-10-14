@@ -5,6 +5,7 @@
 #include "enums.hpp"
 #include "eobject/forward.hpp"
 #include "optional.hpp"
+#include "typedefs.hpp"
 
 
 
@@ -18,9 +19,9 @@ struct Item;
 
 struct SkillDamage
 {
-    int dice_x;
-    int dice_y;
-    int damage_bonus;
+    lua_int dice_x;
+    lua_int dice_y;
+    lua_int damage_bonus;
     int element;
     int element_power;
 };
@@ -66,9 +67,9 @@ int calcattackdmg(
 
 struct CalcAttackProtectionResult
 {
-    int rate;
-    int dice_x;
-    int dice_y;
+    lua_int rate;
+    lua_int dice_x;
+    lua_int dice_y;
 };
 CalcAttackProtectionResult calc_attack_protection(const Character& chara);
 
@@ -103,7 +104,7 @@ int calc_spell_power(const Character& caster, int id);
 int calc_spell_success_rate(const Character& caster, int id);
 int calc_spell_cost_mp(const Character& caster, int id);
 int calc_spell_cost_stock(const Character& caster, int id);
-int calcscore();
+lua_int calcscore();
 void calcpartyscore();
 void calcpartyscore2();
 
@@ -211,7 +212,7 @@ int calc_skill_related_attribute_exp(int experience, int divisor);
  *
  * @param base_experience The base experience coefficient
  * @param potential The skill's potential
- * @param skill_level The skill's level
+ * @param skills().level The skill's level
  *
  * @return The adjusted experience amount
  */

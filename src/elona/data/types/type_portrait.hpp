@@ -27,20 +27,20 @@ class PortraitDB : public _PortraitDBBase
 {
 public:
     /**
-     * Takes a non-fully-quallified ID, and returns the next
-     * non-fully-quallified ID. If `current` does not exist in the storage,
-     * returns `current` itself. Portrait IDs are sorted in lexicographical
-     * order (depending on `operator<()` for two `std::string`s).
+     * Takes a portrait ID, and returns the next one. If `current` does not
+     * exist in the storage, returns `current` itself. Portrait IDs are sorted
+     * in lexicographical order (depending on `operator<()` for two
+     * `std::string`s).
      */
-    std::string get_next_portrait(const std::string& current);
+    data::InstanceId get_next_portrait(data::InstanceId current);
 
     /**
-     * Takes a non-fully-quallified ID, and returns the previous
-     * non-fully-quallified ID. If `current` does not exist in the storage,
-     * returns `current` itself. Portrait IDs are sorted in lexicographical
-     * order (depending on `operator<()` for two `std::string`s).
+     * Takes a portrait ID, and returns the previous one. If `current` does not
+     * exist in the storage, returns `current` itself. Portrait IDs are sorted
+     * in lexicographical order (depending on `operator<()` for two
+     * `std::string`s).
      */
-    std::string get_previous_portrait(const std::string& current);
+    data::InstanceId get_previous_portrait(data::InstanceId current);
 
     void cache_sorted_portrait_table();
 

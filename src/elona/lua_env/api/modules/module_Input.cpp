@@ -247,8 +247,8 @@ int Input_prompt_dialog(
     }
 
     talk_start();
-    auto result =
-        talk_window_query(portrait_id, none, speaker_name, text_, none);
+    auto result = talk_window_query(
+        data::InstanceId{portrait_id}, none, speaker_name, text_, none);
 
     if (result == -1)
     {
@@ -303,7 +303,11 @@ int Input_prompt_dialog_impress(
 
     talk_start();
     auto result = talk_window_query(
-        portrait_id, none, speaker_name, text_, impress_interest);
+        data::InstanceId{portrait_id},
+        none,
+        speaker_name,
+        text_,
+        impress_interest);
 
     if (result == -1)
     {

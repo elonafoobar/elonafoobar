@@ -1,6 +1,5 @@
 #include "animation.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -13,6 +12,7 @@
 #include "item.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -226,13 +226,13 @@ void BrightAuraAnimation::do_play()
     switch (type)
     {
     case Type::debuff:
-        prepare_item_image(8, 0);
+        prepare_item_image(8);
         snd_at("core.curse1", target_pos);
         break;
-    case Type::offering: prepare_item_image(9, 0); break;
+    case Type::offering: prepare_item_image(9); break;
     case Type::healing:
     case Type::healing_rain:
-        prepare_item_image(7, 0);
+        prepare_item_image(7);
         snd_at("core.heal1", target_pos);
         break;
     }
@@ -641,7 +641,7 @@ void RangedAttackAnimation::do_play()
     prepare_item_image(6, anicol);
     if (type == Type::distant_attack)
     {
-        prepare_item_image(23, 0);
+        prepare_item_image(23);
         snd_at("core.bow1", attacker_pos);
     }
     if (type == Type::bow)
@@ -770,7 +770,7 @@ void MeleeAttackAnimation::do_play()
     }
     if (ap == 0)
     {
-        prepare_item_image(17, 0);
+        prepare_item_image(17);
     }
     for (int cnt = 0, cnt_end = (damage_percent); cnt < cnt_end; ++cnt)
     {
@@ -1310,11 +1310,11 @@ void animeblood(const Character& chara, int animation_type, int element)
 
     if (animation_type == 0)
     {
-        prepare_item_image(16, 0);
+        prepare_item_image(16);
     }
     if (animation_type == 1)
     {
-        prepare_item_image(18, 0);
+        prepare_item_image(18);
     }
     dx_at_m133 = (chara.position.x - scx) * inf_tiles + inf_screenx;
     dy_at_m133(0) = (chara.position.y - scy) * inf_tiles + inf_screeny;

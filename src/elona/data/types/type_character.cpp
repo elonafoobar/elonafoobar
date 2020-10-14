@@ -64,7 +64,7 @@ CharacterData CharacterDB::convert(
     DATA_OPT_OR(image, int, 0);
     DATA_OPT_OR(level, int, 0);
     DATA_OPT_OR(male_image, int, 0);
-    DATA_ENUM(original_relationship, int, RelationshipTable, 0);
+    DATA_OPT_OR(relationship, int, 0);
 
     // Portrait
     std::string portrait_male;
@@ -148,9 +148,9 @@ CharacterData CharacterDB::convert(
         image,
         level,
         male_image,
-        original_relationship,
-        portrait_male,
-        portrait_female,
+        static_cast<Relationship>(relationship),
+        data::InstanceId{portrait_male},
+        data::InstanceId{portrait_female},
         data::InstanceId{race},
         sex,
         resistances,

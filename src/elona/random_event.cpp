@@ -2,7 +2,6 @@
 
 #include <cassert>
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
 #include "calc.hpp"
@@ -24,6 +23,7 @@
 #include "message.hpp"
 #include "net.hpp"
 #include "optional.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -65,7 +65,7 @@ optional<RandomEvent> generate_random_event_in_sleep()
     int id = 0;
     int luck_threshold = 0;
 
-    if (cdata.player().god_id != core_god::eyth)
+    if (cdata.player().religion != "")
     {
         if (rnd(12) == 0)
         {
@@ -254,7 +254,7 @@ void run_random_event(RandomEvent event)
 
     listmax = 0;
 
-    if (event.is_evadable(cdata.player().get_skill(19).level))
+    if (event.is_evadable(cdata.player().skills().level("core.stat_luck")))
     {
         // Default to "Avoiding Misfortune" if Luck is good enough.
         event.id = 1;
@@ -375,27 +375,23 @@ void run_random_event(RandomEvent event)
         }
         else
         {
-            f = 0;
-            for (int i = 0; i < 30; ++i)
+            bool equip_any_equipments = false;
+            for (const auto& body_part : cdata.player().body_parts)
             {
-                if (!cdata.player().equipment_slots[i].equipment)
+                if (body_part.is_equip())
                 {
-                    continue;
-                }
-                else
-                {
-                    f = 1;
+                    equip_any_equipments = true;
                 }
             }
-            if (f)
+            if (equip_any_equipments)
             {
                 efid = 1114;
                 efp = 200;
                 magic(cdata.player(), cdata.player());
             }
-            else if (!event_has_pending_events())
+            else if (!deferred_event_has_pending_events())
             {
-                event_add(26);
+                deferred_event_add("core.blaggers");
             }
         }
         listmax = 1;

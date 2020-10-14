@@ -1,12 +1,15 @@
 #include "trait.hpp"
 
 #include "../util/range.hpp"
-#include "ability.hpp"
+#include "animation.hpp"
 #include "character.hpp"
+#include "data/types/type_skill.hpp"
 #include "elona.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
+#include "menu.hpp"
 #include "optional.hpp"
+#include "skill.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
 
@@ -241,16 +244,16 @@ bool is_acquirable(int id)
         return cdata.player().traits().level(
                    *the_trait_db.get_id_from_integer(id)) == 0 ||
             cdata.player().level >= 5;
-    case 6: return cdata.player().get_skill(159).base_level > 0;
+    case 6: return cdata.player().skills().base_level("core.detection") > 0;
     case 7:
         return cdata.player().traits().level(
                    *the_trait_db.get_id_from_integer(id)) == 0 ||
             cdata.player().level >= 5;
-    case 10: return cdata.player().get_skill(173).base_level > 0;
-    case 12: return cdata.player().get_skill(172).base_level > 0;
-    case 16: return cdata.player().get_skill(156).base_level > 0;
-    case 19: return cdata.player().get_skill(166).base_level > 0;
-    case 43: return cdata.player().get_skill(168).base_level > 0;
+    case 10: return cdata.player().skills().base_level("core.evasion") > 0;
+    case 12: return cdata.player().skills().base_level("core.casting") > 0;
+    case 16: return cdata.player().skills().base_level("core.negotiation") > 0;
+    case 19: return cdata.player().skills().base_level("core.dual_wield") > 0;
+    case 43: return cdata.player().skills().base_level("core.shield") > 0;
     default: return true;
     }
 }
@@ -284,6 +287,16 @@ int trait_get_info(int traitmode, int tid)
     }
 
     const auto trait_id = data->id;
+
+    const auto T = cdata.player().traits().level(trait_id);
+    const auto boost_skill = [&](data::InstanceId id, lua_int delta) {
+        cdata.player().skills().set_level(
+            id,
+            clamp(
+                cdata.player().skills().level(id) + delta,
+                lua_int{cdata.player().skills().level(id) > 0},
+                9999));
+    };
 
     if (tid == 24)
     {
@@ -321,20 +334,12 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 21)
     {
-        cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(17).level > 0},
-            9999);
+        boost_skill("core.stat_charisma", T * 4);
         return 1;
     }
     if (tid == 5)
     {
-        cdata.player().get_skill(10).level = clamp(
-            cdata.player().get_skill(10).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(10).level > 0},
-            9999);
+        boost_skill("core.stat_strength", T * 3);
         return 1;
     }
     if (tid == 38)
@@ -351,29 +356,17 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 9)
     {
-        cdata.player().get_skill(11).level = clamp(
-            cdata.player().get_skill(11).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(11).level > 0},
-            9999);
+        boost_skill("core.stat_constitution", T * 3);
         return 1;
     }
     if (tid == 20)
     {
-        cdata.player().get_skill(106).level = clamp(
-            cdata.player().get_skill(106).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(106).level > 0},
-            9999);
+        boost_skill("core.martial_arts", T * 3);
         return 1;
     }
     if (tid == 12)
     {
-        cdata.player().get_skill(172).level = clamp(
-            cdata.player().get_skill(172).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(172).level > 0},
-            9999);
+        boost_skill("core.casting", T * 4);
         return 1;
     }
     if (tid == 43)
@@ -387,117 +380,69 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 19)
     {
-        cdata.player().get_skill(166).level = clamp(
-            cdata.player().get_skill(166).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(166).level > 0},
-            9999);
+        boost_skill("core.dual_wield", T * 4);
         return 1;
     }
     if (tid == 15)
     {
-        cdata.player().get_skill(53).level = clamp(
-            cdata.player().get_skill(53).level +
-                cdata.player().traits().level(trait_id) * 50 / 2,
-            int{cdata.player().get_skill(53).level > 0},
-            9999);
+        boost_skill("core.element_darkness", T * 50 / 2);
         return 1;
     }
     if (tid == 18)
     {
-        cdata.player().get_skill(55).level = clamp(
-            cdata.player().get_skill(55).level +
-                cdata.player().traits().level(trait_id) * 50 / 2,
-            int{cdata.player().get_skill(55).level > 0},
-            9999);
+        boost_skill("core.element_poison", T * 50 / 2);
         return 1;
     }
     if (tid == 16)
     {
-        cdata.player().get_skill(156).level = clamp(
-            cdata.player().get_skill(156).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(156).level > 0},
-            9999);
+        boost_skill("core.negotiation", T * 4);
         return 1;
     }
     if (tid == 17)
     {
-        cdata.player().get_skill(181).level = clamp(
-            cdata.player().get_skill(181).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(181).level > 0},
-            9999);
+        boost_skill("core.faith", T * 4);
         return 1;
     }
     if (tid == 1)
     {
-        cdata.player().get_skill(19).level = clamp(
-            cdata.player().get_skill(19).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(19).level > 0},
-            9999);
+        boost_skill("core.stat_luck", T * 5);
         return 1;
     }
     if (tid == 2)
     {
-        cdata.player().get_skill(2).level = clamp(
-            cdata.player().get_skill(2).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(2).level > 0},
-            9999);
+        boost_skill("core.stat_life", T * 5);
         return 1;
     }
     if (tid == 11)
     {
-        cdata.player().get_skill(3).level = clamp(
-            cdata.player().get_skill(3).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(3).level > 0},
-            9999);
+        boost_skill("core.stat_mana", T * 5);
         return 1;
     }
     if (tid == 6)
     {
-        cdata.player().get_skill(159).level = clamp(
-            cdata.player().get_skill(159).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(159).level > 0},
-            9999);
+        boost_skill("core.detection", T * 3);
         return 1;
     }
     if (tid == 4)
     {
-        cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(18).level > 0},
-            9999);
+        boost_skill("core.stat_speed", T * 5);
         return 1;
     }
     if (tid == 7)
     {
-        cdata.player().pv = clamp(
-            cdata.player().pv + cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().pv > 0},
-            9999);
+        cdata.player().pv =
+            clamp(cdata.player().pv + T * 5, int{cdata.player().pv > 0}, 9999);
         return 1;
     }
     if (tid == 8)
     {
-        cdata.player().dv = clamp(
-            cdata.player().dv + cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().dv > 0},
-            9999);
+        cdata.player().dv =
+            clamp(cdata.player().dv + T * 4, int{cdata.player().dv > 0}, 9999);
         return 1;
     }
     if (tid == 10)
     {
-        cdata.player().get_skill(173).level = clamp(
-            cdata.player().get_skill(173).level +
-                cdata.player().traits().level(trait_id) * 2,
-            int{cdata.player().get_skill(173).level > 0},
-            9999);
+        boost_skill("core.evasion", T * 2);
         return 1;
     }
     if (tid == 41)
@@ -506,154 +451,90 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 25)
     {
-        cdata.player().pv += cdata.player().traits().level(trait_id) * 3;
+        cdata.player().pv += T * 3;
         return 1;
     }
     if (tid == 26)
     {
-        cdata.player().get_skill(12).level = clamp(
-            cdata.player().get_skill(12).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(12).level > 0},
-            9999);
+        boost_skill("core.stat_dexterity", T * 3);
         return 1;
     }
     if (tid == 27)
     {
-        cdata.player().get_skill(154).level = clamp(
-            cdata.player().get_skill(154).level +
-                cdata.player().traits().level(trait_id) * 4,
-            int{cdata.player().get_skill(154).level > 0},
-            9999);
+        boost_skill("core.healing", T * 4);
         return 1;
     }
     if (tid == 28)
     {
-        cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(18).level > 0},
-            9999);
+        boost_skill("core.stat_speed", T * 5);
         return 1;
     }
     if (tid == 29)
     {
-        cdata.player().get_skill(10).level = clamp(
-            cdata.player().get_skill(10).level +
-                cdata.player().traits().level(trait_id) * 3,
-            int{cdata.player().get_skill(10).level > 0},
-            9999);
+        boost_skill("core.stat_strength", T * 3);
         return 1;
     }
     if (tid == 30)
     {
-        cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(17).level > 0},
-            9999);
+        boost_skill("core.stat_charisma", T * 5);
         return 1;
     }
     if (tid == 31)
     {
-        if (cdata.player().get_skill(165).base_level != 0)
+        if (cdata.player().skills().base_level("core.memorization") != 0)
         {
-            cdata.player().get_skill(165).level = clamp(
-                cdata.player().get_skill(165).level +
-                    cdata.player().traits().level(trait_id) * 4,
-                int{cdata.player().get_skill(165).level > 0},
-                9999);
+            boost_skill("core.memorization", T * 4);
         }
         return 1;
     }
     if (tid == 32)
     {
-        cdata.player().get_skill(60).level = clamp(
-            cdata.player().get_skill(60).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(60).level > 0},
-            9999);
+        boost_skill("core.element_magic", T * 50);
         return 1;
     }
     if (tid == 33)
     {
-        cdata.player().get_skill(57).level = clamp(
-            cdata.player().get_skill(57).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(57).level > 0},
-            9999);
+        boost_skill("core.element_sound", T * 50);
         return 1;
     }
     if (tid == 34)
     {
-        cdata.player().get_skill(50).level = clamp(
-            cdata.player().get_skill(50).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(50).level > 0},
-            9999);
+        boost_skill("core.element_fire", T * 50);
         return 1;
     }
     if (tid == 35)
     {
-        cdata.player().get_skill(51).level = clamp(
-            cdata.player().get_skill(51).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(51).level > 0},
-            9999);
+        boost_skill("core.element_cold", T * 50);
         return 1;
     }
     if (tid == 36)
     {
-        cdata.player().get_skill(52).level = clamp(
-            cdata.player().get_skill(52).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(52).level > 0},
-            9999);
+        boost_skill("core.element_lightning", T * 50);
         return 1;
     }
     if (tid == 37)
     {
-        cdata.player().get_skill(13).level = clamp(
-            cdata.player().get_skill(13).level +
-                cdata.player().traits().level(trait_id) * 5,
-            int{cdata.player().get_skill(13).level > 0},
-            9999);
+        boost_skill("core.stat_perception", T * 5);
         return 1;
     }
     if (tid == 150)
     {
-        cdata.player().get_skill(50).level = clamp(
-            cdata.player().get_skill(50).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(50).level > 0},
-            9999);
+        boost_skill("core.element_fire", T * 50);
         return 1;
     }
     if (tid == 151)
     {
-        cdata.player().get_skill(51).level = clamp(
-            cdata.player().get_skill(51).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(51).level > 0},
-            9999);
+        boost_skill("core.element_cold", T * 50);
         return 1;
     }
     if (tid == 152)
     {
-        cdata.player().get_skill(55).level = clamp(
-            cdata.player().get_skill(55).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(55).level > 0},
-            9999);
+        boost_skill("core.element_poison", T * 50);
         return 1;
     }
     if (tid == 155)
     {
-        cdata.player().get_skill(53).level = clamp(
-            cdata.player().get_skill(53).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(53).level > 0},
-            9999);
+        boost_skill("core.element_darkness", T * 50);
         return 1;
     }
     if (tid == 156)
@@ -662,38 +543,14 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 160)
     {
-        cdata.player().get_skill(60).level = clamp(
-            cdata.player().get_skill(60).level + 150,
-            int{cdata.player().get_skill(60).level > 0},
-            9999);
-        cdata.player().get_skill(52).level = clamp(
-            cdata.player().get_skill(52).level + 100,
-            int{cdata.player().get_skill(52).level > 0},
-            9999);
-        cdata.player().get_skill(53).level = clamp(
-            cdata.player().get_skill(53).level + 200,
-            int{cdata.player().get_skill(53).level > 0},
-            9999);
-        cdata.player().get_skill(57).level = clamp(
-            cdata.player().get_skill(57).level + 50,
-            int{cdata.player().get_skill(57).level > 0},
-            9999);
-        cdata.player().get_skill(59).level = clamp(
-            cdata.player().get_skill(59).level + 100,
-            int{cdata.player().get_skill(59).level > 0},
-            9999);
-        cdata.player().get_skill(54).level = clamp(
-            cdata.player().get_skill(54).level + 200,
-            int{cdata.player().get_skill(54).level > 0},
-            9999);
-        cdata.player().get_skill(58).level = clamp(
-            cdata.player().get_skill(58).level + 100,
-            int{cdata.player().get_skill(58).level > 0},
-            9999);
-        cdata.player().get_skill(51).level = clamp(
-            cdata.player().get_skill(51).level + 100,
-            int{cdata.player().get_skill(51).level > 0},
-            9999);
+        boost_skill("core.element_magic", 150);
+        boost_skill("core.element_lightning", 100);
+        boost_skill("core.element_darkness", 200);
+        boost_skill("core.element_sound", 50);
+        boost_skill("core.element_chaos", 100);
+        boost_skill("core.element_mind", 200);
+        boost_skill("core.element_nerve", 100);
+        boost_skill("core.element_cold", 100);
         return 1;
     }
     if (tid == 161)
@@ -750,11 +607,7 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 153)
     {
-        cdata.player().get_skill(60).level = clamp(
-            cdata.player().get_skill(60).level +
-                cdata.player().traits().level(trait_id) * 50,
-            int{cdata.player().get_skill(60).level > 0},
-            9999);
+        boost_skill("core.element_magic", T * 50);
         return 1;
     }
     if (tid == 0)
@@ -771,53 +624,29 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 202)
     {
-        cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level +
-                cdata.player().traits().level(trait_id) *
-                    (4 + cdata.player().level / 5),
-            int{cdata.player().get_skill(17).level > 0},
-            9999);
+        boost_skill("core.stat_charisma", T * (4 + cdata.player().level / 5));
         return 1;
     }
     if (tid == 203)
     {
-        cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level +
-                (20 + cdata.player().level / 2),
-            int{cdata.player().get_skill(18).level > 0},
-            9999);
+        boost_skill("core.stat_speed", 20 + cdata.player().level / 2);
         return 1;
     }
     if (tid == 204)
     {
-        cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level +
-                (5 + cdata.player().level / 3) * -1,
-            int{cdata.player().get_skill(17).level > 0},
-            9999);
-        cdata.player().get_skill(13).level = clamp(
-            cdata.player().get_skill(13).level + (5 + cdata.player().level / 3),
-            int{cdata.player().get_skill(13).level > 0},
-            9999);
+        boost_skill("core.stat_charisma", -(5 + cdata.player().level / 3));
+        boost_skill("core.stat_perception", 5 + cdata.player().level / 3);
         return 1;
     }
     if (tid == 205)
     {
         cdata.player().is_floating() = true;
-        cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level +
-                (12 + cdata.player().level / 4),
-            int{cdata.player().get_skill(18).level > 0},
-            9999);
+        boost_skill("core.stat_speed", 12 + cdata.player().level / 4);
         return 1;
     }
     if (tid == 206)
     {
-        cdata.player().get_skill(17).level = clamp(
-            cdata.player().get_skill(17).level +
-                (5 + cdata.player().level / 5) * -1,
-            int{cdata.player().get_skill(17).level > 0},
-            9999);
+        boost_skill("core.stat_charisma", -(5 + cdata.player().level / 5));
         cdata.player().pv += 12 + cdata.player().level;
         return 1;
     }
@@ -828,24 +657,10 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 208)
     {
-        cdata.player().get_skill(11).level = clamp(
-            cdata.player().get_skill(11).level +
-                (5 + cdata.player().level / 3) * -1,
-            int{cdata.player().get_skill(11).level > 0},
-            9999);
-        cdata.player().get_skill(12).level = clamp(
-            cdata.player().get_skill(12).level +
-                (4 + cdata.player().level / 4) * -1,
-            int{cdata.player().get_skill(12).level > 0},
-            9999);
-        cdata.player().get_skill(14).level = clamp(
-            cdata.player().get_skill(14).level + (6 + cdata.player().level / 2),
-            int{cdata.player().get_skill(14).level > 0},
-            9999);
-        cdata.player().get_skill(15).level = clamp(
-            cdata.player().get_skill(15).level + (2 + cdata.player().level / 6),
-            int{cdata.player().get_skill(15).level > 0},
-            9999);
+        boost_skill("core.stat_constitution", -(5 + cdata.player().level / 3));
+        boost_skill("core.stat_dexterity", -(4 + cdata.player().level / 4));
+        boost_skill("core.stat_learning", 6 + cdata.player().level / 2);
+        boost_skill("core.stat_will", 2 + cdata.player().level / 6);
         return 1;
     }
     if (tid == 209)
@@ -858,37 +673,19 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 211)
     {
-        cdata.player().get_skill(10).level = clamp(
-            cdata.player().get_skill(10).level +
-                (4 + cdata.player().level / 2) * -1,
-            int{cdata.player().get_skill(10).level > 0},
-            9999);
-        cdata.player().get_skill(2).level = clamp(
-            cdata.player().get_skill(2).level + -15,
-            int{cdata.player().get_skill(2).level > 0},
-            9999);
+        boost_skill("core.stat_strength", -(4 + cdata.player().level / 2));
+        boost_skill("core.stat_life", -15);
         return 1;
     }
     if (tid == 212)
     {
-        cdata.player().get_skill(16).level = clamp(
-            cdata.player().get_skill(16).level +
-                (4 + cdata.player().level / 2) * -1,
-            int{cdata.player().get_skill(16).level > 0},
-            9999);
-        cdata.player().get_skill(3).level = clamp(
-            cdata.player().get_skill(3).level + -15,
-            int{cdata.player().get_skill(3).level > 0},
-            9999);
+        boost_skill("core.stat_magic", -(4 + cdata.player().level / 2));
+        boost_skill("core.stat_mana", -15);
         return 1;
     }
     if (tid == 213)
     {
-        cdata.player().get_skill(18).level = clamp(
-            cdata.player().get_skill(18).level +
-                (20 + cdata.player().level / 2) * -1,
-            int{cdata.player().get_skill(18).level > 0},
-            9999);
+        boost_skill("core.stat_speed", -(20 + cdata.player().level / 2));
         cdata.player().pv += 15 + cdata.player().level / 2;
         return 1;
     }
@@ -902,10 +699,7 @@ int trait_get_info(int traitmode, int tid)
     }
     if (tid == 216)
     {
-        cdata.player().get_skill(55).level = clamp(
-            cdata.player().get_skill(55).level + 100,
-            int{cdata.player().get_skill(55).level > 0},
-            9999);
+        boost_skill("core.element_poison", 100);
         return 1;
     }
     return 0;
@@ -918,7 +712,7 @@ void trait_load_desc(Character& chara)
     int featrq = 0;
 
     listmax = 0;
-    if (chara.is_player() && game()->acquirable_feat_count > 0)
+    if (chara.is_player() && chara.acquirable_feats > 0)
     {
         list(0, listmax) = -1;
         list(1, listmax) = 0;
@@ -940,7 +734,7 @@ void trait_load_desc(Character& chara)
         {
             if (traitref == 0)
             {
-                if (game()->acquirable_feat_count > 0)
+                if (chara.acquirable_feats > 0)
                 {
                     list(0, listmax) = cnt;
                     list(1, listmax) = cnt + 1;
@@ -1071,9 +865,9 @@ void trait_load_desc(Character& chara)
                 "core.trait.body_is_complicated", chara.speed_correction_value);
         ++listmax;
     }
-    if (chara.is_player() && game()->ether_disease_speed != 0)
+    if (chara.is_player() && chara.extra_ether_disease_progress != 0)
     {
-        if (game()->ether_disease_speed > 0)
+        if (chara.extra_ether_disease_progress > 0)
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
@@ -1101,6 +895,120 @@ void clear_trait_data()
     DIM2(traitref, 10);
     SDIM3(traitrefn, 80, 9);
     SDIM3(traitrefn2, 20, 6);
+}
+
+
+
+void trait_progress_ether_disease_stage(Character& chara, lua_int delta)
+{
+    if (delta == 0)
+        return;
+
+    const auto original_amount = chara.ether_disease_stage / 1000;
+    if (delta > 0)
+    {
+        delta += chara.extra_ether_disease_progress;
+        if (chara.traits().level("core.slow_ether_disease_progress") != 0)
+        {
+            delta = delta * 100 / 150;
+        }
+    }
+    chara.ether_disease_stage =
+        clamp(chara.ether_disease_stage + delta, 0, 20000);
+    const auto mod_amount = chara.ether_disease_stage / 1000 - original_amount;
+
+    if (mod_amount > 0)
+    {
+        if (original_amount == 0)
+        {
+            txt(i18n::s.get("core.chara.corruption.symptom"),
+                Message::color{ColorIndex::purple});
+            maybe_show_ex_help(15);
+        }
+        for (int cnt2 = 0; cnt2 < mod_amount; ++cnt2)
+        {
+            if (original_amount + cnt2 > 20)
+            {
+                break;
+            }
+            for (int cnt = 0; cnt < 100000; ++cnt)
+            {
+                int tid = rnd(17) + 200;
+                int stat = trait_get_info(0, tid);
+                if (stat == 0 || traitref != 3)
+                {
+                    continue;
+                }
+                if (chara.traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) <= traitref(1))
+                {
+                    continue;
+                }
+                chara.traits().sub(*the_trait_db.get_id_from_integer(tid), 1);
+                chara.ether_disease_history.push_back(
+                    *the_trait_db.get_id_from_integer(tid));
+                txt(i18n::s.get("core.chara.corruption.add"),
+                    Message::color{ColorIndex::purple});
+                txt(traitrefn(1), Message::color{ColorIndex::red});
+                if (tid == 203)
+                {
+                    body_part_make_unequippable(chara, "core.leg");
+                }
+                if (tid == 205)
+                {
+                    body_part_make_unequippable(chara, "core.back");
+                }
+                if (tid == 206)
+                {
+                    body_part_make_unequippable(chara, "core.neck");
+                }
+                break;
+            }
+        }
+        animeload(8, chara);
+        chara_refresh(chara);
+    }
+    else if (mod_amount < 0)
+    {
+        for (int cnt2 = 0; cnt2 < std::abs(mod_amount); ++cnt2)
+        {
+            for (int cnt = 0; cnt < 100000; ++cnt)
+            {
+                int tid =
+                    the_trait_db.ensure(chara.ether_disease_history.back())
+                        .integer_id;
+                int stat = trait_get_info(0, tid);
+                if (stat == 0 || traitref != 3)
+                {
+                    continue;
+                }
+                if (chara.traits().level(
+                        *the_trait_db.get_id_from_integer(tid)) >= 0)
+                {
+                    continue;
+                }
+                chara.traits().add(*the_trait_db.get_id_from_integer(tid), 1);
+                txt(i18n::s.get("core.chara.corruption.remove"),
+                    Message::color{ColorIndex::green});
+                txt(traitrefn(0), Message::color{ColorIndex::green});
+                if (tid == 203)
+                {
+                    body_part_make_equippable(chara, "core.leg");
+                }
+                if (tid == 205)
+                {
+                    body_part_make_equippable(chara, "core.back");
+                }
+                if (tid == 206)
+                {
+                    body_part_make_equippable(chara, "core.neck");
+                }
+                break;
+            }
+        }
+        animeload(10, chara);
+        chara_refresh(chara);
+    }
 }
 
 } // namespace elona

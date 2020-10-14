@@ -1,6 +1,5 @@
 #include "shop.hpp"
 
-#include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "config.hpp"
@@ -14,6 +13,7 @@
 #include "map.hpp"
 #include "menu.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -51,7 +51,7 @@ void shop_refresh_on_talk(Character& shopkeeper)
         }
         shop_refresh(shopkeeper);
     }
-    else if (game()->date.hours() >= shopkeeper.time_to_restore)
+    else if (game_now() >= shopkeeper.shop_restock_time)
     {
         shop_refresh(shopkeeper);
     }
@@ -79,15 +79,8 @@ void shop_refresh(Character& shopkeeper)
 
     lua::call("core.Impl.shop_inventory.generate", lua::handle(shopkeeper));
 
-    if (g_config.restock_interval())
-    {
-        shopkeeper.time_to_restore =
-            game()->date.hours() + 24 * g_config.restock_interval();
-    }
-    else
-    {
-        shopkeeper.time_to_restore = game()->date.hours() - 1;
-    }
+    shopkeeper.shop_restock_time =
+        game_now() + time::Duration::from_days(g_config.restock_interval());
 }
 
 
@@ -104,7 +97,9 @@ void shop_sell_item(optional_ref<Character> shopkeeper)
             shoptrade = 1;
         }
     }
-    ctrl_inventory(shopkeeper);
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = shopkeeper;
+    ctrl_inventory(opts);
 }
 
 } // namespace elona

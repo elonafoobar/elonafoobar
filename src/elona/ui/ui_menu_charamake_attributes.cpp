@@ -1,14 +1,14 @@
 #include "ui_menu_charamake_attributes.hpp"
 
-#include "../ability.hpp"
 #include "../audio.hpp"
 #include "../character_making.hpp"
 #include "../class.hpp"
-#include "../data/types/type_ability.hpp"
+#include "../data/types/type_skill.hpp"
 #include "../draw.hpp"
 #include "../i18n.hpp"
 #include "../menu.hpp"
 #include "../race.hpp"
+#include "../skill.hpp"
 
 namespace elona
 {
@@ -32,18 +32,31 @@ void UIMenuCharamakeAttributes::_reroll_attributes()
         {
             if (_minimum)
             {
-                cdata.player().get_skill(cnt).base_level -=
-                    cdata.player().get_skill(cnt).base_level / 2;
+                cdata.player().skills().set_base_level(
+                    *the_skill_db.get_id_from_integer(cnt),
+                    -cdata.player().skills().base_level(
+                        *the_skill_db.get_id_from_integer(cnt)) /
+                        2);
             }
             else
             {
-                cdata.player().get_skill(cnt).base_level -=
-                    rnd(cdata.player().get_skill(cnt).base_level / 2 + 1);
+                cdata.player().skills().set_base_level(
+                    *the_skill_db.get_id_from_integer(cnt),
+                    -rnd(
+                        cdata.player().skills().base_level(
+                            *the_skill_db.get_id_from_integer(cnt)) /
+                            2 +
+                        1));
             }
             _attributes(cnt - 10) =
-                cdata.player().get_skill(cnt).base_level * 1000000 +
-                cdata.player().get_skill(cnt).experience * 1000 +
-                cdata.player().get_skill(cnt).potential;
+                cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(cnt)) *
+                    1000000 +
+                cdata.player().skills().experience(
+                    *the_skill_db.get_id_from_integer(cnt)) *
+                    1000 +
+                cdata.player().skills().potential(
+                    *the_skill_db.get_id_from_integer(cnt));
         }
     }
 }
@@ -60,7 +73,7 @@ static void _load_attributes_list(elona_vector1<int>& _attributes)
     for (int cnt = 10; cnt < 18; ++cnt)
     {
         list(0, listmax) = _attributes(cnt - 10);
-        listn(0, listmax) = the_ability_db.get_text(cnt, "name");
+        listn(0, listmax) = the_skill_db.get_text(cnt, "name");
         ++listmax;
     }
 }

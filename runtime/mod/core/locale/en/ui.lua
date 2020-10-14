@@ -600,14 +600,6 @@ ELONA.i18n:add {
          _8 = "*Love*",
       },
 
-      weather = {
-         _0 = "",
-         _1 = "Etherwind",
-         _2 = "Snow",
-         _3 = "Rain",
-         _4 = "Hard rain",
-      },
-
       home = {
          _0 = "cave",
          _1 = "shack",
@@ -760,38 +752,6 @@ ELONA.i18n:add {
          _27 = "Pickpocket",
          _28 = "Trade",
          _29 = "Reserve",
-      },
-
-      body_part = {
-         _0 = "",
-         _1 = "Head",
-         _2 = "Neck",
-         _3 = "Back",
-         _4 = "Body",
-         _5 = "Hand",
-         _6 = "Ring",
-         _7 = "Arm",
-         _8 = "Waist",
-         _9 = "Leg",
-         _10 = "Shoot",
-         _11 = "Ammo",
-      },
-
-      action = {
-         _0 = "current action",
-         _1 = "eating",
-         _2 = "reading",
-         _3 = "moving",
-         _4 = "resting",
-         _5 = "mining",
-         _6 = "playing",
-         _7 = "fishing",
-         _8 = "collecting materials",
-         _9 = "searching",
-         _10 = "current action",
-         _11 = "current action",
-         _12 = "current action",
-         _13 = "current action",
       },
 
       cast_style = {

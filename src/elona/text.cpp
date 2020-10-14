@@ -5,7 +5,7 @@
 #include "area.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
+#include "data/types/type_skill.hpp"
 #include "draw.hpp"
 #include "elona.hpp"
 #include "enchantment.hpp"
@@ -466,14 +466,14 @@ std::string txtskillchange(const Character& chara, int id, bool increase)
             return i18n::s.get(
                 "core.skill.default.increase",
                 chara,
-                the_ability_db.get_text(id, "name"));
+                the_skill_db.get_text(id, "name"));
         }
         else
         {
             return i18n::s.get(
                 "core.skill.default.decrease",
                 chara,
-                the_ability_db.get_text(id, "name"));
+                the_skill_db.get_text(id, "name"));
         }
     }
 }
@@ -1076,43 +1076,43 @@ void quest_update_main_quest_journal()
     int progress;
 
     noteadd("@QM[" + i18n::s.get("core.quest.journal.main.title") + "]");
-    if (game()->quest_flags.main_quest >= 0 &&
-        game()->quest_flags.main_quest < 30)
+    if (story_quest_progress("core.elona") >= 0 &&
+        story_quest_progress("core.elona") < 30)
     {
         progress = 0;
     }
-    if (game()->quest_flags.main_quest >= 30 &&
-        game()->quest_flags.main_quest < 50)
+    if (story_quest_progress("core.elona") >= 30 &&
+        story_quest_progress("core.elona") < 50)
     {
         progress = 1;
     }
-    if (game()->quest_flags.main_quest >= 50 &&
-        game()->quest_flags.main_quest < 60)
+    if (story_quest_progress("core.elona") >= 50 &&
+        story_quest_progress("core.elona") < 60)
     {
         progress = 2;
     }
-    if (game()->quest_flags.main_quest >= 60 &&
-        game()->quest_flags.main_quest < 100)
+    if (story_quest_progress("core.elona") >= 60 &&
+        story_quest_progress("core.elona") < 100)
     {
         progress = 3;
     }
-    if (game()->quest_flags.main_quest >= 100 &&
-        game()->quest_flags.main_quest < 110)
+    if (story_quest_progress("core.elona") >= 100 &&
+        story_quest_progress("core.elona") < 110)
     {
         progress = 4;
     }
-    if (game()->quest_flags.main_quest >= 110 &&
-        game()->quest_flags.main_quest < 125)
+    if (story_quest_progress("core.elona") >= 110 &&
+        story_quest_progress("core.elona") < 125)
     {
         progress = 5;
     }
-    if (game()->quest_flags.main_quest >= 125 &&
-        game()->quest_flags.main_quest < 180)
+    if (story_quest_progress("core.elona") >= 125 &&
+        story_quest_progress("core.elona") < 180)
     {
         progress = 6;
     }
-    if (game()->quest_flags.main_quest >= 180 &&
-        game()->quest_flags.main_quest < 1000)
+    if (story_quest_progress("core.elona") >= 180 &&
+        story_quest_progress("core.elona") < 1000)
     {
         progress = 7;
     }
@@ -1132,10 +1132,10 @@ void append_subquest_journal(int val0)
         noteadd("@QM[" + i18n::s.get("core.quest.journal.sub.title") + "]");
     }
     p = 0;
-    if (game()->quest_flags.putit_attacks != 0)
+    if (story_quest_progress("core.putit_attacks") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.putit_attacks.title");
-        p = game()->quest_flags.putit_attacks;
+        p = story_quest_progress("core.putit_attacks");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1168,10 +1168,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.thieves_hideout != 0)
+    if (story_quest_progress("core.thieves_hideout") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.thieves_hideout.title");
-        p = game()->quest_flags.thieves_hideout;
+        p = story_quest_progress("core.thieves_hideout");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1204,10 +1204,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.puppys_cave != 0)
+    if (story_quest_progress("core.puppys_cave") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.puppys_cave.title");
-        p = game()->quest_flags.puppys_cave;
+        p = story_quest_progress("core.puppys_cave");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1229,10 +1229,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.nightmare != 0)
+    if (story_quest_progress("core.nightmare") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.nightmare.title");
-        p = game()->quest_flags.nightmare;
+        p = story_quest_progress("core.nightmare");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1276,10 +1276,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.pael_and_her_mom != 0)
+    if (story_quest_progress("core.pael_and_her_mom") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.pael_and_her_mom.title");
-        p = game()->quest_flags.pael_and_her_mom;
+        p = story_quest_progress("core.pael_and_her_mom");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1400,10 +1400,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.wife_collector != 0)
+    if (story_quest_progress("core.wife_collector") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.wife_collector.title");
-        p = game()->quest_flags.wife_collector;
+        p = story_quest_progress("core.wife_collector");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1425,10 +1425,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.cat_house != 0)
+    if (story_quest_progress("core.cat_house") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.cat_house.title");
-        p = game()->quest_flags.cat_house;
+        p = story_quest_progress("core.cat_house");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1461,10 +1461,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.defense_line != 0)
+    if (story_quest_progress("core.defense_line") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.defense_line.title");
-        p = game()->quest_flags.defense_line;
+        p = story_quest_progress("core.defense_line");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1508,10 +1508,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.novice_knight != 0)
+    if (story_quest_progress("core.novice_knight") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.novice_knight.title");
-        p = game()->quest_flags.novice_knight;
+        p = story_quest_progress("core.novice_knight");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1544,10 +1544,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.kamikaze_attack != 0)
+    if (story_quest_progress("core.kamikaze_attack") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.kamikaze_attack.title");
-        p = game()->quest_flags.kamikaze_attack;
+        p = story_quest_progress("core.kamikaze_attack");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1591,10 +1591,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.mias_dream != 0)
+    if (story_quest_progress("core.mias_dream") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.mias_dream.title");
-        p = game()->quest_flags.mias_dream;
+        p = story_quest_progress("core.mias_dream");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1616,10 +1616,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.rare_books != 0)
+    if (story_quest_progress("core.rare_books") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.rare_books.title");
-        p = game()->quest_flags.rare_books;
+        p = story_quest_progress("core.rare_books");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1641,10 +1641,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.pyramid_trial != 0)
+    if (story_quest_progress("core.pyramid_trial") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.pyramid_trial.title");
-        p = game()->quest_flags.pyramid_trial;
+        p = story_quest_progress("core.pyramid_trial");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1666,10 +1666,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.red_blossom_in_palmia != 0)
+    if (story_quest_progress("core.red_blossom_in_palmia") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.red_blossom_in_palmia.title");
-        p = game()->quest_flags.red_blossom_in_palmia;
+        p = story_quest_progress("core.red_blossom_in_palmia");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1702,10 +1702,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.ambitious_scientist != 0)
+    if (story_quest_progress("core.ambitious_scientist") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.ambitious_scientist.title");
-        p = game()->quest_flags.ambitious_scientist;
+        p = story_quest_progress("core.ambitious_scientist");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1718,24 +1718,24 @@ void append_subquest_journal(int val0)
     if (val0 == 0)
     {
         if (p ==
-            game()->quest_flags.ambitious_scientist *
-                    (game()->quest_flags.ambitious_scientist < 6) +
-                (game()->quest_flags.ambitious_scientist == 0))
+            story_quest_progress("core.ambitious_scientist") *
+                    (story_quest_progress("core.ambitious_scientist") < 6) +
+                (story_quest_progress("core.ambitious_scientist") == 0))
         {
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.ambitious_scientist.progress",
                 0,
-                (6 - game()->quest_flags.ambitious_scientist));
+                (6 - story_quest_progress("core.ambitious_scientist")));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
         }
     }
     p = 0;
-    if (game()->quest_flags.sewer_sweeping != 0)
+    if (story_quest_progress("core.sewer_sweeping") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.sewer_sweeping.title");
-        p = game()->quest_flags.sewer_sweeping;
+        p = story_quest_progress("core.sewer_sweeping");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1932,10 +1932,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.minotaur_king != 0)
+    if (story_quest_progress("core.minotaur_king") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.minotaur_king.title");
-        p = game()->quest_flags.minotaur_king;
+        p = story_quest_progress("core.minotaur_king");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1968,10 +1968,10 @@ void append_subquest_journal(int val0)
         }
     }
     p = 0;
-    if (game()->quest_flags.little_sister != 0)
+    if (story_quest_progress("core.little_sister") != 0)
     {
         s = i18n::s.get("core.quest.journal.sub.little_sister.title");
-        p = game()->quest_flags.little_sister;
+        p = story_quest_progress("core.little_sister");
         if (val0 == 1)
         {
             if (p >= 1000)
@@ -1999,25 +1999,25 @@ void append_subquest_journal(int val0)
 void append_quest_item_journal()
 {
     noteadd("[" + i18n::s.get("core.quest.journal.item.old_talisman") + "]");
-    if (game()->quest_flags.main_quest >= 30)
+    if (story_quest_progress("core.elona") >= 30)
     {
         noteadd(
             "[" + i18n::s.get("core.quest.journal.item.letter_to_the_king") +
             "]");
     }
-    if (game()->quest_flags.magic_stone_of_fool != 0)
+    if (story_quest_progress("core.magic_stone_of_fool") != 0)
     {
         noteadd(
             "[" + i18n::s.get("core.quest.journal.item.fools_magic_stone") +
             "]");
     }
-    if (game()->quest_flags.magic_stone_of_king != 0)
+    if (story_quest_progress("core.magic_stone_of_king") != 0)
     {
         noteadd(
             "[" + i18n::s.get("core.quest.journal.item.kings_magic_stone") +
             "]");
     }
-    if (game()->quest_flags.magic_stone_of_sage != 0)
+    if (story_quest_progress("core.magic_stone_of_sage") != 0)
     {
         noteadd(
             "[" + i18n::s.get("core.quest.journal.item.sages_magic_stone") +
@@ -2617,13 +2617,13 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"耐性に <green>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"耐性に <red>クラス"s + bonus / 50 + u8"<col>("s + bonus +
                 u8") のマイナス修正\n"s;
         }
@@ -2632,12 +2632,12 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"に <green>+"s + bonus + u8"<col> のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_ability_db.get_text(ability_id, "name") +
+            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
                 u8"に <red>"s + bonus + u8"<col> のマイナス修正\n"s;
         }
     }
@@ -2863,8 +2863,7 @@ void txttargetnpc(int x, int y)
     dy_ = 0;
     font(14 - en * 2);
     if (!fov_los(cdata.player().position, {x, y}) ||
-        dist(cdata.player().position, x, y) >
-            cdata.player().vision_distance / 2)
+        dist(cdata.player().position, x, y) > cdata.player().fov_range / 2)
     {
         bmes(
             i18n::s.get("core.action.target.out_of_sight"),

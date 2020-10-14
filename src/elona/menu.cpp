@@ -3,7 +3,6 @@
 #include <iostream>
 #include <stack>
 
-#include "ability.hpp"
 #include "attack.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
@@ -14,15 +13,16 @@
 #include "command.hpp"
 #include "config.hpp"
 #include "config_menu.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_portrait.hpp"
+#include "data/types/type_skill.hpp"
 #include "defines.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
 #include "equipment.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -35,6 +35,7 @@
 #include "pic_loader/tinted_buffers.hpp"
 #include "quest.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "talk.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -82,7 +83,7 @@ std::string _set_pcc_info(Character& chara, int val0)
             rtval(0) = 100;
             rtval(1) = 0;
             rtval(2) = -2;
-            text = chara.portrait;
+            text = chara.portrait.get();
         }
         if (val0 == 2)
         {
@@ -324,7 +325,7 @@ bool maybe_show_ex_help(int id, bool should_update_screen)
         {
             if (mode == 0)
             {
-                if (cdata.player().activity.turn == 0)
+                if (cdata.player().activity.turns == 0)
                 {
                     game()->exhelp_flags.at(id) = 1;
                     show_ex_help(id);
@@ -509,7 +510,7 @@ TurnResult show_skill_list()
 
 static std::string _make_buff_power_string(int skill_id)
 {
-    const auto buff_id = the_ability_db[skill_id]->ability_type % 1000;
+    const auto buff_id = the_skill_db[skill_id]->ability_type % 1000;
     const auto duration = buff_calc_duration(
         *the_buff_db.get_id_from_integer(buff_id),
         calc_spell_power(cdata.player(), skill_id));
@@ -523,7 +524,7 @@ static std::string _make_buff_power_string(int skill_id)
 std::string make_spell_description(int skill_id)
 {
     std::string result = "";
-    if (the_ability_db[skill_id]->ability_type / 1000 == 1)
+    if (the_skill_db[skill_id]->ability_type / 1000 == 1)
     {
         return _make_buff_power_string(skill_id);
     }
@@ -569,7 +570,7 @@ std::string make_spell_description(int skill_id)
         result += u8" "s;
     }
     result +=
-        the_ability_db.get_text_optional(skill_id, "description").value_or("");
+        the_skill_db.get_text_optional(skill_id, "description").value_or("");
 
     return result;
 }
@@ -1126,22 +1127,17 @@ void append_accuracy_info(const Character& chara, int val0)
     p(2) = 0;
     attackskill = 106;
     attacknum = 0;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 10)
+        if (body_part.id == "core.shoot" || body_part.id == "core.ammo")
         {
             continue;
         }
-        if (chara.equipment_slots[cnt].type == 11)
-        {
-            continue;
-        }
-        const auto weapon = chara.equipment_slots[cnt].equipment;
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls > 0)
         {
             attackskill = weapon->skill;
@@ -1309,16 +1305,16 @@ void show_city_chart()
 
 
 
-void begin_to_believe_god(int god_id)
+void begin_to_believe_god(data::InstanceId religion)
 {
-    bool already_believing = cdata.player().god_id != core_god::eyth;
+    bool already_believing = cdata.player().religion != "";
 
-    auto result = ui::UIMenuGod(god_id, already_believing).show();
+    auto result = ui::UIMenuGod(religion, already_believing).show();
 
     if (!result.canceled && result.value)
     {
         rtval = *result.value;
-        god_proc_switching_penalty(core_god::int2godid(god_id));
+        god_proc_switching_penalty(religion);
     }
 }
 
@@ -1365,19 +1361,22 @@ void screen_analyze_self()
     notesel(buff);
     chara_delete(cdata.tmp());
     cdata.tmp().piety_point = cdata.player().piety_point;
-    cdata.tmp().god_id = cdata.player().god_id;
+    cdata.tmp().religion = cdata.player().religion;
     for (int cnt = 0; cnt < 600; ++cnt)
     {
-        cdata.player().get_skill(cnt).level = 1;
+        cdata.player().skills().set_level(
+            *the_skill_db.get_id_from_integer(cnt), 1);
     }
     god_apply_blessing(cdata.tmp());
-    if (cdata.player().god_id != core_god::eyth)
+    if (cdata.player().religion != "")
     {
-        buff += u8"<title1>◆ "s + god_name(cdata.player().god_id) +
+        buff += u8"<title1>◆ "s + god_get_name(cdata.player().religion) +
             u8"による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
-            p = cdata.player().get_skill(cnt).level - 1;
+            p = cdata.player().skills().level(
+                    *the_skill_db.get_id_from_integer(cnt)) -
+                1;
             cnvbonus(cnt, p);
         }
     }

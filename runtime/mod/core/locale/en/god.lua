@@ -2,6 +2,7 @@
 
 ELONA.i18n:add {
    god = {
+      eyth_name = "Eyth of Infidel"
       indifferent = " Your God becomes indifferent to your gift.",
       enraged = "{$1} is enraged.", -- TODO duplicate?
 
@@ -42,71 +43,6 @@ ELONA.i18n:add {
             believe = "Believe in {$1}",
             cancel = "Cancel",
          },
-
-         -- NOTE: The extra whitespace is significant. These strings should have the same number
-         -- of characters each.
-         offering = "Offering",
-         bonus = "   Bonus",
-         ability = " Ability",
-
-         -- NOTE: These currently depend on manual line breaking (<br>, <p>) to fit in the
-         -- decription window. They should be checked manually.
-
-         -- Mani
-         _1 = {
-            text = "Mani is a clockwork god of machinery. Those faithful to Mani<br>receive immense knowledge of machines and learn a way to use them<br>effectively.<p>",
-            offering = "Corpses/Guns/Machinery<p>",
-            bonus = "DEX/PER/Firearm/Healing/Detection/Jeweler/Lockpick/Carpentry<p>",
-            ability = "Mani's decomposition (Passive: Extract materials<br>from traps.)<p>",
-         },
-
-         -- Lulwy
-         _2 = {
-            text = "Lulwy is a goddess of wind. Those faithful to Lulwy receive<br>the blessing of wind and can move swiftly.<p>",
-            offering = "Corpses/Bows<p>",
-            bonus = "PER/SPD/Bow/Crossbow/Stealth/Magic Device<p>",
-            ability = "Lulwy's trick (Boost your speed for a short time.)<p>",
-         },
-
-         -- Itzpalt
-         _3 = {
-            text = "Itzpalt is a god of elements. Those faithful to Itzpalt are<br>protected from elemental damages and learn to absorb mana from<br>their surroundings.<p>",
-            offering = "Corpses/Staves<p>",
-            bonus = "MAG/Meditation/RES Fire/RES Cold/RES Lightning<p>",
-            ability = "Absorb mana (Absorb mana from the air.)<p>",
-         },
-
-         -- Ehekatl
-         _4 = {
-            text = "Ehekatl is a goddess of luck. Those faithful to Ehekatl are<br>really lucky.<p><p>",
-            offering = "Corpses/Fish<p>",
-            bonus = "CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick<p>",
-            ability = "Ehekatl school of magic (Passive: Randomize casting mana<br>cost.)<p>",
-         },
-
-         -- Opatos
-         _5 = {
-            text = "Opatos is a god of earth. Those faithful to Opatos have massive<br>strength and defense.<p><p>",
-            offering = "Corpses/Ores<p>",
-            bonus = "STR/CON/Shield/Weight Lifting/Mining/Magic Device<p>",
-            ability = "Opatos' shell (Passive: Reduce any physical damage you<br>receive.)<p>",
-         },
-
-         -- Jure
-         _6 = {
-            text = "Jure is a god of healing. Those faithful to Jure can heal wounds.<p><p>",
-            offering = "Corpses/Ores<p>",
-            bonus = "WIL/Healing/Meditation/Anatomy/Cooking/Magic Device/Magic Capacity<p>",
-            ability = "Prayer of Jure (Heal yourself.)<p>",
-         },
-
-         -- Kumiromi
-         _7 = {
-            text = "Kumiromi is a god of harvest. Those faithful to Kumiromi receive<br>the blessings of nature.<p><p>",
-            offering = "Corpses/Vegetables/Seeds<p>",
-            bonus = "PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy<p>",
-            ability = "Kumiromi's recycle (Passive: Extract seeds from rotten <p>foods.)<p>",
-         },
       },
    },
 }
@@ -116,11 +52,12 @@ ELONA.i18n:add {
 ELONA.i18n:add_data_text(
    "core.god",
    {
-      eyth = {
-         name = "Eyth of Infidel",
-      },
       mani = {
          name = "Mani of Machine",
+         description = [=[Mani is a clockwork god of machinery. Those faithful to Mani<br>receive immense knowledge of machines and learn a way to use them<br>effectively.
+Offering: Corpses/Guns/Machinery
+   Bonus: DEX/PER/Firearm/Healing/Detection/Jeweler/Lockpick/Carpentry
+ Ability: Mani's decomposition (Passive: Extract materials<br>from traps.)]=],
          random = {
             "\"You should mechanize your body.\"",
             "\"Always behave true to my name.\"",
@@ -144,6 +81,10 @@ ELONA.i18n:add_data_text(
       },
       lulwy = {
          name = "Lulwy of Wind",
+         description = [=[Lulwy is a goddess of wind. Those faithful to Lulwy receive<br>the blessing of wind and can move swiftly.
+Offering: Corpses/Bows
+   Bonus: PER/SPD/Bow/Crossbow/Stealth/Magic Device
+ Ability: Lulwy's trick (Boost your speed for a short time.)]=],
          random = {
             "\"Pathetic pigs.\"",
             "\"Mani? Say that name again and I'll mince you, kitty.\"",
@@ -168,6 +109,10 @@ ELONA.i18n:add_data_text(
       },
       itzpalt = {
          name = "Itzpalt of Element",
+         description = [=[Itzpalt is a god of elements. Those faithful to Itzpalt are<br>protected from elemental damages and learn to absorb mana from<br>their surroundings.
+Offering: Corpses/Staves
+   Bonus: MAG/Meditation/RES Fire/RES Cold/RES Lightning
+ Ability: Absorb mana (Absorb mana from the air.)]=],
          -- Duplicate them to emulate the original Elona's behavior.
          random = {
             "\"Idleness is the devil's workshop.\"",
@@ -198,6 +143,11 @@ ELONA.i18n:add_data_text(
       },
       ehekatl = {
          name = "Ehekatl of Luck",
+         description = [=[Ehekatl is a goddess of luck. Those faithful to Ehekatl are<br>really lucky.
+
+Offering: Corpses/Fish
+   Bonus: CHR/LUCK/Evasion/Magic Capacity/Fishing/Lockpick
+ Ability: Ehekatl school of magic (Passive: Randomize casting mana<br>cost.)]=],
          random = "\"Coconut crab!\"",
          kill = {
             "\"More! More!\"",
@@ -217,6 +167,11 @@ ELONA.i18n:add_data_text(
       },
       opatos = {
          name = "Opatos of Earth",
+         description = [=[Opatos is a god of earth. Those faithful to Opatos have massive<br>strength and defense.
+
+Offering: Corpses/Ores
+   Bonus: STR/CON/Shield/Weight Lifting/Mining/Magic Device
+ Ability: Opatos' shell (Passive: Reduce any physical damage you<br>receive.)]=],
          random = "\"Muwahaha.\"",
          kill = {
             "\"Mwahaha!\"",
@@ -236,6 +191,11 @@ ELONA.i18n:add_data_text(
       },
       jure = {
          name = "Jure of Healing",
+         description = [=[Jure is a god of healing. Those faithful to Jure can heal wounds.
+
+Offering: Corpses/Ores
+   Bonus: WIL/Healing/Meditation/Anatomy/Cooking/Magic Device/Magic Capacity
+ Ability: Prayer of Jure (Heal yourself.)]=],
          random = {
             "\"W-What? Silly!\"",
             "\"Am I really suitable for this job?\"",
@@ -258,6 +218,12 @@ ELONA.i18n:add_data_text(
       },
       kumiromi = {
          name = "Kumiromi of Harvest",
+         description = [=[Kumiromi is a god of harvest. Those faithful to Kumiromi receive<br>the blessings of nature.
+
+Offering: Corpses/Vegetables/Seeds
+   Bonus: PER/DEX/LER/Gardening/Alchemy/Tailoring/Literacy
+ Ability: Kumiromi's recycle (Passive: Extract seeds from rotten
+foods.)]=],
          random = {
             "\"Twitter of trees...song weaved by forests...if you strain your ears....\"",
             "\"This conflict between Gods...ugly.\"",

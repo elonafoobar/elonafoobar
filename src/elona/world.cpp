@@ -9,6 +9,7 @@
 #include "draw.hpp"
 #include "food.hpp"
 #include "game.hpp"
+#include "globals.hpp"
 #include "i18n.hpp"
 #include "initialize_map.hpp"
 #include "map.hpp"
@@ -33,13 +34,13 @@ elona_vector1<int> ranknorma;
 
 void weather_changes_by_location(bool output_immediately)
 {
-    if (game()->weather == 2)
+    if (game()->weather == "core.snow")
     {
         if (game()->pc_x_in_world_map < 65 && game()->pc_y_in_world_map > 10)
         {
-            game()->weather = 3;
+            game()->weather = "core.rain";
             sound_play_environmental();
-            game()->hours_until_weather_changes += 3;
+            game()->weather_change_count += 3;
             if (output_immediately)
             {
                 txt(i18n::s.get("core.action.weather.changes"));
@@ -51,13 +52,13 @@ void weather_changes_by_location(bool output_immediately)
             }
         }
     }
-    if (game()->weather == 4 || game()->weather == 3)
+    if (game()->weather == "core.hard_rain" || game()->weather == "core.rain")
     {
         if (game()->pc_x_in_world_map > 65 || game()->pc_y_in_world_map < 10)
         {
-            game()->weather = 2;
+            game()->weather = "core.snow";
             sound_play_environmental();
-            game()->hours_until_weather_changes += 3;
+            game()->weather_change_count += 3;
             if (output_immediately)
             {
                 txt(i18n::s.get("core.action.weather.changes"));
@@ -73,301 +74,110 @@ void weather_changes_by_location(bool output_immediately)
 
 
 
-void weather_changes()
+bool weather_changes()
 {
-    if (area_data[game()->current_map].id == mdata_t::MapId::museum)
+    game()->weather_change_count = rnd(22) + 2;
+
+    const auto prev_weather = game()->weather;
+    const auto date = game_date();
+
+    if (date.month() % 3 == 0)
     {
-        update_museum();
-    }
-    if (game()->current_map == mdata_t::MapId::your_home)
-    {
-        building_update_home_rank();
-    }
-    if (map_data.type == mdata_t::MapType::world_map)
-    {
-        game()->pc_x_in_world_map = cdata.player().position.x;
-        game()->pc_y_in_world_map = cdata.player().position.y;
-    }
-    --game()->hours_until_weather_changes;
-    weather_changes_by_location();
-    if (game()->hours_until_weather_changes < 0)
-    {
-        game()->hours_until_weather_changes = rnd(22) + 2;
-        p = game()->weather;
-        for (int cnt = 0; cnt < 1; ++cnt)
+        if (1 <= date.day() && date.day() <= 10)
         {
-            if (game()->date.month % 3 == 0)
+            if (30_days < game_now() - game()->last_etherwind_time)
             {
-                if (game()->date.day >= 1 && game()->date.day <= 10)
+                if (rnd(15) < date.day() + 5)
                 {
-                    if (game()->last_etherwind_month != game()->date.month)
-                    {
-                        if (rnd(15) < game()->date.day + 5)
-                        {
-                            game()->weather = 1;
-                            txt(i18n::s.get(
-                                    "core.action.weather.ether_wind.starts"),
-                                Message::color{ColorIndex::red});
-                            game()->last_etherwind_month = game()->date.month;
-                            game()->hours_until_weather_changes = rnd(24) + 24;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (p == 0)
-            {
-                weatherbk = 0;
-                if (cdata.player().traits().level("core.rainy_clouds") != 0)
-                {
-                    if (rnd(4) == 0)
-                    {
-                        game()->weather = 3;
-                        txt(i18n::s.get("core.action.weather.rain.draw_cloud"));
-                        break;
-                    }
-                }
-                if (game()->pc_x_in_world_map > 65 ||
-                    game()->pc_y_in_world_map < 10)
-                {
-                    if (rnd(2) == 0)
-                    {
-                        game()->weather = 2;
-                        txt(i18n::s.get("core.action.weather.snow.starts"));
-                        break;
-                    }
-                }
-                else
-                {
-                    if (rnd(10) == 0)
-                    {
-                        game()->weather = 3;
-                        txt(i18n::s.get("core.action.weather.rain.starts"));
-                        break;
-                    }
-                    if (rnd(40) == 0)
-                    {
-                        game()->weather = 4;
-                        txt(i18n::s.get(
-                            "core.action.weather.rain.starts_heavy"));
-                        break;
-                    }
-                    if (rnd(60) == 0)
-                    {
-                        game()->weather = 2;
-                        txt(i18n::s.get("core.action.weather.snow.starts"));
-                        break;
-                    }
-                }
-            }
-            if (p == 3)
-            {
-                if (rnd(4) == 0)
-                {
-                    game()->weather = 0;
-                    txt(i18n::s.get("core.action.weather.rain.stops"));
-                    break;
-                }
-                if (rnd(15) == 0)
-                {
-                    game()->weather = 4;
-                    txt(i18n::s.get(
-                        "core.action.weather.rain.becomes_heavier"));
-                    break;
-                }
-            }
-            if (p == 4)
-            {
-                if (rnd(3) == 0)
-                {
-                    game()->weather = 3;
-                    txt(i18n::s.get(
-                        "core.action.weather.rain.becomes_lighter"));
-                    break;
-                }
-            }
-            if (p == 1)
-            {
-                if (rnd(2) == 0)
-                {
-                    game()->weather = 0;
-                    txt(i18n::s.get("core.action.weather.ether_wind.stops"));
-                    break;
-                }
-            }
-            if (p == 2)
-            {
-                if (rnd(3) == 0)
-                {
-                    game()->weather = 0;
-                    txt(i18n::s.get("core.action.weather.snow.stops"));
-                    break;
-                }
-            }
-        }
-        if (game()->weather == 4)
-        {
-            maybe_show_ex_help(11);
-        }
-        if (game()->weather == 2)
-        {
-            maybe_show_ex_help(12);
-        }
-        if (game()->weather == 1)
-        {
-            maybe_show_ex_help(13);
-        }
-        if (p != game()->weather)
-        {
-            sound_play_environmental();
-        }
-    }
-    draw_prepare_map_chips();
-    adventurer_update();
-    foods_get_rotten();
-    if (map_data.type == mdata_t::MapType::world_map)
-    {
-        if (rnd(3) == 0)
-        {
-            ++game()->continuous_active_hours;
-        }
-        if (rnd(15) == 0)
-        {
-            if (mode == 0)
-            {
-                txt(i18n::s.get("core.action.move.global.nap"));
-                game()->continuous_active_hours -= 3;
-                if (game()->continuous_active_hours < 0)
-                {
-                    game()->continuous_active_hours = 0;
+                    game()->weather = "core.etherwind";
+                    txt(i18n::s.get("core.action.weather.ether_wind.starts"),
+                        Message::color{ColorIndex::red});
+                    game()->last_etherwind_time = game_now();
+                    game()->weather_change_count = rnd(24) + 24;
+                    return prev_weather != game()->weather;
                 }
             }
         }
     }
-    else if (game()->current_map != mdata_t::MapId::shelter_)
+
+    if (prev_weather == "core.sunny")
     {
-        ++game()->continuous_active_hours;
-    }
-    if (game()->date.hour == 6)
-    {
-        txt(i18n::s.get("core.action.day_breaks"),
-            Message::color{ColorIndex::orange});
-    }
-    if (game()->continuous_active_hours >= 15)
-    {
-        maybe_show_ex_help(9);
-    }
-    if (cdata.player().nutrition < 5000)
-    {
-        maybe_show_ex_help(10);
-    }
-    if (game()->date.hour >= 24)
-    {
-        if (game()->number_of_waiting_guests < 3)
+        g_prev_weather = "";
+        if (cdata.player().traits().level("core.rainy_clouds") != 0)
         {
-            if (rnd(8 + game()->number_of_waiting_guests * 5) == 0)
+            if (rnd(4) == 0)
             {
-                ++game()->number_of_waiting_guests;
+                game()->weather = "core.rain";
+                txt(i18n::s.get("core.action.weather.rain.draw_cloud"));
+                return true;
             }
         }
-        txt(i18n::s.get("core.action.new_day"),
-            Message::color{ColorIndex::orange});
-        update_shop_and_report();
-        for (int rank_id = 0; rank_id < 9; ++rank_id)
+
+        if (game()->pc_x_in_world_map > 65 || game()->pc_y_in_world_map < 10)
         {
-            if (game()->ranks.at(rank_id) >= 10000)
+            if (rnd(2) == 0)
             {
-                game()->ranks.at(rank_id) = 10000;
-                continue;
+                game()->weather = "core.snow";
+                txt(i18n::s.get("core.action.weather.snow.starts"));
             }
-            if (rank_id == 3 || rank_id == 4 || rank_id == 5 || rank_id == 8)
-            {
-                continue;
-            }
-            --game()->rank_deadlines.at(rank_id);
-            if (game()->rank_deadlines.at(rank_id) <= 0)
-            {
-                modrank(rank_id, (game()->ranks.at(rank_id) / 12 + 100) * -1);
-                game()->rank_deadlines.at(rank_id) = ranknorma(rank_id);
-            }
-        }
-        snd("core.night");
-        event_add(10);
-        game()->play_days += game()->date.hour / 24;
-        game()->date.day += game()->date.hour / 24;
-        game()->date.hour = game()->date.hour % 24;
-        if (game()->date.day >= 31)
-        {
-            ++game()->date.month;
-            game()->date.day = game()->date.day - 30;
-            if (game()->date.month % 2 == 0)
-            {
-                ++game()->holy_well_count;
-            }
-        }
-        if (game()->date.month >= 13)
-        {
-            ++game()->date.year;
-            game()->date.month = 1;
-            game()->last_month_when_trainer_visited = 0;
-            game()->wish_count = clamp(game()->wish_count - 1, 0, 10);
-            game()->lost_wallet_count =
-                clamp(game()->lost_wallet_count - 1, 0, 999999);
-        }
-        if (game()->date.day == 1 || game()->date.day == 15)
-        {
-            supply_income();
-        }
-        if (game()->quest_flags.pael_and_her_mom == 1 ||
-            game()->quest_flags.pael_and_her_mom == 3 ||
-            game()->quest_flags.pael_and_her_mom == 5 ||
-            game()->quest_flags.pael_and_her_mom == 7 ||
-            game()->quest_flags.pael_and_her_mom == 9)
-        {
-            if (area_data[game()->current_map].id != mdata_t::MapId::noyel)
-            {
-                if (rnd(20) == 0)
-                {
-                    ++game()->quest_flags.pael_and_her_mom;
-                    quest_update_journal_msg();
-                }
-            }
-        }
-    }
-    if (mode == 0)
-    {
-        if (map_data.type == mdata_t::MapType::world_map)
-        {
-            if (rnd(40) == 0)
-            {
-                --cdata.player().piety_point;
-            }
-            cdata.player().praying_point += 4;
         }
         else
         {
-            if (rnd(5) == 0)
+            if (rnd(10) == 0)
             {
-                --cdata.player().piety_point;
+                game()->weather = "core.rain";
+                txt(i18n::s.get("core.action.weather.rain.starts"));
             }
-            cdata.player().praying_point += 32;
+            else if (rnd(40) == 0)
+            {
+                game()->weather = "core.hard_rain";
+                txt(i18n::s.get("core.action.weather.rain.starts_heavy"));
+            }
+            else if (rnd(60) == 0)
+            {
+                game()->weather = "core.snow";
+                txt(i18n::s.get("core.action.weather.snow.starts"));
+            }
         }
     }
-    if (cdata.player().piety_point < 0)
+    else if (prev_weather == "core.rain")
     {
-        cdata.player().piety_point = 0;
-    }
-    if (cdata.player().activity.turn != 0)
-    {
-        if (cdata.player().activity.type != Activity::Type::travel)
+        if (rnd(4) == 0)
         {
-            update_screen();
+            game()->weather = "core.sunny";
+            txt(i18n::s.get("core.action.weather.rain.stops"));
+        }
+        else if (rnd(15) == 0)
+        {
+            game()->weather = "core.hard_rain";
+            txt(i18n::s.get("core.action.weather.rain.becomes_heavier"));
         }
     }
-    if (!map_prevents_random_events())
+    else if (prev_weather == "core.hard_rain")
     {
-        proc_random_event();
+        if (rnd(3) == 0)
+        {
+            game()->weather = "core.rain";
+            txt(i18n::s.get("core.action.weather.rain.becomes_lighter"));
+        }
     }
+    else if (prev_weather == "core.etherwind")
+    {
+        if (rnd(2) == 0)
+        {
+            game()->weather = "core.sunny";
+            txt(i18n::s.get("core.action.weather.ether_wind.stops"));
+        }
+    }
+    else if (prev_weather == "core.snow")
+    {
+        if (rnd(3) == 0)
+        {
+            game()->weather = "core.sunny";
+            txt(i18n::s.get("core.action.weather.snow.stops"));
+        }
+    }
+    return prev_weather != game()->weather;
 }
 
 

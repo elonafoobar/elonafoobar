@@ -53,11 +53,11 @@ lrun("test LuaCharacter:gain_skill_exp", function()
         Testing.start_in_debug_map()
 
         local putit = Chara.create(0, 0, "core.putit")
-        lequal(putit:get_skill("core.attribute_strength").level, 4)
+        lequal(putit:get_skill("core.stat_strength").level, 4)
 
-        putit:gain_skill_exp("core.attribute_strength", 10000)
+        putit:gain_skill_exp("core.stat_strength", 10000)
 
-        lequal(putit:get_skill("core.attribute_strength").level, 14)
+        lequal(putit:get_skill("core.stat_strength").level, 14)
 end)
 
 lrun("test LuaCharacter:modify_resistance", function()

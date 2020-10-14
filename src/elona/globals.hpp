@@ -1,5 +1,9 @@
 #pragma once
 
+#include "data/id.hpp"
+
+
+
 #ifdef ELONA_DEFINE_GLOBAL_INSTANCE
 #define ELONA_EXTERN(declaration) declaration
 #else
@@ -27,6 +31,9 @@ ELONA_EXTERN(int g_chara_last_attacked_by_player);
 ELONA_EXTERN(bool g_player_is_changing_equipment);
 
 ELONA_EXTERN(bool g_is_autodig_enabled);
+
+// For rendering weather effect. See ui.cpp
+ELONA_EXTERN(data::InstanceId g_prev_weather);
 
 } // namespace elona
 

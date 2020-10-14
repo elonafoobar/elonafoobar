@@ -1,3 +1,4 @@
+#include "../../../game.hpp"
 #include "../common.hpp"
 
 
@@ -31,11 +32,11 @@ void bind(sol::state& lua)
         lua.new_usertype<Game>("LuaGameData", sol::no_constructor);
 
     /**
-     * @luadoc holy_well_count field num
+     * @luadoc holy_well_amount field num
      *
      * [RW] The amount of the water which the the holy well has.
      */
-    LuaGameData.set("holy_well_count", &Game::holy_well_count);
+    LuaGameData.set("holy_well_amount", &Game::holy_well_amount);
 
     /**
      * @luadoc home_scale field num
@@ -45,18 +46,19 @@ void bind(sol::state& lua)
     LuaGameData.set("home_scale", &Game::home_scale);
 
     /**
-     * @luadoc initial_cart_limit field num
+     * @luadoc initial_max_cargo_weight field num
      *
      * [RW] The player's initial cargo capacity.
      */
-    LuaGameData.set("initial_cart_limit", &Game::initial_cart_limit);
+    LuaGameData.set(
+        "initial_max_cargo_weight", &Game::initial_max_cargo_weight);
 
     /**
-     * @luadoc current_cart_limit field num
+     * @luadoc max_cargo_weight field num
      *
      * [RW] The player's maximum cargo capacity.
      */
-    LuaGameData.set("current_cart_limit", &Game::current_cart_limit);
+    LuaGameData.set("max_cargo_weight", &Game::max_cargo_weight);
 
     /**
      * @luadoc ranks field table
@@ -64,18 +66,11 @@ void bind(sol::state& lua)
     LuaGameData.set("ranks", &Game::ranks);
 
     /**
-     * @luadoc left_bill field num
+     * @luadoc left_bills field num
      *
      * [RW] The number of unpaid bills the player owns.
      */
-    LuaGameData.set("left_bill", &Game::left_bill);
-
-    /**
-     * @luadoc date field LuaDateTime
-     *
-     * [R] The current date and time.
-     */
-    LuaGameData.set("date", &Game::date);
+    LuaGameData.set("left_bills", &Game::left_bills);
 
 
     /**

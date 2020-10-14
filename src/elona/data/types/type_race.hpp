@@ -1,4 +1,5 @@
 #pragma once
+
 #include "../base_database.hpp"
 
 
@@ -23,7 +24,7 @@ struct RaceData
     int special_attack_type;
     int dv_multiplier;
     int pv_multiplier;
-    std::vector<int> body_parts;
+    std::vector<data::InstanceId> body_parts;
     std::unordered_map<data::InstanceId, int> skills;
     std::unordered_map<data::InstanceId, int> resistances;
 };

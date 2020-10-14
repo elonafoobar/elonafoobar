@@ -5,7 +5,6 @@
 #include <type_traits>
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "area.hpp"
 #include "audio.hpp"
@@ -15,16 +14,17 @@
 #include "character.hpp"
 #include "config.hpp"
 #include "crafting.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_fish.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "elona.hpp"
 #include "enums.hpp"
 #include "food.hpp"
 #include "fov.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "inventory.hpp"
 #include "itemgen.hpp"
@@ -36,6 +36,7 @@
 #include "mef.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "ui.hpp"
 #include "variables.hpp"
@@ -94,7 +95,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         pv == other.pv &&
         skill == other.skill &&
         curse_state == other.curse_state &&
-        body_part == other.body_part &&
+        _equipped_slot == other._equipped_slot &&
         function == other.function &&
         bonus_value == other.bonus_value &&
         own_state == other.own_state &&
@@ -106,7 +107,7 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         param3 == other.param3 &&
         param4 == other.param4 &&
         identify_level == other.identify_level &&
-        // turn == other.turn &&
+        // _z_order == other._z_order &&
         is_acidproof == other.is_acidproof &&
         is_fireproof == other.is_fireproof &&
         is_coldproof == other.is_coldproof &&
@@ -123,7 +124,14 @@ bool Item::almost_equals(const Item& other, bool ignore_position) const
         is_eternal_force == other.is_eternal_force &&
         is_handmade == other.is_handmade &&
         is_showroom_only == other.is_showroom_only &&
-        range::equal(enchantments, other.enchantments);
+        range::equal(enchantments, other.enchantments) &&
+        /* TODO */
+        __cooldown_time == other.__cooldown_time &&
+        __expiration_time == other.__expiration_time &&
+        __expiration_duration == other.__expiration_duration &&
+        __is_rotten == other.__is_rotten &&
+        __god == other.__god &&
+        true;
     /* clang-format on */
 }
 
@@ -240,7 +248,7 @@ void Inventory::move_all(Inventory& src, Inventory& dst)
         {
             item->_inventory = &dst;
             item->_slot = static_cast<InventorySlot>(i);
-            item->body_part = 0;
+            item->_equipped_slot = lua_index::nil();
         }
         ++i;
     }
@@ -418,8 +426,8 @@ int itemusingfind(const ItemRef& item, bool disallow_pc)
         {
             continue;
         }
-        if (chara.activity && chara.activity.type != Activity::Type::sex &&
-            chara.activity.turn > 0 && chara.activity.item == item)
+        if (chara.activity && chara.activity.id != "core.sex" &&
+            chara.activity.turns > 0 && chara.activity.item == item)
         {
             if (!disallow_pc || !chara.is_player())
             {
@@ -496,11 +504,11 @@ void cell_refresh(int x, int y)
     {
         range::sort(items, [](const auto& i1, const auto& i2) {
             const auto t1 = i1
-                ? i1->turn
-                : std::numeric_limits<decltype(Item::turn)>::max();
+                ? i1->_z_order
+                : std::numeric_limits<decltype(Item::_z_order)>::max();
             const auto t2 = i2
-                ? i2->turn
-                : std::numeric_limits<decltype(Item::turn)>::max();
+                ? i2->_z_order
+                : std::numeric_limits<decltype(Item::_z_order)>::max();
             return t1 < t2;
         });
     }
@@ -526,12 +534,12 @@ void cell_refresh(int x, int y)
 
 void itemturn(const ItemRef& item)
 {
-    ++game()->item_turns;
-    if (game()->item_turns < 0)
+    ++game()->next_item_z_order;
+    if (game()->next_item_z_order < 0)
     {
-        game()->item_turns = 1;
+        game()->next_item_z_order = 1;
     }
-    item->turn = game()->item_turns;
+    item->_z_order = game()->next_item_z_order;
 }
 
 
@@ -713,14 +721,13 @@ ItemRef item_separate(const ItemRef& stacked_item)
 
 bool chara_unequip(const ItemRef& item)
 {
-    if (item->body_part == 0)
+    if (!item->is_equipped())
         return false;
 
-    int body_part = item->body_part;
     if (const auto owner = item_get_owner(item).as_character())
     {
-        owner->equipment_slots[body_part - 100].unequip();
-        item->body_part = 0;
+        owner->body_parts[item->_equipped_slot].unequip();
+        item->_equipped_slot = lua_index::nil();
         return true;
     }
     else
@@ -746,7 +753,7 @@ IdentifyState item_identify(const ItemRef& item, IdentifyState level)
     item->identify_state = level;
     if (item->identify_state >= IdentifyState::partly)
     {
-        game()->item_memories().set_identify_state(
+        game()->item_memories.set_identify_state(
             item->id, IdentifyState::partly);
     }
     idtresult = level;
@@ -767,7 +774,7 @@ IdentifyState item_identify(const ItemRef& item, int power)
 
 void item_checkknown(const ItemRef& item)
 {
-    if (game()->item_memories().identify_state(item->id) !=
+    if (game()->item_memories.identify_state(item->id) !=
             IdentifyState::unidentified &&
         item->identify_state == IdentifyState::unidentified)
     {
@@ -837,10 +844,10 @@ void itemname_additional_info(const ItemRef& item)
         if (item->id == "core.textbook")
         {
             s_ += lang(
-                u8"《"s + the_ability_db.get_text(item->param1, "name") +
+                u8"《"s + the_skill_db.get_text(item->param1, "name") +
                     u8"》という題名の"s,
                 u8" titled <Art of "s +
-                    the_ability_db.get_text(item->param1, "name") + u8">"s);
+                    the_skill_db.get_text(item->param1, "name") + u8">"s);
         }
         else if (item->id == "core.book_of_rachel")
         {
@@ -856,11 +863,11 @@ void itemname_additional_info(const ItemRef& item)
     }
     if (category == ItemCategory::altar)
     {
-        if (item->param1 != 0)
+        if (item->__god != "")
         {
             s_ += lang(
-                god_name(item->param1) + u8"の"s,
-                u8" <"s + god_name(item->param1) + u8">"s);
+                god_get_name(item->__god) + u8"の"s,
+                u8" <"s + god_get_name(item->__god) + u8">"s);
         }
     }
     if (category == ItemCategory::food)
@@ -1058,7 +1065,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                 s2_ = u8"対の"s;
             }
             if (category == ItemCategory::gold_piece ||
-                category == ItemCategory::platinum_coin ||
+                category == ItemCategory::platinum ||
                 item->id == "core.small_medal" ||
                 item->id == "core.music_ticket" ||
                 item->id == "core.token_of_friendship")
@@ -1185,7 +1192,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             s_ = ""s + number + u8" " + s_;
         }
     }
-    if (item->material == "core.raw" && item->param3 < 0)
+    if (item->material == "core.raw" && food_is_rotten(item))
     {
         if (jp)
         {
@@ -1594,11 +1601,12 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
     }
-    if (item->has_cooldown_time && game()->date.hours() < item->charges)
+    if (item->has_cooldown_time && game_now() < item->__cooldown_time)
     {
+        const auto h = (item->__cooldown_time - game_now()).hours();
         s_ += lang(
-            u8"("s + (item->charges - game()->date.hours()) + u8"時間)"s,
-            u8"(Next: "s + (item->charges - game()->date.hours()) + u8"h.)"s);
+            u8"("s + std::to_string(h) + u8"時間)"s,
+            u8"(Next: "s + std::to_string(h) + u8"h.)"s);
     }
     if (item->id == "core.shelter" && item->charges != 0)
     {
@@ -1621,7 +1629,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 void remain_make(const ItemRef& remain, const Character& chara)
 {
     remain->subname = charaid2int(chara.id);
-    remain->tint = chara.image / 1000;
+    remain->tint = color_index_to_color(chara.image / 1000);
 
     if (remain->id == "core.corpse")
     {
@@ -1633,7 +1641,7 @@ void remain_make(const ItemRef& remain, const Character& chara)
         remain->weight = 20 * (chara.weight + 500) / 500;
         remain->value = chara.level * 40 + 600;
         if (the_character_db[charaid2int(chara.id)]->rarity / 1000 < 20 &&
-            chara.original_relationship < -1)
+            chara.original_relationship < Relationship::neutral)
         {
             remain->value *= clamp(
                 4 - the_character_db[charaid2int(chara.id)]->rarity / 1000 / 5,
@@ -1664,21 +1672,17 @@ void item_acid(const Character& owner, OptionalItemRef item)
 {
     if (!item)
     {
-        for (const auto& equipment_slot : owner.equipment_slots)
+        for (const auto& body_part : owner.body_parts)
         {
-            if (!equipment_slot)
-            {
-                break;
-            }
-            if (!equipment_slot.equipment)
+            if (!body_part.is_equip())
             {
                 continue;
             }
-            if (equipment_slot.equipment->bonus_value >= -3)
+            if (body_part.equipment()->bonus_value >= -3)
             {
                 if (rnd(30) == 0)
                 {
-                    item = equipment_slot.equipment;
+                    item = body_part.equipment();
                     break;
                 }
             }
@@ -1720,7 +1724,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (owner->get_skill(50).level / 50 >= 6 ||
+        if (owner->skills().level("core.element_fire") / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -1798,7 +1802,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
             continue;
         }
 
-        if (item->body_part != 0)
+        if (item->is_equipped())
         {
             if (rnd(2))
             {
@@ -1856,7 +1860,7 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
         int p_ = rnd_capped(item->number()) / 2 + 1;
         if (const auto owner = inv_owner.as_character())
         {
-            if (item->body_part != 0)
+            if (item->is_equipped())
             {
                 if (is_in_fov(*owner))
                 {
@@ -1867,8 +1871,8 @@ bool item_fire(const InventoryRef& inv, const OptionalItemRef& burned_item)
                             *owner),
                         Message::color{ColorIndex::purple});
                 }
-                owner->equipment_slots[item->body_part - 100].unequip();
-                item->body_part = 0;
+                owner->body_parts[item->_equipped_slot].unequip();
+                item->_equipped_slot = lua_index::nil();
                 chara_refresh(*owner);
             }
             else if (is_in_fov(*owner))
@@ -1949,7 +1953,7 @@ bool item_cold(const InventoryRef& inv, const OptionalItemRef& destroyed_item)
     auto inv_owner = inv_get_owner(inv);
     if (const auto owner = inv_owner.as_character())
     {
-        if (owner->get_skill(51).level / 50 >= 6 ||
+        if (owner->skills().level("core.element_cold") / 50 >= 6 ||
             owner->quality >= Quality::miracle)
         {
             return false;
@@ -1995,7 +1999,7 @@ bool item_cold(const InventoryRef& inv, const OptionalItemRef& destroyed_item)
         {
             continue;
         }
-        if (item->quality >= Quality::miracle || item->body_part != 0)
+        if (item->quality >= Quality::miracle || item->is_equipped())
         {
             continue;
         }
@@ -2116,8 +2120,8 @@ void item_drop(
     if (building_shelter)
     {
         dropped_item->own_state = OwnState::shelter;
-        dropped_item->charges = game()->next_shelter_serial_id + 100;
-        ++game()->next_shelter_serial_id;
+        dropped_item->charges = game()->next_shelter_serial_number + 100;
+        ++game()->next_shelter_serial_number;
     }
     else
     {
@@ -2130,7 +2134,7 @@ void item_drop(
         if (const auto altar = item_find(ItemCategory::altar))
         {
             // The altar is your god's.
-            if (core_god::int2godid(altar->param1) == cdata.player().god_id)
+            if (altar->__god == cdata.player().religion)
             {
                 if (dropped_item->curse_state != CurseState::blessed)
                 {
@@ -2180,23 +2184,23 @@ void item_build_shelter(const ItemRef& shelter)
 
 
 
-int iequiploc(const ItemRef& item)
+data::InstanceId iequiploc(const ItemRef& item)
 {
     switch (the_item_db[item->id]->category)
     {
-    case ItemCategory::helm: return 1;
-    case ItemCategory::necklace: return 2;
-    case ItemCategory::cloak: return 3;
-    case ItemCategory::armor: return 4;
-    case ItemCategory::melee_weapon: return 5;
-    case ItemCategory::shield: return 5;
-    case ItemCategory::ring: return 6;
-    case ItemCategory::gloves: return 7;
-    case ItemCategory::boots: return 9;
-    case ItemCategory::ranged_weapon: return 10;
-    case ItemCategory::ammo: return 11;
-    case ItemCategory::belt: return 8;
-    default: return 0;
+    case ItemCategory::helm: return "core.head";
+    case ItemCategory::necklace: return "core.neck";
+    case ItemCategory::cloak: return "core.back";
+    case ItemCategory::armor: return "core.body";
+    case ItemCategory::melee_weapon: return "core.hand";
+    case ItemCategory::shield: return "core.hand";
+    case ItemCategory::ring: return "core.ring";
+    case ItemCategory::gloves: return "core.arm";
+    case ItemCategory::boots: return "core.leg";
+    case ItemCategory::ranged_weapon: return "core.shoot";
+    case ItemCategory::ammo: return "core.ammo";
+    case ItemCategory::belt: return "core.waist";
+    default: return "";
     }
 }
 
@@ -2206,7 +2210,7 @@ std::vector<int> item_get_inheritance(const ItemRef& item)
 {
     std::vector<int> result;
 
-    randomize(item->turn + 1);
+    randomize(item->_z_order + 1);
     for (int _i = 0; _i < 10; ++_i)
     {
         const auto enc_index =
@@ -2252,14 +2256,15 @@ void auto_identify()
             continue;
         }
 
-        const auto skill = cdata.player().get_skill(13).level +
-            cdata.player().get_skill(162).level * 5;
+        const auto skill =
+            cdata.player().skills().level("core.stat_perception") +
+            cdata.player().skills().level("core.sense_quality") * 5;
         const auto difficulty = 1500 + item->identify_level * 5;
         if (skill > rnd(difficulty * 5))
         {
             const auto prev_name = itemname(item);
             item_identify(item, IdentifyState::completely);
-            game()->item_memories().set_identify_state(
+            game()->item_memories.set_identify_state(
                 item->id, IdentifyState::partly);
             if (!g_config.hide_autoidentify())
             {
@@ -2327,7 +2332,7 @@ ItemRef item_convert_artifact(
     {
         return artifact; // is not a unique artifact.
     }
-    if (artifact->body_part != 0)
+    if (artifact->is_equipped())
     {
         return artifact; // is equipped.
     }
@@ -2446,7 +2451,7 @@ void dipcursed(const ItemRef& item)
         if (item->material == "core.raw")
         {
             txt(i18n::s.get("core.action.dip.rots", item));
-            item->param3 = -1;
+            food_make_rotten(item);
             item->image = 336;
         }
         else
@@ -2488,18 +2493,17 @@ int efstatusfix(int doomed, int cursed, int none, int blessed)
 void equip_melee_weapon(Character& chara)
 {
     attacknum = 0;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : chara.body_parts)
     {
-        body = 100 + cnt;
-        if (chara.equipment_slots[cnt].type != 5)
+        if (body_part.id != "core.hand")
         {
             continue;
         }
-        if (!chara.equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        const auto weapon = chara.equipment_slots[cnt].equipment.unwrap();
+        const auto weapon = body_part.equipment().unwrap();
         if (weapon->dice.rolls == 0)
         {
             continue;

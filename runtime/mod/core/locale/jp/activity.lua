@@ -1,8 +1,80 @@
+ELONA.i18n:add_data_text(
+   "core.activity",
+   {
+      eat = {
+         cancel_prompt = "食事を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は食事を中断した。",
+      },
+      read = {
+         cancel_prompt = "読書を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は読書を中断した。",
+      },
+      travel = {
+         cancel_prompt = "移動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は移動を中断した。",
+      },
+      sleep = {
+         cancel_prompt = "休息を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は休息を中断した。",
+      },
+      dig_wall = {
+         cancel_prompt = "採掘を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は採掘を中断した。",
+      },
+      perform = {
+         cancel_prompt = "演奏を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は演奏を中断した。",
+      },
+      fish = {
+         cancel_prompt = "釣りを中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は釣りを中断した。",
+      },
+      search_material = {
+         cancel_prompt = "採取を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は採取を中断した。",
+      },
+      dig_around = {
+         cancel_prompt = "探索を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は探索を中断した。",
+      },
+      sleep = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      build_shelter = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      enter_shelter = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      harvest = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      study = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      steal = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      sex = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+      blend = {
+         cancel_prompt = "行動を中断したほうがいいだろうか？ ",
+         canceled = "{name($1)}は行動を中断した。",
+      },
+   }
+)
+
 ELONA.i18n:add {
    activity = {
       cancel = {
-         prompt = "{$1}を中断したほうがいいだろうか？ ",
-         normal = "{name($1)}は{$2}を中断した。",
          item = "{name($1)}は行動を中断した。",
       },
 

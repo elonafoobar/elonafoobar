@@ -2,8 +2,8 @@
 
 #include "../util/range.hpp"
 #include "character.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "element.hpp"
 #include "elona.hpp"
 #include "i18n.hpp"
@@ -202,7 +202,7 @@ void get_enchantment_description(
             if (power / 50 + 1 < 0)
             {
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
-                const auto skill_name = the_ability_db.get_text(sid, "name");
+                const auto skill_name = the_skill_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -220,7 +220,7 @@ void get_enchantment_description(
             }
             else
             {
-                const auto skill_name = the_ability_db.get_text(sid, "name");
+                const auto skill_name = the_skill_db.get_text(sid, "name");
                 if (category == ItemCategory::food)
                 {
                     s = i18n::s.get(
@@ -244,18 +244,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.resistance.decreases",
-                    the_ability_db.get_text(sid, "name"));
+                    the_skill_db.get_text(sid, "name"));
             }
             else
             {
-                s = the_ability_db
+                s = the_skill_db
                         .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.resistance.increases",
-                        the_ability_db.get_text(sid, "name"));
+                        the_skill_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string(power / 100);
@@ -267,18 +267,18 @@ void get_enchantment_description(
                 rtval = static_cast<int>(ItemDescriptionType::negative_effect);
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill.decreases",
-                    the_ability_db.get_text(sid, "name"));
+                    the_skill_db.get_text(sid, "name"));
             }
             else
             {
-                s = the_ability_db
+                s = the_skill_db
                         .get_text_optional(sid, "enchantment_description")
                         .value_or("");
                 if (s == ""s)
                 {
                     s = i18n::s.get(
                         "core.enchantment.with_parameters.skill.increases",
-                        the_ability_db.get_text(sid, "name"));
+                        the_skill_db.get_text(sid, "name"));
                 }
             }
             s += enchantment_level_string((power / 50 + 1) / 5);
@@ -289,25 +289,25 @@ void get_enchantment_description(
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.in_food",
-                    the_ability_db.get_text(sid, "name"));
+                    the_skill_db.get_text(sid, "name"));
                 s += enchantment_level_string(power / 50);
             }
             else
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.skill_maintenance.other",
-                    the_ability_db.get_text(sid, "name"));
+                    the_skill_db.get_text(sid, "name"));
             }
             break;
         case 7:
             rtval = static_cast<int>(ItemDescriptionType::enchantment);
-            s = the_ability_db.get_text_optional(sid, "enchantment_description")
+            s = the_skill_db.get_text_optional(sid, "enchantment_description")
                     .value_or("");
             if (s == ""s)
             {
                 s = i18n::s.get(
                     "core.enchantment.with_parameters.extra_damage",
-                    the_ability_db.get_text(sid, "name"));
+                    the_skill_db.get_text(sid, "name"));
             }
             s += enchantment_level_string(power / 100);
             break;
@@ -316,7 +316,7 @@ void get_enchantment_description(
             sid = encprocref(0, sid);
             s = i18n::s.get(
                 "core.enchantment.with_parameters.invokes",
-                the_ability_db.get_text(sid, "name"));
+                the_skill_db.get_text(sid, "name"));
             s += enchantment_level_string(power / 50);
             break;
         case 9:
@@ -755,12 +755,13 @@ optional<int> enchantment_find(const Character& chara, int id)
 {
     optional<int> max;
 
-    for (const auto& [_type, equipment] : chara.equipment_slots)
+    for (const auto& body_part : chara.body_parts)
     {
-        if (!equipment)
+        if (!body_part.is_equip())
             continue;
 
-        if (const auto power = enchantment_find(equipment.unwrap(), id))
+        if (const auto power =
+                enchantment_find(body_part.equipment().unwrap(), id))
         {
             if (!max || *max < *power)
             {

@@ -1,13 +1,13 @@
 #include "ui.hpp"
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "audio.hpp"
 #include "cell_draw.hpp"
 #include "character.hpp"
 #include "config.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_asset.hpp"
+#include "data/types/type_buff.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "draw.hpp"
 #include "fov.hpp"
@@ -18,6 +18,7 @@
 #include "lua_env/console.hpp"
 #include "map.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -242,7 +243,7 @@ void render_weather_effect_snow()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game()->weather)
+        if (particle == Position{0, 0} || g_prev_weather != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -294,7 +295,7 @@ void render_weather_effect_etherwind()
                 1);
         }
 
-        if (particle == Position{0, 0} || weatherbk != game()->weather)
+        if (particle == Position{0, 0} || g_prev_weather != game()->weather)
         {
             // Create new particle.
             particle.x = rnd(windoww);
@@ -322,16 +323,24 @@ void render_weather_effect()
     if (map_data.indoors_flag != 2)
         return;
 
-    switch (game()->weather)
+    if (game()->weather == "core.etherwind")
     {
-    case 3: render_weather_effect_rain(); break;
-    case 4: render_weather_effect_hard_rain(); break;
-    case 2: render_weather_effect_snow(); break;
-    case 1: render_weather_effect_etherwind(); break;
-    default: break;
+        render_weather_effect_etherwind();
+    }
+    else if (game()->weather == "core.snow")
+    {
+        render_weather_effect_snow();
+    }
+    else if (game()->weather == "core.rain")
+    {
+        render_weather_effect_rain();
+    }
+    else if (game()->weather == "core.hard_rain")
+    {
+        render_weather_effect_hard_rain();
     }
 
-    weatherbk = game()->weather;
+    g_prev_weather = game()->weather;
     gmode(2);
 }
 
@@ -362,11 +371,11 @@ void highlight_characters_in_pet_arena()
         if (chara.is_player())
             continue;
         snail::Color color{0};
-        if (chara.relationship == 10)
+        if (chara.relationship == Relationship::ally)
         {
             color = {127, 127, 255, 32};
         }
-        else if (chara.relationship == -3)
+        else if (chara.relationship == Relationship::enemy)
         {
             color = {255, 127, 127, 32};
         }
@@ -493,7 +502,8 @@ void render_basic_attributes_and_pv_dv()
                 : snail::Color{0, 0, 0};
             mes(x,
                 y,
-                std::to_string(cdata.player().get_skill(10 + i).level),
+                std::to_string(cdata.player().skills().level(
+                    *the_skill_db.get_id_from_integer(10 + i))),
                 text_color);
         }
         else if (i == 8)
@@ -556,10 +566,10 @@ void render_gold()
 void render_platinum()
 {
     _render_gold_or_platinum(
-        cdata.player().platinum_coin,
+        cdata.player().platinum,
         windoww - 120,
         inf_ver - 16,
-        "core.platinum_coin",
+        "core.platinum",
         "pp");
 }
 
@@ -592,11 +602,9 @@ void render_buffs()
 
     for (auto&& buff : cdata.player().buffs)
     {
-        if (buff.id == 0)
-            break;
-
         // Icon
-        draw_indexed("core.buff_icon", x, y, buff.id);
+        draw_indexed(
+            "core.buff_icon", x, y, the_buff_db.ensure(buff.id).integer_id);
         // Turns
         mes(x + 3, y + 19, std::to_string(buff.turns));
         // Turns
@@ -612,12 +620,14 @@ void render_analogue_clock()
 {
     const auto& info = get_image_info("core.clock_hand");
 
+    const auto dt = game_date_time();
+
     // Short hand
     draw_rotated(
         "core.clock_hand",
         inf_clockarrowx,
         inf_clockarrowy,
-        game()->date.hour * 30 + game()->date.minute / 2);
+        dt.hour() * 30 + dt.minute() / 2);
     // Long hand
     draw_rotated(
         "core.clock_hand",
@@ -625,15 +635,15 @@ void render_analogue_clock()
         inf_clockarrowy,
         info.width / 2,
         info.height,
-        game()->date.minute * 6);
+        dt.minute() * 6);
 
     mes(inf_clockw - 3,
         inf_clocky + 17 + vfix,
-        ""s + game()->date.year + u8"/"s + game()->date.month + u8"/"s +
-            game()->date.day);
+        std::to_string(dt.year()) + "/" + std::to_string(dt.month()) + "/" +
+            std::to_string(dt.day()));
     bmes(
-        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game()->weather),
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
+            i18n::s.get_data_text("core.weather", game()->weather, "name"),
         inf_clockw + 6,
         inf_clocky + 35);
 }
@@ -642,14 +652,13 @@ void render_analogue_clock()
 
 void render_digital_clock()
 {
+    const auto dt = game_date_time();
+
     // 24 hour digital clock, 57 pixels wide
     font(16 - en * 2);
     bmes(
         i18n::s.get(
-            "core.ui.digital_clock.time",
-            game()->date.hour,
-            game()->date.minute,
-            game()->date.second),
+            "core.ui.digital_clock.time", dt.hour(), dt.minute(), dt.second()),
         8,
         8);
 
@@ -658,17 +667,14 @@ void render_digital_clock()
     int datex = 8 + 57 + 18;
     bmes(
         i18n::s.get(
-            "core.ui.digital_clock.date",
-            game()->date.year,
-            game()->date.month,
-            game()->date.day),
+            "core.ui.digital_clock.date", dt.year(), dt.month(), dt.day()),
         datex,
         8);
 
     // time of day + weather
     bmes(
-        i18n::s.get_enum("core.ui.time", game()->date.hour / 4) + u8" "s +
-            i18n::s.get_enum("core.ui.weather", game()->weather),
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
+            i18n::s.get_data_text("core.weather", game()->weather, "name"),
         datex + 64 + 12,
         8);
 }
@@ -692,13 +698,19 @@ void render_skill_trackers()
             continue;
         }
         bmes(
-            strutil::take_by_width(the_ability_db.get_text(skill, "name"), 6),
+            strutil::take_by_width(the_skill_db.get_text(skill, "name"), 6),
             16,
             inf_clocky + 107 + y * 16);
         bmes(
-            ""s + cdata[chara].get_skill(skill).base_level + u8"."s +
+            ""s +
+                cdata[chara].skills().base_level(
+                    *the_skill_db.get_id_from_integer(skill)) +
+                u8"."s +
                 std::to_string(
-                    1000 + cdata[chara].get_skill(skill).experience % 1000)
+                    1000 +
+                    cdata[chara].skills().experience(
+                        *the_skill_db.get_id_from_integer(skill)) %
+                        1000)
                     .substr(1),
             66,
             inf_clocky + 107 + y * 16);
@@ -706,20 +718,25 @@ void render_skill_trackers()
         {
             elona::snail::Color col{255, 130, 130};
 
-            if (cdata[chara].get_skill(skill).potential >
+            if (cdata[chara].skills().potential(
+                    *the_skill_db.get_id_from_integer(skill)) >
                 elona::g_config.enhanced_skill_upperbound())
             {
                 col = {130, 255, 130};
             }
             else if (
-                cdata[chara].get_skill(skill).potential >
+                cdata[chara].skills().potential(
+                    *the_skill_db.get_id_from_integer(skill)) >
                 elona::g_config.enhanced_skill_lowerbound())
             {
                 col = {255, 255, 130};
             }
 
             bmes(
-                ""s + cdata[chara].get_skill(skill).potential + u8"%"s,
+                ""s +
+                    cdata[chara].skills().potential(
+                        *the_skill_db.get_id_from_integer(skill)) +
+                    u8"%"s,
                 128,
                 inf_clocky + 107 + y * 16,
                 col);
@@ -1008,7 +1025,7 @@ void render_status_ailments()
         {0, 80, 80});
 
     y = render_one_status_ailment(
-        game()->continuous_active_hours,
+        cdata.player().sleepiness,
         x,
         y,
         [](auto hours) { return hours >= 15; },
@@ -1048,7 +1065,7 @@ void render_status_ailments()
         });
 
     y = render_one_status_ailment(
-        cdata.player().inventory_weight_type,
+        cdata.player().burden_state,
         x,
         y,
         [](auto state) { return state != 0; },
@@ -1081,14 +1098,14 @@ void render_autoturn_animation()
     }
 
     if (firstautoturn ||
-        (cdata.player().activity.type == Activity::Type::fish &&
-         rowactre == 0 && fishanime == 0))
+        (cdata.player().activity.id == "core.fish" && rowactre == 0 &&
+         fishanime == 0))
     {
         ui_render_non_hud();
         render_hud();
     }
 
-    if (cdata.player().activity.type == Activity::Type::fish)
+    if (cdata.player().activity.id == "core.fish")
     {
         if (rowactre == 0 && g_config.animation_wait() != 0)
         {
@@ -1106,12 +1123,12 @@ void render_autoturn_animation()
     bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
     draw_rotated(
-        "core.hourglass", sx + 18, sy + 12, game()->date.minute / 4 * 24);
+        "core.hourglass", sx + 18, sy + 12, game_time().minute() / 4 * 24);
 
-    if (cdata.player().activity.type == Activity::Type::dig_ground ||
-        cdata.player().activity.type == Activity::Type::dig_wall ||
-        cdata.player().activity.type == Activity::Type::search_material ||
-        (cdata.player().activity.type == Activity::Type::fish && rowactre != 0))
+    if (cdata.player().activity.id == "core.dig_ground" ||
+        cdata.player().activity.id == "core.dig_wall" ||
+        cdata.player().activity.id == "core.search_material" ||
+        (cdata.player().activity.id == "core.fish" && rowactre != 0))
     {
         if (g_config.animation_wait() != 0)
         {
@@ -1121,8 +1138,7 @@ void render_autoturn_animation()
                 for (int cnt = 0; cnt < 10; ++cnt)
                 {
                     gmode(0);
-                    if (cdata.player().activity.type ==
-                        Activity::Type::dig_wall)
+                    if (cdata.player().activity.id == "core.dig_wall")
                     {
                         if (cnt == 2)
                         {
@@ -1132,7 +1148,7 @@ void render_autoturn_animation()
                             9, cnt / 2 % 5 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2);
                     }
-                    if (cdata.player().activity.type == Activity::Type::fish)
+                    if (cdata.player().activity.id == "core.fish")
                     {
                         if (racount == 0)
                         {
@@ -1145,8 +1161,7 @@ void render_autoturn_animation()
                             9, cnt / 3 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2.5);
                     }
-                    if (cdata.player().activity.type ==
-                        Activity::Type::search_material)
+                    if (cdata.player().activity.id == "core.search_material")
                     {
                         if (cnt == 4)
                         {
@@ -1156,8 +1171,7 @@ void render_autoturn_animation()
                             9, cnt / 2 % 3 * 144, 0, 144, 96, sx + 2, sy - 102);
                         await(g_config.animation_wait() * 2.75);
                     }
-                    if (cdata.player().activity.type ==
-                        Activity::Type::dig_ground)
+                    if (cdata.player().activity.id == "core.dig_ground")
                     {
                         if (cnt == 2)
                         {
@@ -1565,22 +1579,22 @@ void render_hud()
 void load_activity_animation()
 {
     gsel(9);
-    if (cdata.player().activity.type == Activity::Type::dig_wall)
+    if (cdata.player().activity.id == "core.dig_wall")
     {
         picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
     }
-    if (cdata.player().activity.type == Activity::Type::fish)
+    if (cdata.player().activity.id == "core.fish")
     {
         if (rowactre)
         {
             picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
         }
     }
-    if (cdata.player().activity.type == Activity::Type::search_material)
+    if (cdata.player().activity.id == "core.search_material")
     {
         picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
     }
-    if (cdata.player().activity.type == Activity::Type::dig_ground)
+    if (cdata.player().activity.id == "core.dig_ground")
     {
         picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
     }
@@ -1779,7 +1793,7 @@ void update_slight()
                 if (cell_data.at(sx, sy).chara_index_plus_one != 0)
                 {
                     cdata[cell_data.at(sx, sy).chara_index_plus_one - 1]
-                        .vision_flag = msync;
+                        .fov_flag = msync;
                 }
                 if (cell_data.at(sx, sy).chip_id_memory !=
                     cell_data.at(sx, sy).chip_id_actual)
@@ -2019,7 +2033,7 @@ void render_fishing_animation()
     fishdir(2) = 3;
     fishdir(3) = 2;
     fishdir = fishdir(cdata.player().direction);
-    randomize(cdata.player().turn / 3);
+    randomize(cdata.player().turns / 3);
     gmode(2);
     if (fishanime == 4)
     {

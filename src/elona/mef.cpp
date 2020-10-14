@@ -1,6 +1,5 @@
 #include "mef.hpp"
 
-#include "ability.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "deferred_event.hpp"
@@ -10,9 +9,11 @@
 #include "game.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -43,7 +44,12 @@ void mef_delete(int mef_index)
 {
     if (mef(0, mef_index) == 7)
     {
-        event_add(21, mef(2, mef_index), mef(3, mef_index));
+        deferred_event_add(DeferredEvent{
+            "core.nuclear_bomb",
+            0,
+            lua::create_table(
+                "core.bomb_position",
+                Position{mef(2, mef_index), mef(3, mef_index)})});
     }
     cell_data.at(mef(2, mef_index), mef(3, mef_index)).mef_index_plus_one = 0;
     mef(0, mef_index) = 0;
@@ -137,7 +143,8 @@ void mef_update()
             {
                 if (map_data.type != mdata_t::MapType::world_map)
                 {
-                    if (game()->weather == 3 || game()->weather == 4)
+                    if (game()->weather == "core.rain" ||
+                        game()->weather == "core.hard_rain")
                     {
                         mef_delete(cnt);
                         continue;
@@ -214,7 +221,7 @@ void mef_proc(Character& chara)
     {
         if (chara.is_floating() == 0 || chara.gravity > 0)
         {
-            if (chara.get_skill(63).level / 50 < 7)
+            if (chara.skills().level("core.element_acid") / 50 < 7)
             {
                 if (is_in_fov(chara))
                 {
@@ -318,8 +325,8 @@ bool mef_proc_from_movement(Character& chara)
         {
             if (rnd_capped(mef(5, i) + 25) <
                     rnd_capped(
-                        chara.get_skill(10).level + chara.get_skill(12).level +
-                        1) ||
+                        chara.skills().level("core.stat_strength") +
+                        chara.skills().level("core.stat_dexterity") + 1) ||
                 chara.weight > 100)
             {
                 if (is_in_fov(chara))

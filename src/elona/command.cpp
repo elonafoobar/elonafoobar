@@ -1,7 +1,6 @@
 #include "command.hpp"
 
 #include "../snail/application.hpp"
-#include "ability.hpp"
 #include "activity.hpp"
 #include "animation.hpp"
 #include "area.hpp"
@@ -18,12 +17,12 @@
 #include "crafting.hpp"
 #include "crafting_material.hpp"
 #include "ctrl_file.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_blending_recipe.hpp"
 #include "data/types/type_crafting_material.hpp"
 #include "data/types/type_item.hpp"
 #include "data/types/type_item_material.hpp"
 #include "data/types/type_music.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -32,6 +31,7 @@
 #include "fov.hpp"
 #include "game.hpp"
 #include "globals.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "input_prompt.hpp"
@@ -51,6 +51,7 @@
 #include "save.hpp"
 #include "save_fs.hpp"
 #include "shop.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "talk.hpp"
 #include "tcg.hpp"
@@ -235,7 +236,7 @@ void _search_surroundings(Character& chara)
 void _proc_manis_disassembly(Character& chara)
 {
     if (feat(1) == 14 && feat(0) == tile_trap && chara.is_player() &&
-        chara.god_id == core_god::mani)
+        chara.religion == "core.mani")
     {
         disarm_trap(chara, chara.position.x, chara.position.y);
     }
@@ -291,9 +292,10 @@ TurnResult _pre_proc_movement_event(Character& chara)
 
 TurnResult _bump_into_character(Character& chara)
 {
-    if (chara.relationship >= 10 ||
-        (chara.relationship == -1 && !g_config.attack_neutral_npcs()) ||
-        (chara.relationship == 0 &&
+    if (chara.relationship >= Relationship::ally ||
+        (chara.relationship == Relationship::neutral &&
+         !g_config.attack_neutral_npcs()) ||
+        (chara.relationship == Relationship::friendly &&
          (area_data[game()->current_map].is_museum_or_shop() ||
           is_modifier_pressed(snail::ModKey::shift))))
     {
@@ -332,13 +334,12 @@ TurnResult _bump_into_character(Character& chara)
                     }
                 }
             }
-            if (chara.activity.type == Activity::Type::eat)
+            if (chara.activity.id == "core.eat")
             {
-                if (chara.activity.turn > 0)
+                if (chara.activity.turns > 0)
                 {
                     txt(i18n::s.get("core.action.move.interrupt", chara));
-                    chara.activity.type = Activity::Type::none;
-                    chara.activity.turn = 0;
+                    chara.activity.finish();
                 }
             }
             sense_map_feats_on_move(cdata.player());
@@ -347,12 +348,12 @@ TurnResult _bump_into_character(Character& chara)
     }
     if (running)
     {
-        if (chara.relationship >= -2 || keybd_wait >= 40)
+        if (chara.relationship >= Relationship::unfriendly || keybd_wait >= 40)
         {
             return TurnResult::pc_turn_user_error;
         }
     }
-    if (chara.relationship <= -1)
+    if (chara.relationship <= Relationship::neutral)
     {
         cdata.player().enemy_id = chara.index;
         if (chara.is_invisible() == 1)
@@ -443,20 +444,16 @@ optional<TurnResult> use_gene_machine()
 
     GeneEngineeringAnimation(cdata[original_character].position).play();
 
+    if (const auto body_part_id = gene_engineering_get_transplanted_body_part(
+            cdata[original_character], cdata[gene_chara_index]))
     {
-        int stat = transplant_body_parts(
-            cdata[original_character], cdata[gene_chara_index]);
-        if (stat != -1)
-        {
-            cdata[original_character].equipment_slots[stat - 100] =
-                EquipmentSlot{rtval, nullptr};
-            txt(i18n::s.get(
-                    "core.action.use.gene_machine.gains.body_part",
-                    cdata[original_character],
-                    i18n::s.get_enum("core.ui.body_part", rtval)),
-                Message::color{ColorIndex::green});
-            refresh_speed_correction_value(cdata[original_character]);
-        }
+        cdata[original_character].body_parts.add(*body_part_id);
+        txt(i18n::s.get(
+                "core.action.use.gene_machine.gains.body_part",
+                cdata[original_character],
+                i18n::s.get_data_text("core.body_part", *body_part_id, "name")),
+            Message::color{ColorIndex::green});
+        refresh_speed_correction_value(cdata[original_character]);
     }
 
     {
@@ -474,7 +471,7 @@ optional<TurnResult> use_gene_machine()
                 txt(i18n::s.get(
                         "core.action.use.gene_machine.gains.ability",
                         cdata[original_character],
-                        the_ability_db.get_text(rtval(cnt), "name")),
+                        the_skill_db.get_text(rtval(cnt), "name")),
                     Message::color{ColorIndex::green});
             }
         }
@@ -500,8 +497,8 @@ optional<TurnResult> use_gene_machine()
         for (int cnt = 10; cnt < 18; ++cnt)
         {
             list(0, listmax) = cnt;
-            list(1, listmax) =
-                cdata[gene_chara_index].get_skill(cnt).base_level;
+            list(1, listmax) = cdata[gene_chara_index].skills().base_level(
+                *the_skill_db.get_id_from_integer(cnt));
             ++listmax;
         }
         sort_list_by_column1();
@@ -509,10 +506,12 @@ optional<TurnResult> use_gene_machine()
         {
             p = listmax - cnt - 1;
             i = list(0, p);
-            if (list(1, p) > cdata[original_character].get_skill(i).base_level)
+            if (list(1, p) > cdata[original_character].skills().base_level(
+                                 *the_skill_db.get_id_from_integer(i)))
             {
                 p = (list(1, p) -
-                     cdata[original_character].get_skill(i).base_level) *
+                     cdata[original_character].skills().base_level(
+                         *the_skill_db.get_id_from_integer(i))) *
                     500;
                 p = clamp(p * 10 / clamp(lv, 2, 10), 1000, 10000);
                 chara_gain_fixed_skill_exp(cdata[original_character], i, p);
@@ -594,7 +593,9 @@ TurnResult do_give_command()
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory(cdata[target_chara_index]).menu_result;
+        CtrlInventoryOptions opts;
+        opts.inventory_owner = cdata[target_chara_index];
+        MenuResult mr = ctrl_inventory(opts).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -710,7 +711,9 @@ TurnResult do_interact_command()
         update_screen();
         invctrl = 10;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory(cdata[target_index]).menu_result;
+        CtrlInventoryOptions opts;
+        opts.inventory_owner = cdata[target_index];
+        MenuResult mr = ctrl_inventory(opts).menu_result;
         assert(mr.turn_result != TurnResult::none);
         return mr.turn_result;
     }
@@ -890,10 +893,9 @@ TurnResult do_pray_command()
 {
     if (const auto altar = item_find(ItemCategory::altar))
     {
-        int god_id_int = altar->param1;
-        if (core_god::int2godid(god_id_int) != cdata.player().god_id)
+        if (altar->__god != cdata.player().religion)
         {
-            begin_to_believe_god(god_id_int);
+            begin_to_believe_god(altar->__god);
             return TurnResult::turn_end;
         }
     }
@@ -1024,7 +1026,7 @@ TurnResult do_throw_command_internal(
                         txt(i18n::s.get("core.action.throw.tomato"),
                             Message::color{ColorIndex::blue});
                     }
-                    if (throw_item->param3 == -1)
+                    if (food_is_rotten(throw_item))
                     {
                         if (is_in_fov(cdata[target_index]))
                         {
@@ -1090,7 +1092,7 @@ TurnResult do_throw_command_internal(
                 }
                 return TurnResult::turn_end;
             }
-            efp = 50 + thrower.get_skill(111).level * 10;
+            efp = 50 + thrower.skills().level("core.throwing") * 10;
             if (throw_item->id == "core.bottle_of_sulfuric")
             {
                 mef_add(tlocx, tlocy, 3, 19, rnd(15) + 5, efp, thrower.index);
@@ -1112,7 +1114,7 @@ TurnResult do_throw_command_internal(
                 thrower.index,
                 the_item_db[throw_item->id]->integer_id,
                 static_cast<int>(throw_item->curse_state), // TODO
-                throw_item->tint);
+                color_to_color_index(throw_item->tint));
             return TurnResult::turn_end;
         }
     }
@@ -1138,8 +1140,8 @@ TurnResult do_throw_command(Character& thrower, const ItemRef& throw_item)
         txt(i18n::s.get("core.action.throw.execute", thrower, throw_item));
     }
     if (dist(thrower.position, tlocx, tlocy) * 4 >
-            rnd_capped(thrower.get_skill(111).level + 10) +
-                thrower.get_skill(111).level / 4 ||
+            rnd_capped(thrower.skills().level("core.throwing") + 10) +
+                thrower.skills().level("core.throwing") / 4 ||
         rnd(10) == 0)
     {
         x = tlocx + rnd(2) - rnd(2);
@@ -1214,16 +1216,15 @@ TurnResult do_close_command()
 TurnResult do_change_ammo_command()
 {
     OptionalItemRef ammo_opt;
-    for (int cnt = 0; cnt < 30; ++cnt)
+    for (const auto& body_part : cdata.player().body_parts)
     {
-        body = 100 + cnt;
-        if (!cdata.player().equipment_slots[cnt].equipment)
+        if (!body_part.is_equip())
         {
             continue;
         }
-        if (cdata.player().equipment_slots[cnt].type == 11)
+        if (body_part.id == "core.ammo")
         {
-            ammo_opt = cdata.player().equipment_slots[cnt].equipment;
+            ammo_opt = body_part.equipment();
             break;
         }
     }
@@ -1306,7 +1307,7 @@ TurnResult do_change_ammo_command()
 
 TurnResult do_offer_command(const ItemRef& offering)
 {
-    if (cdata.player().god_id == core_god::eyth)
+    if (cdata.player().religion == "")
     {
         txt(i18n::s.get("core.action.offer.do_not_believe"));
         return TurnResult::turn_end;
@@ -1316,7 +1317,7 @@ TurnResult do_offer_command(const ItemRef& offering)
     txt(i18n::s.get(
         "core.action.offer.execute",
         offering,
-        god_name(cdata.player().god_id)));
+        god_get_name(cdata.player().religion)));
     snd("core.offer2");
     BrightAuraAnimation(
         cdata.player().position, BrightAuraAnimation::Type::offering)
@@ -1332,7 +1333,7 @@ TurnResult do_offer_command(const ItemRef& offering)
     if (offering->id == "core.corpse")
     {
         i = clamp(offering->weight / 200, 1, 50);
-        if (offering->param3 < 0)
+        if (food_is_rotten(offering))
         {
             i = 1;
         }
@@ -1342,21 +1343,22 @@ TurnResult do_offer_command(const ItemRef& offering)
         i = 25;
     }
 
-    if (core_god::int2godid(altar->param1) != cdata.player().god_id)
+    if (altar->__god != cdata.player().religion)
     {
         f = 0;
-        if (altar->param1 == 0)
+        if (altar->__god == "")
         {
             f = 1;
             txt(i18n::s.get(
-                "core.action.offer.claim", god_name(cdata.player().god_id)));
+                "core.action.offer.claim",
+                god_get_name(cdata.player().religion)));
         }
         else
         {
             txt(i18n::s.get(
                 "core.action.offer.take_over.attempt",
-                god_name(cdata.player().god_id),
-                god_name(altar->param1)));
+                god_get_name(cdata.player().religion),
+                god_get_name(altar->__god)));
             if (rnd(17) <= i)
             {
                 f = 1;
@@ -1368,28 +1370,29 @@ TurnResult do_offer_command(const ItemRef& offering)
         }
         if (f == 1)
         {
-            god_modify_piety(i * 5);
-            cdata.player().praying_point += i * 30;
+            god_add_piety(cdata.player(), i * 5);
+            cdata.player().prayer_point += i * 30;
             MiracleAnimation(MiracleAnimation::Mode::target_one, cdata.player())
                 .play();
             snd("core.pray2");
-            if (altar->param1 != 0)
+            if (altar->__god != "")
             {
                 txt(i18n::s.get("core.action.offer.take_over.shadow"));
             }
             txt(i18n::s.get(
                     "core.action.offer.take_over.succeed",
-                    god_name(cdata.player().god_id),
+                    god_get_name(cdata.player().religion),
                     altar),
                 Message::color{ColorIndex::orange});
-            txtgod(cdata.player().god_id, 2);
-            altar->param1 = core_god::godid2int(cdata.player().god_id);
+            txtgod(cdata.player().religion, 2);
+            altar->__god = cdata.player().religion;
         }
         else
         {
             txt(i18n::s.get(
-                "core.action.offer.take_over.fail", god_name(altar->param1)));
-            txtgod(core_god::int2godid(altar->param1), 3);
+                "core.action.offer.take_over.fail",
+                god_get_name(altar->__god)));
+            txtgod(altar->__god, 3);
             god_fail_to_take_over_penalty();
         }
     }
@@ -1399,7 +1402,7 @@ TurnResult do_offer_command(const ItemRef& offering)
         {
             txt(i18n::s.get("core.action.offer.result.best", offering),
                 Message::color{ColorIndex::green});
-            txtgod(cdata.player().god_id, 4);
+            txtgod(cdata.player().religion, 4);
         }
         else if (i >= 10)
         {
@@ -1416,8 +1419,8 @@ TurnResult do_offer_command(const ItemRef& offering)
             txt(i18n::s.get("core.action.offer.result.poor", offering),
                 Message::color{ColorIndex::green});
         }
-        god_modify_piety(i);
-        cdata.player().praying_point += i * 7;
+        god_add_piety(cdata.player(), i);
+        cdata.player().prayer_point += i * 7;
     }
     offering->remove();
     return TurnResult::turn_end;
@@ -1668,7 +1671,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
             {
                 if (mix_target->param1 < -5 || mix_target->param3 >= 20 ||
                     (mix_target->id == "core.holy_well" &&
-                     game()->holy_well_count <= 0))
+                     game()->holy_well_amount <= 0))
                 {
                     txt(i18n::s.get(
                         "core.action.dip.result.natural_potion_dry",
@@ -1685,7 +1688,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
                 OptionalItemRef natural_potion;
                 if (mix_target->id == "core.holy_well")
                 {
-                    --game()->holy_well_count;
+                    --game()->holy_well_amount;
                     flt();
                     if ((natural_potion = itemcreate_player_inv(516, 0)))
                     {
@@ -1762,7 +1765,7 @@ TurnResult do_dip_command(const ItemRef& mix_item, const ItemRef& mix_target)
         mix_item->modify_number(-1);
         mix_target->tint = mix_item->tint;
         txt(i18n::s.get("core.action.dip.result.dyeing", mix_target));
-        if (mix_target->body_part != 0)
+        if (mix_target->is_equipped())
         {
             create_pcpic(cdata.player());
         }
@@ -1879,16 +1882,17 @@ TurnResult do_use_command(ItemRef use_item)
 
     if (use_item->has_cooldown_time)
     {
-        if (game()->date.hours() < use_item->charges)
+        if (game_now() < use_item->__cooldown_time)
         {
             txt(i18n::s.get(
                 "core.action.use.useable_again_at",
-                cnvdate(use_item->charges)));
+                cnvdate(use_item->__cooldown_time.from_epoch().hours())));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
         item_separate(use_item);
-        use_item->charges = game()->date.hours() + use_item->param3;
+        use_item->__cooldown_time =
+            game_now() + time::Duration::from_hours(use_item->param3);
     }
     if (use_item->has_charges)
     {
@@ -1911,14 +1915,13 @@ TurnResult do_use_command(ItemRef use_item)
     }
     if (item_data->subcategory == 60004)
     {
-        if (game()->continuous_active_hours < 15)
+        if (cdata.player().sleepiness < 15)
         {
             txt(i18n::s.get("core.action.use.not_sleepy"));
             update_screen();
             return TurnResult::pc_turn_user_error;
         }
-        game()->activity_about_to_start = 100;
-        activity_others(cdata.player(), use_item);
+        activity_sleep(cdata.player(), use_item);
         return TurnResult::turn_end;
     }
     if (use_item->id == "core.red_treasure_machine" ||
@@ -2436,8 +2439,7 @@ TurnResult do_use_command(ItemRef use_item)
                 update_screen();
                 return TurnResult::pc_turn_user_error;
             }
-            game()->activity_about_to_start = 101;
-            activity_others(cdata.player(), use_item);
+            activity_build_shelter(cdata.player(), use_item);
             return TurnResult::turn_end;
         }
         if (area_data[game()->current_map].id == mdata_t::MapId::random_dungeon)
@@ -2456,8 +2458,7 @@ TurnResult do_use_command(ItemRef use_item)
                 }
             }
         }
-        game()->activity_about_to_start = 102;
-        activity_others(cdata.player(), use_item);
+        activity_enter_shelter(cdata.player(), use_item);
         break;
     case 11:
         if (moneybox(use_item->param2) > cdata.player().gold)
@@ -2541,44 +2542,41 @@ TurnResult do_use_command(ItemRef use_item)
             Message::color{ColorIndex::orange});
         buff_add(cdata.player(), "core.luck", 77, 2500);
         break;
-    case 27:
+    case 27: {
         txt(i18n::s.get("core.action.use.statue.activate", use_item));
         snd("core.pray1");
-        if (game()->weather == 1)
+        if (game()->weather == "core.etherwind")
         {
             txt(i18n::s.get("core.action.use.statue.lulwy.during_etherwind"),
                 Message::color{ColorIndex::orange});
             break;
         }
-        p = game()->weather;
-        while (1)
+        const auto prev_weather = game()->weather;
+        do
         {
             if (rnd(10) == 0)
             {
-                game()->weather = 0;
+                game()->weather = "core.sunny";
             }
             if (rnd(10) == 0)
             {
-                game()->weather = 3;
+                game()->weather = "core.rain";
             }
             if (rnd(15) == 0)
             {
-                game()->weather = 4;
+                game()->weather = "core.hard_rain";
             }
             if (rnd(20) == 0)
             {
-                game()->weather = 2;
+                game()->weather = "core.snow";
             }
-            if (game()->weather != p)
-            {
-                break;
-            }
-        }
+        } while (game()->weather != prev_weather);
         txt(i18n::s.get("core.action.use.statue.lulwy.normal"),
             Message::color{ColorIndex::orange});
         txt(i18n::s.get("core.action.weather.changes"));
         sound_play_environmental();
         break;
+    }
     case 28:
         if (map_data.type == mdata_t::MapType::world_map)
         {
@@ -2588,7 +2586,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
         if (cdata.player().position.x != 33 || cdata.player().position.y != 16)
         {
-            if (game()->quest_flags.red_blossom_in_palmia == 1)
+            if (story_quest_progress("core.red_blossom_in_palmia") == 1)
             {
                 txt(i18n::s.get("core.action.use.nuke.not_quest_goal"));
                 if (!yes_no())
@@ -2642,9 +2640,7 @@ TurnResult do_use_command(ItemRef use_item)
         magic(cdata.player(), cdata.player());
         break;
     case 41:
-        if (game()
-                ->next_level_minus_one_kumiromis_experience_becomes_available >
-            cdata.player().level)
+        if (cdata.player().kumiromi_experience_level > cdata.player().level)
         {
             txt(i18n::s.get(
                 "core.action.use.secret_experience.kumiromi.not_enough_exp"));
@@ -2652,10 +2648,9 @@ TurnResult do_use_command(ItemRef use_item)
             return TurnResult::pc_turn_user_error;
         }
         snd("core.pray1");
-        game()->next_level_minus_one_kumiromis_experience_becomes_available +=
-            10;
+        cdata.player().kumiromi_experience_level += 10;
         use_item->modify_number(-1);
-        ++game()->acquirable_feat_count;
+        ++cdata.player().acquirable_feats;
         txt(i18n::s.get(
             "core.action.use.secret_experience.kumiromi.use.dialog"));
         txt(i18n::s.get("core.action.use.secret_experience.kumiromi.use.text"),
@@ -2884,8 +2879,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         if (invfile == 3)
         {
             txt(i18n::s.get(
-                "core.ui.inv.take.can_claim_more",
-                game()->rights_to_succeed_to));
+                "core.ui.inv.take.can_claim_more", game()->inheritance_rights));
             invctrl(1) = 1;
         }
         if (invfile == 6 || invcontainer(1) == 641)
@@ -3068,28 +3062,28 @@ TurnResult do_use_stairs_command(int val0)
         f = 0;
         if (game()->current_dungeon_level == 3)
         {
-            if (game()->quest_flags.main_quest >= 65)
+            if (story_quest_progress("core.elona") >= 65)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 17)
         {
-            if (game()->quest_flags.main_quest >= 115)
+            if (story_quest_progress("core.elona") >= 115)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 25)
         {
-            if (game()->quest_flags.main_quest >= 125)
+            if (story_quest_progress("core.elona") >= 125)
             {
                 f = 1;
             }
         }
         if (game()->current_dungeon_level == 44)
         {
-            if (game()->quest_flags.main_quest >= 125)
+            if (story_quest_progress("core.elona") >= 125)
             {
                 f = 1;
             }
@@ -3135,9 +3129,9 @@ TurnResult do_use_stairs_command(int val0)
     if (movelevelbystairs == 1)
     {
         bool ok = action_sp(cdata.player(), 15);
-        if (!ok || cdata.player().inventory_weight_type >= 3)
+        if (!ok || cdata.player().burden_state >= 3)
         {
-            if (!ok || rnd(5 - cdata.player().inventory_weight_type) == 0)
+            if (!ok || rnd(5 - cdata.player().burden_state) == 0)
             {
                 txt(i18n::s.get("core.action.use_stairs.lost_balance"));
                 damage_hp(
@@ -3200,17 +3194,16 @@ TurnResult do_movement_command()
     {
         if (cdata[game()->mount].activity)
         {
-            if (cdata[game()->mount].activity.turn > 0)
+            if (cdata[game()->mount].activity.turns > 0)
             {
                 txt(i18n::s.get(
                     "core.action.move.interrupt", cdata[game()->mount]));
-                cdata[game()->mount].activity.type = Activity::Type::none;
-                cdata[game()->mount].activity.turn = 0;
+                cdata[game()->mount].activity.finish();
             }
         }
     }
     cell_check(cdata.player().next_position.x, cdata.player().next_position.y);
-    if (cdata.player().inventory_weight_type >= 4)
+    if (cdata.player().burden_state >= 4)
     {
         txt(i18n::s.get("core.action.move.carry_too_much"),
             Message::only_once{true});
@@ -3408,7 +3401,7 @@ TurnResult do_fire_command()
         return TurnResult::pc_turn_user_error;
     }
     const auto target_chara_index = cdata.player().enemy_id;
-    if (cdata[target_chara_index].relationship >= 0)
+    if (cdata[target_chara_index].relationship >= Relationship::friendly)
     {
         int stat = prompt_really_attack(cdata[target_chara_index]);
         if (stat == 0)
@@ -3643,7 +3636,7 @@ TurnResult do_short_cut_command(int sc_)
         if (efid < 661)
         {
             if (!cdata.player().spacts().has(
-                    *the_ability_db.get_id_from_integer(efid)))
+                    *the_skill_db.get_id_from_integer(efid)))
             {
                 txt(i18n::s.get("core.action.shortcut.cannot_use_anymore"));
                 update_screen();
@@ -3662,7 +3655,7 @@ TurnResult do_short_cut_command(int sc_)
             return TurnResult::pc_turn_user_error;
         }
         if (cdata.player().spell_stocks().amount(
-                *the_ability_db.get_id_from_integer(efid)) <= 0)
+                *the_skill_db.get_id_from_integer(efid)) <= 0)
         {
             txt(i18n::s.get("core.action.shortcut.cannot_use_spell_anymore"),
                 Message::only_once{true});
@@ -3778,14 +3771,14 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
     {
         if (r3 == 0)
         {
-            r4 = caster.get_skill(16).level;
+            r4 = caster.skills().level("core.stat_magic");
         }
         else
         {
-            r4 = caster.get_skill(the_ability_db[r3]->related_basic_attribute)
-                     .level;
+            r4 = caster.skills().level(*the_skill_db.get_id_from_integer(
+                the_skill_db[r3]->related_basic_attribute));
         }
-        if (rnd_capped(caster.get_skill(150).level * r4 * 4 + 250) <
+        if (rnd_capped(caster.skills().level("core.literacy") * r4 * 4 + 250) <
             rnd_capped(r2 + 1))
         {
             if (rnd(7) == 0)
@@ -3865,10 +3858,10 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
             if (const auto chara =
                     chara_create(-1, 0, caster.position.x, caster.position.y))
             {
-                if (caster.relationship <= -3)
+                if (caster.relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
         }
@@ -3889,7 +3882,8 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
 int try_to_reveal(Character& chara)
 {
     if (rnd_capped(
-            chara.get_skill(159).level * 15 + 20 + chara.get_skill(13).level) >
+            chara.skills().level("core.detection") * 15 + 20 +
+            chara.skills().level("core.stat_perception")) >
         rnd_capped(game()->current_dungeon_level * 8 + 60))
     {
         chara_gain_exp_detection(chara);
@@ -3909,7 +3903,8 @@ int can_evade_trap(Character& chara)
     if (chara.is_player_or_ally())
     {
         if (rnd_capped(refdiff + 1) <
-            chara.get_skill(13).level + chara.get_skill(159).level * 4)
+            chara.skills().level("core.stat_perception") +
+                chara.skills().level("core.detection") * 4)
         {
             return 1;
         }
@@ -3926,7 +3921,8 @@ int can_evade_trap(Character& chara)
 int try_to_disarm_trap(Character& chara)
 {
     if (rnd_capped(
-            chara.get_skill(175).level * 15 + 20 + chara.get_skill(12).level) >
+            chara.skills().level("core.disarm_trap") * 15 + 20 +
+            chara.skills().level("core.stat_dexterity")) >
         rnd_capped(game()->current_dungeon_level * 12 + 100))
     {
         chara_gain_exp_disarm_trap(chara);
@@ -3952,10 +3948,11 @@ bool try_to_perceive_npc(const Character& chara, const Character& enemy)
                 return true;
             }
             const auto d = dist(enemy.position, chara.position);
-            const auto p =
-                d * 150 + (enemy.get_skill(157).level * 100 + 150) + 1;
+            const auto p = d * 150 +
+                (enemy.skills().level("core.stealth") * 100 + 150) + 1;
             if (rnd_capped(p) <
-                rnd_capped(chara.get_skill(13).level * 60 + 150))
+                rnd_capped(
+                    chara.skills().level("core.stat_perception") * 60 + 150))
             {
                 return true;
             }
@@ -4002,7 +3999,7 @@ TurnResult do_spact_command()
 
 TurnResult try_interact_with_npc(Character& chara)
 {
-    if (chara.activity.turn != 0)
+    if (chara.activity.turns != 0)
     {
         txt(i18n::s.get("core.action.npc.is_busy_now", chara));
         update_screen();
@@ -4012,7 +4009,9 @@ TurnResult try_interact_with_npc(Character& chara)
     invally = 1;
     invctrl = 10;
     snd("core.inv");
-    MenuResult mr = ctrl_inventory(chara).menu_result;
+    CtrlInventoryOptions opts;
+    opts.inventory_owner = chara;
+    MenuResult mr = ctrl_inventory(opts).menu_result;
     assert(mr.turn_result != TurnResult::none);
     return mr.turn_result;
 }
@@ -4032,7 +4031,7 @@ TurnResult do_gatcha(const ItemRef& gatcha_machine)
         the_crafting_material_db.get_text(required_material, "name")));
     if (yes_no())
     {
-        if (game()->crafting_materials().amount(required_material) > 0)
+        if (game()->crafting_materials.amount(required_material) > 0)
         {
             snd("core.gasha");
             crafting_material_lose(required_material, 1);
@@ -4062,7 +4061,8 @@ bool read_textbook(Character& doer, ItemRef textbook)
 {
     if (textbook->id == "core.textbook")
     {
-        if (cdata.player().get_skill(textbook->param1).base_level == 0)
+        if (cdata.player().skills().base_level(
+                *the_skill_db.get_id_from_integer(textbook->param1)) == 0)
         {
             txt(i18n::s.get("core.action.read.book.not_interested"));
             if (!yes_no())
@@ -4071,8 +4071,7 @@ bool read_textbook(Character& doer, ItemRef textbook)
             }
         }
     }
-    game()->activity_about_to_start = 104;
-    activity_others(doer, textbook);
+    activity_study(doer, textbook);
     return true;
 }
 
@@ -4091,7 +4090,7 @@ TurnResult do_enter_strange_gate()
 void disarm_trap(Character& chara, int x, int y)
 {
     cell_featset(x, y, 0);
-    if (chara.god_id == core_god::mani)
+    if (chara.religion == "core.mani")
     {
         txt(i18n::s.get("core.action.move.trap.disarm.dismantle"));
         for (int _i = 0, n = rnd(3) + 1; _i < n; ++_i)
@@ -4116,29 +4115,29 @@ void do_rest(Character& chara)
 {
     if (!chara.activity)
     {
-        chara.activity.type = Activity::Type::sleep;
-        chara.activity.turn = 50;
+        chara.activity.id = "core.sleep";
+        chara.activity.turns = 50;
         txt(i18n::s.get("core.activity.rest.start"));
         update_screen();
         return;
     }
-    if (chara.activity.turn > 0)
+    if (chara.activity.turns > 0)
     {
-        if (chara.activity.turn % 2 == 0)
+        if (chara.activity.turns % 2 == 0)
         {
             heal_sp(chara, 1);
         }
-        if (chara.activity.turn % 3 == 0)
+        if (chara.activity.turns % 3 == 0)
         {
             heal_hp(chara, 1);
             heal_mp(chara, 1);
         }
         return;
     }
-    if (game()->continuous_active_hours >= 30)
+    if (chara.sleepiness >= 30)
     {
         f = 0;
-        if (game()->continuous_active_hours >= 50)
+        if (chara.sleepiness >= 50)
         {
             f = 1;
         }
@@ -4181,7 +4180,7 @@ int decode_book(Character& reader, const ItemRef& book)
             }
             return 0;
         }
-        reader.activity.type = Activity::Type::read;
+        reader.activity.id = "core.read";
         if (book->id == "core.recipe")
         {
             p = 50;
@@ -4192,10 +4191,10 @@ int decode_book(Character& reader, const ItemRef& book)
         }
         else
         {
-            p = the_ability_db[efid]->difficulty;
+            p = the_skill_db[efid]->difficulty;
         }
-        reader.activity.turn =
-            p / (2 + cdata.player().get_skill(150).level) + 1;
+        reader.activity.turns =
+            p / (2 + cdata.player().skills().level("core.literacy")) + 1;
         reader.activity.item = book;
         if (is_in_fov(reader))
         {
@@ -4204,7 +4203,7 @@ int decode_book(Character& reader, const ItemRef& book)
         item_separate(book);
         return 0;
     }
-    if (reader.activity.turn > 0)
+    if (reader.activity.turns > 0)
     {
         chara_gain_exp_literacy(cdata.player());
         if (book->id == "core.recipe")
@@ -4218,7 +4217,7 @@ int decode_book(Character& reader, const ItemRef& book)
         }
         else
         {
-            r2 = the_ability_db[efid]->difficulty;
+            r2 = the_skill_db[efid]->difficulty;
             r3 = efid;
         }
         if (book->curse_state == CurseState::blessed)
@@ -4262,7 +4261,7 @@ int decode_book(Character& reader, const ItemRef& book)
             return 1;
         }
         txt(i18n::s.get("core.action.read.recipe.learned", book));
-        game()->blending_recipe_memories().increment_read_count(
+        game()->blending_recipe_memories.increment_read_count(
             *the_blending_recipe_db.get_id_from_integer(book->subname));
         item_identify(book, IdentifyState::partly);
         book->modify_number(-1);
@@ -4289,20 +4288,20 @@ int decode_book(Character& reader, const ItemRef& book)
             efid,
             1,
             (rnd(51) + 50) *
-                    (90 + reader.get_skill(165).level +
-                     (reader.get_skill(165).level > 0) * 20) /
+                    (90 + reader.skills().level("core.memorization") +
+                     (reader.skills().level("core.memorization") > 0) * 20) /
                     clamp(
                         (100 +
                          reader.spell_stocks().amount(
-                             *the_ability_db.get_id_from_integer(efid)) /
+                             *the_skill_db.get_id_from_integer(efid)) /
                              2),
                         50,
                         1000) +
                 1);
         chara_gain_exp_memorization(cdata.player(), efid);
-        if (!game()->item_memories().is_decoded(book->id))
+        if (!game()->item_memories.is_decoded(book->id))
         {
-            game()->item_memories().set_decoded(book->id, true);
+            game()->item_memories.set_decoded(book->id, true);
         }
     }
     item_identify(book, IdentifyState::partly);
@@ -4363,18 +4362,22 @@ int read_normal_book(Character& reader, ItemRef book)
 
 bool calc_magic_control(Character& caster, const Character& target)
 {
-    if (caster.get_skill(188).level != 0)
+    if (caster.skills().level("core.control_magic") != 0)
     {
         if (belong_to_same_team(caster, target))
         {
-            if (caster.get_skill(188).level * 5 > rnd_capped(dmg + 1))
+            if (caster.skills().level("core.control_magic") * 5 >
+                rnd_capped(dmg + 1))
             {
                 dmg = 0;
             }
             else
             {
                 dmg = rnd_capped(
-                    dmg * 100 / (100 + caster.get_skill(188).level * 10) + 1);
+                    dmg * 100 /
+                        (100 +
+                         caster.skills().level("core.control_magic") * 10) +
+                    1);
             }
             if (dmg < 1)
             {
@@ -4439,9 +4442,9 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     }
     if (!caster.is_player())
     {
-        if (the_ability_db[efid]->ability_type == 7)
+        if (the_skill_db[efid]->ability_type == 7)
         {
-            if (caster.relationship == 10 ||
+            if (caster.relationship == Relationship::ally ||
                 game()->current_map == mdata_t::MapId::pet_arena)
             {
                 efsource = 0;
@@ -4458,13 +4461,13 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
     if (caster.is_player())
     {
         caster.spell_stocks().lose(
-            *the_ability_db.get_id_from_integer(efid),
+            *the_skill_db.get_id_from_integer(efid),
             calc_spell_cost_stock(caster, efid));
     }
     mp = calc_spell_cost_mp(caster, efid);
     if (caster.is_player())
     {
-        if (cdata.player().god_id == core_god::ehekatl)
+        if (cdata.player().religion == "core.ehekatl")
         {
             mp = rnd(mp * 140 / 100 + 1) + 1;
         }
@@ -4496,7 +4499,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
             txt(i18n::s.get(
                 "core.action.cast.self",
                 caster,
-                the_ability_db.get_text(efid, "name"),
+                the_skill_db.get_text(efid, "name"),
                 i18n::s.get_enum(
                     "core.ui.cast_style", caster.special_attack_type)));
         }
@@ -4540,8 +4543,7 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
         efp = efp * (100 + *spell_enhancement / 10) / 100;
     }
     rapidmagic = 0;
-    if (caster.can_cast_rapid_magic() &&
-        the_ability_db[efid]->ability_type == 2)
+    if (caster.can_cast_rapid_magic() && the_skill_db[efid]->ability_type == 2)
     {
         rapidmagic = 1 + (rnd(3) != 0) + (rnd(2) != 0);
     }
@@ -4560,7 +4562,8 @@ int do_cast_magic_attempt(Character& caster, int& enemy_index)
                 else
                 {
                     enemy_index = caster.enemy_id;
-                    if (relation_between(caster, cdata[enemy_index]) != -3)
+                    if (relation_between(caster, cdata[enemy_index]) !=
+                        Relationship::enemy)
                     {
                         break;
                     }
@@ -4637,7 +4640,7 @@ int drink_potion(Character& chara, const OptionalItemRef& potion)
 int drink_well(Character& chara, const ItemRef& well)
 {
     if (well->param1 < -5 || well->param3 >= 20 ||
-        (well->id == "core.holy_well" && game()->holy_well_count <= 0))
+        (well->id == "core.holy_well" && game()->holy_well_amount <= 0))
     {
         const auto valn = itemname(well);
         txt(i18n::s.get("core.action.drink.well.is_dry", valn));
@@ -4725,7 +4728,9 @@ int drink_well(Character& chara, const ItemRef& well)
             itemcreate_map_inv(
                 54,
                 chara.position,
-                rnd_capped(chara.get_skill(159).level / 2 * 50 + 100) + 1);
+                rnd_capped(
+                    chara.skills().level("core.detection") / 2 * 50 + 100) +
+                    1);
             txt(i18n::s.get("core.action.drink.well.effect.finds_gold", chara));
             break;
         }
@@ -4808,7 +4813,7 @@ int drink_well(Character& chara, const ItemRef& well)
     }
     if (well->id == "core.holy_well")
     {
-        --game()->holy_well_count;
+        --game()->holy_well_amount;
     }
     else
     {
@@ -4924,13 +4929,14 @@ bool do_zap_internal(Character& doer, const ItemRef& rod)
     }
 
     efp = efp *
-        (100 + doer.get_skill(174).level * 10 + doer.get_skill(16).level / 2 +
-         doer.get_skill(13).level / 2) /
+        (100 + doer.skills().level("core.magic_device") * 10 +
+         doer.skills().level("core.stat_magic") / 2 +
+         doer.skills().level("core.stat_perception") / 2) /
         100;
     if (efid >= 400 && efid < 467)
     {
         f = 0;
-        int skill = doer.get_skill(174).level * 20 + 100;
+        int skill = doer.skills().level("core.magic_device") * 20 + 100;
         if (rod->curse_state == CurseState::blessed)
         {
             skill = skill * 125 / 100;
@@ -4943,7 +4949,7 @@ bool do_zap_internal(Character& doer, const ItemRef& rod)
         {
             f = 1;
         }
-        if (rnd((the_ability_db[efid]->difficulty + 1)) / 2 <= skill)
+        if (rnd((the_skill_db[efid]->difficulty + 1)) / 2 <= skill)
         {
             f = 1;
         }
@@ -5004,13 +5010,13 @@ int do_spact(Character& doer, int& enemy_index)
     {
         if (cdata[enemy_index].is_sentenced_daeth() == 1)
         {
-            if (doer.relationship == -3)
+            if (doer.relationship == Relationship::enemy)
             {
                 for (int cnt = 0; cnt < ELONA_MAX_PARTY_CHARACTERS; ++cnt)
                 {
                     if (cdata[cnt].state() == Character::State::alive)
                     {
-                        if (cdata[cnt].relationship == 10)
+                        if (cdata[cnt].relationship == Relationship::ally)
                         {
                             doer.enemy_id = cnt;
                             break;
@@ -5025,8 +5031,8 @@ int do_spact(Character& doer, int& enemy_index)
     {
         return 0;
     }
-    if (the_ability_db[efid]->range / 1000 * 1000 != 3000 &&
-        the_ability_db[efid]->range / 1000 * 1000 != 10000)
+    if (the_skill_db[efid]->range / 1000 * 1000 != 3000 &&
+        the_skill_db[efid]->range / 1000 * 1000 != 10000)
     {
         if (doer.confused != 0 || doer.blind != 0)
         {
@@ -5049,17 +5055,16 @@ int do_spact(Character& doer, int& enemy_index)
                 if (cdata.player().sp < rnd(75))
                 {
                     txt(i18n::s.get("core.magic.common.too_exhausted"));
-                    damage_sp(
-                        cdata.player(), the_ability_db[efid]->cost / 2 + 1);
+                    damage_sp(cdata.player(), the_skill_db[efid]->cost / 2 + 1);
                     return 1;
                 }
             }
             damage_sp(
                 cdata.player(),
-                rnd(the_ability_db[efid]->cost / 2 + 1) +
-                    the_ability_db[efid]->cost / 2 + 1);
+                rnd(the_skill_db[efid]->cost / 2 + 1) +
+                    the_skill_db[efid]->cost / 2 + 1);
             chara_gain_skill_exp(
-                doer, the_ability_db[efid]->related_basic_attribute, 25);
+                doer, the_skill_db[efid]->related_basic_attribute, 25);
         }
     }
     efp = calc_spell_power(doer, efid);
@@ -5091,7 +5096,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         enemy_index = caster.index;
         return 1;
     }
-    tg = the_ability_db[efid]->range / 1000 * 1000;
+    tg = the_skill_db[efid]->range / 1000 * 1000;
     if (efsource == 1)
     {
         if (tg == 3000)
@@ -5099,7 +5104,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
             tg = 8000;
         }
     }
-    if (the_ability_db[efid]->ability_type == 7)
+    if (the_skill_db[efid]->ability_type == 7)
     {
         if (caster.is_player())
         {
@@ -5130,7 +5135,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
         else
         {
             if (dist(cdata[enemy_index].position, caster.position) >
-                the_ability_db[efid]->range % 1000 + 1)
+                the_skill_db[efid]->range % 1000 + 1)
             {
                 return 0;
             }
@@ -5187,10 +5192,10 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
     {
         if (!caster.is_player())
         {
-            if (the_ability_db[efid]->ability_type == 3)
+            if (the_skill_db[efid]->ability_type == 3)
             {
                 if (dist(cdata[enemy_index].position, caster.position) >
-                    the_ability_db[efid]->range % 1000 + 1)
+                    the_skill_db[efid]->range % 1000 + 1)
                 {
                     return 0;
                 }
@@ -5216,7 +5221,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
                 return 0;
             }
             enemy_index = cdata.player().enemy_id;
-            if (cdata[enemy_index].relationship >= 0)
+            if (cdata[enemy_index].relationship >= Relationship::friendly)
             {
                 int stat = prompt_really_attack(cdata[enemy_index]);
                 if (stat == 0)
@@ -5227,7 +5232,7 @@ bool prompt_magic_location(Character& caster, int& enemy_index)
             }
         }
         if (dist(cdata[enemy_index].position, caster.position) >
-            the_ability_db[efid]->range % 1000 + 1)
+            the_skill_db[efid]->range % 1000 + 1)
         {
             if (caster.is_player())
             {
@@ -5295,7 +5300,7 @@ PickUpItemResult pick_up_item(
     const auto inv_owner_chara = inv_owner.as_character();
     if (inv_owner_chara)
     {
-        if (item->id == "core.gold_piece" || item->id == "core.platinum_coin")
+        if (item->id == "core.gold_piece" || item->id == "core.platinum")
         {
             snd_("core.getgold1");
             txt(i18n::s.get(
@@ -5342,8 +5347,7 @@ PickUpItemResult pick_up_item(
                             "core.ui.inv.common.inventory_is_full"));
                         return {0, nullptr};
                     }
-                    game()->activity_about_to_start = 103;
-                    activity_others(*inv_owner_chara, item);
+                    activity_harvest(*inv_owner_chara, item);
                     return {-1, nullptr};
                 }
             }
@@ -5394,7 +5398,7 @@ PickUpItemResult pick_up_item(
                     if (efid >= 400 && efid < 467)
                     {
                         inv_owner_chara->spell_stocks().gain(
-                            *the_ability_db.get_id_from_integer(efid),
+                            *the_skill_db.get_id_from_integer(efid),
                             item->charges * 5 * item->number());
                     }
                     else
@@ -5460,35 +5464,42 @@ PickUpItemResult pick_up_item(
 
     if (mode == 6)
     {
-        if (the_item_db[picked_up_item->id]->category == ItemCategory::food)
+        if (the_item_db[picked_up_item->id]->category == ItemCategory::food &&
+            picked_up_item->material == "core.raw")
         {
             if (invctrl == 11 || invctrl == 22)
             {
                 if (invctrl == 22 && invctrl(1) == 3)
                 {
-                    if (picked_up_item->param3 > 0)
+                    // cooler box or freezer
+                    if (!picked_up_item->__expiration_duration.is_zero())
                     {
-                        picked_up_item->param3 += game()->date.hours();
+                        picked_up_item->__expiration_time =
+                            game_now() + picked_up_item->__expiration_duration;
+                        picked_up_item->__expiration_duration =
+                            time::Duration::zero();
                     }
                 }
-                else if (
-                    picked_up_item->param3 != 0 &&
-                    picked_up_item->material == "core.raw")
+                else
                 {
-                    picked_up_item->param3 = game()->date.hours() +
-                        the_item_db[picked_up_item->id]->expiration_date;
+                    picked_up_item->__expiration_time =
+                        game_now() +
+                        time::Duration::from_hours(
+                            the_item_db[picked_up_item->id]->expiration_date);
                     if (picked_up_item->param2 != 0)
                     {
-                        picked_up_item->param3 += 72;
+                        picked_up_item->__expiration_time += 3_days;
                     }
                 }
             }
             if (invctrl == 24 && invctrl(1) == 3)
             {
-                if (picked_up_item->param3 > 0)
+                // cooler box or freezer
+                if (!food_is_rotten(picked_up_item.unwrap()))
                 {
-                    picked_up_item->param3 =
-                        picked_up_item->param3 - game()->date.hours();
+                    picked_up_item->__expiration_duration =
+                        picked_up_item->__expiration_time - game_now();
+                    picked_up_item->__expiration_time = time::Instant{};
                 }
             }
         }
@@ -5672,7 +5683,8 @@ TurnResult do_bash(Character& chara)
         {
             if (chara.is_player())
             {
-                if (cdata[bash_target_index].relationship >= 0)
+                if (cdata[bash_target_index].relationship >=
+                    Relationship::friendly)
                 {
                     int stat = prompt_really_attack(cdata[bash_target_index]);
                     if (stat == 0)
@@ -5690,7 +5702,7 @@ TurnResult do_bash(Character& chara)
                     cdata[bash_target_index]));
                 damage_hp(
                     cdata[bash_target_index],
-                    chara.get_skill(10).level * 5,
+                    chara.skills().level("core.stat_strength") * 5,
                     chara.index);
                 if (cdata[bash_target_index].state() == Character::State::alive)
                 {
@@ -5757,13 +5769,17 @@ TurnResult do_bash(Character& chara)
             {
                 p *= 20;
             }
-            if (rnd_capped(p(0)) < chara.get_skill(10).level && rnd(2))
+            if (rnd_capped(p(0)) < chara.skills().level("core.stat_strength") &&
+                rnd(2))
             {
                 txt(i18n::s.get("core.action.bash.door.destroyed"));
-                if (feat(2) > chara.get_skill(10).level)
+                if (feat(2) > chara.skills().level("core.stat_strength"))
                 {
                     chara_gain_skill_exp(
-                        chara, 10, (feat(2) - chara.get_skill(10).level) * 15);
+                        chara,
+                        10,
+                        (feat(2) - chara.skills().level("core.stat_strength")) *
+                            15);
                 }
                 cell_featset(x, y, 0, 0, 0, 0);
                 return TurnResult::turn_end;
@@ -5956,12 +5972,13 @@ optional<bool> try_unlock_internal(int difficulty)
     {
         if (item_find("core.skeleton_key"))
         {
-            i = cdata.player().get_skill(158).level * 150 / 100 + 5;
+            i = cdata.player().skills().level("core.lock_picking") * 150 / 100 +
+                5;
             txt(i18n::s.get("core.action.unlock.use_skeleton_key"));
         }
         else
         {
-            i = cdata.player().get_skill(158).level;
+            i = cdata.player().skills().level("core.lock_picking");
         }
     }
     f = 0;
@@ -6259,10 +6276,10 @@ void open_new_year_gift(const ItemRef& box)
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
-                if (cdata.player().relationship <= -3)
+                if (cdata.player().relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
             return;
@@ -6309,10 +6326,10 @@ void open_new_year_gift(const ItemRef& box)
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
-                if (cdata.player().relationship <= -3)
+                if (cdata.player().relationship <= Relationship::enemy)
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                 }
             }
         }
@@ -6362,7 +6379,8 @@ TurnResult try_to_open_locked_door(Character& chara)
     if (feat(2) > 0)
     {
         f = 0;
-        if (rnd(feat(2) * 20 + 150) < chara.get_skill(158).level * 20 + 20)
+        if (rnd(feat(2) * 20 + 150) <
+            chara.skills().level("core.lock_picking") * 20 + 20)
         {
             f = 1;
         }

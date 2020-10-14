@@ -21,6 +21,16 @@ ELONA.data:add(
             "core.shot_gun",
             "core.laser_gun",
          },
+         skills = {
+            ["core.stat_dexterity"] = { factor = 400, limit = 8 },
+            ["core.stat_perception"] = { factor = 300, limit = 14 },
+            ["core.healing"] = { factor = 500, limit = 8 },
+            ["core.firearm"] = { factor = 250, limit = 18 },
+            ["core.detection"] = { factor = 350, limit = 8 },
+            ["core.lock_picking"] = { factor = 250, limit = 16 },
+            ["core.carpentry"] = { factor = 300, limit = 10 },
+            ["core.jeweler"] = { factor = 350, limit = 12 },
+         },
       },
       lulwy = {
          integer_id = 2,
@@ -32,6 +42,14 @@ ELONA.data:add(
             "core.crossbow",
             "core.skull_bow",
          },
+         skills = {
+            ["core.stat_perception"] = { factor = 450, limit = 10 },
+            ["core.stat_speed"] = { factor = 350, limit = 30 },
+            ["core.bow"] = { factor = 350, limit = 16 },
+            ["core.crossbow"] = { factor = 450, limit = 12 },
+            ["core.stealth"] = { factor = 450, limit = 12 },
+            ["core.magic_device"] = { factor = 550, limit = 8 },
+         },
       },
       itzpalt = {
          integer_id = 3,
@@ -40,6 +58,13 @@ ELONA.data:add(
 
             "core.staff",
             "core.long_staff",
+         },
+         skills = {
+            ["core.stat_magic"] = { factor = 300, limit = 18 },
+            ["core.meditation"] = { factor = 350, limit = 15 },
+            ["core.element_fire"] = { factor = 50, limit = 200 },
+            ["core.element_cold"] = { factor = 50, limit = 200 },
+            ["core.element_lightning"] = { factor = 50, limit = 200 },
          },
       },
       ehekatl = {
@@ -60,6 +85,14 @@ ELONA.data:add(
             "core.sandborer",
             "core.fish_a",
          },
+         skills = {
+            ["core.stat_charisma"] = { factor = 250, limit = 20 },
+            ["core.stat_luck"] = { factor = 100, limit = 50 },
+            ["core.evasion"] = { factor = 300, limit = 15 },
+            ["core.magic_capacity"] = { factor = 350, limit = 17 },
+            ["core.fishing"] = { factor = 300, limit = 12 },
+            ["core.lock_picking"] = { factor = 450, limit = 8 },
+         },
       },
       opatos = {
          integer_id = 5,
@@ -76,6 +109,14 @@ ELONA.data:add(
             "core.raw_ore_of_diamond",
             "core.junk_stone",
          },
+         skills = {
+            ["core.stat_strength"] = { factor = 450, limit = 11 },
+            ["core.stat_constitution"] = { factor = 350, limit = 16 },
+            ["core.shield"] = { factor = 350, limit = 15 },
+            ["core.weight_lifting"] = { factor = 300, limit = 16 },
+            ["core.mining"] = { factor = 350, limit = 12 },
+            ["core.magic_device"] = { factor = 450, limit = 8 },
+         },
       },
       jure = {
          integer_id = 6,
@@ -91,6 +132,15 @@ ELONA.data:add(
             "core.raw_ore_of_emerald",
             "core.raw_ore_of_diamond",
             "core.junk_stone",
+         },
+         skills = {
+            ["core.stat_will"] = { factor = 300, limit = 16 },
+            ["core.healing"] = { factor = 250, limit = 18 },
+            ["core.meditation"] = { factor = 400, limit = 10 },
+            ["core.anatomy"] = { factor = 400, limit = 9 },
+            ["core.cooking"] = { factor = 450, limit = 8 },
+            ["core.magic_device"] = { factor = 400, limit = 10 },
+            ["core.magic_capacity"] = { factor = 400, limit = 12 },
          },
       },
       kumiromi = {
@@ -116,6 +166,15 @@ ELONA.data:add(
             "core.artifact_seed",
             "core.gem_seed",
             "core.magical_seed",
+         },
+         skills = {
+            ["core.stat_perception"] = { factor = 400, limit = 8 },
+            ["core.stat_dexterity"] = { factor = 350, limit = 12 },
+            ["core.stat_learning"] = { factor = 250, limit = 16 },
+            ["core.gardening"] = { factor = 300, limit = 12 },
+            ["core.alchemy"] = { factor = 350, limit = 10 },
+            ["core.tailoring"] = { factor = 350, limit = 9 },
+            ["core.literacy"] = { factor = 350, limit = 8 },
          },
       },
    }

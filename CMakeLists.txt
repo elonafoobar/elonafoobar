@@ -36,7 +36,7 @@ string(TIMESTAMP PROJECT_VERSION_TIMESTAMP UTC)
 set(PROJECT_VERSION_PLATFORM "${CMAKE_SYSTEM}")
 
 # Versioning file
-configure_file("${PROJECT_SOURCE_DIR}/src/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/version.cpp")
+configure_file("${PROJECT_SOURCE_DIR}/src/elona/version.cpp.in" "${PROJECT_SOURCE_DIR}/src/elona/version.cpp")
 
 
 
@@ -103,7 +103,7 @@ if(ELONA_BUILD_TARGET STREQUAL "TESTS")
     src/tests/serialization.cpp
     )
 
-  add_executable(${PROJECT_NAME} src/version.cpp ${TEST_SOURCES})
+  add_executable(${PROJECT_NAME} src/elona/version.cpp ${TEST_SOURCES})
   target_link_libraries(${PROJECT_NAME} Catch)
 elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
   add_subdirectory(src/thirdparty/hayai)
@@ -119,18 +119,18 @@ elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
     src/bench/util.cpp
     )
 
-  add_executable(${PROJECT_NAME} src/version.cpp ${BENCH_SOURCES})
+  add_executable(${PROJECT_NAME} src/elona/version.cpp ${BENCH_SOURCES})
   target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
 elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
   if(WIN32)
     set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
   endif()
-  add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/version.cpp ${RESOURCES})
+  add_executable(${PROJECT_NAME} WIN32 src/main.cpp src/elona/version.cpp ${RESOURCES})
 elseif(ELONA_BUILD_TARGET STREQUAL "LAUNCHER")
   if(WIN32)
     set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
   endif()
-  add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/version.cpp ${RESOURCES})
+  add_executable(${PROJECT_NAME} WIN32 src/launcher_main.cpp src/elona/version.cpp ${RESOURCES})
   set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "Elona foobar Launcher")
 else()
   message(FATAL_ERROR "Unknown build mode: ${ELONA_BUILD_TARGET}")

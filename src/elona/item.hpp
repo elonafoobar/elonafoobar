@@ -5,12 +5,14 @@
 #include <vector>
 
 #include "../util/range.hpp"
+#include "color.hpp"
 #include "data/types/type_item.hpp"
 #include "dice.hpp"
 #include "enchantment.hpp"
 #include "enums.hpp"
 #include "eobject/eobject.hpp"
 #include "position.hpp"
+#include "time.hpp"
 
 
 
@@ -28,6 +30,9 @@ enum class InventorySlot : size_t
 
 
 
+/**
+ * Structure for all kinds of Elona items.
+ */
 struct Item
 {
 private:
@@ -56,69 +61,163 @@ public:
     ObjId obj_id;
 
 private:
+    /// Total amount of the item stack.
     lua_int _number{};
 
+    /// Position of the item.
+    /// When the item is not on the ground (i.e., in someone's inventory or
+    /// shop), the field does not have any meaningful value. Usually it is (-1,
+    /// -1), but there is no guarantee that the value is surely (-1, -1).
+    Position _position{};
+
 public:
-    lua_int value{};
-    int image = 0;
+    /// If the item is equipped by a character, it is set to the equipment slot
+    /// (1-origin). Otherwise, 0.
+    lua_index _equipped_slot{};
+
+    /// Z-order of the item. Items on the ground are sorted and displayed so
+    /// that the last placed item is at the top, as in the real world. The
+    /// field, `_z_order`, determines the ordering, the larger the item's
+    /// `_z_order` is, the higher it is placed on. Note that it is *not*
+    /// absolute height, but relative one. The value is reset to
+    /// `Game::next_item_z_order` when the item is put on the ground.
+    lua_int _z_order{};
+
+    /// Item ID of the item
     data::InstanceId id{};
-    Quality quality = Quality::none;
 
-private:
-    Position _position;
+    /// Value of the item per one item
+    lua_int value{};
 
-public:
+    /// Weight of the item *in millistone*.
+    /// Note that `weight` is internally in millistone, but the displayed value
+    /// to players is in stone (`weight / 1000`).
+    lua_int weight{};
+
+    /// Image to draw the item
+    // data::InstanceId image{};
+    int image{};
+
+    /// Tint of the item. It consists of RGBA.
+    Color tint{255, 255, 255};
+
+    /// Quality of the item
+    Quality quality{};
+
+    /// State of the curse/blessing of the item.
+    CurseState curse_state{};
+
+    /// State of the identification of the item.
+    IdentifyState identify_state{};
+
+    /// State of owning of the item.
+    OwnState own_state{};
+
+    /// Item material ID of the item
+    data::InstanceId material{};
+
+    /// Damage dice.
+    Dice dice{};
+
+    /// Hit bonus.
+    lua_int hit_bonus{};
+
+    /// PV, protection value
+    lua_int pv{};
+
+    /// DV, defense value
+    lua_int dv{};
+
+    /// Bonus value.
+    lua_int bonus_value{};
+
+    /// Charges of the item.
+    lua_int charges{};
+
+    /// Level of the identification of the item.
+    lua_int identify_level{};
+
+    /// Acid-proof. The item is not damaged by acid.
+    bool is_acidproof{};
+
+    /// Fire-proof. The item will not burn.
+    bool is_fireproof{};
+
+    /// Cold-proof. The item is not destroyed by cold.
+    bool is_coldproof{};
+
+    /// Precious item.
+    bool is_precious{};
+
+    /// It has charges to use.
+    bool has_charges{};
+
+    /// It has a cooldown time to use.
+    bool has_cooldown_time{};
+
+    /// It is blended with love potion.
+    bool is_aphrodisiac{};
+
+    /// It is blended with poison.
+    bool is_poisoned{};
+
+    /// It is blessed by Ehekatl-sama.
+    bool is_blessed_by_ehekatl{};
+
+    /// It is a stolen item.
+    bool is_stolen{};
+
+    /// It is a quest target.
+    bool is_quest_target{};
+
+    /// It is marked as no-drop.
+    bool is_no_drop{};
+
+    /// It is a living weapon.
+    bool is_alive{};
+
+    /// It is an eternal force weapon.
+    bool is_eternal_force{};
+
+    /// It is hand-made.
+    bool is_handmade{};
+
+    /// It is available only in showroom.
+    bool is_showroom_only{};
+
+    /// All enchantments of the item.
+    EnchantmentList enchantments;
+
+#if 0
+    /// Mod extension data.
+    lua_table ext{};
+#endif
+
     const Position& position() const noexcept
     {
         return _position;
     }
 
-
     void set_position(const Position& new_pos);
 
 
 
-    lua_int weight{};
-    IdentifyState identify_state = IdentifyState::unidentified;
-    lua_int charges{};
-    Dice dice{};
-    lua_int hit_bonus{};
-    lua_int dv{};
-    lua_int pv{};
     int skill = 0;
-    CurseState curse_state = CurseState::none;
-    int body_part = 0;
     int function = 0;
-    lua_int bonus_value{};
-    OwnState own_state{};
-    int tint = 0;
     int subname = 0;
-    data::InstanceId material{};
     int param1 = 0;
     int param2 = 0;
     int param3 = 0;
     int param4 = 0;
-    lua_int identify_level{};
-    lua_int turn{};
 
-    bool is_acidproof{};
-    bool is_fireproof{};
-    bool is_coldproof{};
-    bool is_precious{};
-    bool has_charges{};
-    bool has_cooldown_time{};
-    bool is_aphrodisiac{};
-    bool is_poisoned{};
-    bool is_blessed_by_ehekatl{};
-    bool is_stolen{};
-    bool is_quest_target{};
-    bool is_no_drop{};
-    bool is_alive{};
-    bool is_eternal_force{};
-    bool is_handmade{};
-    bool is_showroom_only{};
 
-    EnchantmentList enchantments;
+
+    time::Instant __cooldown_time{};
+    time::Instant __expiration_time{};
+    time::Duration __expiration_duration{};
+    bool __is_rotten{};
+    data::InstanceId __god{};
+
 
 
     void clear();
@@ -155,6 +254,13 @@ public:
     bool operator!=(const Item& other) const noexcept
     {
         return !(*this == other);
+    }
+
+
+
+    bool is_equipped() const noexcept
+    {
+        return !_equipped_slot.is_nil();
     }
 
 
@@ -587,7 +693,7 @@ enum class ItemDescriptionType : int
 size_t item_load_desc(const ItemRef& item);
 
 
-int iequiploc(const ItemRef& item);
+data::InstanceId iequiploc(const ItemRef& item);
 
 void item_db_set_basic_stats(const ItemRef& item, int integer_id);
 void item_db_get_description(const ItemRef& item, int integer_id);

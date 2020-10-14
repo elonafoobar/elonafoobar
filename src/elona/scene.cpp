@@ -410,16 +410,14 @@ void conquer_lesimas()
         wy + 116,
         i18n::s.get(
             "core.win.window.have_killed",
-            game()->deepest_dungeon_level,
-            game()->kill_count));
+            game()->deepest_dungeon_danger_level,
+            game()->total_kill_count));
     mes(wx + 40, wy + 146, i18n::s.get("core.win.window.score", calcscore()));
+    const auto date = game_date();
     mes(wx + 40,
         wy + 186,
         i18n::s.get(
-            "core.win.window.lesimas",
-            game()->date.year,
-            game()->date.month,
-            game()->date.day));
+            "core.win.window.lesimas", date.year(), date.month(), date.day()));
     mes(wx + 40, wy + 206, i18n::s.get("core.win.window.comment", win_comment));
     mes(wx + 40,
         wy + 246,
@@ -451,7 +449,7 @@ void play_the_last_scene_again()
         conquer_lesimas();
         return;
     }
-    game()->quest_flags.main_quest = 180;
+    story_quest_set_progress("core.elona", 180);
     update_screen();
 }
 

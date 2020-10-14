@@ -1,6 +1,5 @@
 #include "ui_menu_crafting.hpp"
 
-#include "../ability.hpp"
 #include "../audio.hpp"
 #include "../crafting.hpp"
 #include "../data/types/type_crafting_material.hpp"
@@ -9,6 +8,7 @@
 #include "../inventory.hpp"
 #include "../item.hpp"
 #include "../message.hpp"
+#include "../skill.hpp"
 
 namespace elona
 {
@@ -26,14 +26,15 @@ static int _can_produce_item(int created_item_id)
     }
 
     if (recipe->required_skill_level >
-        cdata.player().get_skill(recipe->skill_used).level)
+        cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe->skill_used)))
     {
         return -1;
     }
 
     for (const auto& required_mat : recipe->required_materials)
     {
-        if (game()->crafting_materials().amount(
+        if (game()->crafting_materials.amount(
                 *the_crafting_material_db.get_id_from_integer(
                     required_mat.id)) < required_mat.amount)
         {
@@ -79,7 +80,9 @@ static bool _should_show_entry(int item_id, int _prodtype)
             return false;
         }
     }
-    if (cdata.player().get_skill(recipe->skill_used).level + 3 <
+    if (cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe->skill_used)) +
+            3 <
         recipe->required_skill_level)
     {
         return false;
@@ -185,10 +188,13 @@ void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
     }
 
     desc += u8" "s + recipe.required_skill_level + u8"("s +
-        cdata.player().get_skill(recipe.skill_used).level + u8")"s;
+        cdata.player().skills().level(
+            *the_skill_db.get_id_from_integer(recipe.skill_used)) +
+        u8")"s;
 
     const auto text_color = recipe.required_skill_level <=
-            cdata.player().get_skill(recipe.skill_used).level
+            cdata.player().skills().level(
+                *the_skill_db.get_id_from_integer(recipe.skill_used))
         ? snail::Color{30, 30, 200}
         : snail::Color{200, 30, 30};
     mes(wx + 37, wy + 288, desc + u8" "s, text_color);
@@ -202,12 +208,12 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
         the_crafting_material_db.get_text(required_mat.id, "name") + " " +
         i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount +
         u8"("s +
-        game()->crafting_materials().amount(
+        game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(required_mat.id)) +
         u8")"s;
 
     const auto text_color =
-        game()->crafting_materials().amount(
+        game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(required_mat.id)) >=
             required_mat.amount
         ? snail::Color{30, 30, 200}

@@ -13,11 +13,6 @@ The main entry point of the game, Elona foobar.
 The main entry point of the launcher, Elona foobar Launcher.
 
 
-### `version.hpp`/`version.cpp.in`
-
-Defines Elona foobar's version. Variables enclosed by `@` in `version.cpp.in` like `@PROJECT_VERSION_MAJOR@` are injected by `CMake`.
-
-
 
 ## Folders
 

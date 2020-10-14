@@ -1,7 +1,6 @@
 #include "buff.hpp"
 
 #include "../util/range.hpp"
-#include "ability.hpp"
 #include "character.hpp"
 #include "data/types/type_buff.hpp"
 #include "draw.hpp"
@@ -11,6 +10,7 @@
 #include "lua_env/interface.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -21,43 +21,49 @@ namespace elona
 namespace
 {
 
-constexpr int buff_find_slot_no_effect = -1;
-
-int buff_find_slot(const Character& chara, int id, int turns)
+optional<size_t>
+buff_find_slot(const Character& chara, data::InstanceId id, int turns)
 {
-    for (size_t i = 0; i < chara.buffs.size(); ++i)
+    constexpr size_t max_buffs = 16;
+
+    const auto& buffs = chara.buffs;
+
+    for (size_t i = 0; i < buffs.size(); ++i)
     {
-        if (chara.buffs[i].id == id)
+        const auto& buff = buffs[i];
+        if (buff.id == id)
         {
-            if (chara.buffs[i].turns < turns)
+            if (buff.turns < turns)
             {
-                return static_cast<int>(i);
+                return i;
             }
             else
             {
-                return buff_find_slot_no_effect;
+                return none;
             }
-        }
-        if (chara.buffs[i].id == 0)
-        {
-            return i;
         }
     }
 
-    return rnd(static_cast<int>(chara.buffs.size()));
+    if (buffs.size() < max_buffs)
+    {
+        return buffs.size();
+    }
+    else
+    {
+        return rnd(buffs.size());
+    }
 }
 
 
 
-void buff_on_removal(Character& chara, int id)
+void buff_on_removal(Character& chara, data::InstanceId id)
 {
-    auto buff = the_buff_db[id];
-    assert(buff);
+    auto& buff_data = the_buff_db.ensure(id);
 
-    auto& on_removal = buff->on_removal;
+    auto& on_removal = buff_data.on_removal;
     if (on_removal)
     {
-        auto self = buff->self;
+        auto self = buff_data.self;
         auto args = lua::create_table("chara", lua::handle(chara));
         on_removal->call(self, args);
     }
@@ -102,31 +108,23 @@ void buff_apply(Character& chara, data::InstanceId id, int power)
 
 bool buff_has(const Character& chara, data::InstanceId id)
 {
-    const auto& buff_data = the_buff_db.ensure(id);
-
     return range::any_of(
-        chara.buffs, [integer_id = buff_data.integer_id](const auto& buff) {
-            return buff.id == integer_id;
-        });
+        chara.buffs, [id](const auto& buff) { return buff.id == id; });
 }
 
 
 
 optional_ref<const Buff> buff_find(const Character& chara, data::InstanceId id)
 {
-    const auto& buff_data = the_buff_db.ensure(id);
-
-    const auto itr = range::find_if(
-        chara.buffs, [integer_id = buff_data.integer_id](const auto& buff) {
-            return buff.id == integer_id;
-        });
-    if (itr == std::end(chara.buffs))
+    if (const auto itr = range::find_if(
+            chara.buffs, [id](const auto& buff) { return buff.id == id; });
+        itr != chara.buffs.end())
     {
-        return none;
+        return *itr;
     }
     else
     {
-        return *itr;
+        return none;
     }
 }
 
@@ -144,10 +142,8 @@ void buff_add(
 
     const auto& buff_data = the_buff_db.ensure(id);
 
-    const auto integer_id = buff_data.integer_id;
-
-    const auto slot = buff_find_slot(chara, integer_id, turns);
-    if (slot == buff_find_slot_no_effect)
+    const auto slot_opt = buff_find_slot(chara, id, turns);
+    if (!slot_opt)
     {
         if (is_in_fov(chara))
         {
@@ -155,19 +151,21 @@ void buff_add(
             return;
         }
     }
+    const auto slot = *slot_opt;
 
     if (buff_data.type == BuffType::hex)
     {
         bool resists{};
-        if (chara.get_skill(60).level / 2 > rnd_capped(power * 2 + 100))
+        if (chara.skills().level("core.element_magic") / 2 >
+            rnd_capped(power * 2 + 100))
         {
             resists = true;
         }
-        if (power * 3 < chara.get_skill(60).level)
+        if (power * 3 < chara.skills().level("core.element_magic"))
         {
             resists = true;
         }
-        if (power / 3 > chara.get_skill(60).level)
+        if (power / 3 > chara.skills().level("core.element_magic"))
         {
             resists = false;
         }
@@ -186,7 +184,7 @@ void buff_add(
         {
             resists = true;
         }
-        if (const auto& holy_veil = buff_find(chara, "core.holy_veil"))
+        if (const auto holy_veil = buff_find(chara, "core.holy_veil"))
         {
             if (holy_veil->power + 50 > power * 5 / 2 ||
                 rnd_capped(holy_veil->power + 50) > rnd_capped(power + 1))
@@ -214,58 +212,47 @@ void buff_add(
         // Messages of fodd buff are shown elsewhere.
         if (buff_data.type != BuffType::food)
         {
-            txt(the_buff_db.get_text(integer_id, "apply", chara));
+            txt(the_buff_db.get_text(id, "apply", chara));
         }
 
         add_damage_popup(
-            the_buff_db.get_text(integer_id, "name"),
-            chara.index,
-            {255, 255, 255});
+            the_buff_db.get_text(id, "name"), chara.index, {255, 255, 255});
     }
 
-    chara.buffs[slot] = {integer_id, power, turns};
+    if (chara.buffs.size() <= slot)
+    {
+        chara.buffs.push_back({id, power, turns});
+    }
+    else
+    {
+        chara.buffs[slot] = {id, power, turns};
+    }
 
     chara_refresh(chara);
 }
 
 
 
-void buff_delete(Character& chara, int slot)
+BuffList::iterator buff_remove_at(Character& chara, BuffList::iterator itr)
 {
     if (chara.is_player())
     {
         txt(i18n::s.get(
-                "core.magic.buff.ends",
-                the_buff_db.get_text(chara.buffs[slot].id, "name")),
+                "core.magic.buff.ends", the_buff_db.get_text(itr->id, "name")),
             Message::color{ColorIndex::purple});
     }
     if (is_in_fov(chara))
     {
         add_damage_popup(
-            the_buff_db.get_text(chara.buffs[slot].id, "name"),
+            the_buff_db.get_text(itr->id, "name"),
             chara.index,
             {191, 191, 191});
     }
 
-    buff_on_removal(chara, chara.buffs[slot].id);
-    chara.buffs[slot].id = 0;
-    for (int i = slot; i < 16 - slot - 1; ++i)
-    {
-        if (chara.buffs[i].id == 0)
-        {
-            if (chara.buffs[i + 1].id != 0)
-            {
-                chara.buffs[i] = chara.buffs[i + 1];
-                chara.buffs[i + 1] = Buff{};
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-
+    buff_on_removal(chara, itr->id);
+    const auto ret = chara.buffs.erase(itr);
     chara_refresh(chara);
+    return ret;
 }
 
 } // namespace elona

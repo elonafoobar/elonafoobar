@@ -1,15 +1,17 @@
 #include <sstream>
 
-#include "ability.hpp"
 #include "building.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "class.hpp"
 #include "data/types/type_race.hpp"
+#include "data/types/type_skill.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "item.hpp"
 #include "menu.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "trait.hpp"
 #include "variables.hpp"
@@ -22,13 +24,15 @@ namespace elona
 namespace
 {
 
-std::string game_date_time()
+std::string game_date_time_string()
 {
-    const auto Y = std::to_string(game()->date.year);
-    const auto m = std::to_string(game()->date.month);
-    const auto d = std::to_string(game()->date.day);
-    const auto H = std::to_string(game()->date.hour);
-    const auto M = std::to_string(game()->date.minute);
+    const auto dt = game_date_time();
+
+    const auto Y = std::to_string(dt.year());
+    const auto m = std::to_string(dt.month());
+    const auto d = std::to_string(dt.day());
+    const auto H = std::to_string(dt.hour());
+    const auto M = std::to_string(dt.minute());
 
     return Y + u8"年" + m + u8"月" + d + u8"日 " + H + u8"時" + M + u8"分";
 }
@@ -46,7 +50,7 @@ void save_dump_player_info()
     ss << u8"Elona 1.22" << std::endl;
     ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
 
-    ss << u8"キャラクター情報 " << game_date_time() << "  " << mdatan(0)
+    ss << u8"キャラクター情報 " << game_date_time_string() << "  " << mdatan(0)
        << std::endl;
 
     ss << std::endl;
@@ -62,7 +66,7 @@ void save_dump_player_info()
               u8"種族       : " +
                   the_race_db.get_text(cdata.player().race, "name"),
               30)
-       << fixtxt(u8"信仰      : " + god_name(cdata.player().god_id), 32)
+       << fixtxt(u8"信仰      : " + god_get_name(cdata.player().religion), 32)
        << std::endl;
     ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
        << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
@@ -75,31 +79,37 @@ void save_dump_player_info()
        << fixtxt(u8"経過ターン: " + std::to_string(game()->play_turns), 32)
        << std::endl;
     ss << fixtxt(u8"金貨       : " + std::to_string(cdata.player().gold), 30)
-       << fixtxt(u8"殺害数    : " + std::to_string(game()->kill_count), 32)
+       << fixtxt(
+              u8"殺害数    : " + std::to_string(game()->total_kill_count), 32)
        << std::endl;
     ss << fixtxt(
-              u8"プラチナ   : " + std::to_string(cdata.player().platinum_coin),
-              30)
+              u8"プラチナ   : " + std::to_string(cdata.player().platinum), 30)
        << fixtxt(
-              u8"最深到達  : " + std::to_string(game()->deepest_dungeon_level) +
+              u8"最深到達  : " +
+                  std::to_string(game()->deepest_dungeon_danger_level) +
                   u8"階相当",
               32)
        << std::endl;
     ss << fixtxt(
               u8"プレイ時間 : "s +
                   cnvplaytime(
-                      (game()->play_time + timeGetTime() / 1000 - time_begin)),
+                      (game()->play_seconds_in_real_world +
+                       timeGetTime() / 1000 - time_begin)),
               30)
        << std::endl;
 
     ss << std::endl;
 
     s(1) = u8"生命力    : " +
-        std::to_string(cdata.player().get_skill(2).level) + u8"(" +
-        std::to_string(cdata.player().get_skill(2).base_level) + u8")";
+        std::to_string(cdata.player().skills().level("core.stat_life")) +
+        u8"(" +
+        std::to_string(cdata.player().skills().base_level("core.stat_life")) +
+        u8")";
     s(2) = u8"マナ      : " +
-        std::to_string(cdata.player().get_skill(3).level) + u8"(" +
-        std::to_string(cdata.player().get_skill(3).base_level) + u8")";
+        std::to_string(cdata.player().skills().level("core.stat_mana")) +
+        u8"(" +
+        std::to_string(cdata.player().skills().base_level("core.stat_mana")) +
+        u8")";
     s(3) = u8"狂気度    : " + std::to_string(cdata.player().insanity);
     s(4) = u8"速度      : " + std::to_string(cdata.player().current_speed);
     s(5) = u8"名声度    : " + std::to_string(cdata.player().fame);
@@ -111,7 +121,8 @@ void save_dump_player_info()
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         s = "";
-        p = cdata.player().get_skill(10 + cnt).potential;
+        p = cdata.player().skills().potential(
+            *the_skill_db.get_id_from_integer(10 + cnt));
         if (p >= 200)
         {
             s += u8"superb"s;
@@ -135,8 +146,12 @@ void save_dump_player_info()
         s = fixtxt(s, 15);
         s = fixtxt(
                 i18n::s.get_enum("core.ui.attribute", cnt) + u8"    : "s +
-                    cdata.player().get_skill(10 + cnt).level + u8"("s +
-                    cdata.player().get_skill(10 + cnt).base_level + u8")"s,
+                    cdata.player().skills().level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) +
+                    u8"("s +
+                    cdata.player().skills().base_level(
+                        *the_skill_db.get_id_from_integer(10 + cnt)) +
+                    u8")"s,
                 24) +
             s;
 
@@ -160,23 +175,13 @@ void save_dump_player_info()
     ss << std::endl;
 
     ss << u8"------------------------------ 装備品 合計重量"
-       << cnvweight(cdata.player().sum_of_equipment_weight) << u8" "
+       << cnvweight(cdata.player().equipment_weight) << u8" "
        << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
-    for (const auto& equipment_slot : cdata.player().equipment_slots)
+    for (const auto& body_part : cdata.player().body_parts)
     {
-        if (!equipment_slot)
-        {
-            continue;
-        }
-
-        if ((cdata.player().traits().level("core.thick_neck") != 0 &&
-             equipment_slot.type == 2) ||
-            (cdata.player().traits().level("core.hooves") != 0 &&
-             equipment_slot.type == 9) ||
-            (cdata.player().traits().level("core.feathers") != 0 &&
-             equipment_slot.type == 3))
+        if (body_part.is_unequippable())
         {
             continue;
         }
@@ -185,18 +190,18 @@ void save_dump_player_info()
         std::string item_desc;
         p(0) = 0;
         listmax = 0;
-        if (equipment_slot.equipment)
+        if (const auto equipment = body_part.equipment())
         {
-            item_name = itemname(equipment_slot.equipment.unwrap());
-            item_desc = cnvweight(equipment_slot.equipment->weight);
-            item_dump_desc(equipment_slot.equipment.unwrap());
+            item_name = itemname(equipment.unwrap());
+            item_desc = cnvweight(equipment->weight);
+            item_dump_desc(equipment.unwrap());
         }
         else
         {
             listmax = 0;
         }
 
-        ss << i18n::s.get_enum("core.ui.body_part", equipment_slot.type)
+        ss << i18n::s.get_data_text("core.body_part", body_part.id, "name")
            << u8":" << std::endl;
         ss << item_name << u8" " << item_desc << std::endl;
         for (int i = 0; i < listmax; ++i)

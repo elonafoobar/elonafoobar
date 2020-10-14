@@ -1,8 +1,8 @@
-#include "ability.hpp"
 #include "area.hpp"
 #include "audio.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
+#include "data/types/type_skill.hpp"
 #include "dmgheal.hpp"
 #include "food.hpp"
 #include "game.hpp"
@@ -12,7 +12,10 @@
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "quest.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
+
+
 
 namespace elona
 {
@@ -64,8 +67,8 @@ static void _map_events_quest_party()
                 objlv = 1;
                 if (const auto chara = chara_create(-1, chara_id, -3, 0))
                 {
-                    chara->relationship = -1;
-                    chara->original_relationship = -1;
+                    chara->relationship = Relationship::neutral;
+                    chara->original_relationship = Relationship::neutral;
                     chara->hate = 100;
                     chara->enemy_id = quest_data.immediate().extra_info_2;
                 }
@@ -78,7 +81,7 @@ static void _map_events_tower_of_fire()
 {
     if (rnd(5) == 0)
     {
-        r = cdata.player().get_skill(50).level / 50;
+        r = cdata.player().skills().level("core.element_fire") / 50;
         if (r < 6)
         {
             dmg = (6 - r) * (6 - r) * 2;
@@ -93,7 +96,7 @@ static void _map_events_port_kapul()
 {
     if (game()->current_dungeon_level == 25)
     {
-        ++game()->quest_flags.duration_of_kamikaze_attack;
+        story_quest_add_ext("core.kamikaze_attack", "core.elapsed_time", 1);
         x = 1;
         y = rnd(map_data.height);
         if (rnd(4) == 0)
@@ -112,31 +115,35 @@ static void _map_events_port_kapul()
             y = map_data.height - 2;
         }
         p = 237;
-        if (game()->quest_flags.duration_of_kamikaze_attack > 50)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 50)
         {
             if (rnd(10) == 0)
             {
                 p = 245;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack > 100)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 100)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack > 150)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") > 150)
         {
             if (rnd(10) == 0)
             {
                 p = 244;
             }
         }
-        if (game()->quest_flags.duration_of_kamikaze_attack == 250)
+        if (story_quest_get_ext<lua_int>(
+                "core.kamikaze_attack", "core.elapsed_time") == 250)
         {
             quest_update_journal_msg();
-            game()->quest_flags.kamikaze_attack = 3;
+            story_quest_set_progress("core.kamikaze_attack", 3);
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.message"),
                 Message::color{ColorIndex::cyan});
             txt(i18n::s.get("core.misc.quest.kamikaze_attack.stairs_appear"));
@@ -161,7 +168,8 @@ static void _map_events_jail()
             txt(i18n::s.get("core.misc.map.jail.repent_of_sin"));
             modify_karma(cdata.player(), 1);
             p = rnd(8) + 10;
-            if (cdata.player().get_skill(p).base_level >= 10)
+            if (cdata.player().skills().base_level(
+                    *the_skill_db.get_id_from_integer(p)) >= 10)
             {
                 chara_gain_fixed_skill_exp(cdata.player(), p, -300);
             }
@@ -186,7 +194,8 @@ static void _map_events_jail()
 
 static void _map_events_shelter()
 {
-    if (game()->weather == 2 || game()->weather == 4 || game()->weather == 1)
+    if (game()->weather == "core.snow" || game()->weather == "core.hard_rain" ||
+        game()->weather == "core.etherwind")
     {
         if (cdata.player().nutrition < 5000)
         {
@@ -198,9 +207,9 @@ static void _map_events_shelter()
                 show_eating_message(cdata.player());
             }
         }
-        if (game()->continuous_active_hours >= 15)
+        if (cdata.player().sleepiness >= 15)
         {
-            game()->continuous_active_hours = 13;
+            cdata.player().sleepiness = 13;
         }
         map_data.turn_cost = 1000000;
     }

@@ -1,9 +1,9 @@
 #include "status_ailment.hpp"
 
-#include "ability.hpp"
 #include "activity.hpp"
 #include "buff.hpp"
 #include "character.hpp"
+#include "data/types/type_skill.hpp"
 #include "element.hpp"
 #include "elona.hpp"
 #include "fov.hpp"
@@ -11,6 +11,7 @@
 #include "map.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "variables.hpp"
 
 
@@ -27,7 +28,9 @@ int calc_power_decreased_by_resistance(
     Element element)
 {
     const auto resistance_level =
-        chara.get_skill(static_cast<int>(element)).level / 50;
+        chara.skills().level(
+            *the_skill_db.get_id_from_integer(static_cast<int>(element))) /
+        50;
     power = (rnd_capped(power / 2 + 1) + power / 2) * 100 /
         (50 + resistance_level * 50);
 

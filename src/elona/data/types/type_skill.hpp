@@ -7,7 +7,7 @@
 namespace elona
 {
 
-struct AbilityData
+struct SkillData
 {
     data::InstanceId id;
     int integer_id;
@@ -20,10 +20,10 @@ struct AbilityData
 
 
 
-ELONA_DEFINE_LUA_DB(AbilityDB, AbilityData, "core.ability")
+ELONA_DEFINE_LUA_DB(SkillDB, SkillData, "core.skill")
 
 
 
-extern AbilityDB the_ability_db;
+extern SkillDB the_skill_db;
 
 } // namespace elona

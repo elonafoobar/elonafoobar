@@ -2,7 +2,6 @@
 
 #include <sstream>
 
-#include "../version.hpp"
 #include "character.hpp"
 #include "config.hpp"
 #include "ctrl_file.hpp"
@@ -24,6 +23,7 @@
 #include "save_fs.hpp"
 #include "set_item_info.hpp"
 #include "variables.hpp"
+#include "version.hpp"
 
 
 

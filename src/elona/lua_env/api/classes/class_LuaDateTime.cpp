@@ -1,9 +1,8 @@
-#include "../../../game.hpp"
-#include "../../../map.hpp"
+#include "../../../time.hpp"
 
 
 
-LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::DateTime)
+LUA_API_OPTOUT_SOL_AUTOMAGIC(elona::time::DateTime)
 
 
 
@@ -18,51 +17,59 @@ namespace elona::lua::api::classes::class_LuaDateTime
 void bind(sol::state& lua)
 {
     auto LuaDateTime =
-        lua.new_usertype<DateTime>("LuaDateTime", sol::no_constructor);
+        lua.new_usertype<time::DateTime>("LuaDateTime", sol::no_constructor);
 
     // Properties
 
     /**
      * @luadoc year field num
      */
-    LuaDateTime.set("year", &DateTime::year);
+    LuaDateTime.set("year", sol::property([](const time::DateTime& self) {
+                        return self.year();
+                    }));
 
     /**
      * @luadoc month field num
      */
-    LuaDateTime.set("month", &DateTime::month);
+    LuaDateTime.set("month", sol::property([](const time::DateTime& self) {
+                        return self.month();
+                    }));
 
     /**
      * @luadoc day field num
      */
-    LuaDateTime.set("day", &DateTime::day);
+    LuaDateTime.set("day", sol::property([](const time::DateTime& self) {
+                        return self.day();
+                    }));
 
     /**
      * @luadoc hour field num
      */
-    LuaDateTime.set("hour", &DateTime::hour);
+    LuaDateTime.set("hour", sol::property([](const time::DateTime& self) {
+                        return self.hour();
+                    }));
 
     /**
      * @luadoc minute field num
      */
-    LuaDateTime.set("minute", &DateTime::minute);
+    LuaDateTime.set("minute", sol::property([](const time::DateTime& self) {
+                        return self.minute();
+                    }));
 
     /**
      * @luadoc second field num
      */
-    LuaDateTime.set("second", &DateTime::second);
-
-    // Methods
+    LuaDateTime.set("second", sol::property([](const time::DateTime& self) {
+                        return self.second();
+                    }));
 
     /**
-     * @luadoc hours function
-     *
-     * Returns the time in hours since year 0.
-     * @treturn num
+     * @luadoc millisecond field num
      */
-    LuaDateTime.set("hours", &DateTime::hours);
-
-    LuaDateTime.set(sol::meta_function::to_string, &DateTime::to_string);
+    LuaDateTime.set(
+        "millisecond", sol::property([](const time::DateTime& self) {
+            return self.millisecond();
+        }));
 }
 
 } // namespace elona::lua::api::classes::class_LuaDateTime

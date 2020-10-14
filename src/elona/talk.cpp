@@ -8,6 +8,7 @@
 #include "draw.hpp"
 #include "enums.hpp"
 #include "game.hpp"
+#include "god.hpp"
 #include "i18n.hpp"
 #include "input.hpp"
 #include "item.hpp"
@@ -67,9 +68,9 @@ bool talk_setup_variables(Character& chara)
     }
     cs = 0;
     chatesc = 1;
-    if (chara.relationship <= -1)
+    if (chara.relationship <= Relationship::neutral)
     {
-        if (!event_has_pending_events())
+        if (!deferred_event_has_pending_events())
         {
             txt(i18n::s.get("core.talk.will_not_listen", chara));
             quest_teleport = false;
@@ -77,7 +78,7 @@ bool talk_setup_variables(Character& chara)
             return false;
         }
     }
-    if (game()->date.hours() >= chara.time_interest_revive)
+    if (game_now() >= chara.interest_reset_time)
     {
         chara.interest = 100;
     }
@@ -112,12 +113,12 @@ void talk_to_npc(Character& chara)
         chatval_unique_chara_id = charaid2int(chara.id);
         chatval_show_impress = false;
     }
-    if (event_processing_event() == 2)
+    if (deferred_event_processing_event() == "core.lomias_talk")
     {
         talk_wrapper(chara, TalkResult::talk_game_begin);
         return;
     }
-    if (event_processing_event() == 16)
+    if (deferred_event_processing_event() == "core.quest_escort_complete")
     {
         talk_wrapper(chara, TalkResult::talk_finish_escort);
         return;
@@ -541,7 +542,7 @@ std::string talk_get_speaker_name(const Character& chara)
     }
     if (game()->reveals_religion)
     {
-        speaker_name += u8" ("s + god_name(chara.god_id) + u8")"s;
+        speaker_name += u8" ("s + god_get_name(chara.religion) + u8")"s;
     }
 
     return speaker_name;
@@ -561,8 +562,9 @@ int talk_window_query(const Character& chara)
 
     if (chara.portrait != "" || scenemode)
     {
-        const auto portrait_id =
-            scenemode ? actor(1, current_actor_index) : chara.portrait;
+        const auto portrait_id = scenemode
+            ? data::InstanceId{actor(1, current_actor_index)}
+            : chara.portrait;
         return talk_window_query(
             portrait_id, none, speaker_name, buff, impress_interest);
     }
@@ -576,7 +578,7 @@ int talk_window_query(const Character& chara)
 
 
 int talk_window_query(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,
@@ -673,7 +675,7 @@ void talk_window_init(std::string& text)
 
 
 void talk_window_show(
-    optional_ref<const std::string> portrait_id,
+    optional<data::InstanceId> portrait_id,
     optional<int> chara_image,
     const std::string& speaker_name,
     std::string& text,

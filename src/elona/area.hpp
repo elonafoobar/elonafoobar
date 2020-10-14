@@ -4,6 +4,7 @@
 
 #include "optional.hpp"
 #include "position.hpp"
+#include "time.hpp"
 
 
 
@@ -39,9 +40,9 @@ struct Area
     int winning_streak_in_arena{};
     int winning_streak_in_pet_arena{};
     int arena_random_seed{};
-    int time_of_next_update_of_arena_random_seed{};
-    int time_of_next_arena{};
-    int time_of_next_rumble{};
+    time::Instant time_of_next_update_of_arena_random_seed{};
+    time::Instant time_of_next_arena{};
+    time::Instant time_of_next_rumble{};
     int quest_town_id{};
     bool christmas_festival{};
     int outer_map{};

@@ -1,16 +1,16 @@
 #include "food.hpp"
 
 #include "../util/strutil.hpp"
-#include "ability.hpp"
 #include "audio.hpp"
 #include "buff.hpp"
+#include "buff_utils.hpp"
 #include "calc.hpp"
 #include "chara_db.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
-#include "data/types/type_ability.hpp"
 #include "data/types/type_buff.hpp"
 #include "data/types/type_item.hpp"
+#include "data/types/type_skill.hpp"
 #include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
@@ -22,10 +22,12 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "message.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "status_ailment.hpp"
 #include "text.hpp"
 #include "trait.hpp"
@@ -42,11 +44,11 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     {
         return;
     }
-    if (food->param3 <= 0)
+    if (food_is_rotten(food))
     {
         return; // Has already been rotten.
     }
-    if (food->param3 > game()->date.hours())
+    if (game_now() < food->__expiration_time)
     {
         return; // The expiration date has not come yet.
     }
@@ -59,12 +61,12 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
     if (chara_idx == -1 && food->id == "core.corpse" &&
         chip_data.for_cell(food->position().x, food->position().y).kind == 1)
     {
-        if (game()->weather != 0)
+        if (game()->weather != "core.sunny")
         {
             return;
         }
         txt(i18n::s.get("core.misc.corpse_is_dried_up", food));
-        food->param3 = game()->date.hours() + 2160;
+        food->__expiration_time = game_now() + 90_days;
         food->image = 337;
         food->id = "core.jerky";
         food->param1 = 0;
@@ -77,10 +79,10 @@ void _food_gets_rotten(int chara_idx, const ItemRef& food)
         txt(i18n::s.get("core.misc.get_rotten", food));
     }
 
-    food->param3 = -1;
+    food_make_rotten(food);
     food->image = 336;
 
-    if (chara_idx == 0 && cdata.player().god_id == core_god::kumiromi)
+    if (chara_idx == 0 && cdata.player().religion == "core.kumiromi")
     {
         if (rnd(3) == 0)
         {
@@ -242,21 +244,9 @@ void chara_vomit(Character& chara)
     }
 
     // Lose food buff.
-    for (size_t i = 0; i < chara.buffs.size();)
-    {
-        if (chara.buffs[i].id == 0)
-        {
-            break;
-        }
-        if (the_buff_db[chara.buffs[i].id]->type == BuffType::food)
-        {
-            buff_delete(chara, i);
-        }
-        else
-        {
-            ++i;
-        }
-    }
+    buff_remove_if(chara, [](const auto& buff) {
+        return the_buff_db[buff.id]->type == BuffType::food;
+    });
 
     // Vomit.
     if (map_data.type != mdata_t::MapType::world_map)
@@ -409,18 +399,18 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
 
     const auto item_name_prev = itemname(food);
 
-    int dish_rank = rnd_capped(cook.get_skill(184).level + 6) +
+    int dish_rank = rnd_capped(cook.skills().level("core.cooking") + 6) +
         rnd(cook_tool->param1 / 50 + 1);
-    if (dish_rank > cook.get_skill(184).level / 5 + 7)
+    if (dish_rank > cook.skills().level("core.cooking") / 5 + 7)
     {
-        dish_rank = cook.get_skill(184).level / 5 + 7;
+        dish_rank = cook.skills().level("core.cooking") / 5 + 7;
     }
     dish_rank = rnd(dish_rank + 1);
     if (dish_rank > 3)
     {
         dish_rank = rnd(dish_rank);
     }
-    if (cook.get_skill(184).level >= 5)
+    if (cook.skills().level("core.cooking") >= 5)
     {
         if (dish_rank < 3)
         {
@@ -430,7 +420,7 @@ void food_cook(Character& cook, const ItemRef& cook_tool, const ItemRef& food)
             }
         }
     }
-    if (cook.get_skill(184).level >= 10)
+    if (cook.skills().level("core.cooking") >= 10)
     {
         if (dish_rank < 3)
         {
@@ -461,9 +451,9 @@ void make_dish(const ItemRef& food, int dish_rank)
     food->image = picfood(dish_rank, food->param1 / 1000);
     food->weight = 500;
     food->param2 = dish_rank;
-    if (food->material == "core.raw" && 0 <= food->param3)
+    if (food->material == "core.raw" && !food_is_rotten(food))
     {
-        food->param3 = game()->date.hours() + 72;
+        food->__expiration_time = game_now() + 3_days;
     }
 }
 
@@ -705,7 +695,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             }
             if (food->material == "core.raw")
             {
-                if (food->param3 < 0)
+                if (food_is_rotten(food))
                 {
                     txt(i18n::s.get("core.food.effect.rotten"));
                     break;
@@ -756,7 +746,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     else if (food->material == "core.raw")
     {
-        if (food->param3 < 0)
+        if (food_is_rotten(food))
         {
             txt(i18n::s.get("core.food.effect.raw_glum", eater));
         }
@@ -871,8 +861,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 10, 2);
-        modify_potential(eater, 11, 2);
+        skill_add_potential(eater, "core.stat_strength", 2);
+        skill_add_potential(eater, "core.stat_constitution", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.morgia"),
@@ -931,8 +921,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 16, 2);
-        modify_potential(eater, 15, 2);
+        skill_add_potential(eater, "core.stat_magic", 2);
+        skill_add_potential(eater, "core.stat_will", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.mareilon"),
@@ -990,8 +980,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             fdlist(1, fdmax) = 10;
             ++fdmax;
         }
-        modify_potential(eater, 12, 2);
-        modify_potential(eater, 13, 2);
+        skill_add_potential(eater, "core.stat_dexterity", 2);
+        skill_add_potential(eater, "core.stat_perception", 2);
         nutrition = 500;
         if (eater.is_player())
         {
@@ -1051,8 +1041,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             ++fdmax;
         }
         nutrition = 500;
-        modify_potential(eater, 17, 2);
-        modify_potential(eater, 14, 2);
+        skill_add_potential(eater, "core.stat_charisma", 2);
+        skill_add_potential(eater, "core.stat_learning", 2);
         if (eater.is_player())
         {
             txt(i18n::s.get("core.food.effect.herb.alraunia"),
@@ -1120,7 +1110,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     {
         if (food->material == "core.raw")
         {
-            if (food->param3 < 0)
+            if (food_is_rotten(food))
             {
                 eat_rotten_food(eater);
             }
@@ -1181,7 +1171,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             i = 1500;
             if (food->material == "core.raw")
             {
-                if (food->param3 < 0)
+                if (food_is_rotten(food))
                 {
                     i = 500;
                 }
@@ -1210,7 +1200,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 eater,
                 rnd(3) + 1,
                 eater.nutrition >= 20000 &&
-                    rnd(30000 / std::max(1, eater.nutrition) + 2) == 0);
+                    rnd(30000 / std::max(lua_int{1}, eater.nutrition) + 2) ==
+                        0);
         }
     }
     if (eater.id == CharaId::cute_fairy)
@@ -1234,28 +1225,30 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             txt(i18n::s.get("core.food.effect.little_sister", eater),
                 Message::color{ColorIndex::green});
             if (rnd_capped(
-                    eater.get_skill(2).base_level *
-                        eater.get_skill(2).base_level +
+                    eater.skills().base_level("core.stat_life") *
+                        eater.skills().base_level("core.stat_life") +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 2, 1000);
             }
             if (rnd_capped(
-                    eater.get_skill(3).base_level *
-                        eater.get_skill(3).base_level +
+                    eater.skills().base_level("core.stat_mana") *
+                        eater.skills().base_level("core.stat_mana") +
                     1) < 2000)
             {
                 chara_gain_fixed_skill_exp(eater, 3, 1000);
             }
             for (int cnt = 100; cnt < 400; ++cnt)
             {
-                if (!the_ability_db[cnt] ||
-                    the_ability_db[cnt]->related_basic_attribute == 0 ||
-                    eater.get_skill(cnt).base_level == 0)
+                if (!the_skill_db[cnt] ||
+                    the_skill_db[cnt]->related_basic_attribute == 0 ||
+                    eater.skills().base_level(
+                        *the_skill_db.get_id_from_integer(cnt)) == 0)
                 {
                     continue;
                 }
-                modify_potential(eater, cnt, rnd(10) + 1);
+                skill_add_potential(
+                    eater, *the_skill_db.get_id_from_integer(cnt), rnd(10) + 1);
             }
         }
     }
@@ -1311,7 +1304,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         {
             if (!eater.is_player())
             {
-                if (eater.relationship >= 0)
+                if (eater.relationship >= Relationship::friendly)
                 {
                     modify_karma(cdata.player(), -1);
                 }
@@ -1354,16 +1347,19 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         }
         if (enc_id == 37)
         {
-            event_add(18, eater.index);
+            deferred_event_add(DeferredEvent{
+                "core.ragnarok",
+                0,
+                lua::create_table("core.chara", eater.index)});
             continue;
         }
         if (enc_id == 40)
         {
-            if (game()->left_turns_of_timestop == 0)
+            if (game()->frozen_turns == 0)
             {
                 txt(i18n::s.get("core.action.time_stop.begins", eater),
                     Message::color{ColorIndex::cyan});
-                game()->left_turns_of_timestop = enc.power / 100 + 1 + 1;
+                game()->frozen_turns = enc.power / 100 + 2;
                 continue;
             }
         }
@@ -1380,14 +1376,14 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         txt(i18n::s.get(
                             "core.food.effect.ability.develops",
                             eater,
-                            the_ability_db.get_text(enc_id, "name")));
+                            the_skill_db.get_text(enc_id, "name")));
                     }
                     else
                     {
                         txt(i18n::s.get(
                             "core.food.effect.ability.deteriorates",
                             eater,
-                            the_ability_db.get_text(enc_id, "name")));
+                            the_skill_db.get_text(enc_id, "name")));
                     }
                 }
                 chara_gain_skill_exp(
@@ -1484,6 +1480,23 @@ void foods_get_rotten()
     {
         _food_gets_rotten(-1, item);
     }
+}
+
+
+
+bool food_is_rotten(const ItemRef& food)
+{
+    // return food->__expiration_time == "ROTTEN";
+    return food->__is_rotten;
+}
+
+
+
+void food_make_rotten(const ItemRef& food)
+{
+    // food->__expiration_time = "ROTTEN";
+    food->__expiration_time = time::Instant{};
+    food->__is_rotten = true;
 }
 
 } // namespace elona

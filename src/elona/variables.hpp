@@ -59,7 +59,6 @@ ELONA_EXTERN(bool quest_teleport);
 ELONA_EXTERN(int gspdorg);
 ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
-ELONA_EXTERN(int weatherbk);
 
 
 // crafting.cpp / blending.cpp
@@ -83,7 +82,6 @@ ELONA_EXTERN(int tile_dooropen);
 ELONA_EXTERN(int tile_downlocked);
 ELONA_EXTERN(int tile_re);
 ELONA_EXTERN(int tile_plant);
-ELONA_EXTERN(elona_vector1<int> isetgod);
 ELONA_EXTERN(elona_vector1<int> isetcrop);
 ELONA_EXTERN(int rdtry);
 
@@ -183,7 +181,6 @@ ELONA_EXTERN(elona_vector1<int> windowshadow);
 ELONA_EXTERN(elona_vector1<int> x);
 ELONA_EXTERN(elona_vector1<int> y);
 ELONA_EXTERN(elona_vector1<std::string> ammoname);
-ELONA_EXTERN(std::vector<std::string> artifactlocation);
 ELONA_EXTERN(elona_vector1<std::string> booktitle);
 ELONA_EXTERN(elona_vector1<std::string> buff);
 ELONA_EXTERN(elona_vector1<std::string> buffboard);
@@ -203,7 +200,6 @@ ELONA_EXTERN(elona_vector1<std::string> key_list);
 ELONA_EXTERN(elona_vector1<std::string> key_select);
 ELONA_EXTERN(elona_vector1<std::string> keylog);
 ELONA_EXTERN(elona_vector1<std::string> mdatan);
-ELONA_EXTERN(elona_vector1<std::string> newsbuff);
 ELONA_EXTERN(elona_vector1<std::string> playerheader);
 ELONA_EXTERN(elona_vector1<std::string> q);
 ELONA_EXTERN(elona_vector1<std::string> qname);
@@ -241,7 +237,6 @@ ELONA_EXTERN(int area);
 ELONA_EXTERN(int attacknum);
 ELONA_EXTERN(int attackrange);
 ELONA_EXTERN(int attackskill);
-ELONA_EXTERN(int body);
 ELONA_EXTERN(int bonus);
 ELONA_EXTERN(int camera);
 ELONA_EXTERN(int ccbk);
@@ -287,7 +282,6 @@ ELONA_EXTERN(int encounterref);
 ELONA_EXTERN(int enemyteam);
 ELONA_EXTERN(int eqmultiweapon);
 ELONA_EXTERN(int eqtwohand);
-ELONA_EXTERN(int equip);
 ELONA_EXTERN(int exp);
 ELONA_EXTERN(int f2);
 ELONA_EXTERN(int f);

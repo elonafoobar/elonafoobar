@@ -1,6 +1,5 @@
 #include "itemgen.hpp"
 
-#include "ability.hpp"
 #include "calc.hpp"
 #include "character.hpp"
 #include "character_status.hpp"
@@ -16,6 +15,7 @@
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "random.hpp"
+#include "skill.hpp"
 #include "text.hpp"
 #include "variables.hpp"
 
@@ -159,7 +159,7 @@ bool upgrade_item_quality(const InventoryRef& inv)
     if (owner_chara && !owner_chara->is_player())
         return false;
 
-    return cdata.player().get_skill(19).level > rnd(5000);
+    return cdata.player().skills().level("core.stat_luck") > rnd(5000);
 }
 
 
@@ -283,8 +283,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     item_db_set_full_stats(item, item_id);
     item_db_get_charge_level(item, item_id);
 
-    item->tint = generate_color(
-        the_item_db[item->id]->tint, the_item_db[item->id]->integer_id);
+    item->tint = color_index_to_color(generate_color(
+        the_item_db[item->id]->tint, the_item_db[item->id]->integer_id));
 
     if (item->id == "core.book_b" && item->param1 == 0)
     {
@@ -300,32 +300,37 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         item->param1 = 1;
     }
 
-    game()->item_memories().increment_generate_count(item->id);
+    game()->item_memories.increment_generate_count(item->id);
 
     item->quality = static_cast<Quality>(fixlv);
     if (fixlv == Quality::special && mode != 6 && nooracle == 0)
     {
+        const auto date = game_date();
         const auto owner = item_get_owner(item).as_character();
         if (owner && owner->role == Role::adventurer)
         {
-            artifactlocation.push_back(i18n::s.get(
-                "core.magic.oracle.was_held_by",
-                cnven(iknownnameref(the_item_db[item->id]->integer_id)),
-                *owner,
-                mapname(owner->current_map),
-                game()->date.day,
-                game()->date.month,
-                game()->date.year));
+            game()->artifact_logs.append(ArtifactLog{
+                game_now(),
+                i18n::s.get(
+                    "core.magic.oracle.was_held_by",
+                    cnven(iknownnameref(the_item_db[item->id]->integer_id)),
+                    *owner,
+                    mapname(owner->current_map),
+                    date.day(),
+                    date.month(),
+                    date.year())});
         }
         else
         {
-            artifactlocation.push_back(i18n::s.get(
-                "core.magic.oracle.was_created_at",
-                iknownnameref(the_item_db[item->id]->integer_id),
-                mdatan(0),
-                game()->date.day,
-                game()->date.month,
-                game()->date.year));
+            game()->artifact_logs.append(ArtifactLog{
+                game_now(),
+                i18n::s.get(
+                    "core.magic.oracle.was_created_at",
+                    iknownnameref(the_item_db[item->id]->integer_id),
+                    mdatan(0),
+                    date.day(),
+                    date.month(),
+                    date.year())});
         }
     }
 
@@ -483,7 +488,10 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         }
         if (item->material == "core.raw")
         {
-            item->param3 += game()->date.hours();
+            item->__expiration_time =
+                game_now() +
+                time::Duration::from_hours(
+                    the_item_db[item->id]->expiration_date);
         }
     }
 
@@ -505,8 +513,8 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
         item->identify_state = IdentifyState::completely;
     }
     if (category == ItemCategory::gold_piece ||
-        category == ItemCategory::platinum_coin ||
-        item->id == "core.small_medal" || item->id == "core.music_ticket" ||
+        category == ItemCategory::platinum || item->id == "core.small_medal" ||
+        item->id == "core.music_ticket" ||
         item->id == "core.token_of_friendship" || item->id == "core.bill")
     {
         item->curse_state = CurseState::none;
@@ -516,7 +524,7 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     {
         item->identify_state = IdentifyState::completely;
         item->curse_state = CurseState::none;
-        game()->item_memories().set_identify_state(
+        game()->item_memories.set_identify_state(
             item->id, IdentifyState::partly);
     }
     if (category == ItemCategory::bodyparts || category == ItemCategory::junk ||
@@ -528,7 +536,9 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     {
         if (reftype < 50000)
         {
-            if (rnd_capped(cdata.player().get_skill(162).level + 1) > 5)
+            if (rnd_capped(
+                    cdata.player().skills().level("core.sense_quality") + 1) >
+                5)
             {
                 item->identify_state = IdentifyState::almost;
             }
@@ -755,7 +765,7 @@ void determine_item_material(const ItemRef& item)
 
 void change_item_material(const ItemRef& item, data::InstanceId material)
 {
-    item->tint = 0;
+    item->tint = {255, 255, 255};
 
     fixlv = item->quality;
     if (item->material != "")
@@ -814,9 +824,9 @@ void apply_item_material(const ItemRef& item)
     {
         item->value = item->value * the_item_material_db[p]->value / 100;
     }
-    if (item->tint == 0)
+    if (item->tint == Color{255, 255, 255})
     {
-        item->tint = the_item_material_db[p]->tint;
+        item->tint = color_index_to_color(the_item_material_db[p]->tint);
     }
     p(1) = 120;
     p(2) = 80;

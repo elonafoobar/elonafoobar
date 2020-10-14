@@ -249,22 +249,6 @@ EnumMap<int> GenderTable{
     },
 };
 
-/**
- * @luadoc
- *
- * Relationship of a character to the player.
- */
-EnumMap<int> RelationshipTable{
-    "Relationship",
-    {
-        {"aggressive", -3},
-        {"nonaggressive", -2},
-        {"unconcerned", -1},
-        {"neutral", 0},
-        {"friend", 10},
-    },
-};
-
 
 /**
  * @luadoc

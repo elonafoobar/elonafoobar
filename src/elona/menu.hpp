@@ -2,8 +2,10 @@
 
 #include <string>
 
+#include "data/id.hpp"
 #include "eobject/eobject.hpp"
 #include "optional.hpp"
+#include "typedefs.hpp"
 
 
 
@@ -108,7 +110,7 @@ int show_hire_menu(HireOperation);
 int show_spell_writer_menu();
 void showeconomy(int, int, const std::string&, int = 0, int = 0);
 void show_city_chart();
-void begin_to_believe_god(int);
+void begin_to_believe_god(data::InstanceId religion);
 void screen_analyze_self();
 int ctrl_ally(
     ControlAllyOperation,
@@ -124,8 +126,15 @@ struct CtrlInventoryResult
     OptionalItemRef selected_item;
 };
 
-CtrlInventoryResult ctrl_inventory(
-    optional_ref<Character> inventory_owner = none);
+struct CtrlInventoryOptions
+{
+    optional_ref<Character> inventory_owner;
+    lua_index body_part_index;
+
+    CtrlInventoryOptions() = default;
+};
+
+CtrlInventoryResult ctrl_inventory(const CtrlInventoryOptions& opts = {});
 
 
 void menu_chat_dialog();

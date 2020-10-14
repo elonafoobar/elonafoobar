@@ -1,15 +1,14 @@
 #include "version.hpp"
 
 
+
 namespace elona
 {
 
-
-/* clang-format off */
-
-
-// @VARIABLE@ is replaced by CMake.
-const Version latest_version{
+// Placeholder values enclosed by @ are injected by CMake.
+const Version latest_version
+{
+    /* clang-format off */
     @PROJECT_VERSION_MAJOR@,
     @PROJECT_VERSION_MINOR@,
     @PROJECT_VERSION_PATCH@,
@@ -17,10 +16,7 @@ const Version latest_version{
     u8"@PROJECT_VERSION_REVISION@",
     u8"@PROJECT_VERSION_TIMESTAMP@",
     u8"@PROJECT_VERSION_PLATFORM@",
+    /* clang-format on */
 };
-
-
-/* clang-format on */
-
 
 } // namespace elona
