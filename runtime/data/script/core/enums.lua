@@ -1,25 +1,38 @@
 local Enums = {}
 
+local class, xtype = _ENV.prelude.class, _ENV.prelude.xtype
 
-local function new_enum(definitions)
-   local enum = {}
+local Enum = class("core.Enums.Enum")
+
+function Enum:__init(definitions)
+   assert(type(definitions) == "table", "Enum.new: definitions must be a table.")
+
    for k, v in pairs(definitions) do
-      enum[k] = v
-      enum[v] = k
+      assert(type(k) == "string", "Enum.new: name must be a string.")
+      assert(xtype(v) == "integer", "Enum.new: value must be an integer.")
+      self[k] = v
+      self[v] = k
    end
-   return enum
 end
 
-Enums.new_enum = new_enum
+function Enum:is_valid_value(value)
+   return type(self[value]) == "string"
+end
 
+function Enum:is_valid_name(name)
+   return xtype(self[name]) == "integer"
+end
 
+Enums.Enum = Enum
+
+Enums.new_enum = Enum.new
 
 --- @enum CurseState
 ---
 --- The curse state of an item.
 --- @usage local item = Item.create(10, 10, "core.putitoro", 3)
 --- item.curse_state = Enums.CurseState.BLESSED
-Enums.CurseState = new_enum {
+Enums.CurseState = Enums.new_enum {
    DOOMED = -2,
    CURSED = -1,
    NONE = 0,
@@ -31,7 +44,7 @@ Enums.CurseState = new_enum {
 --- The identify state of an item.
 --- @usage local item = Item.create(10, 10, "core.putitoro", 3)
 --- item.identify_state = Enums.IdentifyState.COMPLETELY
-Enums.IdentifyState = new_enum {
+Enums.IdentifyState = Enums.new_enum {
    UNIDENTIFIED = 0,
    PARTLY = 1,
    ALMOST = 2,
@@ -41,7 +54,7 @@ Enums.IdentifyState = new_enum {
 --- @enum Quality
 ---
 --- The quality of randomly generated equipment.
-Enums.Quality = new_enum {
+Enums.Quality = Enums.new_enum {
    NONE = 0,
    BAD = 1,
    GOOD = 2,

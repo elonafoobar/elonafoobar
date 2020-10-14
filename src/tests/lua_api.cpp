@@ -138,3 +138,8 @@ TEST_CASE("Exports: eating_effect", "[Lua: Exports]")
     lua::lua->get_api_manager().init_from_mods();
     lua_testcase("exports/eating_effect.lua");
 }
+
+TEST_CASE("Core API: Enums", "[Lua: API]")
+{
+    lua_testcase("enums.lua");
+}
