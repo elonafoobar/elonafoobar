@@ -2,18 +2,6 @@
 --  @usage local Debug = ELONA.require("core.Debug")
 module "Debug"
 
---- Logs a message to log.txt.
---
---  @tparam string message the message to log
---  @function log
-function log(message) end
-
---- Reports an error to the game console and log file.
---
---  @tparam string message the error message to report
---  @function report_error
-function report_error(message) end
-
 --- Enable Wizard mode. It is equivalent to turn `core.wizard.is_enabled` on.
 --  @function enable_wizard
 function enable_wizard() end
