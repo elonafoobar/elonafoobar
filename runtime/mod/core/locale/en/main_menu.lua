@@ -72,6 +72,10 @@ ELONA.i18n:add {
             download = "[Switch To Download]",
             installed = "[Switch To Installed]",
          },
+
+         toggle = {
+            cannot_disable = "Mod '{$1}' is required to run the game. You cannot disable it.",
+         },
       },
 
       mod_develop = {
