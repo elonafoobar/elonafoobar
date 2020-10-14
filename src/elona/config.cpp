@@ -78,7 +78,7 @@ void font_quality(const std::string& variant)
         if (variant != "high")
         {
             // Unknown font quality; fallback to the default value, "high".
-            ELONA_WARN("config") << "Unsupported font quality: " << variant;
+            ELONA_WARN("Config: unsupported font quality '" + variant + "'");
         }
         snail::Application::instance()
             .get_renderer()
@@ -141,14 +141,14 @@ json5::value::object_type parse_json5_file(
     }
     catch (json5::syntax_error& err)
     {
-        ELONA_WARN("config")
-            << "JSON5 syntax error in '" << filepath << "': " << err.what();
+        ELONA_WARN(
+            "Config: JSON5 syntax error in '" + filepath + "': " + err.what());
         return {};
     }
     catch (json5::invalid_type_error& err)
     {
-        ELONA_WARN("config")
-            << "JSON5 type error in '" << filepath << "': " << err.what();
+        ELONA_WARN(
+            "Config: JSON5 type error in '" + filepath + "': " + err.what());
         return {};
     }
 }

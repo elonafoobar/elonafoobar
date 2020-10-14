@@ -324,13 +324,14 @@ void play_music_inner(data::InstanceId music_id, bool loop)
     const auto music = the_music_db[music_id];
     if (!music)
     {
-        ELONA_ERROR("audio") << "Cannot load music " << music_id.get();
+        ELONA_ERROR("Audio: cannot load music '" + music_id.get() + "'");
         return;
     }
     if (!fs::exists(music->file))
     {
-        ELONA_ERROR("audio") << "Cannot load file " << music->file.to_u8string()
-                             << " for music " << music_id.get();
+        ELONA_ERROR(
+            "Audio: cannot load file '" + music->file.to_u8string() +
+            "' for music '" + music_id.get() + "'");
         return;
     }
 
@@ -369,7 +370,7 @@ void snd(data::InstanceId sound_id, bool loop, bool allow_duplicate)
 
     if (!sound)
     {
-        ELONA_ERROR("audio") << "Cannot load sound " << sound_id.get();
+        ELONA_ERROR("Audio: cannot load sound '" + sound_id.get() + "'");
         return;
     }
 
@@ -390,7 +391,7 @@ void snd_at(
 
     if (!sound)
     {
-        ELONA_ERROR("audio") << "Cannot load sound " << sound_id.get();
+        ELONA_ERROR("Audio: cannot load sound '" + sound_id.get() + "'");
         return;
     }
 

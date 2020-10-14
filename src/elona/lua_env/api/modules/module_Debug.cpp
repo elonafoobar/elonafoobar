@@ -24,7 +24,7 @@ namespace elona::lua::api::modules::module_Debug
  */
 void Debug_log(const std::string& message)
 {
-    ELONA_LOG("lua.debug") << message;
+    ELONA_LOG("Lua.debug: " + message);
 }
 
 
@@ -47,8 +47,7 @@ void Debug_report_error(const std::string& message)
         txt(line + "  ", Message::color{ColorIndex::red});
     }
 
-    ELONA_ERROR("lua.debug") << "Script error: " << message;
-    std::cerr << "Script error: " << message << std::endl;
+    ELONA_ERROR("Debug.report_error: " + message);
 }
 
 
@@ -61,7 +60,7 @@ void Debug_report_error(const std::string& message)
 void Debug_enable_wizard()
 {
     elona::debug_enable_wizard();
-    ELONA_ERROR("lua.debug") << "Enable Wizard mode";
+    ELONA_LOG("Debug.enable_wizard: enabled");
 }
 
 
@@ -74,7 +73,7 @@ void Debug_enable_wizard()
 void Debug_disable_wizard()
 {
     elona::debug_disable_wizard();
-    ELONA_ERROR("lua.debug") << "Disable Wizard mode";
+    ELONA_LOG("Debug.disable_wizard: disabled");
 }
 
 

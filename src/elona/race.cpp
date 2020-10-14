@@ -69,8 +69,9 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         else
         {
             // Skip the skill if undefined.
-            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first.get()
-                                   << " (race " << race_id.get() << ")";
+            ELONA_WARN(
+                "Data: undefined skill ID: " + pair.first.get() + " (race " +
+                race_id.get() + ")");
         }
     }
 
@@ -83,9 +84,9 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
         else
         {
             // Skip the resistance if undefined.
-            ELONA_WARN("lua.data")
-                << "Undefined resistance ID: " << pair.first.get() << " (race "
-                << race_id.get() << ")";
+            ELONA_WARN(
+                "Data: undefined resistance ID: " + pair.first.get() +
+                " (race " + race_id.get() + ")");
         }
     }
 }

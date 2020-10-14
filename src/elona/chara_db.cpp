@@ -71,9 +71,9 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
         else
         {
             // Skip the resistance if undefined.
-            ELONA_WARN("lua.data")
-                << "Undefined resistance ID: " << pair.first.get()
-                << " (character " << data->id.get() << ")";
+            ELONA_WARN(
+                "Data: undefined resistance ID: " + pair.first.get() +
+                " (character " + data->id.get() + ")");
         }
     }
 

@@ -1284,9 +1284,10 @@ TurnResult exit_map()
     int previous_dungeon_level = game()->current_dungeon_level;
     int fixstart = 0;
 
-    ELONA_LOG("map") << "exit_map levelexitby begin " << levelexitby << " cur "
-                     << game()->current_map << " cur_level "
-                     << game()->current_dungeon_level;
+    ELONA_LOG(
+        "Map: exit_map levelexitby begin " + std::to_string(levelexitby) +
+        " cur " + std::to_string(game()->current_map) + " cur_level " +
+        std::to_string(game()->current_dungeon_level));
 
     game()->left_minutes_of_executing_quest = 0;
     game()->rogue_boss_encountered = 0;
@@ -1649,7 +1650,7 @@ TurnResult exit_map()
         // This map should be saved.
         save_save_map_local_data();
 
-        ELONA_LOG("map") << "exit_map save local";
+        ELONA_LOG("Map: exit_map save local");
     }
     else
     {
@@ -1673,17 +1674,18 @@ TurnResult exit_map()
             }
         }
 
-        ELONA_LOG("map") << "exit_map clear temporary";
+        ELONA_LOG("Map: exit_map clear temporary");
     }
 
     bool map_changed = game()->current_map != previous_map ||
         game()->current_dungeon_level != previous_dungeon_level;
 
-    ELONA_LOG("map") << "exit_map levelexitby end " << levelexitby << " cur "
-                     << game()->current_map << " cur_level "
-                     << game()->current_dungeon_level << " prev "
-                     << previous_map << " prev_level "
-                     << previous_dungeon_level;
+    ELONA_LOG(
+        "Map: exit_map levelexitby end " + std::to_string(levelexitby) +
+        " cur " + std::to_string(game()->current_map) + " cur_level " +
+        std::to_string(game()->current_dungeon_level) + " prev " +
+        std::to_string(previous_map) + " prev_level " +
+        std::to_string(previous_dungeon_level));
 
     // Only trigger the map unload event if the map was changed. The map might
     // not change if access to it is refused (jail, pyramid, etc.).

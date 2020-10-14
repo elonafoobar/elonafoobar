@@ -142,7 +142,7 @@ bool keybind_action_has_category(
     }
     if (keybind::actions.find(action_id) == keybind::actions.end())
     {
-        ELONA_WARN("keybinding") << "No such keybind action " << action_id;
+        ELONA_WARN("Keybinding: no such keybind action " + action_id);
         return false;
     }
 

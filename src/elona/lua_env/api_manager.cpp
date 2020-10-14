@@ -98,9 +98,9 @@ void APIManager::load_library(
     if (!result.valid())
     {
         sol::error err = result;
-        ELONA_ERROR("lua.core") << err.what();
-        throw std::runtime_error(
-            "Failed initializing internal Lua library '" + library_name + "'.");
+        ELONA_ERROR("API: "s + err.what());
+        throw std::runtime_error{
+            "Failed initializing internal Lua library '" + library_name + "'."};
     }
 
     lua_state()->globals()[library_name] = result;

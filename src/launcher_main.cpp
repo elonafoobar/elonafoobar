@@ -157,7 +157,7 @@ int main(int argc, char** argv)
     (void)argc;
     (void)argv;
 
-    log::Logger::instance().init();
+    log::init(filessytem::dirs::log(), log::LogLevel::info);
 
     profiles = list_profiles();
 

@@ -31,8 +31,9 @@ void class_init_chara(Character& chara, data::InstanceId class_id)
         else
         {
             // Skip the skill if undefined.
-            ELONA_WARN("lua.data") << "Undefined skill ID: " << pair.first.get()
-                                   << " (class " << class_id.get() << ")";
+            ELONA_WARN(
+                "Data: undefined skill ID: " + pair.first.get() + " (class " +
+                class_id.get() + ")");
         }
     }
 }

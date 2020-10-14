@@ -144,8 +144,9 @@ ModList ModList::from_stream(std::istream& in, const std::string& filepath)
         }
         else
         {
-            ELONA_WARN("mod") << "failed to load mod list file (" << filepath
-                              << "): " << result.left();
+            ELONA_WARN(
+                "Mod: failed to load mod list file (" + filepath +
+                "): " + result.left());
         }
     }
     mods.emplace(std::make_pair(
