@@ -31,53 +31,24 @@ end
 
 
 
-function Shell:register_builtins(native_builtin_commands)
-   local function register(name, callback)
-      self.register("_builtin_", name, callback)
+function Shell:register_commands()
+   local Console = self._env.Console
+   local Data = self._env.Data
+   local Debug = self._env.Debug
+
+   for id, cmd_data in pairs(Data.get_table("core.console_command")) do
+      if cmd_data.wizard_only then
+         self._env:register_command(id, function(...)
+            if not Debug.is_wizard() then
+               Console.print("Activate Wizard mode to run the command.")
+               return
+            end
+            cmd_data.on_execute(...)
+         end)
+      else
+         self._env:register_command(id, cmd_data.on_execute)
+      end
    end
-
-   register("help", function()
-      local all_commands = {}
-      for mod_id, commands in pairs(self._env.COMMANDS) do
-         for name, _ in pairs(commands) do
-            all_commands[#all_commands+1] = mod_id.."."..name
-         end
-      end
-      table.sort(all_commands)
-      for _, command in ipairs(all_commands) do
-         self._term.println(command)
-      end
-   end)
-
-   register("echo", function(s)
-      self._term.println(tostring(s))
-   end)
-
-   register("history", function()
-      local n = self._history:count()
-      if n >= 10 then
-         n = 10
-      end
-      for i = 1, n do
-         local idx = self._history:count() - n + i
-         local entry = self._history:get(idx)
-         self._term.println("  "..tostring(idx).."  "..entry)
-      end
-   end)
-
-   -- Native commands
-   for name, callback in pairs(native_builtin_commands) do
-      register(name, callback)
-   end
-end
-
-
-
-function Shell:register(mod_id, name, callback)
-   if not mod_id or #mod_id == 0 then
-      mod_id = "_console_"
-   end
-   self._env:register_command(mod_id, name, callback)
 end
 
 
@@ -116,6 +87,12 @@ function Shell:prompt()
    else
       self._term.print(self._env.PROMPT..self._input)
    end
+end
+
+
+
+function Shell:get_history()
+   return self._history
 end
 
 

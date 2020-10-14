@@ -25,10 +25,10 @@ The console has two kinds of mode, shell mode and Lua mode. The command line sta
 
 ## Command namespace
 
-All console commands have own "namespace", usually the mod name where the command is defined. There are two pre-defined namespaces, `_bulitin_` and `_console_`. `_bulitin_` is a namespace for built-in commands defined in C++ or kernel Lua module. `_console_` is one for user-defined commands which are defined via the console. Registered commands are stored in `COMMANDS` table. You can access any commands in Lua mode like this:
+All console commands are defined as Data instances. Defined commands are stored in `COMMANDS` table. You can access any commands in Lua mode like this:
 
 ```
->>> COMMANDS[namespace][command_name]()
+>>> COMMANDS[namespace..command_name]()
 ```
 
 
@@ -150,7 +150,7 @@ Gain `FAME` fame (1 million by default).
 
 ## Variables
 
-There are some variables available in Lua mode.
+There are some special variables available in Lua mode.
 
 
 ### `COMMANDS`
@@ -158,7 +158,7 @@ There are some variables available in Lua mode.
 The variable holds all console commands.
 
 ```
->>> COMMANDS._builtin_.echo("Hello, World!")
+>>> COMMANDS["core.echo"]("Hello, World!")
 ```
 
 

@@ -26,11 +26,8 @@ end
 
 
 
-function Env:register_command(mod_id, name, callback)
-   if not self.COMMANDS[mod_id] then
-      self.COMMANDS[mod_id] = {}
-   end
-   self.COMMANDS[mod_id][name] = callback
+function Env:register_command(id, callback)
+   self.COMMANDS[id] = callback
 end
 
 

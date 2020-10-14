@@ -24,14 +24,10 @@ struct ModEnv;
  * Elona foobar in-game console.
  *
  * All console commands and Lua functions are performed in an isolated
- * environment (pseudo-mod "_console_"), so that no side-effect happends to the
- * game. Commands have own "namespace", usually the mod ID where the command is
- * registered. There are two special namespaces, "_builtin_" and "_console_".
- * "_builtin_" is a namespace for all built-in commands defined from C++ code,
- * "console.cpp". "_console_" is a namespace for user-defined commands which
- * are defined via the console. Registered commands are stored in "COMMANDS"
+ * environment, so that no side-effect happends to the game. Console commands
+ * are defined as Data instances. Defineds commands are stored in "COMMANDS"
  * table. You can access any commands like this
- * "COMMANDS[namespace][command_name]".
+ * "COMMANDS[namespace..command_name]".
  */
 class Console : public LuaSubmodule
 {
@@ -42,16 +38,12 @@ public:
     void init_environment();
 
     void draw();
-    void print(const std::string&);
     void grab_input();
 
 
-    void register_(
-        const std::string& mod_id,
-        const std::string& name,
-        sol::protected_function callback);
-
     sol::object run(const std::string& cmdline);
+    void print(const std::string&);
+    sol::object get_history();
 
 
 
@@ -71,7 +63,6 @@ private:
 
 
     void set_constants(int char_width, int char_height, int width, int height);
-    void register_builtin_commands();
 };
 
 } // namespace lua

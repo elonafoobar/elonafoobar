@@ -17,26 +17,14 @@ namespace elona::lua::api::modules::module_Wish
  *
  * Wish something you want.
  *
+ * @tparam[opt] string wish Your wish. If it is not given, shows text box.
  * @treturn bool True if something happens; otherwise false.
  */
-bool Wish_wish()
+bool Wish_wish(sol::optional<std::string> wish)
 {
-    return what_do_you_wish_for(cdata.player());
-}
-
-
-
-/**
- * @luadoc wish
- *
- * Wish `wish`.
- *
- * @tparam string wish Your wish.
- * @treturn bool True if something happens; otherwise false.
- */
-bool Wish_wish_with_str(const std::string& wish)
-{
-    return what_do_you_wish_for(cdata.player(), wish);
+    return what_do_you_wish_for(
+        cdata.player(),
+        wish ? optional<std::string>{*wish} : optional<std::string>{});
 }
 
 
@@ -111,7 +99,7 @@ void bind(sol::table api_table)
 {
     /* clang-format off */
 
-    ELONA_LUA_API_BIND_FUNCTION("wish", Wish_wish, Wish_wish_with_str);
+    ELONA_LUA_API_BIND_FUNCTION("wish", Wish_wish);
     ELONA_LUA_API_BIND_FUNCTION("match", Wish_match);
     ELONA_LUA_API_BIND_FUNCTION("add", Wish_add);
 
