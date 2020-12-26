@@ -50,6 +50,7 @@ fs::path base_user_dir;
 
 ELONA_DEFINE_PREDEFINED_DIR(exe, "")
 ELONA_DEFINE_PREDEFINED_DIR(data, "data")
+ELONA_DEFINE_PREDEFINED_DIR(font, "data/font")
 ELONA_DEFINE_PREDEFINED_DIR(graphic, "graphic")
 ELONA_DEFINE_PREDEFINED_DIR(locale, "locale")
 ELONA_DEFINE_PREDEFINED_DIR(log, "log")
