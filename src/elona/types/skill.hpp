@@ -116,7 +116,7 @@ struct SkillTable
      */
     void set_base_level(data::InstanceId id, lua_int new_value)
     {
-        _skills[id].level = new_value;
+        _skills[id].base_level = new_value;
     }
 
 
@@ -129,7 +129,7 @@ struct SkillTable
      */
     void add_base_level(data::InstanceId id, lua_int delta)
     {
-        _skills[id].level += delta;
+        _skills[id].base_level += delta;
     }
 
 
@@ -162,7 +162,7 @@ struct SkillTable
      */
     void set_experience(data::InstanceId id, lua_int new_value)
     {
-        _skills[id].level = new_value;
+        _skills[id].experience = new_value;
     }
 
 
@@ -175,7 +175,7 @@ struct SkillTable
      */
     void add_experience(data::InstanceId id, lua_int delta)
     {
-        _skills[id].level += delta;
+        _skills[id].experience += delta;
     }
 
 
@@ -208,7 +208,7 @@ struct SkillTable
      */
     void set_potential(data::InstanceId id, lua_int new_value)
     {
-        _skills[id].level = new_value;
+        _skills[id].potential = new_value;
     }
 
 
@@ -221,7 +221,7 @@ struct SkillTable
      */
     void add_potential(data::InstanceId id, lua_int delta)
     {
-        _skills[id].level += delta;
+        _skills[id].potential += delta;
     }
 
 
