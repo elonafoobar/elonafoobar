@@ -102,7 +102,7 @@ There are mainly 2 ways to build Elona foobar in parallel.
 
 # How To Play
 
-1. Copy the `graphic` and `sound` folders from vanilla v1.22 to the directory containing the executable. Make sure not to overwrite any files that already exist, as they have been updated in this version.
+1. Copy the `graphic` and `sound` folders from vanilla v1.22 to the directory containing the executable.
 2. Execute `bin/Elona_foobar`, `bin/Elona_foobar.app` or `bin/Debug/Elona_foobar.exe`.
 
 
@@ -116,8 +116,6 @@ See [CONTRIBUTING.md](.github/CONTRIBUTING.md) for details.
 
 MIT License. See [LICENSE.txt](LICENSE.txt) for details. This license is applied for the
 contents in this repository. Note that images, sounds and fonts are not included.
-For files under [runtime/graphic](runtime/graphic/) folder of the repository, see
-[runtime/graphic/LICENSE.txt](runtime/graphic/LICENSE.txt).
 
 
 ## Thirdparty libraries

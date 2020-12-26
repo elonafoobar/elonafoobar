@@ -1,0 +1,11 @@
+Copyright and License
+
+interface_ex1.png
+interface_ex2.png
+interface_ex3.png
+interface_ex4.png
+interface_ex7.png
+interface_ex8.png
+interface_ex9.png
+    MIT License
+    Copyright (c) 2018 KI

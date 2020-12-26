@@ -274,7 +274,8 @@ MainMenuResult main_title_menu()
     gcopy(4, 0, 0, windoww, windowh, 0, 0);
     gmode(2);
 
-    snail::Image water_ripple{filesystem::path("graphic/water_ripple.png")};
+    snail::Image water_ripple{
+        filesystem::dirs::data() / "graphic" / "water_ripple.png"};
 
     std::vector<std::pair<int, Position>> ripple_source;
     std::vector<std::tuple<int, int, Position>> ripples;
