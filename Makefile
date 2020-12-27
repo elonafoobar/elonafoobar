@@ -64,17 +64,6 @@ test_runner: $(BIN_DIR) FORCE # Build test runner.
 		cmake --build . --config Debug
 
 
-bench: bench_runner FORCE # Run benchmark.
-	cd $(BIN_DIR); \
-		./Elona_foobar
-
-
-bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
-	cd $(BIN_DIR); \
-		cmake .. -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS); \
-		cmake --build . --config Release
-
-
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 
@@ -110,16 +99,6 @@ luacheck: FORCE # Run luacheck.
 	luacheck --version
 	luacheck runtime/mod/
 	luacheck src/tests/lua
-
-
-i18n-check:FORCE  # Run i18n-checker.
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
-
-
-i18n-check-err: FORCE # Run i18n-checker with --no-warnings.
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
 
 
 rebuild: clean build FORCE # Clean and build Elona.

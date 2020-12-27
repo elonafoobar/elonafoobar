@@ -57,9 +57,9 @@ else()
 endif()
 
 # Options
-set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER, TESTS, or BENCH)")
+set(ELONA_BUILD_TARGET "GAME" CACHE STRING "Build executable type (GAME, LAUNCHER or TESTS)")
 
-if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
+if(ELONA_BUILD_TARGET STREQUAL "TESTS")
   set(SNAIL_BACKEND "HEADLESS")
   set(SPIDER_BACKEND "HEADLESS")
 else()
@@ -105,22 +105,6 @@ if(ELONA_BUILD_TARGET STREQUAL "TESTS")
 
   add_executable(${PROJECT_NAME} src/elona/version.cpp ${TEST_SOURCES})
   target_link_libraries(${PROJECT_NAME} Catch)
-elseif(ELONA_BUILD_TARGET STREQUAL "BENCH")
-  add_subdirectory(src/thirdparty/hayai)
-
-  # Benchmark sources
-  set(BENCH_SOURCES
-    src/bench/ai.cpp
-    src/bench/generate.cpp
-    src/bench/i18n.cpp
-    src/bench/lua_callbacks.cpp
-    src/bench/magic.cpp
-    src/bench/serialization.cpp
-    src/bench/util.cpp
-    )
-
-  add_executable(${PROJECT_NAME} src/elona/version.cpp ${BENCH_SOURCES})
-  target_link_libraries(${PROJECT_NAME} hayai_main ${LIB_TIMING})
 elseif(ELONA_BUILD_TARGET STREQUAL "GAME")
   if(WIN32)
     set(RESOURCES "${PROJECT_SOURCE_DIR}/resources/icon_windows.rc")
@@ -298,9 +282,6 @@ else() # GCC or Clang
     "O0"
     "DDEBUG"
     )
-  if(ELONA_BUILD_TARGET STREQUAL "BENCH")
-    list(APPEND GENERAL_OPTIONS "g1")
-  endif()
   list(APPEND DISABLED_WARNINGS
     "deprecated-declarations"
     )
@@ -474,7 +455,7 @@ else()
   message(WARNING "Elona 1.22 distribution not found at ${CMAKE_PREFIX_PATH}/elona. The game cannot be run without assets. Please manually copy the 'graphic' and 'sound' directories from Elona 1.22 to the ${PROJECT_NAME} output path after building.")
 endif()
 
-if((ELONA_BUILD_TARGET STREQUAL "TESTS") OR (ELONA_BUILD_TARGET STREQUAL "BENCH"))
+if(ELONA_BUILD_TARGET STREQUAL "TESTS")
   copy_dir(${CMAKE_SOURCE_DIR}/src/tests/data "$<TARGET_FILE_DIR:${PROJECT_NAME}>/tests/data")
 endif()
 
