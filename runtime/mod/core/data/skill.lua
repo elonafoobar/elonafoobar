@@ -1,6 +1,6 @@
-ELONA.data:define_prototype("ability")
+ELONA.data:define_prototype("skill")
 ELONA.data:add(
-   "core.ability",
+   "core.skill",
    {
       stat_life = {
          integer_id = 2,
