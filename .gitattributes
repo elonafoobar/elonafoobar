@@ -1,9 +1,5 @@
 * text=auto eol=lf
 
-runtime/font/GenShinGothic/README_GenShin.txt eol=crlf
-runtime/font/GenShinGothic/SIL_Open_Font_License_1.1.txt eol=lf
-runtime/font/GenShinGothic/mplus-TESTFLIGHT-059/LICENSE_E eol=lf
-runtime/font/GenShinGothic/mplus-TESTFLIGHT-059/LICENSE_J eol=crlf
-runtime/font/GenShinGothic/mplus-TESTFLIGHT-059/README_E eol=lf
-runtime/font/GenShinGothic/mplus-TESTFLIGHT-059/README_J eol=crlf
-
+/runtime/data/font/GenShinGothic/README_GenShin.txt             eol=crlf
+/runtime/data/font/GenShinGothic/mplus-TESTFLIGHT-059/LICENSE_J eol=crlf
+/runtime/data/font/GenShinGothic/mplus-TESTFLIGHT-059/README_J  eol=crlf

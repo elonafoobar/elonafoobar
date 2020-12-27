@@ -201,7 +201,7 @@ void font(int size, snail::Font::Style style)
     snail::hsp::font(
         size,
         style,
-        filesystem::path(u8"font") / fs::u8path(g_config.font_filename()));
+        filesystem::dirs::font() / fs::u8path(g_config.font_filename()));
 }
 
 

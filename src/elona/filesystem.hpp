@@ -29,6 +29,7 @@ namespace dirs
 
 fs::path exe();
 fs::path data();
+fs::path font();
 fs::path graphic();
 fs::path locale();
 fs::path log();
