@@ -24,9 +24,7 @@ you can build your own Elona.
 ----------------
 
 1. Copy the graphic and sound folders from vanilla v1.22 to
-   the folder containing the executable. Make sure *not* to
-   overwrite any files that already exist, as they have been
-   updated in this version.
+   the folder containing the executable.
 2. Execute the executable Elona foobar.
 
 
