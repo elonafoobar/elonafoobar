@@ -300,7 +300,6 @@ ELONA_EXTERN(int foot);
 ELONA_EXTERN(int grown);
 ELONA_EXTERN(int hire);
 ELONA_EXTERN(int homemapmode);
-ELONA_EXTERN(int ichargelevel);
 ELONA_EXTERN(IdentifyState idtresult);
 ELONA_EXTERN(int in);
 ELONA_EXTERN(int inf_maxlog);

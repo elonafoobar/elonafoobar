@@ -36,6 +36,7 @@
 #include "inventory.hpp"
 #include "item.hpp"
 #include "itemgen.hpp"
+#include "lua_env/interface.hpp"
 #include "map.hpp"
 #include "map_cell.hpp"
 #include "mef.hpp"
@@ -2678,9 +2679,9 @@ bool _magic_630_1129(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(
-            target_item, the_item_db[target_item->id]->integer_id);
-        if (ichargelevel < 1 || target_item->id == "core.rod_of_wishing" ||
+        const auto max_charges = lua::get_data("core.item", target_item->id)
+                                     ->optional_or<lua_int>("max_charges", 0);
+        if (max_charges < 1 || target_item->id == "core.rod_of_wishing" ||
             target_item->id == "core.rod_of_domination" ||
             target_item->id == "core.spellbook_of_wishing" ||
             target_item->id == "core.spellbook_of_harvest" ||
@@ -2691,7 +2692,7 @@ bool _magic_630_1129(Character& subject)
             return true;
         }
         f = 1;
-        if (target_item->charges > ichargelevel)
+        if (target_item->charges > max_charges)
         {
             f = -1;
         }
@@ -2712,16 +2713,16 @@ bool _magic_630_1129(Character& subject)
                 f = 0;
             }
         }
-        if (rnd(ichargelevel * ichargelevel + 1) == 0)
+        if (rnd(max_charges * max_charges + 1) == 0)
         {
             f = 0;
         }
         if (f == 1)
         {
-            p = 1 + rnd((ichargelevel / 2 + 1));
-            if (p + target_item->charges > ichargelevel)
+            p = 1 + rnd(max_charges / 2 + 1);
+            if (p + target_item->charges > max_charges)
             {
-                p = ichargelevel - target_item->charges + 1;
+                p = max_charges - target_item->charges + 1;
             }
             if (the_item_db[target_item->id]->category ==
                 ItemCategory::spellbook)
@@ -2774,30 +2775,26 @@ bool _magic_629(Character& subject)
     {
         assert(target_item_opt);
         const auto target_item = target_item_opt.unwrap();
-        item_db_get_charge_level(
-            target_item, the_item_db[target_item->id]->integer_id);
-        for (int cnt = 0; cnt < 1; ++cnt)
+        const auto max_charges = lua::get_data("core.item", target_item->id)
+                                     ->optional_or<lua_int>("max_charges", 0);
+        if (max_charges == 1)
         {
-            if (ichargelevel == 1)
-            {
-                p = 100;
-                break;
-            }
-            if (ichargelevel == 2)
-            {
-                p = 25;
-                break;
-            }
-            if (ichargelevel <= 4)
-            {
-                p = 5;
-                break;
-            }
-            if (ichargelevel <= 6)
-            {
-                p = 3;
-                break;
-            }
+            p = 100;
+        }
+        else if (max_charges == 2)
+        {
+            p = 25;
+        }
+        else if (max_charges <= 4)
+        {
+            p = 5;
+        }
+        else if (max_charges <= 6)
+        {
+            p = 3;
+        }
+        else
+        {
             p = 1;
         }
         animeload(8, subject);

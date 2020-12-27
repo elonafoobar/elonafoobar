@@ -1657,7 +1657,6 @@ void item_dump_desc(const ItemRef& item)
 {
     reftype = (int)the_item_db[item->id]->category;
 
-    item_db_get_charge_level(item, the_item_db[item->id]->integer_id);
     item_db_get_description(item, the_item_db[item->id]->integer_id);
 
     p = item_load_desc(item);
