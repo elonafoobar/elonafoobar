@@ -39,8 +39,10 @@ time::Date game_date(optional<time::Instant> instant)
     const auto n = (instant.value_or(game_now())).from_epoch().inner();
 
     lua_int y = game()->epoch_year + (n / time::Duration::ratio_year);
-    uint8_t m = (n % time::Duration::ratio_year) / time::Duration::ratio_month;
-    uint8_t d = (n % time::Duration::ratio_month) / time::Duration::ratio_day;
+    uint8_t m =
+        (n % time::Duration::ratio_year) / time::Duration::ratio_month + 1;
+    uint8_t d =
+        (n % time::Duration::ratio_month) / time::Duration::ratio_day + 1;
     return time::Date{y, m, d};
 }
 

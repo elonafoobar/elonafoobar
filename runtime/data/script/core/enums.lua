@@ -67,7 +67,7 @@ Enums.Quality = Enums.new_enum {
 --- @enum Relationship
 ---
 --- The relationship between characters
-Enums.Relationship = new_enum {
+Enums.Relationship = Enums.new_enum {
    -- Your enemy. Mainly dungeon monsters.
    ENEMY = -3,
 

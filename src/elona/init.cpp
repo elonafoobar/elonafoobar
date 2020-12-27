@@ -511,11 +511,7 @@ void initialize_debug_globals()
     game()->pc_y_in_world_map = 21;
     game()->random_seed = 1 + rnd(2000000000);
     game()->random_seed_offset = 0;
-    game()->current_map = static_cast<int>(mdata_t::MapId::north_tyris);
-    game()->current_dungeon_level = 0;
-    game()->entrance_type = 7;
-    mapstartx = 22;
-    mapstarty = 21;
+    init_game_clock();
     game()->current_map = static_cast<int>(mdata_t::MapId::vernis);
     game()->current_dungeon_level = 1;
     game()->entrance_type = 7;
@@ -525,7 +521,6 @@ void initialize_debug_globals()
     flt(100);
     chara_create(0, 84, -3, 0);
     initialize_pc_character();
-    init_game_clock();
     game()->played_scene = 50;
     game()->has_not_been_to_vernis = 1;
     area_data[static_cast<int>(mdata_t::MapId::your_home)].outer_map =

@@ -88,7 +88,7 @@ TEST_CASE("test registering character", "[Lua: Data]")
 
     REQUIRE(data->color == ColorIndex::blue);
     REQUIRE(data->sex == 1);
-    REQUIRE(data->original_relationship == -3);
+    REQUIRE(data->relationship == Relationship::enemy);
     REQUIRE(data->_flags[22] == true);
     REQUIRE(data->_flags[27] == true);
 }
@@ -176,7 +176,7 @@ TEST_CASE("test registering character with all defaults", "[Lua: Data]")
 
     REQUIRE(data->color == ColorIndex::none);
     REQUIRE(data->sex == -1);
-    REQUIRE(data->original_relationship == 0);
+    REQUIRE(data->relationship == Relationship::friendly);
     REQUIRE(data->_flags[22] == false);
     REQUIRE(data->_flags[27] == false);
 }

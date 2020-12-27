@@ -1,6 +1,6 @@
 ELONA.i18n:add {
    god = {
-      eyth_name = "無のエイス"
+      eyth_name = "無のエイス",
       indifferent = "あなたの信仰は既に限界まで高まっている。",
       enraged = "{$1}は激怒した。", -- TODO duplicate?
 

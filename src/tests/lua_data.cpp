@@ -95,7 +95,7 @@ TEST_CASE("test order of script execution", "[Lua: Data]")
 
     auto& table = lua.get_data_manager().get();
 
-    auto spell = table.raw("core.ability", "load_order.expecto_patronum");
+    auto spell = table.raw("core.skill", "load_order.expecto_patronum");
     REQUIRE_SOME(spell);
     REQUIRE((*spell)["related_basic_attribute"].get<int>() == 17);
     REQUIRE((*spell)["cost"].get<int>() == 100);

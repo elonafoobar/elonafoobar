@@ -174,7 +174,7 @@ void pre_init()
     const fs::path source_config_file = get_test_data_path() / "config.json";
     const fs::path config_file = filesystem::files::profile_local_config();
     fs::copy_file(
-        source_config_file, config_file, fs::copy_option::overwrite_if_exists);
+        source_config_file, config_file, fs::copy_options::overwrite_existing);
 
     (void)PreinitConfigOptions::from_file(config_file);
 

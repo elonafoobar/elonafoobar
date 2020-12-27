@@ -84,14 +84,14 @@ function get_flag(chara, flag) end
 function set_flag(flag, value) end
 
 --- Obtains the skill of the given ID.
---  @tparam string skill_id ID of type core.ability
+--  @tparam string skill_id ID of type core.skill
 --  @treturn LuaAbility
 --  @function get_skill
 function get_skill(skill_id) end
 
 --- Makes this character gain a new skill or spell. This only has an
 --  effect if the character does not already know the skill/spell.
---  @tparam string skill_id the skill/spell ID of type core.ability
+--  @tparam string skill_id the skill/spell ID of type core.skill
 --  @tparam num initial_level the intial skill/spell level
 --  @tparam[opt] num initial_stock the initial spell stock for spells
 --  @function gain_skill
@@ -99,7 +99,7 @@ function gain_skill(skill_id, initial_level, initial_stock) end
 
 --- Makes this character gain experience in a skill or spell. This only
 --  has an effect if the character already knows the skill/spell.
---  @tparam string skill_id the skill/spell ID of type core.ability
+--  @tparam string skill_id the skill/spell ID of type core.skill
 --  @tparam num amount the amount of experience
 --  @function gain_skill_exp
 function gain_skill_exp(skill_id, amount) end

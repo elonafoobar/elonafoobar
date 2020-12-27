@@ -1,5 +1,5 @@
 ELONA.data:add(
-   "core.ability",
+   "core.skill",
    {
       expecto_patronum = {
          integer_id = 9999,

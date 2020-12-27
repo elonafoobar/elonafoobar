@@ -1,4 +1,4 @@
-ELONA.i18n.add_data_text(
+ELONA.i18n:add_data_text(
    "core.weather",
    {
       sunny = {
