@@ -101,16 +101,6 @@ luacheck: FORCE # Run luacheck.
 	luacheck src/tests/lua
 
 
-i18n-check:FORCE  # Run i18n-checker.
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp
-
-
-i18n-check-err: FORCE # Run i18n-checker with --no-warnings.
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) en --no-warnings
-	./tools/i18n_checker/bin/i18n_checker $(CURDIR) jp --no-warnings
-
-
 rebuild: clean build FORCE # Clean and build Elona.
 
 
