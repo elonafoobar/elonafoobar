@@ -1227,7 +1227,7 @@ void _update_aggro_and_crowd_density()
     game()->crowd_density = 0;
     for (auto&& cnt : cdata.all())
     {
-        cnt.turn_cost = 0;
+        cnt.turn_energy = 0;
         if (cnt.id == "core.user") // cnpc
         {
             // Vanilla-compatible CNPC is not supported now.

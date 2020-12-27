@@ -453,7 +453,7 @@ optional<TurnResult> use_gene_machine()
                 cdata[original_character],
                 i18n::s.get_data_text("core.body_part", *body_part_id, "name")),
             Message::color{ColorIndex::green});
-        refresh_speed_correction_value(cdata[original_character]);
+        chara_refresh_speed_penalty(cdata[original_character]);
     }
 
     {

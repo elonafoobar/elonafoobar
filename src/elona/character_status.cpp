@@ -142,15 +142,13 @@ void modify_height(Character& chara, int delta)
 
 
 
-void refresh_speed(Character& chara)
+void chara_refresh_speed_internal(Character& chara)
 {
-    chara.current_speed = chara.skills().level("core.stat_speed") *
-        clamp((100 - chara.speed_correction_value), 0, 100) / 100;
-    if (chara.current_speed < 10)
-    {
-        chara.current_speed = 10;
-    }
-    chara.speed_percentage_in_next_turn = 0;
+    chara.base_speed = std::max(
+        lua_int{10},
+        chara.skills().level("core.stat_speed") *
+            clamp(100 - chara.speed_penalty, 0, 100) / 100);
+    chara.next_speed_bonus = 0;
 
     if (!chara.is_player() && game()->mount != chara.index)
         return;
@@ -159,10 +157,9 @@ void refresh_speed(Character& chara)
     {
         const auto mount_speed =
             cdata[game()->mount].skills().level("core.stat_speed") *
-            clamp(100 - cdata[game()->mount].speed_correction_value, 0, 100) /
-            100;
+            clamp(100 - cdata[game()->mount].speed_penalty, 0, 100) / 100;
 
-        cdata.player().current_speed =
+        cdata.player().base_speed =
             mount_speed * 100 /
             clamp(
                 100 + mount_speed -
@@ -174,11 +171,11 @@ void refresh_speed(Character& chara)
                 1000);
         if (cdata[game()->mount].is_unsuitable_for_mount())
         {
-            cdata.player().current_speed /= 10;
+            cdata.player().base_speed /= 10;
         }
         if (game()->mount == chara.index)
         {
-            chara.current_speed = clamp(
+            chara.base_speed = clamp(
                 lua_int{
                     chara.skills().level("core.stat_strength") +
                     cdata.player().skills().level("core.riding")},
@@ -188,73 +185,74 @@ void refresh_speed(Character& chara)
         }
     }
 
-    gspdorg = cdata.player().skills().base_level("core.stat_speed");
-
     if (game()->mount == 0)
     {
         int n = cdata.player().nutrition / 1000 * 1000;
         if (n < 1000)
         {
-            cdata.player().speed_percentage_in_next_turn -= 30;
+            cdata.player().next_speed_bonus -= 30;
         }
         if (n < 2000)
         {
-            cdata.player().speed_percentage_in_next_turn -= 10;
+            cdata.player().next_speed_bonus -= 10;
         }
         if (cdata.player().sp < 0)
         {
-            cdata.player().speed_percentage_in_next_turn -= 30;
+            cdata.player().next_speed_bonus -= 30;
         }
         if (cdata.player().sp < 25)
         {
-            cdata.player().speed_percentage_in_next_turn -= 20;
+            cdata.player().next_speed_bonus -= 20;
         }
         if (cdata.player().sp < 50)
         {
-            cdata.player().speed_percentage_in_next_turn -= 10;
+            cdata.player().next_speed_bonus -= 10;
         }
     }
     if (cdata.player().burden_state >= 3)
     {
-        cdata.player().speed_percentage_in_next_turn -= 50;
+        cdata.player().next_speed_bonus -= 50;
     }
     if (cdata.player().burden_state == 2)
     {
-        cdata.player().speed_percentage_in_next_turn -= 30;
+        cdata.player().next_speed_bonus -= 30;
     }
     if (cdata.player().burden_state == 1)
     {
-        cdata.player().speed_percentage_in_next_turn -= 10;
+        cdata.player().next_speed_bonus -= 10;
     }
     if (map_data.type == mdata_t::MapType::world_map ||
         map_data.type == mdata_t::MapType::field)
     {
         if (game()->cargo_weight > game()->max_cargo_weight)
         {
-            cdata.player().speed_percentage_in_next_turn -= 25 +
+            cdata.player().next_speed_bonus -= 25 +
                 25 * (game()->cargo_weight / (game()->max_cargo_weight + 1));
         }
-    }
-    gspd = cdata.player().current_speed *
-        (100 + cdata.player().speed_percentage) / 100;
-    if (gspd < 10)
-    {
-        gspd = 10;
     }
 }
 
 
 
-void refresh_speed_correction_value(Character& chara)
+void chara_refresh_speed(Character& chara)
+{
+    chara_refresh_speed_internal(chara);
+    chara.speed = std::max(
+        lua_int{10}, chara.base_speed * (100 + chara.speed_bonus) / 100);
+}
+
+
+
+void chara_refresh_speed_penalty(Character& chara)
 {
     int number_of_body_parts = chara.body_parts.size();
     if (number_of_body_parts > 13)
     {
-        chara.speed_correction_value = (number_of_body_parts - 13) * 5;
+        chara.speed_penalty = (number_of_body_parts - 13) * 5;
     }
     else
     {
-        chara.speed_correction_value = 0;
+        chara.speed_penalty = 0;
     }
 }
 

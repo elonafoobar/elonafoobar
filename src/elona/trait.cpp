@@ -854,14 +854,13 @@ void trait_load_desc(Character& chara)
             i18n::s.get("core.trait.anorexia");
         ++listmax;
     }
-    if (chara.speed_correction_value != 0)
+    if (chara.speed_penalty != 0)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
         listn(0, listmax) = "["s +
             i18n::s.get("core.trait.window.category.etc") + "]"s +
-            i18n::s.get(
-                "core.trait.body_is_complicated", chara.speed_correction_value);
+            i18n::s.get("core.trait.body_is_complicated", chara.speed_penalty);
         ++listmax;
     }
     if (chara.is_player() && chara.extra_ether_disease_progress != 0)

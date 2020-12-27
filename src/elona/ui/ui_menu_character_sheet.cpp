@@ -617,7 +617,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_fame()
     s(1) = ""s + _chara.skills().level("core.stat_mana") + "("s +
         _chara.skills().base_level("core.stat_mana") + ")"s;
     s(2) = ""s + _chara.insanity;
-    s(3) = ""s + _chara.current_speed + "("s +
+    s(3) = ""s + _chara.base_speed + "("s +
         _chara.skills().base_level("core.stat_speed") + ")"s;
     s(4) = "";
     s(5) = ""s + _chara.fame;

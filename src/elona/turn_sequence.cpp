@@ -773,17 +773,11 @@ TurnResult pass_turns(bool time)
 
 TurnResult turn_begin()
 {
-    int turncost = 0;
-    int spd = 0;
     ct = 0;
     mef_update();
-    gspd = cdata.player().current_speed *
-        (100 + cdata.player().speed_percentage) / 100;
-    if (gspd < 10)
-    {
-        gspd = 10;
-    }
-    turncost = (map_data.turn_cost - cdata.player().turn_cost) / gspd + 1;
+    const auto turncost = (map_data.turn_cost - cdata.player().turn_energy) /
+            cdata.player().speed +
+        1;
     if (deferred_event_has_pending_events())
     {
         return deferred_event_start_proc();
@@ -793,16 +787,16 @@ TurnResult turn_begin()
         return TurnResult::pc_died;
     }
 
-    bool update_turn_cost = true;
+    bool update_turn_energy = true;
     if (map_data.type == mdata_t::MapType::world_map)
     {
         if (cdata.player().activity.turns > 2)
         {
-            cdata.player().turn_cost = map_data.turn_cost;
-            update_turn_cost = false;
+            cdata.player().turn_energy = map_data.turn_cost;
+            update_turn_energy = false;
         }
     }
-    if (update_turn_cost)
+    if (update_turn_energy)
     {
         for (auto&& cnt : cdata.all())
         {
@@ -810,12 +804,7 @@ TurnResult turn_begin()
             {
                 continue;
             }
-            spd = cnt.current_speed * (100 + cnt.speed_percentage) / 100;
-            if (spd < 10)
-            {
-                spd = 10;
-            }
-            cnt.turn_cost += spd * turncost;
+            cnt.turn_energy += cnt.speed * turncost;
         }
     }
 
@@ -839,9 +828,9 @@ TurnResult pass_one_turn(bool time_passing)
                 ++ct;
                 continue;
             }
-            if (cdata[ct].turn_cost >= map_data.turn_cost)
+            if (cdata[ct].turn_energy >= map_data.turn_cost)
             {
-                cdata[ct].turn_cost -= map_data.turn_cost;
+                cdata[ct].turn_energy -= map_data.turn_cost;
                 break;
             }
             else
@@ -857,13 +846,13 @@ TurnResult pass_one_turn(bool time_passing)
         }
     }
 
-    cdata[ct].speed_percentage = cdata[ct].speed_percentage_in_next_turn;
+    cdata[ct].speed_bonus = cdata[ct].next_speed_bonus;
     ++cdata[ct].turns;
     update_emoicon(cdata[ct]);
     if (ct == 0)
     {
         Message::instance().new_turn();
-        refresh_speed(cdata.player());
+        chara_refresh_speed(cdata.player());
         switch (cdata.player().turns % 10)
         {
         case 1:
@@ -1145,7 +1134,7 @@ TurnResult turn_end()
             }
         }
         get_hungry(cdata[ct]);
-        refresh_speed(cdata[ct]);
+        chara_refresh_speed(cdata[ct]);
     }
     else if (map_data.type != mdata_t::MapType::world_map)
     {

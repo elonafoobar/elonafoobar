@@ -152,10 +152,6 @@ optional<RandomEvent> generate_random_event()
     int id = 0;
     int luck_threshold = 0;
 
-    if (gspd < 10)
-    {
-        return none;
-    }
     if (dbg_skipevent)
     {
         return none;

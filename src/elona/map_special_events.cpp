@@ -218,7 +218,7 @@ static void _map_events_shelter()
         map_data.turn_cost = 10000;
         for (auto&& cnt : cdata.all())
         {
-            cnt.turn_cost = 0;
+            cnt.turn_energy = 0;
         }
         txt(i18n::s.get("core.misc.map.shelter.no_longer_need_to_stay"));
     }

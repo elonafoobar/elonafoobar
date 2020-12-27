@@ -195,7 +195,7 @@ ELONA.i18n:add {
          currently_riding = "現在{name($1)}は{name($2)}に騎乗している。",
 
          mount = {
-            execute = "{name($1)}に騎乗した({name($1)}の速度: {$2}→",
+            execute = "{name($1)}に騎乗した({name($1)}の速度: {$2}→{$3}) ",
             suitable = "この生物は乗馬用にちょうどいい！",
             unsuitable = "この生物はあなたを乗せるには非力すぎる。",
             dialog = {

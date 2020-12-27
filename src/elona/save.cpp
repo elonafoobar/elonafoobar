@@ -99,7 +99,7 @@ void save_load_game()
             create_pcpic(chara);
         }
     }
-    refresh_speed(cdata.player());
+    chara_refresh_speed(cdata.player());
 
     time_begin = timeGetTime() / 1000;
 

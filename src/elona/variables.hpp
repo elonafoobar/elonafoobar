@@ -56,8 +56,6 @@ ELONA_EXTERN(std::string nquestdate);
 ELONA_EXTERN(elona_vector2<int> podata);
 ELONA_EXTERN(int refreshmode);
 ELONA_EXTERN(bool quest_teleport);
-ELONA_EXTERN(int gspdorg);
-ELONA_EXTERN(int gspd);
 ELONA_EXTERN(int scposval);
 
 

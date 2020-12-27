@@ -200,7 +200,7 @@ ELONA.i18n:add {
          currently_riding = "{name($1)} {is($1)} currently riding {name($2)}.",
 
          mount = {
-            execute = "You ride {name($1)}. ({name($1)}'s speed: {$2}->",
+            execute = "You ride {name($1)}. ({name($1)}'s speed: {$2}->{$3}) ",
             suitable = "You feel comfortable.",
             unsuitable = "This creature is too weak to carry you.",
             dialog = {
