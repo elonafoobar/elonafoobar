@@ -74,7 +74,7 @@ struct Version
             if (result.right()._is_incomplete())
             {
                 return either::either<std::string, Version>::left_of(
-                    u8"Minor and patch version must be specified: " + str);
+                    "Minor and patch version must be specified: " + str);
             }
             else
             {
@@ -177,25 +177,25 @@ private:
             }
             catch (std::out_of_range&)
             {
-                return Result::left_of(u8"Too large number: " + str);
+                return Result::left_of("Too large number: " + str);
             }
 
             if (major == 0 && minor == 0 && patch == 0)
             {
-                return Result::left_of(u8"Version '0.0.0' is invalid.");
+                return Result::left_of("Version '0.0.0' is invalid.");
             }
             // For the upper limit, see to_integer().
             if (100 <= major || 100 <= minor || 100 <= patch)
             {
                 return Result::left_of(
-                    u8"Each number must be less than 100: " + str);
+                    "Each number must be less than 100: " + str);
             }
 
             return Result::right_of(Version{major, minor, patch});
         }
         else
         {
-            return Result::left_of(u8"Invalid format: " + str);
+            return Result::left_of("Invalid format: " + str);
         }
     }
 
@@ -248,37 +248,37 @@ private:
 
             std::string version_str;
             Operator op;
-            if (strutil::starts_with(str, u8"!="))
+            if (strutil::starts_with(str, "!="))
             {
                 version_str = str.substr(2);
                 op = Operator::not_equal;
             }
-            else if (strutil::starts_with(str, u8"=="))
+            else if (strutil::starts_with(str, "=="))
             {
                 version_str = str.substr(2);
                 op = Operator::equal;
             }
-            else if (strutil::starts_with(str, u8"="))
+            else if (strutil::starts_with(str, "="))
             {
                 version_str = str.substr(1);
                 op = Operator::equal;
             }
-            else if (strutil::starts_with(str, u8"<="))
+            else if (strutil::starts_with(str, "<="))
             {
                 version_str = str.substr(2);
                 op = Operator::less_than_or_equal;
             }
-            else if (strutil::starts_with(str, u8"<"))
+            else if (strutil::starts_with(str, "<"))
             {
                 version_str = str.substr(1);
                 op = Operator::less_than;
             }
-            else if (strutil::starts_with(str, u8">="))
+            else if (strutil::starts_with(str, ">="))
             {
                 version_str = str.substr(2);
                 op = Operator::greater_than_or_equal;
             }
-            else if (strutil::starts_with(str, u8">"))
+            else if (strutil::starts_with(str, ">"))
             {
                 version_str = str.substr(1);
                 op = Operator::greater_than;

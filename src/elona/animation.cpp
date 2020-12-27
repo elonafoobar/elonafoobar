@@ -312,7 +312,7 @@ void BreathAnimation::do_play()
 
     // Prepare image.
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime7.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime7.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
@@ -388,7 +388,7 @@ void BallAnimation::do_play()
 
     // Load image.
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime5.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime5.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
@@ -486,7 +486,7 @@ void BoltAnimation::do_play()
     snd_at("core.bolt1", attacker_pos);
 
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime6.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime6.bmp", 0, 0, true);
 
     gsel(4);
     gmode(0);
@@ -785,7 +785,7 @@ void MeleeAttackAnimation::do_play()
     if (is_critical)
     {
         gsel(7);
-        picload(filesystem::dirs::graphic() / u8"anime28.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime28.bmp", 0, 0, true);
     }
     gmode(2);
     gsel(0);
@@ -853,7 +853,7 @@ void GeneEngineeringAnimation::do_play()
         return;
 
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime13.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime13.bmp", 0, 0, true);
 
     gsel(4);
     gmode(0);
@@ -886,7 +886,7 @@ void MiracleAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime12.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime12.bmp", 0, 0, true);
     gsel(4);
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh, 0, 0);
@@ -1026,7 +1026,7 @@ void MeteorAnimation::do_play()
     elona_vector1<int> ay;
 
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime17.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime17.bmp", 0, 0, true);
     gsel(4);
     gmode(0);
     gcopy(0, 0, 0, windoww, windowh, 0, 0);
@@ -1122,7 +1122,7 @@ void RagnarokAnimation::do_play()
 
     // Load image.
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime16.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime16.bmp", 0, 0, true);
 
     // Store entire of the previous screen.
     gsel(4);
@@ -1239,7 +1239,7 @@ void animeload(int animation_type, const Character& chara)
     gsel(7);
     picload(
         filesystem::dirs::graphic() /
-            fs::u8path(u8"anime"s + animation_type + u8".bmp"),
+            fs::u8path("anime"s + animation_type + ".bmp"),
         0,
         0,
         true);
@@ -1328,44 +1328,44 @@ void animeblood(const Character& chara, int animation_type, int element)
     switch (element)
     {
     case 52:
-        picload(filesystem::dirs::graphic() / u8"anime18.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime18.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 51:
-        picload(filesystem::dirs::graphic() / u8"anime19.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime19.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 50:
-        picload(filesystem::dirs::graphic() / u8"anime20.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime20.bmp", 0, 0, true);
         dy_at_m133(1) = -20;
         break;
     case 56:
-        picload(filesystem::dirs::graphic() / u8"anime22.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime22.bmp", 0, 0, true);
         dy_at_m133(1) = -24;
         break;
     case 53:
-        picload(filesystem::dirs::graphic() / u8"anime21.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime21.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 54:
-        picload(filesystem::dirs::graphic() / u8"anime23.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime23.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 57:
-        picload(filesystem::dirs::graphic() / u8"anime24.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime24.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 59:
-        picload(filesystem::dirs::graphic() / u8"anime25.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime25.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 58:
-        picload(filesystem::dirs::graphic() / u8"anime26.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime26.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     case 55:
     case 63:
-        picload(filesystem::dirs::graphic() / u8"anime27.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime27.bmp", 0, 0, true);
         dy_at_m133(1) = -16;
         break;
     default: ele2_at_m133 = 0; break;

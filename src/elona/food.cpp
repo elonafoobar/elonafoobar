@@ -687,7 +687,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         s = chara_db_get_filter(
                             *the_character_db.get_id_from_integer(
                                 food->subname));
-                        if (strutil::contains(s(0), u8"/man/"))
+                        if (strutil::contains(s(0), "/man/"))
                         {
                             txt(i18n::s.get(
                                 "core.food.effect.human.delicious"));
@@ -1125,7 +1125,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
             *the_character_db.get_id_from_integer(food->subname));
         if (eater.is_player())
         {
-            if (strutil::contains(s(0), u8"/man/"))
+            if (strutil::contains(s(0), "/man/"))
             {
                 if (cdata.player().traits().level("core.cannibalism"))
                 {
@@ -1283,11 +1283,11 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
         if (eater.is_player_or_ally())
         {
             txt(i18n::s.get("core.food.effect.fortune_cookie", eater));
-            read_talk_file(u8"%COOKIE2");
+            read_talk_file("%COOKIE2");
             if (food->curse_state == CurseState::blessed ||
                 (food->curse_state == CurseState::none && rnd(2)))
             {
-                read_talk_file(u8"%COOKIE1");
+                read_talk_file("%COOKIE1");
             }
             txt(""s + buff, Message::color{ColorIndex::orange});
         }

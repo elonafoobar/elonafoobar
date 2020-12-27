@@ -509,7 +509,7 @@ const AssetData& get_image_info(data::InstanceId id)
     // TODO: Instead of throwing, log once and return a default.
     auto data = the_asset_db[id];
     if (!data)
-        throw std::runtime_error{u8"Unknown asset ID: "s + id.get()};
+        throw std::runtime_error{"Unknown asset ID: "s + id.get()};
     return *data;
 }
 

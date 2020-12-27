@@ -67,9 +67,9 @@ void _start_elona()
             _main_loop();
             return;
         }
-        else if (fs::exists(filesystem::dirs::save(u8"save_" + default_save)))
+        else if (fs::exists(filesystem::dirs::save("save_" + default_save)))
         {
-            playerid = u8"save_"s + default_save;
+            playerid = "save_"s + default_save;
             mode = 3;
             initialize_game();
             _main_loop();

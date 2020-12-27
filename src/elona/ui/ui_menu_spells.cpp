@@ -145,7 +145,7 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
         if (game()->skill_shortcuts.at(cnt) == spell_id)
         {
             spell_shortcut =
-                u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
+                "{"s + get_bound_shortcut_key_name_by_index(cnt) + "}"s;
         }
     }
     cs_list(
@@ -158,10 +158,10 @@ void UIMenuSpells::_draw_spell_name(int cnt, int spell_id)
 void UIMenuSpells::_draw_spell_cost(int cnt, int spell_id)
 {
     std::string spell_cost = ""s +
-        calc_spell_cost_mp(cdata.player(), spell_id) + u8" ("s +
+        calc_spell_cost_mp(cdata.player(), spell_id) + " ("s +
         std::to_string(cdata.player().spell_stocks().amount(
             *the_skill_db.get_id_from_integer(spell_id))) +
-        u8")"s;
+        ")"s;
     mes(wx + 328 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
         spell_cost);
@@ -176,8 +176,7 @@ void UIMenuSpells::_draw_spell_power(int cnt, int spell_id)
         ""s +
             cdata.player().skills().level(
                 *the_skill_db.get_id_from_integer(spell_id)) +
-            u8"/"s + calc_spell_success_rate(cdata.player(), spell_id) +
-            u8"%"s);
+            "/"s + calc_spell_success_rate(cdata.player(), spell_id) + "%"s);
     mes(wx + 420, wy + 66 + cnt * 19 + 2, spell_power);
 }
 

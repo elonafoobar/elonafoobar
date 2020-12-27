@@ -23,7 +23,7 @@ static void _chara_filter_quest()
     }
     if (game()->executing_immediate_quest_type == 1006)
     {
-        fltn(u8"wild"s);
+        fltn("wild"s);
         objlv = clamp(objlv / 4, 1, 8);
     }
 }

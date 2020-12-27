@@ -672,11 +672,11 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         fixlv = Quality::good;
         if (chatval_ == 36)
         {
-            fltn(u8"man"s);
+            fltn("man"s);
         }
         else
         {
-            fltn(u8"horse"s);
+            fltn("horse"s);
         }
         chara_create(56, "", -3, 0);
         if (cdata.tmp().level == 0)
@@ -1727,7 +1727,7 @@ TalkResult talk_quest_giver(Character& speaker)
                     chara_id = 0;
                 }
                 flt(quest_data[quest_idx].difficulty + cnt, Quality::bad);
-                fltn(u8"man"s);
+                fltn("man"s);
                 const auto chara = chara_create(56, chara_id, -3, 0);
                 f = !!chara;
                 if (f == 1)
@@ -1998,8 +1998,8 @@ TalkResult talk_npc(Character& speaker)
     {
         ELONA_APPEND_RESPONSE(
             13,
-            i18n::s.get("core.talk.npc.innkeeper.choices.eat") + u8" ("s +
-                calcmealvalue() + i18n::s.get("core.ui.gold") + u8")"s);
+            i18n::s.get("core.talk.npc.innkeeper.choices.eat") + " ("s +
+                calcmealvalue() + i18n::s.get("core.ui.gold") + ")"s);
         if (game()->weather == "core.etherwind" ||
             game()->weather == "core.hard_rain" ||
             game()->weather == "core.snow")
@@ -2013,16 +2013,16 @@ TalkResult talk_npc(Character& speaker)
     {
         ELONA_APPEND_RESPONSE(
             14,
-            i18n::s.get("core.talk.npc.wizard.choices.identify") + u8" ("s +
-                calcidentifyvalue(0) + i18n::s.get("core.ui.gold") + u8")"s);
+            i18n::s.get("core.talk.npc.wizard.choices.identify") + " ("s +
+                calcidentifyvalue(0) + i18n::s.get("core.ui.gold") + ")"s);
         ELONA_APPEND_RESPONSE(
             15,
-            i18n::s.get("core.talk.npc.wizard.choices.identify_all") + u8" ("s +
-                calcidentifyvalue(1) + i18n::s.get("core.ui.gold") + u8")"s);
+            i18n::s.get("core.talk.npc.wizard.choices.identify_all") + " ("s +
+                calcidentifyvalue(1) + i18n::s.get("core.ui.gold") + ")"s);
         ELONA_APPEND_RESPONSE(
             16,
-            i18n::s.get("core.talk.npc.wizard.choices.investigate") + u8" ("s +
-                calcidentifyvalue(2) + i18n::s.get("core.ui.gold") + u8")"s);
+            i18n::s.get("core.talk.npc.wizard.choices.investigate") + " ("s +
+                calcidentifyvalue(2) + i18n::s.get("core.ui.gold") + ")"s);
     }
     if (speaker.role == Role::trainer)
     {
@@ -2043,8 +2043,7 @@ TalkResult talk_npc(Character& speaker)
         ELONA_APPEND_RESPONSE(
             19,
             i18n::s.get("core.talk.npc.healer.choices.restore_attributes") +
-                u8"("s + calcrestorecost() + i18n::s.get("core.ui.gold") +
-                u8")"s);
+                "("s + calcrestorecost() + i18n::s.get("core.ui.gold") + ")"s);
     }
     if (speaker.role == Role::adventurer)
     {

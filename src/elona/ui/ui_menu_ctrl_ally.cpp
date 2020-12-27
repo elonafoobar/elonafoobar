@@ -169,8 +169,8 @@ static void _update_pet_arena()
     {
         Message::instance().txtef(ColorIndex::blue);
     }
-    txt(i18n::s.get("core.ui.ally_list.pet_arena.prompt") + ": " + i +
-        u8" / "s + arenaop(1));
+    txt(i18n::s.get("core.ui.ally_list.pet_arena.prompt") + ": " + i + " / "s +
+        arenaop(1));
     s(10) = i18n::s.get("core.ui.ally_list.pet_arena.title");
     s(11) = strhint2 + strhint3;
     s(12) = i18n::s.get("core.ui.ally_list.name");
@@ -283,11 +283,11 @@ snail::Color UIMenuCtrlAlly::_draw_get_color(const Character& chara)
 
 std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 {
-    std::string ally_name = chara.alias + u8" "s + chara.name;
+    std::string ally_name = chara.alias + " "s + chara.name;
 
     if (chara.current_map != 0)
     {
-        ally_name = ally_name + u8"("s + mapname(chara.current_map) + u8")"s;
+        ally_name = ally_name + "("s + mapname(chara.current_map) + ")"s;
     }
     if (_operation == ControlAllyOperation::pet_arena)
     {
@@ -299,7 +299,7 @@ std::string UIMenuCtrlAlly::_get_ally_name(const Character& chara)
 
 std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
 {
-    std::string ally_info = u8"Lv."s + chara.level + u8" "s;
+    std::string ally_info = "Lv."s + chara.level + " "s;
 
     if (chara.state() == Character::State::pet_dead)
     {
@@ -313,7 +313,7 @@ std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
         }
         else
         {
-            ally_info += u8"(Hp: "s + chara.hp * 100 / chara.max_hp + u8"%) "s +
+            ally_info += "(Hp: "s + chara.hp * 100 / chara.max_hp + "%) "s +
                 i18n::s.get("core.ui.ally_list.waiting");
         }
     }
@@ -325,7 +325,7 @@ std::string UIMenuCtrlAlly::_get_general_ally_info(const Character& chara)
         }
         else
         {
-            ally_info += u8"(Hp: "s + chara.hp * 100 / chara.max_hp + u8"%)"s;
+            ally_info += "(Hp: "s + chara.hp * 100 / chara.max_hp + "%)"s;
         }
     }
 
@@ -338,12 +338,12 @@ std::string UIMenuCtrlAlly::_get_specific_ally_info(const Character& chara)
 
     if (area_data[game()->current_map].id == mdata_t::MapId::shop)
     {
-        _s = u8"   "s + chara.skills().level("core.stat_charisma") + u8" / " +
+        _s = "   "s + chara.skills().level("core.stat_charisma") + " / " +
             chara.skills().level("core.negotiation");
     }
     else if (area_data[game()->current_map].id == mdata_t::MapId::ranch)
     {
-        _s = u8"   "s + chara_breed_power(chara);
+        _s = "   "s + chara_breed_power(chara);
     }
 
     return _s;
@@ -391,7 +391,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
         {
             ally_info = i18n::s.get("core.ui.ally_list.gene_engineer.none");
         }
-        ally_info += u8"/"s;
+        ally_info += "/"s;
         {
             int stat = gain_skills_by_geen_engineering(
                 *_gene_engineering_original_character, chara);
@@ -406,7 +406,7 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
                 if (rtval(1) != -1)
                 {
                     ally_info +=
-                        u8", "s + the_skill_db.get_text(rtval(1), "name");
+                        ", "s + the_skill_db.get_text(rtval(1), "name");
                 }
             }
         }
@@ -417,8 +417,8 @@ std::string UIMenuCtrlAlly::_modify_ally_info_gene_engineer(
 
 void UIMenuCtrlAlly::_draw_ally_list_entry_sell(int cnt, const Character& chara)
 {
-    std::string ally_name = chara.alias + u8" "s + chara.name;
-    ally_name += u8" Lv."s + chara.level;
+    std::string ally_name = chara.alias + " "s + chara.name;
+    ally_name += " Lv."s + chara.level;
 
     cs_list(cs == cnt, ally_name, wx + 84, wy + 66 + cnt * 19 - 1);
 

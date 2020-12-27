@@ -180,24 +180,24 @@ void UIMenuCrafting::_draw_recipe_desc(const CraftingRecipe& recipe)
 {
     font(13 - en * 2);
 
-    std::string desc = i18n::s.get("core.crafting.menu.skill_needed") + u8": "s;
+    std::string desc = i18n::s.get("core.crafting.menu.skill_needed") + ": "s;
     if (auto text = i18n::s.get_enum_optional(
             "core.crafting.menu.skills", recipe.skill_used))
     {
         desc += *text;
     }
 
-    desc += u8" "s + recipe.required_skill_level + u8"("s +
+    desc += " "s + recipe.required_skill_level + "("s +
         cdata.player().skills().level(
             *the_skill_db.get_id_from_integer(recipe.skill_used)) +
-        u8")"s;
+        ")"s;
 
     const auto text_color = recipe.required_skill_level <=
             cdata.player().skills().level(
                 *the_skill_db.get_id_from_integer(recipe.skill_used))
         ? snail::Color{30, 30, 200}
         : snail::Color{200, 30, 30};
-    mes(wx + 37, wy + 288, desc + u8" "s, text_color);
+    mes(wx + 37, wy + 288, desc + " "s, text_color);
 }
 
 void UIMenuCrafting::_draw_single_recipe_required_material(
@@ -206,11 +206,10 @@ void UIMenuCrafting::_draw_single_recipe_required_material(
 {
     std::string mat_desc =
         the_crafting_material_db.get_text(required_mat.id, "name") + " " +
-        i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount +
-        u8"("s +
+        i18n::s.get("core.crafting.menu.x") + " " + required_mat.amount + "("s +
         game()->crafting_materials.amount(
             *the_crafting_material_db.get_id_from_integer(required_mat.id)) +
-        u8")"s;
+        ")"s;
 
     const auto text_color =
         game()->crafting_materials.amount(

@@ -103,13 +103,13 @@ _draw_list_entry_pic_and_rank(int cnt, const Character& chara, int _p)
 void UIMenuAdventurers::_draw_list_entry_name(int cnt, const Character& chara)
 {
     const auto name =
-        strutil::take_by_width(chara.alias + u8" "s + chara.name, 26);
+        strutil::take_by_width(chara.alias + " "s + chara.name, 26);
     cs_list(cs == cnt, name, wx + 118, wy + 66 + cnt * 19 - 1);
 }
 
 void UIMenuAdventurers::_draw_list_entry_level(int cnt, const Character& chara)
 {
-    std::string level = ""s + chara.fame + u8"("s + chara.level + u8")"s;
+    std::string level = ""s + chara.fame + "("s + chara.level + ")"s;
     mes(wx + 402 - strlen_u(level) * 7, wy + 66 + cnt * 19 + 2, level);
 }
 

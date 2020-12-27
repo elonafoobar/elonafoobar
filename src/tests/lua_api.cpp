@@ -50,7 +50,7 @@ TEST_CASE("test require from other mods", "[Lua: API]")
     elona::lua::LuaEnv lua;
     lua.load_mods();
     lua.get_mod_manager().load_testing_mod_from_file(
-        filesystem::dirs::exe() / u8"tests/data/mods/test_require");
+        filesystem::dirs::exe() / "tests/data/mods/test_require");
     lua.get_api_manager().init_from_mods();
 
     REQUIRE_NOTHROW(lua.get_mod_manager().load_testing_mod_from_script(
@@ -64,7 +64,7 @@ assert(Hello.hello() == "Hello!")
 
 TEST_CASE("test loading of non-ASCII filepaths", "[Lua: Misc]")
 {
-    lua_testcase(u8"Windowsファイル名.lua");
+    lua_testcase("Windowsファイル名.lua");
 }
 
 TEST_CASE("Core API: Chara", "[Lua: API]")

@@ -50,7 +50,7 @@ struct Release
 
     std::string title() const
     {
-        return version + u8" (" + date + u8")";
+        return version + " (" + date + ")";
     }
 
 
@@ -72,7 +72,7 @@ public:
     {
         for (const auto& line : fileutil::read_by_line(changelog_path))
         {
-            if (strutil::starts_with(line, u8"## "))
+            if (strutil::starts_with(line, "## "))
             {
                 // ## [version] - date
                 const auto open_bracket_pos = line.find('[');
@@ -199,34 +199,34 @@ MainMenuResult main_title_menu()
     gmode(2);
 
     font(13 - en * 2);
-    mes(20, 20, u8"Elona version 1.22  Developed by Noa"s, {255, 255, 255});
+    mes(20, 20, "Elona version 1.22  Developed by Noa"s, {255, 255, 255});
 
     mes(20,
         38,
-        u8"  Variant foobar version "s + latest_version.short_string() +
-            u8"  Developed by KI",
+        "  Variant foobar version "s + latest_version.short_string() +
+            "  Developed by KI",
         {255, 255, 255});
 
     if (jp)
     {
         mes(20,
             56,
-            u8"Contributor MSL / View the credits for more"s,
+            "Contributor MSL / View the credits for more"s,
             {255, 255, 255});
     }
     else
     {
         mes(20,
             56,
-            u8"Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s,
+            "Contributor f1r3fly, Sunstrike, Schmidt, Elvenspirit / View the credits for more"s,
             {255, 255, 255});
-        mes(20, 76, u8"Omake/OO translator: Doorknob", {255, 255, 255});
-        mes(20, 96, u8"Cutscenes translator: AnnaBannana", {255, 255, 255});
+        mes(20, 76, "Omake/OO translator: Doorknob", {255, 255, 255});
+        mes(20, 96, "Cutscenes translator: AnnaBannana", {255, 255, 255});
     }
 
     windowshadow = 1;
     ui_display_window(
-        jp ? u8"冒険の道標" : u8"Starting Menu",
+        jp ? "冒険の道標" : "Starting Menu",
         strhint1,
         80,
         winposy(308, 1),
@@ -254,16 +254,16 @@ MainMenuResult main_title_menu()
         std::string title;
     };
     std::vector<MainMenuItem> items = {
-        {u8"Restore an Adventurer",
+        {"Restore an Adventurer",
          i18n::s.get("core.main_menu.title_menu.continue")},
-        {u8"Generate an Adventurer",
+        {"Generate an Adventurer",
          i18n::s.get("core.main_menu.title_menu.new")},
-        {u8"Incarnate an Adventurer",
+        {"Incarnate an Adventurer",
          i18n::s.get("core.main_menu.title_menu.incarnate")},
-        {u8"About", i18n::s.get("core.main_menu.title_menu.about")},
-        {u8"Options", i18n::s.get("core.main_menu.title_menu.options")},
-        {u8"Mods", i18n::s.get("core.main_menu.title_menu.mods")},
-        {u8"Exit", i18n::s.get("core.main_menu.title_menu.exit")},
+        {"About", i18n::s.get("core.main_menu.title_menu.about")},
+        {"Options", i18n::s.get("core.main_menu.title_menu.options")},
+        {"Mods", i18n::s.get("core.main_menu.title_menu.mods")},
+        {"Exit", i18n::s.get("core.main_menu.title_menu.exit")},
     };
 
     keyrange = items.size();
@@ -708,7 +708,7 @@ MainMenuResult main_menu_incarnate()
     {
         s = entry.path().filename().to_u8string();
         const auto gene_header_filepath =
-            filesystem::dirs::save(s) / u8"gene_header.txt";
+            filesystem::dirs::save(s) / "gene_header.txt";
         if (!fs::exists(gene_header_filepath))
         {
             continue;

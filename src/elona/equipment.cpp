@@ -59,9 +59,8 @@ void draw_additional_item_info_resistance(const ItemRef& equip, int x, int y)
         const auto color = _get_element_color(element);
         if (jp)
         {
-            const auto s =
-                power_level > 5 ? u8"+"s : std::to_string(power_level);
-            const auto glyph = enc.power >= 0 ? u8"●" : u8"▼";
+            const auto s = power_level > 5 ? "+"s : std::to_string(power_level);
+            const auto glyph = enc.power >= 0 ? "●" : "▼";
             mes(x + (element - 50) * 20, y, glyph, color);
             mes(x + (element - 50) * 20 + 5, y + 1, s, color);
             mes(x + (element - 50) * 20 + 4, y, s, {255, 255, 255});
@@ -91,7 +90,7 @@ void draw_additional_item_info_maintenance_and_ailment(
     {
         if (enchantment_find(equip, 60000 + 10 + i))
         {
-            mes(x - 100 + i * 20, y, jp ? u8"●" : "#", {0, 100, 100});
+            mes(x - 100 + i * 20, y, jp ? "●" : "#", {0, 100, 100});
         }
         else
         {
@@ -102,7 +101,7 @@ void draw_additional_item_info_maintenance_and_ailment(
     {
         if (enchantment_find(equip, 23 + i))
         {
-            mes(x + 100 + i * 20, y, jp ? u8"●" : "#", {100, 32, 0});
+            mes(x + 100 + i * 20, y, jp ? "●" : "#", {100, 32, 0});
         }
         else
         {

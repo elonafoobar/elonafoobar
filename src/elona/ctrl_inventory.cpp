@@ -1044,7 +1044,7 @@ void draw_menu(bool dropcontinue)
         if (invkey(p) != ""s)
         {
             bmes(
-                u8"("s + invkey(p) + u8")"s,
+                "("s + invkey(p) + ")"s,
                 x + cnt * 44 + 46,
                 y + 18,
                 {235, 235, 235});
@@ -1052,8 +1052,8 @@ void draw_menu(bool dropcontinue)
     }
     bmes(
         keybind_get_bound_key_name("northwest") + "," +
-            keybind_get_bound_key_name("northeast") + u8",Tab,Ctrl+Tab "s +
-            "[" + i18n::s.get("core.ui.inv.window.change") + "]",
+            keybind_get_bound_key_name("northeast") + ",Tab,Ctrl+Tab "s + "[" +
+            i18n::s.get("core.ui.inv.window.change") + "]",
         x + 260,
         y + 32);
 }
@@ -1116,7 +1116,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
     }
     draw("core.deco_inv_c", wx + ww - 246, wy - 6);
     draw("core.deco_inv_d", wx - 6, wy - 6);
-    s = ""s + listmax + u8" items"s;
+    s = ""s + listmax + " items"s;
     s += "  ("s +
         i18n::s.get(
             "core.ui.inv.window.total_weight",
@@ -1141,7 +1141,7 @@ void draw_window(optional_ref<Character> inventory_owner, bool dropcontinue)
         font(12 + en - en * 2);
         mes(x + 16,
             y + 17,
-            u8"DV:"s + inventory_owner->dv + u8" PV:"s + inventory_owner->pv);
+            "DV:"s + inventory_owner->dv + " PV:"s + inventory_owner->pv);
         mes(x + 16,
             y + 35,
             i18n::s.get("core.ui.inv.take_ally.window.equip_weight") + ":" +
@@ -1207,13 +1207,13 @@ void draw_item_list(const OptionalItemRef& mainweapon)
         s(1) = cnvweight(g_inv[p]->weight * g_inv[p]->number());
         if (invctrl == 11)
         {
-            s += u8" "s + cnvweight(g_inv[p]->weight);
-            s(1) = ""s + calcitemvalue(g_inv[p], 0) + u8" gp"s;
+            s += " "s + cnvweight(g_inv[p]->weight);
+            s(1) = ""s + calcitemvalue(g_inv[p], 0) + " gp"s;
         }
         if (invctrl == 12)
         {
-            s += u8" "s + cnvweight(g_inv[p]->weight);
-            s(1) = ""s + calcitemvalue(g_inv[p], 1) + u8" gp"s;
+            s += " "s + cnvweight(g_inv[p]->weight);
+            s(1) = ""s + calcitemvalue(g_inv[p], 1) + " gp"s;
         }
         if (invctrl == 28)
         {
@@ -1235,8 +1235,7 @@ void draw_item_list(const OptionalItemRef& mainweapon)
             if (game()->skill_shortcuts.at(cnt) ==
                 the_item_db[g_inv[p]->id]->integer_id + invctrl * 10000)
             {
-                s +=
-                    u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
+                s += "{"s + get_bound_shortcut_key_name_by_index(cnt) + "}"s;
             }
         }
         display_key(wx + 58, wy + 60 + cnt * 19 - 2, cnt);
@@ -1291,7 +1290,7 @@ void show_money(optional_ref<Character> inventory_owner)
             draw("core.gold_coin", wx + 340, wy + 32);
             mes(wx + 368,
                 wy + 37 - en * 2,
-                ""s + inventory_owner->gold + u8" gp"s);
+                ""s + inventory_owner->gold + " gp"s);
         }
     }
 }
@@ -1814,7 +1813,7 @@ OnEnterResult on_enter_give(
         {
             f = 1;
             if (strutil::contains(
-                    the_item_db[selected_item->id]->filter, u8"/neg/"))
+                    the_item_db[selected_item->id]->filter, "/neg/"))
             {
                 f = 0;
             }
@@ -1848,12 +1847,12 @@ OnEnterResult on_enter_give(
                 }
             }
             if (strutil::contains(
-                    the_item_db[selected_item->id]->filter, u8"/neg/"))
+                    the_item_db[selected_item->id]->filter, "/neg/"))
             {
                 f = 0;
             }
             if (strutil::contains(
-                    the_item_db[selected_item->id]->filter, u8"/nogive/"))
+                    the_item_db[selected_item->id]->filter, "/nogive/"))
             {
                 f = 0;
             }
@@ -2122,9 +2121,9 @@ OnEnterResult on_enter_put_into(const ItemRef& selected_item)
             }
             txt(i18n::s.get(
                     "core.ui.inv.put.guild.you_deliver", selected_item) +
-                    u8"("s +
+                    "("s +
                     (selected_item->param1 + 1) * selected_item->number() +
-                    u8" Guild Point)"s,
+                    " Guild Point)"s,
                 Message::color{ColorIndex::green});
             if (game()->guild.mages_guild_quota == 0)
             {

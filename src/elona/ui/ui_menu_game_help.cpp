@@ -220,10 +220,10 @@ void UIMenuGameHelp::_draw_key_list()
 
     // Misc.
     // TODO: support key bindings!
-    const auto misc_keys = u8"F9 "s +
-        i18n::s.get("core.ui.manual.keys.other.hide_interface") + u8"  F11 " +
-        i18n::s.get("core.ui.manual.keys.other.export_chara_sheet") +
-        u8"  F12 " + i18n::s.get("core.ui.manual.keys.other.console");
+    const auto misc_keys = "F9 "s +
+        i18n::s.get("core.ui.manual.keys.other.hide_interface") + "  F11 " +
+        i18n::s.get("core.ui.manual.keys.other.export_chara_sheet") + "  F12 " +
+        i18n::s.get("core.ui.manual.keys.other.console");
     font(desc_font_size);
     mes(x + 38, y + 408, misc_keys);
 }
@@ -316,7 +316,7 @@ void UIMenuGameHelp::_draw_window()
         y = winposy(496) - 24;
     }
     ui_display_window(
-        u8"Elona In-Game Help",
+        "Elona In-Game Help",
         strhint2 + strhint3b,
         (windoww - 780) / 2 + inf_screenx,
         y,
@@ -409,7 +409,7 @@ optional<UIMenuGameHelp::ResultType> UIMenuGameHelp::on_key(
 
 void UIMenuGameHelp::GameHelp::load(const fs::path& filepath)
 {
-    constexpr const char* section_marker = u8"{}";
+    constexpr const char* section_marker = "{}";
 
     for (const auto& line : fileutil::read_by_line(filepath))
     {

@@ -1624,12 +1624,12 @@ void calcpartyscore()
     }
     if (score > quest_data.immediate().extra_info_2)
     {
-        txt(u8"(+"s + (score - quest_data.immediate().extra_info_2) + u8") "s,
+        txt("(+"s + (score - quest_data.immediate().extra_info_2) + ") "s,
             Message::color{ColorIndex::blue});
     }
     if (score < quest_data.immediate().extra_info_2)
     {
-        txt(u8"("s + (score - quest_data.immediate().extra_info_2) + u8") "s,
+        txt("("s + (score - quest_data.immediate().extra_info_2) + ") "s,
             Message::color{ColorIndex::red});
     }
     quest_data.immediate().extra_info_2 = score;

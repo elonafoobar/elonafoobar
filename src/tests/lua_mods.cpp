@@ -227,7 +227,7 @@ TEST_CASE("Test requiring Lua chunk multiple times", "[Lua: Mods]")
     elona::lua::LuaEnv lua;
     lua.load_mods();
     lua.get_mod_manager().load_testing_mod_from_file(
-        filesystem::dirs::exe() / u8"tests/data/mods/test_require_chunks");
+        filesystem::dirs::exe() / "tests/data/mods/test_require_chunks");
 }
 
 TEST_CASE(
@@ -237,7 +237,7 @@ TEST_CASE(
     elona::lua::LuaEnv lua;
     lua.load_mods();
     lua.get_mod_manager().load_testing_mod_from_file(
-        filesystem::dirs::exe() / u8"tests/data/mods/test_require");
+        filesystem::dirs::exe() / "tests/data/mods/test_require");
 
     // Attempts to load a file outside the mod's directory.
     REQUIRE_NOTHROW(lua.get_mod_manager().run_in_mod("test_require", R"(

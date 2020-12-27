@@ -40,7 +40,7 @@ void _draw_background()
     auto& renderer = snail::Application::instance().get_renderer();
     renderer.set_text_alignment(snail::Renderer::TextAlignment::center);
     renderer.render_text(
-        u8"Now Loading...",
+        "Now Loading...",
         windoww / 2,
         (windowh - frame_height) / 2 + 70,
         fg_color);

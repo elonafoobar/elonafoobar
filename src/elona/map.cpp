@@ -1524,7 +1524,7 @@ TurnResult exit_map()
     if (rdtry > 1)
     {
         Message::instance().buffered_message_append(
-            u8"(再生成"s + rdtry + u8"回)"s);
+            "(再生成"s + rdtry + "回)"s);
     }
     if (game()->current_map != previous_map)
     {
@@ -1660,7 +1660,7 @@ TurnResult exit_map()
         prepare_charas_for_map_unload();
 
         // delete all map-local data
-        if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
+        if (save_fs_exists(fs::u8path("mdata_"s + mid + ".s2")))
         {
             ctrl_file_map_delete();
         }
@@ -1968,7 +1968,7 @@ void try_to_return()
         {
             list(0, p) = i;
             list(1, p) = area_data[i].visited_deepest_level;
-            auto text = mapname(i) + u8" "s +
+            auto text = mapname(i) + " "s +
                 cnvrank(
                             (area_data[i].visited_deepest_level -
                              area_data[i].danger_level + 1)) +

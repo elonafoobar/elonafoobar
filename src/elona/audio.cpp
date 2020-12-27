@@ -553,7 +553,7 @@ void sound_play_environmental()
 void stop_music()
 {
     snl_music::stop();
-    snl_music::load(filesystem::dirs::sound() / u8"gm_on.mid");
+    snl_music::load(filesystem::dirs::sound() / "gm_on.mid");
     snl_music::play(1);
 }
 

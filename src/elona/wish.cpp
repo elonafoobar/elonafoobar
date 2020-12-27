@@ -158,19 +158,19 @@ std::string fix_wish(const std::string& text)
 
     if (jp)
     {
-        ret = remove_str(ret, u8",");
-        ret = remove_str(ret, u8" ");
-        ret = remove_str(ret, u8"　");
+        ret = remove_str(ret, ",");
+        ret = remove_str(ret, " ");
+        ret = remove_str(ret, "　");
     }
     else
     {
         ret = to_lower(ret);
     }
-    ret = remove_str(ret, u8"item");
-    ret = remove_str(ret, u8"アイテム");
-    ret = remove_str(ret, u8"skill");
-    ret = remove_str(ret, u8"skill ");
-    ret = remove_str(ret, u8"スキル");
+    ret = remove_str(ret, "item");
+    ret = remove_str(ret, "アイテム");
+    ret = remove_str(ret, "skill");
+    ret = remove_str(ret, "skill ");
+    ret = remove_str(ret, "スキル");
 
     return ret;
 }
@@ -183,16 +183,16 @@ std::string remove_extra_str(const std::string& text)
     auto ret{text};
 
     // TODO
-    ret = remove_str(ret, u8"の剥製");
-    ret = remove_str(ret, u8"剥製");
-    ret = remove_str(ret, u8"のはく製");
-    ret = remove_str(ret, u8"はく製");
-    ret = remove_str(ret, u8"のカード");
-    ret = remove_str(ret, u8"カード");
-    ret = remove_str(ret, u8"card ");
-    ret = remove_str(ret, u8"figure ");
-    ret = remove_str(ret, u8"card");
-    ret = remove_str(ret, u8"figure");
+    ret = remove_str(ret, "の剥製");
+    ret = remove_str(ret, "剥製");
+    ret = remove_str(ret, "のはく製");
+    ret = remove_str(ret, "はく製");
+    ret = remove_str(ret, "のカード");
+    ret = remove_str(ret, "カード");
+    ret = remove_str(ret, "card ");
+    ret = remove_str(ret, "figure ");
+    ret = remove_str(ret, "card");
+    ret = remove_str(ret, "figure");
 
     return ret;
 }
@@ -242,7 +242,7 @@ int select_wished_character(const std::string& input)
 
 void wish_for_character()
 {
-    inputlog = strutil::remove_str(inputlog, u8"summon");
+    inputlog = strutil::remove_str(inputlog, "summon");
     flt();
     if (const auto chara = chara_create(
             -1,
@@ -726,7 +726,7 @@ bool process_wish(Character& chara, optional<std::string> wish)
         return true;
     }
 
-    if (inputlog(0) == "" || inputlog(0) == u8" ")
+    if (inputlog(0) == "" || inputlog(0) == " ")
     {
         txt(i18n::s.get("core.common.nothing_happens"));
         return false;

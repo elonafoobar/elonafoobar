@@ -212,8 +212,8 @@ private:
 
         bmes(
             keybind_get_bound_key_name("northwest") + "," +
-                keybind_get_bound_key_name("northeast") + u8",Tab,Ctrl+Tab ["s +
-                i18n::s.get("core.ui.menu.change") + u8"]"s,
+                keybind_get_bound_key_name("northeast") + ",Tab,Ctrl+Tab ["s +
+                i18n::s.get("core.ui.menu.change") + "]"s,
             x + width - 215,
             y + 28);
     }

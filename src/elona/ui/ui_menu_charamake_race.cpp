@@ -36,7 +36,7 @@ static void _load_race_list()
             the_race_db.get_text(data::InstanceId{listn(1, cnt)}, "name");
         if (list(0, cnt) == 1)
         {
-            listn(0, cnt) = u8"(extra)"s + listn(0, cnt);
+            listn(0, cnt) = "(extra)"s + listn(0, cnt);
         }
     }
 }

@@ -71,7 +71,7 @@ void input_number_dialog(int x, int y, int max_number, int initial_number)
         draw("core.label_input", x + dx / 2 - 56, y - 32);
         draw("core.arrow_left", x + 28, y + 4);
         draw("core.arrow_right", x + dx - 51, y + 4);
-        const std::string inputlog2 = inputlog + u8"(" + max_number + u8")";
+        const std::string inputlog2 = inputlog + "(" + max_number + ")";
         mes(x + dx - 70 - strlen_u(inputlog2) * 8 + 8,
             y + vfix + 11,
             inputlog2,
@@ -230,21 +230,21 @@ bool input_text_dialog(int x, int y, int val2, bool is_cancelable)
             s = strutil::take_by_width(s, 18);
             if (jp)
             {
-                s += u8"…";
+                s += "…";
             }
             else
             {
-                s += u8"...";
+                s += "...";
             }
             p(4) += 2;
         }
 
-        if (strutil::contains(inputlog(0), u8"\n"))
+        if (strutil::contains(inputlog(0), "\n"))
         {
             rtval = 0;
             break;
         }
-        if (strutil::contains(inputlog(0), u8"\t"))
+        if (strutil::contains(inputlog(0), "\t"))
         {
             inputlog = "";
             if (is_cancelable)
@@ -266,7 +266,7 @@ bool input_text_dialog(int x, int y, int val2, bool is_cancelable)
     gmode(2);
     if (en)
     {
-        inputlog = strutil::replace(inputlog, u8"\"", u8"'");
+        inputlog = strutil::replace(inputlog, "\"", "'");
     }
     inputlog = strutil::remove_line_ending(inputlog);
     onkey_0();
@@ -620,7 +620,7 @@ optional<TurnResult> check_angband()
     switch (game()->angband_flag)
     {
     case 0:
-        if (key == u8"Q"s)
+        if (key == "Q"s)
         {
             txt(i18n::s.get("core.action.angband.q"));
             ++game()->angband_flag;
@@ -629,7 +629,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 1:
-        if (key == u8"y"s)
+        if (key == "y"s)
         {
             txt(i18n::s.get("core.action.angband.y"));
             ++game()->angband_flag;
@@ -638,7 +638,7 @@ optional<TurnResult> check_angband()
         }
         break;
     case 2:
-        if (key == u8"@"s)
+        if (key == "@"s)
         {
             txt(i18n::s.get("core.action.angband.at"));
             for (int i = 0; i < 10; ++i)

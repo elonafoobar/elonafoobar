@@ -33,7 +33,7 @@ static void _load_scenes()
     p = 0;
     for (int cnt = 0; cnt < 200; ++cnt)
     {
-        s = u8"{"s + cnt + u8"}"s;
+        s = "{"s + cnt + "}"s;
         p = instr(buff, 0, s);
         if (p != -1)
         {
@@ -117,7 +117,7 @@ void UIMenuScene::_draw_title()
     font(
         12 - en * 2,
         snail::Font::Style::italic | snail::Font::Style::underline);
-    mes(wx + 90, wy + 50, u8"Elona - Scene playback"s);
+    mes(wx + 90, wy + 50, "Elona - Scene playback"s);
     font(12 - en * 2);
     mes(wx + 390, wy + 50, i18n::s.get("core.ui.scene.you_can_play"));
 }
@@ -150,10 +150,10 @@ void UIMenuScene::_draw_list_entries()
 void UIMenuScene::_draw_more()
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(wx + 500, wy + 375, u8"- "s + (page + 1) + u8" -"s);
+    mes(wx + 500, wy + 375, "- "s + (page + 1) + " -"s);
     if (page < pagemax)
     {
-        mes(wx + 590, wy + 375, u8"(more)"s);
+        mes(wx + 590, wy + 375, "(more)"s);
     }
 }
 

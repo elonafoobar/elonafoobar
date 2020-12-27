@@ -274,7 +274,7 @@ void UIMenuCharacterSheet::_draw_title(CharacterSheetOperation op)
         if (page != 0)
         {
             title += keybind_get_bound_key_name("switch_mode_2") + " [" +
-                i18n::s.get("core.ui.chara_sheet.hint.track_skill") + u8"]"s;
+                i18n::s.get("core.ui.chara_sheet.hint.track_skill") + "]"s;
         }
     }
 
@@ -490,10 +490,10 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
     {
         s(3) = cnven(i18n::s.get("core.ui.sex3.female"));
     }
-    s(5) = ""s + calc_age(_chara) + u8" "s +
+    s(5) = ""s + calc_age(_chara) + " "s +
         i18n::s.get("core.ui.chara_sheet.personal.age_counter");
-    s(6) = ""s + _chara.height + u8" cm"s;
-    s(7) = ""s + _chara.weight + u8" kg"s;
+    s(6) = ""s + _chara.height + " cm"s;
+    s(7) = ""s + _chara.weight + " kg"s;
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         mes(wx + 68 + cnt / 4 * 190 + en * ((cnt > 3) * 12),
@@ -505,13 +505,13 @@ void UIMenuCharacterSheet::_draw_first_page_text_name()
 
 void UIMenuCharacterSheet::_draw_attribute_level(int cnt)
 {
-    std::string level = u8"("s +
+    std::string level = "("s +
         _chara.skills().base_level(
             *the_skill_db.get_id_from_integer(10 + cnt)) +
-        u8")"s;
+        ")"s;
     if (enchantment_find(_chara, 60010 + cnt))
     {
-        level += u8"*"s;
+        level += "*"s;
     }
     mes(wx + 92,
         wy + 151 + cnt * 15,
@@ -527,25 +527,25 @@ void UIMenuCharacterSheet::_draw_attribute_potential(int cnt)
         _chara.skills().potential(*the_skill_db.get_id_from_integer(10 + cnt));
     if (potential >= 200)
     {
-        mes(wx + 176, wy + 152 + cnt * 15, u8"Superb"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, "Superb"s, {20, 10, 0});
         return;
     }
     if (potential >= 150)
     {
-        mes(wx + 176, wy + 152 + cnt * 15, u8"Great"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, "Great"s, {20, 10, 0});
         return;
     }
     if (potential >= 100)
     {
-        mes(wx + 176, wy + 152 + cnt * 15, u8"Good"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, "Good"s, {20, 10, 0});
         return;
     }
     if (potential >= 50)
     {
-        mes(wx + 176, wy + 152 + cnt * 15, u8"Bad"s, {20, 10, 0});
+        mes(wx + 176, wy + 152 + cnt * 15, "Bad"s, {20, 10, 0});
         return;
     }
-    mes(wx + 176, wy + 152 + cnt * 15, u8"Hopeless"s);
+    mes(wx + 176, wy + 152 + cnt * 15, "Hopeless"s);
 }
 
 void UIMenuCharacterSheet::_draw_attribute(int cnt)
@@ -580,9 +580,9 @@ void UIMenuCharacterSheet::_draw_first_page_weapon_info()
     font(14 - en * 2);
     mes(wx + 460 + en * 8,
         wy + 279 + p(2) * 16,
-        ""s + (100 - 10000 / (prot.rate + 100)) + u8"% + "s + prot.dice_x +
-            u8"d"s + prot.dice_y);
-    mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, ""s + evade + u8"%"s);
+        ""s + (100 - 10000 / (prot.rate + 100)) + "% + "s + prot.dice_x + "d"s +
+            prot.dice_y);
+    mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, ""s + evade + "%"s);
     ++p(2);
 }
 
@@ -612,13 +612,13 @@ void UIMenuCharacterSheet::_draw_first_page_text_fame()
 
 void UIMenuCharacterSheet::_draw_first_page_stats_fame()
 {
-    s(0) = ""s + _chara.skills().level("core.stat_life") + u8"("s +
-        _chara.skills().base_level("core.stat_life") + u8")"s;
-    s(1) = ""s + _chara.skills().level("core.stat_mana") + u8"("s +
-        _chara.skills().base_level("core.stat_mana") + u8")"s;
+    s(0) = ""s + _chara.skills().level("core.stat_life") + "("s +
+        _chara.skills().base_level("core.stat_life") + ")"s;
+    s(1) = ""s + _chara.skills().level("core.stat_mana") + "("s +
+        _chara.skills().base_level("core.stat_mana") + ")"s;
     s(2) = ""s + _chara.insanity;
-    s(3) = ""s + _chara.current_speed + u8"("s +
-        _chara.skills().base_level("core.stat_speed") + u8")"s;
+    s(3) = ""s + _chara.current_speed + "("s +
+        _chara.skills().base_level("core.stat_speed") + ")"s;
     s(4) = "";
     s(5) = ""s + _chara.fame;
     s(6) = ""s + _chara.karma;
@@ -653,7 +653,7 @@ void UIMenuCharacterSheet::_draw_first_page_stats_weight()
 {
     s(0) = cnvweight(game()->cargo_weight);
     s(1) = cnvweight(game()->max_cargo_weight);
-    s(2) = cnvweight(_chara.equipment_weight) + u8" "s +
+    s(2) = cnvweight(_chara.equipment_weight) + " "s +
         get_armor_class_name(_chara);
     s(3) = i18n::s.get(
         "core.ui.chara_sheet.weight.level_counter",
@@ -858,7 +858,7 @@ void UIMenuCharacterSheet::_draw_skill_name(int cnt, int skill_id)
     {
         if (game()->tracked_skills.at(cnt) == _chara.index * 10000 + skill_id)
         {
-            skill_name = u8"*"s + skill_name;
+            skill_name = "*"s + skill_name;
         }
     }
 
@@ -884,7 +884,7 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
         desc = ""s +
             _chara.skills().base_level(
                 *the_skill_db.get_id_from_integer(skill_id)) +
-            u8"."s +
+            "."s +
             std::to_string(
                 1000 +
                 _chara.skills().experience(
@@ -900,10 +900,10 @@ void UIMenuCharacterSheet::_draw_skill_power(int cnt, int skill_id)
                 _chara.skills().base_level(
                     *the_skill_db.get_id_from_integer(skill_id));
         }
-        desc += u8"("s +
+        desc += "("s +
             _chara.skills().potential(
                 *the_skill_db.get_id_from_integer(skill_id)) +
-            u8"%)"s;
+            "%)"s;
     }
 
     mes(wx + 280 - strlen_u(desc) * 7, wy + 66 + cnt * 19 + 2, desc);
@@ -925,11 +925,11 @@ void UIMenuCharacterSheet::_draw_skill_train_cost(
 
     if (is_training)
     {
-        train_cost = ""s + calc_skill_training_cost(skill_id, _chara) + u8"p "s;
+        train_cost = ""s + calc_skill_training_cost(skill_id, _chara) + "p "s;
     }
     else
     {
-        train_cost = ""s + calc_skill_learning_cost(skill_id, _chara) + u8"p "s;
+        train_cost = ""s + calc_skill_learning_cost(skill_id, _chara) + "p "s;
     }
     mes(wx + 322 - strlen_u(train_cost) * 7,
         wy + 66 + cnt * 19 + 2,

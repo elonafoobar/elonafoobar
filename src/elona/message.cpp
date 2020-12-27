@@ -176,7 +176,7 @@ void Message::clear()
 
 void Message::_msg_write(std::string& message)
 {
-    constexpr const auto musical_note = u8"♪";
+    constexpr const auto musical_note = "♪";
 
     for (auto pos = strutil::find_widthwise(message, musical_note);
          pos.first != std::string::npos;
@@ -191,7 +191,7 @@ void Message::_msg_write(std::string& message)
         {
             break;
         }
-        message = message.substr(0, bytewise_pos) + u8"  " +
+        message = message.substr(0, bytewise_pos) + "  " +
             message.substr(
                 bytewise_pos + std::strlen(musical_note) + (symbol_type != 0));
 
@@ -332,7 +332,7 @@ void Message::_txt_conv()
 
     if (jp)
     {
-        if (msgtemp.find(u8"「") != std::string::npos)
+        if (msgtemp.find("「") != std::string::npos)
         {
             if (!fix_text_color)
             {
@@ -359,7 +359,7 @@ void Message::_txt_conv()
                     len += byte;
                     if (wdt + message_width > inf_maxmsglen)
                     {
-                        if (wdt > 1 && strmid(msgtemp, wdt - 2, 3) == u8"♪1")
+                        if (wdt > 1 && strmid(msgtemp, wdt - 2, 3) == "♪1")
                         {
                             ++wdt;
                             break;
@@ -368,15 +368,15 @@ void Message::_txt_conv()
                         {
                             break;
                         }
-                        if (!strutil::starts_with(msgtemp, u8"。", len) &&
-                            !strutil::starts_with(msgtemp, u8"、", len) &&
-                            !strutil::starts_with(msgtemp, u8"」", len) &&
-                            !strutil::starts_with(msgtemp, u8"』", len) &&
-                            !strutil::starts_with(msgtemp, u8"！", len) &&
-                            !strutil::starts_with(msgtemp, u8"？", len) &&
-                            !strutil::starts_with(msgtemp, u8"…", len) &&
-                            !strutil::starts_with(msgtemp, u8"♪", len) &&
-                            !strutil::starts_with(msgtemp, u8"♪1", len))
+                        if (!strutil::starts_with(msgtemp, "。", len) &&
+                            !strutil::starts_with(msgtemp, "、", len) &&
+                            !strutil::starts_with(msgtemp, "」", len) &&
+                            !strutil::starts_with(msgtemp, "』", len) &&
+                            !strutil::starts_with(msgtemp, "！", len) &&
+                            !strutil::starts_with(msgtemp, "？", len) &&
+                            !strutil::starts_with(msgtemp, "…", len) &&
+                            !strutil::starts_with(msgtemp, "♪", len) &&
+                            !strutil::starts_with(msgtemp, "♪1", len))
                         {
                             break;
                         }
@@ -390,7 +390,7 @@ void Message::_txt_conv()
                 msg[msgline % inf_maxlog] += m;
                 _msg_write(m);
                 msgtemp = msgtemp.substr(len);
-                if (msgtemp.empty() || msgtemp == u8" ")
+                if (msgtemp.empty() || msgtemp == " ")
                 {
                     break;
                 }
@@ -411,7 +411,7 @@ void Message::_txt_conv()
         }
         else
         {
-            if (strutil::contains(msgtemp, u8"\""))
+            if (strutil::contains(msgtemp, "\""))
             {
                 if (!fix_text_color)
                 {
@@ -420,10 +420,10 @@ void Message::_txt_conv()
             }
             msgtemp[0] = std::toupper(msgtemp[0]);
         }
-        msgtemp += u8" ";
+        msgtemp += " ";
         while (1)
         {
-            int p_at_txtfunc = instr(msgtemp, 0, u8" ") + 1;
+            int p_at_txtfunc = instr(msgtemp, 0, " ") + 1;
             if (p_at_txtfunc == 0)
             {
                 break;

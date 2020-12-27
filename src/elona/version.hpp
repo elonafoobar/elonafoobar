@@ -38,13 +38,13 @@ struct Version
     // E.g., "Elona foobar version 1.2.3 (14db8cb), compiled on Darwin-17.4.0 at 2018-04-15T14:07:28Z"
     std::string long_string() const
     {
-        return u8"Elona foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
+        return "Elona foobar version " + short_string() + " (" + revision + "), compiled on " + platform + " at " + timestamp;
     }
 
     // E.g., "Elona_foobar/1.2.3+14db8cb (Darwin-17.4.0)"
     std::string user_agent() const
     {
-        return u8"Elona_foobar/" + short_string() + "+" + revision + " (" + platform + ")";
+        return "Elona_foobar/" + short_string() + "+" + revision + " (" + platform + ")";
     }
 };
 

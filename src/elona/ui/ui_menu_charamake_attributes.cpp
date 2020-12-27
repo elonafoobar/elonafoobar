@@ -129,7 +129,7 @@ void UIMenuCharamakeAttributes::_draw_window_desc(int locks_left)
     font(13 - en * 2, snail::Font::Style::bold);
     mes(wx + 180,
         wy + 84,
-        i18n::s.get("core.chara_making.roll_attributes.locks_left") + u8": "s +
+        i18n::s.get("core.chara_making.roll_attributes.locks_left") + ": "s +
             locks_left);
 }
 
@@ -143,7 +143,7 @@ void UIMenuCharamakeAttributes::_draw_window(int locks_left)
 void UIMenuCharamakeAttributes::_draw_attribute_locked(int cnt)
 {
     font(12 - en * 2, snail::Font::Style::bold);
-    mes(wx + 240, wy + 66 + cnt * 23 + 2, u8"Locked!"s, {20, 20, 140});
+    mes(wx + 240, wy + 66 + cnt * 23 + 2, "Locked!"s, {20, 20, 140});
 }
 
 void UIMenuCharamakeAttributes::_draw_attribute_value(

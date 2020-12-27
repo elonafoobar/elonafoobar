@@ -85,7 +85,7 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
 
     lord->is_lord_of_dungeon() = true;
     area_data[game()->current_map].has_been_conquered = lord->index;
-    lord->name += u8" Lv"s + lord->level;
+    lord->name += " Lv"s + lord->level;
     txt(i18n::s.get("core.event.reached_deepest_level"));
     txt(i18n::s.get(
             "core.event.guarded_by_lord", mapname(game()->current_map), *lord),
@@ -215,7 +215,7 @@ void eh_reunoin_with_pets(const DeferredEvent&)
         i18n::s.get("core.event.popup.reunion_with_pet.title"),
         i18n::s.get("core.event.popup.reunion_with_pet.text"),
         choices,
-        u8"core.bg_re13");
+        "core.bg_re13");
     data::InstanceId chara_id = "core.putit";
     if (result == 0)
     {
@@ -252,7 +252,7 @@ void eh_marriage(const DeferredEvent&)
         i18n::s.get("core.event.popup.marriage.title"),
         i18n::s.get("core.event.popup.marriage.text", cdata[marry]),
         {i18n::s.get_enum("core.event.popup.marriage.choices", 0)},
-        u8"core.bg_re14");
+        "core.bg_re14");
     for (int i = 0; i < 5; ++i)
     {
         flt(calcobjlv(cdata[marry].level + 5), calcfixlv(Quality::good));
@@ -449,11 +449,11 @@ void eh_ragnarok(const DeferredEvent& event)
             flt(100, calcfixlv(Quality::good));
             if (rnd(4))
             {
-                fltnrace = u8"core.dragon"s;
+                fltnrace = "core.dragon"s;
             }
             else
             {
-                fltnrace = u8"core.giant"s;
+                fltnrace = "core.giant"s;
             }
             if (const auto chara = chara_create(-1, "", x, y))
             {
@@ -515,7 +515,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
     txt(i18n::s.get("core.event.bomb"), Message::color{ColorIndex::red});
     msg_halt();
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"bg22.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "bg22.bmp", 0, 0, true);
     gsel(4);
     gmode(0);
     gcopy_c(
@@ -529,7 +529,7 @@ void eh_nuclear_bomb(const DeferredEvent& event)
         windoww + 4,
         windowh + 4);
     gsel(7);
-    picload(filesystem::dirs::graphic() / u8"anime9.bmp", 0, 0, true);
+    picload(filesystem::dirs::graphic() / "anime9.bmp", 0, 0, true);
     gsel(0);
     dx = windoww / 2;
     dy = (windowh - inf_verh) / 2;

@@ -34,7 +34,7 @@ std::string game_date_time_string()
     const auto H = std::to_string(dt.hour());
     const auto M = std::to_string(dt.minute());
 
-    return Y + u8"年" + m + u8"月" + d + u8"日 " + H + u8"時" + M + u8"分";
+    return Y + "年" + m + "月" + d + "日 " + H + "時" + M + "分";
 }
 
 } // namespace
@@ -47,51 +47,48 @@ void save_dump_player_info()
 
     std::stringstream ss;
 
-    ss << u8"Elona 1.22" << std::endl;
-    ss << u8"Elona foobar " << latest_version.long_string() << std::endl;
+    ss << "Elona 1.22" << std::endl;
+    ss << "Elona foobar " << latest_version.long_string() << std::endl;
 
-    ss << u8"キャラクター情報 " << game_date_time_string() << "  " << mdatan(0)
+    ss << "キャラクター情報 " << game_date_time_string() << "  " << mdatan(0)
        << std::endl;
 
     ss << std::endl;
 
     ss << "  " << fixtxt(cdata.player().alias + cdata.player().name, 34)
        << i18n::s.get_enum("core.ui.sex", cdata.player().sex) << " "
-       << calc_age(cdata.player()) << u8"歳  " << cdata.player().height
-       << u8"cm " << cdata.player().weight << u8"kg" << std::endl;
+       << calc_age(cdata.player()) << "歳  " << cdata.player().height << "cm "
+       << cdata.player().weight << "kg" << std::endl;
 
     ss << std::endl;
 
     ss << fixtxt(
-              u8"種族       : " +
+              "種族       : " +
                   the_race_db.get_text(cdata.player().race, "name"),
               30)
-       << fixtxt(u8"信仰      : " + god_get_name(cdata.player().religion), 32)
+       << fixtxt("信仰      : " + god_get_name(cdata.player().religion), 32)
        << std::endl;
-    ss << fixtxt(u8"職業       : " + class_get_name(cdata.player().class_), 30)
-       << fixtxt(u8"所属      : " + guildname(), 32) << std::endl;
-    ss << fixtxt(u8"レベル     : " + std::to_string(cdata.player().level), 30)
-       << fixtxt(u8"経過日数  : " + std::to_string(game()->play_days), 32)
-       << std::endl;
-    ss << fixtxt(
-              u8"残りBP     : " + std::to_string(cdata.player().skill_bonus),
-              30)
-       << fixtxt(u8"経過ターン: " + std::to_string(game()->play_turns), 32)
-       << std::endl;
-    ss << fixtxt(u8"金貨       : " + std::to_string(cdata.player().gold), 30)
-       << fixtxt(
-              u8"殺害数    : " + std::to_string(game()->total_kill_count), 32)
+    ss << fixtxt("職業       : " + class_get_name(cdata.player().class_), 30)
+       << fixtxt("所属      : " + guildname(), 32) << std::endl;
+    ss << fixtxt("レベル     : " + std::to_string(cdata.player().level), 30)
+       << fixtxt("経過日数  : " + std::to_string(game()->play_days), 32)
        << std::endl;
     ss << fixtxt(
-              u8"プラチナ   : " + std::to_string(cdata.player().platinum), 30)
+              "残りBP     : " + std::to_string(cdata.player().skill_bonus), 30)
+       << fixtxt("経過ターン: " + std::to_string(game()->play_turns), 32)
+       << std::endl;
+    ss << fixtxt("金貨       : " + std::to_string(cdata.player().gold), 30)
+       << fixtxt("殺害数    : " + std::to_string(game()->total_kill_count), 32)
+       << std::endl;
+    ss << fixtxt("プラチナ   : " + std::to_string(cdata.player().platinum), 30)
        << fixtxt(
-              u8"最深到達  : " +
+              "最深到達  : " +
                   std::to_string(game()->deepest_dungeon_danger_level) +
-                  u8"階相当",
+                  "階相当",
               32)
        << std::endl;
     ss << fixtxt(
-              u8"プレイ時間 : "s +
+              "プレイ時間 : "s +
                   cnvplaytime(
                       (game()->play_seconds_in_real_world +
                        timeGetTime() / 1000 - time_begin)),
@@ -100,22 +97,20 @@ void save_dump_player_info()
 
     ss << std::endl;
 
-    s(1) = u8"生命力    : " +
-        std::to_string(cdata.player().skills().level("core.stat_life")) +
-        u8"(" +
+    s(1) = "生命力    : " +
+        std::to_string(cdata.player().skills().level("core.stat_life")) + "(" +
         std::to_string(cdata.player().skills().base_level("core.stat_life")) +
-        u8")";
-    s(2) = u8"マナ      : " +
-        std::to_string(cdata.player().skills().level("core.stat_mana")) +
-        u8"(" +
+        ")";
+    s(2) = "マナ      : " +
+        std::to_string(cdata.player().skills().level("core.stat_mana")) + "(" +
         std::to_string(cdata.player().skills().base_level("core.stat_mana")) +
-        u8")";
-    s(3) = u8"狂気度    : " + std::to_string(cdata.player().insanity);
-    s(4) = u8"速度      : " + std::to_string(cdata.player().current_speed);
-    s(5) = u8"名声度    : " + std::to_string(cdata.player().fame);
-    s(6) = u8"カルマ    : " + std::to_string(cdata.player().karma);
-    s(7) = u8"DV        : " + std::to_string(cdata.player().dv);
-    s(8) = u8"PV        : " + std::to_string(cdata.player().pv);
+        ")";
+    s(3) = "狂気度    : " + std::to_string(cdata.player().insanity);
+    s(4) = "速度      : " + std::to_string(cdata.player().current_speed);
+    s(5) = "名声度    : " + std::to_string(cdata.player().fame);
+    s(6) = "カルマ    : " + std::to_string(cdata.player().karma);
+    s(7) = "DV        : " + std::to_string(cdata.player().dv);
+    s(8) = "PV        : " + std::to_string(cdata.player().pv);
     s(9) = "";
 
     for (int cnt = 0; cnt < 8; ++cnt)
@@ -125,33 +120,33 @@ void save_dump_player_info()
             *the_skill_db.get_id_from_integer(10 + cnt));
         if (p >= 200)
         {
-            s += u8"superb"s;
+            s += "superb"s;
         }
         else if (p >= 150)
         {
-            s += u8"great"s;
+            s += "great"s;
         }
         else if (p >= 100)
         {
-            s += u8"good"s;
+            s += "good"s;
         }
         else if (p >= 50)
         {
-            s += u8"bad"s;
+            s += "bad"s;
         }
         else
         {
-            s += u8"hopeless"s;
+            s += "hopeless"s;
         }
         s = fixtxt(s, 15);
         s = fixtxt(
-                i18n::s.get_enum("core.ui.attribute", cnt) + u8"    : "s +
+                i18n::s.get_enum("core.ui.attribute", cnt) + "    : "s +
                     cdata.player().skills().level(
                         *the_skill_db.get_id_from_integer(10 + cnt)) +
-                    u8"("s +
+                    "("s +
                     cdata.player().skills().base_level(
                         *the_skill_db.get_id_from_integer(10 + cnt)) +
-                    u8")"s,
+                    ")"s,
                 24) +
             s;
 
@@ -167,15 +162,15 @@ void save_dump_player_info()
         const auto evade = calc_evasion(cdata.player());
         const auto prot = calc_attack_protection(cdata.player());
 
-        ss << u8"回避    : " << evade << u8"%" << std::endl;
-        ss << u8"軽減    : " << (100 - 10000 / (prot.rate + 100)) << u8"% + "
-           << prot.dice_x << u8"d" << prot.dice_y << std::endl;
+        ss << "回避    : " << evade << "%" << std::endl;
+        ss << "軽減    : " << (100 - 10000 / (prot.rate + 100)) << "% + "
+           << prot.dice_x << "d" << prot.dice_y << std::endl;
     }
 
     ss << std::endl;
 
-    ss << u8"------------------------------ 装備品 合計重量"
-       << cnvweight(cdata.player().equipment_weight) << u8" "
+    ss << "------------------------------ 装備品 合計重量"
+       << cnvweight(cdata.player().equipment_weight) << " "
        << get_armor_class_name(cdata.player()) << std::endl;
     ss << std::endl;
 
@@ -186,7 +181,7 @@ void save_dump_player_info()
             continue;
         }
 
-        std::string item_name = u8"装備なし";
+        std::string item_name = "装備なし";
         std::string item_desc;
         p(0) = 0;
         listmax = 0;
@@ -202,8 +197,8 @@ void save_dump_player_info()
         }
 
         ss << i18n::s.get_data_text("core.body_part", body_part.id, "name")
-           << u8":" << std::endl;
-        ss << item_name << u8" " << item_desc << std::endl;
+           << ":" << std::endl;
+        ss << item_name << " " << item_desc << std::endl;
         for (int i = 0; i < listmax; ++i)
         {
             ss << listn(0, i) << std::endl;
@@ -211,7 +206,7 @@ void save_dump_player_info()
         ss << std::endl;
     }
 
-    ss << u8"------------------------------ 特徴" << std::endl;
+    ss << "------------------------------ 特徴" << std::endl;
     ss << std::endl;
 
     trait_load_desc(cdata.player());
@@ -230,7 +225,7 @@ void save_dump_player_info()
 
     ss << std::endl;
 
-    ss << u8"------------------------------ 仲間" << std::endl;
+    ss << "------------------------------ 仲間" << std::endl;
     ss << std::endl;
 
     for (const auto& ally : cdata.allies())
@@ -240,43 +235,44 @@ void save_dump_player_info()
             continue;
         }
 
-        ss << ally.name << u8" " << the_race_db.get_text(ally.race, "name")
-           << u8"の" << class_get_name(ally.class_) << u8" "
-           << i18n::s.get_enum("core.ui.sex", ally.sex) << u8" "
-           << calc_age(ally) << u8"歳" << u8"  " << ally.height << u8"cm"
-           << u8" " << ally.weight << u8"kg" << std::endl;
-        ss << u8"レベル " << ally.level;
+        ss << ally.name << " " << the_race_db.get_text(ally.race, "name")
+           << "の" << class_get_name(ally.class_) << " "
+           << i18n::s.get_enum("core.ui.sex", ally.sex) << " " << calc_age(ally)
+           << "歳"
+           << "  " << ally.height << "cm"
+           << " " << ally.weight << "kg" << std::endl;
+        ss << "レベル " << ally.level;
         if (ally.is_married())
         {
-            ss << u8" 婚約済み";
+            ss << " 婚約済み";
         }
         ss << std::endl << std::endl;
     }
 
-    ss << u8"------------------------------ 称号" << std::endl;
+    ss << "------------------------------ 称号" << std::endl;
     ss << std::endl;
 
     for (int i = 0; i < 9; ++i)
     {
         if (game()->ranks.at(i) < 10000)
         {
-            ss << ranktitle(i) << u8" Rank." << game()->ranks.at(i) / 100
+            ss << ranktitle(i) << " Rank." << game()->ranks.at(i) / 100
                << std::endl;
-            ss << u8"給料: 約 " << calcincome(i) << u8" gold  ノルマ: ";
+            ss << "給料: 約 " << calcincome(i) << " gold  ノルマ: ";
             if (i == 3 || i == 4 || i == 5 || i == 8)
             {
-                ss << u8"なし";
+                ss << "なし";
             }
             else
             {
-                ss << game()->rank_deadlines.at(i) << u8"日以内";
+                ss << game()->rank_deadlines.at(i) << "日以内";
             }
             ss << std::endl;
         }
     }
 
     std::ofstream out{
-        (filesystem::dirs::save() / fs::u8path(playerid + u8".txt")).native()};
+        (filesystem::dirs::save() / fs::u8path(playerid + ".txt")).native()};
     out << ss.str() << std::endl;
 
     std::cout << ss.str();

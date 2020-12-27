@@ -44,7 +44,7 @@ void ConfigManager::save(const fs::path& config_path)
     if (!out)
     {
         throw std::runtime_error{
-            u8"Failed to open: " + config_path.to_u8string()};
+            "Failed to open: " + config_path.to_u8string()};
     }
 
     const std::string serialized_config = _impl["serialize"]();

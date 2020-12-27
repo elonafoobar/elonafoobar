@@ -453,7 +453,7 @@ optional<data::InstanceId> gene_engineering_get_transplanted_body_part(
     const Character& original_ally,
     const Character& gene_ally)
 {
-    if (strutil::contains(chara_db_get_filter(gene_ally.id), u8"/man/"))
+    if (strutil::contains(chara_db_get_filter(gene_ally.id), "/man/"))
         return none;
     if (gene_ally.splits() || gene_ally.splits2())
         return none;

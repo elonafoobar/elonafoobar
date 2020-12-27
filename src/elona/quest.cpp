@@ -278,7 +278,7 @@ void quest_set_data(
     }
     if (quest.id == 1006)
     {
-        s = u8"%HARVEST"s;
+        s = "%HARVEST"s;
         parse_quest_board_text(val0);
         s(10) = ""s + cnvweight(quest.extra_info_1);
         s(11) = mapname(quest.originating_map_id);
@@ -292,7 +292,7 @@ void quest_set_data(
     }
     if (quest.id == 1009)
     {
-        s = u8"%PARTY"s;
+        s = "%PARTY"s;
         parse_quest_board_text(val0);
         s(10) = i18n::s.get("core.quest.info.party.points", quest.extra_info_1);
         s(11) = mapname(quest.originating_map_id);
@@ -305,7 +305,7 @@ void quest_set_data(
     }
     if (quest.id == 1007)
     {
-        s = u8"%ESCORT,"s + quest.escort_difficulty;
+        s = "%ESCORT,"s + quest.escort_difficulty;
         parse_quest_board_text(val0);
         s(11) = ""s + mapname(quest.extra_info_1);
         s(4) = i18n::s.get("core.quest.info.escort.text", s(11));
@@ -313,21 +313,21 @@ void quest_set_data(
     }
     if (quest.id == 1001)
     {
-        s = u8"%HUNT"s;
+        s = "%HUNT"s;
         parse_quest_board_text(val0);
         s(4) = i18n::s.get("core.quest.info.hunt.text");
         s(6) = s(4);
     }
     if (quest.id == 1004)
     {
-        s = u8"%SUPPLY"s;
+        s = "%SUPPLY"s;
         parse_quest_board_text(val0);
         s(4) = cnvarticle(cnvitemname(quest.target_item_id));
         s(6) = i18n::s.get("core.quest.info.supply.text", s(4));
     }
     if (quest.id == 1002)
     {
-        s = u8"%DELIVER,"s + quest.extra_info_1;
+        s = "%DELIVER,"s + quest.extra_info_1;
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(quest.target_item_id));
         s(11) = ""s +
@@ -342,10 +342,10 @@ void quest_set_data(
     }
     if (quest.id == 1003)
     {
-        s = u8"%COOK,"s + quest.extra_info_1;
+        s = "%COOK,"s + quest.extra_info_1;
         if (rnd(6) == 0)
         {
-            s = u8"%COOK,GENERAL"s;
+            s = "%COOK,GENERAL"s;
         }
         parse_quest_board_text(val0);
         s(4) =
@@ -354,7 +354,7 @@ void quest_set_data(
     }
     if (quest.id == 1008)
     {
-        s = u8"%CONQUER"s;
+        s = "%CONQUER"s;
         parse_quest_board_text(val0);
         s(4) = chara_db_get_name(
             *the_character_db.get_id_from_integer(quest.extra_info_1));
@@ -367,7 +367,7 @@ void quest_set_data(
     }
     if (quest.id == 1010)
     {
-        s = u8"%HUNTEX"s;
+        s = "%HUNTEX"s;
         parse_quest_board_text(val0);
         s(4) = chara_db_get_name(
             *the_character_db.get_id_from_integer(quest.extra_info_1));
@@ -376,7 +376,7 @@ void quest_set_data(
     }
     if (quest.id == 1011)
     {
-        s = u8"%COLLECT"s;
+        s = "%COLLECT"s;
         parse_quest_board_text(val0);
         s(10) = cnvarticle(cnvitemname(quest.target_item_id));
         s(11) = ""s + mapname(quest.originating_map_id);
@@ -415,27 +415,27 @@ void quest_set_data(
     {
         if (quest.progress == 3)
         {
-            buff += u8"@QC["s + i18n::s.get("core.quest.journal.complete") +
-                u8"]"s + s(3) + u8"\n"s;
+            buff += "@QC["s + i18n::s.get("core.quest.journal.complete") +
+                "]"s + s(3) + "\n"s;
         }
         else
         {
-            buff += u8"@QL["s + i18n::s.get("core.quest.journal.job") +
-                u8"] "s + s(3) + u8"\n"s;
+            buff += "@QL["s + i18n::s.get("core.quest.journal.job") + "] "s +
+                s(3) + "\n"s;
         }
-        buff += i18n::s.get("core.quest.journal.client") + qname(quest_idx) +
-            u8"\n"s;
+        buff +=
+            i18n::s.get("core.quest.journal.client") + qname(quest_idx) + "\n"s;
         buff += i18n::s.get("core.quest.journal.location") +
-            mapname(quest.originating_map_id) + u8"\n"s;
+            mapname(quest.originating_map_id) + "\n"s;
         buff += i18n::s.get("core.quest.journal.deadline");
         if (quest.deadline_days != -1)
         {
             buff += i18n::s.get("core.quest.journal.remaining");
         }
-        buff += nquestdate + u8"\n"s;
+        buff += nquestdate + "\n"s;
         s(5) = i18n::s.get("core.quest.journal.reward") + s(5);
         talk_conv(s(5), 40 - en * 10);
-        buff += s(5) + u8"\n"s;
+        buff += s(5) + "\n"s;
         s(4) = i18n::s.get("core.quest.journal.detail");
         if (quest.progress == 3)
         {
@@ -446,7 +446,7 @@ void quest_set_data(
             s(4) += s(6);
         }
         talk_conv(s(4), 40 - en * 10);
-        buff += s(4) + u8"\n"s;
+        buff += s(4) + "\n"s;
     }
     if (val0 == 3)
     {

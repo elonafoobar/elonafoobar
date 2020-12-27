@@ -51,7 +51,7 @@ optional<std::string> _random_name_internal()
     {
         if (rnd(8) == 0)
         {
-            ret += u8"ー";
+            ret += "ー";
         }
     }
     if (rnd(5))
@@ -81,8 +81,7 @@ optional<std::string> _random_name_internal()
 
     if (jp)
     {
-        if (strutil::starts_with(ret, u8"ー") ||
-            strutil::contains(ret, u8"ーッ"))
+        if (strutil::starts_with(ret, "ー") || strutil::contains(ret, "ーッ"))
         {
             return none;
         }
@@ -121,13 +120,13 @@ std::string cnvrank(int n)
         return std::to_string(n);
 
     if (n % 10 == 1 && n != 11)
-        return std::to_string(n) + u8"st";
+        return std::to_string(n) + "st";
     else if (n % 10 == 2 && n != 12)
-        return std::to_string(n) + u8"nd";
+        return std::to_string(n) + "nd";
     else if (n % 10 == 3 && n != 13)
-        return std::to_string(n) + u8"rd";
+        return std::to_string(n) + "rd";
     else
-        return std::to_string(n) + u8"th";
+        return std::to_string(n) + "th";
 }
 
 
@@ -148,7 +147,7 @@ std::string cnvitemname(int id)
     {
         return ioriginalnameref(id);
     }
-    return ioriginalnameref2(id) + u8" of "s + ioriginalnameref(id);
+    return ioriginalnameref2(id) + " of "s + ioriginalnameref(id);
 }
 
 
@@ -178,7 +177,7 @@ std::string cnven(const std::string& source)
 
 std::string cnvfix(int n)
 {
-    return n >= 0 ? u8"+"s + std::to_string(n) : std::to_string(n);
+    return n >= 0 ? "+"s + std::to_string(n) : std::to_string(n);
 }
 
 
@@ -331,11 +330,11 @@ std::string maplevel(int)
         {
             if (game()->current_dungeon_level > 0)
             {
-                return u8"B."s + (game()->current_dungeon_level - 1);
+                return "B."s + (game()->current_dungeon_level - 1);
             }
             else
             {
-                return u8"L."s + (game()->current_dungeon_level - 2) * -1;
+                return "L."s + (game()->current_dungeon_level - 2) * -1;
             }
         }
     }
@@ -483,13 +482,13 @@ std::string txtskillchange(const Character& chara, int id, bool increase)
 std::string _ka(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ですか"}, {u8"ですか"}},
-        {{u8"かよ", u8"か"}, {u8"かい"}},
-        {{u8"かい", u8"なの"}, {u8"なの"}},
-        {{u8"か…", u8"かよ…"}, {u8"なの…"}},
-        {{u8"かのう", u8"であるか"}, {u8"であるか"}},
-        {{u8"でござるか"}, {u8"でござりまするか"}},
-        {{u8"ッスか"}, {u8"かにゃ", u8"かニャン"}},
+        {{"ですか"}, {"ですか"}},
+        {{"かよ", "か"}, {"かい"}},
+        {{"かい", "なの"}, {"なの"}},
+        {{"か…", "かよ…"}, {"なの…"}},
+        {{"かのう", "であるか"}, {"であるか"}},
+        {{"でござるか"}, {"でござりまするか"}},
+        {{"ッスか"}, {"かにゃ", "かニャン"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -500,13 +499,13 @@ std::string _ka(const Character& speaker, int mark)
 std::string _da(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"です", u8"ですね"}, {u8"ですわ", u8"です"}},
-        {{u8"だぜ", u8"だ"}, {u8"ね", u8"よ"}},
-        {{u8"だよ"}, {u8"だわ", u8"よ"}},
-        {{u8"だ…", u8"さ…"}, {u8"よ…", u8"ね…"}},
-        {{u8"じゃ", u8"でおじゃる"}, {u8"じゃ", u8"でおじゃるぞ"}},
-        {{u8"でござる", u8"でござるよ"}, {u8"でござりまする"}},
-        {{u8"ッス"}, {u8"みゃん", u8"ミャ"}},
+        {{"です", "ですね"}, {"ですわ", "です"}},
+        {{"だぜ", "だ"}, {"ね", "よ"}},
+        {{"だよ"}, {"だわ", "よ"}},
+        {{"だ…", "さ…"}, {"よ…", "ね…"}},
+        {{"じゃ", "でおじゃる"}, {"じゃ", "でおじゃるぞ"}},
+        {{"でござる", "でござるよ"}, {"でござりまする"}},
+        {{"ッス"}, {"みゃん", "ミャ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -517,13 +516,13 @@ std::string _da(const Character& speaker, int mark)
 std::string _nda(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"のです", u8"んです"}, {u8"のですわ", u8"のです"}},
-        {{"", u8"んだ"}, {u8"の"}},
-        {{u8"んだよ", u8"んだ"}, {u8"わ", u8"のよ"}},
-        {{u8"…", u8"んだ…"}, {u8"の…", u8"わ…"}},
-        {{u8"のじゃ", u8"のだぞよ"}, {u8"のじゃわ", u8"のだぞよ"}},
-        {{u8"のでござる"}, {u8"のでございます"}},
-        {{u8"んだッス"}, {u8"のニャ", u8"のにゃん"}},
+        {{"のです", "んです"}, {"のですわ", "のです"}},
+        {{"", "んだ"}, {"の"}},
+        {{"んだよ", "んだ"}, {"わ", "のよ"}},
+        {{"…", "んだ…"}, {"の…", "わ…"}},
+        {{"のじゃ", "のだぞよ"}, {"のじゃわ", "のだぞよ"}},
+        {{"のでござる"}, {"のでございます"}},
+        {{"んだッス"}, {"のニャ", "のにゃん"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -534,13 +533,13 @@ std::string _nda(const Character& speaker, int mark)
 std::string _noka(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"のですか", u8"んですか"}, {u8"のですか", u8"んですか"}},
-        {{u8"のか", u8"のだな"}, {u8"の", u8"のかい"}},
-        {{u8"のかい", u8"の"}, {u8"の"}},
-        {{u8"のか…"}, {u8"の…"}},
-        {{u8"のかのう", u8"のだな"}, {u8"のかね", u8"のだな"}},
-        {{u8"のでござるか"}, {u8"のでございます"}},
-        {{u8"のッスか"}, {u8"にゃんか", u8"ニャン"}},
+        {{"のですか", "んですか"}, {"のですか", "んですか"}},
+        {{"のか", "のだな"}, {"の", "のかい"}},
+        {{"のかい", "の"}, {"の"}},
+        {{"のか…"}, {"の…"}},
+        {{"のかのう", "のだな"}, {"のかね", "のだな"}},
+        {{"のでござるか"}, {"のでございます"}},
+        {{"のッスか"}, {"にゃんか", "ニャン"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -551,13 +550,13 @@ std::string _noka(const Character& speaker, int mark)
 std::string _kana(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"でしょうか", u8"ですか"}, {u8"かしら", u8"でしょう"}},
-        {{u8"か", u8"かい"}, {u8"か", u8"かい"}},
-        {{u8"かな", u8"かなぁ"}, {u8"かな", u8"かなー"}},
-        {{u8"かな…", u8"か…"}, {u8"かな…", u8"か…"}},
-        {{u8"かのう", u8"かの"}, {u8"かのう", u8"かの"}},
-        {{u8"でござるか"}, {u8"でございますか"}},
-        {{u8"ッスか"}, {u8"かにゃん", u8"かニャ"}},
+        {{"でしょうか", "ですか"}, {"かしら", "でしょう"}},
+        {{"か", "かい"}, {"か", "かい"}},
+        {{"かな", "かなぁ"}, {"かな", "かなー"}},
+        {{"かな…", "か…"}, {"かな…", "か…"}},
+        {{"かのう", "かの"}, {"かのう", "かの"}},
+        {{"でござるか"}, {"でございますか"}},
+        {{"ッスか"}, {"かにゃん", "かニャ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -568,13 +567,13 @@ std::string _kana(const Character& speaker, int mark)
 std::string _kimi(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"貴方"}, {u8"貴方"}},
-        {{u8"お前"}, {u8"お前"}},
-        {{u8"君"}, {u8"君"}},
-        {{u8"君"}, {u8"君"}},
-        {{u8"お主"}, {u8"お主"}},
-        {{u8"そこもと"}, {u8"そなた様"}},
-        {{u8"アンタ"}, {u8"あにゃた"}},
+        {{"貴方"}, {"貴方"}},
+        {{"お前"}, {"お前"}},
+        {{"君"}, {"君"}},
+        {{"君"}, {"君"}},
+        {{"お主"}, {"お主"}},
+        {{"そこもと"}, {"そなた様"}},
+        {{"アンタ"}, {"あにゃた"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -585,13 +584,13 @@ std::string _kimi(const Character& speaker, int mark)
 std::string _ru(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ます", u8"ますよ"}, {u8"ますわ", u8"ますの"}},
-        {{u8"るぜ", u8"るぞ"}, {u8"るわ", u8"るよ"}},
-        {{u8"るよ", u8"るね"}, {u8"るの", u8"るわ"}},
-        {{u8"る…", u8"るが…"}, {u8"る…", u8"るわ…"}},
-        {{u8"るぞよ", u8"るぞ"}, {u8"るぞよ", u8"るぞ"}},
-        {{u8"るでござる", u8"るでござるよ"}, {u8"るのでございます"}},
-        {{u8"るッス"}, {u8"るのニャ", u8"るにゃん"}},
+        {{"ます", "ますよ"}, {"ますわ", "ますの"}},
+        {{"るぜ", "るぞ"}, {"るわ", "るよ"}},
+        {{"るよ", "るね"}, {"るの", "るわ"}},
+        {{"る…", "るが…"}, {"る…", "るわ…"}},
+        {{"るぞよ", "るぞ"}, {"るぞよ", "るぞ"}},
+        {{"るでござる", "るでござるよ"}, {"るのでございます"}},
+        {{"るッス"}, {"るのニャ", "るにゃん"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -602,14 +601,13 @@ std::string _ru(const Character& speaker, int mark)
 std::string _tanomu(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"お願いします", u8"頼みます"},
-         {u8"お願いしますわ", u8"頼みますわ"}},
-        {{u8"頼む", u8"頼むな"}, {u8"頼むよ", u8"頼む"}},
-        {{u8"頼むね", u8"頼むよ"}, {u8"頼むわ", u8"頼むね"}},
-        {{u8"頼む…", u8"頼むぞ…"}, {u8"頼むわ…", u8"頼むよ…"}},
-        {{u8"頼むぞよ"}, {u8"頼むぞよ"}},
-        {{u8"頼み申す", u8"頼むでござる"}, {u8"お頼み申し上げます"}},
-        {{u8"頼むッス"}, {u8"おねがいにゃ", u8"おねがいニャン"}},
+        {{"お願いします", "頼みます"}, {"お願いしますわ", "頼みますわ"}},
+        {{"頼む", "頼むな"}, {"頼むよ", "頼む"}},
+        {{"頼むね", "頼むよ"}, {"頼むわ", "頼むね"}},
+        {{"頼む…", "頼むぞ…"}, {"頼むわ…", "頼むよ…"}},
+        {{"頼むぞよ"}, {"頼むぞよ"}},
+        {{"頼み申す", "頼むでござる"}, {"お頼み申し上げます"}},
+        {{"頼むッス"}, {"おねがいにゃ", "おねがいニャン"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -620,13 +618,13 @@ std::string _tanomu(const Character& speaker, int mark)
 std::string _ore(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"私"}, {u8"私"}},
-        {{u8"俺"}, {u8"あたし"}},
-        {{u8"僕"}, {u8"わたし"}},
-        {{u8"自分"}, {u8"自分"}},
-        {{u8"麻呂"}, {u8"わらわ"}},
-        {{u8"拙者"}, {u8"手前"}},
-        {{u8"あっし"}, {u8"みゅー"}},
+        {{"私"}, {"私"}},
+        {{"俺"}, {"あたし"}},
+        {{"僕"}, {"わたし"}},
+        {{"自分"}, {"自分"}},
+        {{"麻呂"}, {"わらわ"}},
+        {{"拙者"}, {"手前"}},
+        {{"あっし"}, {"みゅー"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -637,13 +635,13 @@ std::string _ore(const Character& speaker, int mark)
 std::string _ga(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ですが", u8"ですけど"}, {u8"ですが", u8"ですけど"}},
-        {{u8"が", u8"がな"}, {u8"が"}},
-        {{u8"けど", u8"が"}, {u8"が", u8"けど"}},
-        {{u8"が…", u8"けど…"}, {u8"が…", u8"けど…"}},
-        {{u8"であるが"}, {u8"であるが"}},
-        {{u8"でござるが"}, {u8"でございますが"}},
-        {{u8"ッスけど", u8"ッスが"}, {u8"ニャけど", u8"にゃが"}},
+        {{"ですが", "ですけど"}, {"ですが", "ですけど"}},
+        {{"が", "がな"}, {"が"}},
+        {{"けど", "が"}, {"が", "けど"}},
+        {{"が…", "けど…"}, {"が…", "けど…"}},
+        {{"であるが"}, {"であるが"}},
+        {{"でござるが"}, {"でございますが"}},
+        {{"ッスけど", "ッスが"}, {"ニャけど", "にゃが"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -654,13 +652,13 @@ std::string _ga(const Character& speaker, int mark)
 std::string _dana(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ですね"}, {u8"ですわね", u8"ですね"}},
-        {{u8"だな"}, {u8"だね", u8"ね"}},
-        {{u8"だね"}, {u8"ね"}},
-        {{u8"だな…"}, {u8"だね…", u8"ね…"}},
-        {{u8"であるな"}, {u8"であるな"}},
-        {{u8"でござるな"}, {u8"でございますね"}},
-        {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
+        {{"ですね"}, {"ですわね", "ですね"}},
+        {{"だな"}, {"だね", "ね"}},
+        {{"だね"}, {"ね"}},
+        {{"だな…"}, {"だね…", "ね…"}},
+        {{"であるな"}, {"であるな"}},
+        {{"でござるな"}, {"でございますね"}},
+        {{"ッスね"}, {"にゃ", "みゃ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -671,13 +669,13 @@ std::string _dana(const Character& speaker, int mark)
 std::string _kure(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ください", u8"くださいよ"}, {u8"くださいな", u8"ください"}},
-        {{u8"くれ", u8"くれよ"}, {u8"くれ", u8"よ"}},
-        {{u8"ね", u8"よ"}, {u8"ね", u8"ね"}},
-        {{u8"くれ…", u8"…"}, {u8"よ…", u8"…"}},
-        {{u8"つかわせ", u8"たもれ"}, {u8"つかわせ", u8"たもれ"}},
-        {{u8"頂きたいでござる"}, {u8"くださいませ"}},
-        {{u8"くれッス"}, {u8"にゃ", u8"みゃ"}},
+        {{"ください", "くださいよ"}, {"くださいな", "ください"}},
+        {{"くれ", "くれよ"}, {"くれ", "よ"}},
+        {{"ね", "よ"}, {"ね", "ね"}},
+        {{"くれ…", "…"}, {"よ…", "…"}},
+        {{"つかわせ", "たもれ"}, {"つかわせ", "たもれ"}},
+        {{"頂きたいでござる"}, {"くださいませ"}},
+        {{"くれッス"}, {"にゃ", "みゃ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -688,13 +686,13 @@ std::string _kure(const Character& speaker, int mark)
 std::string _daro(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"でしょう"}, {u8"でしょう"}},
-        {{u8"だろ"}, {u8"だろうね"}},
-        {{u8"だろうね"}, {u8"でしょ"}},
-        {{u8"だろ…"}, {u8"でしょ…"}},
-        {{u8"であろう"}, {u8"であろうな"}},
-        {{u8"でござろうな"}, {u8"でございましょう"}},
-        {{u8"ッスね"}, {u8"にゃ", u8"みゃ"}},
+        {{"でしょう"}, {"でしょう"}},
+        {{"だろ"}, {"だろうね"}},
+        {{"だろうね"}, {"でしょ"}},
+        {{"だろ…"}, {"でしょ…"}},
+        {{"であろう"}, {"であろうな"}},
+        {{"でござろうな"}, {"でございましょう"}},
+        {{"ッスね"}, {"にゃ", "みゃ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -705,13 +703,13 @@ std::string _daro(const Character& speaker, int mark)
 std::string _yo(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ですよ", u8"です"}, {u8"ですよ", u8"です"}},
-        {{u8"ぜ", u8"ぞ"}, {u8"わ", u8"よ"}},
-        {{u8"よ", u8"ぞ"}, {u8"わよ", u8"わ"}},
-        {{u8"…", u8"ぞ…"}, {u8"わ…", u8"…"}},
-        {{u8"であろう", u8"でおじゃる"}, {u8"であろうぞ", u8"でおじゃる"}},
-        {{u8"でござろう"}, {u8"でございますわ"}},
-        {{u8"ッスよ", u8"ッス"}, {u8"にゃぁ", u8"みゃぁ"}},
+        {{"ですよ", "です"}, {"ですよ", "です"}},
+        {{"ぜ", "ぞ"}, {"わ", "よ"}},
+        {{"よ", "ぞ"}, {"わよ", "わ"}},
+        {{"…", "ぞ…"}, {"わ…", "…"}},
+        {{"であろう", "でおじゃる"}, {"であろうぞ", "でおじゃる"}},
+        {{"でござろう"}, {"でございますわ"}},
+        {{"ッスよ", "ッス"}, {"にゃぁ", "みゃぁ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -722,13 +720,13 @@ std::string _yo(const Character& speaker, int mark)
 std::string _aru(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"あります", u8"ありますね"}, {u8"あります", u8"ありますわ"}},
-        {{u8"ある", u8"あるな"}, {u8"あるね", u8"あるよ"}},
-        {{u8"あるね", u8"あるよ"}, {u8"あるわ", u8"あるわね"}},
-        {{u8"ある…", u8"あるぞ…"}, {u8"あるわ…"}},
-        {{u8"あろう", u8"おじゃる"}, {u8"あろう", u8"おじゃる"}},
-        {{u8"あるでござる", u8"あるでござるな"}, {u8"ござます"}},
-        {{u8"あるッスよ", u8"あるッス"}, {u8"あにゅ", u8"あみぅ"}},
+        {{"あります", "ありますね"}, {"あります", "ありますわ"}},
+        {{"ある", "あるな"}, {"あるね", "あるよ"}},
+        {{"あるね", "あるよ"}, {"あるわ", "あるわね"}},
+        {{"ある…", "あるぞ…"}, {"あるわ…"}},
+        {{"あろう", "おじゃる"}, {"あろう", "おじゃる"}},
+        {{"あるでござる", "あるでござるな"}, {"ござます"}},
+        {{"あるッスよ", "あるッス"}, {"あにゅ", "あみぅ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -739,13 +737,13 @@ std::string _aru(const Character& speaker, int mark)
 std::string _u(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"います", u8"いますよ"}, {u8"いますわ", u8"います"}},
-        {{u8"うぜ", u8"うぞ"}, {u8"うわ", u8"うよ"}},
-        {{u8"うよ", u8"う"}, {u8"うわ", u8"う"}},
-        {{u8"う…", u8"うぞ…"}, {u8"うわ…", u8"う…"}},
-        {{u8"うぞよ", u8"うぞ"}, {u8"うぞよ", u8"うぞ"}},
-        {{u8"うでござる", u8"うでござるよ"}, {u8"うでございます"}},
-        {{u8"うッスよ", u8"うッス"}, {u8"うにぁ", u8"うみぁ"}},
+        {{"います", "いますよ"}, {"いますわ", "います"}},
+        {{"うぜ", "うぞ"}, {"うわ", "うよ"}},
+        {{"うよ", "う"}, {"うわ", "う"}},
+        {{"う…", "うぞ…"}, {"うわ…", "う…"}},
+        {{"うぞよ", "うぞ"}, {"うぞよ", "うぞ"}},
+        {{"うでござる", "うでござるよ"}, {"うでございます"}},
+        {{"うッスよ", "うッス"}, {"うにぁ", "うみぁ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -756,13 +754,13 @@ std::string _u(const Character& speaker, int mark)
 std::string _na(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ですね", u8"です"}, {u8"ですわ", u8"ですね"}},
-        {{u8"ぜ", u8"な"}, {u8"ね", u8"な"}},
-        {{u8"ね", u8"なぁ"}, {u8"わ", u8"わね"}},
-        {{u8"…", u8"な…"}, {u8"…", u8"わ…"}},
-        {{u8"でおじゃるな", u8"のう"}, {u8"でおじゃるな", u8"のう"}},
-        {{u8"でござるな"}, {u8"でございますわ"}},
-        {{u8"ッスね", u8"ッス"}, {u8"ニァ", u8"ミァ"}},
+        {{"ですね", "です"}, {"ですわ", "ですね"}},
+        {{"ぜ", "な"}, {"ね", "な"}},
+        {{"ね", "なぁ"}, {"わ", "わね"}},
+        {{"…", "な…"}, {"…", "わ…"}},
+        {{"でおじゃるな", "のう"}, {"でおじゃるな", "のう"}},
+        {{"でござるな"}, {"でございますわ"}},
+        {{"ッスね", "ッス"}, {"ニァ", "ミァ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -773,13 +771,13 @@ std::string _na(const Character& speaker, int mark)
 std::string _ta(const Character& speaker, int mark)
 {
     std::vector<std::string> candidates[][2] = {
-        {{u8"ました", u8"ましたね"}, {u8"ました", u8"ましたわ"}},
-        {{u8"た", u8"たな"}, {u8"たね", u8"たよ"}},
-        {{u8"たね", u8"たよ"}, {u8"たよ", u8"たね"}},
-        {{u8"た…", u8"たぞ…"}, {u8"たわ…"}},
-        {{u8"たぞよ", u8"たぞな"}, {u8"たぞよ"}},
-        {{u8"たでござる"}, {u8"ましてございます"}},
-        {{u8"たッスよ", u8"たッス"}, {u8"たにゃぁ", u8"たみゃぁ"}},
+        {{"ました", "ましたね"}, {"ました", "ましたわ"}},
+        {{"た", "たな"}, {"たね", "たよ"}},
+        {{"たね", "たよ"}, {"たよ", "たね"}},
+        {{"た…", "たぞ…"}, {"たわ…"}},
+        {{"たぞよ", "たぞな"}, {"たぞよ"}},
+        {{"たでござる"}, {"ましてございます"}},
+        {{"たッスよ", "たッス"}, {"たにゃぁ", "たみゃぁ"}},
     };
     return choice(candidates[speaker.talk_type][speaker.sex]) +
         i18n::s.get_enum("core.ui.mark", mark);
@@ -791,101 +789,101 @@ std::string replace_tag(
     const std::string source,
     optional_ref<const Character> client)
 {
-    if (source == u8"ref"s && talkref == 1)
+    if (source == "ref"s && talkref == 1)
     {
         return i18n::s.get(
             "core.talk.tag.ref", game()->number_of_waiting_guests);
     }
-    if (source == u8"you"s)
+    if (source == "you"s)
     {
         assert(client);
         return _kimi(*client, 3);
     }
-    if (source == u8"sex"s)
+    if (source == "sex"s)
     {
         return i18n::s.get_enum("core.ui.sex2", cdata.player().sex);
     }
-    if (source == u8"player"s)
+    if (source == "player"s)
     {
         return cdata.player().name;
     }
-    if (source == u8"aka"s)
+    if (source == "aka"s)
     {
         return cdata.player().alias;
     }
-    if (source == u8"npc"s)
+    if (source == "npc"s)
     {
         assert(client);
         return client->name;
     }
-    if (source == u8"ある"s)
+    if (source == "ある"s)
     {
         assert(client);
         return _aru(*client, 3);
     }
-    if (source == u8"が"s)
+    if (source == "が"s)
     {
         assert(client);
         return _ga(*client, 3);
     }
-    if (source == u8"か"s)
+    if (source == "か"s)
     {
         assert(client);
         return _ka(*client, 3);
     }
-    if (source == u8"かな"s)
+    if (source == "かな"s)
     {
         assert(client);
         return _kana(*client, 3);
     }
-    if (source == u8"だ"s)
+    if (source == "だ"s)
     {
         assert(client);
         return _da(*client, 3);
     }
-    if (source == u8"よ"s)
+    if (source == "よ"s)
     {
         assert(client);
         return _yo(*client, 3);
     }
-    if (source == u8"だな"s)
+    if (source == "だな"s)
     {
         assert(client);
         return _dana(*client, 3);
     }
-    if (source == u8"だろ"s)
+    if (source == "だろ"s)
     {
         assert(client);
         return _daro(*client, 3);
     }
-    if (source == u8"る"s)
+    if (source == "る"s)
     {
         assert(client);
         return _ru(*client, 3);
     }
-    if (source == u8"のだ"s)
+    if (source == "のだ"s)
     {
         assert(client);
         return _nda(*client, 3);
     }
-    if (source == u8"な"s)
+    if (source == "な"s)
     {
         assert(client);
         return _na(*client, 3);
     }
-    if (source == u8"くれ"s)
+    if (source == "くれ"s)
     {
         assert(client);
         return _kure(*client, 3);
     }
-    return u8"Unknown Code"s;
+    return "Unknown Code"s;
 }
 
 
 
 void parse_talk_file(optional_ref<const Character> speaker)
 {
-    buff = strmid(buff, p, instr(buff, p, u8"%END"s));
+    buff = strmid(buff, p, instr(buff, p, "%END"s));
     if (noteinfo() <= 1)
     {
         buff(0).clear();
@@ -898,8 +896,8 @@ void parse_talk_file(optional_ref<const Character> speaker)
         {
             buff(0) += tmp + '\n';
         }
-        p = instr(buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.meta.tag"));
-        buff = strmid(buff, p, instr(buff, p, u8"%END"s));
+        p = instr(buff, 0, "%DEFAULT,"s + i18n::s.get("core.meta.tag"));
+        buff = strmid(buff, p, instr(buff, p, "%END"s));
     }
     notedel(0);
     p = rnd(noteinfo());
@@ -926,7 +924,7 @@ void read_talk_file(const std::string& valn)
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, valn + u8","s + i18n::s.get("core.meta.tag"));
+    p = instr(buff, 0, valn + ","s + i18n::s.get("core.meta.tag"));
     parse_talk_file(none);
 }
 
@@ -956,35 +954,34 @@ void get_npc_talk(Character& chara)
             if (game()->number_of_waiting_guests > 0)
             {
                 talkref = 1;
-                p = instr(buff, 0, u8"%MAID,"s + i18n::s.get("core.meta.tag"));
+                p = instr(buff, 0, "%MAID,"s + i18n::s.get("core.meta.tag"));
                 break;
             }
         }
         if (chara.interest <= 0)
         {
-            p = instr(buff, 0, u8"%BORED,"s + i18n::s.get("core.meta.tag"));
+            p = instr(buff, 0, "%BORED,"s + i18n::s.get("core.meta.tag"));
             break;
         }
         if (chara.is_player_or_ally())
         {
             p = instr(
-                buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
+                buff, 0, "%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
         if (chara.id == "core.prostitute")
         {
-            p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
+            p = instr(buff, 0, "%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
         }
         if (chara.role == Role::moyer)
         {
-            p = instr(buff, 0, u8"%MOYER,"s + i18n::s.get("core.meta.tag"));
+            p = instr(buff, 0, "%MOYER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
         if (chara.role == Role::slave_master)
         {
-            p = instr(
-                buff, 0, u8"%SLAVEKEEPER,"s + i18n::s.get("core.meta.tag"));
+            p = instr(buff, 0, "%SLAVEKEEPER,"s + i18n::s.get("core.meta.tag"));
             break;
         }
         if (is_shopkeeper(chara.role))
@@ -992,7 +989,7 @@ void get_npc_talk(Character& chara)
             if (rnd(3))
             {
                 p = instr(
-                    buff, 0, u8"%SHOPKEEPER,"s + i18n::s.get("core.meta.tag"));
+                    buff, 0, "%SHOPKEEPER,"s + i18n::s.get("core.meta.tag"));
                 break;
             }
         }
@@ -1001,7 +998,7 @@ void get_npc_talk(Character& chara)
             if (rnd(3) == 0)
             {
                 p = instr(
-                    buff, 0, u8"%RUMOR,LOOT,"s + i18n::s.get("core.meta.tag"));
+                    buff, 0, "%RUMOR,LOOT,"s + i18n::s.get("core.meta.tag"));
                 break;
             }
         }
@@ -1014,7 +1011,7 @@ void get_npc_talk(Character& chara)
                     p = instr(
                         buff,
                         0,
-                        u8"%FEST,"s + game()->current_map + u8","s +
+                        "%FEST,"s + game()->current_map + ","s +
                             i18n::s.get("core.meta.tag"));
                     break;
                 }
@@ -1025,7 +1022,7 @@ void get_npc_talk(Character& chara)
             p = instr(
                 buff,
                 0,
-                u8"%PERSONALITY,"s + chara.personality + u8","s +
+                "%PERSONALITY,"s + chara.personality + ","s +
                     i18n::s.get("core.meta.tag"));
             break;
         }
@@ -1034,14 +1031,14 @@ void get_npc_talk(Character& chara)
             p = instr(
                 buff,
                 0,
-                u8"%AREA,"s + game()->current_map + u8","s +
+                "%AREA,"s + game()->current_map + ","s +
                     i18n::s.get("core.meta.tag"));
             break;
         }
     }
     if (p == -1)
     {
-        p = instr(buff, 0, u8"%DEFAULT,"s + i18n::s.get("core.meta.tag"));
+        p = instr(buff, 0, "%DEFAULT,"s + i18n::s.get("core.meta.tag"));
     }
     parse_talk_file(chara);
 }
@@ -1152,7 +1149,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.putit_attacks.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1163,7 +1160,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.putit_attacks.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1188,7 +1185,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.thieves_hideout.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1199,7 +1196,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.thieves_hideout.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1224,7 +1221,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.puppys_cave.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1249,7 +1246,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.nightmare.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1260,7 +1257,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.nightmare.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1271,7 +1268,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.nightmare.progress", 2);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1296,7 +1293,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1307,7 +1304,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1318,7 +1315,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1329,7 +1326,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1340,7 +1337,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1351,7 +1348,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1362,7 +1359,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1373,7 +1370,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1384,7 +1381,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1395,7 +1392,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pael_and_her_mom.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1420,7 +1417,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.wife_collector.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1445,7 +1442,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.cat_house.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1456,7 +1453,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.cat_house.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1481,7 +1478,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.defense_line.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1492,7 +1489,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.defense_line.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1503,7 +1500,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.defense_line.progress", 2);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1528,7 +1525,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.novice_knight.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1539,7 +1536,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.novice_knight.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1564,7 +1561,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.kamikaze_attack.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1575,7 +1572,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.kamikaze_attack.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1586,7 +1583,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.kamikaze_attack.progress", 2);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1611,7 +1608,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.mias_dream.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1636,7 +1633,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.rare_books.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1661,7 +1658,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.pyramid_trial.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1686,7 +1683,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.red_blossom_in_palmia.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1697,7 +1694,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.red_blossom_in_palmia.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1727,7 +1724,7 @@ void append_subquest_journal(int val0)
                 0,
                 (6 - story_quest_progress("core.ambitious_scientist")));
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1752,7 +1749,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.sewer_sweeping.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1763,7 +1760,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.sewer_sweeping.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1790,7 +1787,7 @@ void append_subquest_journal(int val0)
                 0,
                 game()->guild.mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1815,7 +1812,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.joining_thieves_guild.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1844,7 +1841,7 @@ void append_subquest_journal(int val0)
                 chara_db_get_name(*the_character_db.get_id_from_integer(
                     game()->guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1871,7 +1868,7 @@ void append_subquest_journal(int val0)
                 0,
                 game()->guild.mages_guild_quota);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1900,7 +1897,7 @@ void append_subquest_journal(int val0)
                 chara_db_get_name(*the_character_db.get_id_from_integer(
                     game()->guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1927,7 +1924,7 @@ void append_subquest_journal(int val0)
                 0,
                 game()->guild.thieves_guild_quota);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1952,7 +1949,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.minotaur_king.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1963,7 +1960,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.minotaur_king.progress", 1);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -1988,7 +1985,7 @@ void append_subquest_journal(int val0)
             s1 = i18n::s.get_enum(
                 "core.quest.journal.sub.little_sister.progress", 0);
             talk_conv(s1, 40 - en * 4);
-            buff += u8"("s + s + u8")\n"s + s1;
+            buff += "("s + s + ")\n"s + s1;
             noteadd(""s);
         }
     }
@@ -2032,17 +2029,17 @@ void parse_quest_board_text(int val0)
     elona_vector1<std::string> buff2;
     notesel(buffboard);
     SDIM1(buff2);
-    p = instr(buffboard, 0, s + u8","s + i18n::s.get("core.meta.tag"));
-    buff2 = strmid(buffboard, p, instr(buffboard, p, u8"%END"s));
+    p = instr(buffboard, 0, s + ","s + i18n::s.get("core.meta.tag"));
+    buff2 = strmid(buffboard, p, instr(buffboard, p, "%END"s));
     notesel(buff2);
     if (noteinfo() <= 1)
     {
-        buff2 = u8"no txt"s;
+        buff2 = "no txt"s;
         return;
     }
     p = rnd(noteinfo() - 1) + 1;
     noteget(buff2, p);
-    p = instr(buff2, 0, u8":"s);
+    p = instr(buff2, 0, ":"s);
     s(3) = strmid(buff2, 0, p);
     if (val0 == 2)
     {
@@ -2142,7 +2139,7 @@ std::string random_title_base(RandomTitleType type)
         if (type == RandomTitleType::weapon ||
             type == RandomTitleType::living_weapon)
         {
-            if (category == u8"具"s)
+            if (category == "具"s)
             {
                 continue;
             }
@@ -2158,7 +2155,7 @@ std::string random_title_base(RandomTitleType type)
                     column = 0;
                     if (rnd(2) == 0)
                     {
-                        title += u8"の"s;
+                        title += "の"s;
                     }
                 }
                 else
@@ -2166,21 +2163,21 @@ std::string random_title_base(RandomTitleType type)
                     const auto p = rnd(5);
                     if (p == 0)
                     {
-                        title += u8"・オブ・"s;
+                        title += "・オブ・"s;
                     }
                     if (p == 1)
                     {
-                        return u8"ザ・"s + title;
+                        return "ザ・"s + title;
                     }
                     if (p == 2)
                     {
-                        title += u8"・"s;
+                        title += "・"s;
                     }
                 }
             }
             else if (column == 0 || column == 1)
             {
-                title += u8"の"s;
+                title += "の"s;
                 if (rnd(10) == 0)
                 {
                     column = 10;
@@ -2193,11 +2190,11 @@ std::string random_title_base(RandomTitleType type)
             {
                 if (rnd(6) == 0)
                 {
-                    title += u8" of"s;
+                    title += " of"s;
                 }
                 else if (rnd(6) == 0)
                 {
-                    return u8"the "s + title;
+                    return "the "s + title;
                 }
             }
             title = cnven(title + " ");
@@ -2212,7 +2209,7 @@ std::string random_title_base(RandomTitleType type)
             {
                 continue;
             }
-            if (_rnlist(14, new_row) == category && category != u8"万能"s)
+            if (_rnlist(14, new_row) == category && category != "万能"s)
             {
                 continue;
             }
@@ -2266,17 +2263,17 @@ std::string random_title(RandomTitleType type)
             if (rnd(5))
             {
                 ret += choice(std::initializer_list<const char*>{
-                    u8"団",
-                    u8"チーム",
-                    u8"パーティー",
-                    u8"の集い",
-                    u8"の軍",
-                    u8"アーミー",
-                    u8"隊",
-                    u8"の一家",
-                    u8"軍",
-                    u8"の隊",
-                    u8"の団",
+                    "団",
+                    "チーム",
+                    "パーティー",
+                    "の集い",
+                    "の軍",
+                    "アーミー",
+                    "隊",
+                    "の一家",
+                    "軍",
+                    "の隊",
+                    "の団",
                 });
             }
         }
@@ -2285,23 +2282,23 @@ std::string random_title(RandomTitleType type)
             if (rnd(2))
             {
                 ret = choice(std::initializer_list<const char*>{
-                          u8"The army of ",
-                          u8"The party of ",
-                          u8"The house of ",
-                          u8"Clan ",
+                          "The army of ",
+                          "The party of ",
+                          "The house of ",
+                          "Clan ",
                       }) +
                     ret;
             }
             else
             {
                 ret += choice(std::initializer_list<const char*>{
-                    u8" Clan",
-                    u8" Party",
-                    u8" Band",
-                    u8" Gangs",
-                    u8" Gathering",
-                    u8" House",
-                    u8" Army",
+                    " Clan",
+                    " Party",
+                    " Band",
+                    " Gangs",
+                    " Gathering",
+                    " House",
+                    " Army",
                 });
             }
         }
@@ -2330,8 +2327,8 @@ void text_replace_tags_in_quest_board(optional_ref<const Character> client)
 {
     while (1)
     {
-        const int p0 = instr(buff, 0, u8"{"s);
-        const int p1 = instr(buff, p0, u8"}"s);
+        const int p0 = instr(buff, 0, "{"s);
+        const int p1 = instr(buff, p0, "}"s);
         const int p2 = buff(0).size();
         if (p0 == -1)
         {
@@ -2350,8 +2347,8 @@ void text_replace_tags_in_quest_text(optional_ref<const Character> client)
 {
     for (int cnt = 0; cnt < 20; ++cnt)
     {
-        p(0) = instr(buff, 0, u8"{"s);
-        p(1) = instr(buff, p, u8"}"s);
+        p(0) = instr(buff, 0, "{"s);
+        p(1) = instr(buff, p, "}"s);
         p(2) = buff(0).size();
         if (p == -1)
         {
@@ -2362,155 +2359,155 @@ void text_replace_tags_in_quest_text(optional_ref<const Character> client)
         s(2) = strmid(buff, p + p(1) + 1, p(2) - p(1) - p);
         for (int cnt = 0; cnt < 1; ++cnt)
         {
-            if (s == u8"client"s)
+            if (s == "client"s)
             {
                 s = s(12);
                 break;
             }
-            if (s == u8"map"s)
+            if (s == "map"s)
             {
                 s = s(11);
                 break;
             }
-            if (s == u8"ref"s)
+            if (s == "ref"s)
             {
                 s = s(10);
                 break;
             }
-            if (s == u8"you"s)
+            if (s == "you"s)
             {
                 assert(client);
                 s = _kimi(*client, 3);
                 break;
             }
-            if (s == u8"me"s)
+            if (s == "me"s)
             {
                 assert(client);
                 s = _ore(*client, 3);
                 break;
             }
-            if (s == u8"reward"s)
+            if (s == "reward"s)
             {
                 s = s(5);
                 break;
             }
-            if (s == u8"objective"s)
+            if (s == "objective"s)
             {
                 s = s(4);
                 break;
             }
-            if (s == u8"deadline"s)
+            if (s == "deadline"s)
             {
                 s = nquestdate;
                 break;
             }
-            if (s == u8"player"s)
+            if (s == "player"s)
             {
                 s = cdata.player().name;
                 break;
             }
-            if (s == u8"aka"s)
+            if (s == "aka"s)
             {
                 s = cdata.player().alias;
                 break;
             }
-            if (s == u8"npc"s)
+            if (s == "npc"s)
             {
                 assert(client);
                 s = client->name;
                 break;
             }
-            if (s == u8"ある"s)
+            if (s == "ある"s)
             {
                 assert(client);
                 s = _aru(*client, 3);
                 break;
             }
-            if (s == u8"う"s)
+            if (s == "う"s)
             {
                 assert(client);
                 s = _u(*client, 3);
                 break;
             }
-            if (s == u8"か"s)
+            if (s == "か"s)
             {
                 assert(client);
                 s = _ka(*client, 3);
                 break;
             }
-            if (s == u8"が"s)
+            if (s == "が"s)
             {
                 assert(client);
                 s = _ga(*client, 3);
                 break;
             }
-            if (s == u8"かな"s)
+            if (s == "かな"s)
             {
                 assert(client);
                 s = _kana(*client, 3);
                 break;
             }
-            if (s == u8"だ"s)
+            if (s == "だ"s)
             {
                 assert(client);
                 s = _da(*client, 3);
                 break;
             }
-            if (s == u8"よ"s)
+            if (s == "よ"s)
             {
                 assert(client);
                 s = _yo(*client, 3);
                 break;
             }
-            if (s == u8"た"s)
+            if (s == "た"s)
             {
                 assert(client);
                 s = _ta(*client, 3);
                 break;
             }
-            if (s == u8"だな"s)
+            if (s == "だな"s)
             {
                 assert(client);
                 s = _dana(*client, 3);
                 break;
             }
-            if (s == u8"だろ"s)
+            if (s == "だろ"s)
             {
                 assert(client);
                 s = _daro(*client, 3);
                 break;
             }
-            if (s == u8"たのむ"s)
+            if (s == "たのむ"s)
             {
                 assert(client);
                 s = _tanomu(*client, 3);
                 break;
             }
-            if (s == u8"る"s)
+            if (s == "る"s)
             {
                 assert(client);
                 s = _ru(*client, 3);
                 break;
             }
-            if (s == u8"のだ"s)
+            if (s == "のだ"s)
             {
                 assert(client);
                 s = _nda(*client, 3);
                 break;
             }
-            if (s == u8"な"s)
+            if (s == "な"s)
             {
                 assert(client);
                 s = _na(*client, 3);
                 break;
             }
-            if (s == u8"くれ"s)
+            if (s == "くれ"s)
             {
                 assert(client);
                 s = _kure(*client, 3);
                 break;
             }
-            s = u8"Unknown Code"s;
+            s = "Unknown Code"s;
         }
         buff = s(1) + s + s(2);
     }
@@ -2544,7 +2541,7 @@ std::string name(int chara_index)
         }
         if (cdata[chara_index].has_own_name() == 0)
         {
-            return u8"the "s + cdata[chara_index].name;
+            return "the "s + cdata[chara_index].name;
         }
     }
     return cdata[chara_index].name;
@@ -2617,28 +2614,28 @@ void cnvbonus(int ability_id, int bonus)
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
-                u8"耐性に <green>クラス"s + bonus / 50 + u8"<col>("s + bonus +
-                u8") のボーナス\n"s;
+            buff += "　　"s + the_skill_db.get_text(ability_id, "name") +
+                "耐性に <green>クラス"s + bonus / 50 + "<col>("s + bonus +
+                ") のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
-                u8"耐性に <red>クラス"s + bonus / 50 + u8"<col>("s + bonus +
-                u8") のマイナス修正\n"s;
+            buff += "　　"s + the_skill_db.get_text(ability_id, "name") +
+                "耐性に <red>クラス"s + bonus / 50 + "<col>("s + bonus +
+                ") のマイナス修正\n"s;
         }
     }
     else
     {
         if (bonus > 0)
         {
-            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
-                u8"に <green>+"s + bonus + u8"<col> のボーナス\n"s;
+            buff += "　　"s + the_skill_db.get_text(ability_id, "name") +
+                "に <green>+"s + bonus + "<col> のボーナス\n"s;
         }
         if (bonus < 0)
         {
-            buff += u8"　　"s + the_skill_db.get_text(ability_id, "name") +
-                u8"に <red>"s + bonus + u8"<col> のマイナス修正\n"s;
+            buff += "　　"s + the_skill_db.get_text(ability_id, "name") +
+                "に <red>"s + bonus + "<col> のマイナス修正\n"s;
         }
     }
 }
@@ -2695,7 +2692,7 @@ void lenfix(std::string& str, int length)
     }
     for (int cnt = 0, cnt_end = (p_at_m89); cnt < cnt_end; ++cnt)
     {
-        str += u8" "s;
+        str += " "s;
     }
 }
 
@@ -2713,7 +2710,7 @@ std::string fixtxt(const std::string& str, int length)
             {
                 break;
             }
-            m_at_m104 += u8" "s;
+            m_at_m104 += " "s;
         }
     }
     else
@@ -2733,7 +2730,7 @@ std::string getnpctxt(const std::string& tag, const std::string& default_text)
     {
         return default_text;
     }
-    p_at_m189 += instr(txtbuff, p_at_m189, u8"\""s);
+    p_at_m189 += instr(txtbuff, p_at_m189, "\""s);
     if (p_at_m189 == -1)
     {
         return default_text;
@@ -2741,7 +2738,7 @@ std::string getnpctxt(const std::string& tag, const std::string& default_text)
     return strmid(
         txtbuff,
         p_at_m189 + 1,
-        clamp(instr(txtbuff, p_at_m189 + 1, u8"\""s), 0, 70));
+        clamp(instr(txtbuff, p_at_m189 + 1, "\""s), 0, 70));
 }
 
 

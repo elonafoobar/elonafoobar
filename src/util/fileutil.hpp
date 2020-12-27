@@ -103,7 +103,7 @@ struct ByLineReader
         if (!in)
         {
             throw std::runtime_error(
-                u8"Could not open file " + filepath.to_u8string());
+                "Could not open file " + filepath.to_u8string());
         }
         skip_bom(in);
     }

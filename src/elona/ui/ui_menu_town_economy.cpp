@@ -27,7 +27,7 @@ static void _show_economy_info(
     const auto diff = value - prev_value;
     const auto text_color =
         diff >= 0 ? snail::Color{0, 0, 150} : snail::Color{150, 0, 0};
-    mes(x + 130 + ginfo(14) + 12, y, u8"("s + diff + u8")"s, text_color);
+    mes(x + 130 + ginfo(14) + 12, y, "("s + diff + ")"s, text_color);
 }
 
 bool UIMenuTownEconomy::init()
@@ -95,15 +95,15 @@ void UIMenuTownEconomy::_draw_economy_info(int _city)
     _show_economy_info(
         x,
         y,
-        i18n::s.get("core.ui.economy.basic_tax") + u8" ("s +
-            game()->politics_tax_amount + u8"%)"s,
+        i18n::s.get("core.ui.economy.basic_tax") + " ("s +
+            game()->politics_tax_amount + "%)"s,
         podata(102, _city),
         podata(103, _city));
     _show_economy_info(
         x,
         y + 16,
-        i18n::s.get("core.ui.economy.excise_tax") + u8" ("s +
-            podata(150, _city) + u8"%)"s,
+        i18n::s.get("core.ui.economy.excise_tax") + " ("s + podata(150, _city) +
+            "%)"s,
         podata(104, _city),
         podata(105, _city));
 }

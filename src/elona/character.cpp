@@ -1040,8 +1040,8 @@ void chara_refresh(Character& chara)
 
     if (refreshmode == 1)
     {
-        buff += u8"\n"s;
-        buff += u8"<title1>◆ 装備による能力の修正<def>\n"s;
+        buff += "\n"s;
+        buff += "<title1>◆ 装備による能力の修正<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
             cdata.tmp().skills().set_level(
@@ -1299,7 +1299,7 @@ bool chara_custom_talk(Character& speaker, int talk_type)
     if (speaker.has_custom_talk())
     {
         const auto filepath =
-            filesystem::dirs::user() / u8"talk" / fs::u8path(speaker.talk);
+            filesystem::dirs::user() / "talk" / fs::u8path(speaker.talk);
         if (!fs::exists(filepath))
             return false;
         range::copy(
@@ -1318,30 +1318,30 @@ bool chara_custom_talk(Character& speaker, int talk_type)
         std::string tag;
         switch (talk_type)
         {
-        case 101: tag = u8"%txtAggro"s; break;
-        case 103: tag = u8"%txtKilled"s; break;
-        case 102: tag = u8"%txtDead"s; break;
-        case 104: tag = u8"%txtWelcome"s; break;
-        case 100: tag = u8"%txtCalm"s; break;
-        case 106: tag = u8"%txtDialog"s; break;
+        case 101: tag = "%txtAggro"s; break;
+        case 103: tag = "%txtKilled"s; break;
+        case 102: tag = "%txtDead"s; break;
+        case 104: tag = "%txtWelcome"s; break;
+        case 100: tag = "%txtCalm"s; break;
+        case 106: tag = "%txtDialog"s; break;
         default: assert(0);
         }
 
-        tag += u8"," + i18n::s.get("core.meta.tag");
+        tag += "," + i18n::s.get("core.meta.tag");
         const auto start_text = range::find_if(
             talk_file_buffer,
             [&](const auto& line) { return strutil::contains(line, tag); });
         if (start_text == std::end(talk_file_buffer))
         {
-            throw std::runtime_error(u8"Error: fail to load custom talk");
+            throw std::runtime_error("Error: fail to load custom talk");
         }
         const auto end_text = std::find_if(
             std::next(start_text),
             std::end(talk_file_buffer),
-            [](const auto& line) { return strutil::contains(line, u8"%"); });
+            [](const auto& line) { return strutil::contains(line, "%"); });
         if (end_text == std::end(talk_file_buffer))
         {
-            throw std::runtime_error(u8"Error: fail to load custom talk");
+            throw std::runtime_error("Error: fail to load custom talk");
         }
 
         // Example:
@@ -1352,7 +1352,7 @@ bool chara_custom_talk(Character& speaker, int talk_type)
         const auto number_of_lines_plus_1 = std::distance(start_text, end_text);
         if (number_of_lines_plus_1 == 1)
         {
-            throw std::runtime_error(u8"Error: fail to load custom talk");
+            throw std::runtime_error("Error: fail to load custom talk");
         }
         else
         {
@@ -1866,7 +1866,7 @@ void ride_begin(int mount)
     create_pcpic(cdata.player());
     cdata[game()->mount].activity.finish();
     refresh_speed(cdata[game()->mount]);
-    txt(""s + cdata[mount].current_speed + u8") "s);
+    txt(""s + cdata[mount].current_speed + ") "s);
     if (cdata[game()->mount].is_suitable_for_mount())
     {
         txt(i18n::s.get("core.magic.mount.mount.suitable"));
@@ -2986,7 +2986,7 @@ TurnResult proc_movement_event(Character& chara)
                     valn += i18n::s.get(
                         "core.action.move.global.ambush.rank.dragon");
                 }
-                valn += u8")"s;
+                valn += ")"s;
                 txt(i18n::s.get("core.action.move.global.ambush.text") + valn);
                 msg_halt();
                 levelexitby = 4;

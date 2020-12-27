@@ -157,7 +157,7 @@ void show_game_score_ranking(
 
         if (bones.size() <= index)
         {
-            mes(x, y, u8"no entry", {10, 10, 10});
+            mes(x, y, "no entry", {10, 10, 10});
             continue;
         }
 

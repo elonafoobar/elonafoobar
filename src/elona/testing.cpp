@@ -169,7 +169,7 @@ void run_in_temporary_map(int map, int dungeon_level, std::function<void()> f)
 void pre_init()
 {
     log::init(filesystem::dirs::log(), log::LogLevel::debug);
-    profile::ProfileManager::instance().init(u8"testing");
+    profile::ProfileManager::instance().init("testing");
 
     const fs::path source_config_file = get_test_data_path() / "config.json";
     const fs::path config_file = filesystem::files::profile_local_config();
@@ -178,7 +178,7 @@ void pre_init()
 
     (void)PreinitConfigOptions::from_file(config_file);
 
-    title(u8"Elona foobar version "s + latest_version.short_string());
+    title("Elona foobar version "s + latest_version.short_string());
 
     init_assets();
     filesystem::dirs::set_base_save_directory(fs::path("save"));

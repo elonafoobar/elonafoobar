@@ -58,7 +58,7 @@ TEST_CASE("Test item saving and reloading", "[C++: Serialization]")
     REQUIRE(elona::g_inv[index]->position().y == 8);
     REQUIRE(elona::g_inv[index]->curse_state == CurseState::blessed);
     REQUIRE(elona::g_inv[index]->is_aphrodisiac);
-    REQUIRE(itemname(g_inv[index]) == u8"3個のプチトロ(媚薬混入)");
+    REQUIRE(itemname(g_inv[index]) == "3個のプチトロ(媚薬混入)");
 #endif
 }
 
@@ -98,7 +98,7 @@ TEST_CASE("Test character data compatibility", "[C++: Serialization]")
     int player_idx = 0;
     load_previous_savefile();
     REQUIRE(elona::cdata[player_idx].index == player_idx);
-    REQUIRE(elona::cdata[player_idx].name == u8"foobar_test");
+    REQUIRE(elona::cdata[player_idx].name == "foobar_test");
 #endif
 }
 
@@ -108,7 +108,7 @@ TEST_CASE("Test other character data compatibility", "[C++: Serialization]")
     int chara_idx = 57;
     load_previous_savefile();
     REQUIRE(elona::cdata[chara_idx].index == chara_idx);
-    REQUIRE(elona::cdata[chara_idx].name == u8"風を聴く者『ラーネイレ』");
+    REQUIRE(elona::cdata[chara_idx].name == "風を聴く者『ラーネイレ』");
 #endif
 }
 
@@ -116,7 +116,7 @@ TEST_CASE("Test item data compatibility (in inventory)", "[C++: Serialization]")
 {
 #if 0
     load_previous_savefile();
-    REQUIRE(elona::itemname(g_inv[1 << 18]) == u8"ブロンズの兜 [0,1]");
+    REQUIRE(elona::itemname(g_inv[1 << 18]) == "ブロンズの兜 [0,1]");
 #endif
 }
 
@@ -124,7 +124,7 @@ TEST_CASE("Test item data compatibility (on ground)", "[C++: Serialization]")
 {
 #if 0
     load_previous_savefile();
-    REQUIRE(elona::itemname(g_inv[0]) == u8"割れたつぼ");
+    REQUIRE(elona::itemname(g_inv[0]) == "割れたつぼ");
 #endif
 }
 

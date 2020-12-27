@@ -57,10 +57,10 @@ void character_making_draw_background(const I18NKey& key)
     _draw_background_and_caption(key);
 
     font(13 - en * 2, snail::Font::Style::bold);
-    mes(20, windowh - 20, u8"Press F1 to show help."s);
+    mes(20, windowh - 20, "Press F1 to show help."s);
     if (geneuse != ""s)
     {
-        mes(20, windowh - 36, u8"Gene from "s + geneuse);
+        mes(20, windowh - 36, "Gene from "s + geneuse);
     }
 }
 
@@ -263,7 +263,7 @@ static void _reroll_character()
     chara_delete(cdata.player());
     race_init_chara(cdata.player(), cmrace);
     class_init_chara(cdata.player(), cmclass);
-    cdata.player().name = u8"????"s;
+    cdata.player().name = "????"s;
     cdata.player().alias = cmaka;
     cdata.player().level = 1;
     for (int cnt = 10; cnt < 18; ++cnt)
@@ -382,7 +382,7 @@ MainMenuResult character_making_final_phase()
     }
 
     cmname = ""s + inputlog;
-    if (cmname == ""s || cmname == u8" "s)
+    if (cmname == ""s || cmname == " "s)
     {
         cmname = random_name();
     }
@@ -514,7 +514,7 @@ void draw_race_or_class_info(const std::string& description)
                 ty,
                 strutil::take_by_width(
                     the_skill_db.get_text(r, "name"), jp ? 6 : 3) +
-                    u8": "s + s(p),
+                    ": "s + s(p),
                 text_color);
         }
         ty += 16;
@@ -537,7 +537,7 @@ void draw_race_or_class_info(const std::string& description)
         {
             if (r != 0)
             {
-                s += u8","s;
+                s += ","s;
             }
             s += the_skill_db.get_text(cnt, "name");
             ++r;
@@ -582,7 +582,7 @@ void draw_race_or_class_info(const std::string& description)
             {
                 if (strlen_u(s(1)) > 45)
                 {
-                    s(1) = strutil::take_by_width(s(1), 42) + u8"..."s;
+                    s(1) = strutil::take_by_width(s(1), 42) + "..."s;
                 }
             }
             mes(tx + 32, ty, s + s(1));

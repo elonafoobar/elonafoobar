@@ -788,12 +788,11 @@ void trait_load_desc(Character& chara)
             }
             else
             {
-                s = traitrefn2(traitref(2) - 1) + u8"(MAX)"s;
+                s = traitrefn2(traitref(2) - 1) + "(MAX)"s;
             }
             if (featrq == -1)
             {
-                s += u8"("s + i18n::s.get("core.trait.window.requirement") +
-                    u8")"s;
+                s += "("s + i18n::s.get("core.trait.window.requirement") + ")"s;
             }
             x = 84;
         }
@@ -802,24 +801,24 @@ void trait_load_desc(Character& chara)
             x = 70;
             if (traitref == 0)
             {
-                s = u8"["s + i18n::s.get("core.trait.window.category.feat") +
-                    u8"]"s;
+                s = "["s + i18n::s.get("core.trait.window.category.feat") +
+                    "]"s;
             }
             if (traitref == 1)
             {
-                s = u8"["s +
-                    i18n::s.get("core.trait.window.category.mutation") + u8"]"s;
+                s = "["s + i18n::s.get("core.trait.window.category.mutation") +
+                    "]"s;
             }
             if (traitref == 2)
             {
-                s = u8"["s + i18n::s.get("core.trait.window.category.race") +
-                    u8"]"s;
+                s = "["s + i18n::s.get("core.trait.window.category.race") +
+                    "]"s;
             }
             if (traitref == 3)
             {
-                s = u8"["s +
+                s = "["s +
                     i18n::s.get("core.trait.window.category.ether_disease") +
-                    u8"]"s;
+                    "]"s;
             }
             s += traitrefn(
                 2 +
@@ -832,8 +831,8 @@ void trait_load_desc(Character& chara)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = u8"["s +
-            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+        listn(0, listmax) = "["s +
+            i18n::s.get("core.trait.window.category.etc") + "]"s +
             i18n::s.get("core.trait.incognito");
         ++listmax;
     }
@@ -841,8 +840,8 @@ void trait_load_desc(Character& chara)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = u8"["s +
-            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+        listn(0, listmax) = "["s +
+            i18n::s.get("core.trait.window.category.etc") + "]"s +
             i18n::s.get("core.trait.pregnant");
         ++listmax;
     }
@@ -850,8 +849,8 @@ void trait_load_desc(Character& chara)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = u8"["s +
-            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+        listn(0, listmax) = "["s +
+            i18n::s.get("core.trait.window.category.etc") + "]"s +
             i18n::s.get("core.trait.anorexia");
         ++listmax;
     }
@@ -859,8 +858,8 @@ void trait_load_desc(Character& chara)
     {
         list(0, listmax) = 1;
         list(1, listmax) = 99999;
-        listn(0, listmax) = u8"["s +
-            i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+        listn(0, listmax) = "["s +
+            i18n::s.get("core.trait.window.category.etc") + "]"s +
             i18n::s.get(
                 "core.trait.body_is_complicated", chara.speed_correction_value);
         ++listmax;
@@ -871,8 +870,8 @@ void trait_load_desc(Character& chara)
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
-            listn(0, listmax) = u8"["s +
-                i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+            listn(0, listmax) = "["s +
+                i18n::s.get("core.trait.window.category.etc") + "]"s +
                 i18n::s.get("core.trait.ether_disease_grows.fast");
             ++listmax;
         }
@@ -880,8 +879,8 @@ void trait_load_desc(Character& chara)
         {
             list(0, listmax) = 1;
             list(1, listmax) = 99999;
-            listn(0, listmax) = u8"["s +
-                i18n::s.get("core.trait.window.category.etc") + u8"]"s +
+            listn(0, listmax) = "["s +
+                i18n::s.get("core.trait.window.category.etc") + "]"s +
                 i18n::s.get("core.trait.ether_disease_grows.slow");
             ++listmax;
         }
