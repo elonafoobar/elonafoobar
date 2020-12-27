@@ -240,7 +240,7 @@ void Autopick::load(const std::string& player_id)
           filesystem::dirs::exe()})
     {
         for (const auto filename :
-             {u8"autopick", u8"autopick.txt", u8"autopick.txt.txt"})
+             {"autopick", "autopick.txt", "autopick.txt.txt"})
         {
             const auto filepath = directory / fs::u8path(filename);
             bool file_exists = _try_load(filepath);
@@ -263,8 +263,7 @@ Autopick::Matcher Autopick::_parse_each_line(std::string line)
 {
     Operation op{Operation::Type::pick_up};
 
-    if (strutil::starts_with(line, u8"%=") ||
-        strutil::starts_with(line, u8"=%"))
+    if (strutil::starts_with(line, "%=") || strutil::starts_with(line, "=%"))
     {
         op.type = Operation::Type::save_and_no_drop;
         line = line.substr(2);
@@ -341,7 +340,7 @@ bool Autopick::_try_load(const fs::path& filepath)
         {
             continue;
         }
-        if (strutil::starts_with(line, u8"#"))
+        if (strutil::starts_with(line, "#"))
         {
             continue;
         }

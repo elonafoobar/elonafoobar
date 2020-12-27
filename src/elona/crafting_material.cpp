@@ -37,7 +37,7 @@ void crafting_material_gain(data::InstanceId id, int amount, int spot_type)
             verb,
             amount,
             the_crafting_material_db.get_text(id, "name")) +
-            u8"("s + game()->crafting_materials.amount(id) + u8") "s,
+            "("s + game()->crafting_materials.amount(id) + ") "s,
         Message::color{ColorIndex::blue});
 }
 

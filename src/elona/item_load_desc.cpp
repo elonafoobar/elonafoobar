@@ -49,16 +49,16 @@ void _load_single_item_description_text(const I18NKey& desc_key_prefix, int& p)
                     desc_line.substr(total_size), max_width);
                 int one_line_size = one_line.size();
                 if (strutil::starts_with(
-                        desc_line, u8"。", one_line_size + total_size))
+                        desc_line, "。", one_line_size + total_size))
                 {
-                    one_line += u8"。";
-                    one_line_size += std::strlen(u8"。");
+                    one_line += "。";
+                    one_line_size += std::strlen("。");
                 }
                 if (strutil::starts_with(
-                        desc_line, u8"、", one_line_size + total_size))
+                        desc_line, "、", one_line_size + total_size))
                 {
-                    one_line += u8"、";
-                    one_line_size += std::strlen(u8"、");
+                    one_line += "、";
+                    one_line_size += std::strlen("、");
                 }
                 if (strmid(desc_line, total_size, one_line_size) == ""s)
                 {
@@ -167,9 +167,9 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
     {
         list(0, num_of_desc) = static_cast<int>(ItemDescriptionType::text);
         listn(0, num_of_desc) = i18n::s.get("core.item.desc.bit.alive") +
-            u8" [Lv:"s + item->param1 + u8" Exp:"s +
+            " [Lv:"s + item->param1 + " Exp:"s +
             clamp(item->param2 * 100 / calcexpalive(item->param1), 0, 100) +
-            u8"%]"s;
+            "%]"s;
         ++num_of_desc;
     }
     if (item->is_showroom_only)
@@ -192,9 +192,9 @@ void _load_item_stat_text(const ItemRef& item, int& num_of_desc)
         list(0, num_of_desc) =
             static_cast<int>(ItemDescriptionType::weapon_info);
         listn(0, num_of_desc) =
-            i18n::s.get("core.item.desc.weapon.it_can_be_wielded") + u8" ("s +
-            item->dice.rolls + u8"d"s + item->dice.faces +
-            i18n::s.get("core.item.desc.weapon.pierce") + pierce + u8"%)"s;
+            i18n::s.get("core.item.desc.weapon.it_can_be_wielded") + " ("s +
+            item->dice.rolls + "d"s + item->dice.faces +
+            i18n::s.get("core.item.desc.weapon.pierce") + pierce + "%)"s;
         ++num_of_desc;
         if (reftype == 10000)
         {

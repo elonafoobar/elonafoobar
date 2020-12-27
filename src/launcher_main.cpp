@@ -41,7 +41,7 @@ std::vector<std::string> list_profiles()
         }
     }
     range::sort(result, lib::natural_order_comparator{});
-    result.push_back(u8"+ NEW");
+    result.push_back("+ NEW");
     return result;
 }
 
@@ -81,13 +81,13 @@ void draw(snail::Renderer& r)
         auto y = y1 + 25 + i * 20;
         if (static_cast<int>(i) == cursor)
         {
-            r.render_text(u8">", x - 20, y, fg_color);
+            r.render_text(">", x - 20, y, fg_color);
         }
         r.render_text(profiles[i], x, y, fg_color);
     }
 
-    r.render_text(u8"UP/DOWN: Select", x1 + 10, y3 + 20, fg_color);
-    r.render_text(u8"ENTER/SPACE: Launch Game", x1 + 10, y3 + 40, fg_color);
+    r.render_text("UP/DOWN: Select", x1 + 10, y3 + 20, fg_color);
+    r.render_text("ENTER/SPACE: Launch Game", x1 + 10, y3 + 40, fg_color);
 
     r.present();
 }
@@ -140,7 +140,7 @@ bool handle_event()
                 {
                     boost::process::spawn(
                         path.inner(),
-                        u8"--profile=" + profiles[static_cast<size_t>(cursor)]);
+                        "--profile=" + profiles[static_cast<size_t>(cursor)]);
                 }
             }
             return false;
@@ -162,7 +162,7 @@ int main(int argc, char** argv)
     profiles = list_profiles();
 
     auto& app = snail::Application::instance();
-    app.initialize(u8"Elona foobar Launcher v" + latest_version.short_string());
+    app.initialize("Elona foobar Launcher v" + latest_version.short_string());
     app.set_window_size(screen_width, screen_height);
     app.set_call_redraw(false);
 

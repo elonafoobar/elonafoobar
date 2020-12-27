@@ -143,7 +143,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
             {
                 dbg_revealmap = 1;
                 ++game()->current_dungeon_level;
-                txt(u8"lv:"s + game()->current_dungeon_level);
+                txt("lv:"s + game()->current_dungeon_level);
                 ctrl_file_map_delete();
                 mode = 2;
                 levelexitby = 4;

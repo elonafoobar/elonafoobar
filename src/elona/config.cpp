@@ -401,11 +401,11 @@ void query_language()
     while (true)
     {
         boxf(0, 0, windoww, windowh, bg_color);
-        mes(40, 40, u8"Choose your language and press Enter key.", fg_color);
-        mes(40, 60, u8"言語を選びENTERキーを押してください。", fg_color);
-        mes(50, 90, u8"Japanese (日本語)", fg_color);
-        mes(50, 110, u8"English", fg_color);
-        mes(35, cursor == 0 ? 90 : 110, u8">", fg_color);
+        mes(40, 40, "Choose your language and press Enter key.", fg_color);
+        mes(40, 60, "言語を選びENTERキーを押してください。", fg_color);
+        mes(50, 90, "Japanese (日本語)", fg_color);
+        mes(50, 110, "English", fg_color);
+        mes(35, cursor == 0 ? 90 : 110, ">", fg_color);
         redraw();
         await(30);
         if (getkey(snail::Key::down))

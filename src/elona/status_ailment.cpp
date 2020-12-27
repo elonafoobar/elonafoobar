@@ -322,7 +322,7 @@ void status_ailment_damage(
         return;
     default:
         throw std::runtime_error{
-            u8"Unknown status ailment: "s + int(status_ailment)};
+            "Unknown status ailment: "s + int(status_ailment)};
     }
 }
 
@@ -585,7 +585,7 @@ void status_ailment_heal(
         break;
     default:
         throw std::runtime_error{
-            u8"Unknown status ailment: "s + int(status_ailment)};
+            "Unknown status ailment: "s + int(status_ailment)};
     }
 }
 

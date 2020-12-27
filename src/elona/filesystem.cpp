@@ -16,7 +16,7 @@ fs::path get_executable_dir()
         auto exe_name = fs::get_executable_path();
         if (!exe_name)
         {
-            throw std::runtime_error(u8"Error: fail to get excutable path");
+            throw std::runtime_error("Error: fail to get excutable path");
         }
         return fs::canonical(exe_name->remove_filename());
     })();
@@ -129,7 +129,7 @@ fs::path save(const std::string& player_id)
 
 fs::path user_script()
 {
-    return current_profile() / u8"script";
+    return current_profile() / "script";
 }
 
 
@@ -137,8 +137,8 @@ fs::path user_script()
 void set_profile_directory(const fs::path& profile_dir)
 {
     set_current_profile_directory(profile_dir);
-    set_base_save_directory(profile_dir / u8"save");
-    set_base_user_directory(profile_dir / u8"user");
+    set_base_save_directory(profile_dir / "save");
+    set_base_user_directory(profile_dir / "user");
 }
 
 } // namespace dirs

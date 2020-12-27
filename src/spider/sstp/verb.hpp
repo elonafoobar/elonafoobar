@@ -28,7 +28,7 @@ struct Verb
 
     std::string to_string() const
     {
-        return std::to_string(method) + u8"/" + version;
+        return std::to_string(method) + "/" + version;
     }
 };
 

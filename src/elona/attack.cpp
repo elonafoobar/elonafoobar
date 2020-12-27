@@ -594,7 +594,7 @@ bool do_physical_attack_internal(
             {
                 txt(i18n::s.get("core.damage.miss.other", attacker, target));
             }
-            add_damage_popup(u8"miss", target.index, {191, 191, 191});
+            add_damage_popup("miss", target.index, {191, 191, 191});
         }
     }
     if (hit == -2)
@@ -614,7 +614,7 @@ bool do_physical_attack_internal(
             {
                 txt(i18n::s.get("core.damage.evade.other", attacker, target));
             }
-            add_damage_popup(u8"evade!!", target.index, {191, 191, 191});
+            add_damage_popup("evade!!", target.index, {191, 191, 191});
         }
     }
     rowact_check(target);
@@ -947,7 +947,7 @@ void proc_weapon_enchantments(
         if (enc_id == 57)
         {
             s = chara_db_get_filter(target.id);
-            if (strutil::contains(s(0), u8"/dragon/"))
+            if (strutil::contains(s(0), "/dragon/"))
             {
                 g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
@@ -957,7 +957,7 @@ void proc_weapon_enchantments(
         if (enc_id == 61)
         {
             s = chara_db_get_filter(target.id);
-            if (strutil::contains(s(0), u8"/god/"))
+            if (strutil::contains(s(0), "/god/"))
             {
                 g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);
@@ -967,7 +967,7 @@ void proc_weapon_enchantments(
         if (enc_id == 58)
         {
             s = chara_db_get_filter(target.id);
-            if (strutil::contains(s(0), u8"/undead/"))
+            if (strutil::contains(s(0), "/undead/"))
             {
                 g_proc_damage_events_flag = 1;
                 damage_hp(target, orgdmg / 2, attacker.index);

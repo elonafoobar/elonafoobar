@@ -322,7 +322,7 @@ static TurnResult _build_new_home(int home_scale)
     initialize_home_adata();
 
     std::string midbk = mid;
-    mid = ""s + static_cast<int>(mdata_t::MapId::your_home) + u8"_"s + 101;
+    mid = ""s + static_cast<int>(mdata_t::MapId::your_home) + "_"s + 101;
     ctrl_file_map_delete_preserve_items();
     mid = midbk;
 
@@ -955,7 +955,7 @@ void update_shop_and_report()
         if (area_data[cnt].id == mdata_t::MapId::shop)
         {
             area = cnt;
-            mid = ""s + area + u8"_"s + 101;
+            mid = ""s + area + "_"s + 101;
             show_shop_log();
         }
     }
@@ -979,8 +979,8 @@ void show_shop_log()
 
     if (game()->current_map != area)
     {
-        ctrl_file_map_items_write(u8"shoptmp.s2");
-        ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file_map_items_write("shoptmp.s2");
+        ctrl_file_map_items_read(fs::u8path("inv_"s + mid + ".s2"));
     }
     mode = 6;
 
@@ -1064,8 +1064,8 @@ void show_shop_log()
     mode = 0;
     if (game()->current_map != area)
     {
-        ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
-        ctrl_file_map_items_read(u8"shoptmp.s2");
+        ctrl_file_map_items_write(fs::u8path("inv_"s + mid + ".s2"));
+        ctrl_file_map_items_read("shoptmp.s2");
     }
 
     inv_open_tmp_inv("shop5.s2");

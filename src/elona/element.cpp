@@ -68,7 +68,7 @@ std::string elename(int ele)
     {
         return *text;
     }
-    return u8"?"s;
+    return "?"s;
 }
 
 

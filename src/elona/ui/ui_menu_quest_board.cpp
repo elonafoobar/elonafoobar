@@ -122,7 +122,7 @@ void UIMenuQuestBoard::_draw_window()
     gcopy(4, 0, 0, windoww, inf_ver, 0, 0);
     gmode(2);
     font(16 - en * 2);
-    bmes(u8"Page "s + (page + 1) + u8"/"s + (pagemax + 1), wx + ww + 20, wy);
+    bmes("Page "s + (page + 1) + "/"s + (pagemax + 1), wx + ww + 20, wy);
 }
 
 void UIMenuQuestBoard::_draw_key(int cnt)
@@ -178,7 +178,7 @@ void UIMenuQuestBoard::_draw_list_entry_title(int cnt, const std::string& title)
 
 void UIMenuQuestBoard::_draw_list_entry_date(const std::string& date_text)
 {
-    std::string quest_date = u8"("s + date_text + u8")"s;
+    std::string quest_date = "("s + date_text + ")"s;
     mes(wx + 344, y + 2, quest_date);
 }
 

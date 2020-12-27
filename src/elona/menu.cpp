@@ -90,14 +90,14 @@ std::string _set_pcc_info(Character& chara, int val0)
             rtval(0) = 1;
             rtval(1) = 0;
             rtval(2) = pcc(1, chara.index) % 1000;
-            text = u8"hair"s;
+            text = "hair"s;
         }
         if (val0 == 3)
         {
             rtval(0) = 10;
             rtval(1) = 0;
             rtval(2) = pcc(10, chara.index) % 1000;
-            text = u8"subhair"s;
+            text = "subhair"s;
         }
         if (val0 == 4)
         {
@@ -110,21 +110,21 @@ std::string _set_pcc_info(Character& chara, int val0)
             rtval(0) = 15;
             rtval(1) = 0;
             rtval(2) = pcc(15, chara.index) % 1000;
-            text = u8"body"s;
+            text = "body"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 9;
             rtval(1) = 0;
             rtval(2) = pcc(9, chara.index) % 1000;
-            text = u8"cloth"s;
+            text = "cloth"s;
         }
         if (val0 == 7)
         {
             rtval(0) = 7;
             rtval(1) = 0;
             rtval(2) = pcc(7, chara.index) % 1000;
-            text = u8"pants"s;
+            text = "pants"s;
         }
         if (val0 == 8)
         {
@@ -144,7 +144,7 @@ std::string _set_pcc_info(Character& chara, int val0)
                 rtval(0) = 16;
                 rtval(1) = 0;
                 rtval(2) = pcc(16, chara.index) % 1000;
-                text = u8"ride"s;
+                text = "ride"s;
             }
         }
     }
@@ -173,28 +173,28 @@ std::string _set_pcc_info(Character& chara, int val0)
             rtval(0) = 11;
             rtval(1) = 0;
             rtval(2) = pcc(11, chara.index) % 1000;
-            text = u8"etc"s;
+            text = "etc"s;
         }
         if (val0 == 4)
         {
             rtval(0) = 12;
             rtval(1) = 0;
             rtval(2) = pcc(12, chara.index) % 1000;
-            text = u8"etc"s;
+            text = "etc"s;
         }
         if (val0 == 5)
         {
             rtval(0) = 13;
             rtval(1) = 0;
             rtval(2) = pcc(13, chara.index) % 1000;
-            text = u8"etc"s;
+            text = "etc"s;
         }
         if (val0 == 6)
         {
             rtval(0) = 14;
             rtval(1) = 0;
             rtval(2) = pcc(14, chara.index) % 1000;
-            text = u8"eye"s;
+            text = "eye"s;
         }
         if (val0 == 7)
         {
@@ -231,87 +231,87 @@ void text_set()
     SDIM4(_melee, 20, 3, 8);
     if (jp)
     {
-        _melee(0, 0) = u8"殴って"s;
-        _melee(1, 0) = u8"殴られた。"s;
-        _melee(2, 0) = u8"手"s;
+        _melee(0, 0) = "殴って"s;
+        _melee(1, 0) = "殴られた。"s;
+        _melee(2, 0) = "手"s;
     }
     else
     {
-        _melee(0, 0) = u8"punch"s;
-        _melee(1, 0) = u8"punch"s;
-        _melee(2, 0) = u8"hand"s;
+        _melee(0, 0) = "punch"s;
+        _melee(1, 0) = "punch"s;
+        _melee(2, 0) = "hand"s;
     }
     if (jp)
     {
-        _melee(0, 3) = u8"噛み付いて"s;
-        _melee(1, 3) = u8"噛み付かれた。"s;
-        _melee(2, 3) = u8"牙"s;
+        _melee(0, 3) = "噛み付いて"s;
+        _melee(1, 3) = "噛み付かれた。"s;
+        _melee(2, 3) = "牙"s;
     }
     else
     {
-        _melee(0, 3) = u8"bite"s;
-        _melee(1, 3) = u8"bite"s;
-        _melee(2, 3) = u8"fang"s;
+        _melee(0, 3) = "bite"s;
+        _melee(1, 3) = "bite"s;
+        _melee(2, 3) = "fang"s;
     }
     if (jp)
     {
-        _melee(0, 4) = u8"睨んで"s;
-        _melee(1, 4) = u8"睨まれた。"s;
-        _melee(2, 4) = u8"眼"s;
+        _melee(0, 4) = "睨んで"s;
+        _melee(1, 4) = "睨まれた。"s;
+        _melee(2, 4) = "眼"s;
     }
     else
     {
-        _melee(0, 4) = u8"gaze"s;
-        _melee(1, 4) = u8"gaze"s;
-        _melee(2, 4) = u8"eye"s;
+        _melee(0, 4) = "gaze"s;
+        _melee(1, 4) = "gaze"s;
+        _melee(2, 4) = "eye"s;
     }
     if (jp)
     {
-        _melee(0, 1) = u8"引っ掻き"s;
-        _melee(1, 1) = u8"引っ掻かれた。"s;
-        _melee(2, 1) = u8"爪"s;
+        _melee(0, 1) = "引っ掻き"s;
+        _melee(1, 1) = "引っ掻かれた。"s;
+        _melee(2, 1) = "爪"s;
     }
     else
     {
-        _melee(0, 1) = u8"claw"s;
-        _melee(1, 1) = u8"claw"s;
-        _melee(2, 1) = u8"claw"s;
+        _melee(0, 1) = "claw"s;
+        _melee(1, 1) = "claw"s;
+        _melee(2, 1) = "claw"s;
     }
     if (jp)
     {
-        _melee(0, 5) = u8"刺し"s;
-        _melee(1, 5) = u8"刺された。"s;
-        _melee(2, 5) = u8"針"s;
+        _melee(0, 5) = "刺し"s;
+        _melee(1, 5) = "刺された。"s;
+        _melee(2, 5) = "針"s;
     }
     else
     {
-        _melee(0, 5) = u8"sting"s;
-        _melee(1, 5) = u8"sting"s;
-        _melee(2, 5) = u8"needle"s;
+        _melee(0, 5) = "sting"s;
+        _melee(1, 5) = "sting"s;
+        _melee(2, 5) = "needle"s;
     }
     if (jp)
     {
-        _melee(0, 6) = u8"触って"s;
-        _melee(1, 6) = u8"触られた。"s;
-        _melee(2, 6) = u8"手"s;
+        _melee(0, 6) = "触って"s;
+        _melee(1, 6) = "触られた。"s;
+        _melee(2, 6) = "手"s;
     }
     else
     {
-        _melee(0, 6) = u8"touch"s;
-        _melee(1, 6) = u8"touch"s;
-        _melee(2, 6) = u8"hand"s;
+        _melee(0, 6) = "touch"s;
+        _melee(1, 6) = "touch"s;
+        _melee(2, 6) = "hand"s;
     }
     if (jp)
     {
-        _melee(0, 7) = u8"胞子を撒き散らし"s;
-        _melee(1, 7) = u8"胞子を飛ばされた。"s;
-        _melee(2, 7) = u8"胞子"s;
+        _melee(0, 7) = "胞子を撒き散らし"s;
+        _melee(1, 7) = "胞子を飛ばされた。"s;
+        _melee(2, 7) = "胞子"s;
     }
     else
     {
-        _melee(0, 7) = u8"attack"s;
-        _melee(1, 7) = u8"attack"s;
-        _melee(2, 7) = u8"spore"s;
+        _melee(0, 7) = "attack"s;
+        _melee(1, 7) = "attack"s;
+        _melee(2, 7) = "spore"s;
     }
 }
 
@@ -366,15 +366,15 @@ void show_ex_help(int id)
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, u8"%"s + id + u8","s + i18n::s.get("core.meta.tag"));
+    p = instr(buff, 0, "%"s + id + ","s + i18n::s.get("core.meta.tag"));
     if (p == -1)
     {
         dialog(
-            u8"help index not found %"s + id + u8","s +
+            "help index not found %"s + id + ","s +
             i18n::s.get("core.meta.tag"));
         return;
     }
-    buff = strmid(buff, p, instr(buff, p, u8"%END"s));
+    buff = strmid(buff, p, instr(buff, p, "%END"s));
     notedel(0);
     if (noteinfo() == 0)
     {
@@ -546,12 +546,12 @@ std::string make_spell_description(int skill_id)
         }
         if (dice1 != 0)
         {
-            result += ""s + dice1 + u8"d"s + dice2;
+            result += ""s + dice1 + "d"s + dice2;
             if (bonus != 0)
             {
                 if (bonus > 0)
                 {
-                    result += u8"+"s + bonus;
+                    result += "+"s + bonus;
                 }
                 else
                 {
@@ -561,13 +561,13 @@ std::string make_spell_description(int skill_id)
         }
         else if (skill_id == 461)
         {
-            result += ""s + clamp(bonus, 1, 100) + u8"%"s;
+            result += ""s + clamp(bonus, 1, 100) + "%"s;
         }
         else
         {
             result += i18n::s.get("core.ui.spell.power") + bonus;
         }
-        result += u8" "s;
+        result += " "s;
     }
     result +=
         the_skill_db.get_text_optional(skill_id, "description").value_or("");
@@ -833,11 +833,11 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
             {
                 if (rtval(2) >= 0)
                 {
-                    s += u8" "s + rtval(2);
+                    s += " "s + rtval(2);
                 }
                 else if (rtval(2) == -1)
                 {
-                    s += u8" N/A"s;
+                    s += " N/A"s;
                 }
                 else
                 {
@@ -912,8 +912,8 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                 if (fs::exists(
                         filesystem::dirs::graphic() /
                         fs::u8path(
-                            u8"pcc_"s + text + u8"_" +
-                            (pcc(rtval, chara.index) % 1000 + 1) + u8".bmp")))
+                            "pcc_"s + text + "_" +
+                            (pcc(rtval, chara.index) % 1000 + 1) + ".bmp")))
                 {
                     ++pcc(rtval, chara.index);
                     changed = true;
@@ -945,8 +945,8 @@ ChangeAppearanceResult menu_change_appearance(Character& chara)
                     fs::exists(
                         filesystem::dirs::graphic() /
                         fs::u8path(
-                            u8"pcc_"s + text + u8"_"s +
-                            (pcc(rtval, chara.index) % 1000 - 1) + u8".bmp"s)))
+                            "pcc_"s + text + "_"s +
+                            (pcc(rtval, chara.index) % 1000 - 1) + ".bmp"s)))
                 {
                     --pcc(rtval, chara.index);
                     changed = true;
@@ -1073,11 +1073,11 @@ void change_appearance_equipment(Character& chara)
             {
                 if (pcc(20 + cnt - 1, chara.index) == 0)
                 {
-                    s += u8"On"s;
+                    s += "On"s;
                 }
                 else
                 {
-                    s += u8"Off"s;
+                    s += "Off"s;
                 }
                 draw("core.arrow_left", wx + 30, wy + 66 + cnt * 21 - 5);
                 draw("core.arrow_right", wx + 175, wy + 66 + cnt * 21 - 5);
@@ -1192,7 +1192,7 @@ void show_weapon_dice(
         chara, chara, weapon, ammo, AttackDamageCalculationMode::raw_damage);
     font(14 - en * 2);
     s(2) = std::to_string(dmgmulti);
-    s = ""s + tohit + u8"%"s;
+    s = ""s + tohit + "%"s;
     if (val0 == 0)
     {
         mes(wx + 625 - en * 8, wy + 279 + p(2) * 16, s);
@@ -1201,7 +1201,7 @@ void show_weapon_dice(
     {
         s(3) = s;
     }
-    s = ""s + dice1 + u8"d"s + dice2 + cnvfix(dmgfix) + u8" x"s +
+    s = ""s + dice1 + "d"s + dice2 + cnvfix(dmgfix) + " x"s +
         strmid(
             s(2),
             0,
@@ -1370,8 +1370,8 @@ void screen_analyze_self()
     god_apply_blessing(cdata.tmp());
     if (cdata.player().religion != "")
     {
-        buff += u8"<title1>◆ "s + god_get_name(cdata.player().religion) +
-            u8"による能力の恩恵<def>\n"s;
+        buff += "<title1>◆ "s + god_get_name(cdata.player().religion) +
+            "による能力の恩恵<def>\n"s;
         for (int cnt = 0; cnt < 600; ++cnt)
         {
             p = cdata.player().skills().level(
@@ -1383,8 +1383,8 @@ void screen_analyze_self()
     refreshmode = 1;
     chara_refresh(cdata.player());
     refreshmode = 0;
-    buff += u8"\n"s;
-    buff += u8"<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
+    buff += "\n"s;
+    buff += "<title1>◆ 特徴と特殊状態による能力の恩恵<def>\n"s;
     listmax = noteinfo();
 
     bool init = true;

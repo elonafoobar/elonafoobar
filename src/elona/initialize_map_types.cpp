@@ -1010,7 +1010,7 @@ static void _init_map_your_home()
                 cnt.initial_position.x = map_data.width / 2;
                 cnt.initial_position.y = map_data.height / 2;
             }
-            ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
+            ctrl_file_map_items_read(fs::u8path("inv_"s + mid + ".s2"));
             for (const auto& item : *inv_map())
             {
                 item->set_position({map_data.width / 2, map_data.height / 2});
@@ -2834,7 +2834,7 @@ static void _init_map_fields_maybe_generate_encounter()
             initlv = encounterlv + rnd(10);
             if (const auto chara = chara_create(-1, 303 + rnd(3), 14, 11))
             {
-                chara->name += u8" Lv"s + chara->level;
+                chara->name += " Lv"s + chara->level;
             }
         }
         deferred_event_add("core.rogue_party_ambush");
@@ -2888,7 +2888,7 @@ static void _init_map_fields_maybe_generate_encounter()
             if (const auto chara = chara_create(-1, 159 + rnd(3), 14, 11))
             {
                 chara->role = Role::shop_guard;
-                chara->name += u8" Lv"s + chara->level;
+                chara->name += " Lv"s + chara->level;
             }
         }
     }

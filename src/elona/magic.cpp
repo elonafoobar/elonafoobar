@@ -1080,7 +1080,7 @@ bool _magic_461(Character& subject)
         for (int cnt = 0, cnt_end = (4 + rnd(4)); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(cdata.player().level), calcfixlv(Quality::good));
-            fltn(u8"undead"s);
+            fltn("undead"s);
             chara_create(
                 -1, "", cdata.player().position.x, cdata.player().position.y);
         }
@@ -2221,7 +2221,7 @@ bool _magic_1138_1123_1122_1137(Character& subject)
     data::InstanceId chara_id = "";
     if (rnd(3) == 0)
     {
-        fltn(u8"man"s);
+        fltn("man"s);
     }
     if (efid == 1138)
     {
@@ -4276,23 +4276,23 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             data::InstanceId chara_id = "";
             if (efid == 425)
             {
-                fltn(u8"wild"s);
+                fltn("wild"s);
             }
             if (efid == 642)
             {
-                fltn(u8"fire"s);
+                fltn("fire"s);
             }
             if (efid == 641)
             {
-                fltn(u8"pawn"s);
+                fltn("pawn"s);
             }
             if (efid == 639)
             {
-                fltn(u8"cat"s);
+                fltn("cat"s);
             }
             if (efid == 640)
             {
-                fltn(u8"yeek"s);
+                fltn("yeek"s);
             }
             if (efid == 643)
             {

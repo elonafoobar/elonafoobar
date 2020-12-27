@@ -39,7 +39,7 @@ void fltn(const std::string& filter)
         {
             break;
         }
-        filtern(cnt) = u8"/"s + filtern(cnt) + u8"/"s;
+        filtern(cnt) = "/"s + filtern(cnt) + "/"s;
         p_at_m44 += strsize;
         ++filtermax;
     }

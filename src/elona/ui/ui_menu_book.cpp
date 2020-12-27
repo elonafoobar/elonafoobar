@@ -32,12 +32,12 @@ bool UIMenuBook::init()
             buff(0) += tmp + '\n';
         }
     }
-    p = instr(buff, 0, ""s + _book_id + u8","s + i18n::s.get("core.meta.tag"));
+    p = instr(buff, 0, ""s + _book_id + ","s + i18n::s.get("core.meta.tag"));
     if (p == -1)
     {
         return false;
     }
-    buff = strmid(buff, p, instr(buff, p, u8"%END"s));
+    buff = strmid(buff, p, instr(buff, p, "%END"s));
     notedel(0);
     listmax = 0;
     page = 0;
@@ -97,7 +97,7 @@ void UIMenuBook::draw()
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, "- "s + (p / 20 + 1) + " -"s);
         }
     }
 }

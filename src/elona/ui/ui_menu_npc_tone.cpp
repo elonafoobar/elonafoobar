@@ -18,7 +18,7 @@ static int _load_talk_entries()
     listn(0, 0) = i18n::s.get("core.action.interact.change_tone.default_tone");
 
     ++_listmax;
-    const auto base_dir = filesystem::dirs::user() / u8"talk";
+    const auto base_dir = filesystem::dirs::user() / "talk";
     if (fs::exists(base_dir))
     {
         for (const auto& entry :

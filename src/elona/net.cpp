@@ -91,8 +91,8 @@ bool can_send_chat_now(ChatKind kind)
 std::string replace_f_word(std::string str)
 {
     // same as vanilla.
-    str = strutil::replace(str, u8"fucking", u8"nyoro~n");
-    str = strutil::replace(str, u8"fuck", u8"nyou talk funny");
+    str = strutil::replace(str, "fucking", "nyoro~n");
+    str = strutil::replace(str, "fuck", "nyou talk funny");
     return str;
 }
 

@@ -62,7 +62,7 @@ void end_dmghp(const Character& victim)
     {
         if (is_in_fov(victim))
         {
-            txt(u8"("s + dmg_at_m141 + u8")"s + i18n::space_if_needed());
+            txt("("s + dmg_at_m141 + ")"s + i18n::space_if_needed());
             if (rnd(20) == 0)
             {
                 int picked = rnd(6);

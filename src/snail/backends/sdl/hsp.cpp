@@ -213,8 +213,7 @@ struct MessageBox
                     std::unique_ptr<char, decltype(&::SDL_free)> text_ptr{
                         ::SDL_GetClipboardText(), ::SDL_free};
 
-                    buffer +=
-                        strutil::replace(text_ptr.get(), u8"\r\n", u8"\n");
+                    buffer += strutil::replace(text_ptr.get(), "\r\n", "\n");
                 }
                 else if (!input.is_pressed(Key::backspace))
                 {

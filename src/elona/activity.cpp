@@ -1874,7 +1874,7 @@ void spot_fishing(Character& fisher, OptionalItemRef rod)
         racount = 0;
         fishstat = 0;
         gsel(9);
-        picload(filesystem::dirs::graphic() / u8"fishing.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "fishing.bmp", 0, 0, true);
         gsel(0);
         return;
     }
@@ -2364,7 +2364,7 @@ void sleep_start(const OptionalItemRef& bed)
                 i18n::s.get("core.activity.sleep.new_gene.title"),
                 i18n::s.get("core.activity.sleep.new_gene.text", *gene_chara),
                 {i18n::s.get_enum("core.activity.sleep.new_gene.choices", 0)},
-                u8"core.bg_re14");
+                "core.bg_re14");
             save_save_gene();
         }
     }

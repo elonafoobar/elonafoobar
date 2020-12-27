@@ -76,7 +76,7 @@ void initialize_directories()
 void initialize_screen(const PreinitConfigOptions& opts)
 {
     title(
-        u8"Elona foobar version "s + latest_version.short_string(),
+        "Elona foobar version "s + latest_version.short_string(),
         opts.display_mode(),
         opts.fullscreen());
 }
@@ -199,7 +199,7 @@ void initialize_elona()
     buffer(8, windoww, windowh);
     gsel(0);
     buffer(1, 1584, 1200);
-    picload(filesystem::dirs::graphic() / u8"item.bmp", 0, 0, false);
+    picload(filesystem::dirs::graphic() / "item.bmp", 0, 0, false);
     if (inf_tiles != 48)
     {
         gcopy(1, 0, 0, 1584, 1200, 0, 0, 33 * inf_tiles, 25 * inf_tiles);
@@ -579,7 +579,7 @@ void initialize_game()
     }
     if (mode == 6)
     {
-        playerid = u8"sav_testbed"s;
+        playerid = "sav_testbed"s;
         initialize_debug_globals();
         initialize_testbed();
         will_load_script = true;
@@ -958,11 +958,11 @@ void initialize_set_of_random_generation()
     for (const auto& line : fileutil::read_by_line(lua::resolve_path_for_mod(
              "<core>/locale/<LANGUAGE>/lazy/book.txt")))
     {
-        if (line == u8"%DEFINE")
+        if (line == "%DEFINE")
         {
             in_booktitle_definition = true;
         }
-        else if (line == u8"%END")
+        else if (line == "%END")
         {
             break;
         }

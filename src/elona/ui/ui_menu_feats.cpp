@@ -51,19 +51,19 @@ void UIMenuFeats::_change_tense_of_trait_desc(int cnt)
     {
         listn(0, cnt) = strutil::replace(
             listn(0, cnt),
-            u8"あなた",
-            cdata[_chara_index].sex == 0 ? u8"彼" : u8"彼女");
+            "あなた",
+            cdata[_chara_index].sex == 0 ? "彼" : "彼女");
     }
     else
     {
         listn(0, cnt) = strutil::replace(
             listn(0, cnt),
-            u8" your",
-            cdata[_chara_index].sex == 0 ? u8" his" : u8" her");
+            " your",
+            cdata[_chara_index].sex == 0 ? " his" : " her");
         listn(0, cnt) = strutil::replace(
             listn(0, cnt),
-            u8" you",
-            cdata[_chara_index].sex == 0 ? u8" him" : u8" her");
+            " you",
+            cdata[_chara_index].sex == 0 ? " him" : " her");
     }
 }
 
@@ -76,13 +76,12 @@ void UIMenuFeats::_add_trait_desc(const std::string& trait_desc)
     listn(0, listmax) = i18n::s.get(
         "core.trait.window.his_equipment",
         cnven(
-            (jp)
-                ? ((_chara_index == 0)
-                       ? u8"あなたの"
-                       : (cdata[_chara_index].sex == 0 ? u8"彼の" : u8"彼女の"))
-                : ((_chara_index == 0)
-                       ? "your"
-                       : (cdata[_chara_index].sex == 0 ? u8"his" : u8"her"))),
+            (jp) ? ((_chara_index == 0)
+                        ? "あなたの"
+                        : (cdata[_chara_index].sex == 0 ? "彼の" : "彼女の"))
+                 : ((_chara_index == 0)
+                        ? "your"
+                        : (cdata[_chara_index].sex == 0 ? "his" : "her"))),
         trait_desc);
     ++listmax;
 }
@@ -185,7 +184,7 @@ void UIMenuFeats::_draw_window_background(bool is_chara_making)
         i18n::s.get("core.trait.window.enter") + "  " + strhint2 + strhint3 +
             keybind_get_bound_key_name("switch_mode") + "," +
             keybind_get_bound_key_name("identify") + " [" +
-            i18n::s.get("core.trait.window.ally") + u8"]",
+            i18n::s.get("core.trait.window.ally") + "]",
         (windoww - 730) / 2 + inf_screenx,
         winposy(430, y_adjust) + y_adjust * 15,
         730,

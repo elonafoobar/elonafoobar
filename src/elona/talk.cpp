@@ -188,7 +188,7 @@ TalkResult talk_more(Character& speaker)
 TalkResult talk_sleeping(Character& speaker)
 {
     listmax = 0;
-    buff = u8"("s + i18n::s.get("core.talk.is_sleeping", speaker) + u8")"s;
+    buff = "("s + i18n::s.get("core.talk.is_sleeping", speaker) + ")"s;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
@@ -209,7 +209,7 @@ TalkResult talk_sleeping(Character& speaker)
 TalkResult talk_busy(Character& speaker)
 {
     listmax = 0;
-    buff = u8"("s + i18n::s.get("core.talk.is_busy", speaker) + u8")"s;
+    buff = "("s + i18n::s.get("core.talk.is_busy", speaker) + ")"s;
     list(0, listmax) = 0;
     listn(0, listmax) = i18n::s.get("core.ui.bye");
     ++listmax;
@@ -516,7 +516,7 @@ std::string talk_get_speaker_name(const Character& chara)
     }
     if (chara.alias == ""s)
     {
-        speaker_name = chara.name + u8" "s;
+        speaker_name = chara.name + " "s;
     }
     else
     {
@@ -542,7 +542,7 @@ std::string talk_get_speaker_name(const Character& chara)
     }
     if (game()->reveals_religion)
     {
-        speaker_name += u8" ("s + god_get_name(chara.religion) + u8")"s;
+        speaker_name += " ("s + god_get_name(chara.religion) + ")"s;
     }
 
     return speaker_name;
@@ -725,7 +725,7 @@ void talk_window_show(
         std::tie(impress, interest) = *impress_interest;
 
         std::string impress_enum = i18n::s.get_enum(
-            u8"core.ui.impression", chara_impression_level(impress));
+            "core.ui.impression", chara_impression_level(impress));
         std::string impress_text;
 
         if (impress < 150)
@@ -734,11 +734,11 @@ void talk_window_show(
         }
         else
         {
-            impress_text = u8"???"s;
+            impress_text = "???"s;
         }
         mes(wx + 32,
             wy + 198,
-            u8"("s + impress_text + u8")"s + impress_enum,
+            "("s + impress_text + ")"s + impress_enum,
             {20, 10, 5});
         if (interest >= 0)
         {
@@ -751,8 +751,8 @@ void talk_window_show(
     }
     else
     {
-        mes(wx + 60, wy + 198, u8"-"s);
-        mes(wx + 60, wy + 245, u8"-"s);
+        mes(wx + 60, wy + 198, "-"s);
+        mes(wx + 60, wy + 245, "-"s);
     }
     font(14 - en * 2);
     notesel(text);

@@ -1174,7 +1174,7 @@ TurnResult turn_end()
                 update_screen();
                 await(g_config.animation_wait() * 10);
             }
-            txt(u8" *tick* "s, Message::color{ColorIndex::cyan});
+            txt(" *tick* "s, Message::color{ColorIndex::cyan});
             return TurnResult::pass_one_turn_freeze_time;
         }
     }

@@ -86,7 +86,7 @@ static void _draw_class_info(
     }
     mes(wx + 460,
         wy + 38,
-        i18n::s.get("core.chara_making.select_race.race_info.race") + u8": "s +
+        i18n::s.get("core.chara_making.select_race.race_info.race") + ": "s +
             race);
 
     draw_race_or_class_info(

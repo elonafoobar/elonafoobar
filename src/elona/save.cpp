@@ -43,7 +43,7 @@ void _do_save_game()
     }
 
     ctrl_file_map_write();
-    ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
+    ctrl_file_map_items_write(fs::u8path("inv_"s + mid + ".s2"));
 
     const auto save_dir = filesystem::dirs::save(playerid);
     if (!fs::exists(save_dir))
@@ -123,7 +123,7 @@ void save_save_map_local_data()
     ctrl_file_map_write();
 
     // write data for items/character inventories local to this map
-    ctrl_file_map_items_write(fs::u8path(u8"inv_"s + mid + u8".s2"));
+    ctrl_file_map_items_write(fs::u8path("inv_"s + mid + ".s2"));
 }
 
 

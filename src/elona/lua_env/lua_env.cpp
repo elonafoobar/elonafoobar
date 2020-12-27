@@ -40,7 +40,7 @@ LuaEnv::LuaEnv()
     // Add executable directory to package.path
     fs::path script_path = filesystem::dirs::data() / "script";
     lua_->safe_script(
-        u8"package.path = [[" + script_path.to_u8string() +
+        "package.path = [[" + script_path.to_u8string() +
         "/?.lua;]]..package.path"s);
 
     // Make sure the API environment is initialized first so any

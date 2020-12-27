@@ -15,8 +15,8 @@ using ProfileId = std::string;
 
 
 
-constexpr const char* default_base_profile_id = u8"_";
-constexpr const char* default_profile_id = u8"default";
+constexpr const char* default_base_profile_id = "_";
+constexpr const char* default_profile_id = "default";
 
 
 

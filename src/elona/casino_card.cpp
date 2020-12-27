@@ -196,7 +196,7 @@ void showcardpile()
     }
     font(16 - en * 2, snail::Font::Style::bold);
     bmes(
-        u8"X "s + pilestack_at_cardcontrol,
+        "X "s + pilestack_at_cardcontrol,
         pilex_at_cardcontrol + 8,
         piley_at_cardcontrol + 70,
         {240, 240, 240},

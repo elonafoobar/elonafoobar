@@ -26,7 +26,7 @@ bool UIMenuJournal::init()
     key_list(0) = keybind_get_bound_key_name("enter");
     if (game()->adventurer_logs.empty())
     {
-        buff = u8"No news"s;
+        buff = "No news"s;
     }
     else
     {
@@ -37,7 +37,7 @@ bool UIMenuJournal::init()
         }
     }
     notesel(buff);
-    noteadd(u8" - News - "s, 0);
+    noteadd(" - News - "s, 0);
     noteadd(""s, 1);
     if (noteinfo() / (pagesize / 2) % 2 == 1)
     {
@@ -54,7 +54,7 @@ bool UIMenuJournal::init()
     {
         noteadd(""s);
     }
-    noteadd(u8" - Quest - "s);
+    noteadd(" - Quest - "s);
     noteadd(""s);
     quest_update_main_quest_journal();
     for (int cnt = 0, cnt_end = (game()->number_of_existing_quests);
@@ -75,7 +75,7 @@ bool UIMenuJournal::init()
     {
         noteadd(""s);
     }
-    noteadd(u8" - Quest Item - "s);
+    noteadd(" - Quest Item - "s);
     noteadd(""s);
     append_quest_item_journal();
     for (int cnt = 0,
@@ -92,7 +92,7 @@ bool UIMenuJournal::init()
         p += (cdata.player().fame - 25000) / 100;
     }
     gold += p;
-    noteadd(u8" - Title & Ranking - "s);
+    noteadd(" - Title & Ranking - "s);
     noteadd(""s);
     noteadd(
         i18n::s.get("core.ui.journal.rank.fame") + ": " + cdata.player().fame);
@@ -102,8 +102,7 @@ bool UIMenuJournal::init()
         if (game()->ranks.at(cnt) < 10000)
         {
             noteadd(
-                ""s + ranktitle(cnt) + u8" Rank."s +
-                game()->ranks.at(cnt) / 100);
+                ""s + ranktitle(cnt) + " Rank."s + game()->ranks.at(cnt) / 100);
             s = i18n::s.get("core.ui.journal.rank.pay", calcincome(cnt));
             gold += calcincome(cnt);
             if (cnt != 3 && cnt != 4 && cnt != 5 && cnt != 8)
@@ -128,7 +127,7 @@ bool UIMenuJournal::init()
     {
         noteadd(""s);
     }
-    noteadd(u8" - Income & Expense - "s);
+    noteadd(" - Income & Expense - "s);
     noteadd(""s);
     noteadd(i18n::s.get("core.ui.journal.income.salary.title"));
     noteadd(i18n::s.get("core.ui.journal.income.salary.sum", gold));
@@ -152,7 +151,7 @@ bool UIMenuJournal::init()
     {
         noteadd(""s);
     }
-    noteadd(u8" - Completed Quests - "s);
+    noteadd(" - Completed Quests - "s);
     noteadd(""s);
     append_subquest_journal(1);
     listmax = noteinfo();
@@ -192,29 +191,29 @@ void UIMenuJournal::update()
         y = wy + 45 + cnt % 20 * 16;
         noteget(s, p);
         snail::Color text_color{0, 0, 0};
-        if (strmid(s, 0, 1) == u8"@"s)
+        if (strmid(s, 0, 1) == "@"s)
         {
             s(1) = strmid(s, 1, 2);
             s = strmid(s, 3, s(0).size() - 3);
             font(10 + en - en * 2, snail::Font::Style::bold);
-            if (s(1) == u8"QL"s)
+            if (s(1) == "QL"s)
             {
                 text_color = snail::Color{100, 100, 0};
             }
-            else if (s(1) == u8"QC"s)
+            else if (s(1) == "QC"s)
             {
                 text_color = snail::Color{0, 100, 100};
             }
-            else if (s(1) == u8"QM"s)
+            else if (s(1) == "QM"s)
             {
                 text_color = snail::Color{0, 100, 0};
             }
-            else if (s(1) == u8"RE"s)
+            else if (s(1) == "RE"s)
             {
                 text_color = snail::Color{100, 0, 0};
                 font(12 + sizefix - en * 2);
             }
-            else if (s(1) == u8"BL"s)
+            else if (s(1) == "BL"s)
             {
                 text_color = snail::Color{0, 0, 100};
                 font(12 + sizefix - en * 2);
@@ -232,12 +231,12 @@ void UIMenuJournal::update()
         if (p % 20 == 0)
         {
             font(12 + sizefix - en * 2, snail::Font::Style::bold);
-            mes(x + 90, y + 330, u8"- "s + (p / 20 + 1) + u8" -"s);
+            mes(x + 90, y + 330, "- "s + (p / 20 + 1) + " -"s);
             if (p % 40 == 20)
             {
                 if (page < pagemax)
                 {
-                    mes(x + 200, y + 330, u8"(more)"s);
+                    mes(x + 200, y + 330, "(more)"s);
                 }
             }
         }

@@ -149,7 +149,7 @@ void adventurer_add_news(
     {
     case NewsType::discovery:
         add_adv_log(
-            u8"@01"s,
+            "@01"s,
             i18n::s.get("core.news.discovery.title"),
             i18n::s.get(
                 "core.news.discovery.text",
@@ -160,7 +160,7 @@ void adventurer_add_news(
         break;
     case NewsType::growth:
         add_adv_log(
-            u8"@02"s,
+            "@02"s,
             i18n::s.get("core.news.growth.title"),
             i18n::s.get(
                 "core.news.growth.text",
@@ -170,14 +170,14 @@ void adventurer_add_news(
         break;
     case NewsType::recovery:
         add_adv_log(
-            u8"@02"s,
+            "@02"s,
             i18n::s.get("core.news.recovery.title"),
             i18n::s.get(
                 "core.news.recovery.text", adventurer.alias, adventurer.name));
         break;
     case NewsType::accomplishment:
         add_adv_log(
-            u8"@03"s,
+            "@03"s,
             i18n::s.get("core.news.accomplishment.title"),
             i18n::s.get(
                 "core.news.accomplishment.text",
@@ -187,7 +187,7 @@ void adventurer_add_news(
         break;
     case NewsType::retirement:
         add_adv_log(
-            u8"@04"s,
+            "@04"s,
             i18n::s.get("core.news.retirement.title"),
             i18n::s.get(
                 "core.news.retirement.text",

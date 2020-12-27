@@ -215,7 +215,7 @@ std::string cnvrare(int rarity)
     for (int cnt = 0, cnt_end = (clamp(5 - rarity / 20, 1, 5)); cnt < cnt_end;
          ++cnt)
     {
-        s_at_tcg += u8"*"s;
+        s_at_tcg += "*"s;
     }
     return s_at_tcg;
 }
@@ -250,7 +250,7 @@ std::pair<int, std::string> card_ref(int id, CardInfo& card_info)
         cardrefbg = card_info.cardrefdomain;
         card_desc += " <" + i18n::s.get("core.tcg.card.creature") + ">  " +
             i18n::s.get("core.tcg.card.race") + ":" + card_info.cardrefrace +
-            u8"  Hp:"s + card_info.cardrefhp + u8"  Atk:"s +
+            "  Hp:"s + card_info.cardrefhp + "  Atk:"s +
             card_info.cardrefattack;
     }
     if (card_info.cardreftype == 30)
@@ -276,7 +276,7 @@ std::pair<int, std::string> card_ref(int id, CardInfo& card_info)
         }
         s_at_tcg += cdrefn_at_tcg(card_info.cardrefskill);
         talk_conv(s_at_tcg, 95);
-        card_desc += u8"\n"s + s_at_tcg;
+        card_desc += "\n"s + s_at_tcg;
     }
 
     return std::make_pair(cardrefbg, card_desc);
@@ -595,7 +595,7 @@ void tcgdraw()
             gcopy(7, 96, 144, 72, 96, x_at_tcg, y_at_tcg);
             mes(x_at_tcg + 14,
                 y_at_tcg + 75,
-                ""s + cpdata_at_tcg(7, cnt) + u8"/"s + cpdata_at_tcg(8, cnt),
+                ""s + cpdata_at_tcg(7, cnt) + "/"s + cpdata_at_tcg(8, cnt),
                 {255, 255, 255});
         }
         font(13 + en - en * 2);
@@ -1608,10 +1608,10 @@ void tcginit()
     SDIM1(helpmsg_at_tcg);
     DIM2(deck, 1000);
     SDIM3(domname_at_tcg, 20, 10);
-    phasen_at_tcg(0) = u8"Begin"s;
-    phasen_at_tcg(1) = u8"Draw"s;
-    phasen_at_tcg(2) = u8"Main"s;
-    phasen_at_tcg(3) = u8"End"s;
+    phasen_at_tcg(0) = "Begin"s;
+    phasen_at_tcg(1) = "Draw"s;
+    phasen_at_tcg(2) = "Main"s;
+    phasen_at_tcg(3) = "End"s;
     phasen_at_tcg(4) = "";
     domname_at_tcg(0) = i18n::s.get("core.tcg.domain.lulwy");
     domname_at_tcg(1) = i18n::s.get("core.tcg.domain.kumiromi");
@@ -1653,7 +1653,7 @@ void tcginit()
     asset_load("core.deco_card");
     asset_load("core.interface2");
     gsel(2);
-    picload(filesystem::dirs::graphic() / u8"card0.bmp", 0, 0, false);
+    picload(filesystem::dirs::graphic() / "card0.bmp", 0, 0, false);
     asset_load("core.bg_card");
     tcg_prepare_cnt2();
     tcgdrawbg();
@@ -1769,16 +1769,16 @@ void tcgdeck()
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             s_at_tcg(cnt) = i18n::s.get("core.tcg.deck.name", s_at_tcg(cnt));
-            if (save_fs_exists(fs::u8path(u8"deck_"s + cnt + u8".s2")))
+            if (save_fs_exists(fs::u8path("deck_"s + cnt + ".s2")))
             {
                 if (game()->tcg_decks.at(cnt) != 30)
                 {
-                    s_at_tcg(cnt) += u8" (NG "s + game()->tcg_decks.at(cnt) +
-                        u8"/"s + 30 + u8")"s;
+                    s_at_tcg(cnt) +=
+                        " (NG "s + game()->tcg_decks.at(cnt) + "/"s + 30 + ")"s;
                 }
                 if (game()->tcg_used_deck == cnt)
                 {
-                    s_at_tcg(cnt) += u8" [Use]"s;
+                    s_at_tcg(cnt) += " [Use]"s;
                 }
             }
             else
@@ -1794,7 +1794,7 @@ void tcgdeck()
         }
         DIM2(deck, 1000);
         curdeck = rtval;
-        if (save_fs_exists(fs::u8path(u8"deck_"s + curdeck + u8".s2")))
+        if (save_fs_exists(fs::u8path("deck_"s + curdeck + ".s2")))
         {
             Prompt prompt;
             prompt.append(i18n::s.get("core.tcg.deck.choices.edit"));
@@ -1812,7 +1812,7 @@ void tcgdeck()
             }
             if (rtval == 0)
             {
-                ctrl_file_deck_read(fs::u8path(u8"deck_"s + curdeck + u8".s2"));
+                ctrl_file_deck_read(fs::u8path("deck_"s + curdeck + ".s2"));
             }
         }
         decksizebk_at_tcg = game()->tcg_decks.at(curdeck);
@@ -2252,7 +2252,7 @@ void tcg_draw_selection()
             {
                 s_at_tcg = "";
             }
-            s_at_tcg += u8"("s + card(0, i_at_tcg) + u8")"s;
+            s_at_tcg += "("s + card(0, i_at_tcg) + ")"s;
             mes(x_at_tcg + 1, y_at_tcg + 111, s_at_tcg);
             const auto text_color = deck(i_at_tcg) != 0
                 ? snail::Color{150, 255, 150}
@@ -2272,8 +2272,7 @@ void tcg_draw_selection()
         {255, 255, 255});
     mes(basex_at_tcg + 700,
         basey_at_tcg + 510,
-        u8"Page "s + dsc_at_tcg / 8 / 3 + u8"/"s +
-            (dlistmax_at_tcg - 1) / 8 / 3,
+        "Page "s + dsc_at_tcg / 8 / 3 + "/"s + (dlistmax_at_tcg - 1) / 8 / 3,
         {255, 255, 255});
 }
 
@@ -2295,10 +2294,10 @@ void tcg_draw_deck_editor()
     }
     if (cardmode_at_tcg == 0)
     {
-        mes(basex_at_tcg + 39, basey_at_tcg + 58, u8"Turn "s + turn_at_tcg);
+        mes(basex_at_tcg + 39, basey_at_tcg + 58, "Turn "s + turn_at_tcg);
         mes(basex_at_tcg + 38,
             basey_at_tcg + 57,
-            u8"Turn "s + turn_at_tcg,
+            "Turn "s + turn_at_tcg,
             {255, 255, 255});
         for (int cnt = 0; cnt < 2; ++cnt)
         {
@@ -2312,12 +2311,12 @@ void tcg_draw_deck_editor()
                 {255, 255, 255});
             if (cnt != player_at_tcg)
             {
-                s_at_tcg = u8"?/"s + cpdata_at_tcg(6, cnt);
+                s_at_tcg = "?/"s + cpdata_at_tcg(6, cnt);
             }
             else
             {
-                s_at_tcg = ""s + cpdata_at_tcg(5, cnt) + u8"/"s +
-                    cpdata_at_tcg(6, cnt);
+                s_at_tcg =
+                    ""s + cpdata_at_tcg(5, cnt) + "/"s + cpdata_at_tcg(6, cnt);
             }
             mes(x_at_tcg + 36 - strlen_u(s_at_tcg) * 3,
                 y_at_tcg + 95 - en,
@@ -2343,14 +2342,14 @@ void tcg_draw_deck_editor()
                 {
                     mes(basex_at_tcg + 36,
                         basey_at_tcg + 373 + cnt * 20,
-                        u8"Player"s,
+                        "Player"s,
                         {150, 150, 255});
                 }
                 else
                 {
                     mes(basex_at_tcg + 36,
                         basey_at_tcg + 373 + cnt * 20,
-                        u8"Opponent"s,
+                        "Opponent"s,
                         {255, 150, 150});
                 }
             }
@@ -2365,40 +2364,40 @@ void tcg_draw_deck_editor()
     }
     else
     {
-        mes(basex_at_tcg + 41, basey_at_tcg + 53, u8"Deck\n Editor"s);
+        mes(basex_at_tcg + 41, basey_at_tcg + 53, "Deck\n Editor"s);
         mes(basex_at_tcg + 40,
             basey_at_tcg + 52,
-            u8"Deck\n Editor"s,
+            "Deck\n Editor"s,
             {255, 255, 255});
         const auto text_color = game()->tcg_decks.at(curdeck) != 30
             ? snail::Color{255, 100, 100}
             : snail::Color{100, 255, 100};
         mes(basex_at_tcg + 24,
             basey_at_tcg + 120,
-            u8"Deck "s + game()->tcg_decks.at(curdeck) + u8"/"s + 30,
+            "Deck "s + game()->tcg_decks.at(curdeck) + "/"s + 30,
             text_color);
         mes(basex_at_tcg + 24,
             basey_at_tcg + 140,
-            u8"Life "s + cpdata_at_tcg(4, 0),
+            "Life "s + cpdata_at_tcg(4, 0),
             {215, 215, 215});
         mes(basex_at_tcg + 24,
             basey_at_tcg + 160,
-            u8"Mana "s + cpdata_at_tcg(6, 0),
+            "Mana "s + cpdata_at_tcg(6, 0),
             {215, 215, 215});
         mes(basex_at_tcg + 24,
             basey_at_tcg + 180,
-            u8"Card "s + calcstartcard(0),
+            "Card "s + calcstartcard(0),
             {215, 215, 215});
         mes(basex_at_tcg + 24,
             basey_at_tcg + 220,
-            u8"Domain * "s + cpdata_at_tcg(9, 0),
+            "Domain * "s + cpdata_at_tcg(9, 0),
             {215, 215, 215});
         s_at_tcg = "";
         for (int cnt = 0; cnt < 5; ++cnt)
         {
             if (domain_at_tcg(cnt))
             {
-                s_at_tcg += ""s + domname_at_tcg(cnt) + u8"\n"s;
+                s_at_tcg += ""s + domname_at_tcg(cnt) + "\n"s;
             }
         }
         mes(basex_at_tcg + 24, basey_at_tcg + 240, s_at_tcg);
@@ -2715,7 +2714,7 @@ void tcg_draw_menu()
                 if (rtval == 0)
                 {
                     ctrl_file_deck_write(
-                        fs::u8path(u8"deck_"s + curdeck + u8".s2"));
+                        fs::u8path("deck_"s + curdeck + ".s2"));
                 }
                 else
                 {

@@ -1287,19 +1287,19 @@ TurnResult do_change_ammo_command()
             i(0) = ammo->enchantments[p].power % 1000;
             i(1) = ammo->enchantments[p].power / 1000;
             s(0) = ammoname(ammo->enchantments[p].id % 10000);
-            s(1) = ""s + i + u8"/"s + i(1);
+            s(1) = ""s + i + "/"s + i(1);
         }
-        s = s + u8":"s + s(1);
+        s = s + ":"s + s(1);
         if (ammo->charges == cnt - 1)
         {
-            s = u8"["s + s + u8"]"s;
+            s = "["s + s + "]"s;
             Message::instance().txtef(ColorIndex::blue);
         }
         else
         {
-            s = u8" "s + s + u8" "s;
+            s = " "s + s + " "s;
         }
-        txt(u8" "s + s);
+        txt(" "s + s);
     }
     return TurnResult::pc_turn_user_error;
 }
@@ -2876,7 +2876,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
                 return TurnResult::pc_turn_user_error;
             }
         }
-        inv_open_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
+        inv_open_tmp_inv(fs::u8path("shop"s + invfile + ".s2"));
         shoptrade = 0;
         invsubroutine = 1;
         invctrl(0) = 22;
@@ -2908,7 +2908,7 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         {
             refweight = inv_weight(g_inv.tmp()) + 2500;
         }
-        inv_close_tmp_inv(fs::u8path(u8"shop"s + invfile + u8".s2"));
+        inv_close_tmp_inv(fs::u8path("shop"s + invfile + ".s2"));
         if (refweight != 0)
         {
             box->weight = refweight;
@@ -5366,8 +5366,8 @@ PickUpItemResult pick_up_item(
                 if (item->id == "core.shelter")
                 {
                     std::string midbk = mid;
-                    mid = ""s + 30 + u8"_"s + (100 + item->charges);
-                    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
+                    mid = ""s + 30 + "_"s + (100 + item->charges);
+                    if (save_fs_exists(fs::u8path("mdata_"s + mid + ".s2")))
                     {
                         ctrl_file_map_delete();
                     }

@@ -370,7 +370,7 @@ bool mef_proc_from_physical_attack(
             if (is_in_fov(attacker))
             {
                 txt(i18n::s.get("core.mef.attacks_illusion_in_mist", attacker));
-                add_damage_popup(u8"miss", target.index, {191, 191, 191});
+                add_damage_popup("miss", target.index, {191, 191, 191});
             }
             return true;
         }

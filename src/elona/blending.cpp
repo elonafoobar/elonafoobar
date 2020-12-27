@@ -369,7 +369,7 @@ void window_recipe(
         x + width - 40,
         y + height - 49 - height % 8,
         {234, 220, 188});
-    s_(0) = u8"Page."s + (rppage + 1) + u8"/"s + (rppage(1) + 1);
+    s_(0) = "Page."s + (rppage + 1) + "/"s + (rppage(1) + 1);
     s_(1) = keybind_get_bound_key_name("northwest") + "," +
         keybind_get_bound_key_name("northeast") + ""s +
         i18n::s.get("core.blending.recipe.hint");
@@ -406,14 +406,14 @@ void window_recipe(
     {
         mes(dx_,
             dy_,
-            ""s + i_ + u8"."s +
+            ""s + i_ + "."s +
                 i18n::s.get("core.blending.window.choose_a_recipe"));
     }
     else
     {
         mes(dx_,
             dy_,
-            ""s + i_ + u8"."s +
+            ""s + i_ + "."s +
                 i18n::s.get(
                     "core.blending.window.chose_the_recipe_of",
                     blending_get_recipe_name(rpid)));
@@ -443,7 +443,7 @@ void window_recipe(
                 "core.blending.window.selected", g_inv[rpref(10 + cnt * 2)]);
             s_ = strutil::take_by_width(s_, 44);
         }
-        mes(dx_, dy_, ""s + i_ + u8"."s + s_);
+        mes(dx_, dy_, ""s + i_ + "."s + s_);
         dy_ += 17;
         ++i_;
     }
@@ -456,9 +456,7 @@ void window_recipe(
     {
         boxf(dx_ - 10, dy_ - 2, width - 60, 17, {20, 20, 20, 32});
     }
-    mes(dx_,
-        dy_,
-        ""s + i_ + u8"."s + i18n::s.get("core.blending.window.start"));
+    mes(dx_, dy_, ""s + i_ + "."s + i18n::s.get("core.blending.window.start"));
     dy_ += 30;
     if (rppage == 0)
     {
@@ -486,11 +484,11 @@ void window_recipe(
                 : snail::Color{0, 120, 0};
             mes(dx_ + cnt % 2 * 140,
                 dy_ + cnt / 2 * 17,
-                the_skill_db.get_text(skill_id, "name") + u8"  "s +
-                    required_level + u8"("s +
+                the_skill_db.get_text(skill_id, "name") + "  "s +
+                    required_level + "("s +
                     cdata.player().skills().level(
                         *the_skill_db.get_id_from_integer(integer_skill_id)) +
-                    u8")"s,
+                    ")"s,
                 text_color);
             ++cnt;
         }

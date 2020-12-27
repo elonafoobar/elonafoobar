@@ -149,7 +149,7 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
         if (game()->skill_shortcuts.at(cnt) == skill_id)
         {
             skill_shortcut =
-                u8"{"s + get_bound_shortcut_key_name_by_index(cnt) + u8"}"s;
+                "{"s + get_bound_shortcut_key_name_by_index(cnt) + "}"s;
         }
     }
     cs_list(
@@ -161,7 +161,7 @@ void UIMenuSkills::_draw_skill_name(int cnt, int skill_id)
 
 void UIMenuSkills::_draw_spell_cost(int cnt, int skill_id)
 {
-    std::string spell_cost = ""s + the_skill_db[skill_id]->cost + u8" Sp"s;
+    std::string spell_cost = ""s + the_skill_db[skill_id]->cost + " Sp"s;
     mes(wx + 288 - strlen_u(spell_cost) * 7,
         wy + 66 + cnt * 19 + 2,
         spell_cost);

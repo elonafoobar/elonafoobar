@@ -131,8 +131,8 @@ void UIMenuEquipment::_draw_window_headers()
         i18n::s.get("core.ui.equip.hit_bonus") + ":" +
         cdata.player().hit_bonus + " " +
         i18n::s.get("core.ui.equip.damage_bonus") + ":" +
-        cdata.player().damage_bonus + u8"  DV/PV:"s + cdata.player().dv +
-        u8"/"s + cdata.player().pv);
+        cdata.player().damage_bonus + "  DV/PV:"s + cdata.player().dv + "/"s +
+        cdata.player().pv);
 }
 
 void UIMenuEquipment::_draw_window(bool show_additional_info)
@@ -197,8 +197,8 @@ _draw_single_list_entry(int cnt, int list_item, bool show_additional_info)
     display_key(wx + 88, wy + 60 + cnt * 19 - 2, cnt);
 
     const auto equipment = cdata.player().body_parts[list_item - 1].equipment();
-    std::string item_name = u8"-    "s;
-    std::string item_weight = u8"-"s;
+    std::string item_name = "-    "s;
+    std::string item_weight = "-"s;
 
     if (equipment)
     {

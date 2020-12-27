@@ -39,18 +39,16 @@ i18n::Store load(const std::string& str)
 
 TEST_CASE("test formats", "[I18N: Formatting]")
 {
-    REQUIRE(i18n::s.format("{$1}", 1) == u8"1"s);
-    REQUIRE(i18n::s.format("{$1}", u8"foo"s) == u8"foo"s);
-    REQUIRE(i18n::s.format("{$1} {$2}", u8"foo"s, 2) == u8"foo 2"s);
-    REQUIRE(i18n::s.format("{$1} {$1}", u8"foo"s, 2) == u8"foo foo"s);
+    REQUIRE(i18n::s.format("{$1}", 1) == "1"s);
+    REQUIRE(i18n::s.format("{$1}", "foo"s) == "foo"s);
+    REQUIRE(i18n::s.format("{$1} {$2}", "foo"s, 2) == "foo 2"s);
+    REQUIRE(i18n::s.format("{$1} {$1}", "foo"s, 2) == "foo foo"s);
     REQUIRE(
-        i18n::s.format("{$1} {$2}", u8"foo"s) ==
-        u8"foo <missing argument #2>"s);
+        i18n::s.format("{$1} {$2}", "foo"s) == "foo <missing argument #2>"s);
+    REQUIRE(i18n::s.format("You see {$1}.", "Palmia") == "You see Palmia."s);
     REQUIRE(
-        i18n::s.format("You see {$1}.", u8"Palmia") == u8"You see Palmia."s);
-    REQUIRE(
-        i18n::s.format("You see {$1} the {$2}.", u8"Adam", u8"rock thrower") ==
-        u8"You see Adam the rock thrower."s);
+        i18n::s.format("You see {$1} the {$2}.", "Adam", "rock thrower") ==
+        "You see Adam the rock thrower."s);
 }
 
 
@@ -62,11 +60,11 @@ TEST_CASE("test format chara", "[I18N: Formatting]")
 
     REQUIRE(
         i18n::s.format("{$1}", chara) ==
-        u8"LuaCharacter("s + chara.obj_id.to_string() + u8")"s);
+        "LuaCharacter("s + chara.obj_id.to_string() + ")"s);
 
-    REQUIRE(i18n::s.format("{name($1)}", chara) == u8"何か"s);
-    REQUIRE(i18n::s.format("{basename($1)}", chara) == u8"プチ"s);
-    REQUIRE(i18n::s.format("{basename($1)}: {$2}", chara, 42) == u8"プチ: 42");
+    REQUIRE(i18n::s.format("{name($1)}", chara) == "何か"s);
+    REQUIRE(i18n::s.format("{basename($1)}", chara) == "プチ"s);
+    REQUIRE(i18n::s.format("{basename($1)}: {$2}", chara, 42) == "プチ: 42");
 }
 
 
@@ -80,10 +78,10 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 
     REQUIRE(
         i18n::s.format("{$1}", i) ==
-        u8"LuaItem("s + i.obj_id.to_string() + u8")"s);
+        "LuaItem("s + i.obj_id.to_string() + ")"s);
 
-    REQUIRE(i18n::s.format("{itemname($1)}", i) == u8"3個のプチトロ"s);
-    REQUIRE(i18n::s.format("{itembasename($1)}", i) == u8"プチトロ"s);
+    REQUIRE(i18n::s.format("{itemname($1)}", i) == "3個のプチトロ"s);
+    REQUIRE(i18n::s.format("{itembasename($1)}", i) == "プチトロ"s);
 #endif
 }
 
@@ -97,8 +95,8 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.foo") == u8"bar");
-    REQUIRE(store.get(u8"test.baz") == u8"<Unknown ID: test.baz>");
+    REQUIRE(store.get("test.foo") == "bar");
+    REQUIRE(store.get("test.baz") == "<Unknown ID: test.baz>");
 }
 
 
@@ -113,7 +111,7 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.foo.bar") == u8"baz");
+    REQUIRE(store.get("test.foo.bar") == "baz");
 }
 
 
@@ -131,8 +129,8 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.foo.bar") == u8"baz");
-    REQUIRE(store.get(u8"test.hoge.fuga") == u8"piyo");
+    REQUIRE(store.get("test.foo.bar") == "baz");
+    REQUIRE(store.get("test.hoge.fuga") == "piyo");
 }
 
 
@@ -148,8 +146,8 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get_enum(u8"test.foo", 1) == u8"bar");
-    REQUIRE(store.get_enum(u8"test.foo", 2) == u8"baz");
+    REQUIRE(store.get_enum("test.foo", 1) == "bar");
+    REQUIRE(store.get_enum("test.foo", 2) == "baz");
 }
 
 
@@ -169,8 +167,8 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get_enum_property(u8"test.foo", "name", 1) == u8"bar");
-    REQUIRE(store.get_enum_property(u8"test.foo", "name", 2) == u8"baz");
+    REQUIRE(store.get_enum_property("test.foo", "name", 1) == "bar");
+    REQUIRE(store.get_enum_property("test.foo", "name", 2) == "baz");
 }
 
 
@@ -183,10 +181,10 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.foo") == u8"bar: <missing argument #1>");
-    REQUIRE(store.get(u8"test.foo", 12) == u8"bar: 12");
-    REQUIRE(store.get(u8"test.foo", u8"baz") == u8"bar: baz");
-    REQUIRE(store.get(u8"test.foo", u8"baz", "hoge") == u8"bar: baz");
+    REQUIRE(store.get("test.foo") == "bar: <missing argument #1>");
+    REQUIRE(store.get("test.foo", 12) == "bar: 12");
+    REQUIRE(store.get("test.foo", "baz") == "bar: baz");
+    REQUIRE(store.get("test.foo", "baz", "hoge") == "bar: baz");
 }
 
 
@@ -200,12 +198,12 @@ ELONA.i18n:add {
 )");
 
     REQUIRE(
-        store.get(u8"test.foo") ==
-        u8"<missing argument #2>: <missing argument #1>");
-    REQUIRE(store.get(u8"test.foo", 42) == u8"<missing argument #2>: 42");
-    REQUIRE(store.get(u8"test.foo", 12, u8"bar") == u8"bar: 12");
-    REQUIRE(store.get(u8"test.foo", u8"bar", u8"baz") == u8"baz: bar");
-    REQUIRE(store.get(u8"test.foo", u8"bar", u8"baz", "hoge") == u8"baz: bar");
+        store.get("test.foo") ==
+        "<missing argument #2>: <missing argument #1>");
+    REQUIRE(store.get("test.foo", 42) == "<missing argument #2>: 42");
+    REQUIRE(store.get("test.foo", 12, "bar") == "bar: 12");
+    REQUIRE(store.get("test.foo", "bar", "baz") == "baz: bar");
+    REQUIRE(store.get("test.foo", "bar", "baz", "hoge") == "baz: bar");
 }
 
 
@@ -226,11 +224,9 @@ ELONA.i18n:add {
 )");
 
     REQUIRE(
-        store.get_enum_property(u8"test.foo", "name", 1, "dood") ==
-        u8"bar: dood");
+        store.get_enum_property("test.foo", "name", 1, "dood") == "bar: dood");
     REQUIRE(
-        store.get_enum_property(u8"test.foo", "name", 2, "dood") ==
-        u8"baz: dood");
+        store.get_enum_property("test.foo", "name", 2, "dood") == "baz: dood");
 }
 
 
@@ -243,7 +239,7 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.foo", "dood") == u8"baz: dood");
+    REQUIRE(store.get("test.foo", "dood") == "baz: dood");
 }
 
 
@@ -257,7 +253,7 @@ ELONA.i18n:add {
 }
 )");
 
-    REQUIRE(store.get(u8"test.ether_disease") == u8"ｴｰﾃﾙ病"s);
+    REQUIRE(store.get("test.ether_disease") == "ｴｰﾃﾙ病"s);
 }
 
 
@@ -272,6 +268,6 @@ TEST_CASE("test loading i18n data from multiple sources", "[I18N: Store]")
         testing::get_mods_path() / "test_i18n_b");
     store.init();
 
-    REQUIRE(store.get(u8"test_i18n_a.test") == u8"こんばんは"s);
-    REQUIRE(store.get(u8"test_i18n_b.test") == u8"こんにちは"s);
+    REQUIRE(store.get("test_i18n_a.test") == "こんばんは"s);
+    REQUIRE(store.get("test_i18n_b.test") == "こんにちは"s);
 }

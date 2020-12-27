@@ -154,8 +154,8 @@ void _load_pcc_part(Character& chara, int body_part, const char* body_part_str)
     const auto idx = chara.index;
 
     const auto filepath = filesystem::dirs::graphic() /
-        fs::u8path(u8"pcc_"s + body_part_str + (pcc(body_part, idx) % 1000) +
-                   u8".bmp");
+        fs::u8path("pcc_"s + body_part_str + (pcc(body_part, idx) % 1000) +
+                   ".bmp");
     if (!fs::exists(filepath))
         return;
 
@@ -674,63 +674,63 @@ void create_pcpic(Character& chara, bool with_equipments)
     {
         if (pcc(24, idx) == 0)
         {
-            _load_pcc_part(chara, 4, u8"mantle_");
+            _load_pcc_part(chara, 4, "mantle_");
         }
     }
-    _load_pcc_part(chara, 1, u8"hairbk_");
+    _load_pcc_part(chara, 1, "hairbk_");
     if (idx == 0 && game()->mount != 0 && pcc(16, idx) != 0)
     {
-        _load_pcc_part(chara, 16, u8"ridebk_");
+        _load_pcc_part(chara, 16, "ridebk_");
     }
     else
     {
-        _load_pcc_part(chara, 15, u8"body_");
+        _load_pcc_part(chara, 15, "body_");
     }
-    _load_pcc_part(chara, 14, u8"eye_");
+    _load_pcc_part(chara, 14, "eye_");
     if (idx != 0 || game()->mount == 0 || pcc(16, idx) == 0)
     {
-        _load_pcc_part(chara, 7, u8"pants_");
+        _load_pcc_part(chara, 7, "pants_");
     }
-    _load_pcc_part(chara, 9, u8"cloth_");
+    _load_pcc_part(chara, 9, "cloth_");
     if (with_equipments)
     {
         if (pcc(20, idx) == 0)
         {
-            _load_pcc_part(chara, 2, u8"chest_");
+            _load_pcc_part(chara, 2, "chest_");
         }
         if ((idx != 0 || game()->mount == 0 || pcc(16, idx) == 0) &&
             pcc(21, idx) == 0)
         {
-            _load_pcc_part(chara, 3, u8"leg_");
+            _load_pcc_part(chara, 3, "leg_");
         }
         if (pcc(22, idx) == 0)
         {
-            _load_pcc_part(chara, 5, u8"belt_");
+            _load_pcc_part(chara, 5, "belt_");
         }
         if (pcc(23, idx) == 0)
         {
-            _load_pcc_part(chara, 8, u8"glove_");
+            _load_pcc_part(chara, 8, "glove_");
         }
     }
     if (idx == 0)
     {
         if (game()->mount != 0)
         {
-            _load_pcc_part(chara, 16, u8"ride_");
+            _load_pcc_part(chara, 16, "ride_");
         }
     }
     if (with_equipments)
     {
         if (pcc(24, idx) == 0)
         {
-            _load_pcc_part(chara, 4, u8"mantlebk_");
+            _load_pcc_part(chara, 4, "mantlebk_");
         }
     }
-    _load_pcc_part(chara, 1, u8"hair_");
-    _load_pcc_part(chara, 10, u8"subhair_");
-    _load_pcc_part(chara, 11, u8"etc_");
-    _load_pcc_part(chara, 12, u8"etc_");
-    _load_pcc_part(chara, 13, u8"etc_");
+    _load_pcc_part(chara, 1, "hair_");
+    _load_pcc_part(chara, 10, "subhair_");
+    _load_pcc_part(chara, 11, "etc_");
+    _load_pcc_part(chara, 12, "etc_");
+    _load_pcc_part(chara, 13, "etc_");
 
     gsel(0);
 }
@@ -785,12 +785,12 @@ void initialize_map_chips(const MapChipDB& db)
             }
 
             loader.add_predefined_extents(
-                filesystem::dirs::graphic() / fs::u8path(u8"map"s + i + ".bmp"),
+                filesystem::dirs::graphic() / fs::u8path("map"s + i + ".bmp"),
                 extents_chips,
                 PicLoader::PageType::map_chip);
 
             loader.add_predefined_extents(
-                filesystem::dirs::graphic() / fs::u8path(u8"map"s + i + ".bmp"),
+                filesystem::dirs::graphic() / fs::u8path("map"s + i + ".bmp"),
                 extents_feats,
                 PicLoader::PageType::map_feat);
         }
@@ -927,7 +927,7 @@ void initialize_item_chips(const ItemChipDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dirs::graphic() / u8"item.bmp",
+        filesystem::dirs::graphic() / "item.bmp",
         predefined_extents,
         PicLoader::PageType::item);
 }
@@ -956,7 +956,7 @@ void initialize_portraits(const PortraitDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dirs::graphic() / u8"face1.bmp",
+        filesystem::dirs::graphic() / "face1.bmp",
         predefined_extents,
         PicLoader::PageType::portrait);
 }
@@ -993,7 +993,7 @@ void initialize_chara_chips(const CharaChipDB& db)
     }
 
     loader.add_predefined_extents(
-        filesystem::dirs::graphic() / u8"character.bmp",
+        filesystem::dirs::graphic() / "character.bmp",
         predefined_extents,
         PicLoader::PageType::character);
 }

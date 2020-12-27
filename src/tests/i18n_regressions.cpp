@@ -22,23 +22,21 @@ TEST_CASE("test foodname", "[I18N: Regressions]")
         update_slight();
 
         item->param2 = 1;
-        REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"恐怖のパン");
+        REQUIRE(i18n::s.format("{itemname($1)}", item) == "恐怖のパン");
         item->param2 = 8;
-        REQUIRE(i18n::s.format("{itemname($1)}", item) == u8"カレーパン");
+        REQUIRE(i18n::s.format("{itemname($1)}", item) == "カレーパン");
     }
     {
         const auto item = testing::create_item(573);
         update_slight();
 
         item->param2 = 1;
-        REQUIRE(
-            i18n::s.format("{itemname($1)}", item) == u8"グロテスクな鳥の卵");
+        REQUIRE(i18n::s.format("{itemname($1)}", item) == "グロテスクな鳥の卵");
         item->param2 = 8;
         REQUIRE(
-            i18n::s.format("{itemname($1)}", item) == u8"鳥のレアチーズケーキ");
+            i18n::s.format("{itemname($1)}", item) == "鳥のレアチーズケーキ");
         item->subname = 3;
         REQUIRE(
-            i18n::s.format("{itemname($1)}", item) ==
-            u8"プチのレアチーズケーキ");
+            i18n::s.format("{itemname($1)}", item) == "プチのレアチーズケーキ");
     }
 }

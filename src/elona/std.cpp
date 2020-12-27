@@ -683,11 +683,11 @@ void pget(int x, int y)
 void picload(const fs::path& filepath, int x, int y, bool create_buffer)
 {
     optional<snail::Color> keycolor = snail::Color{0, 0, 0};
-    if (filepath.to_u8string().find(u8"pcc") != std::string::npos)
+    if (filepath.to_u8string().find("pcc") != std::string::npos)
     {
         keycolor = snail::Color(43, 133, 133);
     }
-    if (filepath.to_u8string().find(u8"bg") != std::string::npos)
+    if (filepath.to_u8string().find("bg") != std::string::npos)
     {
         keycolor = none;
     }
@@ -1011,15 +1011,15 @@ int talk_conv_jp(std::string& text, int max_line_length)
                 {
                     const auto m = rest.substr(line_length);
                     for (const auto& period_like : {
-                             u8"。",
-                             u8"、",
-                             u8"」",
-                             u8"』",
-                             u8"！",
-                             u8"？",
-                             u8"…",
-                             u8"♪",
-                             u8"♪1",
+                             "。",
+                             "、",
+                             "」",
+                             "』",
+                             "！",
+                             "？",
+                             "…",
+                             "♪",
+                             "♪1",
                          })
                     {
                         if (strutil::starts_with(m, period_like))

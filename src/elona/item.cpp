@@ -794,8 +794,8 @@ void itemname_additional_info(const ItemRef& item)
     {
         s_ += lang(
             ""s + i18n::s.get_enum("core.item.bait_rank", item->param1),
-            u8" <"s + i18n::s.get_enum("core.item.bait_rank", item->param1) +
-                u8">"s);
+            " <"s + i18n::s.get_enum("core.item.bait_rank", item->param1) +
+                ">"s);
     }
     if (item->id == "core.ancient_book")
     {
@@ -803,37 +803,37 @@ void itemname_additional_info(const ItemRef& item)
         {
             if (item->param2 != 0)
             {
-                s_ += u8"解読済みの"s;
+                s_ += "解読済みの"s;
             }
         }
         if (item->identify_state == IdentifyState::completely)
         {
             s_ += lang(
-                u8"《"s +
+                "《"s +
                     i18n::s.get_enum(
                         "core.item.ancient_book_title", item->param1) +
-                    u8"》という題名の"s,
-                u8" titled <"s +
+                    "》という題名の"s,
+                " titled <"s +
                     i18n::s.get_enum(
                         "core.item.ancient_book_title", item->param1) +
-                    u8">"s);
+                    ">"s);
         }
     }
     if (item->id == "core.recipe")
     {
         if (item->param1 == 0)
         {
-            s_ += lang(u8"もう使えない"s, u8" which cannot be used anymore"s);
+            s_ += lang("もう使えない"s, " which cannot be used anymore"s);
         }
         else if (item->subname == 0)
         {
-            s_ += lang(u8"カスタム"s, ""s);
+            s_ += lang("カスタム"s, ""s);
         }
         else
         {
             s_ += lang(
-                u8"《"s + blending_get_recipe_name(item->subname) + u8"》の"s,
-                u8" of <"s + blending_get_recipe_name(item->subname) + u8">"s);
+                "《"s + blending_get_recipe_name(item->subname) + "》の"s,
+                " of <"s + blending_get_recipe_name(item->subname) + ">"s);
         }
     }
 
@@ -844,21 +844,21 @@ void itemname_additional_info(const ItemRef& item)
         if (item->id == "core.textbook")
         {
             s_ += lang(
-                u8"《"s + the_skill_db.get_text(item->param1, "name") +
-                    u8"》という題名の"s,
-                u8" titled <Art of "s +
-                    the_skill_db.get_text(item->param1, "name") + u8">"s);
+                "《"s + the_skill_db.get_text(item->param1, "name") +
+                    "》という題名の"s,
+                " titled <Art of "s +
+                    the_skill_db.get_text(item->param1, "name") + ">"s);
         }
         else if (item->id == "core.book_of_rachel")
         {
-            s_ += lang(u8"第"s, u8" of Rachel No."s) + item->param2 +
-                lang(u8"巻目の"s, ""s);
+            s_ += lang("第"s, " of Rachel No."s) + item->param2 +
+                lang("巻目の"s, ""s);
         }
         else if (item->id == "core.book_b")
         {
             s_ += lang(
-                u8"《"s + booktitle(item->param1) + u8"》という題名の"s,
-                u8" titled <"s + booktitle(item->param1) + u8">"s);
+                "《"s + booktitle(item->param1) + "》という題名の"s,
+                " titled <"s + booktitle(item->param1) + ">"s);
         }
     }
     if (category == ItemCategory::altar)
@@ -866,8 +866,8 @@ void itemname_additional_info(const ItemRef& item)
         if (item->__god != "")
         {
             s_ += lang(
-                god_get_name(item->__god) + u8"の"s,
-                u8" <"s + god_get_name(item->__god) + u8">"s);
+                god_get_name(item->__god) + "の"s,
+                " <"s + god_get_name(item->__god) + ">"s);
         }
     }
     if (category == ItemCategory::food)
@@ -901,9 +901,9 @@ void itemname_additional_info(const ItemRef& item)
         }
         if (item->own_state == OwnState::crop)
         {
-            s_ += lang(""s, u8" grown "s) +
+            s_ += lang(""s, " grown "s) +
                 i18n::s.get_enum("core.ui.weight", item->subname) +
-                lang(u8"育った"s, ""s);
+                lang("育った"s, ""s);
         }
     }
     if (item->subname != 0)
@@ -912,7 +912,7 @@ void itemname_additional_info(const ItemRef& item)
         {
             if (item->subname < 0 || item->subname >= 100)
             {
-                s_ += u8"/bugged/"s;
+                s_ += "/bugged/"s;
                 return;
             }
             s_ += the_fish_db.get_text(item->subname, "name");
@@ -925,17 +925,17 @@ void itemname_additional_info(const ItemRef& item)
         {
             if (item->subname < 0 || item->subname >= 800)
             {
-                s_ += u8"/bugged/"s;
+                s_ += "/bugged/"s;
                 return;
             }
             if (item->own_state != OwnState::crop)
             {
-                s_ += lang(""s, u8" of "s) +
+                s_ += lang(""s, " of "s) +
                     chara_db_get_name(
                           *the_character_db.get_id_from_integer(item->subname));
                 if (jp)
                 {
-                    s_ += u8"の"s;
+                    s_ += "の"s;
                 }
             }
         }
@@ -955,29 +955,29 @@ void itemname_additional_info(const ItemRef& item)
         }
         if (item->id == "core.deed")
         {
-            s_ += lang(""s, u8" of "s) +
+            s_ += lang(""s, " of "s) +
                 i18n::s.get_enum("core.ui.home", item->param1) +
-                lang(u8"の"s, ""s);
+                lang("の"s, ""s);
         }
         if (item->id == "core.bill")
         {
             s_ += lang(
-                ""s + item->subname + u8"goldの"s,
-                u8" <"s + item->subname + u8" gp>"s);
+                ""s + item->subname + "goldの"s,
+                " <"s + item->subname + " gp>"s);
         }
         if (item->id == "core.vomit")
         {
             if (item->subname < 0 || item->subname >= 800)
             {
-                s_ += u8"/bugged/"s;
+                s_ += "/bugged/"s;
                 return;
             }
             s_ += lang(
                 ""s +
                     chara_db_get_name(
                         *the_character_db.get_id_from_integer(item->subname)) +
-                    u8"の"s,
-                u8" of "s +
+                    "の"s,
+                " of "s +
                     chara_db_get_name(
                         *the_character_db.get_id_from_integer(item->subname)));
         }
@@ -986,27 +986,27 @@ void itemname_additional_info(const ItemRef& item)
     {
         if (item->param1 == 169)
         {
-            s_ += lang(u8"善人の"s, u8" of saint"s);
+            s_ += lang("善人の"s, " of saint"s);
         }
         if (item->param1 == 162)
         {
-            s_ += lang(u8"悪人の"s, u8" of wicked"s);
+            s_ += lang("悪人の"s, " of wicked"s);
         }
         if (item->param1 == 163)
         {
-            s_ += lang(u8"エヘカトルの"s, u8" of Ehekatl"s);
+            s_ += lang("エヘカトルの"s, " of Ehekatl"s);
         }
         if (item->param1 == 164)
         {
-            s_ += lang(u8"オパートスの"s, u8" of Opatos"s);
+            s_ += lang("オパートスの"s, " of Opatos"s);
         }
         if (item->param1 == 165)
         {
-            s_ += lang(u8"イツパロトルの"s, u8" of Itzpalt"s);
+            s_ += lang("イツパロトルの"s, " of Itzpalt"s);
         }
         if (item->param1 == 166)
         {
-            s_ += lang(u8"ジュアの"s, u8" of Jure"s);
+            s_ += lang("ジュアの"s, " of Jure"s);
         }
     }
 }
@@ -1036,39 +1036,39 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         if (number > 1)
         {
-            s2_ = u8"個の"s;
+            s2_ = "個の"s;
             if (category == ItemCategory::armor)
             {
-                s2_ = u8"着の"s;
+                s2_ = "着の"s;
             }
             if (category == ItemCategory::spellbook ||
                 category == ItemCategory::book)
             {
                 if (item->id == "core.recipe")
                 {
-                    s2_ = u8"枚の"s;
+                    s2_ = "枚の"s;
                 }
                 else
                 {
-                    s2_ = u8"冊の"s;
+                    s2_ = "冊の"s;
                 }
             }
             if (category == ItemCategory::melee_weapon)
             {
-                s2_ = u8"本の"s;
+                s2_ = "本の"s;
             }
             if (category == ItemCategory::potion)
             {
-                s2_ = u8"服の"s;
+                s2_ = "服の"s;
             }
             if (category == ItemCategory::scroll)
             {
-                s2_ = u8"巻の"s;
+                s2_ = "巻の"s;
             }
             if (category == ItemCategory::boots ||
                 category == ItemCategory::gloves)
             {
-                s2_ = u8"対の"s;
+                s2_ = "対の"s;
             }
             if (category == ItemCategory::gold_piece ||
                 category == ItemCategory::platinum ||
@@ -1076,11 +1076,11 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                 item->id == "core.music_ticket" ||
                 item->id == "core.token_of_friendship")
             {
-                s2_ = u8"枚の"s;
+                s2_ = "枚の"s;
             }
             if (item->id == "core.fish_a")
             {
-                s2_ = u8"匹の"s;
+                s2_ = "匹の"s;
             }
             s_ = ""s + number + s2_;
         }
@@ -1113,14 +1113,14 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             switch (item->curse_state)
             {
             case CurseState::doomed:
-                s_ = i18n::s.get("core.ui.curse_state.doomed") + u8" "s;
+                s_ = i18n::s.get("core.ui.curse_state.doomed") + " "s;
                 break;
             case CurseState::cursed:
-                s_ = i18n::s.get("core.ui.curse_state.cursed") + u8" "s;
+                s_ = i18n::s.get("core.ui.curse_state.cursed") + " "s;
                 break;
             case CurseState::none: break;
             case CurseState::blessed:
-                s_ = i18n::s.get("core.ui.curse_state.blessed") + u8" "s;
+                s_ = i18n::s.get("core.ui.curse_state.blessed") + " "s;
                 break;
             }
         }
@@ -1134,37 +1134,37 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             s2_ = ""s + ioriginalnameref2(the_item_db[item->id]->integer_id);
             if (strutil::contains(
                     ioriginalnameref(the_item_db[item->id]->integer_id),
-                    u8"with"))
+                    "with"))
             {
                 s3_ = "";
             }
             else if (strutil::contains(
                          ioriginalnameref(the_item_db[item->id]->integer_id),
-                         u8"for testing"))
+                         "for testing"))
             {
                 s3_ = "";
             }
             else
             {
-                s3_ = u8"of";
+                s3_ = "of";
             }
             if (item->identify_state != IdentifyState::unidentified &&
                 s2_ == "")
             {
                 if (item->weight < 0)
                 {
-                    s2_ = u8"cargo";
+                    s2_ = "cargo";
                 }
                 if (category == ItemCategory::boots ||
                     category == ItemCategory::gloves)
                 {
-                    s2_ = u8"pair";
+                    s2_ = "pair";
                 }
             }
             if (category == ItemCategory::food && item->param1 != 0 &&
                 item->param2 != 0)
             {
-                s2_ = u8"dish";
+                s2_ = "dish";
             }
         }
         if (s2_ != ""s)
@@ -1177,36 +1177,36 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             {
                 if (s2_ == "variety")
                 {
-                    s_ = ""s + number + u8" " + s_ + u8"variety " + s3_;
+                    s_ = ""s + number + " " + s_ + "variety " + s3_;
                 }
                 else if (s2_ == "dish")
                 {
-                    s_ = ""s + number + u8" " + s_ + u8"dishes " + s3_;
+                    s_ = ""s + number + " " + s_ + "dishes " + s3_;
                 }
                 else
                 {
-                    s_ = ""s + number + u8" " + s_ + s2_ + u8"s " + s3_;
+                    s_ = ""s + number + " " + s_ + s2_ + "s " + s3_;
                 }
             }
             else
             {
-                s_ = s_ + s2_ + u8" " + s3_;
+                s_ = s_ + s2_ + " " + s3_;
             }
         }
         else if (number > 1)
         {
-            s_ = ""s + number + u8" " + s_;
+            s_ = ""s + number + " " + s_;
         }
     }
     if (item->material == "core.raw" && food_is_rotten(item))
     {
         if (jp)
         {
-            s_ += u8"腐った"s;
+            s_ += "腐った"s;
         }
         else
         {
-            s_ += u8"rotten "s;
+            s_ += "rotten "s;
         }
     }
     if (en)
@@ -1224,23 +1224,23 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             }
             else
             {
-                s_ += i18n::s.get_enum("core.ui.furniture", item->subname) +
-                    u8" "s;
+                s_ +=
+                    i18n::s.get_enum("core.ui.furniture", item->subname) + " "s;
             }
         }
         if (item->id == "core.ancient_book" && item->param2 != 0)
         {
-            s_ += u8"undecoded "s;
+            s_ += "undecoded "s;
         }
         if (item->id == "core.recipe" && item->subname == 0)
         {
-            s_ += u8"custom "s;
+            s_ += "custom "s;
         }
     }
     if (item->id == "core.material_kit")
     {
         s_ += ""s + the_item_material_db.get_text(item->material, "name") +
-            lang(u8"製の"s, u8" "s);
+            lang("製の"s, " "s);
     }
     if (jp)
     {
@@ -1251,12 +1251,12 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         if (jp)
         {
             s_ += ""s + the_item_material_db.get_text(item->material, "name") +
-                u8"細工の"s;
+                "細工の"s;
         }
         else
         {
             s_ += ""s + the_item_material_db.get_text(item->material, "name") +
-                u8"work "s;
+                "work "s;
         }
     }
     if (item->id == "core.gift")
@@ -1273,7 +1273,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             if (item->is_eternal_force)
             {
                 alpha_ = 1;
-                s_ += lang(u8"エターナルフォース"s, u8"eternal force"s) +
+                s_ += lang("エターナルフォース"s, "eternal force"s) +
                     i18n::space_if_needed();
             }
             else
@@ -1315,7 +1315,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
                             }
                             else
                             {
-                                s_ += u8"の"s;
+                                s_ += "の"s;
                             }
                         }
                     }
@@ -1341,7 +1341,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         {
             if (jp)
             {
-                s_ = u8"★"s + s_ +
+                s_ = "★"s + s_ +
                     ioriginalnameref(the_item_db[item->id]->integer_id);
             }
             else
@@ -1353,7 +1353,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         {
             if (item->quality >= Quality::miracle && jp)
             {
-                s_ = u8"☆"s + s_;
+                s_ = "☆"s + s_;
             }
             if (alpha_ == 1 && jp)
             {
@@ -1366,7 +1366,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             if (en && is_equipment(category) && item->subname >= 10000 &&
                 item->subname < 20000)
             {
-                s_ += u8" "s + egoname((item->subname - 10000));
+                s_ += " "s + egoname((item->subname - 10000));
             }
             if (item->subname >= 40000)
             {
@@ -1396,19 +1396,19 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
             if (item->identify_state == IdentifyState::completely &&
                 (item->quality >= Quality::miracle && is_equipment(category)))
             {
-                s_ = u8"the "s + s_;
+                s_ = "the "s + s_;
             }
             else if (number == 1)
             {
                 s4_ = strmid(s_, 0, 1);
-                if (s4_ == u8"a"s || s4_ == u8"o"s || s4_ == u8"i"s ||
-                    s4_ == u8"u"s || s4_ == u8"e"s)
+                if (s4_ == "a"s || s4_ == "o"s || s4_ == "i"s || s4_ == "u"s ||
+                    s4_ == "e"s)
                 {
-                    s_ = u8"an "s + s_;
+                    s_ = "an "s + s_;
                 }
                 else
                 {
-                    s_ = u8"a "s + s_;
+                    s_ = "a "s + s_;
                 }
             }
         }
@@ -1482,7 +1482,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         if (item->bonus_value != 0)
         {
-            s_ += ""s + cnvfix(item->bonus_value) + u8" "s;
+            s_ += ""s + cnvfix(item->bonus_value) + " "s;
         }
         if (item->has_charges)
         {
@@ -1491,86 +1491,84 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         if (item->dice.rolls != 0 || item->hit_bonus != 0 ||
             item->dice.bonus != 0)
         {
-            s_ += u8" ("s;
+            s_ += " ("s;
             if (item->dice.rolls != 0)
             {
-                s_ += ""s + item->dice.rolls + u8"d"s + item->dice.faces;
+                s_ += ""s + item->dice.rolls + "d"s + item->dice.faces;
                 if (item->dice.bonus != 0)
                 {
                     if (item->dice.bonus > 0)
                     {
-                        s_ += u8"+"s + item->dice.bonus;
+                        s_ += "+"s + item->dice.bonus;
                     }
                     else
                     {
                         s_ += ""s + item->dice.bonus;
                     }
                 }
-                s_ += u8")"s;
+                s_ += ")"s;
                 if (item->hit_bonus != 0)
                 {
-                    s_ += u8"("s + item->hit_bonus + u8")"s;
+                    s_ += "("s + item->hit_bonus + ")"s;
                 }
             }
             else
             {
-                s_ +=
-                    ""s + item->hit_bonus + u8","s + item->dice.bonus + u8")"s;
+                s_ += ""s + item->hit_bonus + ","s + item->dice.bonus + ")"s;
             }
         }
         if (item->dv != 0 || item->pv != 0)
         {
-            s_ += u8" ["s + item->dv + u8","s + item->pv + u8"]"s;
+            s_ += " ["s + item->dv + ","s + item->pv + "]"s;
         }
     }
     if (en && (item->id == "core.wallet" || item->id == "core.suitcase"))
     {
-        s_ += u8"(Lost property)"s;
+        s_ += "(Lost property)"s;
     }
     if (item->id == "core.fishing_pole" && item->charges != 0)
     {
         s_ += lang(
-            u8"("s + i18n::s.get_enum("core.item.bait_rank", item->param4) +
-                u8"残り"s + item->charges + u8"匹)"s,
-            u8"("s + item->charges + u8" "s +
-                i18n::s.get_enum("core.item.bait_rank", item->param4) + u8")"s);
+            "("s + i18n::s.get_enum("core.item.bait_rank", item->param4) +
+                "残り"s + item->charges + "匹)"s,
+            "("s + item->charges + " "s +
+                i18n::s.get_enum("core.item.bait_rank", item->param4) + ")"s);
     }
     if (item->id == "core.monster_ball")
     {
         if (item->subname == 0)
         {
-            s_ += lang(u8" Lv"s, u8" Level "s) + item->param2 +
-                lang(u8" (空)"s, u8"(Empty)"s);
+            s_ += lang(" Lv"s, " Level "s) + item->param2 +
+                lang(" (空)"s, "(Empty)"s);
         }
         else
         {
-            s_ += u8" ("s +
+            s_ += " ("s +
                 chara_db_get_name(
                       *the_character_db.get_id_from_integer(item->subname)) +
-                u8")"s;
+                ")"s;
         }
     }
     if (item->id == "core.small_gamble_chest")
     {
-        s_ += lang(u8" Lv"s, u8" Level "s) + item->param2;
+        s_ += lang(" Lv"s, " Level "s) + item->param2;
     }
     if (item->identify_state == IdentifyState::almost && is_equipment(category))
     {
-        s_ += u8" ("s +
+        s_ += " ("s +
             cnven(i18n::s.get_enum(
-                u8"core.ui.quality", static_cast<int>(item->quality))) +
-            u8")"s;
+                "core.ui.quality", static_cast<int>(item->quality))) +
+            ")"s;
         if (jp)
         {
-            s_ += u8"["s +
-                the_item_material_db.get_text(item->material, "name") +
-                u8"製]"s;
+            s_ += "["s + the_item_material_db.get_text(item->material, "name") +
+                "製]"s;
         }
         else
         {
-            s_ += u8"["s +
+            s_ += "["s +
                 cnven(the_item_material_db.get_text(item->material, "name")) +
-                u8"]"s;
+                "]"s;
         }
         if (item->curse_state == CurseState::cursed)
         {
@@ -1585,44 +1583,44 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
     {
         if (item->id == "core.shopkeepers_trunk")
         {
-            s_ += lang(u8"(移動時消滅)"s, u8"(Temporal)"s);
+            s_ += lang("(移動時消滅)"s, "(Temporal)"s);
         }
         else if (item->charges == 0)
         {
             if (item->param1 == 0)
             {
-                s_ += lang(u8"(空っぽ)"s, u8"(Empty)"s);
+                s_ += lang("(空っぽ)"s, "(Empty)"s);
             }
         }
     }
     if (category == ItemCategory::cargo && item->param2 != 0)
     {
         s_ += lang(
-            u8"(仕入れ値 "s + item->param2 + u8"g)"s,
-            u8"(Buying price: "s + item->param2 + u8")"s);
+            "(仕入れ値 "s + item->param2 + "g)"s,
+            "(Buying price: "s + item->param2 + ")"s);
     }
     if (item->is_aphrodisiac)
     {
-        s_ += lang(u8"(媚薬混入)"s, u8"(Aphrodisiac)"s);
+        s_ += lang("(媚薬混入)"s, "(Aphrodisiac)"s);
     }
     if (item->is_poisoned)
     {
-        s_ += lang(u8"(毒物混入)"s, u8"(Poisoned)"s);
+        s_ += lang("(毒物混入)"s, "(Poisoned)"s);
     }
     if (item->has_cooldown_time && game_now() < item->__cooldown_time)
     {
         const auto h = (item->__cooldown_time - game_now()).hours();
         s_ += lang(
-            u8"("s + std::to_string(h) + u8"時間)"s,
-            u8"(Next: "s + std::to_string(h) + u8"h.)"s);
+            "("s + std::to_string(h) + "時間)"s,
+            "(Next: "s + std::to_string(h) + "h.)"s);
     }
     if (item->id == "core.shelter" && item->charges != 0)
     {
-        s_ += lang(u8" シリアルNo."s, u8" serial no."s) + item->charges;
+        s_ += lang(" シリアルNo."s, " serial no."s) + item->charges;
     }
     if (item->id == "core.disc")
     {
-        s_ += u8" <BGM"s + item->param1 + u8">"s;
+        s_ += " <BGM"s + item->param1 + ">"s;
     }
     if (strlen_u(s_) > 66)
     {
@@ -2288,7 +2286,7 @@ void auto_identify()
                         "core.misc.identify.almost_identified",
                         item,
                         i18n::s.get_enum(
-                            u8"core.ui.quality",
+                            "core.ui.quality",
                             static_cast<int>(item->quality))));
                 }
                 item_identify(item, IdentifyState::almost);

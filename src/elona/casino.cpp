@@ -44,7 +44,7 @@ void casino_dealer()
     atxpic = 0;
     snd("core.pop3");
     mode = 9;
-    atxbg = u8"core.bg13"s;
+    atxbg = "core.bg13"s;
     atxbgbk = "";
     SDIM3(atxinfon, 80, 5);
     txt(i18n::s.get("core.casino.talk_to_dealer"));
@@ -68,20 +68,20 @@ void casino_choose_card()
             {
                 noteget(s, cnt);
                 snail::Color text_color{0, 0, 0};
-                if (strmid(s, 0, 1) == u8"@"s)
+                if (strmid(s, 0, 1) == "@"s)
                 {
                     s(1) = strmid(s, 1, 2);
                     s = strmid(s, 3, s(0).size() - 3);
                     font(16 - en * 2);
-                    if (s(1) == u8"BL"s)
+                    if (s(1) == "BL"s)
                     {
                         text_color = snail::Color{130, 130, 250};
                     }
-                    else if (s(1) == u8"GR"s)
+                    else if (s(1) == "GR"s)
                     {
                         text_color = snail::Color{130, 250, 130};
                     }
-                    else if (s(1) == u8"QM"s)
+                    else if (s(1) == "QM"s)
                     {
                         text_color = snail::Color{0, 100, 0};
                     }
@@ -394,7 +394,7 @@ void casino_wrapper()
 bool casino_start()
 {
     bool finished = false;
-    atxbg = u8"core.bg14"s;
+    atxbg = "core.bg14"s;
     mattile = -1;
     atxinfon(0) = i18n::s.get("core.casino.window.title");
     atxinit();

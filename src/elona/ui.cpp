@@ -457,7 +457,7 @@ void _render_hp_or_mp_bar(
 
     if (show_digit)
     {
-        bmes(""s + value + u8"("s + max + u8")"s, x + 20, y - 8);
+        bmes(""s + value + "("s + max + ")"s, x + 20, y - 8);
     }
 }
 
@@ -529,9 +529,7 @@ void render_basic_attributes_and_pv_dv()
         {
             // PV/DV
             draw_region("core.attributes_bar", x + 14, y, 64);
-            mes(x + 14,
-                y,
-                ""s + cdata.player().dv + u8"/"s + cdata.player().pv);
+            mes(x + 14, y, ""s + cdata.player().dv + "/"s + cdata.player().pv);
         }
     }
 }
@@ -582,7 +580,7 @@ void render_character_level()
         cdata.player().required_experience - cdata.player().experience;
 
     draw("core.character_level_icon", 4, inf_ver - 16);
-    bmes(u8"Lv"s + lvl + u8"/"s + exp, 32, inf_ver - 14);
+    bmes("Lv"s + lvl + "/"s + exp, 32, inf_ver - 14);
 }
 
 
@@ -642,7 +640,7 @@ void render_analogue_clock()
         std::to_string(dt.year()) + "/" + std::to_string(dt.month()) + "/" +
             std::to_string(dt.day()));
     bmes(
-        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + " "s +
             i18n::s.get_data_text("core.weather", game()->weather, "name"),
         inf_clockw + 6,
         inf_clocky + 35);
@@ -673,7 +671,7 @@ void render_digital_clock()
 
     // time of day + weather
     bmes(
-        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + u8" "s +
+        i18n::s.get_enum("core.ui.time", dt.hour() / 4) + " "s +
             i18n::s.get_data_text("core.weather", game()->weather, "name"),
         datex + 64 + 12,
         8);
@@ -705,7 +703,7 @@ void render_skill_trackers()
             ""s +
                 cdata[chara].skills().base_level(
                     *the_skill_db.get_id_from_integer(skill)) +
-                u8"."s +
+                "."s +
                 std::to_string(
                     1000 +
                     cdata[chara].skills().experience(
@@ -736,7 +734,7 @@ void render_skill_trackers()
                 ""s +
                     cdata[chara].skills().potential(
                         *the_skill_db.get_id_from_integer(skill)) +
-                    u8"%"s,
+                    "%"s,
                 128,
                 inf_clocky + 107 + y * 16,
                 col);
@@ -1119,7 +1117,7 @@ void render_autoturn_animation()
 
     window2(sx, sy, w, h, 0, 5);
     font(13 - en * 2, snail::Font::Style::bold);
-    bmes(u8"AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
+    bmes("AUTO TURN"s, sx + 43, sy + vfix + 6, {235, 235, 235});
     gmode(2);
     draw_rotated(
         "core.hourglass", sx + 18, sy + 12, game_time().minute() / 4 * 24);
@@ -1249,15 +1247,15 @@ Position gmes(
         std::string one_char = text.substr(pos, byte);
         pos += byte;
 
-        if (one_char == u8"。" || one_char == u8"、" || one_char == u8"」" ||
-            one_char == u8"』" || one_char == u8"！" || one_char == u8"？" ||
-            one_char == u8"…")
+        if (one_char == "。" || one_char == "、" || one_char == "」" ||
+            one_char == "』" || one_char == "！" || one_char == "？" ||
+            one_char == "…")
         {
             wait_to_break_line = true;
         }
-        else if (one_char == u8"<")
+        else if (one_char == "<")
         {
-            const auto closing_tag_pos = text.find(u8">", pos);
+            const auto closing_tag_pos = text.find(">", pos);
             if (closing_tag_pos == std::string::npos)
             {
                 ELONA_ERROR("Text: invalid notation: missing '>'");
@@ -1266,57 +1264,57 @@ Position gmes(
             }
             const auto tag = text.substr(pos, closing_tag_pos - pos);
             pos = closing_tag_pos + 1;
-            if (tag == u8"emp1")
+            if (tag == "emp1")
             {
                 font(font_size - en * 2, snail::Font::Style::underline);
                 text_color = {50, 50, 255};
             }
-            else if (tag == u8"emp2")
+            else if (tag == "emp2")
             {
                 font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {40, 130, 40};
             }
-            else if (tag == u8"title1")
+            else if (tag == "title1")
             {
                 font_size = 12;
                 font(font_size - en * 2, snail::Font::Style::bold);
                 text_color = {100, 50, 50};
             }
-            else if (tag == u8"def")
+            else if (tag == "def")
             {
                 font_size = 14;
                 font(font_size - en * 2);
                 text_color = text_color_base;
             }
-            else if (tag == u8"p")
+            else if (tag == "p")
             {
                 y += 24;
                 x = x_base;
             }
-            else if (tag == u8"br")
+            else if (tag == "br")
             {
                 y += 16;
                 x = x_base;
             }
-            else if (tag == u8"b")
+            else if (tag == "b")
             {
                 font(font_size - en * 2, snail::Font::Style::bold);
             }
-            else if (tag == u8"green")
+            else if (tag == "green")
             {
                 text_color = {20, 120, 20};
             }
-            else if (tag == u8"red")
+            else if (tag == "red")
             {
                 text_color = {120, 20, 20};
             }
-            else if (tag == u8"col")
+            else if (tag == "col")
             {
                 text_color = text_color_base;
             }
             continue;
         }
-        else if (one_char == u8"^")
+        else if (one_char == "^")
         {
             // Escape
             one_char = text.substr(pos, 1);
@@ -1580,22 +1578,22 @@ void load_activity_animation()
     gsel(9);
     if (cdata.player().activity.id == "core.dig_wall")
     {
-        picload(filesystem::dirs::graphic() / u8"anime1.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime1.bmp", 0, 0, true);
     }
     if (cdata.player().activity.id == "core.fish")
     {
         if (rowactre)
         {
-            picload(filesystem::dirs::graphic() / u8"anime2.bmp", 0, 0, true);
+            picload(filesystem::dirs::graphic() / "anime2.bmp", 0, 0, true);
         }
     }
     if (cdata.player().activity.id == "core.search_material")
     {
-        picload(filesystem::dirs::graphic() / u8"anime3.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime3.bmp", 0, 0, true);
     }
     if (cdata.player().activity.id == "core.dig_ground")
     {
-        picload(filesystem::dirs::graphic() / u8"anime4.bmp", 0, 0, true);
+        picload(filesystem::dirs::graphic() / "anime4.bmp", 0, 0, true);
     }
     gsel(0);
 }
@@ -2183,7 +2181,7 @@ void ui_display_window(
     mes(x + 58 + x_offset, y + height - 43 - height % 8, key_help);
     if (pagesize != 0)
     {
-        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        const auto page_str = "Page."s + (page + 1) + "/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
         mes(x + width - strlen_u(page_str) * 7 - 40 - y_offset,
             y + height - 65 - height % 8,
@@ -2225,7 +2223,7 @@ void ui_display_window2(
     }
     if (pagesize != 0)
     {
-        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        const auto page_str = "Page."s + (page + 1) + "/"s + (pagemax + 1);
         mes(x + width - strlen_u(page_str) * 7 - 40,
             y + height - 24 - height % 8 + 0,
             page_str);
@@ -2319,8 +2317,7 @@ void load_background_variants(int buffer)
     for (int cnt = 0; cnt < 8; ++cnt)
     {
         picload(
-            filesystem::dirs::graphic() /
-                fs::u8path(u8"g"s + (cnt + 1) + u8".bmp"),
+            filesystem::dirs::graphic() / fs::u8path("g"s + (cnt + 1) + ".bmp"),
             cnt % 4 * 180,
             cnt / 4 * 300,
             false);
@@ -2537,7 +2534,7 @@ void showscroll(const std::string& hint, int x, int y, int width, int height)
     mes(x + 68, y + height - 63 - height % 8, hint);
     if (pagesize != 0)
     {
-        const auto page_str = u8"Page."s + (page + 1) + u8"/"s + (pagemax + 1);
+        const auto page_str = "Page."s + (page + 1) + "/"s + (pagemax + 1);
         font(12 + sizefix - en * 2, snail::Font::Style::bold);
         mes(x + width - strlen_u(page_str) * 7 - 40,
             y + height - 63 - height % 8,

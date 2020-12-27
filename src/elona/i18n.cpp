@@ -45,7 +45,7 @@ std::string space_if_needed()
     }
     else
     {
-        return u8" ";
+        return " ";
     }
 }
 

@@ -141,7 +141,7 @@ void Prompt::_draw_entries()
         }
 
         cs_list(cs == cnt, text, sx + 56, cnt * 20 + sy + 21);
-        key_list(cnt) = u8"aaa";
+        key_list(cnt) = "aaa";
         ++keyrange;
         ++cnt;
     }
@@ -178,8 +178,7 @@ void PromptWithNumber::_draw_window()
     draw("core.label_input", dx(1) + sx + dx / 2 - 56, dy - 32);
     draw("core.arrow_left", dx(1) + sx + 28, dy + 4);
     draw("core.arrow_right", dx(1) + sx + dx - 51, dy + 4);
-    const auto inputlog2 =
-        ""s + elona::stoi(inputlog(0)) + u8"("s + _max + u8")"s;
+    const auto inputlog2 = ""s + elona::stoi(inputlog(0)) + "("s + _max + ")"s;
     mes(dx(1) + sx + dx - 70 - strlen_u(inputlog2) * 8 + 8,
         dy + 11,
         inputlog2,

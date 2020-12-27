@@ -168,7 +168,7 @@ void UIMenuHire::_draw_list_entry_name(int cnt, const Character& chara)
 
 void UIMenuHire::_draw_list_entry_info(int cnt, const Character& chara)
 {
-    std::string level = u8"Lv."s + chara.level + u8" "s;
+    std::string level = "Lv."s + chara.level + " "s;
 
     if (chara.sex == 0)
     {
@@ -193,7 +193,7 @@ void UIMenuHire::_draw_list_entry_cost(int cnt, const Character& chara)
 
         if (_operation == HireOperation::hire)
         {
-            text = ""s + (cost * 20) + u8"("s + cost + u8")"s;
+            text = ""s + (cost * 20) + "("s + cost + ")"s;
         }
         else
         {

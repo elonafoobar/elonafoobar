@@ -161,7 +161,7 @@ std::string enchantment_print_level(int level)
     {
         if (i > 4)
         {
-            s += u8"+";
+            s += "+";
             break;
         }
         s += i18n::s.get("core.enchantment.level");
@@ -336,7 +336,7 @@ void get_enchantment_description(
 
     switch (val0)
     {
-    case 0: s = u8"?????"s; break;
+    case 0: s = "?????"s; break;
     case 21:
         rtval = static_cast<int>(ItemDescriptionType::negative_effect);
         if (trait)

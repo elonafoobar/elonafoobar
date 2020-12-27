@@ -106,7 +106,7 @@ void _update_pets_moving_status()
 
 void _prompt_initialize_map()
 {
-    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(fs::u8path("mdata_"s + mid + ".s2")))
     {
         int stat = dialog(i18n::s.get("core.map.prompt_initialize"), 3);
         if (stat == 6)
@@ -440,27 +440,27 @@ void _regenerate_map()
 {
     if (game()->current_map == mdata_t::MapId::lumiest)
     {
-        map_reload(u8"lumiest"s);
+        map_reload("lumiest"s);
     }
     if (game()->current_map == mdata_t::MapId::vernis)
     {
-        map_reload(u8"vernis"s);
+        map_reload("vernis"s);
     }
     if (game()->current_map == mdata_t::MapId::palmia)
     {
-        map_reload(u8"palmia"s);
+        map_reload("palmia"s);
     }
     if (game()->current_map == mdata_t::MapId::port_kapul)
     {
-        map_reload(u8"kapul"s);
+        map_reload("kapul"s);
     }
     if (game()->current_map == mdata_t::MapId::yowyn)
     {
-        map_reload(u8"yowyn"s);
+        map_reload("yowyn"s);
     }
     if (game()->current_map == mdata_t::MapId::derphy)
     {
-        map_reload(u8"rogueden"s);
+        map_reload("rogueden"s);
     }
     if (game()->current_map == mdata_t::MapId::noyel)
     {
@@ -471,7 +471,7 @@ void _regenerate_map()
                 area_data[game()->current_map].christmas_festival = true;
                 map_reload_noyel();
             }
-            map_reload(u8"noyel_fest"s);
+            map_reload("noyel_fest"s);
         }
         else
         {
@@ -480,7 +480,7 @@ void _regenerate_map()
                 area_data[game()->current_map].christmas_festival = false;
                 map_reload_noyel();
             }
-            map_reload(u8"noyel"s);
+            map_reload("noyel"s);
         }
         game()->released_fire_giant = 0;
     }
@@ -1343,13 +1343,13 @@ int initialize_map_pregenerate()
 
     _update_pets_moving_status();
 
-    mid = ""s + game()->current_map + u8"_"s +
+    mid = ""s + game()->current_map + "_"s +
         (100 + game()->current_dungeon_level);
 
     if (mode == 3)
     {
         ctrl_file_map_read();
-        ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file_map_items_read(fs::u8path("inv_"s + mid + ".s2"));
         return 2;
     }
 
@@ -1358,7 +1358,7 @@ int initialize_map_pregenerate()
         _prompt_initialize_map();
     }
 
-    if (save_fs_exists(fs::u8path(u8"mdata_"s + mid + u8".s2")))
+    if (save_fs_exists(fs::u8path("mdata_"s + mid + ".s2")))
     {
         ctrl_file_map_read();
         if (map_data.refresh_type == 0)
@@ -1378,7 +1378,7 @@ int initialize_map_pregenerate()
                 return 0;
             }
         }
-        ctrl_file_map_items_read(fs::u8path(u8"inv_"s + mid + u8".s2"));
+        ctrl_file_map_items_read(fs::u8path("inv_"s + mid + ".s2"));
         if (mode == 2)
         {
             map_place_player_and_allies();

@@ -9,7 +9,7 @@ namespace profile
 
 bool is_valid_id(const ProfileId& profile_id)
 {
-    const std::regex pattern{u8"[0-9A-Za-z_]+"};
+    const std::regex pattern{"[0-9A-Za-z_]+"};
     return std::regex_match(profile_id, pattern) &&
         fs::is_portable_path(fs::u8path(profile_id));
 }
