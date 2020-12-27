@@ -552,6 +552,9 @@ void draw_race_or_class_info(const std::string& description)
     }
     for (int cnt = 150; cnt < 600; ++cnt)
     {
+        if (!the_skill_db.get_id_from_integer(cnt))
+            continue;
+
         if (cdata.player().skills().base_level(
                 *the_skill_db.get_id_from_integer(cnt)) != 0)
         {
