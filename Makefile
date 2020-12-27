@@ -64,17 +64,6 @@ test_runner: $(BIN_DIR) FORCE # Build test runner.
 		cmake --build . --config Debug
 
 
-bench: bench_runner FORCE # Run benchmark.
-	cd $(BIN_DIR); \
-		./Elona_foobar
-
-
-bench_runner: $(BIN_DIR) FORCE # Build benchmark runner.
-	cd $(BIN_DIR); \
-		cmake .. -DELONA_BUILD_TARGET=BENCH -DCMAKE_BUILD_TYPE=Release $(CMAKE_ARGS); \
-		cmake --build . --config Release
-
-
 $(BIN_DIR):
 	$(MKDIR) $(BIN_DIR)
 

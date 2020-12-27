@@ -121,7 +121,6 @@ contents in this repository. Note that images, sounds and fonts are not included
 ## Thirdparty libraries
 
 * [Catch2](https://github.com/catchorg/Catch2): see [license file](src/thirdparty/catch2/LICENSE).
-* [hayai](https://github.com/nickbruun/hayai): see [license file](src/thirdparty/hayai/LICENSE).
 * [sol2](https://github.com/ThePhD/sol2): see [license file](src/thirdparty/sol2/LICENSE.txt).
 * [ordered_map](https://github.com/Tessil/ordered-map): see [license file](src/thirdparty/ordered_map/LICENSE).
 * [boostrandom](https://github.com/boostorg/random): see [license file](src/thirdparty/LICENSE_1_0.txt).
