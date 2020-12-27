@@ -335,9 +335,9 @@ struct elona_vector3
 
     size_t i_size() const noexcept
     {
-        return storage.empty()
-            ? 0
-            : storage.at(0)->empty() ? 0 : (*storage.at(0))[0]->size();
+        return storage.empty()       ? 0
+            : storage.at(0)->empty() ? 0
+                                     : (*storage.at(0))[0]->size();
     }
 
 
