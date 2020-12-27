@@ -1761,7 +1761,7 @@ OnEnterResult on_enter_give(
     p = inventory_owner.skills().level("core.stat_strength") * 500 +
         inventory_owner.skills().level("core.stat_constitution") * 500 +
         inventory_owner.skills().level("core.weight_lifting") * 2500 + 25000;
-    if (inventory_owner.id == CharaId::golden_knight)
+    if (inventory_owner.id == "core.golden_knight")
     {
         p *= 5;
     }
@@ -1769,7 +1769,7 @@ OnEnterResult on_enter_give(
     {
         f = 1;
     }
-    if (inventory_owner.id != CharaId::golden_knight)
+    if (inventory_owner.id != "core.golden_knight")
     {
         if (reftype == 60000)
         {

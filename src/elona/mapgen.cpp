@@ -1822,7 +1822,7 @@ void generate_random_nefia()
             }
             map_set_chara_generation_filter();
             if (const auto chara =
-                    chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry))
+                    chara_create(-1, "", rnd(rw) + rx, rnd(rh) + ry))
             {
                 if (game()->current_dungeon_level > 3)
                 {
@@ -1837,7 +1837,8 @@ void generate_random_nefia()
                             {
                                 flt(chara->level, calcfixlv(Quality::bad));
                                 flttypemajor = creaturepack;
-                                chara_create(-1, 0, rnd(rw) + rx, rnd(rh) + ry);
+                                chara_create(
+                                    -1, "", rnd(rw) + rx, rnd(rh) + ry);
                             }
                             break;
                         }
@@ -1869,7 +1870,7 @@ void generate_random_nefia()
                         {
                             rdx3 = cnt;
                             map_set_chara_generation_filter();
-                            chara_create(-1, 0, rdx3, rdy3);
+                            chara_create(-1, "", rdx3, rdy3);
                         }
                     }
                     if (rdtype != 2)
@@ -1916,7 +1917,7 @@ void generate_random_nefia()
     for (int cnt = 0, cnt_end = (mobdensity); cnt < cnt_end; ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
     for (int cnt = 0, cnt_end = (itemdensity); cnt < cnt_end; ++cnt)
     {
@@ -2007,7 +2008,7 @@ void initialize_random_nefia_rdtype6()
     for (int cnt = 0, cnt_end = (10 + rnd(6)); cnt < cnt_end; ++cnt)
     {
         map_set_chara_generation_filter();
-        if (const auto chara = chara_create(-1, 0, -3, 0))
+        if (const auto chara = chara_create(-1, "", -3, 0))
         {
             chara->relationship = Relationship::enemy;
             chara->original_relationship = Relationship::enemy;
@@ -2146,7 +2147,7 @@ int initialize_quest_map_crop()
     for (int cnt = 0; cnt < 30; ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
     return 1;
 }

@@ -71,11 +71,10 @@ void create_adventurer(Character& adv)
 {
     flt(0, Quality::miracle);
     initlv = rnd_capped(60 + cdata.player().level) + 1;
-    p(0) = 75;
-    p(1) = 41;
-    p(2) = 160;
     novoidlv = 1;
-    chara_create(adv.index, p(rnd(3)), -1, -1);
+    const data::InstanceId ids[] = {
+        "core.warrior", "core.wizard", "core.mercenary_archer"};
+    chara_create(adv.index, choice(ids), -1, -1);
     adv.relationship = Relationship::friendly;
     adv.original_relationship = Relationship::friendly;
     adv._156 = 100;

@@ -175,7 +175,7 @@ static void _init_map_test_site()
     {
         flt();
         chara_create(
-            -1, 0, cdata.player().position.x, cdata.player().position.y + 5);
+            -1, "", cdata.player().position.x, cdata.player().position.y + 5);
     }
     for (int cnt = 0; cnt < 100; ++cnt)
     {
@@ -184,7 +184,10 @@ static void _init_map_test_site()
     }
     flt();
     if (const auto chara = chara_create(
-            -1, 41, cdata.player().position.x, cdata.player().position.y))
+            -1,
+            "core.wizard",
+            cdata.player().position.x,
+            cdata.player().position.y))
     {
         chara->role = Role::horse_master;
         chara->is_livestock() = true;
@@ -203,7 +206,7 @@ static void _init_map_lumiest_graveyard()
          ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
 }
 
@@ -276,7 +279,7 @@ static void _init_map_truce_ground()
          ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
 }
 
@@ -287,25 +290,25 @@ static void _init_map_embassy()
     map_init_static_map("office_1");
     map_data.max_crowd_density = 0;
     flt();
-    if (const auto chara = chara_create(-1, 173, 9, 2))
+    if (const auto chara = chara_create(-1, "core.sales_person", 9, 2))
     {
         chara->role = Role::furniture_vendor;
         chara->shop_rank = 10;
     }
     flt();
-    if (const auto chara = chara_create(-1, 173, 15, 2))
+    if (const auto chara = chara_create(-1, "core.sales_person", 15, 2))
     {
         chara->role = Role::furniture_vendor;
         chara->shop_rank = 10;
     }
     flt();
-    if (const auto chara = chara_create(-1, 173, 21, 2))
+    if (const auto chara = chara_create(-1, "core.sales_person", 21, 2))
     {
         chara->role = Role::deed_vendor;
         chara->shop_rank = 10;
     }
     flt();
-    if (const auto chara = chara_create(-1, 173, 3, 2))
+    if (const auto chara = chara_create(-1, "core.sales_person", 3, 2))
     {
         chara->role = Role::deed_vendor;
         chara->shop_rank = 10;
@@ -313,7 +316,7 @@ static void _init_map_embassy()
     for (int cnt = 0; cnt < 3; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -665,13 +668,13 @@ static void _init_map_cyber_dome()
         item->own_state = OwnState::town;
     }
     flt();
-    if (const auto chara = chara_create(-1, 173, 9, 16))
+    if (const auto chara = chara_create(-1, "core.sales_person", 9, 16))
     {
         chara->role = Role::firearm_vendor;
         chara->shop_rank = 10;
     }
     flt();
-    if (const auto chara = chara_create(-1, 173, 9, 8))
+    if (const auto chara = chara_create(-1, "core.sales_person", 9, 8))
     {
         chara->role = Role::firearm_vendor;
         chara->shop_rank = 10;
@@ -698,7 +701,7 @@ static void _init_map_cyber_dome()
          ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
     map_data.bgm = 79;
     map_place_player_and_allies();
@@ -750,7 +753,7 @@ static void _init_map_larna()
     for (int cnt = 0; cnt < 7; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -771,7 +774,7 @@ static void _init_map_larna()
          ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
     map_data.bgm = 79;
     map_place_player_and_allies();
@@ -870,7 +873,7 @@ static void _init_map_pet_arena()
     for (int cnt = 0, cnt_end = (arenaop(1)); cnt < cnt_end; ++cnt)
     {
         flt(arenaop(2), calcfixlv(Quality::good));
-        if (const auto chara = chara_create(-1, 0, -3, 0))
+        if (const auto chara = chara_create(-1, "", -3, 0))
         {
             cell_data.at(chara->position.x, chara->position.y)
                 .chara_index_plus_one = 0;
@@ -1202,7 +1205,7 @@ static void _init_map_derphy_town()
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -1493,7 +1496,7 @@ static void _init_map_palmia()
     for (int cnt = 0; cnt < 5; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -1661,7 +1664,7 @@ static void _init_map_lumiest_town()
     for (int cnt = 0; cnt < 6; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -1887,7 +1890,7 @@ static void _init_map_yowyn_town()
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -2128,7 +2131,7 @@ static void _init_map_noyel()
     {
         flt();
         if (const auto chara =
-                chara_create(-1, 16, rnd(32), rnd(map_data.height)))
+                chara_create(-1, "core.citizen", rnd(32), rnd(map_data.height)))
         {
             chara->role = Role::citizen;
         }
@@ -2313,7 +2316,7 @@ static void _init_map_port_kapul_town()
     for (int cnt = 0; cnt < 2; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -2348,7 +2351,7 @@ static void _init_map_port_kapul_town()
     for (int cnt = 0; cnt < 20; ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
 }
 
@@ -2585,7 +2588,7 @@ static void _init_map_vernis_town()
     for (int cnt = 0; cnt < 4; ++cnt)
     {
         flt();
-        if (const auto chara = chara_create(-1, 16, -3, 0))
+        if (const auto chara = chara_create(-1, "core.citizen", -3, 0))
         {
             chara->role = Role::citizen;
         }
@@ -2815,7 +2818,7 @@ static void _init_map_fields_maybe_generate_encounter()
         {
             map_set_chara_generation_filter();
             flt();
-            chara_create(-1, 0, -3, 0);
+            chara_create(-1, "", -3, 0);
         }
     }
     if (encounter == 4)
@@ -2921,7 +2924,7 @@ static void _init_map_fields_maybe_generate_encounter()
             }
             else
             {
-                if (const auto chara = chara_create(-1, 0, -3, 0))
+                if (const auto chara = chara_create(-1, "", -3, 0))
                 {
                     chara->hate = 30;
                 }
@@ -3191,7 +3194,7 @@ static void _init_map_pyramid_first_floor()
          ++cnt)
     {
         map_set_chara_generation_filter();
-        chara_create(-1, 0, -3, 0);
+        chara_create(-1, "", -3, 0);
     }
 }
 

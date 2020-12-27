@@ -312,7 +312,7 @@ TurnResult _bump_into_character(Character& chara)
             }
             cell_swap(cdata.player(), chara);
             txt(i18n::s.get("core.action.move.displace.text", chara));
-            if (chara.id == CharaId::rogue)
+            if (chara.id == "core.rogue")
             {
                 if (rnd(5) == 0)
                 {
@@ -953,7 +953,8 @@ TurnResult do_throw_command_internal(
                         cdata[target_index]),
                     Message::color{ColorIndex::green});
                 animeload(8, cdata[target_index]);
-                throw_item->subname = charaid2int(cdata[target_index].id);
+                throw_item->subname =
+                    the_character_db.ensure(cdata[target_index].id).integer_id;
                 throw_item->param3 = cdata[target_index].level;
                 throw_item->weight =
                     clamp(cdata[target_index].weight, 10000, 100000);
@@ -961,7 +962,7 @@ TurnResult do_throw_command_internal(
             }
             else
             {
-                if (cdata[target_index].id != CharaId::little_sister ||
+                if (cdata[target_index].id != "core.little_sister" ||
                     target_index < 16)
                 {
                     txt(i18n::s.get("core.common.nothing_happens"));
@@ -2685,7 +2686,11 @@ TurnResult do_use_command(ItemRef use_item)
         use_item->modify_number(-1);
         flt();
         novoidlv = 1;
-        chara_create(56, use_item->subname, -3, 0);
+        chara_create(
+            56,
+            *the_character_db.get_id_from_integer(use_item->subname),
+            -3,
+            0);
         new_ally_joins(cdata.tmp());
         break;
     case 31:
@@ -3856,7 +3861,7 @@ int try_to_cast_spell(Character& caster, int& enemy_index)
             flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                 calcfixlv(Quality::bad));
             if (const auto chara =
-                    chara_create(-1, 0, caster.position.x, caster.position.y))
+                    chara_create(-1, "", caster.position.x, caster.position.y))
             {
                 if (caster.relationship <= Relationship::enemy)
                 {
@@ -4768,7 +4773,7 @@ int drink_well(Character& chara, const ItemRef& well)
             {
                 flt(calcobjlv(chara.level * 3 / 2 + 3),
                     calcfixlv(Quality::bad));
-                chara_create(-1, 0, chara.position.x, chara.position.y);
+                chara_create(-1, "", chara.position.x, chara.position.y);
             }
             break;
         }
@@ -6225,7 +6230,7 @@ void open_new_year_gift(const ItemRef& box)
                     calcfixlv(Quality::bad));
                 chara_create(
                     -1,
-                    0,
+                    "",
                     cdata.player().position.x,
                     cdata.player().position.y);
             }
@@ -6272,7 +6277,8 @@ void open_new_year_gift(const ItemRef& box)
             flt();
             if (const auto chara = chara_create(
                     -1,
-                    328 + rnd(2),
+                    choice(std::vector<data::InstanceId>{
+                        "core.silver_bell", "core.gold_bell"}),
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
@@ -6294,7 +6300,7 @@ void open_new_year_gift(const ItemRef& box)
             flt();
             if (const auto chara = chara_create(
                     -1,
-                    176,
+                    "core.younger_sister",
                     cdata.player().position.x,
                     cdata.player().position.y))
             {
@@ -6322,7 +6328,8 @@ void open_new_year_gift(const ItemRef& box)
             flt();
             if (const auto chara = chara_create(
                     -1,
-                    328 + rnd(2),
+                    choice(std::vector<data::InstanceId>{
+                        "core.silver_bell", "core.gold_bell"}),
                     cdata.player().position.x,
                     cdata.player().position.y))
             {

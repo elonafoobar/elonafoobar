@@ -771,7 +771,7 @@ void bind(sol::state& lua)
      * [R] The new-style version prototype ID of the character.
      */
     LuaCharacter.set(
-        "id", sol::property([](Character& c) { return c.new_id().get(); }));
+        "id", sol::property([](Character& c) { return c.id.get(); }));
 
     /**
      * @luadoc name field string
@@ -837,7 +837,7 @@ void bind(sol::state& lua)
      */
     LuaCharacter.set("prototype", sol::property([](Character& self) {
                          return *lua::lua->get_data_manager().get().raw(
-                             "core.chara", self.new_id());
+                             "core.chara", self.id);
                      }));
 
     /**

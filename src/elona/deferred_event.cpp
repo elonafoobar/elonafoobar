@@ -47,7 +47,8 @@ void eh_conquer_lesimas(const DeferredEvent&)
 {
     conquer_lesimas();
     flt();
-    chara_create(-1, 23, cdata.player().position.x, cdata.player().position.y);
+    chara_create(
+        -1, "core.orphe", cdata.player().position.x, cdata.player().position.y);
 }
 
 
@@ -78,7 +79,7 @@ void eh_lord_of_normal_nefia(const DeferredEvent&)
         map_set_chara_generation_filter();
         fixlv = Quality::miracle;
         initlv = game()->current_dungeon_level + rnd(5);
-        lord = chara_create(-1, 0, -3, 0);
+        lord = chara_create(-1, "", -3, 0);
     } while (!lord);
     assert(lord);
 
@@ -215,28 +216,28 @@ void eh_reunoin_with_pets(const DeferredEvent&)
         i18n::s.get("core.event.popup.reunion_with_pet.text"),
         choices,
         u8"core.bg_re13");
-    p = 3;
+    data::InstanceId chara_id = "core.putit";
     if (result == 0)
     {
-        p = 165;
+        chara_id = "core.dog";
     }
-    if (result == 1)
+    else if (result == 1)
     {
-        p = 164;
+        chara_id = "core.cat";
     }
-    if (result == 2)
+    else if (result == 2)
     {
-        p = 108;
+        chara_id = "core.brown_bear";
     }
-    if (result == 3)
+    else if (result == 3)
     {
-        p = 166;
+        chara_id = "core.little_girl";
     }
     flt();
     initlv = cdata.player().level * 2 / 3 + 1;
     novoidlv = 1;
     if (const auto chara = chara_create(
-            -1, p, cdata.player().position.x, cdata.player().position.y))
+            -1, chara_id, cdata.player().position.x, cdata.player().position.y))
     {
         new_ally_joins(*chara);
     }
@@ -454,7 +455,7 @@ void eh_ragnarok(const DeferredEvent& event)
             {
                 fltnrace = u8"core.giant"s;
             }
-            if (const auto chara = chara_create(-1, 0, x, y))
+            if (const auto chara = chara_create(-1, "", x, y))
             {
                 chara->is_temporary() = true;
             }
@@ -766,21 +767,21 @@ void eh_guest_visit(const DeferredEvent&)
              rnd(5) == 0) &&
             rnd(3))
         {
-            if ((guest = chara_create(-1, 333, -3, 0)))
+            if ((guest = chara_create(-1, "core.guild_trainer", -3, 0)))
             {
                 guest->role = Role::guest_trainer;
             }
         }
         else if (rnd(10) == 0)
         {
-            if ((guest = chara_create(-1, 334, -3, 0)))
+            if ((guest = chara_create(-1, "core.mysterious_producer", -3, 0)))
             {
                 guest->role = Role::guest_producer;
             }
         }
         else if (rnd(10) == 0)
         {
-            if ((guest = chara_create(-1, 1, -3, 0)))
+            if ((guest = chara_create(-1, "core.shopkeeper", -3, 0)))
             {
                 guest->role = Role::guest_wandering_vendor;
                 guest->shop_rank = clamp(cdata.player().fame / 100, 20, 100);
@@ -788,21 +789,21 @@ void eh_guest_visit(const DeferredEvent&)
         }
         else if (rnd(4) == 0)
         {
-            if ((guest = chara_create(-1, 9, -3, 0)))
+            if ((guest = chara_create(-1, "core.beggar", -3, 0)))
             {
                 guest->role = Role::guest_beggar;
             }
         }
         else if (rnd(4) == 0)
         {
-            if ((guest = chara_create(-1, 174, -3, 0)))
+            if ((guest = chara_create(-1, "core.punk", -3, 0)))
             {
                 guest->role = Role::guest_punk;
             }
         }
         else
         {
-            if ((guest = chara_create(-1, 16, -3, 0)))
+            if ((guest = chara_create(-1, "core.citizen", -3, 0)))
             {
                 guest->role = Role::guest_citizen;
             }
@@ -957,7 +958,10 @@ void eh_blaggers(const DeferredEvent&)
         flt();
         initlv = cdata.player().level;
         chara_create(
-            -1, 215, cdata.player().position.x, cdata.player().position.y);
+            -1,
+            "core.robber",
+            cdata.player().position.x,
+            cdata.player().position.y);
     }
 }
 
@@ -974,7 +978,8 @@ void eh_little_sister(const DeferredEvent& event)
         return;
     }
     flt();
-    chara_create(-1, 319, big_daddy_position.x, big_daddy_position.y);
+    chara_create(
+        -1, "core.little_sister", big_daddy_position.x, big_daddy_position.y);
     txt(i18n::s.get("core.event.little_sister_slips"),
         Message::color{ColorIndex::blue});
 }
@@ -991,7 +996,8 @@ void eh_god_inside_ehekatl(const DeferredEvent& event)
     msg_halt();
     RagnarokAnimation().play();
     flt();
-    chara_create(-1, 336, ehekatl_position.x, ehekatl_position.x);
+    chara_create(
+        -1, "core.god_inside_ehekatl", ehekatl_position.x, ehekatl_position.x);
 }
 
 
@@ -999,15 +1005,23 @@ void eh_god_inside_ehekatl(const DeferredEvent& event)
 void eh_lord_of_void(const DeferredEvent&)
 {
     randomize(game_date().year() + game()->current_dungeon_level);
-    int c = choice(std::initializer_list<int>{
-        300, 26,  27, 28,  29,  140, 34, 141, 143, 144,
-        145, 242, 25, 257, 230, 202, 37, 33,  80,  332,
+    const auto chara_id = choice(std::vector<data::InstanceId>{
+        "core.ungaga", "core.mad_scientist",
+        "core.isca",   "core.whom_dwell_in_the_vanity",
+        "core.loyter", "core.vesda",
+        "core.lomias", "core.issizzle",
+        "core.wynan",  "core.quruiza",
+        "core.corgon", "core.rodlob",
+        "core.goda",   "core.tuwen",
+        "core.cacy",   "core.ebon",
+        "core.at",     "core.larnneire",
+        "core.xabi",   "core.stray_cat",
     });
     randomize();
     flt();
     fixlv = Quality::miracle;
     initlv = clamp(game()->current_dungeon_level / 4, 50, 250);
-    if (const auto lord = chara_create(-1, c, -3, 0))
+    if (const auto lord = chara_create(-1, chara_id, -3, 0))
     {
         lord->is_lord_of_dungeon() = true;
         lord->relationship = Relationship::enemy;

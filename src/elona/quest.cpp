@@ -356,7 +356,8 @@ void quest_set_data(
     {
         s = u8"%CONQUER"s;
         parse_quest_board_text(val0);
-        s(4) = chara_db_get_name(int2charaid(quest.extra_info_1));
+        s(4) = chara_db_get_name(
+            *the_character_db.get_id_from_integer(quest.extra_info_1));
         if (quest.extra_info_1 == 343)
         {
             s(4) = i18n::s.get("core.quest.info.conquer.unknown_monster");
@@ -368,7 +369,8 @@ void quest_set_data(
     {
         s = u8"%HUNTEX"s;
         parse_quest_board_text(val0);
-        s(4) = chara_db_get_name(int2charaid(quest.extra_info_1));
+        s(4) = chara_db_get_name(
+            *the_character_db.get_id_from_integer(quest.extra_info_1));
         s(10) = ""s + quest.difficulty * 3 / 2;
         s(6) = i18n::s.get("core.quest.info.huntex.text");
     }
@@ -655,7 +657,7 @@ bool quest_generate(int quest_idx)
             for (int _i = 0; _i < 50; ++_i)
             {
                 flt(quest.difficulty, Quality::good);
-                const auto chara = chara_create(56, 0, -3, 0);
+                const auto chara = chara_create(56, "", -3, 0);
                 if (cmshade)
                 {
                     continue;
@@ -666,7 +668,8 @@ bool quest_generate(int quest_idx)
                 }
                 break;
             }
-            quest.extra_info_1 = charaid2int(cdata.tmp().id);
+            quest.extra_info_1 =
+                the_character_db.ensure(cdata.tmp().id).integer_id;
             quest.refresh_time =
                 game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
@@ -691,7 +694,7 @@ bool quest_generate(int quest_idx)
             for (int _i = 0; _i < 50; ++_i)
             {
                 flt(quest.difficulty, Quality::good);
-                const auto chara = chara_create(56, 0, -3, 0);
+                const auto chara = chara_create(56, "", -3, 0);
                 if (cmshade)
                 {
                     continue;
@@ -702,7 +705,8 @@ bool quest_generate(int quest_idx)
                 }
                 break;
             }
-            quest.extra_info_1 = charaid2int(cdata.tmp().id);
+            quest.extra_info_1 =
+                the_character_db.ensure(cdata.tmp().id).integer_id;
             quest.refresh_time =
                 game_now() + time::Duration::from_days(rnd(6) + 2) + 1_hour;
             quest.reward_item_id = 0;
@@ -1031,8 +1035,8 @@ void quest_enter_map()
     {
         txt(i18n::s.get(
                 "core.map.quest.on_enter.conquer",
-                chara_db_get_name(
-                    int2charaid(quest_data.immediate().extra_info_1)),
+                chara_db_get_name(*the_character_db.get_id_from_integer(
+                    quest_data.immediate().extra_info_1)),
                 game()->left_minutes_of_executing_quest),
             Message::color{ColorIndex::cyan});
     }
@@ -1127,7 +1131,8 @@ void quest_failed(optional<int> quest_idx, int val0)
             for (auto&& ally : cdata.allies())
             {
                 if (ally.is_escorted() &&
-                    quest.extra_info_2 == charaid2int(ally.id))
+                    quest.extra_info_2 ==
+                        the_character_db.ensure(ally.id).integer_id)
                 {
                     ally.is_escorted() = false;
                     if (ally.state() == Character::State::alive)

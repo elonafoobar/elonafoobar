@@ -15,7 +15,7 @@ public:
         : BaseEvent(id)
     {
         _chara = lua::handle(chara);
-        _chara_id = chara.new_id();
+        _chara_id = chara.id;
     }
 
     sol::table make_event_table() const override

@@ -104,14 +104,14 @@ static void _process_chara_filter(const lua::WrappedFunction& chara_filter)
     }
 }
 
-void map_set_chara_generation_filter()
+data::InstanceId map_set_chara_generation_filter()
 {
     dbid = 0;
 
     if (game()->current_map == mdata_t::MapId::quest)
     {
         _chara_filter_quest();
-        return;
+        return *the_character_db.get_id_from_integer(dbid);
     }
 
     int map_id = area_data[game()->current_map].id;
@@ -120,16 +120,17 @@ void map_set_chara_generation_filter()
     {
         auto& chara_filter = *mapdef_data->chara_filter;
         _process_chara_filter(chara_filter);
-        return;
+        return *the_character_db.get_id_from_integer(dbid);
     }
 
     if (mdata_t::is_nefia(map_data.type))
     {
         _chara_filter_nefia();
-        return;
+        return *the_character_db.get_id_from_integer(dbid);
     }
 
     flt(calcobjlv(cdata.player().level), calcfixlv(Quality::bad));
+    return *the_character_db.get_id_from_integer(dbid);
 }
 
 

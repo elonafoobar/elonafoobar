@@ -145,7 +145,7 @@ sol::optional<LuaCharacterHandle> Chara_player()
 sol::optional<LuaCharacterHandle> Chara_create_random_xy(int x, int y)
 {
     elona::flt();
-    if (const auto chara = elona::chara_create(-1, 0, x, y))
+    if (const auto chara = elona::chara_create(-1, "", x, y))
     {
         return lua::handle(*chara);
     }
@@ -167,9 +167,7 @@ sol::optional<LuaCharacterHandle> Chara_create_random(const Position& position)
 sol::optional<LuaCharacterHandle>
 Chara_create_from_id_xy(int x, int y, const std::string& id)
 {
-    auto data = the_character_db.ensure(data::InstanceId{id});
-
-    if (const auto chara = elona::chara_create(-1, data.integer_id, x, y))
+    if (const auto chara = elona::chara_create(-1, data::InstanceId{id}, x, y))
     {
         return lua::handle(*chara);
     }
@@ -203,8 +201,8 @@ sol::optional<LuaCharacterHandle> Chara_create_from_id(
 
 sol::optional<LuaCharacterHandle> Chara_generate_from_map_xy(int x, int y)
 {
-    map_set_chara_generation_filter();
-    if (const auto chara = elona::chara_create(-1, dbid, x, y))
+    const auto chara_id = map_set_chara_generation_filter();
+    if (const auto chara = elona::chara_create(-1, chara_id, x, y))
     {
         return lua::handle(*chara);
     }
@@ -281,12 +279,7 @@ sol::optional<LuaCharacterHandle> Chara_find(
     const std::string& id,
     sol::optional<EnumString> location)
 {
-    auto data = the_character_db[data::InstanceId{id}];
-    if (!data)
-    {
-        return sol::nullopt;
-    }
-
+    const data::InstanceId id_{id};
     auto location_value = CharaFindLocation::others;
     if (location)
     {
@@ -296,17 +289,18 @@ sol::optional<LuaCharacterHandle> Chara_find(
 
     if (location_value == CharaFindLocation::allies)
     {
-        int result = chara_find_ally(data->integer_id);
-
-        if (result == -1)
+        if (const auto result = chara_find_ally(id_))
+        {
+            return lua::handle(*result);
+        }
+        else
         {
             return sol::nullopt;
         }
-        return lua::handle(elona::cdata[result]);
     }
     else
     {
-        if (const auto result = chara_find(data->id))
+        if (const auto result = chara_find(id_))
         {
             return lua::handle(*result);
         }

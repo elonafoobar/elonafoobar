@@ -220,7 +220,7 @@ int select_wished_character(const std::string& input)
     for (int i = 0; i < 800; ++i)
     {
         int similarity{};
-        auto name = chara_db_get_name(int2charaid(i));
+        auto name = chara_db_get_name(*the_character_db.get_id_from_integer(i));
         if (en)
         {
             name = to_lower(name);
@@ -265,7 +265,7 @@ void wish_for_card()
     flt();
     if (const auto item = itemcreate_map_inv(504, cdata.player().position, 0))
     {
-        item->subname = charaid2int(cdata.tmp().id);
+        item->subname = the_character_db.ensure(cdata.tmp().id).integer_id;
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
         txt(i18n::s.get(
@@ -284,7 +284,7 @@ void wish_for_figure()
     flt();
     if (const auto item = itemcreate_map_inv(503, cdata.player().position, 0))
     {
-        item->subname = charaid2int(cdata.tmp().id);
+        item->subname = the_character_db.ensure(cdata.tmp().id).integer_id;
         item->param1 = cdata.tmp().image;
         chara_vanquish(cdata.tmp());
         txt(i18n::s.get(

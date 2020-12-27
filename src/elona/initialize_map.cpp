@@ -1095,7 +1095,9 @@ void _update_quest_escort(int cnt2)
         if (ally.state() == Character::State::alive)
         {
             if (ally.is_escorted() &&
-                ally.id == int2charaid(quest_data[cnt2].extra_info_2) &&
+                ally.id ==
+                    *the_character_db.get_id_from_integer(
+                        quest_data[cnt2].extra_info_2) &&
                 quest_data[cnt2].extra_info_1 == game()->current_map)
             {
                 deferred_event_add(DeferredEvent{
@@ -1226,7 +1228,7 @@ void _update_aggro_and_crowd_density()
     for (auto&& cnt : cdata.all())
     {
         cnt.turn_cost = 0;
-        if (cnt.id == CharaId::user) // cnpc
+        if (cnt.id == "core.user") // cnpc
         {
             // Vanilla-compatible CNPC is not supported now.
         }

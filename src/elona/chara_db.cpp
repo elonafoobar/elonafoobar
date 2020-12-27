@@ -20,9 +20,9 @@
 namespace elona
 {
 
-void chara_db_set_stats(Character& chara, CharaId chara_id)
+void chara_db_set_stats(Character& chara, data::InstanceId chara_id)
 {
-    const auto data = the_character_db[charaid2int(chara_id)];
+    const auto data = the_character_db[chara_id];
     if (!data)
     {
         return;
@@ -91,7 +91,8 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
         chara.portrait = data->portrait_female;
     }
     {
-        int color = generate_color(data->color, charaid2int(chara.id));
+        int color = generate_color(
+            data->color, the_character_db.ensure(chara.id).integer_id);
         chara.image += color * 1000;
     }
     eqammo(0) = data->eqammo_0;
@@ -112,9 +113,9 @@ void chara_db_set_stats(Character& chara, CharaId chara_id)
 
 
 
-int chara_db_get_item_type(CharaId chara_id)
+int chara_db_get_item_type(data::InstanceId chara_id)
 {
-    if (const auto data = the_character_db[charaid2int(chara_id)])
+    if (const auto data = the_character_db[chara_id])
     {
         return data->item_type;
     }
@@ -126,9 +127,9 @@ int chara_db_get_item_type(CharaId chara_id)
 
 
 
-std::string chara_db_get_filter(CharaId chara_id)
+std::string chara_db_get_filter(data::InstanceId chara_id)
 {
-    if (const auto data = the_character_db[charaid2int(chara_id)])
+    if (const auto data = the_character_db[chara_id])
     {
         return data->filter;
     }
@@ -140,9 +141,9 @@ std::string chara_db_get_filter(CharaId chara_id)
 
 
 
-std::string chara_db_get_name(CharaId chara_id)
+std::string chara_db_get_name(data::InstanceId chara_id)
 {
-    if (const auto data = the_character_db[charaid2int(chara_id)])
+    if (const auto data = the_character_db[chara_id])
     {
         return the_character_db.get_text(data->id, "name");
     }
@@ -154,9 +155,9 @@ std::string chara_db_get_name(CharaId chara_id)
 
 
 
-void chara_db_invoke_eating_effect(Character& eater, CharaId chara_id)
+void chara_db_invoke_eating_effect(Character& eater, data::InstanceId chara_id)
 {
-    const auto data = the_character_db[charaid2int(chara_id)];
+    const auto data = the_character_db[chara_id];
     if (data && data->corpse_eating_callback)
     {
         lua::call(*data->corpse_eating_callback, lua::handle(eater));
@@ -165,98 +166,169 @@ void chara_db_invoke_eating_effect(Character& eater, CharaId chara_id)
 
 
 
-void chara_db_get_special_equipments(CharaId chara_id)
+void chara_db_get_special_equipments(data::InstanceId chara_id)
 {
-    switch (charaid2int(chara_id))
+    if (chara_id == "core.zeome")
     {
-    case 2: eqweapon1 = 63; return;
-    case 23: eqweapon1 = 64; return;
-    case 28: eqweapon1 = 73; return;
-    case 351:
+        eqweapon1 = 63;
+    }
+    else if (chara_id == "core.orphe")
+    {
+        eqweapon1 = 64;
+    }
+    else if (chara_id == "core.whom_dwell_in_the_vanity")
+    {
+        eqweapon1 = 73;
+    }
+    else if (chara_id == "core.the_leopard_warrior")
+    {
         eqtwohand = 1;
         eqweapon1 = 232;
-        return;
-    case 33: eqweapon1 = 206; return;
-    case 34:
+    }
+    else if (chara_id == "core.larnneire")
+    {
+        eqweapon1 = 206;
+    }
+    else if (chara_id == "core.lomias")
+    {
         eqweapon1 = 1;
         eqrange = 207;
         eqammo(0) = 25001;
         eqammo(1) = 3;
-        return;
-    case 141: eqweapon1 = 358; return;
-    case 143: eqweapon1 = 359; return;
-    case 144: eqweapon1 = 356; return;
-    case 145: eqring1 = 357; return;
-    case 336:
+    }
+    else if (chara_id == "core.issizzle")
+    {
+        eqweapon1 = 358;
+    }
+    else if (chara_id == "core.wynan")
+    {
+        eqweapon1 = 359;
+    }
+    else if (chara_id == "core.quruiza")
+    {
+        eqweapon1 = 356;
+    }
+    else if (chara_id == "core.corgon")
+    {
+        eqring1 = 357;
+    }
+    else if (chara_id == "core.god_inside_ehekatl")
+    {
         eqtwohand = 1;
         eqweapon1 = 739;
-        return;
-    case 338:
+    }
+    else if (chara_id == "core.opatos")
+    {
         eqtwohand = 1;
         eqweapon1 = 739;
-        return;
-    case 339:
+    }
+    else if (chara_id == "core.kumiromi")
+    {
         eqtwohand = 1;
         eqweapon1 = 739;
-        return;
-    case 342:
+    }
+    else if (chara_id == "core.mani")
+    {
         eqtwohand = 1;
         eqweapon1 = 739;
-        return;
-    case 340:
+    }
+    else if (chara_id == "core._test")
+    {
         eqtwohand = 1;
         eqweapon1 = 739;
-        return;
-    case 299: eqtwohand = 1; return;
-    case 300:
+    }
+    else if (chara_id == "core.minotaur_king")
+        eqtwohand = 1;
+    else if (chara_id == "core.ungaga")
+    {
         eqweapon1 = 695;
         eqtwohand = 1;
-        return;
-    case 309: eqmultiweapon = 2; return;
-    case 310: eqmultiweapon = 266; return;
-    case 311: eqmultiweapon = 224; return;
-    case 307:
+    }
+    else if (chara_id == "core.asura")
+    {
+        eqmultiweapon = 2;
+    }
+    else if (chara_id == "core.mitra")
+    {
+        eqmultiweapon = 266;
+    }
+    else if (chara_id == "core.varuna")
+    {
+        eqmultiweapon = 224;
+    }
+    else if (chara_id == "core.executioner")
+    {
         eqweapon1 = 735;
         eqtwohand = 1;
-        return;
-    case 308: eqweapon1 = 735; return;
-    case 50: eqtwohand = 1; return;
-    case 90: eqtwohand = 1; return;
-    case 151: eqtwohand = 1; return;
-    case 156: eqtwohand = 1; return;
-    case 303: eqtwohand = 1; return;
-    case 163: eqrange = 210; return;
-    case 170: eqrange = 210; return;
-    case 177:
+    }
+    else if (chara_id == "core.messenger_of_death")
+    {
+        eqweapon1 = 735;
+    }
+    else if (chara_id == "core.hound")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.hand_of_the_murderer")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.skeleton_berserker")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.knight")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.rogue_warrior")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.rock_thrower")
+    {
+        eqrange = 210;
+    }
+    else if (chara_id == "core.public_performer")
+    {
+        eqrange = 210;
+    }
+    else if (chara_id == "core.utima")
+    {
         eqweapon1 = 1;
         eqrange = 514;
         eqammo(0) = 25030;
         eqammo(1) = 3;
-        return;
-    case 212: eqweapon1 = 56; return;
-    case 301: eqtwohand = 1; return;
-    case 317:
+    }
+    else if (chara_id == "core.test_subject")
+    {
+        eqweapon1 = 56;
+    }
+    else if (chara_id == "core.conery")
+    {
+        eqtwohand = 1;
+    }
+    else if (chara_id == "core.silver_eyed_witch")
+    {
         eqweapon1 = 232;
         eqtwohand = 1;
-        return;
-    case 318:
+    }
+    else if (chara_id == "core.big_daddy")
+    {
         eqrange(0) = 496;
         eqrange(1) = 4;
         eqammo(0) = 25020;
         eqammo(1) = 3;
-        return;
-    default: return;
     }
 }
 
 
 
-void chara_db_get_talk(CharaId chara_id, int talk_type)
+void chara_db_get_talk(data::InstanceId chara_id, int talk_type)
 {
-    switch (chara_id)
+    if (chara_id == "core.younger_sister" ||
+        chara_id == "core.younger_sister_of_mansion")
     {
-    case CharaId::younger_sister:
-    case CharaId::younger_sister_of_mansion: {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)
@@ -277,9 +349,9 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
-        break;
     }
-    case CharaId::maid: {
+    else if (chara_id == "core.maid")
+    {
         std::string text =
             i18n::s.get_enum("core.ui.syujin", cdata.player().sex);
 
@@ -310,9 +382,9 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
-        break;
     }
-    case CharaId::younger_cat_sister: {
+    else if (chara_id == "core.younger_cat_sister")
+    {
         std::string text = i18n::s.get_enum("core.ui.onii", cdata.player().sex);
 
         if (talk_type == 100)
@@ -333,14 +405,11 @@ void chara_db_get_talk(CharaId chara_id, int talk_type)
                 return;
             }
         }
-        break;
-    }
-    default: break;
     }
 
     const auto dialog_id = "text_" + std::to_string(talk_type);
-    if (const auto text = the_character_db.get_text_optional(
-            charaid2int(chara_id), dialog_id))
+    if (const auto text =
+            the_character_db.get_text_optional(chara_id, dialog_id))
     {
         txt(*text, Message::color{ColorIndex::cyan});
     }

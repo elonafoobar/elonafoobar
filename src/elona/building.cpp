@@ -630,7 +630,8 @@ void prompt_hiring()
         {
             hire = rnd(isethire.size());
         }
-        const auto chara_id = isethire.at(hire).first;
+        const auto chara_id =
+            *the_character_db.get_id_from_integer(isethire.at(hire).first);
         randomize(seed);
         flt(20);
         const auto servant = chara_create(-1, chara_id, -3, 0);
@@ -640,7 +641,7 @@ void prompt_hiring()
         }
         servant->set_state(Character::State::servant_being_selected);
         servant->role = isethire.at(hire).second;
-        if (servant->id == CharaId::shopkeeper)
+        if (servant->id == "core.shopkeeper")
         {
             p = rnd(6);
             if (p == 0)
@@ -1188,36 +1189,41 @@ void update_shop()
 
 
 
-void calc_collection_value(int chara_id, bool val0)
+int calc_collection_value(
+    data::InstanceId chara_id,
+    bool val0,
+    std::unordered_map<data::InstanceId, int>& figurine_card_list)
 {
     fixlv = Quality::good;
-    chara_db_set_stats(cdata.tmp(), int2charaid(chara_id));
-    ++dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id));
+    chara_db_set_stats(cdata.tmp(), chara_id);
+    figurine_card_list[chara_id] |= val0 ? 1 : 2;
+    int result;
     if (fixlv == Quality::special)
     {
-        rtval = 70 + cdata.tmp().level;
+        result = 70 + cdata.tmp().level;
     }
     else
     {
-        rtval = cdata.tmp().level / 10 + 2;
+        result = cdata.tmp().level / 10 + 2;
         if (draw_get_rect_chara(cdata.tmp().image % 1000)->height > inf_tiles)
         {
-            rtval = rtval / 2 * 3 + 40;
+            result = result / 2 * 3 + 40;
         }
-        p = the_character_db[charaid2int(cdata.tmp().id)]->rarity / 1000;
-        if (p < 80)
+        const auto rarity = the_character_db[chara_id]->rarity / 1000;
+        if (rarity < 80)
         {
-            rtval = rtval + 80 - p;
+            result = result + 80 - rarity;
         }
     }
-    if (dblist(val0 ? 1 : 0, charaid2int(cdata.tmp().id)) > 1)
+    if ((figurine_card_list[chara_id] & (val0 ? 1 : 2)) != 0)
     {
-        rtval /= 3;
-        if (rtval > 15)
+        result /= 3;
+        if (result > 15)
         {
-            rtval = 15;
+            result = 15;
         }
     }
+    return result;
 }
 
 
@@ -1226,7 +1232,7 @@ void update_museum()
 {
     rankorg = game()->ranks.at(3);
     rankcur = 0;
-    DIM3(dblist, 2, 800);
+    std::unordered_map<data::InstanceId, int> figurine_card_list;
     for (const auto& item : *inv_map())
     {
         if (item->id != "core.figurine" && item->id != "core.card")
@@ -1238,7 +1244,10 @@ void update_museum()
         {
             continue;
         }
-        calc_collection_value(item->subname, item->id != "core.figurine");
+        rtval = calc_collection_value(
+            *the_character_db.get_id_from_integer(item->subname),
+            item->id != "core.figurine",
+            figurine_card_list);
         if (item->id == "core.figurine")
         {
             rankcur += rtval;
@@ -1365,23 +1374,23 @@ void update_ranch()
             _livestock_will_breed(cdata[worker], livestock_count))
         {
             flt(calcobjlv(cdata[worker].level), Quality::bad);
-            int chara_id;
+            data::InstanceId chara_id;
             if (rnd(2))
             {
-                chara_id = charaid2int(cdata[worker].id);
+                chara_id = cdata[worker].id;
             }
             else
             {
-                chara_id = 0;
+                chara_id = "";
             }
             if (rnd(10) != 0)
             {
                 fltnrace = cdata[worker].race.get();
             }
-            if (cdata[worker].id == CharaId::little_sister)
+            if (cdata[worker].id == "core.little_sister")
             {
                 // Little sister -> younger sister
-                chara_id = 176;
+                chara_id = "core.younger_sister";
             }
             if (const auto chara =
                     chara_create(-1, chara_id, 4 + rnd(11), 4 + rnd(8)))
@@ -1451,7 +1460,8 @@ void update_ranch()
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_map_inv(573, x, y, 0))
                     {
-                        item->subname = charaid2int(chara.id);
+                        item->subname =
+                            the_character_db.ensure(chara.id).integer_id;
                         item->weight = chara.weight * 10 + 250;
                         item->value = clamp(
                             chara.weight * chara.weight / 10000, 200, 40000);
@@ -1466,7 +1476,8 @@ void update_ranch()
                     ++egg_or_milk_count;
                     if (const auto item = itemcreate_map_inv(574, x, y, 0))
                     {
-                        item->subname = charaid2int(chara.id);
+                        item->subname =
+                            the_character_db.ensure(chara.id).integer_id;
                     }
                 }
                 break;
@@ -1476,7 +1487,8 @@ void update_ranch()
                 {
                     if (const auto item = itemcreate_map_inv(575, x, y, 0))
                     {
-                        item->subname = charaid2int(chara.id);
+                        item->subname =
+                            the_character_db.ensure(chara.id).integer_id;
                         item->weight = chara.weight * 40 + 300;
                         item->value =
                             clamp(chara.weight * chara.weight / 5000, 1, 20000);

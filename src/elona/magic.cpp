@@ -1082,7 +1082,7 @@ bool _magic_461(Character& subject)
             flt(calcobjlv(cdata.player().level), calcfixlv(Quality::good));
             fltn(u8"undead"s);
             chara_create(
-                -1, 0, cdata.player().position.x, cdata.player().position.y);
+                -1, "", cdata.player().position.x, cdata.player().position.y);
         }
         obvious = 0;
         return true;
@@ -2218,7 +2218,7 @@ bool _magic_1138_1123_1122_1137(Character& subject)
         return true;
     }
     flt(cdata.player().level / 2 + 5, Quality::great);
-    p = 0;
+    data::InstanceId chara_id = "";
     if (rnd(3) == 0)
     {
         fltn(u8"man"s);
@@ -2226,20 +2226,20 @@ bool _magic_1138_1123_1122_1137(Character& subject)
     if (efid == 1138)
     {
         txt(i18n::s.get("core.magic.diary.cat_sister"));
-        p = 210;
+        chara_id = "core.younger_cat_sister";
     }
-    if (efid == 1123)
+    else if (efid == 1123)
     {
         txt(i18n::s.get("core.magic.diary.younger_sister"));
-        p = 176;
+        chara_id = "core.younger_sister";
     }
-    if (efid == 1137)
+    else if (efid == 1137)
     {
         txt(i18n::s.get("core.magic.diary.young_lady"));
-        p = 211;
+        chara_id = "core.young_lady";
     }
     novoidlv = 1;
-    chara_create(56, p, -3, 0);
+    chara_create(56, chara_id, -3, 0);
     new_ally_joins(cdata.tmp());
     return true;
 }
@@ -2839,7 +2839,7 @@ bool _magic_628(Character& subject, Character& target)
         animeload(8, target);
         txt(i18n::s.get("core.magic.change.apply", target));
         flt(calcobjlv(target.level + 3), Quality::good);
-        chara_create(56, 0, -3, 0);
+        chara_create(56, "", -3, 0);
         chara_relocate(cdata.tmp(), target, CharaRelocationMode::change);
         target.enemy_id = subject.index;
         target.is_quest_target() = false;
@@ -4273,7 +4273,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         for (int cnt = 0, cnt_end = (1 + rnd(p(0))); cnt < cnt_end; ++cnt)
         {
             flt(calcobjlv(efp), Quality::good);
-            int chara_id = 0;
+            data::InstanceId chara_id = "";
             if (efid == 425)
             {
                 fltn(u8"wild"s);
@@ -4296,7 +4296,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             }
             if (efid == 643)
             {
-                chara_id = 176;
+                chara_id = "core.younger_sister";
             }
             if (const auto chara = chara_create(
                     -1, chara_id, target.position.x, target.position.y))

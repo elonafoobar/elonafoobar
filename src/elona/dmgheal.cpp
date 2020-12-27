@@ -145,7 +145,7 @@ Character::State dmgheal_set_death_status(Character& victim)
             deferred_event_add(DeferredEvent{
                 "core.quest_failed",
                 0,
-                lua::create_table("core.client", victim.new_id().get())});
+                lua::create_table("core.client", victim.id.get())});
             new_state = Character::State::empty;
         }
         if (victim.is_escorted_in_sub_quest() == 1)
@@ -1107,11 +1107,11 @@ int damage_hp(
             {
                 if (game()->current_map != mdata_t::MapId::the_void)
                 {
-                    if (victim.id == CharaId::zeome)
+                    if (victim.id == "core.zeome")
                     {
                         deferred_event_add("core.conquer_lesimas");
                     }
-                    if (victim.id == CharaId::issizzle)
+                    if (victim.id == "core.issizzle")
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.fool"),
                             Message::color{ColorIndex::green});
@@ -1119,7 +1119,7 @@ int damage_hp(
                         story_quest_set_ext(
                             "core.elona", "core.magic_stone_of_fool", true);
                     }
-                    if (victim.id == CharaId::wynan)
+                    if (victim.id == "core.wynan")
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.king"),
                             Message::color{ColorIndex::green});
@@ -1127,7 +1127,7 @@ int damage_hp(
                         story_quest_set_ext(
                             "core.elona", "core.magic_stone_of_king", true);
                     }
-                    if (victim.id == CharaId::quruiza)
+                    if (victim.id == "core.quruiza")
                     {
                         txt(i18n::s.get("core.scenario.obtain_stone.sage"),
                             Message::color{ColorIndex::green});
@@ -1135,7 +1135,7 @@ int damage_hp(
                         story_quest_set_ext(
                             "core.elona", "core.magic_stone_of_sage", true);
                     }
-                    if (victim.id == CharaId::rodlob)
+                    if (victim.id == "core.rodlob")
                     {
                         if (story_quest_progress("core.novice_knight") < 1000)
                         {
@@ -1143,7 +1143,7 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == CharaId::tuwen)
+                    if (victim.id == "core.tuwen")
                     {
                         if (story_quest_progress("core.pyramid_trial") < 1000)
                         {
@@ -1154,7 +1154,7 @@ int damage_hp(
                             snd("core.complete1");
                         }
                     }
-                    if (victim.id == CharaId::ungaga)
+                    if (victim.id == "core.ungaga")
                     {
                         if (story_quest_progress("core.minotaur_king") < 1000)
                         {
@@ -1162,7 +1162,7 @@ int damage_hp(
                             quest_update_journal_msg();
                         }
                     }
-                    if (victim.id == CharaId::big_daddy)
+                    if (victim.id == "core.big_daddy")
                     {
                         deferred_event_add(DeferredEvent{
                             "core.little_sister",
@@ -1170,7 +1170,7 @@ int damage_hp(
                             lua::create_table(
                                 "core.big_daddy_position", victim.position)});
                     }
-                    if (victim.id == CharaId::little_sister)
+                    if (victim.id == "core.little_sister")
                     {
                         story_quest_add_ext(
                             "core.little_sister", "core.kill_count", 1);
@@ -1193,7 +1193,7 @@ int damage_hp(
                             deferred_event_add("core.conquer_nefia");
                         }
                     }
-                    if (victim.id == CharaId::ehekatl)
+                    if (victim.id == "core.ehekatl")
                     {
                         if (rnd(4) == 0)
                         {
@@ -1219,7 +1219,7 @@ int damage_hp(
         }
         if (!victim.is_player())
         {
-            game()->character_memories.increment_kill_count(victim.new_id());
+            game()->character_memories.increment_kill_count(victim.id);
             chara_custom_talk(victim, 102);
             if (victim.is_player_or_ally())
             {
@@ -1249,7 +1249,7 @@ int damage_hp(
         }
         if (attacker)
         {
-            if (attacker->id == CharaId::black_cat)
+            if (attacker->id == "core.black_cat")
             {
                 catitem = attacker->index;
             }
@@ -1591,11 +1591,11 @@ void character_drops_item(Character& victim)
     }
     if (game()->current_map == mdata_t::MapId::noyel)
     {
-        if (victim.id == CharaId::tourist)
+        if (victim.id == "core.tourist")
         {
             return;
         }
-        if (victim.id == CharaId::palmian_elite_soldier)
+        if (victim.id == "core.palmian_elite_soldier")
         {
             return;
         }
@@ -2042,7 +2042,7 @@ void character_drops_item(Character& victim)
             if (const auto item = itemcreate_map_inv(504, victim.position, 0))
             {
                 item->param1 = victim.image;
-                item->subname = charaid2int(victim.id);
+                item->subname = the_character_db.ensure(victim.id).integer_id;
             }
         }
         if (rnd(175) == 0 || victim.quality == Quality::special || 0 ||
@@ -2053,7 +2053,7 @@ void character_drops_item(Character& victim)
             if (const auto item = itemcreate_map_inv(503, victim.position, 0))
             {
                 item->param1 = victim.image;
-                item->subname = charaid2int(victim.id);
+                item->subname = the_character_db.ensure(victim.id).integer_id;
             }
         }
     }
@@ -2119,7 +2119,9 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
         if (!victim.is_player_or_ally())
         {
             ++game()->total_kill_count;
-            if (victim.id == int2charaid(game()->guild.fighters_guild_target))
+            if (victim.id ==
+                *the_character_db.get_id_from_integer(
+                    game()->guild.fighters_guild_target))
             {
                 if (game()->guild.fighters_guild_quota > 0)
                 {
@@ -2130,15 +2132,15 @@ void check_kill(optional_ref<Character> killer_chara, Character& victim)
             {
                 karma = -2;
             }
-            if (victim.id == CharaId::rich_person)
+            if (victim.id == "core.rich_person")
             {
                 karma = -15;
             }
-            if (victim.id == CharaId::noble_child)
+            if (victim.id == "core.noble_child")
             {
                 karma = -10;
             }
-            if (victim.id == CharaId::tourist)
+            if (victim.id == "core.tourist")
             {
                 karma = -5;
             }

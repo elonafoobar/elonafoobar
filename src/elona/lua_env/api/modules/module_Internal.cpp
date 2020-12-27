@@ -87,8 +87,8 @@ int Internal_generate_fighters_guild_target(int level)
     while (true)
     {
         flt(level);
-        chara_create(56, 0, -3, 0);
-        if (the_character_db[charaid2int(cdata.tmp().id)]->rarity / 1000 < 70)
+        chara_create(56, "", -3, 0);
+        if (the_character_db[cdata.tmp().id]->rarity / 1000 < 70)
         {
             continue;
         }
@@ -103,7 +103,7 @@ int Internal_generate_fighters_guild_target(int level)
         break;
     }
 
-    auto id = charaid2int(cdata.tmp().id);
+    auto id = the_character_db.ensure(cdata.tmp().id).integer_id;
     chara_vanquish(cdata.tmp());
 
     return id;

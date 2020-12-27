@@ -944,8 +944,8 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
         }
         if (map_villagers_make_snowmen())
         {
-            if ((chara.id == CharaId::town_child ||
-                 chara.id == CharaId::young_lady) &&
+            if ((chara.id == "core.town_child" ||
+                 chara.id == "core.young_lady") &&
                 is_in_fov(chara) &&
                 chip_data.for_cell(chara.position.x, chara.position.y).kind ==
                     4)
@@ -966,7 +966,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
     // Special AIs.
     if (chara.ai_calm == 5)
     {
-        if (chara.id == CharaId::bard)
+        if (chara.id == "core.bard")
         {
             if (rnd(5) == 0)
             {
@@ -975,7 +975,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                 return TurnResult::turn_end;
             }
         }
-        if (chara.id == CharaId::cleaner || chara.id == CharaId::balzak)
+        if (chara.id == "core.cleaner" || chara.id == "core.balzak")
         {
             if (is_in_fov(chara))
             {
@@ -1003,7 +1003,7 @@ TurnResult ai_proc_misc_map_events(Character& chara, int& enemy_index)
                 }
             }
         }
-        if (chara.id == CharaId::prostitute || chara.id == CharaId::silvia)
+        if (chara.id == "core.prostitute" || chara.id == "core.silvia")
         {
             if (rnd(10) == 0)
             {
