@@ -4,7 +4,7 @@ ELONA.data:add(
    {
       sunny = {
          integer_id = 0,
-      }
+      },
       etherwind = {
          integer_id = 1,
       },

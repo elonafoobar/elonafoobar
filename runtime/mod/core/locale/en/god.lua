@@ -2,7 +2,7 @@
 
 ELONA.i18n:add {
    god = {
-      eyth_name = "Eyth of Infidel"
+      eyth_name = "Eyth of Infidel",
       indifferent = " Your God becomes indifferent to your gift.",
       enraged = "{$1} is enraged.", -- TODO duplicate?
 
