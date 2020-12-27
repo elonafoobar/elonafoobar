@@ -1618,7 +1618,8 @@ void character_drops_item(Character& victim)
         {
             break;
         }
-        if (item->quality > Quality::miracle || item->id == "core.platinum")
+        if (item->quality > Quality::miracle ||
+            item->id == "core.platinum_coin")
         {
             f = 1;
         }

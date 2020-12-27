@@ -5300,7 +5300,7 @@ PickUpItemResult pick_up_item(
     const auto inv_owner_chara = inv_owner.as_character();
     if (inv_owner_chara)
     {
-        if (item->id == "core.gold_piece" || item->id == "core.platinum")
+        if (item->id == "core.gold_piece" || item->id == "core.platinum_coin")
         {
             snd_("core.getgold1");
             txt(i18n::s.get(
