@@ -281,7 +281,6 @@ do_create_item(int item_id, const InventoryRef& inv, int x, int y)
     }
 
     item_db_set_full_stats(item, item_id);
-    item_db_get_charge_level(item, item_id);
 
     item->tint = color_index_to_color(generate_color(
         the_item_db[item->id]->tint, the_item_db[item->id]->integer_id));

@@ -59,17 +59,6 @@ void item_db_get_description(const ItemRef& item, int integer_id)
 
 
 
-void item_db_get_charge_level(const ItemRef& item, int integer_id)
-{
-    (void)item;
-
-    const auto& info = the_item_db.ensure(integer_id);
-    ichargelevel = info.chargelevel;
-    reftype = (int)info.category;
-}
-
-
-
 void item_db_set_full_stats(const ItemRef& item, int integer_id)
 {
     const auto& info = the_item_db.ensure(integer_id);

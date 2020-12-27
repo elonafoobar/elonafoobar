@@ -697,7 +697,6 @@ data::InstanceId iequiploc(const ItemRef& item);
 
 void item_db_set_basic_stats(const ItemRef& item, int integer_id);
 void item_db_get_description(const ItemRef& item, int integer_id);
-void item_db_get_charge_level(const ItemRef& item, int integer_id);
 void item_db_set_full_stats(const ItemRef& item, int integer_id);
 void item_db_on_read(Character& reader, const ItemRef& item, int integer_id);
 void item_db_on_zap(const ItemRef& item, int integer_id);
