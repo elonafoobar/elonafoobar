@@ -404,8 +404,7 @@ MainMenuResult character_making_final_phase()
 
     cdata.player().index = 0;
 
-    mode = 5;
-    return MainMenuResult::initialize_game;
+    return MainMenuResult::initialize_game_new;
 }
 
 

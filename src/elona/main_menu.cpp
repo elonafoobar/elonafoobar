@@ -149,27 +149,24 @@ protected:
 
 
 
-bool main_menu_loop()
+optional<InitializeGameMode> main_menu_loop()
 {
     MainMenuResult result = main_menu_wrapper();
-    bool finished = false;
-    while (!finished)
+    while (true)
     {
         switch (result)
         {
         case MainMenuResult::main_title_menu:
             result = main_menu_wrapper();
             break;
-        case MainMenuResult::initialize_game: finished = true; break;
-        case MainMenuResult::finish_elona:
-            finish_elona();
-            finished = true;
-            break;
+        case MainMenuResult::initialize_game_continue:
+            return InitializeGameMode::continue_;
+        case MainMenuResult::initialize_game_new:
+            return InitializeGameMode::new_;
+        case MainMenuResult::finish_elona: finish_elona(); return none;
         default: assert(0); break;
         }
     }
-
-    return result == MainMenuResult::initialize_game;
 }
 
 
@@ -408,8 +405,7 @@ MainMenuResult main_menu_wrapper()
 {
     // Start off in the title menu.
     MainMenuResult result = main_title_menu();
-    bool finished = false;
-    while (!finished)
+    while (true)
     {
         switch (result)
         {
@@ -443,9 +439,7 @@ MainMenuResult main_menu_wrapper()
             break;
         case MainMenuResult::main_title_menu:
             // Loop back to the start.
-            result = MainMenuResult::main_title_menu;
-            finished = true;
-            break;
+            return result;
 
             // Character making
 
@@ -488,14 +482,9 @@ MainMenuResult main_menu_wrapper()
 
             // Finished initializing, start the game.
 
-        case MainMenuResult::initialize_game:
-            result = MainMenuResult::initialize_game;
-            finished = true;
-            break;
-        case MainMenuResult::finish_elona:
-            result = MainMenuResult::finish_elona;
-            finished = true;
-            break;
+        case MainMenuResult::initialize_game_continue: return result;
+        case MainMenuResult::initialize_game_new: return result;
+        case MainMenuResult::finish_elona: return result;
         default: assert(0); break;
         }
     }
@@ -632,8 +621,7 @@ MainMenuResult main_menu_continue()
         {
             playerid = listn(0, p);
             snd("core.ok1");
-            mode = 3;
-            return MainMenuResult::initialize_game;
+            return MainMenuResult::initialize_game_continue;
         }
         if (ginfo(2) == 0)
         {

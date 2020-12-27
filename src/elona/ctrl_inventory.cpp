@@ -1673,7 +1673,7 @@ OnEnterResult on_enter_equip(
         equip_melee_weapon(cdata.player());
     }
     menucycle = true;
-    result.turn_result = TurnResult::menu_equipment;
+    result.succeeded = true;
     return OnEnterResult{result};
 }
 
@@ -2613,7 +2613,7 @@ optional<MenuResult> on_cancel(bool dropcontinue)
         screenupdate = -1;
         update_screen();
         menucycle = true;
-        result.turn_result = TurnResult::menu_equipment;
+        result.succeeded = false;
         return result;
     }
     if (invctrl == 11 || invctrl == 12 || invctrl == 22 || invctrl == 28)

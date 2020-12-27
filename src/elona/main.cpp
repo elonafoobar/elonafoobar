@@ -33,14 +33,7 @@ void _main_loop()
     lua::lua->get_event_manager().trigger(
         lua::BaseEvent("core.game_initialized"));
 
-    while (true)
-    {
-        bool finished = turn_wrapper();
-        if (finished)
-        {
-            break;
-        }
-    }
+    turn_wrapper();
 }
 
 
@@ -50,8 +43,7 @@ void _start_elona()
     if (g_config.startup_script() != ""s &&
         !config_get<bool>("core.foobar.run_script_in_save"))
     {
-        mode = 6;
-        initialize_game();
+        initialize_game(InitializeGameMode::quickstart);
         _main_loop();
         return;
     }
@@ -62,25 +54,22 @@ void _start_elona()
         if (fs::exists(filesystem::dirs::save(default_save)))
         {
             playerid = default_save;
-            mode = 3;
-            initialize_game();
+            initialize_game(InitializeGameMode::continue_);
             _main_loop();
             return;
         }
         else if (fs::exists(filesystem::dirs::save("save_" + default_save)))
         {
             playerid = "save_"s + default_save;
-            mode = 3;
-            initialize_game();
+            initialize_game(InitializeGameMode::continue_);
             _main_loop();
             return;
         }
     }
 
-    const auto start = main_menu_loop();
-    if (start)
+    if (const auto start_mode = main_menu_loop())
     {
-        initialize_game();
+        initialize_game(*start_mode);
         _main_loop();
     }
 }

@@ -683,11 +683,10 @@ TurnResult npc_turn(Character& chara)
 
 
 
-bool turn_wrapper()
+void turn_wrapper()
 {
-    bool finished = false;
     TurnResult result = turn_begin();
-    while (!finished)
+    while (true)
     {
         switch (result)
         {
@@ -695,78 +694,19 @@ bool turn_wrapper()
 
         case TurnResult::turn_begin: result = turn_begin(); break;
         case TurnResult::turn_end: result = turn_end(); break;
-        case TurnResult::pass_one_turn: result = pass_turns(true); break;
+        case TurnResult::pass_one_turn: result = pass_one_turn(true); break;
         case TurnResult::pass_one_turn_freeze_time:
-            result = pass_turns(false);
+            result = pass_one_turn(false);
             break;
-        case TurnResult::pc_turn: result = pc_turn(); break;
-        case TurnResult::npc_turn: result = npc_turn(cdata[ct]); break;
-        case TurnResult::pc_turn_user_error: result = pc_turn(false); break;
+        case TurnResult::pc_turn_user_error: result = pc_turn(); break;
         case TurnResult::pc_died: result = pc_died(); break;
         case TurnResult::initialize_map: result = initialize_map(); break;
         case TurnResult::exit_map: result = exit_map(); break;
-        case TurnResult::play_scene: result = play_scene(); break;
-        case TurnResult::finish_elona:
-            finish_elona();
-            finished = true;
-            break;
+        case TurnResult::finish_elona: finish_elona(); return;
 
-            // Menus that don't return success status
-
-        case TurnResult::show_chat_history: result = show_chat_history(); break;
-        case TurnResult::show_message_log: result = show_message_log(); break;
-        case TurnResult::show_journal: result = show_journal(); break;
-        case TurnResult::show_house_board: result = show_house_board(); break;
-        case TurnResult::show_quest_board: result = show_quest_board(); break;
-        case TurnResult::show_skill_list: result = show_skill_list(); break;
-        case TurnResult::show_spell_list:
-            result = show_spell_list();
-            break;
-
-            // Menus with a success status
-
-        case TurnResult::menu_materials:
-            result = menu_materials().turn_result;
-            break;
-        case TurnResult::menu_character_sheet:
-            result = menu_character_sheet_normal().turn_result;
-            break;
-        case TurnResult::menu_equipment:
-            result = menu_equipment().turn_result;
-            break;
-        case TurnResult::menu_feats: result = menu_feats().turn_result; break;
-        case TurnResult::ctrl_inventory:
-            result = ctrl_inventory().menu_result.turn_result;
-            break;
-
-        case TurnResult::all_turns_finished:
-            result = TurnResult::turn_begin;
-            break;
-        case TurnResult::none:
         default: assert(0); break;
         }
     }
-    return finished;
-}
-
-
-
-TurnResult pass_turns(bool time)
-{
-    bool finished = false;
-    TurnResult result = pass_one_turn(time);
-    while (!finished)
-    {
-        switch (result)
-        {
-        case TurnResult::all_turns_finished: finished = true; break;
-        case TurnResult::pass_one_turn: time = true; break;
-        case TurnResult::pass_one_turn_freeze_time: time = false; break;
-        default: return result;
-        }
-        result = pass_one_turn(time);
-    }
-    return TurnResult::all_turns_finished;
 }
 
 
@@ -828,6 +768,8 @@ TurnResult turn_begin()
 
 
 
+optional<TurnResult> pc_turn_advance_time();
+
 TurnResult pass_one_turn(bool time_passing)
 {
     if (time_passing)
@@ -853,7 +795,7 @@ TurnResult pass_one_turn(bool time_passing)
         {
             lua::lua->get_event_manager().trigger(
                 lua::BaseEvent("core.all_turns_finished"));
-            return TurnResult::all_turns_finished;
+            return TurnResult::turn_begin;
         }
     }
 
@@ -1073,11 +1015,15 @@ TurnResult pass_one_turn(bool time_passing)
     {
         if (ct == 0)
         {
-            return TurnResult::pc_turn;
+            if (const auto result = pc_turn_advance_time())
+            {
+                return *result;
+            }
+            return TurnResult::pc_turn_user_error;
         }
         else
         {
-            return TurnResult::npc_turn;
+            return npc_turn(cdata[ct]);
         }
     }
     return TurnResult::pass_one_turn;
@@ -1383,16 +1329,8 @@ optional<TurnResult> pc_turn_advance_time()
 
 
 
-TurnResult pc_turn(bool advance_time)
+TurnResult pc_turn()
 {
-    if (advance_time)
-    {
-        if (const auto result = pc_turn_advance_time())
-        {
-            return *result;
-        }
-    }
-
     while (true)
     {
         if (debug_is_wizard())
