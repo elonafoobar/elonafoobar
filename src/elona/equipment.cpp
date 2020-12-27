@@ -818,8 +818,11 @@ void supply_initial_equipments(Character& chara)
             eqamulet1 = 722;
         }
     }
-    for (int i = 0; i < 30; ++i)
+    for (size_t i = 0; i < 30; ++i)
     {
+        if (chara.body_parts.size() <= i)
+            continue;
+
         const auto body_part_id = chara.body_parts[i].id;
         if (body_part_id == "core.neck")
         {
