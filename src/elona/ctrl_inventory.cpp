@@ -436,7 +436,7 @@ void make_item_list(
             if (invctrl == 11)
             {
                 if (item->id == "core.gold_piece" ||
-                    item->id == "core.platinum")
+                    item->id == "core.platinum_coin")
                 {
                     continue;
                 }
@@ -542,7 +542,7 @@ void make_item_list(
             if (invctrl == 20)
             {
                 if (item->id == "core.gold_piece" ||
-                    item->id == "core.platinum")
+                    item->id == "core.platinum_coin")
                 {
                     continue;
                 }

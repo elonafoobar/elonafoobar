@@ -111,7 +111,7 @@ struct StoryQuestTable
     set_ext(data::InstanceId id, std::string_view field_name, T&& new_value)
     {
         auto& entry = _quests[id];
-        if (entry.ext.empty())
+        if (entry.ext == sol::lua_nil)
         {
             entry.ext = lua::lua->get_state()->create_table();
         }

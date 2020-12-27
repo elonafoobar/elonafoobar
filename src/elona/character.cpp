@@ -206,6 +206,7 @@ optional<int> chara_create_internal(int slot, int chara_id)
     }
     cdata[slot].quality = static_cast<Quality>(fixlv);
     cdata[slot].index = slot;
+    cdata[slot].set_state(Character::State::alive);
     initialize_character(cdata[slot]);
 
     rtval = slot;
@@ -673,8 +674,6 @@ void initialize_character(Character& chara)
     {
         chara.is_lay_hand_available() = true;
     }
-
-    chara.set_state(Character::State::alive);
 
     cm = 0;
 }

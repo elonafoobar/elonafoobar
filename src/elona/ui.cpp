@@ -569,7 +569,7 @@ void render_platinum()
         cdata.player().platinum,
         windoww - 120,
         inf_ver - 16,
-        "core.platinum",
+        "core.platinum_coin",
         "pp");
 }
 
