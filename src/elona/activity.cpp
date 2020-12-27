@@ -449,7 +449,7 @@ std::pair<bool, int> activity_perform_proc_audience(
                 txt(i18n::s.get("core.activity.perform.throws_rock", audience));
             }
             dmg = rnd_capped(audience.level + 1) + 1;
-            if (audience.id == CharaId::loyter)
+            if (audience.id == "core.loyter")
             {
                 dmg = audience.level * 2 + rnd(100);
             }
@@ -1053,7 +1053,7 @@ void activity_steal_doing(Character& doer, const ItemRef& steal_target)
         modify_karma(cdata.player(), -5);
         if (const auto owner = steal_target_owner.as_character())
         {
-            if (owner->id != CharaId::ebon)
+            if (owner->id != "core.ebon")
             {
                 if (owner->sleep == 0)
                 {

@@ -931,7 +931,8 @@ void itemname_additional_info(const ItemRef& item)
             if (item->own_state != OwnState::crop)
             {
                 s_ += lang(""s, u8" of "s) +
-                    chara_db_get_name(int2charaid(item->subname));
+                    chara_db_get_name(
+                          *the_character_db.get_id_from_integer(item->subname));
                 if (jp)
                 {
                     s_ += u8"の"s;
@@ -972,8 +973,13 @@ void itemname_additional_info(const ItemRef& item)
                 return;
             }
             s_ += lang(
-                ""s + chara_db_get_name(int2charaid(item->subname)) + u8"の"s,
-                u8" of "s + chara_db_get_name(int2charaid(item->subname)));
+                ""s +
+                    chara_db_get_name(
+                        *the_character_db.get_id_from_integer(item->subname)) +
+                    u8"の"s,
+                u8" of "s +
+                    chara_db_get_name(
+                        *the_character_db.get_id_from_integer(item->subname)));
         }
     }
     if (item->id == "core.secret_treasure")
@@ -1538,7 +1544,9 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
         }
         else
         {
-            s_ += u8" ("s + chara_db_get_name(int2charaid(item->subname)) +
+            s_ += u8" ("s +
+                chara_db_get_name(
+                      *the_character_db.get_id_from_integer(item->subname)) +
                 u8")"s;
         }
     }
@@ -1628,7 +1636,7 @@ std::string itemname(const ItemRef& item, lua_int number, bool with_article)
 
 void remain_make(const ItemRef& remain, const Character& chara)
 {
-    remain->subname = charaid2int(chara.id);
+    remain->subname = the_character_db.ensure(chara.id).integer_id;
     remain->tint = color_index_to_color(chara.image / 1000);
 
     if (remain->id == "core.corpse")
@@ -1640,13 +1648,11 @@ void remain_make(const ItemRef& remain, const Character& chara)
     {
         remain->weight = 20 * (chara.weight + 500) / 500;
         remain->value = chara.level * 40 + 600;
-        if (the_character_db[charaid2int(chara.id)]->rarity / 1000 < 20 &&
+        if (the_character_db[chara.id]->rarity / 1000 < 20 &&
             chara.original_relationship < Relationship::neutral)
         {
-            remain->value *= clamp(
-                4 - the_character_db[charaid2int(chara.id)]->rarity / 1000 / 5,
-                1,
-                5);
+            remain->value *=
+                clamp(4 - the_character_db[chara.id]->rarity / 1000 / 5, 1, 5);
         }
     }
 }

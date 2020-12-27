@@ -339,7 +339,10 @@ void conquer_lesimas()
         txt(u8"「お前がここに辿り着くことは」台座から、何かの声が聞こえる。"s);
         flt();
         chara_create(
-            -1, 23, cdata.player().position.x, cdata.player().position.y);
+            -1,
+            "core.orphe",
+            cdata.player().position.x,
+            cdata.player().position.y);
         play_music("core.mcChaos");
         msg_halt();
         Message::instance().clear();

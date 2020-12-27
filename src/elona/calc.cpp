@@ -1403,13 +1403,14 @@ int calcinitgold(int owner)
             1;
     }
 
-    switch (charaid2int(cdata[owner].id))
-    {
-    case 183: return 5000 + rnd(11000);
-    case 184: return 2000 + rnd(5000);
-    case 185: return 1000 + rnd(3000);
-    default: return rnd_capped(cdata[owner].level * 25 + 10) + 1;
-    }
+    if (cdata[owner].id == "core.rich_person")
+        return 5000 + rnd(11000);
+    else if (cdata[owner].id == "core.noble_child")
+        return 2000 + rnd(5000);
+    else if (cdata[owner].id == "core.tourist")
+        return 1000 + rnd(3000);
+    else
+        return rnd_capped(cdata[owner].level * 25 + 10) + 1;
 }
 
 

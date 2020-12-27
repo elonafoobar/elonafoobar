@@ -9,7 +9,6 @@
 #include "activity.hpp"
 #include "body_part.hpp"
 #include "buff.hpp"
-#include "consts.hpp"
 #include "data/types/type_character.hpp"
 #include "eobject/eobject.hpp"
 #include "lua_env/wrapped_function.hpp"
@@ -148,7 +147,7 @@ public:
     Position initial_position{};
 
     /// Character ID
-    CharaId id = CharaId::none;
+    data::InstanceId id{};
 
     /// FOV flag
     lua_int fov_flag{};
@@ -530,12 +529,6 @@ public:
     }
 
 
-    data::InstanceId new_id() const
-    {
-        return *the_character_db.get_id_from_integer(charaid2int(this->id));
-    }
-
-
 
     bool is_player() const;
     bool is_ally() const;
@@ -669,6 +662,8 @@ private:
 
 extern CData cdata;
 
+optional_ref<Character>
+chara_create(int slot, data::InstanceId chara_id, int x, int y);
 optional_ref<Character> chara_create(int slot, int chara_id, int x, int y);
 void initialize_character(Character& chara);
 bool chara_place(Character& chara);
@@ -715,7 +710,7 @@ enum class CharaFindLocation
 };
 
 optional_ref<Character> chara_find(data::InstanceId chara_id);
-int chara_find_ally(int id);
+optional_ref<Character> chara_find_ally(data::InstanceId chara_id);
 int chara_get_free_slot();
 int chara_get_free_slot_ally();
 bool chara_unequip(const ItemRef& item);

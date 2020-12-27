@@ -266,7 +266,8 @@ void chara_vomit(Character& chara)
             {
                 if (!chara.is_player())
                 {
-                    item->subname = charaid2int(chara.id);
+                    item->subname =
+                        the_character_db.ensure(chara.id).integer_id;
                 }
             }
         }
@@ -683,7 +684,9 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                 {
                     if (food->id == "core.corpse")
                     {
-                        s = chara_db_get_filter(int2charaid(food->subname));
+                        s = chara_db_get_filter(
+                            *the_character_db.get_id_from_integer(
+                                food->subname));
                         if (strutil::contains(s(0), u8"/man/"))
                         {
                             txt(i18n::s.get(
@@ -1118,7 +1121,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     }
     if (food->id == "core.corpse")
     {
-        s = chara_db_get_filter(int2charaid(food->subname));
+        s = chara_db_get_filter(
+            *the_character_db.get_id_from_integer(food->subname));
         if (eater.is_player())
         {
             if (strutil::contains(s(0), u8"/man/"))
@@ -1156,7 +1160,8 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
     if (food->id == "core.corpse" ||
         ((food->id == "core.jerky" || food->id == "core.egg") && rnd(3) == 0))
     {
-        chara_db_invoke_eating_effect(eater, int2charaid(food->subname));
+        chara_db_invoke_eating_effect(
+            eater, *the_character_db.get_id_from_integer(food->subname));
     }
     for (int cnt = 0, cnt_end = (fdmax); cnt < cnt_end; ++cnt)
     {
@@ -1204,7 +1209,7 @@ void apply_general_eating_effect(Character& eater, const ItemRef& food)
                         0);
         }
     }
-    if (eater.id == CharaId::cute_fairy)
+    if (eater.id == "core.cute_fairy")
     {
         if (nutrition >= 2000)
         {
@@ -1433,7 +1438,8 @@ foodname(int type, const std::string& ingredient_, int rank, int character_id)
         }
         else
         {
-            ingredient = chara_db_get_name(int2charaid(character_id));
+            ingredient = chara_db_get_name(
+                *the_character_db.get_id_from_integer(character_id));
         }
     }
     else if (type == 5 || type == 7)

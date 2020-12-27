@@ -971,7 +971,7 @@ void get_npc_talk(Character& chara)
                 buff, 0, u8"%ALLY_DEFAULT,"s + i18n::s.get("core.meta.tag"));
             break;
         }
-        if (chara.id == CharaId::prostitute)
+        if (chara.id == "core.prostitute")
         {
             p = instr(buff, 0, u8"%BITCH,"s + i18n::s.get("core.meta.tag"));
             break;
@@ -1841,8 +1841,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.joining_fighters_guild.progress",
                 0,
                 game()->guild.fighters_guild_quota,
-                chara_db_get_name(
-                    int2charaid(game()->guild.fighters_guild_target)));
+                chara_db_get_name(*the_character_db.get_id_from_integer(
+                    game()->guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);
@@ -1897,8 +1897,8 @@ void append_subquest_journal(int val0)
                 "core.quest.journal.sub.quota_fighters_guild.progress",
                 0,
                 game()->guild.fighters_guild_quota,
-                chara_db_get_name(
-                    int2charaid(game()->guild.fighters_guild_target)));
+                chara_db_get_name(*the_character_db.get_id_from_integer(
+                    game()->guild.fighters_guild_target)));
             talk_conv(s1, 40 - en * 4);
             buff += u8"("s + s + u8")\n"s + s1;
             noteadd(""s);

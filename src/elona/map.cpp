@@ -749,7 +749,7 @@ static void _restock_character_inventories()
             continue;
         }
         generatemoney(cnt);
-        if (cnt.id == CharaId::bard)
+        if (cnt.id == "core.bard")
         {
             _proc_generate_bard_items(cnt);
         }
@@ -1670,8 +1670,7 @@ TurnResult exit_map()
         {
             if (cnt.state() != Character::State::empty)
             {
-                game()->character_memories.decrement_generate_count(
-                    cnt.new_id());
+                game()->character_memories.decrement_generate_count(cnt.id);
             }
         }
 

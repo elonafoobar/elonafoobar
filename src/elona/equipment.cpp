@@ -767,51 +767,51 @@ void supply_initial_equipments(Character& chara)
     {
         eqshield = 0;
     }
-    if (chara.id == CharaId::beggar)
+    if (chara.id == "core.beggar")
     {
         if (rnd(120) == 0)
         {
             eqamulet1 = 705;
         }
     }
-    if (chara.id == CharaId::noble)
+    if (chara.id == "core.noble")
     {
         if (rnd(100) == 0)
         {
             eqrange = 718;
         }
     }
-    if (chara.id == CharaId::rock_thrower)
+    if (chara.id == "core.rock_thrower")
     {
         if (rnd(200) == 0)
         {
             eqrange = 716;
         }
     }
-    if (chara.id == CharaId::blade || chara.id == CharaId::blade_alpha ||
-        chara.id == CharaId::blade_omega)
+    if (chara.id == "core.blade" || chara.id == "core.blade_alpha" ||
+        chara.id == "core.blade_omega")
     {
         if (rnd(800) == 0)
         {
             eqgirdle = 728;
         }
     }
-    if (chara.id == CharaId::silver_eyed_witch)
+    if (chara.id == "core.silver_eyed_witch")
     {
         if (rnd(150) == 0)
         {
             eqweapon1 = 719;
         }
     }
-    if (chara.id == CharaId::asura || chara.id == CharaId::mitra ||
-        chara.id == CharaId::varuna)
+    if (chara.id == "core.asura" || chara.id == "core.mitra" ||
+        chara.id == "core.varuna")
     {
         if (rnd(600) == 0)
         {
             eqamulet1 = 723;
         }
     }
-    if (chara.id == CharaId::rogue_archer)
+    if (chara.id == "core.rogue_archer")
     {
         if (rnd(250) == 0)
         {
@@ -1278,7 +1278,7 @@ void supply_initial_equipments(Character& chara)
             continue;
         }
     }
-    if (chara.id == CharaId::bard)
+    if (chara.id == "core.bard")
     {
         if (rnd(150) == 0)
         {
@@ -1292,7 +1292,7 @@ void supply_initial_equipments(Character& chara)
             itemcreate_chara_inv(chara, 0, 0);
         }
     }
-    if (chara.id == CharaId::the_leopard_warrior || chara.id == CharaId::silvia)
+    if (chara.id == "core.the_leopard_warrior" || chara.id == "core.silvia")
     {
         for (int cnt = 0; cnt < 6; ++cnt)
         {

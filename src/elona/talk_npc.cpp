@@ -286,7 +286,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             minlevel = arenaop(1) / 3 * 2;
             flt(arenaop(1));
             fixlv = static_cast<Quality>(arenaop(2));
-            const auto chara = chara_create(56, 0, -3, 0);
+            const auto chara = chara_create(56, "", -3, 0);
             if (cmshade)
             {
                 continue;
@@ -299,7 +299,7 @@ TalkResult talk_arena_master(Character& speaker, int chatval_)
             {
                 continue;
             }
-            arenaop(1) = charaid2int(chara->id);
+            arenaop(1) = the_character_db.ensure(chara->id).integer_id;
             buff = i18n::s.get(
                 "core.talk.npc.arena_master.enter.target",
                 chara->name,
@@ -678,7 +678,7 @@ TalkResult talk_slave_buy(Character& speaker, int chatval_)
         {
             fltn(u8"horse"s);
         }
-        chara_create(56, 0, -3, 0);
+        chara_create(56, "", -3, 0);
         if (cdata.tmp().level == 0)
         {
             chara_vanquish(cdata.tmp());
@@ -754,8 +754,7 @@ TalkResult talk_slave_sell(Character& speaker)
                 deferred_event_add(DeferredEvent{
                     "core.quest_failed",
                     0,
-                    lua::create_table(
-                        "core.client", cdata[stat].new_id().get())});
+                    lua::create_table("core.client", cdata[stat].id.get())});
             }
             chara_delete(cdata[stat]);
             buff = i18n::s.get("core.talk.npc.common.thanks", speaker);
@@ -1753,7 +1752,8 @@ TalkResult talk_quest_giver(Character& speaker)
             }
             const auto ally = new_ally_joins(cdata.tmp());
             ally->is_escorted() = true;
-            quest_data[quest_idx].extra_info_2 = charaid2int(ally->id);
+            quest_data[quest_idx].extra_info_2 =
+                the_character_db.ensure(ally->id).integer_id;
         }
         quest_data[quest_idx].progress = 1;
         if (quest_data[quest_idx].deadline_days == -1)
@@ -2147,7 +2147,7 @@ TalkResult talk_npc(Character& speaker)
             }
         }
     }
-    if (speaker.id == CharaId::prostitute)
+    if (speaker.id == "core.prostitute")
     {
         if (!deferred_event_has_pending_events())
         {

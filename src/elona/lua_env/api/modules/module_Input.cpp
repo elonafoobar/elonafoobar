@@ -415,11 +415,10 @@ void Input_start_dialog(LuaCharacterHandle speaker)
 {
     auto& speaker_ref = lua::ref<Character>(speaker);
 
-    auto data = the_character_db.ensure(charaid2int(speaker_ref.id));
+    auto data = the_character_db.ensure(speaker_ref.id);
     if (!data.dialog_id)
     {
-        throw sol::error(
-            "Character has no dialog: "s + speaker_ref.new_id().get());
+        throw sol::error("Character has no dialog: "s + speaker_ref.id.get());
     }
 
     if (!talk_setup_variables(speaker_ref))

@@ -110,7 +110,7 @@ void talk_to_npc(Character& chara)
     chatval_show_impress = true;
     if (chara.quality == Quality::special && !chara.is_player_or_ally())
     {
-        chatval_unique_chara_id = charaid2int(chara.id);
+        chatval_unique_chara_id = the_character_db.ensure(chara.id).integer_id;
         chatval_show_impress = false;
     }
     if (deferred_event_processing_event() == "core.lomias_talk")

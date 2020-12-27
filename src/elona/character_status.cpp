@@ -411,7 +411,7 @@ int gain_skills_by_geen_engineering(
     {
         return 0;
     }
-    randomize(charaid2int(gene_ally.id));
+    randomize(the_character_db.ensure(gene_ally.id).integer_id);
     int dbmax = 0;
     for (int cnt = 0; cnt < 100; ++cnt)
     {
@@ -475,7 +475,7 @@ optional<data::InstanceId> gene_engineering_get_transplanted_body_part(
     if (body_parts.empty())
         return none;
 
-    randomize(charaid2int(gene_ally.id));
+    randomize(the_character_db.ensure(gene_ally.id).integer_id);
     lib::scope_guard _reset_random_seed{[] { randomize(); }};
 
     bool already_has = false;

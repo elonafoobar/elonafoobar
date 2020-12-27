@@ -366,7 +366,7 @@ extern ChipData chip_data;
 
 
 void map_get_trainer_skills(const Character& chara);
-void map_set_chara_generation_filter();
+data::InstanceId map_set_chara_generation_filter();
 void map_reload(const std::string& map_filename);
 std::string map_get_custom_map_name(int);
 

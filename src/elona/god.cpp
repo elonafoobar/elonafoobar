@@ -244,46 +244,46 @@ TurnResult do_pray()
                 return TurnResult::turn_end;
             }
             flt();
-            int chara_id = 0;
+            data::InstanceId chara_id = "";
             if (cdata.player().religion == "core.mani")
             {
-                chara_id = 262;
+                chara_id = "core.android";
                 txt(i18n::s.get("core.god.pray.servant.desc.mani"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.lulwy")
             {
-                chara_id = 263;
+                chara_id = "core.black_angel";
                 txt(i18n::s.get("core.god.pray.servant.desc.lulwy"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.itzpalt")
             {
-                chara_id = 264;
+                chara_id = "core.exile";
                 txt(i18n::s.get("core.god.pray.servant.desc.itzpalt"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.ehekatl")
             {
-                chara_id = 260;
+                chara_id = "core.black_cat";
                 txt(i18n::s.get("core.god.pray.servant.desc.ehekatl"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.opatos")
             {
-                chara_id = 265;
+                chara_id = "core.golden_knight";
                 txt(i18n::s.get("core.god.pray.servant.desc.opatos"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.jure")
             {
-                chara_id = 266;
+                chara_id = "core.defender";
                 txt(i18n::s.get("core.god.pray.servant.desc.jure"),
                     Message::color{ColorIndex::blue});
             }
             if (cdata.player().religion == "core.kumiromi")
             {
-                chara_id = 261;
+                chara_id = "core.cute_fairy";
                 txt(i18n::s.get("core.god.pray.servant.desc.kumiromi"),
                     Message::color{ColorIndex::blue});
             }

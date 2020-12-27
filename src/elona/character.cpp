@@ -197,7 +197,8 @@ optional<int> chara_create_internal(int slot, int chara_id)
     }
     else
     {
-        chara_db_set_stats(cdata[slot], int2charaid(chara_id));
+        chara_db_set_stats(
+            cdata[slot], *the_character_db.get_id_from_integer(chara_id));
     }
     if (cmshade)
     {
@@ -633,7 +634,7 @@ void initialize_character(Character& chara)
     chara.interest = 100;
     chara.impression = 50;
     chara.fov_range = 14;
-    if (chara.id == CharaId::maid)
+    if (chara.id == "core.maid")
     {
         chara.image = rnd(33) * 2 + chara.sex + 1;
     }
@@ -681,6 +682,16 @@ void initialize_character(Character& chara)
 
 
 
+optional_ref<Character>
+chara_create(int slot, data::InstanceId chara_id, int x, int y)
+{
+    return chara_create(
+        slot,
+        chara_id == "" ? 0 : the_character_db.ensure(chara_id).integer_id,
+        x,
+        y);
+}
+
 optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
 {
     bool success = false;
@@ -705,7 +716,7 @@ optional_ref<Character> chara_create(int slot, int chara_id, int x, int y)
         {
             cdata[*result].set_state(Character::State::empty);
             game()->character_memories.decrement_generate_count(
-                cdata[*result].new_id());
+                cdata[*result].id);
             return cdata.tmp();
         }
         if (*result != 0)
@@ -768,7 +779,7 @@ void chara_refresh(Character& chara)
             }
         }
     }
-    else if (chara.id == CharaId::user)
+    else if (chara.id == "core.user")
     {
         // Vanilla-compatible CNPC is not supported now.
     }
@@ -776,8 +787,7 @@ void chara_refresh(Character& chara)
     {
         for (size_t i = 0; i < 32 * 30; ++i)
         {
-            chara._flags[i] =
-                the_character_db[charaid2int(chara.id)]->_flags[i];
+            chara._flags[i] = the_character_db[chara.id]->_flags[i];
         }
     }
     for (auto&& growth_buff : chara.growth_buffs)
@@ -1213,9 +1223,6 @@ Relationship relation_between(const Character& a, const Character& b)
 
 optional_ref<Character> chara_find(data::InstanceId chara_id)
 {
-    // Note: if `chara_id` not found, `ensure()` throws an exception.
-    int integer_id = the_character_db.ensure(chara_id).integer_id;
-
     for (auto&& chara : cdata.others())
     {
         if (chara.state() != Character::State::villager_dead)
@@ -1225,7 +1232,7 @@ optional_ref<Character> chara_find(data::InstanceId chara_id)
                 continue;
             }
         }
-        if (chara.id == int2charaid(integer_id))
+        if (chara.id == chara_id)
         {
             return chara;
         }
@@ -1235,7 +1242,7 @@ optional_ref<Character> chara_find(data::InstanceId chara_id)
 
 
 
-int chara_find_ally(int id)
+optional_ref<Character> chara_find_ally(data::InstanceId chara_id)
 {
     for (auto&& ally : cdata.allies())
     {
@@ -1243,12 +1250,12 @@ int chara_find_ally(int id)
         {
             continue;
         }
-        if (ally.id == int2charaid(id))
+        if (ally.id == chara_id)
         {
-            return ally.index;
+            return ally;
         }
     }
-    return -1;
+    return none;
 }
 
 
@@ -1301,7 +1308,7 @@ bool chara_custom_talk(Character& speaker, int talk_type)
             std::back_inserter(talk_file_buffer));
         use_external_file = true;
     }
-    else if (speaker.id == CharaId::user)
+    else if (speaker.id == "core.user")
     {
         talk_file_buffer = strutil::split_lines(usertxt(speaker.cnpc_id));
         use_external_file = true;
@@ -1534,7 +1541,7 @@ int chara_copy(const Character& source)
     // Increase crowd density.
     modify_crowd_density(slot, 1);
     // Increase the generation counter.
-    game()->character_memories.increment_generate_count(destination.new_id());
+    game()->character_memories.increment_generate_count(destination.id);
 
     return slot;
 }
@@ -1965,7 +1972,7 @@ void chara_act_hostile_action(Character& attacker, Character& target)
         {
             modify_karma(cdata.player(), -2);
         }
-        if (target.id == CharaId::ebon)
+        if (target.id == "core.ebon")
         {
             if (game()->released_fire_giant == 0)
             {
@@ -2249,7 +2256,7 @@ void revive_player(Character& chara)
             gain_level(chara);
         }
     }
-    if (chara.id == CharaId::bard)
+    if (chara.id == "core.bard")
     {
         chara_gain_fixed_skill_exp(chara, 183, 1000);
     }
@@ -2366,7 +2373,8 @@ void proc_one_equipment_with_negative_enchantments(
                     {
                         flt(calcobjlv(cdata.player().level * 3 / 2 + 3),
                             calcfixlv(Quality::bad));
-                        chara_create(-1, 0, chara.position.x, chara.position.y);
+                        chara_create(
+                            -1, "", chara.position.x, chara.position.y);
                     }
                 }
             }
@@ -2407,7 +2415,7 @@ void lovemiracle(Character& chara)
     {
         if (const auto item = itemcreate_map_inv(573, chara.position, 0))
         {
-            item->subname = charaid2int(chara.id);
+            item->subname = the_character_db.ensure(chara.id).integer_id;
             item->weight = chara.weight * 10 + 250;
             item->value =
                 clamp(chara.weight * chara.weight / 10000, 200, 40000);
@@ -2417,7 +2425,7 @@ void lovemiracle(Character& chara)
     {
         if (const auto item = itemcreate_map_inv(574, chara.position, 0))
         {
-            item->subname = charaid2int(chara.id);
+            item->subname = the_character_db.ensure(chara.id).integer_id;
         }
     }
     snd("core.atk_elec");
