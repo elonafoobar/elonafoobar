@@ -1,4 +1,3 @@
-#include "../elona/ability.hpp"
 #include "../elona/character.hpp"
 #include "../elona/enums.hpp"
 #include "../elona/filesystem.hpp"
@@ -6,6 +5,7 @@
 #include "../elona/init.hpp"
 #include "../elona/item.hpp"
 #include "../elona/itemgen.hpp"
+#include "../elona/skill.hpp"
 #include "../elona/testing.hpp"
 #include "../elona/variables.hpp"
 #include "../thirdparty/catch2/catch.hpp"

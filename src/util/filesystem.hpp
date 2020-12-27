@@ -319,7 +319,7 @@ using boost_fs::remove;
 using boost_fs::remove_all;
 using boost_fs::rename;
 
-using boost_fs::copy_option;
+using boost_fs::copy_options;
 
 
 
