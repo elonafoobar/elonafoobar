@@ -32,7 +32,7 @@ void UIMenuCharamakeAttributes::_reroll_attributes()
         {
             if (_minimum)
             {
-                cdata.player().skills().set_base_level(
+                cdata.player().skills().add_base_level(
                     *the_skill_db.get_id_from_integer(cnt),
                     -cdata.player().skills().base_level(
                         *the_skill_db.get_id_from_integer(cnt)) /
@@ -40,7 +40,7 @@ void UIMenuCharamakeAttributes::_reroll_attributes()
             }
             else
             {
-                cdata.player().skills().set_base_level(
+                cdata.player().skills().add_base_level(
                     *the_skill_db.get_id_from_integer(cnt),
                     -rnd(
                         cdata.player().skills().base_level(
