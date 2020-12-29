@@ -106,7 +106,7 @@ void save_dump_player_info()
         std::to_string(cdata.player().skills().base_level("core.stat_mana")) +
         ")";
     s(3) = "狂気度    : " + std::to_string(cdata.player().insanity);
-    s(4) = "速度      : " + std::to_string(cdata.player().current_speed);
+    s(4) = "速度      : " + std::to_string(cdata.player().base_speed);
     s(5) = "名声度    : " + std::to_string(cdata.player().fame);
     s(6) = "カルマ    : " + std::to_string(cdata.player().karma);
     s(7) = "DV        : " + std::to_string(cdata.player().dv);

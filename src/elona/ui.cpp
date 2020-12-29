@@ -511,11 +511,14 @@ void render_basic_attributes_and_pv_dv()
             // Speed
             draw_region("core.attributes_bar", x + 8, y, 34);
             snail::Color text_color{0, 0, 0};
-            if (gspdorg > gspd)
+            const auto stat_speed =
+                cdata.player().skills().base_level("core.stat_speed");
+            const auto actual_speed = cdata.player().speed;
+            if (actual_speed < stat_speed)
             {
                 text_color = snail::Color{200, 0, 0};
             }
-            else if (gspdorg < gspd)
+            else if (stat_speed < actual_speed)
             {
                 text_color = snail::Color{0, 120, 0};
             }
@@ -523,7 +526,7 @@ void render_basic_attributes_and_pv_dv()
             {
                 text_color = snail::Color{0, 0, 0};
             }
-            mes(x + 8, y, std::to_string(gspd), text_color);
+            mes(x + 8, y, std::to_string(actual_speed), text_color);
         }
         else
         {

@@ -1193,7 +1193,7 @@ void chara_refresh(Character& chara)
         chara.rate_of_critical_hit = 30;
     }
     refresh_burden_state();
-    refresh_speed(chara);
+    chara_refresh_speed(chara);
     chara.needs_refreshing_status() = false;
 
     lua::lua->get_event_manager().trigger(
@@ -1855,18 +1855,19 @@ void go_hostile()
 
 void ride_begin(int mount)
 {
-    txt(i18n::s.get(
-        "core.magic.mount.mount.execute",
-        cdata[mount],
-        cdata[mount].current_speed));
+    const auto prev_speed = cdata[mount].base_speed;
     cdata[mount].is_ridden() = true;
     cell_data.at(cdata[mount].position.x, cdata[mount].position.y)
         .chara_index_plus_one = 0;
     game()->mount = mount;
     create_pcpic(cdata.player());
     cdata[game()->mount].activity.finish();
-    refresh_speed(cdata[game()->mount]);
-    txt(""s + cdata[mount].current_speed + ") "s);
+    chara_refresh_speed(cdata[game()->mount]);
+    txt(i18n::s.get(
+        "core.magic.mount.mount.execute",
+        cdata[mount],
+        prev_speed,
+        cdata[mount].base_speed));
     if (cdata[game()->mount].is_suitable_for_mount())
     {
         txt(i18n::s.get("core.magic.mount.mount.suitable"));
@@ -1886,7 +1887,7 @@ void ride_end()
     cdata[mount].activity.finish();
     game()->mount = 0;
     create_pcpic(cdata.player());
-    refresh_speed(cdata[mount]);
+    chara_refresh_speed(cdata[mount]);
 }
 
 
@@ -2150,7 +2151,7 @@ void refresh_burden_state()
         }
         cdata.player().burden_state = 0;
     }
-    refresh_speed(cdata.player());
+    chara_refresh_speed(cdata.player());
 }
 
 

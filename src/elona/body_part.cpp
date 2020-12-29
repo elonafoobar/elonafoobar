@@ -51,10 +51,7 @@ bool body_part_has_empty_slot(const Character& chara)
 void body_part_gain_new_slot(Character& chara, bool show_message)
 {
     if (!body_part_has_empty_slot(chara))
-    {
-        refresh_speed_correction_value(chara); // needed?
         return;
-    }
 
     const auto body_part_id = get_random_body_part();
     chara.body_parts.add(body_part_id);
@@ -66,7 +63,7 @@ void body_part_gain_new_slot(Character& chara, bool show_message)
             i18n::s.get_data_text("core.body_part", body_part_id, "name")));
     }
 
-    refresh_speed_correction_value(chara);
+    chara_refresh_speed_penalty(chara);
 }
 
 

@@ -237,11 +237,23 @@ public:
     /// Required experience to the next level
     lua_int required_experience{};
 
-    lua_int turn_cost{};
-    lua_int current_speed{};
-    lua_int speed_percentage{};
-    lua_int speed_percentage_in_next_turn{};
-    lua_int speed_correction_value{};
+    /// Turn energy
+    lua_int turn_energy{};
+
+    /// Base value of `speed`.
+    lua_int base_speed{};
+
+    /// Current speed. It is used for turn energy calculation.
+    lua_int speed{};
+
+    /// Speed bonus (positive value means faster)
+    lua_int speed_bonus{};
+
+    /// Speed bonus in the next turn
+    lua_int next_speed_bonus{};
+
+    /// Speed penalty (positive value means slower)
+    lua_int speed_penalty{};
 
     /// Current skill bonus
     lua_int skill_bonus{};

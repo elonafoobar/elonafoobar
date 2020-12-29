@@ -387,7 +387,7 @@ void get_hungry(Character& chara)
             input_halt_input(HaltInput::alert);
             txt(i18n::s.get("core.food.hunger_status.hungry"));
         }
-        refresh_speed(chara);
+        chara_refresh_speed(chara);
     }
 }
 
