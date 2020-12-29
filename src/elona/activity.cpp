@@ -2323,15 +2323,15 @@ void sleep_start(const OptionalItemRef& bed)
             cdata[cnt].is_lay_hand_available() = true;
         }
     }
-    mode = 9;
+    g_mode = 9;
     timeslept = 7 + rnd(5);
     for (int cnt = 0, cnt_end = (timeslept); cnt < cnt_end; ++cnt)
     {
         game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
-        if (mode != 9)
+        if (g_mode != 9)
         {
             load_sleep_background();
-            mode = 9;
+            g_mode = 9;
         }
         cdata.player().sleepiness = 0;
         {
@@ -2370,7 +2370,7 @@ void sleep_start(const OptionalItemRef& bed)
     }
     draw_sleep_background_frame();
     game()->character_and_status_for_gene = 0;
-    mode = 0;
+    g_mode = 0;
     wake_up();
     cdata.player().nutrition -=
         1500 / (cdata.player().traits().level("core.slow_digestion") + 1);

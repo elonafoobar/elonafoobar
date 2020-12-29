@@ -3540,12 +3540,12 @@ bool _magic_463()
     invctrl(0) = 22;
     invctrl(1) = 5;
     invcontainer = clamp(efp / 10 + 10, 10, 300);
-    mode = 6;
+    g_mode = 6;
     snd("core.inv");
     ctrl_inventory();
     invcontainer = 0;
     inv_close_tmp_inv(pocket_file_name);
-    mode = 0;
+    g_mode = 0;
     return true;
 }
 

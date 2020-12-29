@@ -25,7 +25,7 @@ bool UIMenuGameHelp::init()
     cs_bk = -1;
     page_bk = 0;
     cs_bk2 = 0;
-    if (mode != 1)
+    if (g_mode != 1)
     {
         load_background_variants(4);
         gsel(0);
@@ -307,7 +307,7 @@ void UIMenuGameHelp::update()
 void UIMenuGameHelp::_draw_window()
 {
     int y;
-    if (mode == 1)
+    if (g_mode == 1)
     {
         y = winposy(496, 1);
     }
@@ -324,7 +324,7 @@ void UIMenuGameHelp::_draw_window()
         496);
     display_topic(i18n::s.get("core.ui.manual.topic"), wx + 34, wy + 36);
 
-    _draw_background_vignette(page % 5, mode == 1 ? 2 : 4);
+    _draw_background_vignette(page % 5, g_mode == 1 ? 2 : 4);
     keyrange = 0;
 
     // Moves and refresh cursor

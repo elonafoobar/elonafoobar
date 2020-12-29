@@ -537,7 +537,7 @@ void initialize_debug_globals()
     chara_refresh(cdata.player());
 
     cdata.player().can_cast_rapid_magic() = true;
-    mode = 0;
+    g_mode = 0;
     refresh_burden_state();
     for (const auto& [id, _] : the_crafting_material_db)
     {
@@ -563,9 +563,9 @@ void initialize_game(InitializeGameMode start_mode)
 
     switch (start_mode)
     {
-    case InitializeGameMode::continue_: mode = 3; break;
-    case InitializeGameMode::new_: mode = 5; break;
-    case InitializeGameMode::quickstart: mode = 6; break;
+    case InitializeGameMode::continue_: g_mode = 3; break;
+    case InitializeGameMode::new_: g_mode = 5; break;
+    case InitializeGameMode::quickstart: g_mode = 6; break;
     default: assert(0); break;
     }
 
@@ -576,7 +576,7 @@ void initialize_game(InitializeGameMode start_mode)
         deferred_event_add("core.generate_game_world");
         deferred_event_add("core.lomias_talks");
         sceneid = 0;
-        mode = 2;
+        g_mode = 2;
         do_play_scene();
     }
     else if (start_mode == InitializeGameMode::quickstart)
@@ -585,7 +585,7 @@ void initialize_game(InitializeGameMode start_mode)
         initialize_debug_globals();
         initialize_testbed();
         will_load_script = true;
-        mode = 2;
+        g_mode = 2;
     }
 
     if (start_mode == InitializeGameMode::continue_)
@@ -613,9 +613,9 @@ void initialize_game(InitializeGameMode start_mode)
 
     fov_init_fovlist();
 
-    assert(mode == 2 || mode == 3);
+    assert(g_mode == 2 || g_mode == 3);
     initialize_map();
-    assert(mode == 0);
+    assert(g_mode == 0);
 
     if (script_loaded)
     {

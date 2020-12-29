@@ -83,11 +83,6 @@ sol::optional<ItemRef> Item_create_xy(int x, int y, sol::table args)
         nostack = *it ? 1 : 0;
     }
 
-    if (auto it = args.get<sol::optional<int>>("mode"))
-    {
-        mode = *it;
-    }
-
     if (auto it = args.get<sol::optional<int>>("number"))
     {
         number = *it;

@@ -1695,7 +1695,7 @@ TurnResult exit_map()
             lua::BaseEvent("core.before_map_unload"));
     }
 
-    mode = 2;
+    g_mode = 2;
     return TurnResult::initialize_map;
 }
 

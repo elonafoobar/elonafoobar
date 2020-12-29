@@ -200,9 +200,9 @@ void inject_display_modes()
     const auto default_display_mode =
         snail::Application::instance().get_default_display_mode();
 
-    // If there is no available display mode, we're probably in
-    // headless mode, so don't try to set any config options (or
-    // "invalid enum variant" will be generated).
+    // If there is no available display mode, we're probably in headless mode,
+    // so don't try to set any config options (or "invalid enum variant" will
+    // be generated).
     if (!display_modes.empty())
     {
         std::vector<std::string> display_mode_names;

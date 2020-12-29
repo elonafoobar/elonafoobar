@@ -996,7 +996,7 @@ void show_shop_log()
         ctrl_file_map_items_write("shoptmp.s2");
         ctrl_file_map_items_read(fs::u8path("inv_"s + mid + ".s2"));
     }
-    mode = 6;
+    g_mode = 6;
 
     const auto shop_level = 100 - game()->ranks.at(5) / 100;
     const auto num_of_customers =
@@ -1075,7 +1075,7 @@ void show_shop_log()
         }
     }
 
-    mode = 0;
+    g_mode = 0;
     if (game()->current_map != area)
     {
         ctrl_file_map_items_write(fs::u8path("inv_"s + mid + ".s2"));
@@ -1083,7 +1083,7 @@ void show_shop_log()
     }
 
     inv_open_tmp_inv("shop5.s2");
-    mode = 6;
+    g_mode = 6;
 
     if (total_profit != 0)
     {
@@ -1170,7 +1170,7 @@ void show_shop_log()
         modrank(5, 30, 2);
     }
 
-    mode = 0;
+    g_mode = 0;
     inv_close_tmp_inv("shop5.s2");
 }
 
@@ -1579,7 +1579,7 @@ void supply_income()
 {
     invfile = 4;
     inv_open_tmp_inv("shop4.s2");
-    mode = 6;
+    g_mode = 6;
     income(0) = 0;
     income(1) = 0;
     for (int cnt = 0; cnt < 9; ++cnt)
@@ -1670,7 +1670,7 @@ void supply_income()
                     game()->cost_to_hire + calccostbuilding() + calccosttax();
                 item->subname = item->subname * (100 + rnd(20)) / 100;
             }
-            mode = 0;
+            g_mode = 0;
             ++game()->left_bills;
             txt(i18n::s.get("core.misc.tax.bill"));
             if (game()->left_bills > 1)
@@ -1713,7 +1713,7 @@ void supply_income()
         }
     }
     inv_close_tmp_inv("shop4.s2");
-    mode = 0;
+    g_mode = 0;
     maybe_show_ex_help(16);
 }
 

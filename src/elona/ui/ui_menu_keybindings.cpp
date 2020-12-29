@@ -127,16 +127,16 @@ static void _load_keybindings()
 
 void UIMenuKeybindings::_draw_background()
 {
-    int bg_variant_buffer = mode == 10 ? 2 : 4;
+    int bg_variant_buffer = g_mode == 10 ? 2 : 4;
     load_background_variants(bg_variant_buffer);
     gsel(0);
 
-    if (mode == 0)
+    if (g_mode == 0)
     {
         screenupdate = -1;
         update_screen();
     }
-    if (mode == 10)
+    if (g_mode == 10)
     {
         gmode(0);
         asset_load("core.title");

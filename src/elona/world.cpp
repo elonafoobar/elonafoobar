@@ -214,7 +214,7 @@ void initialize_economy()
     bkdata(2) = cdata.player().position.x;
     bkdata(3) = cdata.player().position.y;
     save_save_game(save_game_no_message);
-    mode = 11;
+    g_mode = 11;
     cdata.player().position.x = 0;
     cdata.player().position.y = 0;
     scx = cdata.player().position.x;
@@ -290,7 +290,7 @@ void initialize_economy()
     cdata.player().position.x = bkdata(2);
     cdata.player().position.y = bkdata(3);
     game()->reset_world_map_in_diastrophism_flag = 1;
-    mode = 3;
+    g_mode = 3;
     mapsubroutine = 1;
     initialize_map();
     initeco = 0;

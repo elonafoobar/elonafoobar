@@ -56,7 +56,7 @@ void load_previous_savefile()
     filesystem::dirs::set_base_save_directory(filesystem::path(save_dir));
     save_load_game();
     elona::firstturn = 1;
-    elona::mode =
+    elona::g_mode =
         3; // begin the game as if it were loaded from a save; load inv_xxx.s2
     initialize_map();
 }
@@ -84,7 +84,7 @@ void load()
 {
     elona::firstturn = 1;
     save_load_game();
-    elona::mode = 3;
+    elona::g_mode = 3;
     initialize_map();
 }
 
@@ -133,7 +133,7 @@ void start_in_map(int map, int level)
     game()->current_map = map;
     game()->current_dungeon_level = level;
     fov_init_fovlist();
-    elona::mode = 2;
+    elona::g_mode = 2;
     initialize_map();
 
     save_save_game(save_game_no_message, save_game_silent);

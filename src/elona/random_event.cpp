@@ -156,11 +156,11 @@ optional<RandomEvent> generate_random_event()
     {
         return none;
     }
-    if (mode == 12)
+    if (g_mode == 12)
     {
         return none;
     }
-    if (mode == 9)
+    if (g_mode == 9)
     {
         return generate_random_event_in_sleep();
     }

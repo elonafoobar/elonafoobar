@@ -628,7 +628,7 @@ bool chara_place(Character& chara)
 
 void initialize_character(Character& chara)
 {
-    if (mode != 1)
+    if (g_mode != 1)
     {
         chara_add_quality_parens(chara);
     }

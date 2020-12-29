@@ -485,7 +485,7 @@ void supply_initial_equipments(Character& chara)
     eqamulet1.clear();
     eqamulet2.clear();
 
-    if (mode == 1)
+    if (g_mode == 1)
     {
         fixeq = 0;
         probeq = 10;

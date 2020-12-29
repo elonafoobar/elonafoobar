@@ -330,7 +330,7 @@ void conquer_lesimas()
 
     const auto win_comment = ask_win_comment();
 
-    mode = 7;
+    g_mode = 7;
     screenupdate = -1;
     update_screen();
     if (jp)
@@ -376,7 +376,7 @@ void conquer_lesimas()
         txt("…どれくらい時間がたっただろう。氷の瞳の男は、いつの間にか姿を消していた。あなたは不安を振り払い、ゆっくりと本に手を伸ばした…"s);
         msg_halt();
     }
-    mode = 0;
+    g_mode = 0;
     play_music("core.mcMarch2");
     ui_win_screen_fade();
     asset_load("core.void");

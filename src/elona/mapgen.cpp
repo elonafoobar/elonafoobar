@@ -879,7 +879,7 @@ void map_place_chara_on_pet_arena(Character& chara, ArenaCharaType chara_type)
 
 void map_place_player_and_allies()
 {
-    if (mode == 11)
+    if (g_mode == 11)
         return; // during the first initialization of all towns
 
     camera = 0;

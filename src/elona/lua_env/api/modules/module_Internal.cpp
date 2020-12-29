@@ -122,7 +122,7 @@ void Internal_leave_map()
 void Internal_strange_scientist_pick_reward()
 {
     inv_open_tmp_inv_no_physical_file();
-    mode = 6;
+    g_mode = 6;
     flt();
     itemcreate_tmp_inv(283, 0);
     flt();
@@ -183,7 +183,7 @@ void Internal_strange_scientist_pick_reward()
     invctrl(1) = 4;
     ctrl_inventory();
     inv_close_tmp_inv_no_physical_file();
-    mode = 0;
+    g_mode = 0;
 }
 
 

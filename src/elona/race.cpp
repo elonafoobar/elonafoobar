@@ -37,7 +37,7 @@ void race_init_chara(Character& chara, data::InstanceId race_id)
     }
     chara.height = data->height;
 
-    if (mode == 1)
+    if (g_mode == 1)
     {
         chara.sex = cmsex;
     }
