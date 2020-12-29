@@ -12,32 +12,6 @@ namespace elona
 namespace lua
 {
 
-namespace
-{
-
-template <typename F>
-std::vector<fs::path> mod_dirs_internal(const fs::path& base_dir, F predicate)
-{
-    std::vector<fs::path> result;
-    // E.g., lomias-1.2.3
-    for (const auto& entry : filesystem::glob_dirs(
-             base_dir, std::regex{R"([a-z][a-z0-9_]+-[0-9]\.[0-9]\.[0-9])"}))
-    {
-        if (fs::exists(entry.path() / "mod.json"))
-        {
-            if (predicate(entry.path()))
-            {
-                result.push_back(entry.path());
-            }
-        }
-    }
-    return result;
-}
-
-} // namespace
-
-
-
 optional<ConfigTable> get_data(
     data::PrototypeId prototype_id,
     data::InstanceId instance_id)
@@ -76,27 +50,17 @@ fs::path resolve_path_for_mod(const std::string& path)
 
 std::vector<fs::path> all_mod_dirs(const fs::path& base_dir)
 {
-    return mod_dirs_internal(base_dir, [](const auto&) { return true; });
-}
-
-
-
-std::vector<fs::path> template_mod_dirs(const fs::path& base_dir)
-{
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto id_and_version = path.filename().to_u8string();
-        return strutil::has_prefix(id_and_version, "template_");
-    });
-}
-
-
-
-std::vector<fs::path> normal_mod_dirs(const fs::path& base_dir)
-{
-    return mod_dirs_internal(base_dir, [](const auto& path) {
-        const auto id_and_version = path.filename().to_u8string();
-        return !strutil::has_prefix(id_and_version, "template_");
-    });
+    std::vector<fs::path> result;
+    // E.g., lomias-1.2.3
+    for (const auto& entry : filesystem::glob_dirs(
+             base_dir, std::regex{R"([a-z][a-z0-9_]+-[0-9]\.[0-9]\.[0-9])"}))
+    {
+        if (fs::exists(entry.path() / "mod.json"))
+        {
+            result.push_back(entry.path());
+        }
+    }
+    return result;
 }
 
 } // namespace lua

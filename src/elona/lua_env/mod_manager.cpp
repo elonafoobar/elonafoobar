@@ -127,7 +127,7 @@ std::vector<ModManifest> ModManager::installed_mods() const
     // Traverse `mod` directory, and gather the latest versions.
     std::unordered_map<std::string, std::pair<semver::Version, fs::path>>
         mod_dirs;
-    for (const auto& dir : normal_mod_dirs(filesystem::dirs::mod()))
+    for (const auto& dir : all_mod_dirs(filesystem::dirs::mod()))
     {
         // Get mod ID and version from folder name.
         const auto dir_name = dir.filename().to_u8string();
@@ -340,34 +340,16 @@ void ModManager::run_in_mod(const std::string& id, const std::string& script)
 
 
 
-std::vector<ModManifest> ModManager::get_templates()
-{
-    std::vector<ModManifest> result;
-    for (const auto& path : template_mod_dirs(filesystem::dirs::mod()))
-    {
-        auto manifest = ModManifest::load(path / "mod.json");
-        result.push_back(manifest);
-    }
-    return result;
-}
-
-
-
-void ModManager::create_mod_from_template(
-    const std::string& new_mod_id,
-    const std::string& template_mod_id,
-    const semver::Version& template_mod_version)
+void ModManager::create_new_mod(const std::string& new_mod_id)
 {
     const auto new_mod_version = semver::Version{0, 1, 0};
+    const auto mod_dir = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
 
-    // Copy all files from the template mod to the new mod.
-    const auto from =
-        filesystem::dirs::for_mod(template_mod_id, template_mod_version);
-    const auto to = filesystem::dirs::for_mod(new_mod_id, new_mod_version);
-    fs::copy_recursively(from, to);
+    // Make mod's directory.
+    fs::create_directory(mod_dir);
 
     // Edit the new mod's manifest file.
-    auto new_mod_manifest = ModManifest::load(to / "mod.json");
+    auto new_mod_manifest = ModManifest::load(mod_dir / "mod.json");
     new_mod_manifest.id = new_mod_id;
     new_mod_manifest.version = new_mod_version;
     new_mod_manifest.name.default_text = new_mod_id;
@@ -380,7 +362,10 @@ bool ModManager::exists(const std::string& mod_id)
 {
     for (const auto& dir : all_mod_dirs(filesystem::dirs::mod()))
     {
-        if (mod_id == dir.filename().to_u8string())
+        const auto dir_name = dir.filename().to_u8string();
+        const auto [id, _version_str] = strutil::split_on_string(dir_name, "-");
+        (void)_version_str;
+        if (mod_id == id)
         {
             return true;
         }

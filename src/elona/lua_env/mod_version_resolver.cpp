@@ -187,7 +187,7 @@ ModIndex ModIndex::traverse(const fs::path& mod_root_dir)
 {
     std::unordered_map<std::string, std::vector<IndexEntry>> mods;
 
-    for (const auto& mod_dir : normal_mod_dirs(mod_root_dir))
+    for (const auto& mod_dir : all_mod_dirs(mod_root_dir))
     {
         ModManifest manifest = ModManifest::load(mod_dir / "mod.json");
         const auto& id = manifest.id;
