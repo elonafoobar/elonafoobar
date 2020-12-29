@@ -80,10 +80,6 @@ format: FORCE # Format all C++ source files.
 	test -z "$$(git status --short)"
 
 
-docgen: # Generate ldoc files from C++ sources.
-	cargo run --release --manifest-path tools/docgen/Cargo.toml -- -f -o doc/api src/elona/lua_env
-
-
 ldoc: FORCE # Generate LDoc.
 	-@$(RM) -rf $(BIN_DIR)/doc
 	-@$(RM) -rf doc/generated
