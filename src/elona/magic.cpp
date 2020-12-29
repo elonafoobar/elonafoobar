@@ -3797,6 +3797,172 @@ void _ball_spell(Character& subject)
 
 
 
+void proc_bolt(Character& subject, Character& target)
+{
+    (void)target;
+
+    const auto route = fov_get_route(subject.position, Position{tlocx, tlocy});
+    if (route.empty())
+    {
+        return;
+    }
+    {
+        int distance = the_skill_db[efid]->range % 1000 + 1;
+        BoltAnimation(subject.position, {tlocx, tlocy}, ele, distance, route)
+            .play();
+    }
+    dx = subject.position.x;
+    dy = subject.position.y;
+    for (int cnt = 0; cnt < 20; ++cnt)
+    {
+        const auto route_result = route_info(dx, dy, cnt, route);
+        if (route_result == RouteInfo::stop)
+        {
+            break;
+        }
+        else if (route_result == RouteInfo::skip)
+        {
+            continue;
+        }
+        if (dist(dx, dy, subject.position) >
+            the_skill_db[efid]->range % 1000 + 1)
+        {
+            break;
+        }
+        if (dx == subject.position.x && dy == subject.position.y)
+        {
+            continue;
+        }
+        if (ele == 50)
+        {
+            mapitem_fire(subject, dx, dy);
+        }
+        if (ele == 51)
+        {
+            mapitem_cold(dx, dy);
+        }
+        if (cell_data.at(dx, dy).chara_index_plus_one != 0)
+        {
+            const auto target_index =
+                cell_data.at(dx, dy).chara_index_plus_one - 1;
+            if (subject.index != target_index)
+            {
+                if (game()->mount != 0)
+                {
+                    if (game()->mount == subject.index)
+                    {
+                        if (target_index == 0)
+                        {
+                            continue;
+                        }
+                    }
+                }
+                dmg = roll(dice1, dice2, bonus);
+                if (calc_magic_control(subject, cdata[target_index]))
+                {
+                    continue;
+                }
+                if (is_in_fov(cdata[target_index]))
+                {
+                    if (target_index >= 16)
+                    {
+                        g_proc_damage_events_flag = 2;
+                        txt3rd = 1;
+                        txt(i18n::s.get(
+                            "core.magic.bolt.other", cdata[target_index]));
+                    }
+                    else
+                    {
+                        txt(i18n::s.get(
+                            "core.magic.bolt.ally", cdata[target_index]));
+                    }
+                }
+                damage_hp(cdata[target_index], dmg, subject.index, ele, elep);
+            }
+        }
+    }
+}
+
+
+
+void proc_breath(Character& subject, Character& target)
+{
+    (void)target;
+
+    const auto route = fov_get_route(subject.position, Position{tlocx, tlocy});
+    if (route.empty())
+    {
+        return;
+    }
+    std::string valn;
+    if (ele)
+    {
+        valn = i18n::s.get(
+            "core.magic.breath.named", the_skill_db.get_text(ele, "name"));
+    }
+    else
+    {
+        valn = i18n::s.get("core.magic.breath.no_element");
+    }
+    if (is_in_fov(subject))
+    {
+        txt(i18n::s.get("core.magic.breath.bellows", subject, valn));
+    }
+
+    const auto breath_route = fov_get_breath_route(
+        subject.position, the_skill_db[efid]->range % 1000 + 1, route);
+
+    BreathAnimation(subject.position, {tlocx, tlocy}, breath_route, ele).play();
+
+    for (const auto pos : breath_route)
+    {
+        const auto [dx, dy] = pos;
+        if (!fov_los(subject.position, pos))
+        {
+            continue;
+        }
+        if (pos == subject.position)
+        {
+            continue;
+        }
+        if (ele == 50)
+        {
+            mapitem_fire(subject, dx, dy);
+        }
+        if (ele == 51)
+        {
+            mapitem_cold(dx, dy);
+        }
+        if (cell_data.at(dx, dy).chara_index_plus_one != 0)
+        {
+            const auto target_index =
+                cell_data.at(dx, dy).chara_index_plus_one - 1;
+            if (subject.index != target_index)
+            {
+                dmg = roll(dice1, dice2, bonus);
+                if (is_in_fov(cdata[target_index]))
+                {
+                    if (target_index >= 16)
+                    {
+                        g_proc_damage_events_flag = 2;
+                        txt3rd = 1;
+                        txt(i18n::s.get(
+                            "core.magic.breath.other", cdata[target_index]));
+                    }
+                    else
+                    {
+                        txt(i18n::s.get(
+                            "core.magic.breath.ally", cdata[target_index]));
+                    }
+                }
+                damage_hp(cdata[target_index], dmg, subject.index, ele, elep);
+            }
+        }
+    }
+}
+
+
+
 optional<bool> _proc_general_magic(Character& subject, Character& target)
 {
     int efbad = 0;
@@ -3960,91 +4126,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
             .play();
         try_to_melee_attack(subject, target);
         return true;
-    case 1: {
-        int stat =
-            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
-        if (stat == 0)
-        {
-            return true;
-        }
-    }
-        {
-            int distance = the_skill_db[efid]->range % 1000 + 1;
-            BoltAnimation(subject.position, {tlocx, tlocy}, ele, distance)
-                .play();
-        }
-        dx = subject.position.x;
-        dy = subject.position.y;
-        for (int cnt = 0; cnt < 20; ++cnt)
-        {
-            int stat = route_info(dx, dy, cnt);
-            if (stat == 0)
-            {
-                break;
-            }
-            else if (stat == -1)
-            {
-                continue;
-            }
-            if (dist(dx, dy, subject.position) >
-                the_skill_db[efid]->range % 1000 + 1)
-            {
-                break;
-            }
-            if (dx == subject.position.x && dy == subject.position.y)
-            {
-                continue;
-            }
-            if (ele == 50)
-            {
-                mapitem_fire(subject, dx, dy);
-            }
-            if (ele == 51)
-            {
-                mapitem_cold(dx, dy);
-            }
-            if (cell_data.at(dx, dy).chara_index_plus_one != 0)
-            {
-                const auto target_index =
-                    cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (subject.index != target_index)
-                {
-                    if (game()->mount != 0)
-                    {
-                        if (game()->mount == subject.index)
-                        {
-                            if (target_index == 0)
-                            {
-                                continue;
-                            }
-                        }
-                    }
-                    dmg = roll(dice1, dice2, bonus);
-                    if (calc_magic_control(subject, cdata[target_index]))
-                    {
-                        continue;
-                    }
-                    if (is_in_fov(cdata[target_index]))
-                    {
-                        if (target_index >= 16)
-                        {
-                            g_proc_damage_events_flag = 2;
-                            txt3rd = 1;
-                            txt(i18n::s.get(
-                                "core.magic.bolt.other", cdata[target_index]));
-                        }
-                        else
-                        {
-                            txt(i18n::s.get(
-                                "core.magic.bolt.ally", cdata[target_index]));
-                        }
-                    }
-                    damage_hp(
-                        cdata[target_index], dmg, subject.index, ele, elep);
-                }
-            }
-        }
-        return true;
+    case 1: proc_bolt(subject, target); return true;
     case 3: _ball_spell(subject); return true;
     case 2:
         RangedAttackAnimation(
@@ -4504,78 +4586,7 @@ optional<bool> _proc_general_magic(Character& subject, Character& target)
         }
         return true;
     }
-    case 8:
-        int stat =
-            get_route(subject.position.x, subject.position.y, tlocx, tlocy);
-        if (stat == 0)
-        {
-            return true;
-        }
-        std::string valn;
-        if (ele)
-        {
-            valn = i18n::s.get(
-                "core.magic.breath.named", the_skill_db.get_text(ele, "name"));
-        }
-        else
-        {
-            valn = i18n::s.get("core.magic.breath.no_element");
-        }
-        if (is_in_fov(subject))
-        {
-            txt(i18n::s.get("core.magic.breath.bellows", subject, valn));
-        }
-        breath_list(subject.position);
-        BreathAnimation(subject.position, {tlocx, tlocy}, ele).play();
-        for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
-        {
-            dx = breathlist(0, cnt);
-            dy = breathlist(1, cnt);
-            if (!fov_los(subject.position, {dx, dy}))
-            {
-                continue;
-            }
-            if (dx == subject.position.x && dy == subject.position.y)
-            {
-                continue;
-            }
-            if (ele == 50)
-            {
-                mapitem_fire(subject, dx, dy);
-            }
-            if (ele == 51)
-            {
-                mapitem_cold(dx, dy);
-            }
-            if (cell_data.at(dx, dy).chara_index_plus_one != 0)
-            {
-                const auto target_index =
-                    cell_data.at(dx, dy).chara_index_plus_one - 1;
-                if (subject.index != target_index)
-                {
-                    dmg = roll(dice1, dice2, bonus);
-                    if (is_in_fov(cdata[target_index]))
-                    {
-                        if (target_index >= 16)
-                        {
-                            g_proc_damage_events_flag = 2;
-                            txt3rd = 1;
-                            txt(i18n::s.get(
-                                "core.magic.breath.other",
-                                cdata[target_index]));
-                        }
-                        else
-                        {
-                            txt(i18n::s.get(
-                                "core.magic.breath.ally", cdata[target_index]));
-                        }
-                    }
-                    damage_hp(
-                        cdata[target_index], dmg, subject.index, ele, elep);
-                }
-            }
-        }
-        return true;
+    case 8: proc_breath(subject, target); return true;
     }
 }
 

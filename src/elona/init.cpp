@@ -17,6 +17,7 @@
 #include "deferred_event.hpp"
 #include "draw.hpp"
 #include "enchantment.hpp"
+#include "fov.hpp"
 #include "game.hpp"
 #include "god.hpp"
 #include "i18n.hpp"
@@ -617,7 +618,7 @@ void initialize_game(InitializeGameMode start_mode)
         script_loaded = true;
     }
 
-    init_fovlist();
+    fov_init_fovlist();
 
     assert(mode == 2 || mode == 3);
     initialize_map();

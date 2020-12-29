@@ -86,9 +86,11 @@ public:
     BreathAnimation(
         const Position& attacker_pos,
         const Position& target_pos,
+        const std::vector<Position>& breath_route,
         int element)
         : attacker_pos(attacker_pos)
         , target_pos(target_pos)
+        , breath_route(breath_route)
         , element(element)
     {
     }
@@ -101,6 +103,7 @@ protected:
 private:
     const Position& attacker_pos;
     const Position& target_pos;
+    const std::vector<Position>& breath_route;
     int element;
 };
 
@@ -149,11 +152,13 @@ public:
         const Position& attacker_pos,
         const Position& target_pos,
         int element,
-        int distance)
+        int distance,
+        const std::vector<std::pair<int, int>>& route)
         : attacker_pos(attacker_pos)
         , target_pos(target_pos)
         , element(element)
         , distance(distance)
+        , route(route)
     {
     }
 
@@ -167,6 +172,7 @@ private:
     const Position& target_pos;
     int element;
     int distance;
+    const std::vector<std::pair<int, int>>& route;
 };
 
 

@@ -68,18 +68,6 @@ Position rendering_base_position_center(const Position& position)
 
 
 
-std::vector<Position> breath_pos()
-{
-    std::vector<Position> ret(maxbreath);
-    for (int i = 0; i < maxbreath; ++i)
-    {
-        ret[i] = {breathlist(0, i), breathlist(1, i)};
-    }
-    return ret;
-}
-
-
-
 template <typename F>
 void do_animation(
     const Position& center,
@@ -327,11 +315,10 @@ void BreathAnimation::do_play()
         gcopy(4, 0, 0, windoww, windowh, 0, 0);
 
         bool did_draw{};
-        for (const auto& position : breath_pos())
+        for (const auto& position : breath_route)
         {
-            const auto dx = position.x;
-            const auto dy = position.y;
-            if (!fov_los(attacker_pos, {dx, dy}))
+            const auto [dx, dy] = position;
+            if (!fov_los(attacker_pos, position))
             {
                 continue;
             }
@@ -500,13 +487,13 @@ void BoltAnimation::do_play()
     {
         if (ap(20) == -1)
         {
-            int stat = route_info(x, y, t);
-            if (stat == -1)
+            const auto route_result = route_info(x, y, t, route);
+            if (route_result == RouteInfo::skip)
             {
                 ap(t) = -1;
                 continue;
             }
-            else if (stat == 0)
+            else if (route_result == RouteInfo::stop)
             {
                 ap(t) = -2;
                 ap(20) = 4;
