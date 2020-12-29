@@ -1,6 +1,6 @@
 require("tests/lua/support/minctest")
 
-local Chara = ELONA.require("core.Chara")
+local Chara = require("core.Chara")
 
 lrun("test Chara.is_alive", function()
         Testing.start_in_debug_map()

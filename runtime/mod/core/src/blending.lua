@@ -1,5 +1,5 @@
-local Data = ELONA.require("core.Data")
-local I18N = ELONA.require("core.I18N")
+local Data = require("core.Data")
+local I18N = require("core.I18N")
 local table = table
 
 

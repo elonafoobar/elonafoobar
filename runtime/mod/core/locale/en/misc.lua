@@ -1,4 +1,4 @@
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 -- TODO
 -- These text are unclassed. They should be moved to appropriate files.

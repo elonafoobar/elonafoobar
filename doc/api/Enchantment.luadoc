@@ -1,5 +1,5 @@
 --- Handle item enchantments.
---  @usage local Enchantment = ELONA.require("core.Enchantment")
+--  @usage local Enchantment = require("core.Enchantment")
 module "Enchantment"
 
 --- Add an enchantment to the item.

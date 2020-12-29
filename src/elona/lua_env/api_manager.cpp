@@ -139,23 +139,6 @@ api_table = kernel.ReadOnly.make_read_only(api_table)
 
 
 
-void APIManager::bind(LuaEnv& lua, sol::table table)
-{
-    auto ELONA = table.create_named("ELONA");
-    ELONA["require"] = [&lua](const std::string& name) {
-        return lua.get_api_manager().try_find_api(name);
-    };
-}
-
-
-
-void APIManager::set_on(LuaEnv& lua)
-{
-    bind(lua, lua.get_state()->globals());
-}
-
-
-
 sol::table APIManager::get_master_api_table()
 {
     return env()["api_table"];

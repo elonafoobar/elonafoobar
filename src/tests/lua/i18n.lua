@@ -1,16 +1,16 @@
 require("tests/lua/support/minctest")
 
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
-local Chara = ELONA.require("core.Chara")
-local FOV = ELONA.require("core.FOV")
-local Item = ELONA.require("core.Item")
+local Chara = require("core.Chara")
+local FOV = require("core.FOV")
+local Item = require("core.Item")
 
 lrun("test I18N.get", function()
         Testing.start_in_debug_map()
 
         Testing.reinit_core_and_load_translations([[
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = "bar",
@@ -45,7 +45,7 @@ lrun("test I18N.get_optional", function()
         Testing.start_in_debug_map()
 
         Testing.load_translations([[
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = "bar",
@@ -71,7 +71,7 @@ end)
 
 lrun("test I18N.get_enum", function()
         Testing.load_translations([[
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
   foo = {
@@ -90,7 +90,7 @@ end)
 
 lrun("test I18N.get_enum_property", function()
         Testing.load_translations([[
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo1 = {
@@ -121,7 +121,7 @@ end)
 
 lrun("test I18N.get_enum_property_optional", function()
         Testing.load_translations([[
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo2 = {

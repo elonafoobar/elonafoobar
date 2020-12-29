@@ -1,6 +1,6 @@
-local Data = ELONA.require("core.Data")
-local Log = ELONA.require("core.Log")
-local Rand = ELONA.require("core.Rand")
+local Data = require("core.Data")
+local Log = require("core.Log")
+local Rand = require("core.Rand")
 local math = math
 local table = table
 

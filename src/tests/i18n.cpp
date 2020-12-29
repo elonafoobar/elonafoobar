@@ -90,7 +90,7 @@ TEST_CASE("test format item", "[I18N: Formatting]")
 TEST_CASE("test i18n store literal", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = "bar"
@@ -106,7 +106,7 @@ I18N.add {
 TEST_CASE("test i18n store nested literal", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {
@@ -123,7 +123,7 @@ I18N.add {
 TEST_CASE("test i18n store multiple nested literals", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {
@@ -144,7 +144,7 @@ I18N.add {
 TEST_CASE("test i18n store enum", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {
@@ -163,7 +163,7 @@ I18N.add {
 TEST_CASE("test i18n store complex enum", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {
@@ -186,7 +186,7 @@ I18N.add {
 TEST_CASE("test i18n store interpolation", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = "bar: {$1}"
@@ -204,7 +204,7 @@ I18N.add {
 TEST_CASE("test i18n store multiple interpolation", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = "{$2}: {$1}"
@@ -225,7 +225,7 @@ I18N.add {
 TEST_CASE("test i18n store enum interpolation", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {
@@ -250,7 +250,7 @@ I18N.add {
 TEST_CASE("test i18n lists", "[I18N: Store]")
 {
     i18n::Store store = load(R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    foo = {"baz: {$1}"}
@@ -266,7 +266,7 @@ TEST_CASE("test i18n halfwidth katakana", "[I18N: Store]")
 {
     i18n::Store store = load(
         u8R"(
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    ether_disease = "ｴｰﾃﾙ病"

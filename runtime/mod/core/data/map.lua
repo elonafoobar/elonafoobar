@@ -1,12 +1,12 @@
-local Calc = ELONA.require("core.Calc")
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local Map = ELONA.require("core.Map")
-local Rand = ELONA.require("core.Rand")
+local Calc = require("core.Calc")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local Map = require("core.Map")
+local Rand = require("core.Rand")
 local math = math
 local table = table
 
-local map = require("map/static.lua")
+local map = require_relative("map/static.lua")
 
 local function chara_filter_town(callbacks)
    return function()

@@ -15,10 +15,10 @@ Starting the game will place you in a script testing map, isolated from your oth
 ### Module requires
 
 ```
-local Map = ELONA.require("core.Map")
-local Enums = ELONA.require("core.Enums")
-local Event = ELONA.require("core.Event")
-local Rand = ELONA.require("core.Rand")
+local Map = require("core.Map")
+local Enums = require("core.Enums")
+local Event = require("core.Event")
+local Rand = require("core.Rand")
 ```
 
 At the top, we have some defines. All modules related to the core API can be obtained by using `require`.

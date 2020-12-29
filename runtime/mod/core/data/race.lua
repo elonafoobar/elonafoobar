@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 -- Common body parts of human/demi-human races
 local humanoid_body_parts = {

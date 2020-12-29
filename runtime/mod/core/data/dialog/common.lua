@@ -1,7 +1,7 @@
-local Chara = ELONA.require("core.Chara")
-local Map = ELONA.require("core.Map")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
+local Chara = require("core.Chara")
+local Map = require("core.Map")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
 
 local function create_downstairs(x, y, dungeon_level)
    Map.set_feat(x, y, 231, 11, dungeon_level)

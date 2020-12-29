@@ -1,10 +1,10 @@
-local Chara = ELONA.require("core.Chara")
-local Config = ELONA.require("core.Config")
-local Console = ELONA.require("core.Console")
-local Data = ELONA.require("core.Data")
-local Debug = ELONA.require("core.Debug")
-local Internal = ELONA.require("core.Internal")
-local Wish = ELONA.require("core.Wish")
+local Chara = require("core.Chara")
+local Config = require("core.Config")
+local Console = require("core.Console")
+local Data = require("core.Data")
+local Debug = require("core.Debug")
+local Internal = require("core.Internal")
+local Wish = require("core.Wish")
 
 
 

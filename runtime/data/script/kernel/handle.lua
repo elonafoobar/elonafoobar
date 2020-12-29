@@ -37,8 +37,8 @@ local function handle_error(handle, key)
       return
    end
 
-   if ELONA and ELONA.require then
-      local GUI = ELONA.require("core.GUI")
+   if ELONA and require then
+      local GUI = require("core.GUI")
       GUI.txt_color(3)
       GUI.txt("Error: handle is not valid! ")
       if key ~= nil then

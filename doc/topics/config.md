@@ -27,7 +27,7 @@ config {
 Then, add a corresponding translation file to `locale/en` or `locale/ja`.
 
 ```lua
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    config = {
@@ -103,7 +103,7 @@ The following is a translation file which corresponds to the `config-schema.lua`
 
 
 ```lua
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    config = {
@@ -188,7 +188,7 @@ Random events will still occur. In most cases, a default option will be chosen.]
 To access and change config options from mods, use the [Config](../modules/Config.html) API.
 
 ```lua
-local Config = ELONA.require("core.Config")
+local Config = require("core.Config")
 
 print(Config.get("core.game.extra_help"))
 print(Config.set("core.balance.restock_interval", 10))

@@ -1,6 +1,6 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
-local unique = require("dialog/unique.lua")
+local unique = require_relative("dialog/unique.lua")
 
 Data.define_prototype("dialog")
 Data.add(

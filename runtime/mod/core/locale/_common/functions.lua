@@ -1,6 +1,6 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local I18N = ELONA.require("core.I18N")
-local Item = ELONA.require("core.Item")
+local I18N = require("core.I18N")
+local Item = require("core.Item")
 local string = string
 
 

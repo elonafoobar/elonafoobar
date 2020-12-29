@@ -20,7 +20,7 @@ TEST_CASE("Test character created callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_chara_created", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_created_handler(e)
    mod.store.global.charas[e.chara.index] = e.chara
@@ -52,7 +52,7 @@ TEST_CASE("Test character hurt callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_chara_hurt", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_hurt_handler(e)
    mod.store.global.hurt_idx = e.chara.index
@@ -89,7 +89,7 @@ TEST_CASE("Test character removed callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_chara_removed", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_removed_handler(e)
    mod.store.global.removed_idx = e.chara.index
@@ -122,7 +122,7 @@ TEST_CASE("Test character killed callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_chara_killed", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_killed_handler(e)
    mod.store.global.killed_idx = e.chara.index
@@ -157,8 +157,8 @@ TEST_CASE(
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_townsperson_killed", R"(
-local Chara = ELONA.require("core.Chara")
-local Event = ELONA.require("core.Event")
+local Chara = require("core.Chara")
+local Event = require("core.Event")
 
 mod.store.global.townsperson = Chara.create(0, 0, "core.putit")
 mod.store.global.townsperson.role = 14
@@ -202,7 +202,7 @@ TEST_CASE(
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_special_chara_killed", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_removed_handler(e)
    mod.store.global.removed_idx = e.chara.index
@@ -249,7 +249,7 @@ TEST_CASE("Test character refreshed callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_chara_refreshed", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_chara_refreshed_handler(e)
    mod.store.global.idx = e.chara.index
@@ -280,7 +280,7 @@ TEST_CASE("Test item created callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_item_created", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_item_created_handler(e)
    mod.store.global.event_handler_called = true
@@ -305,7 +305,7 @@ TEST_CASE("Test map unloading callback", "[Lua: Callbacks]")
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_map_unloading", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_map_unloading_handler()
    mod.store.global.map_unloaded = true
@@ -334,7 +334,7 @@ TEST_CASE(
     REQUIRE_NOTHROW(
         elona::lua::lua->get_mod_manager().load_testing_mod_from_script(
             "test_map_local_chara", R"(
-local Chara = ELONA.require("core.Chara")
+local Chara = require("core.Chara")
 
 mod.store.global.chara = Chara.create(24, 24, "core.putit")
 mod.store.global.player = Chara.player()

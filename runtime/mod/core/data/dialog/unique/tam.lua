@@ -1,9 +1,9 @@
-local Chara = ELONA.require("core.Chara")
-local Map = ELONA.require("core.Map")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
+local Chara = require("core.Chara")
+local Map = require("core.Map")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 return {
    root = "core.talk.unique.tam",

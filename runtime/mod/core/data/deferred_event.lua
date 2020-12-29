@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 Data.define_prototype("deferred_event")
 Data.add(

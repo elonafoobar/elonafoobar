@@ -1,5 +1,5 @@
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
 
 Data.define_prototype("chara")
 Data.add(

@@ -1,4 +1,4 @@
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 -- NOTE: Will change drastically with the introduction of custom gods.
 

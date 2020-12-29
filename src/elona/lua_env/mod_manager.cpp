@@ -477,7 +477,6 @@ void ModManager::setup_mod_globals(ModEnv& mod)
 
     mt["mod"] = create_mod_table(L);
 
-    lua().get_api_manager().bind(lua(), mt);
     mt["_MOD_ID"] = mod.manifest.id;
 
     // Add a list of whitelisted standard library functions to the
@@ -490,13 +489,17 @@ void ModManager::setup_mod_globals(ModEnv& mod)
     {
         auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
-        mt["require"] = [state, &chunk_cache](
-                            const std::string& name,
-                            sol::this_environment this_env) {
+        mt["require_relative"] = [state, &chunk_cache](
+                                     const std::string& name,
+                                     sol::this_environment this_env) {
             sol::environment env = this_env;
             return chunk_cache.require(name, env, *state);
         };
     }
+
+    mt["require"] = [](const std::string& name) {
+        return lua::lua->get_api_manager().try_find_api(name);
+    };
 
     mt[sol::meta_function::new_index] = deny_new_fields;
     mt[sol::meta_function::index] = mt;

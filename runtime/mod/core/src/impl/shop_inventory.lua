@@ -1,10 +1,10 @@
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local Inventory = ELONA.require("core.Inventory")
-local Item = ELONA.require("core.Item")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local Inventory = require("core.Inventory")
+local Item = require("core.Item")
 local math = math
-local Chara = ELONA.require("core.Chara")
-local Rand = ELONA.require("core.Rand")
+local Chara = require("core.Chara")
+local Rand = require("core.Rand")
 
 local shop_inventory = {}
 

@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 Data.define_prototype("sound")
 Data.add(

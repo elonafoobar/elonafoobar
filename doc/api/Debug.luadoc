@@ -1,5 +1,5 @@
 --- Functions for debugging scripts.
---  @usage local Debug = ELONA.require("core.Debug")
+--  @usage local Debug = require("core.Debug")
 module "Debug"
 
 --- Enable Wizard mode. It is equivalent to turn `core.wizard.is_enabled` on.

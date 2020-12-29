@@ -1,9 +1,9 @@
-local Chara = ELONA.require("core.Chara")
-local FOV = ELONA.require("core.FOV")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Rand = ELONA.require("core.Rand")
-local Trait = ELONA.require("core.Trait")
+local Chara = require("core.Chara")
+local FOV = require("core.FOV")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Rand = require("core.Rand")
+local Trait = require("core.Trait")
 local math = math
 
 local EatingEffects = {}

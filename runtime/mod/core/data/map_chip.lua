@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 local function make_atlas(atlas_index)
    local atlas = {}

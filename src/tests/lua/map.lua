@@ -1,6 +1,6 @@
 require("tests/lua/support/minctest")
 
-local Map = ELONA.require("core.Map")
+local Map = require("core.Map")
 
 lrun("test Map.width/Map.height", function()
         Testing.start_in_debug_map()

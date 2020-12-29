@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 -- Contains only id, to test handling of defaults.
 Data.add(

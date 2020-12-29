@@ -1,6 +1,6 @@
-local Chara = ELONA.require("core.Chara")
-local Data = ELONA.require("core.Data")
-local I18N = ELONA.require("core.I18N")
+local Chara = require("core.Chara")
+local Data = require("core.Data")
+local I18N = require("core.I18N")
 local math = math
 
 local function mod_skill_level(args, id, amount)

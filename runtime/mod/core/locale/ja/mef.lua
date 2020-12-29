@@ -1,4 +1,4 @@
-local I18N = ELONA.require("core.I18N")
+local I18N = require("core.I18N")
 
 I18N.add {
    mef = {

@@ -1,7 +1,7 @@
 require("tests/lua/support/minctest")
 
-local Item = ELONA.require("core.Item")
-local Inventory = ELONA.require("core.Inventory")
+local Item = require("core.Item")
+local Inventory = require("core.Inventory")
 
 lrun("test Item.create", function()
         Testing.start_in_debug_map()

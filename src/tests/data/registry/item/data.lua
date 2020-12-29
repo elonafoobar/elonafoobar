@@ -1,4 +1,4 @@
-local Data = ELONA.require("core.Data")
+local Data = require("core.Data")
 
 -- Contains all possible item parameters for testing.
 Data.add(

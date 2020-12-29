@@ -1,9 +1,9 @@
-local Chara = ELONA.require("core.Chara")
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local Item = ELONA.require("core.Item")
-local Map = ELONA.require("core.Map")
-local Rand = ELONA.require("core.Rand")
+local Chara = require("core.Chara")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local Item = require("core.Item")
+local Map = require("core.Map")
+local Rand = require("core.Rand")
 
 -- Returns 'drops' table from array of item IDs.
 local function make_drops(ids)

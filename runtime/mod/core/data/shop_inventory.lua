@@ -1,8 +1,8 @@
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local Item = ELONA.require("core.Item")
-local Rand = ELONA.require("core.Rand")
-local World = ELONA.require("core.World")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local Item = require("core.Item")
+local Rand = require("core.Rand")
+local World = require("core.World")
 local math = math
 
 -- Generates a list to be used with "choices" which will set the

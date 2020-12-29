@@ -1,13 +1,13 @@
-local Chara = ELONA.require("core.Chara")
-local Data = ELONA.require("core.Data")
-local Enchantment = ELONA.require("core.Enchantment")
-local Enums = ELONA.require("core.Enums")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Inventory = ELONA.require("core.Inventory")
-local Item = ELONA.require("core.Item")
-local Rand = ELONA.require("core.Rand")
-local World = ELONA.require("core.World")
+local Chara = require("core.Chara")
+local Data = require("core.Data")
+local Enchantment = require("core.Enchantment")
+local Enums = require("core.Enums")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Inventory = require("core.Inventory")
+local Item = require("core.Item")
+local Rand = require("core.Rand")
+local World = require("core.World")
 
 
 

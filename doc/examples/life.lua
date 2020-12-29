@@ -1,7 +1,7 @@
-local Map = ELONA.require("core.Map")
-local Enums = ELONA.require("core.Enums")
-local Event = ELONA.require("core.Event")
-local Rand = ELONA.require("core.Rand")
+local Map = require("core.Map")
+local Enums = require("core.Enums")
+local Event = require("core.Event")
+local Rand = require("core.Rand")
 
 local function create_life_grid()
    local grid = {}

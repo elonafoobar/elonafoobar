@@ -1,6 +1,6 @@
 --- Functions for localization.
 --  See the I18N section for more information.
---  @usage local I18N = ELONA.require("core.I18N")
+--  @usage local I18N = require("core.I18N")
 --  @module "I18N"
 local I18N = {}
 

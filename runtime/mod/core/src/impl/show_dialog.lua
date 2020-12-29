@@ -1,9 +1,9 @@
-local Chara = ELONA.require("core.Chara")
-local Data = ELONA.require("core.Data")
-local I18N = ELONA.require("core.I18N")
-local Input = ELONA.require("core.Input")
-local Internal = ELONA.require("core.Internal")
-local Enums = ELONA.require("core.Enums")
+local Chara = require("core.Chara")
+local Data = require("core.Data")
+local I18N = require("core.I18N")
+local Input = require("core.Input")
+local Internal = require("core.Internal")
+local Enums = require("core.Enums")
 local table = table
 
 local function dialog_error(talk, msg, err)

@@ -129,7 +129,7 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
     lua.load_mods();
 
     REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_turn_handler()
   mod.store.global.thing = mod.store.global.thing + 1
@@ -189,7 +189,7 @@ TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
     lua.load_mods();
 
     REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_turn_handler()
    for x = 1, 20 do

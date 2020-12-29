@@ -237,7 +237,7 @@ bool LuaCharacter_get_flag(Character& chara, const EnumString& flag)
  * @tparam Enums.CharaFlag flag the flag to set
  * @tparam bool value the flag's new value
  * @see core.event
- * @usage local Event = ELONA.require("core.Event")
+ * @usage local Event = require("core.Event")
  *
  * local function make_invisible(e)
  * e.chara:set_flag("is_invisible", true) -- intrinsic, reset on refresh
