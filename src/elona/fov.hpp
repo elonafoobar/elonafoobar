@@ -27,10 +27,30 @@ bool is_in_fov(const Character& chara);
  */
 bool fov_los(const Position& p1, const Position& p2);
 
-int get_route(int = 0, int = 0, int = 0, int = 0);
-void init_fovlist();
+std::vector<std::pair<int, int>> fov_get_route(
+    const Position& p1,
+    const Position& p2);
 
-int breath_list(const Position& source_pos);
-int route_info(int&, int&, int = 0);
+std::vector<Position> fov_get_breath_route(
+    const Position& source_pos,
+    int range,
+    const std::vector<std::pair<int, int>>& route);
+
+
+
+enum class RouteInfo
+{
+    skip,
+    stop,
+    go,
+};
+
+RouteInfo route_info(
+    int& x,
+    int& y,
+    int step,
+    const std::vector<std::pair<int, int>>& route);
+
+void fov_init_fovlist();
 
 } // namespace elona

@@ -9,6 +9,7 @@
 #include "data/types/type_music.hpp"
 #include "data/types/type_sound.hpp"
 #include "draw.hpp"
+#include "fov.hpp"
 #include "game.hpp"
 #include "i18n.hpp"
 #include "init.hpp"
@@ -131,7 +132,7 @@ void start_in_map(int map, int level)
 
     game()->current_map = map;
     game()->current_dungeon_level = level;
-    init_fovlist();
+    fov_init_fovlist();
     elona::mode = 2;
     initialize_map();
 

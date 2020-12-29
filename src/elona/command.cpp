@@ -1487,25 +1487,23 @@ TurnResult do_look_command()
                 if (cs == cnt)
                 {
                     i = p;
-                    get_route(
-                        cdata.player().position.x,
-                        cdata.player().position.y,
-                        cdata[list(0, p)].position.x,
-                        cdata[list(0, p)].position.y);
+                    const auto route = fov_get_route(
+                        cdata.player().position, cdata[list(0, p)].position);
                     dx = (tlocx - scx) * inf_tiles + inf_screenx;
                     dy = (tlocy - scy) * inf_tiles + inf_screeny;
-                    if (maxroute != 0)
+                    if (!route.empty())
                     {
                         dx = cdata.player().position.x;
                         dy = cdata.player().position.y;
                         for (int cnt = 0; cnt < 100; ++cnt)
                         {
-                            int stat = route_info(dx, dy, cnt);
-                            if (stat == 0)
+                            const auto route_result =
+                                route_info(dx, dy, cnt, route);
+                            if (route_result == RouteInfo::stop)
                             {
                                 break;
                             }
-                            else if (stat == -1)
+                            else if (route_result == RouteInfo::skip)
                             {
                                 continue;
                             }

@@ -57,8 +57,14 @@ void Animation_play_breath(
     const Position& target_pos,
     const EnumString& element_name)
 {
+#if 0 // TODO
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     BreathAnimation(attacker_pos, target_pos, static_cast<int>(element)).play();
+#else
+    (void)attacker_pos;
+    (void)target_pos;
+    (void)element_name;
+#endif
 }
 
 
@@ -114,9 +120,16 @@ void Animation_play_bolt(
     const EnumString& element_name,
     int distance)
 {
+#if 0 // TODO
     Element element = LuaEnums::ElementTable.ensure_from_string(element_name);
     BoltAnimation(attacker_pos, target_pos, static_cast<int>(element), distance)
         .play();
+#else
+    (void)attacker_pos;
+    (void)target_pos;
+    (void)element_name;
+    (void)distance;
+#endif
 }
 
 

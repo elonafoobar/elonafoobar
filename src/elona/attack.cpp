@@ -1228,25 +1228,22 @@ int target_position(bool target_cell)
             {
                 break;
             }
-            get_route(
-                cdata.player().position.x,
-                cdata.player().position.y,
-                target_chara->position.x,
-                target_chara->position.y);
+            const auto route =
+                fov_get_route(cdata.player().position, target_chara->position);
             dx = (tlocx - scx) * inf_tiles + inf_screenx;
             dy = (tlocy - scy) * inf_tiles + inf_screeny;
-            if (maxroute != 0)
+            if (!route.empty())
             {
                 dx = cdata.player().position.x;
                 dy = cdata.player().position.y;
                 for (int cnt = 0; cnt < 100; ++cnt)
                 {
-                    int stat = route_info(dx, dy, cnt);
-                    if (stat == 0)
+                    const auto route_result = route_info(dx, dy, cnt, route);
+                    if (route_result == RouteInfo::stop)
                     {
                         break;
                     }
-                    else if (stat == -1)
+                    else if (route_result == RouteInfo::skip)
                     {
                         continue;
                     }

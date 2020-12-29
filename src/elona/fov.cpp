@@ -28,20 +28,6 @@ bool is_blocked(int x, int y)
 
 std::array<std::array<int, 2>, 17> fovlist;
 
-int dy_at_modfov = 0;
-int dx_at_modfov = 0;
-int ay_at_modfov = 0;
-int ax_at_modfov = 0;
-int ty_at_modfov = 0;
-int tx_at_modfov = 0;
-int sx_at_modfov = 0;
-int sy_at_modfov = 0;
-int f2_at_modfov = 0;
-int f1_at_modfov = 0;
-int qy_at_modfov = 0;
-int m_at_modfov = 0;
-int qx_at_modfov = 0;
-
 bool is_in_fov(const Position& pos)
 {
     return mapsync(pos.x, pos.y) == msync;
@@ -299,365 +285,281 @@ bool fov_los(const Position& p1, const Position& p2)
 
 
 
-int get_route(int x1, int y1, int x2, int y2)
+std::vector<std::pair<int, int>> fov_get_route(
+    const Position& p1,
+    const Position& p2)
 {
-    int p_at_modfov = 0;
-    DIM3(route, 2, 100);
-    dy_at_modfov = y2 - y1;
-    dx_at_modfov = x2 - x1;
-    if (y2 == y1)
+    const auto [x1, y1] = p1;
+    const auto [x2, y2] = p2;
+
+    if (p1 == p2)
     {
-        if (x2 == x1)
+        return {
+            {2, 0},
+        };
+    }
+
+    const auto dx = std::abs(x2 - x1);
+    const auto dy = std::abs(y2 - y1);
+    const auto sx = x1 <= x2 ? 1 : -1;
+    const auto sy = y1 <= y2 ? 1 : -1;
+
+    if (dx == 0)
+    {
+        std::vector<std::pair<int, int>> ret;
+        ret.push_back({2, sy});
+        for (int y = y1 + sy; y != y2; y += sy)
         {
-            route(0, 0) = 2;
-            route(1, 0) = 0;
-            maxroute = 1;
-            return 1;
+            if (is_blocked(x1, y))
+            {
+                return {};
+            }
+            ret.push_back({2, sy});
+        }
+        return ret;
+    }
+
+    if (dy == 0)
+    {
+        std::vector<std::pair<int, int>> ret;
+        ret.push_back({1, sx});
+        for (int x = x1 + sx; x != x2; x += sx)
+        {
+            if (is_blocked(x, y1))
+            {
+                return {};
+            }
+            ret.push_back({1, sx});
+        }
+        return ret;
+    }
+
+    if (dx == 1 && dy == 2)
+    {
+        if (!is_blocked(x1, y1 + sy))
+        {
+            return {
+                {2, sy},
+                {2, 0},
+                {1, sx},
+            };
         }
     }
-    ay_at_modfov = std::abs(dy_at_modfov);
-    ax_at_modfov = std::abs(dx_at_modfov);
-    p_at_modfov = 0;
-    if (dx_at_modfov == 0)
+
+    if (dy == 1 && dx == 2)
     {
-        if (dy_at_modfov > 0)
+        if (!is_blocked(x1 + sx, y1))
         {
-            ty_at_modfov = y1 + 1;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = 1;
-            ++p_at_modfov;
-            while (1)
-            {
-                if (ty_at_modfov >= y2)
-                {
-                    break;
-                }
-                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                ++ty_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = 1;
-                ++p_at_modfov;
-            }
+            return {
+                {1, sx},
+                {1, 0},
+                {2, sy},
+            };
         }
-        else
-        {
-            ty_at_modfov = y1 - 1;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = -1;
-            ++p_at_modfov;
-            while (1)
-            {
-                if (ty_at_modfov <= y2)
-                {
-                    break;
-                }
-                if (chip_data.for_cell(x1, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(x1, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                --ty_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = -1;
-                ++p_at_modfov;
-            }
-        }
-        maxroute = p_at_modfov;
-        return 1;
     }
-    if (dy_at_modfov == 0)
+
+    if (dx == dy)
     {
-        if (dx_at_modfov > 0)
+        std::vector<std::pair<int, int>> ret;
+        ret.push_back({1, sx});
+        ret.push_back({2, sy});
+        for (int x = x1 + sx, y = y1 + sy; x != x2; x += sx, y += sy)
         {
-            tx_at_modfov = x1 + 1;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = 1;
-            ++p_at_modfov;
-            while (1)
+            if (is_blocked(x, y))
             {
-                if (tx_at_modfov >= x2)
-                {
-                    break;
-                }
-                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
-                {
-                    return 0;
-                }
-                ++tx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = 1;
-                ++p_at_modfov;
+                return {};
             }
+            ret.push_back({2, sy});
+            ret.push_back({1, sx});
         }
-        else
-        {
-            tx_at_modfov = x1 - 1;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = -1;
-            ++p_at_modfov;
-            while (1)
-            {
-                if (tx_at_modfov <= x2)
-                {
-                    break;
-                }
-                if (chip_data.for_cell(tx_at_modfov, y1).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(tx_at_modfov, y1).effect & 1)
-                {
-                    return 0;
-                }
-                --tx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = -1;
-                ++p_at_modfov;
-            }
-        }
-        maxroute = p_at_modfov;
-        return 1;
+        return ret;
     }
-    if (dx_at_modfov < 0)
+
+    if (dx > dy)
     {
-        sx_at_modfov = -1;
+        std::vector<std::pair<int, int>> ret;
+        ret.push_back({1, sx});
+        int qy = dy;
+        int y = y1;
+        for (int x = x1 + sx; x != x2; x += sx)
+        {
+            if (is_blocked(x, y))
+            {
+                return {};
+            }
+            qy += 2 * dy;
+            if (qy >= dx)
+            {
+                y += sy;
+                ret.push_back({2, sy});
+                if (qy != dx && is_blocked(x, y))
+                {
+                    return {};
+                }
+                qy -= 2 * dx;
+            }
+            ret.push_back({1, sx});
+        }
+        return ret;
     }
     else
     {
-        sx_at_modfov = 1;
-    }
-    if (dy_at_modfov < 0)
-    {
-        sy_at_modfov = -1;
-    }
-    else
-    {
-        sy_at_modfov = 1;
-    }
-    if (ax_at_modfov == 1)
-    {
-        if (ay_at_modfov == 2)
+        std::vector<std::pair<int, int>> ret;
+        ret.push_back({2, sy});
+        int qx = dx;
+        int x = x1;
+        for (int y = y1 + sy; y != y2; y += sy)
         {
-            if ((chip_data.for_cell(x1, y1 + sy_at_modfov).effect & 1) == 0)
+            if (is_blocked(x, y))
             {
-                if ((chip_data.for_feat(x1, (y1 + sy_at_modfov)).effect & 1) ==
-                    0)
+                return {};
+            }
+            qx += 2 * dx;
+            if (qx >= dy)
+            {
+                x += sx;
+                ret.push_back({1, sx});
+                if (qx != dy && is_blocked(x, y))
                 {
-                    p_at_modfov = 0;
-                    route(0, p_at_modfov) = 2;
-                    route(1, p_at_modfov) = sy_at_modfov;
-                    ++p_at_modfov;
-                    route(0, p_at_modfov) = 2;
-                    route(1, p_at_modfov) = 0;
-                    ++p_at_modfov;
-                    route(0, p_at_modfov) = 1;
-                    route(1, p_at_modfov) = sx_at_modfov;
-                    ++p_at_modfov;
-                    maxroute = p_at_modfov;
-                    return 1;
+                    return {};
                 }
+                qx -= 2 * dy;
             }
+            ret.push_back({2, sy});
         }
+        return ret;
     }
-    else if (ay_at_modfov == 1)
-    {
-        if (ax_at_modfov == 2)
-        {
-            if ((chip_data.for_cell(x1 + sx_at_modfov, y1).effect & 1) == 0)
-            {
-                if ((chip_data.for_feat((x1 + sx_at_modfov), y1).effect & 1) ==
-                    0)
-                {
-                    route(0, p_at_modfov) = 1;
-                    route(1, p_at_modfov) = sx_at_modfov;
-                    ++p_at_modfov;
-                    route(0, p_at_modfov) = 1;
-                    route(1, p_at_modfov) = 0;
-                    ++p_at_modfov;
-                    route(0, p_at_modfov) = 2;
-                    route(1, p_at_modfov) = sy_at_modfov;
-                    ++p_at_modfov;
-                    maxroute = p_at_modfov;
-                    return 1;
-                }
-            }
-        }
-    }
-    f2_at_modfov = ax_at_modfov * ay_at_modfov;
-    f1_at_modfov = f2_at_modfov << 1;
-    if (ax_at_modfov >= ay_at_modfov)
-    {
-        qy_at_modfov = ay_at_modfov * ay_at_modfov;
-        m_at_modfov = qy_at_modfov << 1;
-        tx_at_modfov = x1 + sx_at_modfov;
-        route(0, p_at_modfov) = 1;
-        route(1, p_at_modfov) = sx_at_modfov;
-        ++p_at_modfov;
-        if (qy_at_modfov == f2_at_modfov)
-        {
-            ty_at_modfov = y1 + sy_at_modfov;
-            route(0, p_at_modfov) = 2;
-            route(1, p_at_modfov) = sy_at_modfov;
-            ++p_at_modfov;
-            qy_at_modfov -= f1_at_modfov;
-        }
-        else
-        {
-            ty_at_modfov = y1;
-        }
-        while (1)
-        {
-            if (x2 - tx_at_modfov == 0)
-            {
-                break;
-            }
-            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
-            {
-                return 0;
-            }
-            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
-            {
-                return 0;
-            }
-            qy_at_modfov += m_at_modfov;
-            if (qy_at_modfov < f2_at_modfov)
-            {
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-            }
-            else if (qy_at_modfov > f2_at_modfov)
-            {
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-            }
-            else
-            {
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-                qy_at_modfov -= f1_at_modfov;
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-            }
-        }
-    }
-    else
-    {
-        qx_at_modfov = ax_at_modfov * ax_at_modfov;
-        m_at_modfov = qx_at_modfov << 1;
-        ty_at_modfov = y1 + sy_at_modfov;
-        route(0, p_at_modfov) = 2;
-        route(1, p_at_modfov) = sy_at_modfov;
-        ++p_at_modfov;
-        if (qx_at_modfov == f2_at_modfov)
-        {
-            tx_at_modfov = x1 + sx_at_modfov;
-            route(0, p_at_modfov) = 1;
-            route(1, p_at_modfov) = sx_at_modfov;
-            ++p_at_modfov;
-            qx_at_modfov -= f1_at_modfov;
-        }
-        else
-        {
-            tx_at_modfov = x1;
-        }
-        while (1)
-        {
-            if (y2 - ty_at_modfov == 0)
-            {
-                break;
-            }
-            if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
-            {
-                return 0;
-            }
-            if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
-            {
-                return 0;
-            }
-            qx_at_modfov += m_at_modfov;
-            if (qx_at_modfov < f2_at_modfov)
-            {
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-            }
-            else if (qx_at_modfov > f2_at_modfov)
-            {
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-                if (chip_data.for_cell(tx_at_modfov, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                if (chip_data.for_feat(tx_at_modfov, ty_at_modfov).effect & 1)
-                {
-                    return 0;
-                }
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-            }
-            else
-            {
-                tx_at_modfov += sx_at_modfov;
-                route(0, p_at_modfov) = 1;
-                route(1, p_at_modfov) = sx_at_modfov;
-                ++p_at_modfov;
-                qx_at_modfov -= f1_at_modfov;
-                ty_at_modfov += sy_at_modfov;
-                route(0, p_at_modfov) = 2;
-                route(1, p_at_modfov) = sy_at_modfov;
-                ++p_at_modfov;
-            }
-        }
-    }
-    maxroute = p_at_modfov;
-    return 1;
 }
 
 
 
-void init_fovlist()
+RouteInfo route_info(
+    int& x,
+    int& y,
+    int step,
+    const std::vector<std::pair<int, int>>& route)
+{
+    if (route.size() == 0)
+    {
+        return RouteInfo::skip;
+    }
+
+    if (route.at(step % route.size()).first == 1)
+    {
+        x += route.at(step % route.size()).second;
+    }
+    else
+    {
+        y += route.at(step % route.size()).second;
+    }
+
+    if (step % route.size() % 2 == 0)
+    {
+        if (route.at((step + 1) % route.size()).first !=
+            route.at(step % route.size()).first)
+        {
+            return RouteInfo::skip;
+        }
+    }
+    if (step >= static_cast<int>(route.size()))
+    {
+        if (x < scx || y < scy || x >= scx + inf_screenw ||
+            y >= scy + inf_screenh)
+        {
+            return RouteInfo::stop;
+        }
+        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
+        {
+            return RouteInfo::stop;
+        }
+        if (chip_data.for_cell(x, y).effect & 1)
+        {
+            return RouteInfo::stop;
+        }
+        if (cell_data.at(x, y).feats != 0)
+        {
+            cell_featread(x, y);
+            if (chip_data[feat].effect & 1)
+            {
+                return RouteInfo::stop;
+            }
+        }
+    }
+    if (route.at(step % route.size()).second == 0)
+    {
+        return RouteInfo::skip;
+    }
+    return RouteInfo::go;
+}
+
+
+
+std::vector<Position> fov_get_breath_route(
+    const Position& source_pos,
+    int range,
+    const std::vector<std::pair<int, int>>& route)
+{
+    auto [x0, y0] = source_pos;
+
+    std::vector<Position> ret;
+    for (int step = 0; step < range; ++step)
+    {
+        if (route.at(step % route.size()).first == 1)
+        {
+            x0 += route.at(step % route.size()).second;
+        }
+        else
+        {
+            y0 += route.at(step % route.size()).second;
+        }
+
+        int breath_width;
+        switch (step)
+        {
+        case 0: breath_width = 1; break;
+        case 1:
+        case 2:
+        case 3: breath_width = 3; break;
+        case 4:
+        case 5: breath_width = 5; break;
+        default: breath_width = 3; break;
+        }
+
+        for (int dy = 0; dy < breath_width; ++dy)
+        {
+            const auto y = y0 + dy - breath_width / 2;
+            for (int dx = 0; dx < breath_width; ++dx)
+            {
+                const auto x = x0 + dx - breath_width / 2;
+                if (x < scx || y < scy || x >= scx + inf_screenw ||
+                    y >= scy + inf_screenh)
+                {
+                    continue;
+                }
+                if (x < 0 || y < 0 || x >= map_data.width ||
+                    y >= map_data.height)
+                {
+                    continue;
+                }
+                if (chip_data.for_cell(x, y).effect & 1)
+                {
+                    continue;
+                }
+
+                if (range::find(ret, Position{x, y}) == ret.end())
+                {
+                    ret.push_back(Position{x, y});
+                }
+            }
+        }
+    }
+
+    return ret;
+}
+
+
+
+void fov_init_fovlist()
 {
     std::array<std::array<bool, fov_max + 2>, fov_max + 2> fovmap;
     for (int y = 0; y < fov_max + 2; ++y)
@@ -691,146 +593,6 @@ void init_fovlist()
             }
         }
     }
-}
-
-
-
-int route_info(int& x, int& y, int n)
-{
-    if (maxroute == 0)
-    {
-        return -1;
-    }
-    if (route(0, n % maxroute) == 1)
-    {
-        x += route(1, n % maxroute);
-    }
-    else
-    {
-        y += route(1, n % maxroute);
-    }
-    if (n % maxroute % 2 == 0)
-    {
-        if (route(0, (n + 1) % maxroute) != route(0, n % maxroute))
-        {
-            return -1;
-        }
-    }
-    if (n >= maxroute)
-    {
-        if (x < scx || y < scy || x >= scx + inf_screenw ||
-            y >= scy + inf_screenh)
-        {
-            return 0;
-        }
-        if (x < 0 || y < 0 || x >= map_data.width || y >= map_data.height)
-        {
-            return 0;
-        }
-        if (chip_data.for_cell(x, y).effect & 1)
-        {
-            return 0;
-        }
-        if (cell_data.at(x, y).feats != 0)
-        {
-            cell_featread(x, y);
-            if (chip_data[feat].effect & 1)
-            {
-                return 0;
-            }
-        }
-    }
-    if (route(1, n % maxroute) == 0)
-    {
-        return -1;
-    }
-    return 1;
-}
-
-
-
-int breath_list(const Position& source_pos)
-{
-    int breathw = 0;
-    DIM3(breathlist, 2, 100);
-    maxbreath = 0;
-    breathw = 1;
-    dx = source_pos.x;
-    dy = source_pos.y;
-    for (int cnt = 0, cnt_end = cnt + (the_skill_db[efid]->range % 1000 + 1);
-         cnt < cnt_end;
-         ++cnt)
-    {
-        if (route(0, cnt % maxroute) == 1)
-        {
-            dx += route(1, cnt % maxroute);
-        }
-        else
-        {
-            dy += route(1, cnt % maxroute);
-        }
-        if (cnt < 6)
-        {
-            if (cnt % 3 == 1)
-            {
-                breathw += 2;
-            }
-        }
-        else
-        {
-            breathw -= 2;
-            if (breathw < 3)
-            {
-                breathw = 3;
-            }
-        }
-        for (int cnt = 0, cnt_end = (breathw); cnt < cnt_end; ++cnt)
-        {
-            ty = cnt - breathw / 2 + dy;
-            for (int cnt = 0, cnt_end = (breathw); cnt < cnt_end; ++cnt)
-            {
-                tx = cnt - breathw / 2 + dx;
-                if (tx < scx || ty < scy || tx >= scx + inf_screenw ||
-                    ty >= scy + inf_screenh)
-                {
-                    continue;
-                }
-                if (tx < 0 || ty < 0 || tx >= map_data.width ||
-                    ty >= map_data.height)
-                {
-                    continue;
-                }
-                if (chip_data.for_cell(tx, ty).effect & 1)
-                {
-                    continue;
-                }
-                if (maxbreath >= 100)
-                {
-                    break;
-                }
-                p = 0;
-                for (int cnt = 0, cnt_end = (maxbreath); cnt < cnt_end; ++cnt)
-                {
-                    if (breathlist(0, cnt) == tx)
-                    {
-                        if (breathlist(1, cnt) == ty)
-                        {
-                            p = 1;
-                            break;
-                        }
-                    }
-                }
-                if (p == 1)
-                {
-                    continue;
-                }
-                breathlist(0, maxbreath) = tx;
-                breathlist(1, maxbreath) = ty;
-                ++maxbreath;
-            }
-        }
-    }
-    return 1;
 }
 
 } // namespace elona

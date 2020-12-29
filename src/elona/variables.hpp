@@ -31,10 +31,6 @@ ELONA_EXTERN(elona_vector1<int> fsetwear);
 ELONA_EXTERN(elona_vector1<int> fsetitem);
 ELONA_EXTERN(int txtadvscreenupdate);
 
-// fov.cpp
-ELONA_EXTERN(elona_vector2<int> route);
-ELONA_EXTERN(int maxroute);
-
 // building.cpp
 ELONA_EXTERN(int tlocinitx);
 ELONA_EXTERN(int tlocinity);
@@ -206,7 +202,6 @@ ELONA_EXTERN(elona_vector1<std::string> s);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn2);
 ELONA_EXTERN(elona_vector1<std::string> traitrefn);
 ELONA_EXTERN(elona_vector2<int> adata);
-ELONA_EXTERN(elona_vector2<int> breathlist);
 ELONA_EXTERN(elona_vector2<int> c_col);
 ELONA_EXTERN(elona_vector2<int> card);
 ELONA_EXTERN(elona_vector2<int> cmapdata);
@@ -336,7 +331,6 @@ ELONA_EXTERN(int mapstarty);
 ELONA_EXTERN(int mapsubroutine);
 ELONA_EXTERN(int mapupdate);
 ELONA_EXTERN(int marry);
-ELONA_EXTERN(int maxbreath);
 ELONA_EXTERN(int maxitemid);
 ELONA_EXTERN(int menucycle);
 ELONA_EXTERN(int minlevel);
