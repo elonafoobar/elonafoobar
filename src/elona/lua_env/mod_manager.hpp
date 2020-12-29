@@ -186,12 +186,7 @@ public:
 
 
 
-    std::vector<ModManifest> get_templates();
-
-    void create_mod_from_template(
-        const std::string& new_mod_id,
-        const std::string& template_mod_id,
-        const semver::Version& template_mod_version);
+    void create_new_mod(const std::string& new_mod_id);
 
     bool exists(const std::string& mod_id);
 

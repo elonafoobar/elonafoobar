@@ -82,7 +82,6 @@ ELONA.i18n:add {
          title = "Mods",
          lets_create = "Let's create a mod.",
          key_hint = "Enter [Create]",
-         no_template = "No template found",
          invalid_id = "'{$1}' is invalid. Only letters, digits, and underscore are allowed.",
          exist = "Mod '{$1}' already exists.",
          created = "Mod '{$1}' was successfully created!",

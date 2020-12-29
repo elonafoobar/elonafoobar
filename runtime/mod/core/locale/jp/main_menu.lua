@@ -82,7 +82,6 @@ ELONA.i18n:add {
          title = "MOD",
          lets_create = "MODを作ってみよう。",
          key_hint = "決定 [作成]",
-         no_template = "No template found",
          invalid_id = "'{$1}' は無効です。アルファベット、数字、アンダーバーのみ使用できます",
          exist = "MOD '{$1}' はすでに存在します",
          created = "MOD '{$1}' を作成しました。",

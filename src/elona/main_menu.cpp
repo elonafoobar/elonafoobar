@@ -1470,7 +1470,6 @@ MainMenuResult main_menu_mods_list()
 
 MainMenuResult main_menu_mods_develop()
 {
-    int template_count = 0;
     int index = 0;
     cs = 0;
     cs_bk = -1;
@@ -1478,17 +1477,10 @@ MainMenuResult main_menu_mods_develop()
     pagesize = 16;
     keyrange = 0;
 
-    std::vector<std::pair<std::string, semver::Version>> mod_id_and_versions;
-    for (const auto& tmpl : lua::lua->get_mod_manager().get_templates())
-    {
-        list(0, template_count) = template_count;
-        listn(0, template_count) = tmpl.id + " v" + tmpl.version.to_string();
-        listn(1, template_count) = tmpl.name.localize(g_config.language());
-        mod_id_and_versions.emplace_back(tmpl.id, tmpl.version);
-        key_list(template_count) = key_select(template_count);
-        ++template_count;
-    }
-    listmax = template_count;
+    list(0, 0) = 0;
+    listn(0, 0) = "New";
+    key_list(0) = key_select(0);
+    listmax = 1;
 
     bool init = true;
     while (true)
@@ -1533,20 +1525,11 @@ MainMenuResult main_menu_mods_develop()
             x = wx + 20;
             y = cnt * 40 + wy + 50;
             display_key(x + 20, y - 2, cnt);
-            font(11 - en * 2);
-            mes(x + 48, y - 4, listn(0, index));
             font(13 - en * 2);
-            cs_list(cs == cnt, listn(1, index), x + 48, y + 8);
+            cs_list(cs == cnt, listn(0, index), x + 48, y + 8);
             ++keyrange;
         }
         cs_bk = cs;
-        if (template_count == 0)
-        {
-            font(14 - en * 2);
-            mes(wx + 140,
-                wy + 120,
-                i18n::s.get("core.main_menu.mod_develop.no_template"));
-        }
         redraw();
 
         int cursor{};
@@ -1590,10 +1573,7 @@ MainMenuResult main_menu_mods_develop()
                 }
                 else
                 {
-                    lua::lua->get_mod_manager().create_mod_from_template(
-                        new_mod_id,
-                        mod_id_and_versions.at(p).first,
-                        mod_id_and_versions.at(p).second);
+                    lua::lua->get_mod_manager().create_new_mod(new_mod_id);
                     snd("core.write1");
                     ModCreatePrompt(
                         i18n::s.get(
