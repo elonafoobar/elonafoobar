@@ -158,10 +158,6 @@ void initialize_lua()
     // Load mods.
     lua::lua->load_mods();
 
-    auto& api_manager = lua::lua->get_api_manager();
-    api_manager.clear();
-    api_manager.init_from_mods();
-
     auto& data_manager = lua::lua->get_data_manager();
     data_manager.init_from_mods();
 

@@ -230,6 +230,11 @@ void ModManager::init_mod(ModEnv& mod)
         report_error(err);
         throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
     }
+
+    if (sol::optional<sol::table> exports = result)
+    {
+        lua().get_api_manager().register_api(mod.manifest.id, *exports);
+    }
 }
 
 

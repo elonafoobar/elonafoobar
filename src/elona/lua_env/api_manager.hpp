@@ -40,10 +40,8 @@ public:
     explicit APIManager(LuaEnv&);
 
     void clear();
-    void init_from_mods();
 
-    // for testing
-    void load_script(const std::string& mod_id, const std::string& script);
+    void register_api(const std::string& mod_id, sol::table exports);
 
     /***
      * Makes all API tables read-only.
@@ -102,8 +100,6 @@ private:
      * ELONA.require("core.Rand").
      */
     sol::optional<sol::table> try_find_api(const std::string& name) const;
-
-    void init_from_mod(ModEnv& mod);
 };
 
 } // namespace lua

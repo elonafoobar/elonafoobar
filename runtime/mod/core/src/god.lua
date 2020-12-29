@@ -154,6 +154,4 @@ end
 -- TODO
 -- txtgod
 
-ELONA.api:add {
-   God = God,
-}
+return God
