@@ -1,7 +1,9 @@
+local I18N = ELONA.require("core.I18N")
+
 -- TODO
 -- These text are unclassed. They should be moved to appropriate files.
 
-ELONA.i18n:add {
+I18N.add {
    misc = {
       ranking = {
          changed = "ランク変動({$1} {$2}位 → {$3}位) 《{$4}》",

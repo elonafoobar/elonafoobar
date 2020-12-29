@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    damage = {
       miss = {
          ally = "{kare_wa($2)}{name($1)}の攻撃を避けた。",

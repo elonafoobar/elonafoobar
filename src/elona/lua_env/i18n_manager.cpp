@@ -26,7 +26,6 @@ local I18N = kernel.I18N
 get_optional = I18N.get_optional
 get_data_text_optional = I18N.get_data_text_optional
 get_list = I18N.get_list
-i18n = I18N.interface
 format = I18N.format
 )");
         if (!result.valid())
@@ -50,7 +49,6 @@ void I18NManager::load(ModEnv& mod)
         return;
 
     lua_state()->set("_MOD_ID", mod.manifest.id);
-    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result =
         safe_script_file(script_filepath, mod.env, sol::script_pass_on_error);
     lua_state()->set("_MOD_ID", sol::lua_nil);
@@ -66,7 +64,6 @@ void I18NManager::load(ModEnv& mod)
 void I18NManager::load_string(const std::string& src, ModEnv& mod)
 {
     lua_state()->set("_MOD_ID", mod.manifest.id);
-    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result = safe_script(src, mod.env, sol::script_pass_on_error);
     lua_state()->set("_MOD_ID", sol::lua_nil);
     if (!result.valid())

@@ -27,7 +27,9 @@ config {
 Then, add a corresponding translation file to `locale/en` or `locale/ja`.
 
 ```lua
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    config = {
       menu = {
          -- Mod name
@@ -101,7 +103,9 @@ The following is a translation file which corresponds to the `config-schema.lua`
 
 
 ```lua
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    config = {
       menu = {
          name = "Example Config",

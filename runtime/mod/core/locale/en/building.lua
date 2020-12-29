@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    building = {
       can_only_use_in_world_map = "You can only use it in the world map.",
       cannot_build_it_here = "You can't build it here.",

@@ -666,7 +666,7 @@ local endings = {
 }
 
 for name, list in pairs(endings) do
-   ELONA.i18n:add_function {
+   I18N.add_function {
       [name] = function(chara, mark)
          -- Lua tables are 1-indexed.
          if mark == nil then

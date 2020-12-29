@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    ui = {
       yes = "Yes",
       no = "No..",

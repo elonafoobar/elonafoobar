@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    quest = {
       journal_updated = "Your journal has been updated.",
       minutes_left = "{$1} min left for the quest.",

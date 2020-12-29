@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    action = {
       use = {
          useable_again_at = "そのアイテムが次に使用できるのは{$1}だ。",

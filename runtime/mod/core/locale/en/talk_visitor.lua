@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    talk = {
       visitor = {
          wanted_to_say_hi = "I just wanted to say hi.",

@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    item = {
       desc = {
          have_to_identify = "このアイテムに関する知識を得るには、鑑定する必要がある。",
@@ -142,7 +144,7 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
+I18N.add {
    item = {
       bug = {
          name = "黄金",

@@ -1,4 +1,6 @@
-ELONA.i18n:add_data_text(
+local I18N = ELONA.require("core.I18N")
+
+I18N.add_data_text(
    "core.activity",
    {
       eat = {
@@ -72,7 +74,7 @@ ELONA.i18n:add_data_text(
    }
 )
 
-ELONA.i18n:add {
+I18N.add {
    activity = {
       cancel = {
          item = "{name($1)} cancel{s($1)} {his($1)} action.",

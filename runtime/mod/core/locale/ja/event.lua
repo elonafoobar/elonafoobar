@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    event = {
       little_sister_slips = "ビッグダディの肩から、リトルシスターが滑り落ちた。「Mr Bubbles！！」",
 

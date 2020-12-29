@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    action = {
       cannot_do_in_global = "You can't do that while you're in a global area.",
       hit_key_for_help = "Hit ? key to display help.",

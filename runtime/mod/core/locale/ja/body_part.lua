@@ -1,4 +1,6 @@
-ELONA.i18n:add_data_text(
+local I18N = ELONA.require("core.I18N")
+
+I18N.add_data_text(
    "core.body_part"
    {
       head = {

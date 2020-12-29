@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    food = {
       -- Names for cooked food.
       -- These are organized by type, then quality.

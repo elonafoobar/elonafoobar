@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    wish = {
       what_do_you_wish_for = "何を望む？",
       your_wish = "「{$1}！！」",

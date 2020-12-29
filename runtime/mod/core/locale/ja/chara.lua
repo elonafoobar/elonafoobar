@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    chara = {
       you = "あなた",
       something = "何か",
@@ -117,7 +119,7 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add_data_text(
+I18N.add_data_text(
    "core.chara",
    {
       bug = {

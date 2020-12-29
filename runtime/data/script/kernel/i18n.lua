@@ -215,17 +215,13 @@ end
 
 
 
-I18N.interface = {}
-
-
-
-function I18N.interface:add(data)
+function I18N.add(data)
    collect_i18n_resources(data, _MOD_ID, storage)
 end
 
 
 
-function I18N.interface:add_data_text(prototype_id, data)
+function I18N.add_data_text(prototype_id, data)
    for k, v in pairs(data) do
       local key = prototype_id.."#".._MOD_ID.."."..k
       collect_i18n_resources(v, key, storage_for_data)
@@ -234,7 +230,7 @@ end
 
 
 
-function I18N.interface:add_function(functions)
+function I18N.add_function(functions)
    for func_name, func in pairs(functions) do
       localize_functions[_MOD_ID.."."..func_name] = func
    end

@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    casino = {
       talk_to_dealer = "ディーラーに話しかけた。",
       can_acquire = "幾つかの戦利品がある。",

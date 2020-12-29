@@ -1,6 +1,8 @@
+local I18N = ELONA.require("core.I18N")
+
 -- NOTE: Will change drastically with the introduction of custom gods.
 
-ELONA.i18n:add {
+I18N.add {
    god = {
       eyth_name = "Eyth of Infidel",
       indifferent = " Your God becomes indifferent to your gift.",
@@ -49,7 +51,7 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add_data_text(
+I18N.add_data_text(
    "core.god",
    {
       mani = {

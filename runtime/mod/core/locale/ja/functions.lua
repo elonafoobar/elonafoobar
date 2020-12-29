@@ -8,7 +8,7 @@ local I18N = ELONA.require("core.I18N")
 local Item = ELONA.require("core.Item")
 local string = string
 
-ELONA.i18n:add_function {
+I18N.add_function {
    ordinal = function(n)
       return tostring(n)
    end,

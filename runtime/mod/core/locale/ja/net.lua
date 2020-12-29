@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    net = {
       failed_to_send = "送信に失敗した。",
       failed_to_receive = "受信に失敗した。",

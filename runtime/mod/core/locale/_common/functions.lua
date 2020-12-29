@@ -4,7 +4,7 @@ local Item = ELONA.require("core.Item")
 local string = string
 
 
-ELONA.i18n:add_function {
+I18N.add_function {
    you = function()
       return I18N.get("core.chara.you")
    end,

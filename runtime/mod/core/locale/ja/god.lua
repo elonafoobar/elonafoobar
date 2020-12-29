@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = ELONA.require("core.I18N")
+
+I18N.add {
    god = {
       eyth_name = "無のエイス",
       indifferent = "あなたの信仰は既に限界まで高まっている。",
@@ -47,7 +49,7 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add_data_text(
+I18N.add_data_text(
    "core.god",
    {
       mani = {

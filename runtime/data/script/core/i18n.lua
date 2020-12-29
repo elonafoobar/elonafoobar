@@ -118,4 +118,9 @@ function I18N.get_data_text(prototype_id, instance_id, property_name, ...)
 end
 
 
+I18N.add = internal.add
+I18N.add_data_text = internal.add_data_text
+I18N.add_function = internal.add_function
+
+
 return I18N
