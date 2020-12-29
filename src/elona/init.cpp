@@ -158,15 +158,8 @@ void initialize_lua()
     // Load mods.
     lua::lua->load_mods();
 
-    auto& api_manager = lua::lua->get_api_manager();
-    api_manager.clear();
-    api_manager.init_from_mods();
-
     auto& data_manager = lua::lua->get_data_manager();
-    data_manager.clear();
     data_manager.init_from_mods();
-
-    lua::lua->get_export_manager().register_all_exports();
 
     // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());

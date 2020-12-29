@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("putit")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("putit")
+Data.add(
    "putit.putit",
    {
       normal = {

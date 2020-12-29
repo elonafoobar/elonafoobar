@@ -30,7 +30,7 @@ void set_english()
 
 void set_japanese()
 {
-    config_set("core.language.language", "jp"s);
+    config_set("core.language.language", "ja"s);
     elona::jp = 1;
     elona::en = 0;
     initialize_i18n();

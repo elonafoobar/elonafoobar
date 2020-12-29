@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    net = {
       failed_to_send = "Failed to send a message.",
       failed_to_receive = "Failed to receive messages.",

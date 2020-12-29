@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    chara_status = {
       gain_new_body_part = "{name($1)} grow{s($1)} a new {$2}!",
 

@@ -1,17 +1,17 @@
-local Chara = ELONA.require("core.Chara")
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
-local Rand = ELONA.require("core.Rand")
-local World = ELONA.require("core.World")
+local Chara = require("core.Chara")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
+local Rand = require("core.Rand")
+local World = require("core.World")
 local math = math
 local table = table
 local string = string
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 local function start_trial()
     World.data.joining_fighters_guild = 1

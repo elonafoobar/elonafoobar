@@ -22,28 +22,11 @@ struct ModEnv;
 class APIManager : public LuaSubmodule
 {
 public:
-    /***
-     * Exposes "require" function to import external APIs to the passed
-     * environment table.
-     */
-    static void bind(LuaEnv&, sol::table);
-
-    /***
-     * Exposes "require" function to import external APIs to the passed Lua
-     * environment as a global variable.
-     *
-     * For testing use only.
-     */
-    static void set_on(LuaEnv&);
-
-public:
     explicit APIManager(LuaEnv&);
 
     void clear();
-    void init_from_mods();
 
-    // for testing
-    void load_script(const std::string& mod_id, const std::string& script);
+    void register_api(const std::string& mod_id, sol::table exports);
 
     /***
      * Makes all API tables read-only.
@@ -62,6 +45,16 @@ public:
      * their own API methods to it.
      */
     sol::table get_core_api_table();
+
+    /***
+     * Attempts to locate an API module under a namespace. For example, all
+     * core API modules have module_namespace "core", and the Rand module would
+     * have module_name "Rand".
+     *
+     * This is used by require in Lua to get references to API tables. So, the
+     * Rand table would be accessed from Lua by calling require("core.Rand").
+     */
+    sol::optional<sol::table> try_find_api(const std::string& name) const;
 
 
 
@@ -85,25 +78,12 @@ private:
     void load_kernel();
 
     /**
-     * Load core modules. They can be retrieved via "ELONA.require()".
+     * Load core modules. They can be retrieved via "require()".
      * It adds "core" table to Lua's global namespace.
      */
     void load_core();
 
     void load_library(const fs::path& path, const std::string& library_name);
-
-    /***
-     * Attempts to locate an API module under a namespace. For
-     * example, all core API modules have module_namespace "core", and
-     * the Rand module would have module_name "Rand".
-     *
-     * This is used by require in Lua to get references to API tables. So, the
-     * Rand table would be accessed from Lua by calling
-     * ELONA.require("core.Rand").
-     */
-    sol::optional<sol::table> try_find_api(const std::string& name) const;
-
-    void init_from_mod(ModEnv& mod);
 };
 
 } // namespace lua

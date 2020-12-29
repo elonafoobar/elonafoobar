@@ -36,8 +36,6 @@ local localize_functions = {}
 local parse_fmt = native.Internal.parse_fmt
 -- Generate random number.
 local rnd = native.Rand.rnd
--- Config API
-local Config = native.Config
 
 
 
@@ -65,16 +63,13 @@ local function eval(x, args)
       elseif x[1] == "f" then -- Is it a `FunctionCall`?
          -- Structure:
          --  [1]: tag (string), "f"
-         --  [2]: mod_name (string)
-         --  [3]: function_name (string)
-         --  [4]: argument 1 (any)
-         --  [5]: argument 2 (any)
+         --  [2]: namespaced_function_name (string)
+         --  [3]: argument 1 (any)
+         --  [4]: argument 2 (any)
          --  ...
-         -- TODO use x[2]
-         local language = Config.get("core.language.language")
-         local func = localize_functions[language][x[3]]
+         local func = localize_functions[x[2]]
          if not func then
-            return "<unknown function "..tostring(x[3])..">"
+            return "<unknown function '"..tostring(x[2]).."'>"
          end
          local func_args = {}
          for i = 4, #x do
@@ -220,31 +215,27 @@ end
 
 
 
-function I18N.register_function(lang, name, fn)
-   if not localize_functions[lang] then
-      localize_functions[lang] = {}
-   end
-   localize_functions[lang][name] = fn
-end
-
-
-
-I18N.interface = {}
-
-
-
-function I18N.interface:add(data)
+function I18N.add(data)
    collect_i18n_resources(data, _MOD_ID, storage)
 end
 
 
 
-function I18N.interface:add_data_text(prototype_id, data)
+function I18N.add_data_text(prototype_id, data)
    for k, v in pairs(data) do
       local key = prototype_id.."#".._MOD_ID.."."..k
       collect_i18n_resources(v, key, storage_for_data)
    end
 end
+
+
+
+function I18N.add_function(functions)
+   for func_name, func in pairs(functions) do
+      localize_functions[_MOD_ID.."."..func_name] = func
+   end
+end
+
 
 
 return I18N

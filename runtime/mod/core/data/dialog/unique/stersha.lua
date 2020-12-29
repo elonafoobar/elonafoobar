@@ -1,4 +1,4 @@
-local Internal = ELONA.require("core.Internal")
+local Internal = require("core.Internal")
 
 return {
    root = "core.talk.unique.stersha",

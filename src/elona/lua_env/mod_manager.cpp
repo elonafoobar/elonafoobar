@@ -17,7 +17,6 @@
 #include "api_manager.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
-#include "export_manager.hpp"
 #include "lua_event/base_event.hpp"
 
 
@@ -229,6 +228,11 @@ void ModManager::init_mod(ModEnv& mod)
         sol::error err = result;
         report_error(err);
         throw std::runtime_error("Failed initializing mod "s + mod.manifest.id);
+    }
+
+    if (sol::optional<sol::table> exports = result)
+    {
+        lua().get_api_manager().register_api(mod.manifest.id, *exports);
     }
 }
 
@@ -473,7 +477,6 @@ void ModManager::setup_mod_globals(ModEnv& mod)
 
     mt["mod"] = create_mod_table(L);
 
-    lua().get_api_manager().bind(lua(), mt);
     mt["_MOD_ID"] = mod.manifest.id;
 
     // Add a list of whitelisted standard library functions to the
@@ -486,13 +489,17 @@ void ModManager::setup_mod_globals(ModEnv& mod)
     {
         auto state = lua_state();
         auto& chunk_cache = *mod.chunk_cache;
-        mt["require"] = [state, &chunk_cache](
-                            const std::string& name,
-                            sol::this_environment this_env) {
+        mt["require_relative"] = [state, &chunk_cache](
+                                     const std::string& name,
+                                     sol::this_environment this_env) {
             sol::environment env = this_env;
             return chunk_cache.require(name, env, *state);
         };
     }
+
+    mt["require"] = [](const std::string& name) {
+        return lua::lua->get_api_manager().try_find_api(name);
+    };
 
     mt[sol::meta_function::new_index] = deny_new_fields;
     mt[sol::meta_function::index] = mt;

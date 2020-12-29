@@ -1,6 +1,6 @@
-local Chara = ELONA.require("core.Chara")
-local I18N = ELONA.require("core.I18N")
-local World = ELONA.require("core.World")
+local Chara = require("core.Chara")
+local I18N = require("core.I18N")
+local World = require("core.World")
 
 return {
    root = "core.talk.unique.orphe",

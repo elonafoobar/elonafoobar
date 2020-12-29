@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    config = {
       common = {
          menu = "Menu",
@@ -470,7 +472,7 @@ If 0, the item selection will change each time you interact with a shopkeeper.
             language = {
                name = "Language*",
                enum = {
-                  jp = "Japanese",
+                  ja = "Japanese",
                   en = "English",
                },
             },

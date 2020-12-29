@@ -1,12 +1,12 @@
-local Chara = ELONA.require("core.Chara")
-local Input = ELONA.require("core.Input")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
+local Chara = require("core.Chara")
+local Input = require("core.Input")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
 local table = table
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 local function give_wife(raphael, wife)
    if not table.contains(wife.prototype.tags, "man") then

@@ -1,9 +1,9 @@
-local Data = ELONA.require("core.Data")
-local Enums = ELONA.require("core.Enums")
-local Rand = ELONA.require("core.Rand")
-local Item = ELONA.require("core.Item")
+local Data = require("core.Data")
+local Enums = require("core.Enums")
+local Item = require("core.Item")
+local Rand = require("core.Rand")
+local World = require("core.World")
 local math = math
-local World = ELONA.require("core.World")
 
 -- Generates a list to be used with "choices" which will set the
 -- provided field to one of the choices in "list".
@@ -127,8 +127,8 @@ Available properties:
 
 -- NOTE: "id" must be the same as a character role, and between
 -- [1000,1999]. (2003 is special-cased.)
-ELONA.data:define_prototype("shop_inventory")
-ELONA.data:add(
+Data.define_prototype("shop_inventory")
+Data.add(
    "core.shop_inventory",
    {
       magic_vendor = {

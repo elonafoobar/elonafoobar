@@ -1,10 +1,10 @@
-local Chara = ELONA.require("core.Chara")
-local Enums = ELONA.require("core.Enums")
-local GUI = ELONA.require("core.GUI")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
+local Chara = require("core.Chara")
+local Enums = require("core.Enums")
+local GUI = require("core.GUI")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 return {
    root = "core.talk.unique.miches",

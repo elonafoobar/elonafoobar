@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("sound")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("sound")
+Data.add(
    "core.sound",
    {
       pop1 = {

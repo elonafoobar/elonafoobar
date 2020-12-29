@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("class")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("class")
+Data.add(
    "core.class",
    {
       warrior = {

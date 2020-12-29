@@ -1,7 +1,7 @@
 require("tests/lua/support/minctest")
 
-local Chara = ELONA.require("core.Chara")
-local Skill = ELONA.require("core.Skill")
+local Chara = require("core.Chara")
+local Skill = require("core.Skill")
 
 lrun("test LuaCharacter:damage_hp", function()
         Testing.start_in_debug_map()

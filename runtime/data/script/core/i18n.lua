@@ -1,6 +1,6 @@
 --- Functions for localization.
 --  See the I18N section for more information.
---  @usage local I18N = ELONA.require("core.I18N")
+--  @usage local I18N = require("core.I18N")
 --  @module "I18N"
 local I18N = {}
 
@@ -118,15 +118,9 @@ function I18N.get_data_text(prototype_id, instance_id, property_name, ...)
 end
 
 
---- Registers a new function for use inside localization files.
---
---  @tparam string language Localized language the function is valid in
---  @tparam string name The function's name
---  @tparam function func A function taking arguments and returning a string
---  @function register_function
-function I18N.register_function(language, name, func)
-   internal.register_function(language, name, func)
-end
+I18N.add = internal.add
+I18N.add_data_text = internal.add_data_text
+I18N.add_function = internal.add_function
 
 
 return I18N

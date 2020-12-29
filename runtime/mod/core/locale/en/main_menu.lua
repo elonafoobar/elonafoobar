@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    main_menu = {
       title_menu = {
          continue = "Restore an Adventurer",

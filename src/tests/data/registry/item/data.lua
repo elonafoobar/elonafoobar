@@ -1,5 +1,7 @@
+local Data = require("core.Data")
+
 -- Contains all possible item parameters for testing.
-ELONA.data:add(
+Data.add(
    "core.item",
    {
       putitoro = {

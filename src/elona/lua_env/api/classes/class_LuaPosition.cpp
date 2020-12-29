@@ -24,7 +24,7 @@ void bind(sol::state& lua)
      * @luadoc new function
      *
      * Constructs a new LuaPosition.
-     * @usage local LuaPosition = ELONA.require("core.LuaPosition")
+     * @usage local LuaPosition = require("core.LuaPosition")
      * local pos = LuaPosition.new()
      */
     auto LuaPosition = lua.new_usertype<Position>(

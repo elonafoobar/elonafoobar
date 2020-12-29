@@ -26,11 +26,6 @@ class I18NManager : public LuaSubmodule
 public:
     explicit I18NManager(LuaEnv&);
 
-    void register_function(
-        const std::string& language,
-        const std::string& name,
-        sol::protected_function function);
-
     void load(ModEnv& mod);
     void load_string(const std::string& src, ModEnv& mod);
 

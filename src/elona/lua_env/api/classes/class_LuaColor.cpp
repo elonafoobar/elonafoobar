@@ -21,7 +21,7 @@ void bind(sol::state& lua)
      * @luadoc new function
      *
      * Constructs a new LuaColor.
-     * @usage local LuaColor = ELONA.require("core.LuaColor")
+     * @usage local LuaColor = require("core.LuaColor")
      * local c = LuaColor.new()
      */
     auto LuaColor = lua.new_usertype<Color>(

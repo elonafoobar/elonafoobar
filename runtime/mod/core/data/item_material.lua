@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("item_material")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("item_material")
+Data.add(
    "core.item_material",
    {
       -- TODO

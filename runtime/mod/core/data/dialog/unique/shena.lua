@@ -1,9 +1,9 @@
-local Chara = ELONA.require("core.Chara")
-local GUI = ELONA.require("core.GUI")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
+local Chara = require("core.Chara")
+local GUI = require("core.GUI")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 return {
    root = "core.talk.unique.shena",

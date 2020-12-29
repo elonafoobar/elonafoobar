@@ -1,4 +1,6 @@
-ELONA.i18n:add_data_text(
+local I18N = require("core.I18N")
+
+I18N.add_data_text(
    "core.skill",
    {
       stat_life = {
@@ -791,7 +793,7 @@ ELONA.i18n:add_data_text(
 )
 
 
-ELONA.i18n:add {
+I18N.add {
    skill = {
       gained = "You have learned new ability, {$1}.",
 

@@ -1,5 +1,7 @@
+local Data = require("core.Data")
+
 -- Contains only id, to test handling of defaults.
-ELONA.data:add(
+Data.add(
    "core.chara",
    {
       nothing = {

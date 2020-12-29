@@ -1,5 +1,5 @@
 --- Functions for working with inventory.
---  @usage local Inventory = ELONA.require("core.Inventory")
+--  @usage local Inventory = require("core.Inventory")
 module "Inventory"
 
 --- Gets the player's inventory.

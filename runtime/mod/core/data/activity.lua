@@ -1,5 +1,8 @@
-ELONA.data:define_prototype("activity")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("activity")
+
+Data.add(
    "core.activity",
    {
       eat = {

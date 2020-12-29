@@ -1,6 +1,6 @@
 require("tests/lua/support/minctest")
 
-local Enums = ELONA.require("core.Enums")
+local Enums = require("core.Enums")
 
 lrun("test Enums.new_enum", function()
    local Vanilla = Enums.new_enum {

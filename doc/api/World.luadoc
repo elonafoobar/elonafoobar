@@ -1,5 +1,5 @@
 --- Functions for working with the state of the game world.
---  @usage local World = ELONA.require("core.World")
+--  @usage local World = require("core.World")
 module "World"
 
 --- Gets the ID of the next deferred event that will run.

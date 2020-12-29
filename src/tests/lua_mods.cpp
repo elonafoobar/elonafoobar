@@ -129,7 +129,7 @@ TEST_CASE("Test modification of store inside callback", "[Lua: Mods]")
     lua.load_mods();
 
     REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_turn_handler()
   mod.store.global.thing = mod.store.global.thing + 1
@@ -189,7 +189,7 @@ TEST_CASE("Test complex nested table assignment", "[Lua: Mods]")
     lua.load_mods();
 
     REQUIRE_NOTHROW(mod_mgr.load_testing_mod_from_script("test", R"(
-local Event = ELONA.require("core.Event")
+local Event = require("core.Event")
 
 local function my_turn_handler()
    for x = 1, 20 do
@@ -265,10 +265,10 @@ TEST_CASE("Test resolve_path_for_mod", "[Lua: Mods]")
         dirs::for_mod("test") / "<dood>" / "file.txt");
     REQUIRE(
         lua::resolve_path_for_mod("<test>/file-<LANGUAGE>.txt") ==
-        dirs::for_mod("test") / "file-jp.txt");
+        dirs::for_mod("test") / "file-ja.txt");
     REQUIRE(
         lua::resolve_path_for_mod("<test>/<LANGUAGE>/file-<LANGUAGE>.txt") ==
-        dirs::for_mod("test") / "jp" / "file-jp.txt");
+        dirs::for_mod("test") / "ja" / "file-ja.txt");
 
     REQUIRE_THROWS(lua::resolve_path_for_mod("file.txt"));
     REQUIRE_THROWS(lua::resolve_path_for_mod("<>"));

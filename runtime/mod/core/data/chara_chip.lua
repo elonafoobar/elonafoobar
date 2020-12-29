@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("chara_chip")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("chara_chip")
+Data.add(
    "core.chara_chip",
    {
       _0 = {

@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    win = {
       conquer_lesimas = "Unbelievable! You conquered Lesimas!",
       you_acquired_codex = "Blessing to {$2}, {$1}! You've finally acquired the codex!",

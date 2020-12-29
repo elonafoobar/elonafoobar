@@ -1,11 +1,11 @@
-local Chara = ELONA.require("core.Chara")
-local Enums = ELONA.require("core.Enums")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Internal = ELONA.require("core.Internal")
-local Item = ELONA.require("core.Item")
-local Map = ELONA.require("core.Map")
-local Rand = ELONA.require("core.Rand")
+local Chara = require("core.Chara")
+local Enums = require("core.Enums")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Internal = require("core.Internal")
+local Item = require("core.Item")
+local Map = require("core.Map")
+local Rand = require("core.Rand")
 
 return {
    root = "core.talk.unique.slan",

@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    scenario = {
       obtain_stone = {
          fool = "You obtain the fool's magic stone!",

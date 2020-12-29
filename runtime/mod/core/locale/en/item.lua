@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    item = {
       desc = {
          have_to_identify = "You have to identify the item to gain knowledge.",
@@ -142,7 +144,7 @@ ELONA.i18n:add {
 
 
 
-ELONA.i18n:add {
+I18N.add {
    item = {
       bug = {
          name = "gold bar",

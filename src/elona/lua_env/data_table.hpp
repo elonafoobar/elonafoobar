@@ -21,14 +21,6 @@ struct DataTable
 
 
 
-    /// Initialize with @a data.
-    DataTable(sol::table data)
-        : _storage(data)
-    {
-    }
-
-
-
     /**
      * Get a new ID by an integer ID.
      *
@@ -41,10 +33,7 @@ struct DataTable
         int integer_instance_id)
     {
         if (const auto id = _storage.traverse_get<sol::optional<std::string>>(
-                "_by_integer_id_tables",
-                prototype_id.get(),
-                integer_instance_id,
-                "id"))
+                "by_integer_id", prototype_id.get(), integer_instance_id, "id"))
         {
             return data::InstanceId{*id};
         }
@@ -68,7 +57,7 @@ struct DataTable
         data::InstanceId instance_id)
     {
         if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
-                "_instance_storages", prototype_id.get(), instance_id.get()))
+                "instances", prototype_id.get(), instance_id.get()))
         {
             return *data;
         }
@@ -89,7 +78,7 @@ struct DataTable
     optional<sol::table> get_table(data::PrototypeId prototype_id)
     {
         if (const auto data = _storage.traverse_get<sol::optional<sol::table>>(
-                "_instance_storages", prototype_id.get()))
+                "instances", prototype_id.get()))
         {
             return *data;
         }

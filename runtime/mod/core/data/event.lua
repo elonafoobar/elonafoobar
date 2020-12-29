@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("event")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("event")
+Data.add(
    "core.event",
    {
       game_initialized = {},

@@ -1,7 +1,7 @@
-local Chara = ELONA.require("core.Chara")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Internal = ELONA.require("core.Internal")
+local Chara = require("core.Chara")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Internal = require("core.Internal")
 local table = table
 
 return {

@@ -1,7 +1,7 @@
-local Chara = ELONA.require("core.Chara")
-local God = ELONA.require("core.God")
-local Item = ELONA.require("core.Item")
-local Map = ELONA.require("core.Map")
+local Chara = require("core.Chara")
+local God = require("core.God")
+local Item = require("core.Item")
+local Map = require("core.Map")
 
 return {
    root = "core.talk.unique.part_time_worker",

@@ -1,4 +1,6 @@
-ELONA.i18n:add {
+local I18N = require("core.I18N")
+
+I18N.add {
    casino = {
       talk_to_dealer = "You talk to the dealer.",
       can_acquire = "There're some items you can acquire.",

@@ -26,9 +26,7 @@ local I18N = kernel.I18N
 get_optional = I18N.get_optional
 get_data_text_optional = I18N.get_data_text_optional
 get_list = I18N.get_list
-i18n = I18N.interface
 format = I18N.format
-register_function = I18N.register_function
 )");
         if (!result.valid())
         {
@@ -46,12 +44,11 @@ void I18NManager::load(ModEnv& mod)
         return;
 
     const auto script_filepath = *mod.manifest.path / "locale" /
-        fs::u8path(g_config.language()) / "i18n.lua";
+        fs::u8path(g_config.language() + ".lua");
     if (!fs::exists(script_filepath))
         return;
 
     lua_state()->set("_MOD_ID", mod.manifest.id);
-    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result =
         safe_script_file(script_filepath, mod.env, sol::script_pass_on_error);
     lua_state()->set("_MOD_ID", sol::lua_nil);
@@ -67,7 +64,6 @@ void I18NManager::load(ModEnv& mod)
 void I18NManager::load_string(const std::string& src, ModEnv& mod)
 {
     lua_state()->set("_MOD_ID", mod.manifest.id);
-    mod.env["ELONA"]["i18n"] = env()["i18n"];
     const auto result = safe_script(src, mod.env, sol::script_pass_on_error);
     lua_state()->set("_MOD_ID", sol::lua_nil);
     if (!result.valid())
@@ -75,16 +71,6 @@ void I18NManager::load_string(const std::string& src, ModEnv& mod)
         sol::error e = result;
         throw std::runtime_error{e.what()};
     }
-}
-
-
-
-void I18NManager::register_function(
-    const std::string& language,
-    const std::string& name,
-    sol::protected_function function)
-{
-    env()["register_function"](language, name, function);
 }
 
 

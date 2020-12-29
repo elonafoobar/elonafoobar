@@ -8,7 +8,6 @@
 #include "console.hpp"
 #include "data_manager.hpp"
 #include "event_manager.hpp"
-#include "export_manager.hpp"
 #include "handle_manager.hpp"
 #include "i18n_manager.hpp"
 #include "mod_manager.hpp"
@@ -51,7 +50,6 @@ LuaEnv::LuaEnv()
     mod_mgr = std::make_unique<ModManager>(*this);
     handle_mgr = std::make_unique<HandleManager>(*this);
     data_mgr = std::make_unique<DataManager>(*this);
-    export_mgr = std::make_unique<ExportManager>(*this);
     i18n_mgr = std::make_unique<I18NManager>(*this);
     console = std::make_unique<Console>(*this);
     config_mgr = std::make_unique<ConfigManager>(*this);
@@ -98,7 +96,6 @@ void LuaEnv::clear()
 
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
-    data_mgr->clear();
     handle_mgr->clear_all_handles();
     // ConfigManager::clear() will be called elsewhere.
     lua_->collect_garbage();

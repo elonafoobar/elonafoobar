@@ -1,12 +1,12 @@
-local Chara = ELONA.require("core.Chara")
-local GUI = ELONA.require("core.GUI")
-local I18N = ELONA.require("core.I18N")
-local Internal = ELONA.require("core.Internal")
-local Inventory = ELONA.require("core.Inventory")
-local Item = ELONA.require("core.Item")
-local World = ELONA.require("core.World")
+local Chara = require("core.Chara")
+local GUI = require("core.GUI")
+local I18N = require("core.I18N")
+local Internal = require("core.Internal")
+local Inventory = require("core.Inventory")
+local Item = require("core.Item")
+local World = require("core.World")
 
-local common = require("../common.lua")
+local common = require_relative("../common.lua")
 
 local function surrender_cost()
    return Chara.player().gold // 5

@@ -123,7 +123,6 @@ set(ELONA_SOURCES
   lua_env/console.cpp
   lua_env/data_manager.cpp
   lua_env/event_manager.cpp
-  lua_env/export_manager.cpp
   lua_env/handle_manager.cpp
   lua_env/i18n_manager.cpp
   lua_env/interface.cpp

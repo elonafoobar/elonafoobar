@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("weather")
-ELONA.data:add(
+local Data = require("core.Data")
+
+Data.define_prototype("weather")
+Data.add(
    "core.weather",
    {
       sunny = {

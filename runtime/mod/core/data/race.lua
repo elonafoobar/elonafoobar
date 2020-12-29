@@ -1,3 +1,5 @@
+local Data = require("core.Data")
+
 -- Common body parts of human/demi-human races
 local humanoid_body_parts = {
    "core.head",
@@ -14,8 +16,8 @@ local humanoid_body_parts = {
 }
 
 
-ELONA.data:define_prototype("race")
-ELONA.data:add(
+Data.define_prototype("race")
+Data.add(
    "core.race",
    {
       kobold = {
