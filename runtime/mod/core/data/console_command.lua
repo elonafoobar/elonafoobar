@@ -73,6 +73,7 @@ Data.add(
             Config.set("core.wizard.no_sleepy", true)
             Config.set("core.wizard.no_sp_damage", true)
             Config.set("core.wizard.no_spellstock_cost", true)
+            Config.set("core.wizard.skip_random_event", true)
 
             Console.print("I AM LORD VOLDEMORT.")
          end,

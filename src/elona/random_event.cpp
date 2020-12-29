@@ -8,6 +8,7 @@
 #include "character.hpp"
 #include "character_status.hpp"
 #include "config.hpp"
+#include "debug.hpp"
 #include "deferred_event.hpp"
 #include "dmgheal.hpp"
 #include "draw.hpp"
@@ -152,7 +153,7 @@ optional<RandomEvent> generate_random_event()
     int id = 0;
     int luck_threshold = 0;
 
-    if (dbg_skipevent)
+    if (debug_has_wizard_flag("core.wizard.skip_random_event"))
     {
         return none;
     }

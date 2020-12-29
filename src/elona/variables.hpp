@@ -118,7 +118,6 @@ ELONA_EXTERN(int rtdmg);
 
 // turn_sequence.cpp
 ELONA_EXTERN(int tgloc);
-ELONA_EXTERN(int dbg_skipevent);
 ELONA_EXTERN(int findlocmode);
 ELONA_EXTERN(int dirsub);
 ELONA_EXTERN(int mousex);

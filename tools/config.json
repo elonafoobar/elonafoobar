@@ -110,6 +110,7 @@
       no_sleepy: true,
       no_sp_damage: true,
       no_spellstock_cost: true,
+      skip_random_event: true,
     },
   },
 }
