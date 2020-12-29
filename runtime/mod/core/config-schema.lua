@@ -313,5 +313,6 @@ config {
       option "no_sleepy", false,
       option "can_unlock_all_keys", false,
       option "can_cast_all_spells", false,
+      option "skip_random_event", false,
    },
 }

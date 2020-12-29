@@ -131,9 +131,13 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         if (action == "wizard_advance_time")
         {
-            dbg_skipevent = 1;
+            const auto prev_value_of_skip_random_event =
+                config_get<bool>("core.wizard.skip_random_event");
+            config_set("core.wizard.skip_random_event", true);
             game_advance_clock(1_hour, GameAdvanceClockEvents::on_hour_changed);
-            dbg_skipevent = 0;
+            config_set(
+                "core.wizard.skip_random_event",
+                prev_value_of_skip_random_event);
             g_mode = 0;
             return TurnResult::turn_end;
         }

@@ -628,6 +628,11 @@ Provide a script's name, like 'my_script.lua' for 'data/script/my_script.lua'.
                name = "Can Cast All Spells",
                doc = "You can cast all spells without failure. (Your success rates to cast spells become 100%.)"
             },
+
+            skip_random_event = {
+               name = "Skip Events",
+               doc = "All random events every 1 hour are skipped."
+            },
          },
 
          keybindings = {
