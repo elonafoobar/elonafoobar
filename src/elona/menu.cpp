@@ -450,27 +450,17 @@ TurnResult show_message_log()
     return TurnResult::pc_turn_user_error;
 }
 
-TurnResult show_chat_history()
-{
-    ui::UIMenuCompositeMessage(
-        static_cast<size_t>(ui::UIMenuCompositeMessage::Index::chat_history))
-        .show();
-    return TurnResult::pc_turn_user_error;
-}
-
 
 
 TurnResult play_scene()
 {
-    auto result = ui::UIMenuScene().show();
-
-    if (result.canceled)
+    while (true)
     {
-        return TurnResult::pc_turn_user_error;
-    }
-    else
-    {
-        return TurnResult::play_scene;
+        auto result = ui::UIMenuScene().show();
+        if (result.canceled)
+        {
+            return TurnResult::pc_turn_user_error;
+        }
     }
 }
 

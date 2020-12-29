@@ -15,13 +15,12 @@ struct Character;
 
 
 TurnResult npc_turn(Character& chara);
-bool turn_wrapper();
-TurnResult pass_turns(bool time);
+void turn_wrapper();
 TurnResult turn_begin();
 TurnResult pass_one_turn(bool time_passing = true);
 void update_emoicon(Character& chara);
 TurnResult turn_end();
-TurnResult pc_turn(bool advance_time = true);
+TurnResult pc_turn();
 
 optional<TurnResult> handle_pc_action(std::string& action);
 

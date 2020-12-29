@@ -455,7 +455,7 @@ void addbuilding(int related_town_quest_id, int building_type, int x, int y)
 
 
 
-TurnResult show_house_board()
+optional<TurnResult> show_house_board_one_loop()
 {
     Message::instance().linebreak();
     if (map_data.type != mdata_t::MapType::player_owned)
@@ -590,8 +590,22 @@ TurnResult show_house_board()
     tlocinity = 0;
     screenupdate = -1;
     update_screen();
-    return TurnResult::show_house_board;
+    return none;
 }
+
+
+
+TurnResult show_house_board()
+{
+    while (true)
+    {
+        if (const auto turn_result = show_house_board_one_loop())
+        {
+            return *turn_result;
+        }
+    }
+}
+
 
 
 void prompt_hiring()

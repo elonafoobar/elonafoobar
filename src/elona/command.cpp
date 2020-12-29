@@ -595,9 +595,7 @@ TurnResult do_give_command()
         snd("core.inv");
         CtrlInventoryOptions opts;
         opts.inventory_owner = cdata[target_chara_index];
-        MenuResult mr = ctrl_inventory(opts).menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory(opts).menu_result.turn_result;
     }
     txt(i18n::s.get("core.ui.invalid_target"));
     update_screen();
@@ -713,9 +711,7 @@ TurnResult do_interact_command()
         snd("core.inv");
         CtrlInventoryOptions opts;
         opts.inventory_owner = cdata[target_index];
-        MenuResult mr = ctrl_inventory(opts).menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory(opts).menu_result.turn_result;
     }
     if (p == 3)
     {
@@ -2131,7 +2127,7 @@ TurnResult do_use_command(ItemRef use_item)
         }
         screenupdate = -1;
         update_screen();
-        return TurnResult::show_house_board;
+        return show_house_board();
     case 19: {
         int chara = -1;
         // Are there any of your pets around you?
@@ -2421,7 +2417,7 @@ TurnResult do_use_command(ItemRef use_item)
     case 10:
         screenupdate = -1;
         update_screen();
-        return TurnResult::play_scene;
+        return play_scene();
     case 7:
         if (use_item->own_state != OwnState::shelter)
         {
@@ -2807,18 +2803,14 @@ TurnResult do_open_command(const ItemRef& box, bool play_sound)
         invctrl(0) = 24;
         invctrl(1) = 0;
         snd_("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (box->id == "core.tax_masters_tax_box")
     {
         invctrl(0) = 24;
         invctrl(1) = 2;
         snd_("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (box->id == "core.giants_shackle")
     {
@@ -3284,7 +3276,7 @@ TurnResult do_movement_command()
         if (cellfeat == 23)
         {
             snd("core.chat");
-            return TurnResult::show_quest_board;
+            return show_quest_board();
         }
         if (cellfeat == 31)
         {
@@ -3551,9 +3543,7 @@ TurnResult do_get_command()
     {
         invctrl = 3;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
 
     const auto item_opt = cell_get_item_if_only_one(cdata.player().position);
@@ -3620,9 +3610,7 @@ TurnResult do_short_cut_command(int sc_)
         invsc = game()->skill_shortcuts.at(sc_) % 10000;
         invctrl(0) = game()->skill_shortcuts.at(sc_) / 10000;
         invctrl(1) = 0;
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     efid = game()->skill_shortcuts.at(sc_);
     if (efid >= 300 && efid < 400)
@@ -4016,9 +4004,7 @@ TurnResult try_interact_with_npc(Character& chara)
     snd("core.inv");
     CtrlInventoryOptions opts;
     opts.inventory_owner = chara;
-    MenuResult mr = ctrl_inventory(opts).menu_result;
-    assert(mr.turn_result != TurnResult::none);
-    return mr.turn_result;
+    return ctrl_inventory(opts).menu_result.turn_result;
 }
 
 

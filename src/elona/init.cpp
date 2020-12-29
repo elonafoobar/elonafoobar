@@ -557,7 +557,7 @@ void initialize_debug_globals()
 
 
 
-void initialize_game()
+void initialize_game(InitializeGameMode start_mode)
 {
     bool script_loaded = false;
     bool will_load_script = false;
@@ -567,17 +567,25 @@ void initialize_game()
     firstturn = 1;
     Message::instance().buffered_message_begin("   Welcome traveler! ");
 
-    if (mode == 5)
+    switch (start_mode)
+    {
+    case InitializeGameMode::continue_: mode = 3; break;
+    case InitializeGameMode::new_: mode = 5; break;
+    case InitializeGameMode::quickstart: mode = 6; break;
+    default: assert(0); break;
+    }
+
+    if (start_mode == InitializeGameMode::new_)
     {
         initialize_world();
         create_all_adventurers();
-        mode = 2;
         deferred_event_add("core.generate_game_world");
         deferred_event_add("core.lomias_talks");
         sceneid = 0;
+        mode = 2;
         do_play_scene();
     }
-    if (mode == 6)
+    else if (start_mode == InitializeGameMode::quickstart)
     {
         playerid = "sav_testbed"s;
         initialize_debug_globals();
@@ -585,13 +593,8 @@ void initialize_game()
         will_load_script = true;
         mode = 2;
     }
-    if (mode == 2)
-    {
-        game()->next_inventory_serial_id = 1000;
-        game()->next_shelter_serial_number = 100;
-        blending_clear_recipe_memory();
-    }
-    if (mode == 3)
+
+    if (start_mode == InitializeGameMode::continue_)
     {
         save_load_game();
 
@@ -599,6 +602,12 @@ void initialize_game()
         {
             will_load_script = true;
         }
+    }
+    else
+    {
+        game()->next_inventory_serial_id = 1000;
+        game()->next_shelter_serial_number = 100;
+        blending_clear_recipe_memory();
     }
 
     if (will_load_script && g_config.startup_script() != ""s)
@@ -609,7 +618,10 @@ void initialize_game()
     }
 
     init_fovlist();
+
+    assert(mode == 2 || mode == 3);
     initialize_map();
+    assert(mode == 0);
 
     if (script_loaded)
     {

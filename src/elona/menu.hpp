@@ -58,7 +58,6 @@ std::string show_quick_menu();
 bool maybe_show_ex_help(int id, bool should_update_screen = false);
 void show_ex_help(int id);
 void show_game_help();
-TurnResult show_chat_history();
 TurnResult show_message_log();
 void show_option_menu();
 TurnResult play_scene();

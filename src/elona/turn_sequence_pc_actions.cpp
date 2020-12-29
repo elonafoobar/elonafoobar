@@ -379,9 +379,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
     {
         invctrl = lastctrl;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "throw")
     {
@@ -396,18 +394,14 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 26;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory().menu_result;
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "inventory")
     {
         invctrl = 1;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "drop")
     {
@@ -422,34 +416,26 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 2;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory().menu_result;
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "eat")
     {
         invctrl = 5;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "read")
     {
         invctrl = 7;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "drink")
     {
         invctrl = 8;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "zap")
     {
@@ -464,18 +450,14 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 9;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory().menu_result;
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "use")
     {
         invctrl = 14;
         snd("core.inv");
-        MenuResult mr = ctrl_inventory().menu_result;
-        assert(mr.turn_result != TurnResult::none);
-        return mr.turn_result;
+        return ctrl_inventory().menu_result.turn_result;
     }
     if (action == "open")
     {
@@ -490,9 +472,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 15;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory().menu_result;
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "dip")
@@ -508,24 +488,24 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 17;
             snd("core.inv");
-            return TurnResult::ctrl_inventory;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "chara_info")
     {
-        return TurnResult::menu_character_sheet;
+        return menu_character_sheet_normal().turn_result;
     }
     if (action == "material")
     {
-        return TurnResult::menu_materials;
+        return menu_materials().turn_result;
     }
     if (action == "trait")
     {
-        return TurnResult::menu_feats;
+        return menu_feats().turn_result;
     }
     if (action == "wear")
     {
-        return TurnResult::menu_equipment;
+        return menu_equipment().turn_result;
     }
     if (action == "cast")
     {
@@ -538,7 +518,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         else
         {
-            return TurnResult::show_spell_list;
+            return show_spell_list();
         }
     }
     if (action == "skill")
@@ -552,16 +532,16 @@ optional<TurnResult> handle_pc_action(std::string& action)
         }
         else
         {
-            return TurnResult::show_skill_list;
+            return show_skill_list();
         }
     }
     if (action == "message_log")
     {
-        return TurnResult::show_message_log;
+        return show_message_log();
     }
     if (action == "journal")
     {
-        return TurnResult::show_journal;
+        return show_journal();
     }
     menucycle = 0;
     if (action == "offer")
@@ -577,9 +557,7 @@ optional<TurnResult> handle_pc_action(std::string& action)
         {
             invctrl = 19;
             snd("core.inv");
-            MenuResult mr = ctrl_inventory().menu_result;
-            assert(mr.turn_result != TurnResult::none);
-            return mr.turn_result;
+            return ctrl_inventory().menu_result.turn_result;
         }
     }
     if (action == "help")

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "optional.hpp"
+
 namespace elona
 {
 
@@ -28,14 +30,16 @@ enum class MainMenuResult
     character_making_select_alias_looped,
     character_making_customize_appearance,
     character_making_final_phase,
-    initialize_game,
+    initialize_game_continue,
+    initialize_game_new,
     finish_elona,
 };
 
 
+enum class InitializeGameMode;
 
 /// @return True if the game is about to start; false if Exit was selected.
-bool main_menu_loop();
+optional<InitializeGameMode> main_menu_loop();
 MainMenuResult main_menu_wrapper();
 MainMenuResult main_menu_new_game();
 MainMenuResult main_title_menu();
