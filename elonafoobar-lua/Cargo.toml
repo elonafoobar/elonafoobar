@@ -1,0 +1,12 @@
+[package]
+name = "elonafoobar-lua"
+version = "0.8.0"
+authors = ["KI"] # See also ../CREDITS.txt.
+edition = "2018"
+publish = false
+
+[dependencies]
+elonafoobar-lua-sys = { path = "../elonafoobar-lua-sys" }
+elonafoobar-utils = { path = "../elonafoobar-utils" }
+anyhow = "1.0.33"
+bitflags = "1.2.1"

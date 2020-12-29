@@ -1,0 +1,3 @@
+[submodule "elonafoobar-lua-sys/lua"]
+	path = elonafoobar-lua-sys/lua
+	url = https://github.com/elonafoobar/lua

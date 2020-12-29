@@ -1,0 +1,14 @@
+[package]
+name = "elonafoobar-gui"
+version = "0.8.0"
+authors = ["KI"] # See also ../CREDITS.txt.
+edition = "2018"
+publish = false
+
+[dependencies]
+anyhow = "1.0.33"
+
+[dependencies.sdl2]
+version = "0.34.3"
+default-features = false
+features = ["ttf", "image", "mixer"]
