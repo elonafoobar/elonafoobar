@@ -24,7 +24,7 @@ config {
 }
 ```
 
-Then, add a corresponding translation file to `locale/en` or `locale/jp`.
+Then, add a corresponding translation file to `locale/en` or `locale/ja`.
 
 ```lua
 ELONA.i18n:add {

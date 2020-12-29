@@ -265,10 +265,10 @@ TEST_CASE("Test resolve_path_for_mod", "[Lua: Mods]")
         dirs::for_mod("test") / "<dood>" / "file.txt");
     REQUIRE(
         lua::resolve_path_for_mod("<test>/file-<LANGUAGE>.txt") ==
-        dirs::for_mod("test") / "file-jp.txt");
+        dirs::for_mod("test") / "file-ja.txt");
     REQUIRE(
         lua::resolve_path_for_mod("<test>/<LANGUAGE>/file-<LANGUAGE>.txt") ==
-        dirs::for_mod("test") / "jp" / "file-jp.txt");
+        dirs::for_mod("test") / "ja" / "file-ja.txt");
 
     REQUIRE_THROWS(lua::resolve_path_for_mod("file.txt"));
     REQUIRE_THROWS(lua::resolve_path_for_mod("<>"));

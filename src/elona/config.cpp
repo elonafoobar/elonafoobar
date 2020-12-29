@@ -254,20 +254,20 @@ void inject_languages()
     auto& conf = lua::lua->get_config_manager();
 
     std::vector<std::string> locales;
-    bool has_jp = false;
+    bool has_ja = false;
     bool has_en = false;
 
     // TODO
     locales.push_back("en");
-    locales.push_back("jp");
+    locales.push_back("ja");
     has_en = true;
-    has_jp = true;
+    has_ja = true;
 
     // Not having English or Japanese loaded will cause weird things
     // to happen, since many parts of the code depend on one or the
     // other being loaded. This can be removed after those parts of
     // the code are refactored.
-    if (!has_en || !has_jp)
+    if (!has_en || !has_ja)
     {
         throw ConfigLoadingError(
             "Locale for English or Japanese is missing in locale/ folder.");
@@ -441,7 +441,7 @@ void query_language()
     std::string locale;
     if (cursor == 0)
     {
-        locale = "jp";
+        locale = "ja";
     }
     else
     {
@@ -485,7 +485,7 @@ void load_options_internal(std::istream& in, const std::string& filepath)
     {
         query_language();
     }
-    if (g_config.language() == "jp")
+    if (g_config.language() == "ja")
     {
         jp = 1;
     }

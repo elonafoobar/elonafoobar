@@ -257,13 +257,13 @@ end
 -- Japanese
 --
 
-i18n.jp = {}
+i18n.ja = {}
 
-function i18n.jp.ordinal(n)
+function i18n.ja.ordinal(n)
    return tostring(n)
 end
 
-function i18n.jp.he(chara)
+function i18n.ja.he(chara)
    if not chara then
       return "彼"
    end
@@ -275,7 +275,7 @@ function i18n.jp.he(chara)
    end
 end
 
-function i18n.jp.his(chara)
+function i18n.ja.his(chara)
    if not chara then
       return "彼の"
    end
@@ -289,7 +289,7 @@ function i18n.jp.his(chara)
    end
 end
 
-function i18n.jp.him(chara)
+function i18n.ja.him(chara)
    if not chara then
       return "彼"
    end
@@ -301,7 +301,7 @@ function i18n.jp.him(chara)
    end
 end
 
-function i18n.jp.kare_wa(chara)
+function i18n.ja.kare_wa(chara)
    if not chara then
       return "それは"
    end
@@ -380,11 +380,11 @@ for name, func in pairs(i18n.en) do
    I18N.register_function("en", name, func)
 end
 
-for name, func in pairs(i18n.jp) do
-   I18N.register_function("jp", name, func)
+for name, func in pairs(i18n.ja) do
+   I18N.register_function("ja", name, func)
 end
 
 for name, func in pairs(i18n.all) do
    I18N.register_function("en", name, func)
-   I18N.register_function("jp", name, func)
+   I18N.register_function("ja", name, func)
 end

@@ -1015,7 +1015,7 @@ MainMenuResult main_menu_about_changelogs()
     Changelog changelog;
     if (jp)
     {
-        changelog.load(filesystem::path("../CHANGELOG-jp.md"));
+        changelog.load(filesystem::path("../CHANGELOG-ja.md"));
     }
     else
     {

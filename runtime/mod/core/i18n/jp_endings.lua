@@ -358,7 +358,7 @@ local endings = {
 }
 
 for name, list in pairs(endings) do
-   I18N.register_function("jp", name, function(chara, mark)
+   I18N.register_function("ja", name, function(chara, mark)
                              -- Lua tables are 1-indexed.
                              if mark == nil then
                                 mark = 0

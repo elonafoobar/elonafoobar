@@ -71,7 +71,7 @@
       walk_wait: 5,
     },
     language: {
-      language: "jp",
+      language: "ja",
     },
     message: {
       add_timestamps: true,
