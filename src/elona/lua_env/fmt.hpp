@@ -342,12 +342,11 @@ private:
 
         ++idx; // '('
 
-        // return {"f", mod_name, func_name, args, ...}
+        // return {"f", mod_name.."."..func_name, args, ...}
         auto ret = make_table();
         ret[1] = "f";
-        ret[2] = std::string{mod_name};
-        ret[3] = std::string{func_name};
-        int ret_index = 4;
+        ret[2] = std::string{mod_name} + "." + std::string{func_name};
+        int ret_index = 3;
         while (idx < src.size())
         {
             if (src[idx] == ')')

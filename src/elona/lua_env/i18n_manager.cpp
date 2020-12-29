@@ -28,7 +28,6 @@ get_data_text_optional = I18N.get_data_text_optional
 get_list = I18N.get_list
 i18n = I18N.interface
 format = I18N.format
-register_function = I18N.register_function
 )");
         if (!result.valid())
         {
@@ -75,16 +74,6 @@ void I18NManager::load_string(const std::string& src, ModEnv& mod)
         sol::error e = result;
         throw std::runtime_error{e.what()};
     }
-}
-
-
-
-void I18NManager::register_function(
-    const std::string& language,
-    const std::string& name,
-    sol::protected_function function)
-{
-    env()["register_function"](language, name, function);
 }
 
 

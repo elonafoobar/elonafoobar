@@ -1,3 +1,6 @@
+require("functions.lua")
+require("endings.lua")
+
 require("action.lua")
 require("action_use.lua")
 require("activity.lua")
