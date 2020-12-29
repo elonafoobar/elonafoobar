@@ -161,8 +161,6 @@ void initialize_lua()
     auto& data_manager = lua::lua->get_data_manager();
     data_manager.init_from_mods();
 
-    lua::lua->get_export_manager().register_all_exports();
-
     // Set "data" table on all loaded mod environments.
     data::initialize(data_manager.get());
 

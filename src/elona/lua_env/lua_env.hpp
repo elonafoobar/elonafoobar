@@ -12,7 +12,6 @@ namespace lua
 class APIManager;
 class DataManager;
 class EventManager;
-class ExportManager;
 class HandleManager;
 class I18NManager;
 class ModManager;
@@ -51,11 +50,6 @@ public:
     EventManager& get_event_manager()
     {
         return *event_mgr;
-    }
-
-    ExportManager& get_export_manager()
-    {
-        return *export_mgr;
     }
 
     HandleManager& get_handle_manager()
@@ -111,7 +105,6 @@ private:
     std::unique_ptr<ModManager> mod_mgr;
     std::unique_ptr<APIManager> api_mgr;
     std::unique_ptr<EventManager> event_mgr;
-    std::unique_ptr<ExportManager> export_mgr;
     std::unique_ptr<HandleManager> handle_mgr;
     std::unique_ptr<DataManager> data_mgr;
     std::unique_ptr<I18NManager> i18n_mgr;

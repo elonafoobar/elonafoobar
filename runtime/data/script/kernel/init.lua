@@ -4,7 +4,6 @@
 local Config = require("kernel.config")
 local Data = require("kernel.data")
 local Event = require("kernel.event")
-local Export = require("kernel.export")
 local Handle = require("kernel.handle")
 local I18N = require("kernel.i18n")
 local ReadOnly = require("kernel.readonly")
@@ -15,7 +14,6 @@ return {
    Config = Config,
    Data = Data,
    Event = Event,
-   Export = Export,
    Handle = Handle,
    I18N = I18N,
    ReadOnly = ReadOnly,

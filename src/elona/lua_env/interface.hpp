@@ -1,9 +1,13 @@
 #pragma once
 
+#include <iostream>
+
+#include "../../util/strutil.hpp"
 #include "../data/id.hpp"
-#include "export_manager.hpp"
+#include "api_manager.hpp"
 #include "handle_manager.hpp"
 #include "lua_env.hpp"
+#include "wrapped_function.hpp"
 
 
 
@@ -11,12 +15,50 @@
  * Simpler interface for using the global LuaEnv instance to call mod-related
  * things.
  */
-namespace elona
-{
-namespace lua
+namespace elona::lua
 {
 
 class ConfigTable;
+
+
+
+namespace detail
+{
+
+/***
+ * Obtains a Lua callback where name is like
+ * "<mod_id>.<namespaces>", if it exists.
+ */
+inline optional<WrappedFunction> get_exported_function(const std::string& name)
+{
+    const auto names = strutil::split(name, '.');
+    assert(1 < names.size());
+    sol::table t = lua::lua->get_api_manager().get_master_api_table();
+    for (size_t i = 0; i < names.size() - 1; ++i)
+    {
+        if (auto next_t = t.get<sol::optional<sol::table>>(names.at(i)))
+        {
+            t = *next_t;
+        }
+        else
+        {
+            return none;
+        }
+    }
+
+    if (auto func = t.get<sol::optional<sol::protected_function>>(names.back()))
+    {
+        return WrappedFunction{name, *func};
+    }
+    else
+    {
+        return none;
+    }
+}
+
+} // namespace detail
+
+
 
 /**
  * Calls a Lua exported function, printing any errors that may have occurred
@@ -25,7 +67,26 @@ class ConfigTable;
 template <typename... Args>
 void call(const std::string& name, Args... args)
 {
-    lua::lua->get_export_manager().call(name, std::forward<Args>(args)...);
+    try
+    {
+        if (auto func = detail::get_exported_function(name))
+        {
+            func->call_unsafely(std::forward<Args>(args)...);
+        }
+        else
+        {
+            throw std::runtime_error(
+                "Script callback error (" + name +
+                "): no such exported function was found");
+        }
+    }
+    catch (const std::exception& e)
+    {
+        std::string message =
+            "Script callback error (" + name + "): " + e.what();
+        txt(message, Message::color{ColorIndex::red});
+        std::cerr << message << std::endl;
+    }
 }
 
 /**
@@ -36,8 +97,21 @@ template <typename Retval, typename... Args>
 Retval
 call_with_result(const std::string& name, Retval default_value, Args... args)
 {
-    return lua::lua->get_export_manager().call_with_result(
-        name, default_value, std::forward<Args>(args)...);
+    if (auto func = detail::get_exported_function(name))
+    {
+        return func->call_with_result(
+            default_value, std::forward<Args>(args)...);
+    }
+    else
+    {
+        std::string message = "Script callback error (" + name +
+            "): no such exported function was "
+            "found";
+
+        txt(message, Message::color{ColorIndex::red});
+        std::cerr << message << std::endl;
+        return default_value;
+    }
 }
 
 /**
@@ -114,5 +188,4 @@ fs::path resolve_path_for_mod(const std::string& path);
 // List mod directories under `base_dir`.
 std::vector<fs::path> all_mod_dirs(const fs::path& base_dir);
 
-} // namespace lua
-} // namespace elona
+} // namespace elona::lua
