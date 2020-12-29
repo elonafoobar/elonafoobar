@@ -44,7 +44,7 @@ void I18NManager::load(ModEnv& mod)
         return;
 
     const auto script_filepath = *mod.manifest.path / "locale" /
-        fs::u8path(g_config.language()) / "i18n.lua";
+        fs::u8path(g_config.language() + ".lua");
     if (!fs::exists(script_filepath))
         return;
 
