@@ -1,0 +1,10 @@
+[workspace]
+members = [
+  "elonafoobar",
+  "elonafoobar-gui",
+  "elonafoobar-log",
+  "elonafoobar-lua",
+  "elonafoobar-lua-sys",
+  "elonafoobar-net",
+  "elonafoobar-utils",
+]

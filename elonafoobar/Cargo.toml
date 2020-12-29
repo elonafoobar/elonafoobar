@@ -1,0 +1,29 @@
+[package]
+name = "elonafoobar"
+version = "0.8.0"
+authors = ["Noa", "KI", "Ruin0x11"] # See also ../CREDITS.txt
+edition = "2018"
+publish = false
+default-run = "elona"
+
+[dependencies]
+elonafoobar-gui = { path = "../elonafoobar-gui" }
+elonafoobar-log = { path = "../elonafoobar-log" }
+elonafoobar-lua = { path = "../elonafoobar-lua" }
+elonafoobar-net = { path = "../elonafoobar-net" }
+elonafoobar-utils = { path = "../elonafoobar-utils" }
+anyhow = "1.0.33"
+clap = "2.33.3"
+itertools = "0.9.0"
+json5 = "0.2.8"
+lazy_static = "1.4.0"
+petgraph = "0.5.1"
+semver = { version = "0.11.0", features = ["serde"] }
+serde = { version = "1.0.116", features = ["derive"] }
+thiserror = "1.0.21"
+
+[build-dependencies]
+anyhow = "1.0.33"
+fs_extra = "1.2.0"
+regex = "1.4.1"
+vergen = "3.1.0"

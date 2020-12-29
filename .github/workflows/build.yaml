@@ -1,0 +1,59 @@
+name: Tests
+
+on: [push, pull_request]
+
+jobs:
+  test-ubuntu:
+    name: Test on Ubuntu
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Test
+      run: |
+        cargo test --verbose
+
+
+  test-macos:
+    name: Test on macOS
+    runs-on: macos-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Test
+      run: |
+        cargo test --verbose
+
+
+  format:
+    name: Run cargo fmt
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Run cargo fmt
+      run: |
+        cargo fmt
+
+
+  lint:
+    name: Run cargo clippy
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        submodules: true
+
+    - name: Run cargo clippy
+      run: |
+        cargo clippy

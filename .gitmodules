@@ -1,6 +1,3 @@
-[submodule "deps/windows"]
-	path = deps/windows
-	url = https://github.com/elonafoobar/windows_deps.git
-[submodule "src/thirdparty/msgpack-c"]
-	path = src/thirdparty/msgpack-c
-	url = https://github.com/msgpack/msgpack-c
+[submodule "elonafoobar-lua-sys/lua"]
+	path = elonafoobar-lua-sys/lua
+	url = https://github.com/elonafoobar/lua
