@@ -1,5 +1,7 @@
+local Data = ELONA.require("core.Data")
+
 -- Contains all possible character parameters for testing.
-ELONA.data:add(
+Data.add(
    "core.chara",
    {
       spiral_putit = {

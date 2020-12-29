@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("portrait")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("portrait")
+Data.add(
    "core.portrait",
    {
       man1 = {

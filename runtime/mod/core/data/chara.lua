@@ -1,7 +1,8 @@
+local Data = ELONA.require("core.Data")
 local Enums = ELONA.require("core.Enums")
 
-ELONA.data:define_prototype("chara")
-ELONA.data:add(
+Data.define_prototype("chara")
+Data.add(
    "core.chara",
    {
       bug = {

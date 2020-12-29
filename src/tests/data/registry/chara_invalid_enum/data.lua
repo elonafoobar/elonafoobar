@@ -1,4 +1,6 @@
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.add(
    "core.chara",
    {
       putit = {

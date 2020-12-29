@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("fish")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("fish")
+Data.add(
    "core.fish",
    {
       bug = {

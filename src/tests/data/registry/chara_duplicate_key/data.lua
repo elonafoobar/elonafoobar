@@ -1,4 +1,6 @@
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.add(
    "core.chara",
    {
       dragon = {
@@ -9,7 +11,7 @@ ELONA.data:add(
       },
    }
 )
-ELONA.data:add(
+Data.add(
    "core.chara",
    {
       nothing = {

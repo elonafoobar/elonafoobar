@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("god")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("god")
+Data.add(
    "core.god",
    {
       mani = {

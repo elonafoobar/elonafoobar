@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("enchantment")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("enchantment")
+Data.add(
    "core.enchantment",
    {
       increases_attribute = {

@@ -1,11 +1,13 @@
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.add(
    "core.chara",
    {
       foo = {},
    }
 )
 
-ELONA.data:add(
+Data.add(
    "core.item",
    {
       foo = {},

@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("story_quest")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("story_quest")
+Data.add(
    "core.story_quest",
    {
       tutorial = {

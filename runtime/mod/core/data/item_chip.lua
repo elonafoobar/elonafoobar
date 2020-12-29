@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("item_chip")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("item_chip")
+Data.add(
    "core.item_chip",
    {
       empty = {

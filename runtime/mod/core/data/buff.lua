@@ -1,6 +1,7 @@
 local Chara = ELONA.require("core.Chara")
-local math = math
+local Data = ELONA.require("core.Data")
 local I18N = ELONA.require("core.I18N")
+local math = math
 
 local function mod_skill_level(args, id, amount)
    local skill = args.chara:get_skill(id)
@@ -63,8 +64,8 @@ in the description.
 ]]
 
 -- TODO: buff icons
-ELONA.data:define_prototype("buff")
-ELONA.data:add(
+Data.define_prototype("buff")
+Data.add(
    "core.buff",
    {
       holy_shield = {
@@ -406,7 +407,7 @@ ELONA.data:add(
 )
 
 local function register_growth_buff(stat_index, stat_name)
-   ELONA.data:add(
+   Data.add(
       "core.buff",
       {
          ["grow_" .. stat_name] = {

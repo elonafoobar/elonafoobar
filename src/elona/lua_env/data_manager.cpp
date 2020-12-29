@@ -14,26 +14,18 @@ namespace lua
 DataManager::DataManager(LuaEnv& lua)
     : LuaSubmodule(lua)
 {
-    clear();
-}
-
-
-
-void DataManager::clear()
-{
-    std::pair<sol::table, sol::table> result = safe_script(R"(
-return kernel.Data.new_registry()
+    sol::table result = safe_script(R"(
+local storage = kernel.Data._INTERNAL_API_get_inner_storage()
+kernel.Data._INTERNAL_API_get_inner_storage = nil
+return storage
 )");
-    _public_interface = result.first;
-    _data.storage() = result.second;
+    _data.storage() = result;
 }
 
 
 
 void DataManager::_init_from_mod(ModEnv& mod)
 {
-    mod.env["ELONA"]["data"] = _public_interface;
-
     if (!mod.manifest.path)
     {
         return; // psuedo-mod
@@ -78,15 +70,6 @@ void DataManager::init_from_mods()
     }
 
     lua_state()->set("_MOD_ID", sol::lua_nil);
-
-    // Prevent modifications to the 'data' table.
-    sol::table metatable = _data.storage().create_with(
-        sol::meta_function::new_index,
-        sol::detail::fail_on_newindex,
-        sol::meta_function::index,
-        _data.storage());
-
-    _data.storage()[sol::metatable_key] = metatable;
 }
 
 } // namespace lua

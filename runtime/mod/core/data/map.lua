@@ -1,8 +1,9 @@
 local Calc = ELONA.require("core.Calc")
+local Data = ELONA.require("core.Data")
 local Enums = ELONA.require("core.Enums")
 local Map = ELONA.require("core.Map")
-local math = math
 local Rand = ELONA.require("core.Rand")
+local math = math
 local table = table
 
 local map = require("map/static.lua")
@@ -46,8 +47,8 @@ end
     generates the map. See the mapgen/ folder for examples.
 
 ]]
-ELONA.data:define_prototype("map")
-ELONA.data:add(
+Data.define_prototype("map")
+Data.add(
    "core.map",
    {
       test_world = {
@@ -1014,7 +1015,7 @@ local function chara_filter_museum_shop()
 end
 
 -- These maps are player-created.
-ELONA.data:add(
+Data.add(
    "core.map",
    {
       museum = player_owned {

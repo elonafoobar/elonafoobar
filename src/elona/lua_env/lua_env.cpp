@@ -98,7 +98,6 @@ void LuaEnv::clear()
 
     event_mgr->clear();
     mod_mgr->clear_mod_stores();
-    data_mgr->clear();
     handle_mgr->clear_all_handles();
     // ConfigManager::clear() will be called elsewhere.
     lua_->collect_garbage();

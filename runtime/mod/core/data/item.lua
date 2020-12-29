@@ -1,8 +1,10 @@
-ELONA.data:define_prototype("item", {
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("item", {
    max_charges = 0,
 })
 
-ELONA.data:add(
+Data.add(
    "core.item",
    {
       bug = {

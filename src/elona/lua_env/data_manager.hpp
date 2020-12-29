@@ -33,8 +33,6 @@ class DataManager : public LuaSubmodule
 public:
     explicit DataManager(LuaEnv& lua);
 
-    void clear();
-
     void init_from_mods();
 
     DataTable& get()
@@ -47,7 +45,6 @@ public:
 private:
     void _init_from_mod(ModEnv& mod);
 
-    sol::table _public_interface;
     DataTable _data;
 };
 

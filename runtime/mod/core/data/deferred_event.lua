@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("deferred_event")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("deferred_event")
+Data.add(
    "core.deferred_event",
    {
       conquer_lesimas = {

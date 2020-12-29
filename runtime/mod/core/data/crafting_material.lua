@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("crafting_material")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("crafting_material")
+Data.add(
    "core.crafting_material",
    {
       garbage = {

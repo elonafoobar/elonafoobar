@@ -8,8 +8,8 @@ local Wish = ELONA.require("core.Wish")
 
 
 
-ELONA.data:define_prototype("console_command")
-ELONA.data:add(
+Data.define_prototype("console_command")
+Data.add(
    "core.console_command",
    {
       history = {

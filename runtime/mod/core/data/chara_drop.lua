@@ -1,8 +1,9 @@
 local Chara = ELONA.require("core.Chara")
+local Data = ELONA.require("core.Data")
+local Enums = ELONA.require("core.Enums")
 local Item = ELONA.require("core.Item")
 local Map = ELONA.require("core.Map")
 local Rand = ELONA.require("core.Rand")
-local Enums = ELONA.require("core.Enums")
 
 -- Returns 'drops' table from array of item IDs.
 local function make_drops(ids)
@@ -55,8 +56,8 @@ Each item of "drops" can have these properties.
     chara: character that was killed.
 --]]
 
-ELONA.data:define_prototype("chara_drop")
-ELONA.data:add(
+Data.define_prototype("chara_drop")
+Data.add(
    "core.chara_drop",
    {
       rich_person = {

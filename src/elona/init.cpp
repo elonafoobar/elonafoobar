@@ -163,7 +163,6 @@ void initialize_lua()
     api_manager.init_from_mods();
 
     auto& data_manager = lua::lua->get_data_manager();
-    data_manager.clear();
     data_manager.init_from_mods();
 
     lua::lua->get_export_manager().register_all_exports();

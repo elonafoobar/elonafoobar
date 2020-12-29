@@ -1,5 +1,7 @@
-ELONA.data:define_prototype("body_part")
-ELONA.data:add(
+local Data = ELONA.require("core.Data")
+
+Data.define_prototype("body_part")
+Data.add(
    "core.body_part",
    {
       head = {

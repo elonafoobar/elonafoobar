@@ -1,4 +1,5 @@
 local Chara = ELONA.require("core.Chara")
+local Data = ELONA.require("core.Data")
 local Enchantment = ELONA.require("core.Enchantment")
 local Enums = ELONA.require("core.Enums")
 local GUI = ELONA.require("core.GUI")
@@ -27,8 +28,8 @@ end
 
 
 
-ELONA.data:define_prototype("blending_recipe")
-ELONA.data:add(
+Data.define_prototype("blending_recipe")
+Data.add(
    "core.blending_recipe",
    {
       love_food = {
