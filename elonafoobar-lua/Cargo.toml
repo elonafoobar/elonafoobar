@@ -8,5 +8,5 @@ publish = false
 [dependencies]
 elonafoobar-lua-sys = { path = "../elonafoobar-lua-sys" }
 elonafoobar-utils = { path = "../elonafoobar-utils" }
-anyhow = "1.0.33"
+anyhow = "1.0.37"
 bitflags = "1.2.1"

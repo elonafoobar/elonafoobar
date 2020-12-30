@@ -12,17 +12,17 @@ elonafoobar-log = { path = "../elonafoobar-log" }
 elonafoobar-lua = { path = "../elonafoobar-lua" }
 elonafoobar-net = { path = "../elonafoobar-net" }
 elonafoobar-utils = { path = "../elonafoobar-utils" }
-anyhow = "1.0.33"
+anyhow = "1.0.37"
 clap = "2.33.3"
-json5 = "0.2.8"
+json5 = "0.3.0"
 lazy_static = "1.4.0"
 petgraph = "0.5.1"
 semver = { version = "0.11.0", features = ["serde"] }
-serde = { version = "1.0.116", features = ["derive"] }
-thiserror = "1.0.21"
+serde = { version = "1.0.118", features = ["derive"] }
+thiserror = "1.0.23"
 
 [build-dependencies]
-anyhow = "1.0.33"
+anyhow = "1.0.37"
 fs_extra = "1.2.0"
-regex = "1.4.1"
+regex = "1.4.2"
 vergen = "3.1.0"
