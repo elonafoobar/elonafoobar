@@ -5,7 +5,7 @@ local Color = native.Graphics.Color
 local prelude = _ENV.prelude
 local p = prelude.p
 
-local Data = require("data")
+local data = require("data")
 
 local Graphics = {}
 
@@ -16,7 +16,7 @@ function Graphics.reset_context()
 end
 
 function Graphics.draw_image(id, x, y, width, height)
-   local asset_data = Data.get("core.asset", id)
+   local asset_data = data.get("core.asset", id)
    if not asset_data then
       log_error(("Asset data 'core.asset#%s' not found"):format(id))
       return

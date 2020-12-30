@@ -1,5 +1,5 @@
-local Data = require("core.Data")
-local Enums = require("core.Enums")
+local data = require("core.data")
+local enums = require("core.enums")
 local Inventory = require("core.Inventory")
 local Item = require("core.Item")
 local math = math
@@ -57,7 +57,7 @@ function shop_inventory.apply_rule_properties(rule, ret, index, shopkeeper)
 end
 
 function shop_inventory.apply_rules(index, shopkeeper, inv)
-   local ret = {level = shopkeeper.shop_rank, quality = Enums.Quality.BAD}
+   local ret = {level = shopkeeper.shop_rank, quality = enums.Quality.BAD}
 
    if not inv.rules then
       return ret
@@ -111,11 +111,11 @@ local function is_excluded(item)
 end
 
 local function is_cursed(item)
-   return item.curse_state == Enums.CurseState.CURSED or item.curse_state == Enums.CurseState.DOOMED
+   return item.curse_state == enums.CurseState.CURSED or item.curse_state == enums.CurseState.DOOMED
 end
 
 function shop_inventory.should_remove(item, inv)
-   local tags = Data.get("core.item", item.id).tags
+   local tags = data.get("core.item", item.id).tags
 
    if has_tag("neg", tags) then
       return true
@@ -157,7 +157,7 @@ shop_inventory.item_number_factors = {
 }
 
 function shop_inventory.calc_max_item_number(item)
-   local item_def = Data.get("core.item", item.id)
+   local item_def = data.get("core.item", item.id)
    local category = item_def.category
    local number = 1
 
@@ -278,7 +278,7 @@ function shop_inventory.do_generate(shopkeeper, inv)
       end
 
       -- Blessed items are never generated in multiple (per cycle).
-      if item.curse_state == Enums.CurseState.BLESSED then
+      if item.curse_state == enums.CurseState.BLESSED then
          item.number = 1
       end
 
@@ -297,10 +297,10 @@ function shop_inventory.generate(shopkeeper)
    -- Obtain shop inventory data by using the shopkeeper's
    -- role as its integer ID index. If it does not exist, a
    -- default set of items will be generated as a fallback.
-   local id = Data.get_id_by_integer("core.shop_inventory", shopkeeper.role)
+   local id = data.get_id_by_integer("core.shop_inventory", shopkeeper.role)
    local inv = {}
    if id then
-      inv = Data.get("core.shop_inventory", id)
+      inv = data.get("core.shop_inventory", id)
    end
 
    shop_inventory.do_generate(shopkeeper, inv)

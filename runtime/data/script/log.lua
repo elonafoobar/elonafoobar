@@ -3,11 +3,11 @@ local LOGGERS = {}
 local function make_logger(mod_id)
    local Log = {}
 
-   local Enums = require("enums")
+   local enums = require("enums")
    local I18n = require("i18n")
    local internal = _ENV.native.Log
 
-   Log.Level = Enums.new_enum {
+   Log.Level = enums.new_enum {
       ERROR = 5,
       WARN = 4,
       INFO = 3,

@@ -4,11 +4,15 @@
 require_relative("../_common/functions.lua")
 
 local FOV = require("core.FOV")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Item = require("core.Item")
 local string = string
 
-I18N.add_function {
+local function trim_job(name_with_job)
+   return string.gsub(name_with_job, " .*", " ")
+end
+
+i18n.add_function {
    ordinal = function(n)
       if n % 10 == 1 and n ~= 11 then
          return tostring(n) .. "st"
@@ -21,9 +25,7 @@ I18N.add_function {
       end
    end,
 
-   trim_job = function(name_with_job)
-      return string.gsub(name_with_job, " .*", " ")
-   end,
+   trim_job = trim_job,
 
    capitalize = function(str)
       if str == "" then
@@ -242,6 +244,6 @@ I18N.add_function {
    end,
 
    name_nojob = function(chara)
-      return i18n.en.trim_job(chara.basename)
+      return trim_job(chara.basename)
    end,
 }

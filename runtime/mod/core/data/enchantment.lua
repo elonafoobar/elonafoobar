@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("enchantment")
-Data.add(
+data.define_prototype("enchantment")
+data.add(
    "core.enchantment",
    {
       increases_attribute = {

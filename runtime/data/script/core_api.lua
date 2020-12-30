@@ -1,15 +1,14 @@
 local core = {}
 
-core.Audio = require("audio")
-core.Config = require("config")
-core.Data = require("data")
-core.Enums = require("enums")
-core.Env = require("env")
-core.Graphics = require("graphics")
-core.I18n = require("i18n")
-core.UI = require("ui")
+core.audio = require("audio")
+core.data = require("data")
+core.enums = require("enums")
+core.env = require("env")
+core.graphics = require("graphics")
+core.i18n = require("i18n")
+core.ui = require("ui")
 
-local Config = require("config")
-core.Config = { get = Config.get, set = Config.set }
+local config = require("config")
+core.config = { get = config.get, set = config.set }
 
 return core

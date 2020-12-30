@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    common = {
       nothing_happens = "何もおきない… ",
       something_is_put_on_the_ground = "何かが足元に転がってきた。",

@@ -80,9 +80,9 @@ function random_pos() end
 --- Generates a random tile ID from the current map's tileset.
 --  Tile kinds can contain one of several different tile variations.
 --
---  @tparam Enums.TileKind tile_kind the tile kind to set
+--  @tparam enums.TileKind tile_kind the tile kind to set
 --  @treturn num the generated tile ID
---  @see Enums.TileKind
+--  @see enums.TileKind
 --  @function generate_tile
 function generate_tile(tile_kind) end
 
@@ -135,7 +135,7 @@ function get_chara(position) end
 --
 --  @tparam LuaPosition position
 --  @tparam num id the tile ID to set
---  @usage Map.set_tile(10, 10, Map.generate_tile(Enums.TileKind.Room))
+--  @usage Map.set_tile(10, 10, Map.generate_tile(enums.TileKind.Room))
 --  @function set_tile
 function set_tile(position, id) end
 
@@ -143,7 +143,7 @@ function set_tile(position, id) end
 --
 --  @tparam LuaPosition position
 --  @tparam num id the tile ID to set
---  @usage Map.set_memory(10, 10, Map.generate_tile(Enums.TileKind.Room))
+--  @usage Map.set_memory(10, 10, Map.generate_tile(enums.TileKind.Room))
 --  @function set_memory
 function set_memory(position, id) end
 

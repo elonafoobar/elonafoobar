@@ -19,7 +19,7 @@ function play_bright_aura(target_pos, kind) end
 --
 --  @tparam LuaPosition attacker_pos The attacker's position.
 --  @tparam LuaPosition target_pos The target's position.
---  @tparam Enums.Element element_name The element of the breath
+--  @tparam enums.Element element_name The element of the breath
 --  @function play_breath
 function play_breath(attacker_pos, target_pos, element_name) end
 
@@ -42,7 +42,7 @@ function play_ball_magic(caster_pos, range, element) end
 --
 --  @tparam LuaPosition attacker_pos The attacker's position.
 --  @tparam LuaPosition target_pos The target's position.
---  @tparam Enums.Element element_name The element of the bolt
+--  @tparam enums.Element element_name The element of the bolt
 --  @tparam number distance The distance between `attacker_pos` and the tile
 --  which the animation lasts to
 --  @function play_bolt

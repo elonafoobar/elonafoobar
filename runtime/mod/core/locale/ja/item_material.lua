@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add_data_text(
+i18n.add_data_text(
    "core.item_material",
    {
       vegetable_seed = {

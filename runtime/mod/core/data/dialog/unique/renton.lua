@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Inventory = require("core.Inventory")
 local Item = require("core.Item")
@@ -88,7 +88,7 @@ return {
             {"quest.brought_all.dialog._3"},
             {"quest.brought_all.dialog._4"},
             function(t)
-               GUI.txt(I18N.get(t.dialog.root .. ".quest.brought_all.ehekatl"), "orange")
+               GUI.txt(i18n.get(t.dialog.root .. ".quest.brought_all.ehekatl"), "orange")
             end,
             {"quest.brought_all.dialog._5"},
          },

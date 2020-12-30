@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local table = table
 
@@ -30,7 +30,7 @@ return {
          end
       },
       take = function(t)
-         GUI.txt(I18N.get("core.talk.unique.poppy.find.you_must_return", t.speaker))
+         GUI.txt(i18n.get("core.talk.unique.poppy.find.you_must_return", t.speaker))
          t.speaker:recruit_as_ally()
          t.speaker:set_flag("is_escorted_in_sub_quest", true)
          t.speaker:refresh()

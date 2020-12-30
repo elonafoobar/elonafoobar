@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("fish")
-Data.add(
+data.define_prototype("fish")
+data.add(
    "core.fish",
    {
       bug = {

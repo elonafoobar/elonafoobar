@@ -44,15 +44,15 @@ module "core.event"
 --- damage taken by modifying <code>amount</code>.
 -- @event core.calc_character_damage
 -- @tfield LuaCharacter target the character will be damaged
--- @tfield[opt] Enums.Element element the element type of the damage
--- @tfield Enums.DamageSource|LuaCharacter source the source of the damage
+-- @tfield[opt] enums.Element element the element type of the damage
+-- @tfield enums.DamageSource|LuaCharacter source the source of the damage
 -- @tfield num damage (<b><i>mut</i></b>) the amount of damage
 
 --- Fired after a character is damaged.
 -- @event core.character_damaged
 -- @tfield LuaCharacter target the character that was damaged
--- @tfield[opt] Enums.Element element the element type of the damage
--- @tfield Enums.DamageSource|LuaCharacter source the source of the damage
+-- @tfield[opt] enums.Element element the element type of the damage
+-- @tfield enums.DamageSource|LuaCharacter source the source of the damage
 -- @tfield num damage the amount of damage
 
 --- Fired after a character was killed. This might not remove the
@@ -61,8 +61,8 @@ module "core.event"
 --- global storage here.
 -- @event core.character_killed
 -- @tfield LuaCharacter target the character that was killed
--- @tfield[opt] Enums.Element element the element type of the damage received
--- @tfield Enums.DamageSource|LuaCharacter source the source of the killing
+-- @tfield[opt] enums.Element element the element type of the damage received
+-- @tfield enums.DamageSource|LuaCharacter source the source of the killing
 -- @tfield num damage the amount of damage that caused the killing
 
 --- Fired when a character is about to start moving.

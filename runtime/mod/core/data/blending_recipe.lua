@@ -1,9 +1,9 @@
 local Chara = require("core.Chara")
-local Data = require("core.Data")
+local data = require("core.data")
 local Enchantment = require("core.Enchantment")
-local Enums = require("core.Enums")
+local enums = require("core.enums")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Inventory = require("core.Inventory")
 local Item = require("core.Item")
 local Rand = require("core.Rand")
@@ -20,7 +20,7 @@ local function create_item(product_id, on_item_created)
          if on_item_created then
             on_item_created(product)
          end
-         GUI.txt(I18N.get("core.blending.succeeded", product), "green")
+         GUI.txt(i18n.get("core.blending.succeeded", product), "green")
          GUI.play_sound("core.drink1")
       end
    end
@@ -28,8 +28,8 @@ end
 
 
 
-Data.define_prototype("blending_recipe")
-Data.add(
+data.define_prototype("blending_recipe")
+data.add(
    "core.blending_recipe",
    {
       love_food = {
@@ -49,8 +49,8 @@ Data.add(
             local food = args.materials[1]
 
             food.is_aphrodisiac = true
-            GUI.txt(I18N.get("core.blending.succeeded", food), "green")
-            GUI.txt(I18N.get("core.action.dip.result.love_food.guilty"))
+            GUI.txt(i18n.get("core.blending.succeeded", food), "green")
+            GUI.txt(i18n.get("core.action.dip.result.love_food.guilty"))
             GUI.play_sound("core.offer1")
          end,
       },
@@ -70,7 +70,7 @@ Data.add(
             local target, dye = args.materials[1], args.materials[2]
 
             target.tint = dye.tint
-            GUI.txt(I18N.get("core.action.dip.result.dyeing", target), "green")
+            GUI.txt(i18n.get("core.action.dip.result.dyeing", target), "green")
             GUI.play_sound("core.drink1")
          end,
       },
@@ -90,8 +90,8 @@ Data.add(
             local food = args.materials[1]
 
             food.is_poisoned = true
-            GUI.txt(I18N.get("core.blending.succeeded", food), "green")
-            GUI.txt(I18N.get("core.action.dip.result.poisoned_food"))
+            GUI.txt(i18n.get("core.blending.succeeded", food), "green")
+            GUI.txt(i18n.get("core.action.dip.result.poisoned_food"))
             GUI.play_sound("core.offer1")
          end,
       },
@@ -110,12 +110,12 @@ Data.add(
          on_success = function(args)
             local target, potion_of_fireproof = args.materials[1], args.materials[2]
 
-            GUI.txt(I18N.get("core.action.dip.result.put_on", target, potion_of_fireproof), "green")
+            GUI.txt(i18n.get("core.action.dip.result.put_on", target, potion_of_fireproof), "green")
             if target.id == "core.fireproof_blanket" then
-               GUI.txt(I18N.get("core.action.dip.result.good_idea_but"))
+               GUI.txt(i18n.get("core.action.dip.result.good_idea_but"))
             else
                target.is_fireproof = true
-               GUI.txt(I18N.get("core.action.dip.result.gains_fireproof", target))
+               GUI.txt(i18n.get("core.action.dip.result.gains_fireproof", target))
             end
             GUI.play_sound("core.drink1")
          end,
@@ -135,9 +135,9 @@ Data.add(
          on_success = function(args)
             local target, potion_of_acidproof = args.materials[1], args.materials[2]
 
-            GUI.txt(I18N.get("core.action.dip.result.put_on", target, potion_of_acidproof), "green")
+            GUI.txt(i18n.get("core.action.dip.result.put_on", target, potion_of_acidproof), "green")
             target.is_acidproof = true
-            GUI.txt(I18N.get("core.action.dip.result.gains_acidproof", target))
+            GUI.txt(i18n.get("core.action.dip.result.gains_acidproof", target))
             GUI.play_sound("core.drink1")
          end,
       },
@@ -157,7 +157,7 @@ Data.add(
          on_success = function(args)
             local rod, bait = args.materials[1], args.materials[2]
 
-            GUI.txt(I18N.get("core.action.dip.result.bait_attachment", rod, bait), "green")
+            GUI.txt(i18n.get("core.action.dip.result.bait_attachment", rod, bait), "green")
             if rod.param4 == bait.param1 then
                rod.count = rod.count + Rand.between(15, 25)
             else
@@ -182,14 +182,14 @@ Data.add(
          on_success = function(args)
             local target, water = args.materials[1], args.materials[2]
 
-            GUI.txt(I18N.get("core.action.dip.result.blessed_item", target, water), "green")
-            if water.curse_state == Enums.CurseState.BLESSED then
-               GUI.txt(I18N.get("core.action.dip.result.becomes_blessed", target), "orange")
-               target.curse_state = Enums.CurseState.BLESSED
+            GUI.txt(i18n.get("core.action.dip.result.blessed_item", target, water), "green")
+            if water.curse_state == enums.CurseState.BLESSED then
+               GUI.txt(i18n.get("core.action.dip.result.becomes_blessed", target), "orange")
+               target.curse_state = enums.CurseState.BLESSED
             end
-            if water.curse_state == Enums.CurseState.CURSED or water.curse_state == Enums.CurseState.DOOMED then
-               GUI.txt(I18N.get("core.action.dip.result.becomes_cursed", target), "purple")
-               target.curse_state = Enums.CurseState.CURSED
+            if water.curse_state == enums.CurseState.CURSED or water.curse_state == enums.CurseState.DOOMED then
+               GUI.txt(i18n.get("core.action.dip.result.becomes_cursed", target), "purple")
+               target.curse_state = enums.CurseState.CURSED
             end
             GUI.play_sound("core.drink1")
          end,
@@ -209,23 +209,23 @@ Data.add(
          on_success = function(args)
             local well, potion = args.materials[1], args.materials[2]
 
-            GUI.txt(I18N.get("core.action.dip.result.well_refill", well, potion))
+            GUI.txt(i18n.get("core.action.dip.result.well_refill", well, potion))
             if potion.id == "core.empty_bottle" then
-               GUI.txt(I18N.get("core.action.dip.result.empty_bottle_shatters"))
+               GUI.txt(i18n.get("core.action.dip.result.empty_bottle_shatters"))
                return
             end
             GUI.play_sound("core.drink1")
             if well.id == "core.holy_well" then
-               GUI.txt(I18N.get("core.action.dip.result.holy_well_polluted"))
+               GUI.txt(i18n.get("core.action.dip.result.holy_well_polluted"))
                return
             end
             if well.param3 >= 20 then
-               GUI.txt(I18N.get("core.action.dip.result.well_dry", well))
+               GUI.txt(i18n.get("core.action.dip.result.well_dry", well))
                return
             end
-            GUI.txt(I18N.get("core.action.dip.result.well_refilled", well), "green")
+            GUI.txt(i18n.get("core.action.dip.result.well_refilled", well), "green")
             if potion.id == "core.handful_of_snow" then
-               GUI.txt(I18N.get("core.action.dip.result.snow_melts.blending"))
+               GUI.txt(i18n.get("core.action.dip.result.snow_melts.blending"))
             else
                well.param1 = well.param1 + Rand.rnd(3)
             end
@@ -247,12 +247,12 @@ Data.add(
 
             if well.param1 < -5 or well.param3 >= 20 or
                   (well.id == "core.holy_well" and World.data.holy_well_count <= 0) then
-               GUI.txt(I18N.get("core.action.dip.result.natural_potion_dry", well))
-               GUI.txt(I18N.get("core.action.dip.result.natural_potion_drop"))
+               GUI.txt(i18n.get("core.action.dip.result.natural_potion_dry", well))
+               GUI.txt(i18n.get("core.action.dip.result.natural_potion_drop"))
                return
             end
             if not Inventory.player():has_free_slot() then
-               GUI.txt(I18N.get("core.ui.inv.common.inventory_is_full"))
+               GUI.txt(i18n.get("core.ui.inv.common.inventory_is_full"))
                return
             end
             local natural_potion
@@ -260,15 +260,15 @@ Data.add(
                World.data.holy_well_count = World.data.holy_well_count - 1
                natural_potion = Item.create(-1, -1, { id = "core.bottle_of_water", inventory = Inventory.player() })
                if natural_potion then
-                  natural_potion.curse_state = Enums.CurseState.BLESSED
+                  natural_potion.curse_state = enums.CurseState.BLESSED
                end
             else
                well.param1 = well.param1 - 3
                natural_potion = Item.create(-1, -1, { objlv = 20, flttypemajor = 52000, inventory = Inventory.player() })
             end
             if natural_potion then
-               GUI.txt(I18N.get("core.action.dip.result.natural_potion"))
-               GUI.txt(I18N.get("core.action.dip.you_get", natural_potion), "green")
+               GUI.txt(i18n.get("core.action.dip.result.natural_potion"))
+               GUI.txt(i18n.get("core.action.dip.you_get", natural_potion), "green")
                Inventory.player():stack(natural_potion, true)
                GUI.play_sound("core.drink1")
             end

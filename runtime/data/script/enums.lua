@@ -2,9 +2,9 @@ local native = _ENV.native
 local class, xtype = prelude.class, prelude.xtype
 local Color = native.Graphics.Color
 
-local Enums = {}
+local enums = {}
 
-local Enum = class("core.Enums.Enum")
+local Enum = class("core.enums.Enum")
 
 function Enum:__init(definitions)
    assert(type(definitions) == "table", "Enum.new: definitions must be a table.")
@@ -23,12 +23,12 @@ function Enum:is_valid_name(name)
    return xtype(self[name]) == "integer"
 end
 
-Enums.Enum = Enum
+enums.Enum = Enum
 
-Enums.new_enum = Enum.new
+enums.new_enum = Enum.new
 
 -- https://dlang.org/library/std/typecons/flag.html
-Enums.BooleanFlag = Enum.new {
+enums.BooleanFlag = Enum.new {
    YES = true,
    NO = false,
 }
@@ -37,24 +37,24 @@ Enums.BooleanFlag = Enum.new {
 ---
 --- The curse state of an item.
 --- @usage local item = Item.create(10, 10, "core.putitoro", 3)
---- item.curse_state = Enums.CurseState.BLESSED
-Enums.CurseState = Enums.new_enum {
+--- item.curse_state = enums.CurseState.BLESSED
+enums.CurseState = enums.new_enum {
    DOOMED = -2,
    CURSED = -1,
    NONE = 0,
    BLESSED = 1,
 }
 
-function Enums.CurseState.is_cursed(c)
-   return c <= Enums.CurseState.CURSED
+function enums.CurseState.is_cursed(c)
+   return c <= enums.CurseState.CURSED
 end
 
 --- @enum IdentifyState
 ---
 --- The identify state of an item.
 --- @usage local item = Item.create(10, 10, "core.putitoro", 3)
---- item.identify_state = Enums.IdentifyState.COMPLETELY
-Enums.IdentifyState = Enums.new_enum {
+--- item.identify_state = enums.IdentifyState.COMPLETELY
+enums.IdentifyState = enums.new_enum {
    UNIDENTIFIED = 0,
    PARTLY = 1,
    ALMOST = 2,
@@ -64,7 +64,7 @@ Enums.IdentifyState = Enums.new_enum {
 --- @enum Quality
 ---
 --- The quality of randomly generated equipment.
-Enums.Quality = Enums.new_enum {
+enums.Quality = enums.new_enum {
    NONE = 0,
    BAD = 1,
    GOOD = 2,
@@ -77,7 +77,7 @@ Enums.Quality = Enums.new_enum {
 --- @enum Relationship
 ---
 --- The relationship between characters
-Enums.Relationship = Enums.new_enum {
+enums.Relationship = enums.new_enum {
    -- Your enemy. Mainly dungeon monsters.
    ENEMY = -3,
 
@@ -95,7 +95,7 @@ Enums.Relationship = Enums.new_enum {
 }
 
 -- TODO ldoc
-Enums.SkillType = Enums.new_enum {
+enums.SkillType = enums.new_enum {
    STAT = 0,
    RESISTANCE = 1,
    TOWN_SKILL = 2, -- TODO rename
@@ -103,7 +103,7 @@ Enums.SkillType = Enums.new_enum {
    SPACT = 4,
 }
 
-Enums.ColorPalette = Enums.new_enum {
+enums.ColorPalette = enums.new_enum {
    NONE         = Color.rgb(255, 255, 255),
    WHITE        = Color.rgb(255 - 1, 255, 255), -- TODO
    GREEN        = Color.rgb(175, 255, 175),
@@ -127,7 +127,7 @@ Enums.ColorPalette = Enums.new_enum {
    YELLOW_GREEN = Color.rgb(210, 250, 160),
 }
 
-Enums.ItemCategory = Enums.new_enum {
+enums.ItemCategory = enums.new_enum {
    UNIDENTIFIED = 0,
    MELEE_WEAPON = 10000,
    HELM = 12000,
@@ -163,11 +163,11 @@ Enums.ItemCategory = Enums.new_enum {
    BUG = 99999999,
 }
 
-function Enums.ItemCategory.is_equipment(c)
+function enums.ItemCategory.is_equipment(c)
    return c <= 50000
 end
 
-Enums.DamageSource = Enums.new_enum {
+enums.DamageSource = enums.new_enum {
    TRAP = -1,
    OVERCASTING = -2,
    STARVATION = -3,
@@ -191,13 +191,13 @@ Enums.DamageSource = Enums.new_enum {
    MOCHI = -21,
 }
 
-Enums.BuffType = Enums.new_enum {
+enums.BuffType = enums.new_enum {
    BUFF = 0,
    HEX = 1,
    FOOD = 2,
 }
 
-Enums.TurnResult = Enums.new_enum {
+enums.TurnResult = enums.new_enum {
    NONE = 0,
    INITIALIZE_MAP = 1,
    PASS_ONE_TURN = 2,
@@ -211,21 +211,21 @@ Enums.TurnResult = Enums.new_enum {
    FINISH_ELONA = 10,
 }
 
-Enums.AdditionalItemInfo = Enums.new_enum {
+enums.AdditionalItemInfo = enums.new_enum {
    NONE = 0,
    RESISTANCE = 1,
    MAINTENANCE_AND_AILMENT = 2,
 }
 
-function Enums.AdditionalItemInfo.next(v)
+function enums.AdditionalItemInfo.next(v)
    return (v + 1) % 3
 end
 
-function Enums.AdditionalItemInfo.prev(v)
+function enums.AdditionalItemInfo.prev(v)
    return (3 + v - 1) % 3
 end
 
-Enums.Role = Enums.new_enum {
+enums.Role = enums.new_enum {
    NONE = 0,
    OTHER = 3,
    CITIZEN = 4,
@@ -282,15 +282,15 @@ Enums.Role = Enums.new_enum {
    GUEST_PRODUCER = 2006,
 }
 
-function Enums.Role.is_shopkeeper(role)
-   return (1000 <= role and role < 2000) or role == Enums.Role.GUEST_WANDERING_VENDOR
+function enums.Role.is_shopkeeper(role)
+   return (1000 <= role and role < 2000) or role == enums.Role.GUEST_WANDERING_VENDOR
 end
 
-function Enums.Role.is_guest(role)
+function enums.Role.is_guest(role)
    return 2000 <= role
 end
 
-Enums.OwnState = Enums.new_enum {
+enums.OwnState = enums.new_enum {
    -- Your lost items on death.
    LOST = -2,
 
@@ -325,9 +325,9 @@ Enums.OwnState = Enums.new_enum {
    -- CROP_HARVESTED = 6,
 }
 
-Enums.MenuResult = Enums.new_enum {
+enums.MenuResult = enums.new_enum {
    PUSH = 0,
    CLOSE = 1,
 }
 
-return Enums
+return enums

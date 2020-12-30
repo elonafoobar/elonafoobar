@@ -166,9 +166,9 @@ return coroutine.create(function()
 
    coroutine.yield("Run i18n.lua")
    local lang = Config.get("core.language.language")
-   local I18n = require("i18n")
-   I18n.__INTERNAL_API_inject_current_language(lang)
-   I18n.__INTERNAL_API_inject_current_language = nil
+   local i18n = require("i18n")
+   i18n.__INTERNAL_API_inject_current_language(lang)
+   i18n.__INTERNAL_API_inject_current_language = nil
    for _, mod in ipairs(resolved_mod_list) do
       local mod_id, version, env = table.unpack(mod)
 
@@ -187,10 +187,10 @@ return coroutine.create(function()
    end
 
    do
-      local Data = require("data")
-      local Event = require("event")
-      Event.__INTERNAL_API_remove_unknown_events(Data.instances("core.event"):tomap())
-      Event.__INTERNAL_API_remove_unknown_events = nil
+      local data = require("data")
+      local event = require("event")
+      event.__INTERNAL_API_remove_unknown_events(data.instances("core.event"):tomap())
+      event.__INTERNAL_API_remove_unknown_events = nil
    end
 
    coroutine.yield("Load key bindings")

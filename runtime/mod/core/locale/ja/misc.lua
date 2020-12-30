@@ -1,9 +1,9 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
 -- TODO
 -- These text are unclassed. They should be moved to appropriate files.
 
-I18N.add {
+i18n.add {
    misc = {
       ranking = {
          changed = "ランク変動({$1} {$2}位 → {$3}位) 《{$4}》",

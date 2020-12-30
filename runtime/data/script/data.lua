@@ -3,7 +3,7 @@ local xtype, p, fun = prelude.xtype, prelude.p, prelude.fun
 
 local __debug__ = false
 
-local Data = {}
+local data = {}
 
 local PROTOTYPES = {}
 local INSTANCES = {}
@@ -51,7 +51,7 @@ local Schema = {new = function(...) return {validate = function(x) return x end}
 
 --- Defines a new prototype
 --- @tparam string prototype_id Non-namespaced data prototype ID
-function Data.define_prototype(prototype_id, ...)
+function data.define_prototype(prototype_id, ...)
    if not is_valid_id(prototype_id) then
       error("Invalid prototype ID: "..tostring(prototype_id))
    end
@@ -79,7 +79,7 @@ end
 --- Adds data instances of `prototype_id`.
 --- @tparam string prototype_id Data prototype ID
 --- @tparam table instances Data instances
-function Data.add(prototype_id, instances)
+function data.add(prototype_id, instances)
    local prototype = PROTOTYPES[prototype_id]
    if not prototype then
       if not is_valid_id(prototype_id) then
@@ -149,7 +149,7 @@ end
 --- Adds data resolvers of `prototype_id`.
 --- @tparam string prototype_id Namespaced data prototype ID
 --- @tparam table resolvers Data resolvers
-function Data.add_resolver(prototype_id, resolvers)
+function data.add_resolver(prototype_id, resolvers)
    -- TODO
 end
 
@@ -157,7 +157,7 @@ end
 --- @tparam string prototype_id Namespaced data prototype ID
 --- @tparam string instance_id Namespaced data instance ID
 --- @treturn any?
-function Data.get(prototype_id, instance_id)
+function data.get(prototype_id, instance_id)
    local instances = INSTANCES[prototype_id]
    return instances and instances[instance_id]
 end
@@ -165,9 +165,9 @@ end
 --- Returns iterator over a certain data instances.
 --- @tparam string prototype_id Data prototype ID
 --- @treturn iterator?
-function Data.instances(prototype_id)
+function data.instances(prototype_id)
    local instances = INSTANCES[prototype_id]
-   return fun.iter(iter)
+   return fun.iter(instances)
 end
 
-return Data
+return data

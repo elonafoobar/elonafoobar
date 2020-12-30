@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    map = {
       prompt_initialize = "Initialize this map? (Warning, only do this if an error occurs when loading this map. Make sure make a backup of the current save folder before doing this.)",
       location_changed = "The location of {$1} has been changed from x{$2}:y{$3} to x{$4}:y{$5}.",

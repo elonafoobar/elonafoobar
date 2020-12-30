@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("portrait")
-Data.add(
+data.define_prototype("portrait")
+data.add(
    "core.portrait",
    {
       man1 = {

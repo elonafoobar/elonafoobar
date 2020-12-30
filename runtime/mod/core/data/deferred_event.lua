@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("deferred_event")
-Data.add(
+data.define_prototype("deferred_event")
+data.add(
    "core.deferred_event",
    {
       conquer_lesimas = {

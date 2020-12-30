@@ -2,8 +2,8 @@ local native = _ENV.native
 local Fs = native.Fs
 
 local Config = require("config")
-local Data = require("data")
-local Enums = require("enums")
+local data = require("data")
+local enums = require("enums")
 
 local Audio = {}
 
@@ -24,7 +24,7 @@ function Audio.play_music(music_id, loop_times)
       return
    end
 
-   local music_data = Data.get("core.music", music_id)
+   local music_data = data.get("core.music", music_id)
    if not music_data then
       log_error("Audio: cannot find music data of '{$1}'", music_id)
       return

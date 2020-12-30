@@ -1,4 +1,4 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
 -- Common body parts of human/demi-human races
 local humanoid_body_parts = {
@@ -16,8 +16,8 @@ local humanoid_body_parts = {
 }
 
 
-Data.define_prototype("race")
-Data.add(
+data.define_prototype("race")
+data.add(
    "core.race",
    {
       kobold = {

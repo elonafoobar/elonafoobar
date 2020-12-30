@@ -33,10 +33,10 @@ end
 
 function Shell:register_commands()
    local Console = self._env.Console
-   local Data = self._env.Data
+   local data = self._env.data
    local Debug = self._env.Debug
 
-   for id, cmd_data in pairs(Data.get_table("core.console_command")) do
+   for id, cmd_data in pairs(data.get_table("core.console_command")) do
       if cmd_data.wizard_only then
          self._env:register_command(id, function(...)
             if not Debug.is_wizard() then

@@ -1,15 +1,15 @@
 local Chara = require("core.Chara")
 local Config = require("core.Config")
 local Console = require("core.Console")
-local Data = require("core.Data")
+local data = require("core.data")
 local Debug = require("core.Debug")
 local Internal = require("core.Internal")
 local Wish = require("core.Wish")
 
 
 
-Data.define_prototype("console_command")
-Data.add(
+data.define_prototype("console_command")
+data.add(
    "core.console_command",
    {
       history = {
@@ -34,7 +34,7 @@ Data.add(
       help = {
          on_execute = function()
             local all_commands = {}
-            for id, _ in pairs(Data.get_table("core.console_command")) do
+            for id, _ in pairs(data.get_table("core.console_command")) do
                all_commands[#all_commands+1] = id
             end
             table.sort(all_commands)

@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    damage = {
       miss = {
          ally = "{kare_wa($2)}{name($1)}の攻撃を避けた。",

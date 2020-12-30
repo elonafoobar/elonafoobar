@@ -44,7 +44,7 @@ function modify_ranking(ranking_id, amount, min) end
 
 --- Generates a random title.
 --
---  @tparam Enums.RandomTitleType The type of title to generate.
+--  @tparam enums.RandomTitleType The type of title to generate.
 --  @function random_title
 function random_title(type) end
 

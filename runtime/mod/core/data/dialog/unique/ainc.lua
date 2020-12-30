@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 
@@ -66,9 +66,9 @@ return {
             Item.create(Chara.player().position, "core.gold_piece", 5000)
             Item.create(Chara.player().position, "core.platinum_coin", 3)
 
-            GUI.txt(I18N.get("core.quest.completed"))
+            GUI.txt(i18n.get("core.quest.completed"))
             GUI.play_sound("core.complete1")
-            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+            GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             GUI.show_journal_update_message()
 
             Internal.set_quest_flag("novice_knight", 1000)

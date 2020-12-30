@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("skill")
-Data.add(
+data.define_prototype("skill")
+data.add(
    "core.skill",
    {
       stat_life = {

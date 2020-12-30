@@ -3,7 +3,7 @@
 
 --- Damages this character.
 --  @tparam num amount the amount to damage
---  @tparam[opt] Enums.DamageSource source the source of the damage (defaults to
+--  @tparam[opt] enums.DamageSource source the source of the damage (defaults to
 --  the unseen hand)
 --  @usage local chara = Chara.player()
 --  chara:damage_hp(100)
@@ -20,7 +20,7 @@ function damage_hp(amount, source) end
 function damage_hp(amount, source) end
 
 --- Applies a status ailment to this character.
---  @tparam Enums.StatusAilment ailment the kind of status ailment
+--  @tparam enums.StatusAilment ailment the kind of status ailment
 --  @tparam num power the power of the status ailment
 --  @usage local chara = Chara.player()
 --  chara:apply_ailment("Blinded", 100)
@@ -28,7 +28,7 @@ function damage_hp(amount, source) end
 function apply_ailment(ailment, power) end
 
 --- Heals a status ailment on a character.
---  @tparam Enums.StatusAilment ailment the kind of status ailment
+--  @tparam enums.StatusAilment ailment the kind of status ailment
 --  @tparam num power the power of the healing. If 0, heal the ailment
 --  completely.
 --  @usage local chara = Chara.player()
@@ -58,7 +58,7 @@ function set_growth_buff(index, power) end
 function recruit_as_ally() end
 
 --- Gets the value of a flag on this character.
---  @tparam Enums.CharaFlag flag the flag to get
+--  @tparam enums.CharaFlag flag the flag to get
 --  @treturn bool
 --  @function get_flag
 function get_flag(chara, flag) end
@@ -68,7 +68,7 @@ function get_flag(chara, flag) end
 --  reset when this character is refreshed each turn. To change these flags, you
 --  must call this function inside a handler for
 --  <code>core.character_refreshed</code>, or the flag will be reset later.
---  @tparam Enums.CharaFlag flag the flag to set
+--  @tparam enums.CharaFlag flag the flag to set
 --  @tparam bool value the flag's new value
 --  @see core.event
 --  @usage local Event = require("core.Event")

@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    action = {
       use = {
          useable_again_at = "そのアイテムが次に使用できるのは{$1}だ。",

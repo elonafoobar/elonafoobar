@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("class")
-Data.add(
+data.define_prototype("class")
+data.add(
    "core.class",
    {
       warrior = {

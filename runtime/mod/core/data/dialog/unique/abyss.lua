@@ -1,7 +1,7 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
 local math = math
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Item = require("core.Item")
 local World = require("core.World")
 local table = table
@@ -18,10 +18,10 @@ local function join_guild()
 
     World.join_guild("thieves")
 
-    GUI.txt(I18N.get("core.quest.completed"))
+    GUI.txt(i18n.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.talk.unique.abyss.nonmember.joined"), "orange")
+    GUI.txt(i18n.get("core.talk.unique.abyss.nonmember.joined"), "orange")
 end
 
 local function move_self(t)

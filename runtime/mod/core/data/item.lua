@@ -1,10 +1,10 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("item", {
+data.define_prototype("item", {
    max_charges = 0,
 })
 
-Data.add(
+data.add(
    "core.item",
    {
       bug = {

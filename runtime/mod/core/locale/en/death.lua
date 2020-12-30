@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    death_by = {
       chara = {
          -- _1 is victim, _2 is attacker.
