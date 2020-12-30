@@ -2,7 +2,7 @@ use anyhow::format_err;
 use anyhow::Result;
 use elonafoobar_log::{log, trace, Level as LogLevel};
 use elonafoobar_lua::types::LuaInt;
-use elonafoobar_lua::{AsLuaInt, FromLuaInt, Lua, ToLuaInt};
+use elonafoobar_lua::{AsLuaInt, FromLuaInt, IntoLuaInt, Lua};
 
 struct Level(LogLevel);
 
@@ -19,8 +19,8 @@ impl FromLuaInt for Level {
     }
 }
 
-impl ToLuaInt for Level {
-    fn to_lua_int(self) -> Result<LuaInt> {
+impl IntoLuaInt for Level {
+    fn into_lua_int(self) -> Result<LuaInt> {
         match self.0 {
             LogLevel::Error => Ok(5),
             LogLevel::Warn => Ok(4),
