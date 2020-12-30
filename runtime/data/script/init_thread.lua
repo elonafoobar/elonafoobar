@@ -9,13 +9,14 @@ return coroutine.create(function()
    local Mods = native.Mods
 
    local Api = require("api")
+   local Config = require("config")
    local get_logger = require("log")
 
    local resolved_mod_list
    do
       local mods = Mods.new()
       coroutine.yield("Resolve mod versions")
-      mods:resolve_versions()
+      mods:resolve_versions("default")
 
       coroutine.yield("Install mods")
       mods:install()
@@ -30,23 +31,7 @@ return coroutine.create(function()
    do
       log_info("Load core")
 
-      local core = {}
-      core.Audio = require("audio")
-      core.Config = require("config")
-      core.Data = require("data")
-      core.Enums = require("enums")
-      core.Env = require("env")
-      core.Graphics = require("graphics")
-      core.I18n = require("i18n")
-      core.UI = require("ui")
-
-      -- core.Inventory = require("inventory")
-      -- core.Item = require("item")
-      -- core.Message = require("message")
-      -- core.Net = require("net")
-      -- core.Random = require("random")
-      -- core.StoryQuest = require("story_quest")
-      -- core.Trait = require("trait")
+      local core = require("core_api")
 
       local Api = require("api")
       for k, v in pairs(core) do
@@ -60,16 +45,15 @@ return coroutine.create(function()
       local chunk_cache = {}
       local env = {}
 
-      env.ELONA = {}
-      env.ELONA.require = function(module_path)
+      env.require = function(module_path)
          if module_path == "core.Log" then
             return get_logger(mod_id)
          else
             return Api.require(module_path)
          end
       end
-      env.require = function(file_path)
-         log_trace(mod_id..": require('"..file_path.."')")
+      env.require_relative = function(file_path)
+         log_trace(mod_id..": require_relative('"..file_path.."')")
          local path = Fs.resolve_relative_path(mod_id, version, file_path)
          local cache = chunk_cache[path]
          if cache ~= nil then
@@ -93,13 +77,32 @@ return coroutine.create(function()
    end
 
    coroutine.yield("Load config schema")
-   -- for _, mod in ipairs(resolved_mod_list) do
-   --    local env = mod[3]
-   --    config_schema(env)
-   -- end
+   --[[
+   for _, mod in ipairs(resolved_mod_list) do
+      local mod_id, version = table.unpack(mod)
+      -- TODO
+      -- * Move it to native side
+      -- * Windows file path is UTF-16, not UTF-8.
+      local path = Fs.get_lua_full_path(mod_id, version, "config-schema.lua")
+      local file = io.open(path)
+      local schema_file_content = file:read("a")
+      Config.load_schema(schema_file_content, path, mod_id)
+      file:close()
+      file = nil
+   end
+   --]]
 
    coroutine.yield("Load config")
-   -- config()
+   --[[
+   do
+      local path = Fs.get_config_file_path()
+      local file = io.open(path)
+      local config_file_content = file:read("a")
+      Config.load_options(config_file_content, path)
+      file:close()
+      file = nil
+   end
+   --]]
 
    coroutine.yield("Run init.lua")
    for _, mod in ipairs(resolved_mod_list) do
@@ -108,7 +111,21 @@ return coroutine.create(function()
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "init.lua")
-      assert(loadfile(path, "t", env))()
+      if Fs.exists(path) then
+         log_info(("Run %s-%s/init.lua"):format(mod_id, version))
+         local init_result = assert(loadfile(path, "t", env))()
+         if type(init_result) == "table" then
+            if mod_id == "core" then
+               for k, v in pairs(init_result) do
+                  Api.merge_core_module(mod_id.."."..k, v)
+               end
+            else
+               for k, v in pairs(init_result) do
+                  Api.register(mod_id.."."..k, v)
+               end
+            end
+         end
+      end
    end
 
    coroutine.yield("Run data.lua")
@@ -121,12 +138,15 @@ return coroutine.create(function()
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "data.lua")
-      assert(loadfile(path, "t", env))()
+      if Fs.exists(path) then
+         log_info(("Run %s-%s/data.lua"):format(mod_id, version))
+         assert(loadfile(path, "t", env))()
+      end
 
       _ENV._MOD_ID = nil
    end
 
-   coroutine.yield("Run i18n.lua")
+   coroutine.yield("Run data-update.lua")
    for _, mod in ipairs(resolved_mod_list) do
       local mod_id, version, env = table.unpack(mod)
 
@@ -135,10 +155,47 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "locale/ja.lua") -- TODO
-      assert(loadfile(path, "t", env))()
+      local path = Fs.get_lua_full_path(mod_id, version, "data-update.lua")
+      if Fs.exists(path) then
+         log_info(("Run %s-%s/data-update.lua"):format(mod_id, version))
+         assert(loadfile(path, "t", env))()
+      end
 
       _ENV._MOD_ID = nil
+   end
+
+   coroutine.yield("Run i18n.lua")
+   local lang = Config.get("core.language.language")
+   local I18n = require("i18n")
+   I18n.__INTERNAL_API_inject_current_language(lang)
+   I18n.__INTERNAL_API_inject_current_language = nil
+   for _, mod in ipairs(resolved_mod_list) do
+      local mod_id, version, env = table.unpack(mod)
+
+      _ENV._MOD_ID = mod_id
+
+      -- TODO
+      -- * Move it to native side
+      -- * Windows file path is UTF-16, not UTF-8.
+      local path = Fs.get_lua_full_path(mod_id, version, "locale/"..lang..".lua") -- TODO
+      if Fs.exists(path) then
+         log_info(("Run %s-%s/locale/%s.lua"):format(mod_id, version, lang)) -- TODO
+         assert(loadfile(path, "t", env))()
+      end
+
+      _ENV._MOD_ID = nil
+   end
+
+   do
+      local Data = require("data")
+      local Event = require("event")
+      Event.__INTERNAL_API_remove_unknown_events(Data.instances("core.event"):tomap())
+      Event.__INTERNAL_API_remove_unknown_events = nil
+   end
+
+   coroutine.yield("Load key bindings")
+   do
+      -- TODO
    end
 
    return 'Done'

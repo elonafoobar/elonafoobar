@@ -12,6 +12,15 @@ do
    function log_info(msg)  _log(3, "core", msg) end
    function log_debug(msg) _log(2, "core", msg) end
    function log_trace(msg) _log(1, "core", msg) end
+
+   -- TODO: remove this
+   function todo(module_name)
+      if module_name then
+         log_info(module_name..": NOT IMPLEMENTED YET!")
+      else
+         log_info("NOT IMPLEMENTED YET!")
+      end
+   end
 end
 
 do

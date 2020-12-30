@@ -12,7 +12,7 @@ local Config = require("config")
 
 --- Functions for localization.
 --  See the I18n section for more information.
---  @usage local I18n = ELONA.require("core.I18n")
+--  @usage local I18n = require("core.I18n")
 --  @module "I18n"
 local I18n = {}
 
@@ -43,7 +43,9 @@ local STORAGE = {}
 --  Values: FormattableObject | FormattableObjectList
 local DATA_TEXT_STORAGE = {}
 
-local LOCALIZE_FUNCTIONS = {}
+local L10N_FUNCTIONS = {}
+
+local CURRENT_LANGUAGE = nil
 
 -- Evaluate formattable object with given arguments and returns the result.
 -- @param x Segment The formattable object
@@ -73,7 +75,7 @@ local function eval(x, args)
          --  [3]: argument 1 (any)
          --  [4]: argument 2 (any)
          --  ...
-         local func = LOCALIZE_FUNCTIONS[x[2]]
+         local func = L10N_FUNCTIONS[x[2]]
          if not func then
             return "<unknown function '"..tostring(x[2]).."'>"
          end
@@ -150,30 +152,6 @@ local function format(fmt, args)
          joined = joined..tostring(x)
       end
       return joined
-   end
-end
-
---- Gets the current active language.
---- @treturn string Language ID
-function I18n.language()
-   return Config.get("core.language.language")
-end
-
-function I18n.add(data)
-   collect_i18n_resources(data, _MOD_ID, STORAGE)
-end
-
-function I18n.add_data_text(prototype_id, data)
-   for k, v in pairs(data) do
-      local key = prototype_id.."#".._MOD_ID.."."..k
-      collect_i18n_resources(v, key, DATA_TEXT_STORAGE)
-   end
-end
-
--- functions :: { string => (...) -> string }
-function I18n.add_function(functions)
-   for func_name, func in pairs(functions) do
-      LOCALIZE_FUNCTIONS[_MOD_ID.."."..func_name] = func
    end
 end
 
@@ -273,10 +251,6 @@ function I18n.get_data_text(prototype_id, instance_id, property_name, ...)
    return I18n.get_data_text_optional(prototype_id, instance_id, property_name, ...) or ("<Unknown ID: %s>"):format(("%s#%s.%s"):format(prototype_id, instance_id, property_name))
 end
 
-function I18n.format(fmt, ...)
-   return format(make_fomattable_object(fmt), {...})
-end
-
 function I18n.get_data_text_optional(prototype_id, instance_id, property_name, ...)
    local key = ("%s#%s.%s"):format(prototype_id, instance_id, property_name)
    local fmt = DATA_TEXT_STORAGE[key]
@@ -306,6 +280,55 @@ function I18n.get_list(key)
       -- error
       return {}
    end
+end
+
+function I18n.format(fmt, ...)
+   return format(make_fomattable_object(fmt), {...})
+end
+
+function I18n.call_function(func_name, ...)
+   local func = L10N_FUNCTIONS[func_name]
+   if func then
+      return func(...)
+   else
+      return "<unknown function '"..tostring(func_name).."'>"
+   end
+end
+
+function I18n.add(data)
+   collect_i18n_resources(data, _MOD_ID, STORAGE)
+end
+
+function I18n.add_data_text(prototype_id, data)
+   for k, v in pairs(data) do
+      local key = prototype_id.."#".._MOD_ID.."."..k
+      collect_i18n_resources(v, key, DATA_TEXT_STORAGE)
+   end
+end
+
+-- functions :: { string => (...) -> string }
+function I18n.add_function(functions)
+   for func_name, func in pairs(functions) do
+      L10N_FUNCTIONS[_MOD_ID.."."..func_name] = func
+   end
+end
+
+--- Gets the current active language.
+--- @treturn string Language ID
+function I18n.language()
+   if CURRENT_LANGUAGE then
+      return CURRENT_LANGUAGE
+   else
+      error("I18n.language: config option has not been loaded yet")
+   end
+end
+
+function I18n.word_separator()
+   return I18n.get_optional("core.meta.word_separator") or ""
+end
+
+function I18n.__INTERNAL_API_inject_current_language(lang)
+   CURRENT_LANGUAGE = lang
 end
 
 return I18n

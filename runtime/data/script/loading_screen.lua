@@ -24,16 +24,21 @@ return function(init_thread)
    local message = ""
 
    while app:update() do
-      local ok, message, progress_change = coroutine.resume(init_thread)
-      if ok then
-         message = message
-         progress = progress + (progress_change or 1)
-      else
-         error(message) -- Propagate the error upward
-      end
-
       if coroutine.status(init_thread) == "dead" then
-         break -- complete
+         if progress < 100 then
+            progress = 100
+         else
+            break
+         end
+      else
+         local ok, message = coroutine.resume(init_thread)
+         if ok then
+            message = message
+            progress = progress + 1
+         else
+            print(debug.traceback())
+            error(message) -- Propagate the error upward
+         end
       end
 
       -- Fill
