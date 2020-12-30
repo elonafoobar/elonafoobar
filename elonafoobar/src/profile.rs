@@ -1,4 +1,3 @@
-use crate::fs;
 use anyhow::{bail, Result};
 use elonafoobar_log::info;
 use elonafoobar_lua::{self as lua, utils::IdentifierCheck};
@@ -33,38 +32,29 @@ impl std::fmt::Display for ProfileId {
 }
 
 impl TryFrom<String> for ProfileId {
-    type Error = String;
+    type Error = anyhow::Error;
 
-    fn try_from(s: String) -> Result<ProfileId, String> {
+    fn try_from(s: String) -> Result<ProfileId> {
         if ProfileId::is_valid_id(&s) {
             Ok(ProfileId(s))
         } else {
-            Err(format!("Profile '{}' is invalid", s))
+            bail!("Profile '{}' is invalid", s)
         }
     }
 }
 
-pub fn try_set_profile(profile: Option<String>) -> Result<()> {
-    match profile.map(TryInto::try_into) {
-        Some(Ok(profile)) => {
-            set_profile_internal(profile);
-            Ok(())
-        }
+pub fn resolve_from_config(profile: Option<&str>) -> Result<ProfileId> {
+    match profile.map(ToOwned::to_owned).map(TryInto::try_into) {
+        Some(Ok(profile)) => Ok(profile),
         Some(Err(err)) => {
-            bail!(err);
+            bail!(err)
         }
         None => {
             info!(
                 "Profile is not given, fallbacking to '{}'",
                 ProfileId::default_id()
             );
-            set_profile_internal(ProfileId::default_id());
-            Ok(())
+            Ok(ProfileId::default_id())
         }
     }
-}
-
-fn set_profile_internal(profile: ProfileId) {
-    info!("Set profile: '{}'", profile);
-    fs::dirs::set_current_profile(profile);
 }

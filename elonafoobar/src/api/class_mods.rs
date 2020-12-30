@@ -6,6 +6,7 @@ use elonafoobar_log::{debug, trace};
 use elonafoobar_lua::types::LuaUserdata;
 use elonafoobar_lua::Lua;
 use std::collections::HashMap;
+use std::convert::TryInto;
 
 pub struct Mods {
     resolved_mod_list: Option<ResolvedModList>,
@@ -37,11 +38,11 @@ pub fn lua_new(_args: ()) -> Result<Mods> {
     })
 }
 
-fn lua_resolve_versions(args: &mut Mods) -> Result<()> {
+fn lua_resolve_versions(args: (&mut Mods, &str)) -> Result<()> {
     trace!("native.Mods.Mods:resolve_versions()");
 
-    let self_ = args;
-    self_.resolved_mod_list = Some(mods::resolve()?);
+    let (self_, profile_id) = args;
+    self_.resolved_mod_list = Some(mods::resolve(&profile_id.to_owned().try_into()?)?);
     Ok(())
 }
 

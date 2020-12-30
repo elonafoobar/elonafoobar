@@ -5,6 +5,7 @@ use elonafoobar_log::info;
 #[derive(Debug)]
 pub struct CliOptions {
     pub profile: Option<String>,
+    pub headless: bool,
 }
 
 #[derive(Debug)]
@@ -30,7 +31,8 @@ pub fn parse_args() -> ParseResult {
     let matches = make_arg_parser(&version, &long_version).get_matches_safe();
     match matches {
         Ok(matches) => ParseResult::Ok(CliOptions {
-            profile: matches.value_of("profile").map(|s| s.to_owned()),
+            profile: matches.value_of("profile").map(ToOwned::to_owned),
+            headless: matches.is_present("headless"),
         }),
         Err(err) if err.kind == clap::ErrorKind::HelpDisplayed => {
             println!("{}", err.message); // Output help message, which is not output by clap.
@@ -56,5 +58,11 @@ fn make_arg_parser<'a, 'b>(version: &'b str, long_version: &'b str) -> App<'a, '
                 .long("profile")
                 .value_name("PROFILE")
                 .help("Sets a profile"),
+        )
+        .arg(
+            Arg::with_name("headless")
+                .short("H")
+                .long("headless")
+                .help("Enables headless mode (no GUI mode)"),
         )
 }
