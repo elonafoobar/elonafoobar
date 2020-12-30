@@ -16,4 +16,44 @@ fn main() {
     bindings
         .write_to_file(out_path.join("bindings.rs"))
         .expect("`bindgen` failed to write generated bindings.");
+
+    cc::Build::new()
+        .files(&[
+            // Core
+            "lua/lapi.c",
+            "lua/lcode.c",
+            "lua/lctype.c",
+            "lua/ldebug.c",
+            "lua/ldo.c",
+            "lua/ldump.c",
+            "lua/lfunc.c",
+            "lua/lgc.c",
+            "lua/llex.c",
+            "lua/lmem.c",
+            "lua/lobject.c",
+            "lua/lopcodes.c",
+            "lua/lparser.c",
+            "lua/lstate.c",
+            "lua/lstring.c",
+            "lua/ltable.c",
+            "lua/ltm.c",
+            "lua/lundump.c",
+            "lua/lvm.c",
+            "lua/lzio.c",
+            "lua/ltests.c",
+            "lua/lauxlib.c",
+            // Libraries
+            "lua/lbaselib.c",
+            "lua/ldblib.c",
+            "lua/liolib.c",
+            "lua/lmathlib.c",
+            "lua/loslib.c",
+            "lua/ltablib.c",
+            "lua/lstrlib.c",
+            "lua/lutf8lib.c",
+            "lua/loadlib.c",
+            "lua/lcorolib.c",
+            "lua/linit.c",
+        ])
+        .compile("lua");
 }

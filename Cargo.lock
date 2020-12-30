@@ -120,6 +120,12 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08c48aae112d48ed9f069b33538ea9e3e90aa263cfa3d1c24309612b1f7472de"
 
 [[package]]
+name = "cc"
+version = "1.0.66"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4c0496836a84f8d0495758516b8621a622beb77c0fed418570e50764093ced48"
+
+[[package]]
 name = "cexpr"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -250,6 +256,7 @@ name = "elonafoobar-lua-sys"
 version = "0.8.0"
 dependencies = [
  "bindgen",
+ "cc",
 ]
 
 [[package]]

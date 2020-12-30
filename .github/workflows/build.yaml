@@ -12,6 +12,32 @@ jobs:
       with:
         submodules: true
 
+    - name: Install Dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y \
+          libsdl2-dev \
+          libsdl2-image-dev \
+          libsdl2-mixer-dev \
+          libsdl2-ttf-dev \
+          libsmpeg-dev \
+          timidity
+
+    - name: Cache Vanilla Elona
+      uses: actions/cache@v1
+      with:
+        path: deps/elona
+        key: elona122
+
+    - name: Download Vanilla Elona
+      run: |
+        if [ ! -d deps/elona ]
+        then
+          mkdir deps
+          wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
+          unzip -qq elona122.zip -d deps
+        fi
+
     - name: Test
       run: |
         cargo test --verbose
@@ -25,6 +51,30 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: true
+
+    - name: Install Dependencies
+      run: |
+        brew update
+        brew install -f \
+          sdl2 \
+          sdl2_image \
+          sdl2_mixer \
+          sdl2_ttf
+
+    - name: Cache Vanilla Elona
+      uses: actions/cache@v1
+      with:
+        path: deps/elona
+        key: elona122
+
+    - name: Download Vanilla Elona
+      run: |
+        if [ ! -d deps/elona ]
+        then
+          mkdir deps
+          wget --no-verbose "http://ylvania.style.coocan.jp/file/elona122.zip"
+          unzip -qq elona122.zip -d deps
+        fi
 
     - name: Test
       run: |
