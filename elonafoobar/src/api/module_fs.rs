@@ -6,17 +6,26 @@ use elonafoobar_log::trace;
 use elonafoobar_lua::Lua;
 use elonafoobar_utils as utils;
 use std::convert::TryFrom;
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Fs module");
     lua.bind_module("Fs", |lua| -> Result<()> {
+        lua.set_function("exists", lua_exists)?;
         lua.set_function("get_bundled_font_path", lua_get_bundled_font_path)?;
         lua.set_function("get_lua_full_path", lua_get_lua_full_path)?;
         lua.set_function("resolve_path_for_mod", lua_resolve_path_for_mod)?;
         lua.set_function_with_state("resolve_relative_path", lua_resolve_relative_path)?;
         Ok(())
     })
+}
+
+fn lua_exists(args: &str) -> Result<bool> {
+    trace!("native.Fs.exists()");
+
+    let path = args;
+
+    Ok(Path::new(path).exists())
 }
 
 fn lua_get_bundled_font_path(_args: ()) -> Result<PathBuf> {

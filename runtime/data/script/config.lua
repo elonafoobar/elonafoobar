@@ -1,26 +1,25 @@
 local Config = {}
 
+function Config.get(key)
+   local TODO = {
+      ["core.language.language"] = "ja",
+   }
+   return TODO[key]
+end
 
+function Config.set(...)
+end
 
--- These two are passed by C++ side.
+function Config.save(...)
+end
+
+--[===[
 local json5_parse = _ENV.native.JSON5.parse
 local json5_stringify = _ENV.native.JSON5.stringify
 
+local xtype = _ENV.prelude.xtype
 
-
-local eval_in_dsl_env = require("kernel.config_dsl")
-
-
-
-local function stype(v)
-   if type(v) == "number" then
-      return math.type(v)
-   else
-      return type(v)
-   end
-end
-
-
+local eval_in_dsl_env = require("config_dsl")
 
 local function make_schema(schema)
    local result = {}
@@ -41,13 +40,9 @@ local function make_schema(schema)
    return result
 end
 
-
-
 local _setters = {}
 local _options = {}
 local _schemas = {}
-
-
 
 --[[
 -- { a = { b = { c = 1 }, d = 2 } }
@@ -84,7 +79,7 @@ local function validate(schema, value)
    local default = schema.default
 
    -- Check 'type'.
-   if stype(value) ~= schema.type then
+   if xtype(value) ~= schema.type then
       return default
    end
 
@@ -157,8 +152,6 @@ local function should_save(option_key, value)
    return not schema.is_hidden or value ~= schema.default
 end
 
-
-
 local function split_keys_by_dot(keys)
    local ret = {}
    for k in keys:gmatch("([^.]+)") do
@@ -166,8 +159,6 @@ local function split_keys_by_dot(keys)
    end
    return ret
 end
-
-
 
 -- option_key :: string
 -- setter :: (string | number | boolean) -> nil
@@ -177,8 +168,6 @@ function Config.bind_setter(option_key, setter)
 
    _setters[option_key] = setter
 end
-
-
 
 function Config.inject_enum(option_key, enum, default_value)
    assert(#enum ~= 0, "Config.inject_enum(): enum must have at least one value.")
@@ -196,13 +185,9 @@ function Config.inject_enum(option_key, enum, default_value)
    end
 end
 
-
-
 function Config.validate(option_key, value)
    return validate(_schemas[option_key], value)
 end
-
-
 
 function Config.load_schema(schema_str, filename, mod_id)
    local result = eval_in_dsl_env(schema_str, filename, mod_id)
@@ -220,14 +205,10 @@ function Config.load_schema(schema_str, filename, mod_id)
    _schemas = make_schema(schema)
 end
 
-
-
 function Config.load_options(config_str, filename)
    load_options_impl(config_str, filename)
    load_default_values_if_unset()
 end
-
-
 
 function Config.serialize()
    local obj = {}
@@ -259,15 +240,11 @@ function Config.serialize()
    return json5_stringify(obj, opts)
 end
 
-
-
 function Config.clear()
    _setters = {}
    _options = {}
    _schemas = {}
 end
-
-
 
 -- option_key :: string
 -- value :: string | number | boolean
@@ -286,15 +263,11 @@ function Config.set(option_key, value)
    end
 end
 
-
-
 -- option_key :: string
 -- result :: string | number | boolean | nil
 function Config.get(option_key)
    return _options[option_key]
 end
-
-
 
 function Config.get_children_keys(option_key)
    if _schemas[option_key] then
@@ -304,62 +277,42 @@ function Config.get_children_keys(option_key)
    end
 end
 
-
-
 function Config.get_enum(option_key)
    return _schemas[option_key].enum
 end
-
-
 
 function Config.get_min(option_key)
    return _schemas[option_key].min or math.mininteger
 end
 
-
-
 function Config.get_max(option_key)
    return _schemas[option_key].max or math.maxinteger
 end
-
-
 
 function Config.get_step(option_key)
    return _schemas[option_key].step or 1
 end
 
-
-
 function Config.is_boolean_option(option_key)
    return _schemas[option_key].type == "boolean"
 end
-
-
 
 function Config.is_integer_option(option_key)
    return _schemas[option_key].type == "integer"
 end
 
-
-
 function Config.is_string_option(option_key)
    return _schemas[option_key].type == "string"
 end
-
-
 
 function Config.is_enum_option(option_key)
    local s = _schemas[option_key]
    return s.type == "string" and s.enum ~= nil
 end
 
-
-
 function Config.is_section(option_key)
    return _schemas[option_key].type == "section"
 end
-
-
 
 function Config.is_hidden(option_key)
    if option_key:match("^[%w_]+%.wizard$") then
@@ -369,7 +322,6 @@ function Config.is_hidden(option_key)
       return not not _schemas[option_key].is_hidden
    end
 end
-
-
+--]===]
 
 return Config

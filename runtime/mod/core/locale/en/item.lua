@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    item = {
       desc = {
          have_to_identify = "You have to identify the item to gain knowledge.",
@@ -144,7 +144,7 @@ I18N.add {
 
 
 
-I18N.add {
+i18n.add {
    item = {
       bug = {
          name = "gold bar",

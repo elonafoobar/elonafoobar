@@ -1,7 +1,7 @@
 local Chara = require("core.Chara")
 local FOV = require("core.FOV")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Rand = require("core.Rand")
 local Trait = require("core.Trait")
 local math = math
@@ -11,7 +11,7 @@ local EatingEffects = {}
 local function eat_message(eater, locale_id, color)
    local locale_key = "core.food.effect.corpse." .. locale_id
    if FOV.you_see(eater) then
-      GUI.txt(I18N.get(locale_key, eater), color)
+      GUI.txt(i18n.get(locale_key, eater), color)
    end
 end
 

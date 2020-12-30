@@ -1,5 +1,5 @@
-local Data = require("core.Data")
-local Enums = require("core.Enums")
+local data = require("core.data")
+local enums = require("core.enums")
 local Item = require("core.Item")
 local Rand = require("core.Rand")
 local World = require("core.World")
@@ -67,8 +67,8 @@ local filter_set_wear = make_filter_list({10000, 10000, 24000, 24000,
 
 local merchant_rules = {
    { choices = filter_set_wear },
-   { fixlv = Enums.Quality.GREAT },
-   { one_in = 2, fixlv = Enums.Quality.MIRACLE },
+   { fixlv = enums.Quality.GREAT },
+   { one_in = 2, fixlv = enums.Quality.MIRACLE },
 }
 
 local function merchant_item_number()
@@ -127,8 +127,8 @@ Available properties:
 
 -- NOTE: "id" must be the same as a character role, and between
 -- [1000,1999]. (2003 is special-cased.)
-Data.define_prototype("shop_inventory")
-Data.add(
+data.define_prototype("shop_inventory")
+data.add(
    "core.shop_inventory",
    {
       magic_vendor = {
@@ -158,7 +158,7 @@ Data.add(
             {
                on_generate = function()
                   local reserved = {}
-                  for item_id, _ in pairs(Data.get_table("core.item")) do
+                  for item_id, _ in pairs(data.get_table("core.item")) do
                      if Item.memory(2, item_id) > 1 then
                         reserved[#reserved+1] = item_id
                      end
@@ -194,8 +194,8 @@ Data.add(
                   {flttypemajor = 34000},
                }
             },
-            { one_in = 3, fixlv = Enums.Quality.GREAT },
-            { one_in = 10, fixlv = Enums.Quality.MIRACLE },
+            { one_in = 3, fixlv = enums.Quality.GREAT },
+            { one_in = 10, fixlv = enums.Quality.MIRACLE },
          },
          item_base_value = function(args)
             return args.item.value * 2
@@ -243,8 +243,8 @@ Data.add(
          integer_id = 1007,
          rules = {
             { choices = filter_set_wear },
-            { one_in = 3, fixlv = Enums.Quality.GREAT },
-            { one_in = 10, fixlv = Enums.Quality.MIRACLE },
+            { one_in = 3, fixlv = enums.Quality.GREAT },
+            { one_in = 10, fixlv = enums.Quality.MIRACLE },
          },
          item_number = function(args)
             return 6 + args.shopkeeper.shop_rank // 10
@@ -437,7 +437,7 @@ Data.add(
          item_number = function() return #medal_items end,
          on_generate_item = function(args)
             args.item.number = 1
-            args.item.curse_state = Enums.CurseState.NONE
+            args.item.curse_state = enums.CurseState.NONE
             if args.item.id == "core.rod_of_domination" then
                args.item.count = 4
             end

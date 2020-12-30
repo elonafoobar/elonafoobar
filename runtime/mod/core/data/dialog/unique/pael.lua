@@ -1,6 +1,6 @@
 local GUI = require("core.GUI")
 local Map = require("core.Map")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 
@@ -73,7 +73,7 @@ return {
             function()
                local potion = Item.find("core.potion_of_cure_corruption", "player_inventory")
                potion.number = potion.number - 1
-               GUI.txt(I18N.get("core.talk.unique.pael.give.you_give"))
+               GUI.txt(i18n.get("core.talk.unique.pael.give.you_give"))
                GUI.play_sound("core.equip1")
             end,
             {"give.dialog"}

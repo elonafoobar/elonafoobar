@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 local table = table
@@ -8,7 +8,7 @@ local table = table
 local common = require_relative("../common.lua")
 
 local function buy_nuke()
-   GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+   GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
    Chara.player().gold = Chara.player().gold - 12000
    GUI.play_sound("core.paygold1")
    Item.create(Chara.player().position, "core.nuclear_bomb", 0)

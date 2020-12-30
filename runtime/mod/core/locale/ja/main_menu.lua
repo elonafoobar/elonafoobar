@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    main_menu = {
       title_menu = {
          continue = "冒険を再開する",

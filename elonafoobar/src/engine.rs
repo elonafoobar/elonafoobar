@@ -1,5 +1,5 @@
 use crate::api::{self, App};
-use crate::config::PreinitLocalConfig;
+use crate::config::Config;
 use crate::fs::{dirs, files};
 use crate::version::latest_version;
 use anyhow::Result;
@@ -8,11 +8,11 @@ use elonafoobar_lua::Lua;
 
 pub struct Engine {
     lua: Lua,
-    cfg: PreinitLocalConfig,
+    cfg: Config,
 }
 
 impl Engine {
-    pub fn new(cfg: PreinitLocalConfig) -> Result<Engine> {
+    pub fn new(cfg: Config) -> Result<Engine> {
         Ok(Engine {
             lua: Lua::new()?,
             cfg,

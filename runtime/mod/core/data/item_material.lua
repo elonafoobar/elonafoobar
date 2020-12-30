@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("item_material")
-Data.add(
+data.define_prototype("item_material")
+data.add(
    "core.item_material",
    {
       -- TODO

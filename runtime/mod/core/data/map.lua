@@ -1,6 +1,6 @@
 local Calc = require("core.Calc")
-local Data = require("core.Data")
-local Enums = require("core.Enums")
+local data = require("core.data")
+local enums = require("core.enums")
 local Map = require("core.Map")
 local Rand = require("core.Rand")
 local math = math
@@ -10,7 +10,7 @@ local map = require_relative("map/static.lua")
 
 local function chara_filter_town(callbacks)
    return function()
-      local opts = { level = 10, quality = Enums.Quality.BAD, fltselect = 5 }
+      local opts = { level = 10, quality = enums.Quality.BAD, fltselect = 5 }
 
       if callbacks == nil then
          return opts
@@ -47,8 +47,8 @@ end
     generates the map. See the mapgen/ folder for examples.
 
 ]]
-Data.define_prototype("map")
-Data.add(
+data.define_prototype("map")
+data.add(
    "core.map",
    {
       test_world = {
@@ -491,7 +491,7 @@ Data.add(
          can_return_to = true,
          shows_floor_count_in_name = true,
          chara_filter = function()
-            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = Enums.Quality.BAD }
+            local opts = { objlv = Calc.calc_objlv(Map.current_dungeon_level()), quality = enums.Quality.BAD }
 
             if Map.current_dungeon_level() < 4 and opts.objlv > 5 then
                opts.objlv = 5
@@ -519,7 +519,7 @@ Data.add(
          can_return_to = true,
          prevents_domination = true,
          chara_filter = function()
-            return { level = math.modf(Map.current_dungeon_level(), 50) + 5, quality = Enums.Quality.BAD }
+            return { level = math.modf(Map.current_dungeon_level(), 50) + 5, quality = enums.Quality.BAD }
          end
       },
       tower_of_fire = {
@@ -539,7 +539,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, fltn = "fire" }
+            return { level = Map.current_dungeon_level(), quality = enums.Quality.BAD, fltn = "fire" }
          end
       },
       crypt_of_the_damned = {
@@ -559,7 +559,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, fltn = "undead" }
+            return { level = Map.current_dungeon_level(), quality = enums.Quality.BAD, fltn = "undead" }
          end
       },
       ancient_castle = {
@@ -579,7 +579,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
+            local opts = { level = Map.current_dungeon_level(), quality = enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "man"
@@ -605,7 +605,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
+            return { level = Map.current_dungeon_level(), quality = enums.Quality.BAD }
          end
       },
       mountain_pass = {
@@ -659,7 +659,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
+            local opts = { level = Map.current_dungeon_level(), quality = enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "mino"
@@ -685,7 +685,7 @@ Data.add(
          default_ai_calm = 0,
 
          chara_filter = function()
-            local opts = { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD }
+            local opts = { level = Map.current_dungeon_level(), quality = enums.Quality.BAD }
 
             if Rand.one_in(2) then
                opts.fltn = "yeek"
@@ -712,7 +712,7 @@ Data.add(
 
          prevents_teleport = true,
          chara_filter = function()
-            return { level = Map.current_dungeon_level(), quality = Enums.Quality.BAD, flttypemajor = 13 }
+            return { level = Map.current_dungeon_level(), quality = enums.Quality.BAD, flttypemajor = 13 }
          end
       },
       lumiest_graveyard = {
@@ -732,7 +732,7 @@ Data.add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 20, quality = Enums.Quality.BAD, fltselect = 4 }
+            return { level = 20, quality = enums.Quality.BAD, fltselect = 4 }
          end
       },
       truce_ground = {
@@ -752,7 +752,7 @@ Data.add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 20, quality = Enums.Quality.BAD, fltselect = 4 }
+            return { level = 20, quality = enums.Quality.BAD, fltselect = 4 }
          end
       },
       jail = {
@@ -792,7 +792,7 @@ Data.add(
          default_ai_calm = 1,
 
          chara_filter = function()
-            return { level = 10, quality = Enums.Quality.BAD, fltn = "sf" }
+            return { level = 10, quality = enums.Quality.BAD, fltn = "sf" }
          end
       },
       larna = {
@@ -1011,11 +1011,11 @@ local function chara_filter_museum_shop()
       fltselect = 7
    end
 
-   return { level = 100, quality = Enums.Quality.BAD, fltselect = fltselect }
+   return { level = 100, quality = enums.Quality.BAD, fltselect = fltselect }
 end
 
 -- These maps are player-created.
-Data.add(
+data.add(
    "core.map",
    {
       museum = player_owned {
@@ -1069,7 +1069,7 @@ Data.add(
          is_fixed = false,
 
          chara_filter = function()
-            return { level = Map.data.current_dungeon_level, quality = Enums.Quality.BAD }
+            return { level = Map.data.current_dungeon_level, quality = enums.Quality.BAD }
          end,
 
          -- The following fields are required for loading the data but

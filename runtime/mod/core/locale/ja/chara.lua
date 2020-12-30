@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    chara = {
       you = "あなた",
       something = "何か",
@@ -119,7 +119,7 @@ I18N.add {
 
 
 
-I18N.add_data_text(
+i18n.add_data_text(
    "core.chara",
    {
       bug = {

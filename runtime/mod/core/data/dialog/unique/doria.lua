@@ -1,8 +1,8 @@
 local Chara = require("core.Chara")
-local Data = require("core.Data")
-local Enums = require("core.Enums")
+local data = require("core.data")
+local enums = require("core.enums")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 local Rand = require("core.Rand")
@@ -25,10 +25,10 @@ local function join_guild()
 
     World.join_guild("fighters")
 
-    GUI.txt(I18N.get("core.quest.completed"))
+    GUI.txt(i18n.get("core.quest.completed"))
     GUI.play_sound("core.complete1")
     GUI.show_journal_update_message()
-    GUI.txt(I18N.get("core.talk.unique.doria.nonmember.joined"), "orange")
+    GUI.txt(i18n.get("core.talk.unique.doria.nonmember.joined"), "orange")
 end
 
 local function move_self(t)
@@ -46,7 +46,7 @@ end
 
 local function receive_reward()
    World.data.fighters_guild_quota_recurring = false
-   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = Enums.Quality.GOOD, flttypemajor = 10000})
+   Item.create(Chara.player().position, {objlv = 51 - World.data.ranks[8] // 200, quality = enums.Quality.GOOD, flttypemajor = 10000})
    Item.create(Chara.player().position, "core.gold_piece", 10000 - World.data.ranks[8] + 1000)
    Item.create(Chara.player().position, "core.platinum_coin", math.clamp(4 - World.data.ranks[8] // 2500, 1, 4))
 
@@ -56,8 +56,8 @@ local function receive_reward()
 end
 
 local function quota_args()
-   local id = Data.get_id_by_integer("core.chara", World.data.fighters_guild_target)
-   local name = I18N.get_data_text("core.chara", id, "name")
+   local id = data.get_id_by_integer("core.chara", World.data.fighters_guild_target)
+   local name = i18n.get_data_text("core.chara", id, "name")
    return {World.data.fighters_guild_quota, name}
 end
 

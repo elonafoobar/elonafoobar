@@ -2,11 +2,9 @@ use crate::mods::{ModId, Version};
 use crate::profile::ProfileId;
 use lazy_static::lazy_static;
 use std::path::PathBuf;
-use std::sync::Mutex;
 
 lazy_static! {
     static ref ROOT_CACHE: PathBuf = get_exe_path();
-    static ref CURRENT_PROFILE: Mutex<Option<ProfileId>> = Mutex::new(None);
 }
 
 fn get_exe_path() -> PathBuf {
@@ -57,25 +55,8 @@ pub fn profile() -> PathBuf {
 }
 
 /// "/profile/<profile>"
-pub fn profile_of(profile_id: ProfileId) -> PathBuf {
+pub fn profile_of(profile_id: &ProfileId) -> PathBuf {
     profile().join(profile_id.to_path())
-}
-
-pub fn current_profile() -> PathBuf {
-    let p = CURRENT_PROFILE
-        .lock()
-        .expect("It never fails because the game runs in single thread");
-    profile_of(
-        p.as_ref()
-            .expect(concat!(
-                "Set current profile before calling ",
-                module_path!(),
-                "::current_profile() by ",
-                module_path!(),
-                "set_current_profile()"
-            ))
-            .clone(),
-    )
 }
 
 /// "/tmp"
@@ -84,13 +65,6 @@ pub fn tmp() -> PathBuf {
 }
 
 /// "/profile/<profile>/save"
-pub fn save() -> PathBuf {
-    current_profile().join("save")
-}
-
-pub fn set_current_profile(profile: ProfileId) {
-    let mut p = CURRENT_PROFILE
-        .lock()
-        .expect("It never fails because the game runs in single thread");
-    *p = Some(profile);
+pub fn save(profile_id: &ProfileId) -> PathBuf {
+    profile_of(profile_id).join("save")
 }

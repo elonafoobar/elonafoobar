@@ -4,11 +4,11 @@
 require_relative("../_common/functions.lua")
 
 local FOV = require("core.FOV")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Item = require("core.Item")
 local string = string
 
-I18N.add_function {
+i18n.add_function {
    ordinal = function(n)
       return tostring(n)
    end,

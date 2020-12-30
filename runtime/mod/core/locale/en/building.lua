@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    building = {
       can_only_use_in_world_map = "You can only use it in the world map.",
       cannot_build_it_here = "You can't build it here.",

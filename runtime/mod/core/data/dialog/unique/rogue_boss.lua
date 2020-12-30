@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Inventory = require("core.Inventory")
 local Item = require("core.Item")
@@ -18,7 +18,7 @@ local function surrender()
 
    for _, item in ipairs(Inventory.player():as_table()) do
       if item.prototype.is_cargo then
-         GUI.txt(I18N.get("core.talk.npc.common.hand_over", item))
+         GUI.txt(i18n.get("core.talk.npc.common.hand_over", item))
          item:remove()
       end
    end

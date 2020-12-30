@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("body_part")
-Data.add(
+data.define_prototype("body_part")
+data.add(
    "core.body_part",
    {
       head = {

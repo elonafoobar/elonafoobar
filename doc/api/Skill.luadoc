@@ -7,7 +7,7 @@ module "Skill"
 
 --- Obtains a character's resistance level for an element.
 --
---  @tparam Enums.Element element the element
+--  @tparam enums.Element element the element
 --  @tparam LuaCharacter chara the character to get resistance information from
 --  @treturn num the character's resistance level
 --  @function resistance

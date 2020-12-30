@@ -1,9 +1,9 @@
 local Chara = require("core.Chara")
-local Data = require("core.Data")
-local I18N = require("core.I18N")
+local data = require("core.data")
+local i18n = require("core.i18n")
 local Input = require("core.Input")
 local Internal = require("core.Internal")
-local Enums = require("core.Enums")
+local enums = require("core.enums")
 local table = table
 
 local function dialog_error(talk, msg, err)
@@ -43,7 +43,7 @@ local function resolve_response(obj, talk)
 
    get = talk.dialog.root .. "." .. key
 
-   if I18N.get_optional(get) == nil then
+   if i18n.get_optional(get) == nil then
       get = key
    end
    return get, args
@@ -61,7 +61,7 @@ local function query(talk, text, choices, default_choice)
       image = talk.speaker.image
    end
    local show_impress = true
-   if talk.speaker.quality == Enums.Quality.SPECIAL and not Chara.is_ally(talk.speaker) then
+   if talk.speaker.quality == enums.Quality.SPECIAL and not Chara.is_ally(talk.speaker) then
       show_impress = false
    end
 
@@ -72,7 +72,7 @@ local function query(talk, text, choices, default_choice)
    local the_choices = {}
    for i, choice in ipairs(choices) do
       local response, args = resolve_response(choice[2], talk)
-      the_choices[i] = I18N.get(response, table.unpack(args))
+      the_choices[i] = i18n.get(response, table.unpack(args))
       if default_choice == nil and choice[1] == "__END__" then
          default_choice = i - 1
       end
@@ -100,7 +100,7 @@ local function make_talk(speaker, dialog, id)
       dialog = dialog,
       say = function(self, key, response)
          local resolved, args = resolve_response(key, self)
-         query(self, I18N.get(resolved, table.unpack(args)), {{"dummy", resolve_response(response, self)}})
+         query(self, i18n.get(resolved, table.unpack(args)), {{"dummy", resolve_response(response, self)}})
       end
    }
 end
@@ -111,7 +111,7 @@ end
 -- @tparam string node Node inside the dialog to jump to.
 -- @treturn table Current node data in {choice, opts} format
 local function jump_to_dialog(talk, new_dialog_id, node)
-   local dialog = Data.get('core.dialog', new_dialog_id)
+   local dialog = data.get('core.dialog', new_dialog_id)
    if dialog == nil then
       error("No such dialog " .. new_dialog_id)
    end
@@ -172,7 +172,7 @@ local function step_dialog(dialog, node_data, talk, state)
          end
 
          if type(text) == "table" then
-            -- Obtain arguments to I18N.get().
+            -- Obtain arguments to i18n.get().
             local args = {}
             if text.args then
                local ok
@@ -231,9 +231,9 @@ local function step_dialog(dialog, node_data, talk, state)
 
             -- Resolve localized text.
             local key = talk.dialog.root .. "." .. text[1]
-            local tex = I18N.get_optional(key, table.unpack(args))
+            local tex = i18n.get_optional(key, table.unpack(args))
             if tex == nil then
-               tex = I18N.get(text[1], table.unpack(args))
+               tex = i18n.get(text[1], table.unpack(args))
             end
 
             -- Prompt for choice if on the last text entry, otherwise
@@ -273,7 +273,7 @@ end
 -- @tparam LuaCharacter chara The speaking character.
 -- @tparam string dialog_id ID of core.dialog to use.
 local function show_dialog(chara, id)
-   local dialog = Data.get('core.dialog', id)
+   local dialog = data.get('core.dialog', id)
    if dialog == nil then
       error("No such dialog " .. id)
    end

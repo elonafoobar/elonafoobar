@@ -1,3 +1,5 @@
+use crate::cli::CliOptions;
+use crate::profile::ProfileId;
 use anyhow::Result;
 use serde::Deserialize;
 use std::io::ErrorKind as IoErrorKind;
@@ -94,6 +96,32 @@ impl std::str::FromStr for PreinitLocalConfig {
             cfg.display_mode = None;
         }
         Ok(cfg)
+    }
+}
+
+#[derive(Debug)]
+pub struct Config {
+    pub profile: ProfileId,
+    pub headless: bool,
+    pub fullscreen: Option<String>,
+    pub display_mode: Option<String>,
+    pub fps: f64,
+}
+
+impl Config {
+    pub fn merge(
+        cli_options: CliOptions,
+        _global_cfg: PreinitGlobalConfig,
+        local_cfg: PreinitLocalConfig,
+        profile: ProfileId,
+    ) -> Config {
+        Config {
+            profile,
+            headless: cli_options.headless,
+            fullscreen: local_cfg.fullscreen,
+            display_mode: local_cfg.display_mode,
+            fps: 60.0, /* TODO */
+        }
     }
 }
 

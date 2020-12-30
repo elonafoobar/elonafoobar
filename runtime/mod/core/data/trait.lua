@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("trait")
-Data.add(
+data.define_prototype("trait")
+data.add(
    "core.trait",
    {
       stamina_feat = {

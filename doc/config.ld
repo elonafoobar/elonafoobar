@@ -20,7 +20,7 @@ examples = {"./doc/examples"}
 topics = {"./doc/topics"}
 
 new_type("event", "Events", false, "Event Parameters")
-new_type("enum", "Enums", false, "Enum Values")
+new_type("enum", "enums", false, "Enum Values")
 
 custom_see_handler("^(http[s]?%:%/%/.-) (.+)$",
    function(url, name)

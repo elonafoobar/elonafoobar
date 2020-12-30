@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    event = {
       little_sister_slips = "The little sister slips from Big daddy's shoulder, \"Mr.Bubbles!\"",
 

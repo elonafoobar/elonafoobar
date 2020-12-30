@@ -1,6 +1,6 @@
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 
-I18N.add {
+i18n.add {
    food = {
       -- Names for cooked food.
       -- These are organized by type, then quality.

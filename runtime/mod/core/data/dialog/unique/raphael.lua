@@ -1,7 +1,7 @@
 local Chara = require("core.Chara")
 local Input = require("core.Input")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 local table = table
@@ -99,7 +99,7 @@ return {
             t:say("bring_wife.this_one.not_human")
          elseif Internal.get_quest_flag("wife_collector") == 1 then
             Item.create(Chara.player().position, "core.gold_piece", 5000)
-            GUI.txt(I18N.get("core.quest.completed"))
+            GUI.txt(i18n.get("core.quest.completed"))
             GUI.show_journal_update_message()
             Internal.set_quest_flag("wife_collector", 1000)
          end
@@ -123,7 +123,7 @@ return {
                GUI.play_sound("core.complete1")
                Item.create(Chara.player().position, "core.unicorn_horn", 2)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
-               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+               GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             end,
             {"bring_wife.this_one.end"}
          }

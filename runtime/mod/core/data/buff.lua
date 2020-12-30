@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
-local Data = require("core.Data")
-local I18N = require("core.I18N")
+local data = require("core.data")
+local i18n = require("core.i18n")
 local math = math
 
 local function mod_skill_level(args, id, amount)
@@ -18,7 +18,7 @@ local function mod_skill_level_clamp(args, id, amount)
 end
 
 local function get_description(self, power)
-   return I18N.get_data_text("core.buff", self.id, "description", self._effect(power))
+   return i18n.get_data_text("core.buff", self.id, "description", self._effect(power))
 end
 
 --[[
@@ -64,8 +64,8 @@ in the description.
 ]]
 
 -- TODO: buff icons
-Data.define_prototype("buff")
-Data.add(
+data.define_prototype("buff")
+data.add(
    "core.buff",
    {
       holy_shield = {
@@ -407,7 +407,7 @@ Data.add(
 )
 
 local function register_growth_buff(stat_index, stat_name)
-   Data.add(
+   data.add(
       "core.buff",
       {
          ["grow_" .. stat_name] = {

@@ -1,7 +1,7 @@
 local Event = {}
 
 
-local EventTree = require("kernel.event_tree")
+local EventTree = require("event_tree")
 
 local hooks = {}
 local instanced_hooks = {}
@@ -18,7 +18,7 @@ local function check_event(event_id)
    end
 end
 
-function Event.remove_unknown_events(event_table)
+function Event.__INTERNAL_API_remove_unknown_events(event_table)
    for k, _ in pairs(event_table) do
       event_types[k] = true
    end
@@ -202,7 +202,7 @@ function Event.trigger(event_id, args, opts)
 end
 
 
-function Event.__clear_all_events()
+function Event.__INTERNAL_API_clear_all_events()
    hooks = {}
    instanced_hooks = {}
    reg = {}

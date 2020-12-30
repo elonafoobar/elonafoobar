@@ -85,7 +85,7 @@ config {
          max = 50,
       },
 
-      -- "Enums" allow selecting a string value from a list of values. They each have an
+      -- "enums" allow selecting a string value from a list of values. They each have an
       -- individual localized string.
       option "fullscreen", {
          type = "string",

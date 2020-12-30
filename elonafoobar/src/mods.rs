@@ -1,4 +1,5 @@
 use crate::fs::{dirs, files};
+use crate::profile::ProfileId;
 use anyhow::Result;
 use elonafoobar_log::debug;
 pub use semver::{Version, VersionReq};
@@ -11,9 +12,9 @@ pub use id::Id as ModId;
 pub use manifest::Manifest as ModManifest;
 pub use resolve::{ModIndex, ModList, ModLock, ResolvedModList};
 
-pub fn resolve() -> Result<ResolvedModList> {
+pub fn resolve(profile_id: &ProfileId) -> Result<ResolvedModList> {
     let list = {
-        let mut list = ModList::from_file(&files::mod_list())?;
+        let mut list = ModList::from_file(&files::mod_list(profile_id))?;
         // TODO
         list.add(ModId::core(), VersionReq::any());
         list

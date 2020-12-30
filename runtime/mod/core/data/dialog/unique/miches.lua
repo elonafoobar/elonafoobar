@@ -1,5 +1,5 @@
 local Chara = require("core.Chara")
-local Enums = require("core.Enums")
+local enums = require("core.enums")
 local GUI = require("core.GUI")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
@@ -60,8 +60,8 @@ return {
       quest_finish = {
          text = {
             function()
-               Item.create(Chara.player().position, {id = "core.small_shield", level = 10, quality = Enums.Quality.GOOD})
-               Item.create(Chara.player().position, {id = "core.girdle", level = 10, quality = Enums.Quality.GOOD})
+               Item.create(Chara.player().position, {id = "core.small_shield", level = 10, quality = enums.Quality.GOOD})
+               Item.create(Chara.player().position, {id = "core.girdle", level = 10, quality = enums.Quality.GOOD})
                Item.create(Chara.player().position, "core.gold_piece", 3000)
                Item.create(Chara.player().position, "core.platinum_coin", 2)
 

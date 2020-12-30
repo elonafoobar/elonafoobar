@@ -1,7 +1,7 @@
 local Chara = require("core.Chara")
-local Enums = require("core.Enums")
+local enums = require("core.enums")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 
@@ -73,9 +73,9 @@ return {
       tutorial_3 = {
          text = {
             function()
-               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+               GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
                local scroll = Item.create(Chara.player().position, "core.scroll_of_identify", 0)
-               scroll.identify_state = Enums.IdentifyState.COMPLETELY
+               scroll.identify_state = enums.IdentifyState.COMPLETELY
             end,
             {"tutorial.after_dig.dialog"},
          },
@@ -138,7 +138,7 @@ return {
                chest.param1 = 35
                chest.param2 = 25
                Item.create(Chara.player().position, "core.lockpick", 2)
-               GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+               GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             end,
             {"tutorial.chests.dialog._2"},
          },
@@ -191,8 +191,8 @@ return {
          on_finish = function()
             local corpse = Item.create(Chara.player().position, "core.corpse", 0)
             corpse.subname = 9
-            corpse.identify_state = Enums.IdentifyState.COMPLETELY
-            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+            corpse.identify_state = enums.IdentifyState.COMPLETELY
+            GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 1)
          end
       },
@@ -216,9 +216,9 @@ return {
             Chara.find("core.larnneire", "others"):vanquish()
             Chara.find("core.lomias", "others"):vanquish()
 
-            GUI.txt(I18N.get("core.quest.completed"))
+            GUI.txt(i18n.get("core.quest.completed"))
             GUI.play_sound("core.complete1")
-            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+            GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             for i=0,2 do
                Item.create(Chara.player().position, {flttypemajor = 60000})
             end
@@ -247,13 +247,13 @@ return {
          },
          on_finish = function()
             local item = Item.create(Chara.player().position, "core.long_bow", 0)
-            item.curse_state = Enums.CurseState.CURSED
+            item.curse_state = enums.CurseState.CURSED
             item = Item.create(Chara.player().position, "core.arrow", 0)
-            item.curse_state = Enums.CurseState.NONE
+            item.curse_state = enums.CurseState.NONE
             item = Item.create(Chara.player().position, "core.scroll_of_vanish_curse", 0)
-            item.identify_state = Enums.IdentifyState.COMPLETELY
-            item.curse_state = Enums.CurseState.BLESSED
-            GUI.txt(I18N.get("core.common.something_is_put_on_the_ground"))
+            item.identify_state = enums.IdentifyState.COMPLETELY
+            item.curse_state = enums.CurseState.BLESSED
+            GUI.txt(i18n.get("core.common.something_is_put_on_the_ground"))
             Internal.set_quest_flag("tutorial", 5)
          end
       },
@@ -267,13 +267,13 @@ return {
             {"__END__", "__MORE__"}
          },
          on_finish = function()
-            GUI.txt(I18N.get("core.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "cyan")
+            GUI.txt(i18n.get("core.talk.unique.lomias.tutorial.equip.done.lomias_releases"), "cyan")
             for i=0,2 do
                local putit = Chara.create(Chara.player().position, "core.putit")
                putit:set_flag("is_not_attacked_by_enemy", true)
             end
             local item = Item.create(Chara.player().position, "core.potion_of_cure_minor_wound", 0)
-            item.identify_state = Enums.IdentifyState.COMPLETELY
+            item.identify_state = enums.IdentifyState.COMPLETELY
             Internal.set_quest_flag("tutorial", 6)
          end
       }

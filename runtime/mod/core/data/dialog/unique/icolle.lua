@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Inventory = require("core.Inventory")
 local Item = require("core.Item")
@@ -19,7 +19,7 @@ local function give_monster_balls()
       if item.id == "core.monster_ball" and item.subname ~= 0 then
          found = true
          while item.number > 0 and flag < 6 do
-            GUI.txt(I18N.get("core.talk.unique.icolle.quest.give.deliver", item));
+            GUI.txt(i18n.get("core.talk.unique.icolle.quest.give.deliver", item));
             item.number = item.number - 1
             flag = flag + 1
          end

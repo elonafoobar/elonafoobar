@@ -1,7 +1,7 @@
-local Data = require("core.Data")
+local data = require("core.data")
 
-Data.define_prototype("asset")
-Data.add(
+data.define_prototype("asset")
+data.add(
    "core.asset",
    {
       interface = {
@@ -1016,7 +1016,7 @@ local function background_card(name)
    }
 end
 
-Data.add(
+data.add(
    "core.asset",
    {
       atx_background = {
@@ -1096,7 +1096,7 @@ local function background(name, width, height)
    }
 end
 
-Data.add(
+data.add(
    "core.asset",
    {
       background = {
@@ -1125,7 +1125,7 @@ Data.add(
    }
 )
 
-Data.add(
+data.add(
    "core.asset",
    {
       ie_sheet = {

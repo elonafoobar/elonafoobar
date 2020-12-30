@@ -1,34 +1,34 @@
 --- Functions to be used inside translations, like "${itemname(_1, _2, _3)}".
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Item = require("core.Item")
 local string = string
 
 
-I18N.add_function {
+i18n.add_function {
    you = function()
-      return I18N.get("core.chara.you")
+      return i18n.get("core.chara.you")
    end,
 
    name = function(chara)
       if not chara or not chara.name then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       return chara.name
    end,
 
    basename = function(chara)
       if not chara or not chara.name then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       return chara.basename
    end,
 
    itemname = function(item, number, needs_article)
       if not item then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       if item.lua_type ~= "LuaItem" then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       if number == nil then
          number = item.number
@@ -42,10 +42,10 @@ I18N.add_function {
 
    itembasename = function(item)
       if not item then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       if item.lua_type ~= "LuaItem" then
-         return I18N.get("core.chara.something")
+         return i18n.get("core.chara.something")
       end
       return item.basename
    end,

@@ -1,18 +1,7 @@
+local xtype = _ENV.prelude.xtype
+
 local process_section
 local process_option
-
-
-
-local function stype(v)
-   if type(v) == "number" then
-      return math.type(v)
-   else
-      return type(v)
-   end
-end
-
-
-
 local function process_section_internal(schema, options)
    assert(#options % 2 == 0, "invalid config schema")
 
@@ -45,8 +34,6 @@ local function process_section_internal(schema, options)
    return schema, is_hidden, children_keys
 end
 
-
-
 process_section = function(def)
    local schema, is_hidden, children_keys = process_section_internal({}, def)
    return {
@@ -57,10 +44,8 @@ process_section = function(def)
    }
 end
 
-
-
 process_option = function(def)
-   local ty = stype(def)
+   local ty = xtype(def)
    if ty == "boolean" then
       return {
          type = "boolean",
@@ -83,18 +68,16 @@ process_option = function(def)
       }
    elseif ty == "table" then
       -- TODO
-      def.type = def.type or stype(def.default)
+      def.type = def.type or xtype(def.default)
       if not def.type then
          return nil, "cannot detect the type of the option: set default value or type."
       end
-      def.type = def.type or stype(def.default)
+      def.type = def.type or xtype(def.default)
       return def
    else
       return nil, "option default value must be boolean, number, string or table."
    end
 end
-
-
 
 --[[
 local env = make_dsl_env(result)
@@ -122,28 +105,22 @@ local function make_dsl_env(result)
    }
 end
 
-
-
 local function eval_in_dsl_env(chunk_str, chunk_name, mod_id)
    local result = {}
 
    local env = make_dsl_env(result)
    local f, err = load(chunk_str, chunk_name, "t", env)
    if err then
-      -- TODO Log.warn(err, mod_id)
-      print(err)
+      log_error(("Error during loading 'config-schema.lua' of '%s': "):format(mod_id, err))
       return nil
    end
    local _, err = pcall(f)
    if err then
-      -- TODO Log.warn(err, mod_id)
-      print(err)
+      log_error(("Error during loading 'config-schema.lua' of '%s': "):format(mod_id, err))
       return nil
    end
 
    return result
 end
-
-
 
 return eval_in_dsl_env

@@ -1,6 +1,6 @@
 local Chara = require("core.Chara")
 local GUI = require("core.GUI")
-local I18N = require("core.I18N")
+local i18n = require("core.i18n")
 local Internal = require("core.Internal")
 local Item = require("core.Item")
 
@@ -75,7 +75,7 @@ return {
             function()
                local drug = Item.find("core.blue_capsule_drug", "player_inventory")
                drug.number = drug.number - 1
-               GUI.txt(I18N.get("core.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
+               GUI.txt(i18n.get("core.talk.unique.kaneda_bike.before_drug.yes.you_hand_him"))
                GUI.play_sound("core.equip1")
             end,
             {"before_drug.yes.dialog"},

@@ -18,7 +18,7 @@ function wish(wish) end
 --- Check whether `input` matches particular words.
 --
 --  @tparam string input Your wish
---  @tparam Enums.WishMatchType match_type Match type
+--  @tparam enums.WishMatchType match_type Match type
 --  @tparam string i18n_key_to_word_list I18N key to localized word list
 --  @tparam table english_words List of English words
 --  @treturn bool True if match.
@@ -26,7 +26,7 @@ function wish(wish) end
 function match(input, match_type, i18n_key_to_word_list, english_words) end
 
 --- Add custom wishing.
---  @tparam Enums.WishHook hook_type Hook point
+--  @tparam enums.WishHook hook_type Hook point
 --  @tparam function callback Function which takes the input and returns a
 --  boolean value (success/failure)
 --

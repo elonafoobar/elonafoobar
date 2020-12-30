@@ -1,4 +1,4 @@
-local Data = require("core.Data")
+local data = require("core.data")
 local Log = require("core.Log")
 local Rand = require("core.Rand")
 local math = math
@@ -10,7 +10,7 @@ local God = {}
 --- @treturn string God ID or Eyth ("")
 function God.get_random_god_or_eyth()
    local ids = {""} -- Eyth of Infidel
-   for k, v in pairs(Data.get_table("core.god")) do
+   for k, v in pairs(data.get_table("core.god")) do
       ids[#ids+1] = k
    end
    return Rand.choice(ids)
@@ -36,11 +36,11 @@ function God.switch_religion(chara, new_religion)
    chara.spacts:lose("core.lulwys_trick")
 
    if chara.religion == "" then
-      GUI.txt(I18N.get("core.god.switch.unbeliever"), "orange")
+      GUI.txt(i18n.get("core.god.switch.unbeliever"), "orange")
    else
       Animation.play_miracle_animation(Mode.target_one, chara)
       GUI.snd("core.complete1")
-      GUI.txt(I18N.get("core.god.switch.follower", God.get_name(chara.religion)), "orange")
+      GUI.txt(i18n.get("core.god.switch.follower", God.get_name(chara.religion)), "orange")
 
       -- TODO
       if chara.religion == "core.itzpalt" then
@@ -81,7 +81,7 @@ function God.add_piety(chara, amount)
 
    -- Faith skill is not enough.
    if chara.skills:level("core.faith") * 100 < chara.piety_point then
-      GUI.txt(I18N.get("core.god.indifferent"))
+      GUI.txt(i18n.get("core.god.indifferent"))
       return
    end
 
@@ -100,7 +100,7 @@ function God.apply_blessing(believer)
       return
    end
 
-   local god_data = Data.get("core.god", believer.religion)
+   local god_data = data.get("core.god", believer.religion)
    if not god_data then
       Log.warn("God.apply_blessing: god data of '{$1}' not found", believer.religion)
       return
@@ -127,9 +127,9 @@ end
 --- @treturn string Localized god name or Eyth of Infidel if `id` is empty.
 function God.get_name(id)
    if id == "" then
-      return I18N.get("core.god.eyth_name")
+      return i18n.get("core.god.eyth_name")
    else
-      return I18N.get_data_text("core.god", id, "name")
+      return i18n.get_data_text("core.god", id, "name")
    end
 end
 
@@ -142,7 +142,7 @@ function God.is_offerable(offering, believer)
       return false
    end
 
-   local god_data = Data.get("core.god", believer.religion)
+   local god_data = data.get("core.god", believer.religion)
    if not god_data then
       Log.warn("God.is_offerable: god data of '{$1}' not found", believer.religion)
       return false
