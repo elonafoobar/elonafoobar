@@ -2,7 +2,7 @@
   id: "core",
   name: "Core Content",
   authors: "KI, Ruin0x11",
-  version: "0.2.6",
+  version: "0.3.0",
   license: "MIT",
   description: {
     ja: "ゲームの基本コンテンツ。Elona foobar の動作にはこの MOD が必須です。",

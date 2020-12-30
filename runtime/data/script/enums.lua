@@ -1,6 +1,7 @@
-local Enums = {}
+local native = _ENV.native
+local class, xtype = prelude.class, prelude.xtype
 
-local class, xtype = _ENV.prelude.class, _ENV.prelude.xtype
+local Enums = {}
 
 local Enum = class("core.Enums.Enum")
 
@@ -82,6 +83,15 @@ Enums.Relationship = Enums.new_enum {
 
    -- Your ally.
    ALLY = 10,
+}
+
+-- TODO ldoc
+Enums.SkillType = Enums.new_enum {
+   STAT = 0,
+   RESISTANCE = 1,
+   TOWN_SKILL = 2, -- TODO rename
+   SPELL = 3,
+   SPACT = 4,
 }
 
 return Enums

@@ -1,5 +1,5 @@
-local jarowinkler = require("kernel.ush.jarowinkler")
-local parse = require("kernel.ush.parse")
+local jarowinkler = require("ush.jarowinkler")
+local parse = require("ush.parse")
 
 
 

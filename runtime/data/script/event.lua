@@ -1,7 +1,7 @@
 local Event = {}
 
 
-local EventTree = require("kernel.event_tree")
+local EventTree = require("event_tree")
 
 local hooks = {}
 local instanced_hooks = {}

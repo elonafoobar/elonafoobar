@@ -2,11 +2,11 @@ local USH = {}
 
 
 
-local utils = require("kernel.utils")
+local utils = require("utils")
 
-local execute = require("kernel.ush.execute")
-local Env = require("kernel.ush.env")
-local History = require("kernel.ush.history")
+local execute = require("ush.execute")
+local Env = require("ush.env")
+local History = require("ush.history")
 
 
 
