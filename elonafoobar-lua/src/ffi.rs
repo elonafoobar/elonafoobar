@@ -287,7 +287,11 @@ pub fn check_nargs(state: State, expected_nargs: c_int) -> Result<()> {
     if expected_nargs <= actual_nargs {
         Ok(())
     } else {
-        Err(format_err!("check_nargs")) // TODO
+        Err(format_err!(
+            "check_nargs: expect {} arguments, but only {} are given",
+            expected_nargs,
+            actual_nargs
+        )) // TODO
     }
 }
 
