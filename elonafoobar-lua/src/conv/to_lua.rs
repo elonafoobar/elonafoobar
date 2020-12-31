@@ -45,10 +45,10 @@ impl ToLuaValue for PathBuf {
 
 impl<T> ToLuaValue for AsLuaInt<T>
 where
-    T: ToLuaInt,
+    T: IntoLuaInt,
 {
     fn push(self, state: ffi::State) -> Result<()> {
-        let value = self.0.to_lua_int()?;
+        let value = self.0.into_lua_int()?;
         value.push(state)
     }
 }
@@ -96,8 +96,8 @@ where
     }
 }
 
-pub trait ToLuaInt: Sized {
-    fn to_lua_int(self) -> Result<LuaInt>;
+pub trait IntoLuaInt: Sized {
+    fn into_lua_int(self) -> Result<LuaInt>;
 }
 
 pub trait ToLuaValues: Sized {

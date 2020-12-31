@@ -9,4 +9,4 @@ pub mod utils;
 pub use crate::state::Lua;
 pub use crate::types::{AsLuaInt, LuaUserdata};
 
-pub use crate::conv::{FromLuaInt, ToLuaInt};
+pub use crate::conv::{FromLuaInt, IntoLuaInt};

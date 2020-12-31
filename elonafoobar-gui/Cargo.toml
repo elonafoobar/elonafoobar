@@ -6,7 +6,7 @@ edition = "2018"
 publish = false
 
 [dependencies]
-anyhow = "1.0.33"
+anyhow = "1.0.37"
 
 [dependencies.sdl2]
 version = "0.34.3"

@@ -216,7 +216,7 @@ impl Lua {
         ffi::lua_pushstring(self.inner, "__gc")?;
         ffi::lua_pushcfunction(self.inner, free::<T>);
         ffi::lua_rawset(self.inner, -3);
-        self.pop_one()?;
+        self.pop_one();
 
         Ok(())
     }
@@ -261,9 +261,8 @@ impl Lua {
         Ok(())
     }
 
-    fn pop_one(&mut self) -> Result<()> {
+    fn pop_one(&mut self) {
         ffi::lua_pop_one(self.inner);
-        Ok(())
     }
 
     fn set_global(&mut self, name: &str) -> Result<()> {
