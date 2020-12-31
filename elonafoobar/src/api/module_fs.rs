@@ -5,7 +5,7 @@ use anyhow::Result;
 use elonafoobar_log::trace;
 use elonafoobar_lua::Lua;
 use elonafoobar_utils as utils;
-use std::convert::TryFrom;
+use std::convert::{TryFrom, TryInto};
 use std::path::{Path, PathBuf};
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
@@ -13,6 +13,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     lua.bind_module("Fs", |lua| -> Result<()> {
         lua.set_function("exists", lua_exists)?;
         lua.set_function("get_bundled_font_path", lua_get_bundled_font_path)?;
+        lua.set_function("get_config_file_path", lua_get_config_file_path)?;
         lua.set_function("get_lua_full_path", lua_get_lua_full_path)?;
         lua.set_function("resolve_path_for_mod", lua_resolve_path_for_mod)?;
         lua.set_function_with_state("resolve_relative_path", lua_resolve_relative_path)?;
@@ -32,6 +33,14 @@ fn lua_get_bundled_font_path(_args: ()) -> Result<PathBuf> {
     trace!("native.Fs.get_bundled_font_path()");
 
     Ok(files::bundled_font())
+}
+
+fn lua_get_config_file_path(args: &str) -> Result<PathBuf> {
+    trace!("native.Fs.get_config_file_path()");
+
+    let profile_id = args;
+
+    Ok(files::local_config(&profile_id.to_owned().try_into()?))
 }
 
 fn lua_get_lua_full_path(args: (&str, &str, &str)) -> Result<PathBuf> {

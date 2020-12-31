@@ -1,25 +1,10 @@
-local Config = {}
+local config = {}
 
-function Config.get(key)
-   local TODO = {
-      ["core.language.language"] = "ja",
-   }
-   return TODO[key]
-end
-
-function Config.set(...)
-end
-
-function Config.save(...)
-end
-
---[===[
-local json5_parse = _ENV.native.JSON5.parse
-local json5_stringify = _ENV.native.JSON5.stringify
-
-local xtype = _ENV.prelude.xtype
+local xtype, inspect = _ENV.prelude.xtype, _ENV.prelude.inspect
+local Fs = _ENV.native.Fs
 
 local eval_in_dsl_env = require("config_dsl")
+local json5 = require("json5")
 
 local function make_schema(schema)
    local result = {}
@@ -117,16 +102,15 @@ end
 
 
 local function load_options_impl(config_str, filename)
-   local conf, err = json5_parse(config_str)
+   local conf, err = json5.parse(config_str)
    if err then
-      -- TODO Log.warn(err, filename)
-      print(err)
+      log_warn(err)
       return
    end
 
    conf = flatten(conf)
    for k, v in pairs(conf) do
-      Config.set(k, v)
+      config.set(k, v)
    end
 end
 
@@ -134,12 +118,12 @@ end
 
 local function load_default_values_if_unset()
    for option_key, schema in pairs(_schemas) do
-      if Config.get(option_key) == nil then
+      if config.get(option_key) == nil then
          -- Almost all of options have thier own default values, but there are some exceptions:
          -- * Sections
          -- * Option "core.screen.display_mode" in headless mode
          if schema.default ~= nil then
-            Config.set(option_key, schema.default)
+            config.set(option_key, schema.default)
          end
       end
    end
@@ -163,14 +147,14 @@ end
 -- option_key :: string
 -- setter :: (string | number | boolean) -> nil
 -- result :: nil
-function Config.bind_setter(option_key, setter)
-   assert(exists(option_key), "Config.bind_setter(): option '"..option_key.."' not found")
+function config.bind_setter(option_key, setter)
+   assert(exists(option_key), "config.bind_setter(): option '"..option_key.."' not found")
 
    _setters[option_key] = setter
 end
 
-function Config.inject_enum(option_key, enum, default_value)
-   assert(#enum ~= 0, "Config.inject_enum(): enum must have at least one value.")
+function config.inject_enum(option_key, enum, default_value)
+   assert(#enum ~= 0, "config.inject_enum(): enum must have at least one value.")
 
    _schemas[option_key].enum = enum
    _schemas[option_key].default = default_value
@@ -181,15 +165,15 @@ function Config.inject_enum(option_key, enum, default_value)
             return
          end
       end
-      assert(false, "Config.inject_enum(): default_value must be in enum.")
+      assert(false, "config.inject_enum(): default_value must be in enum.")
    end
 end
 
-function Config.validate(option_key, value)
+function config.validate(option_key, value)
    return validate(_schemas[option_key], value)
 end
 
-function Config.load_schema(schema_str, filename, mod_id)
+function config.load_schema(schema_str, filename, mod_id)
    local result = eval_in_dsl_env(schema_str, filename, mod_id)
    if not result then
       return
@@ -205,12 +189,21 @@ function Config.load_schema(schema_str, filename, mod_id)
    _schemas = make_schema(schema)
 end
 
-function Config.load_options(config_str, filename)
+function config.load_options(config_str, filename)
    load_options_impl(config_str, filename)
    load_default_values_if_unset()
+
+   local options = {}
+   for k, v in pairs(_options) do
+      options[#options + 1] = { k, v }
+   end
+   table.sort(options, function(a, b) return a[1] < b[1] end)
+   for _, kv in pairs(options) do
+      log_info(("Config: '%s' = %s"):format(kv[1], inspect(kv[2])))
+   end
 end
 
-function Config.serialize()
+function config.serialize()
    local obj = {}
    for option_key, value in pairs(_options) do
       if should_save(option_key, value) then
@@ -237,10 +230,19 @@ function Config.serialize()
          return ordering[v1] < ordering[v2]
       end,
    }
-   return json5_stringify(obj, opts)
+   return json5.stringify(obj, opts)
 end
 
-function Config.clear()
+function config.save()
+   local path = Fs.get_config_file_path(__PROFILE_ID)
+   local file = io.open(path, "w")
+   local output = config.serialize()
+   assert(file:write(output))
+   file:flush()
+   file:close()
+end
+
+function config.clear()
    _setters = {}
    _options = {}
    _schemas = {}
@@ -249,27 +251,27 @@ end
 -- option_key :: string
 -- value :: string | number | boolean
 -- result :: nil
-function Config.set(option_key, value)
+function config.set(option_key, value)
    if value == nil then return end
 
    if exists(option_key) then
-      value = Config.validate(option_key, value)
+      value = config.validate(option_key, value)
       _options[option_key] = value
       if _setters[option_key] then
          _setters[option_key](value)
       end
    else
-      -- TODO Log.warn("option not found")
+      log_warn(("Config.set: option '%s' not found"):format(option_key))
    end
 end
 
 -- option_key :: string
 -- result :: string | number | boolean | nil
-function Config.get(option_key)
+function config.get(option_key)
    return _options[option_key]
 end
 
-function Config.get_children_keys(option_key)
+function config.get_children_keys(option_key)
    if _schemas[option_key] then
       return _schemas[option_key].children_keys
    else
@@ -277,51 +279,50 @@ function Config.get_children_keys(option_key)
    end
 end
 
-function Config.get_enum(option_key)
+function config.get_enum(option_key)
    return _schemas[option_key].enum
 end
 
-function Config.get_min(option_key)
+function config.get_min(option_key)
    return _schemas[option_key].min or math.mininteger
 end
 
-function Config.get_max(option_key)
+function config.get_max(option_key)
    return _schemas[option_key].max or math.maxinteger
 end
 
-function Config.get_step(option_key)
+function config.get_step(option_key)
    return _schemas[option_key].step or 1
 end
 
-function Config.is_boolean_option(option_key)
+function config.is_boolean_option(option_key)
    return _schemas[option_key].type == "boolean"
 end
 
-function Config.is_integer_option(option_key)
+function config.is_integer_option(option_key)
    return _schemas[option_key].type == "integer"
 end
 
-function Config.is_string_option(option_key)
+function config.is_string_option(option_key)
    return _schemas[option_key].type == "string"
 end
 
-function Config.is_enum_option(option_key)
+function config.is_enum_option(option_key)
    local s = _schemas[option_key]
    return s.type == "string" and s.enum ~= nil
 end
 
-function Config.is_section(option_key)
+function config.is_section(option_key)
    return _schemas[option_key].type == "section"
 end
 
-function Config.is_hidden(option_key)
+function config.is_hidden(option_key)
    if option_key:match("^[%w_]+%.wizard$") then
       -- Section <any mod name>.wizard is hidden unless wizard mode is enabled.
-      return not Config.get("core.wizard.is_enabled")
+      return not config.get("core.wizard.is_enabled")
    else
       return not not _schemas[option_key].is_hidden
    end
 end
---]===]
 
-return Config
+return config
