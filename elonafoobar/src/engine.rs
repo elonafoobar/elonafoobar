@@ -32,7 +32,7 @@ impl Engine {
         let app = self.create_new_app()?;
         self.lua.set_load_path(&dirs::script())?;
         self.lua.load(&files::entry_point())?;
-        self.lua.call(app)?;
+        self.lua.call((app, self.cfg.profile.to_string()))?;
         Ok(())
     }
 

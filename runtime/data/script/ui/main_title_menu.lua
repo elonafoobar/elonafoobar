@@ -20,7 +20,7 @@ function MainTitleMenu:update()
 
    Graphics.set_draw_color(255, 255, 255)
    Graphics.draw_text("Elona version 1.22  Developed by Noa", 20, 20)
-   Graphics.draw_text("  Variant foobar version"..Env.VARIANT_VERSION, 20, 38)
+   Graphics.draw_text("  Variant foobar version "..Env.VARIANT_VERSION, 20, 38)
    if I18n.language() == "ja" then
       Graphics.draw_text("Contributor MSL / View the credits for more", 20, 56)
    elseif I18n.language() == "en" then
