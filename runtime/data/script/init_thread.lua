@@ -16,7 +16,7 @@ return coroutine.create(function()
    do
       local mods = Mods.new()
       coroutine.yield("Resolve mod versions")
-      mods:resolve_versions("default")
+      mods:resolve_versions(__PROFILE_ID)
 
       coroutine.yield("Install mods")
       mods:install()
@@ -46,7 +46,7 @@ return coroutine.create(function()
       local env = {}
 
       env.require = function(module_path)
-         if module_path == "core.Log" then
+         if module_path == "core.log" then
             return get_logger(mod_id)
          else
             return Api.require(module_path)
@@ -112,7 +112,7 @@ return coroutine.create(function()
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "init.lua")
       if Fs.exists(path) then
-         log_info(("Run %s-%s/init.lua"):format(mod_id, version))
+         log_info(("Run %s@%s/init.lua"):format(mod_id, version))
          local init_result = assert(loadfile(path, "t", env))()
          if type(init_result) == "table" then
             if mod_id == "core" then
@@ -139,7 +139,7 @@ return coroutine.create(function()
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "data.lua")
       if Fs.exists(path) then
-         log_info(("Run %s-%s/data.lua"):format(mod_id, version))
+         log_info(("Run %s@%s/data.lua"):format(mod_id, version))
          assert(loadfile(path, "t", env))()
       end
 
@@ -157,7 +157,7 @@ return coroutine.create(function()
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "data-update.lua")
       if Fs.exists(path) then
-         log_info(("Run %s-%s/data-update.lua"):format(mod_id, version))
+         log_info(("Run %s@%s/data-update.lua"):format(mod_id, version))
          assert(loadfile(path, "t", env))()
       end
 
@@ -179,7 +179,7 @@ return coroutine.create(function()
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "locale/"..lang..".lua") -- TODO
       if Fs.exists(path) then
-         log_info(("Run %s-%s/locale/%s.lua"):format(mod_id, version, lang)) -- TODO
+         log_info(("Run %s@%s/locale/%s.lua"):format(mod_id, version, lang)) -- TODO
          assert(loadfile(path, "t", env))()
       end
 
@@ -197,6 +197,13 @@ return coroutine.create(function()
    do
       -- TODO
    end
+
+   -- initialize_elona();
+
+   -- Config.save(path)
+
+   -- // It is necessary to calculate PC's birth year correctly.
+   -- init_game_clock();
 
    return 'Done'
 end)

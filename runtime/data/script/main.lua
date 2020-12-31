@@ -2,7 +2,7 @@
   | The main entry point in Lua side |
 --]==================================]
 
-__APP = ...
+__APP, __PROFILE_ID = ...
 prelude = require("prelude.init")
 
 do

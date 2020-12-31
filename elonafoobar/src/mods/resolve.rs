@@ -1,3 +1,5 @@
+use super::iter_mod_dirs;
+use super::manifest::Manifest;
 use crate::mods::{ModId, Version, VersionReq};
 use anyhow::{bail, format_err, Result};
 use serde::Deserialize;
@@ -64,17 +66,23 @@ pub enum ModIndexQueryError {
 }
 
 impl ModIndex {
-    pub fn traverse(_mod_dir: &Path) -> Result<ModIndex> {
-        // TODO
+    pub fn traverse(mod_root_dir: &Path) -> Result<ModIndex> {
         let mut mods = HashMap::new();
-        mods.insert(
-            ModId::core(),
-            vec![ModIndexEntry {
-                version: Version::new(0, 3, 0),
-                dependencies: HashMap::new(),
-                optional_dependencies: HashMap::new(),
-            }],
-        );
+
+        for mod_dir in iter_mod_dirs(mod_root_dir) {
+            let manifest = Manifest::from_file(&mod_dir.join("mod.json"))?;
+            let id = manifest.id;
+            let version = manifest.version;
+            let dependencies = manifest.dependencies;
+            let optional_dependencies = manifest.optional_dependencies;
+
+            mods.entry(id).or_insert_with(Vec::new).push(ModIndexEntry {
+                version,
+                dependencies,
+                optional_dependencies,
+            });
+        }
+
         Ok(ModIndex { mods })
     }
 

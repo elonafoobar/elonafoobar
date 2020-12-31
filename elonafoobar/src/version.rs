@@ -1,54 +1,57 @@
-#[derive(Debug)]
-pub struct Version {
-    pub major: u32,
-    pub minor: u32,
-    pub patch: u32,
-    pub serial_id: u32,
-    pub revision: &'static str,
-    pub platform: &'static str,
+use const_format::formatcp;
+
+pub const VARIANT_MAJOR: u32 = parse_int(env!("CARGO_PKG_VERSION_MAJOR"));
+pub const VARIANT_MINOR: u32 = parse_int(env!("CARGO_PKG_VERSION_MINOR"));
+pub const VARIANT_PATCH: u32 = parse_int(env!("CARGO_PKG_VERSION_PATCH"));
+pub const VARIANT_SERIAL_ID: u32 = 24;
+pub const VARIANT_REVISION: &str = env!("VERGEN_SHA_SHORT"); // See ../build.rs
+pub const VARIANT_PLATFORM: &str = env!("VERGEN_TARGET_TRIPLE"); // See ../build.rs
+
+// Example: "1.2.3"
+pub const VARIANT_SHORT_STRING: &str =
+    formatcp!("{}.{}.{}", VARIANT_MAJOR, VARIANT_MINOR, VARIANT_PATCH);
+
+// Example: "Elona foobar version 1.2.3 (14db8cb) on x86_64-apple-darwin"
+pub const VARIANT_LONG_STRING: &str = formatcp!(
+    "Elona foobar version {} ({}) on {}",
+    VARIANT_SHORT_STRING,
+    VARIANT_REVISION,
+    VARIANT_PLATFORM,
+);
+
+// Example: "Elona_foobar/1.2.3+14db8cb (x86_64-apple-darwin)"
+pub const VARIANT_USER_AGENT: &str = formatcp!(
+    "Elona_foobar/{}+{} ({})",
+    VARIANT_SHORT_STRING,
+    VARIANT_REVISION,
+    VARIANT_PLATFORM,
+);
+
+pub const MOD_CORE_MAJOR: u32 = parse_int(env!("ELONAFOOBAR_MOD_CORE_MAJOR"));
+pub const MOD_CORE_MINOR: u32 = parse_int(env!("ELONAFOOBAR_MOD_CORE_MINOR"));
+pub const MOD_CORE_PATCH: u32 = parse_int(env!("ELONAFOOBAR_MOD_CORE_PATCH"));
+
+// const version of `str::parse::<u32>`.
+const fn parse_int(s: &str) -> u32 {
+    let bytes = s.as_bytes();
+    let mut n = 0;
+    let mut i = 0;
+    while i < bytes.len() {
+        let c = bytes[i];
+        n *= 10;
+        n += (c - b'0') as u32;
+        i += 1;
+    }
+    n
 }
 
-impl Version {
-    // Example: "1.2.3"
-    pub fn short_string(&self) -> String {
-        format!("{}.{}.{}", self.major, self.minor, self.patch)
-    }
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    // Example: "Elona foobar version 1.2.3 (14db8cb) on x86_64-apple-darwin"
-    pub fn long_string(&self) -> String {
-        format!(
-            "Elona foobar version {} ({}) on {}",
-            self.short_string(),
-            self.revision,
-            self.platform,
-        )
-    }
-
-    // Example: "Elona_foobar/1.2.3+14db8cb (x86_64-apple-darwin)"
-    pub fn user_agent(&self) -> String {
-        format!(
-            "Elona_foobar/{}+{} ({})",
-            self.short_string(),
-            self.revision,
-            self.platform
-        )
-    }
-}
-
-pub fn latest_version() -> Version {
-    // It is not a const variable because std::parse() is not a const fn.
-    Version {
-        major: env!("CARGO_PKG_VERSION_MAJOR")
-            .parse()
-            .expect("It is automatically set by Cargo so definitely number"),
-        minor: env!("CARGO_PKG_VERSION_MINOR")
-            .parse()
-            .expect("automatically set by Cargo so definitely number"),
-        patch: env!("CARGO_PKG_VERSION_PATCH")
-            .parse()
-            .expect("automatically set by Cargo so definitely number"),
-        serial_id: 24,
-        revision: env!("VERGEN_SHA_SHORT"),     // See ../build.rs
-        platform: env!("VERGEN_TARGET_TRIPLE"), // See ../build.rs
+    #[test]
+    fn test_parse_int() {
+        assert_eq!(parse_int("0"), 0);
+        assert_eq!(parse_int("42"), 42);
     }
 }

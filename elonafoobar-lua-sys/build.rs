@@ -40,7 +40,7 @@ fn main() {
             "lua/lundump.c",
             "lua/lvm.c",
             "lua/lzio.c",
-            "lua/ltests.c",
+            // "lua/ltests.c", // testing only
             "lua/lauxlib.c",
             // Libraries
             "lua/lbaselib.c",

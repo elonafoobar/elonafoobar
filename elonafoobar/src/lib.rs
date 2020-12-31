@@ -1,3 +1,5 @@
+#![feature(str_split_once)]
+
 pub mod api;
 pub mod cli;
 pub mod config;
