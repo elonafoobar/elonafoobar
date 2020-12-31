@@ -1,7 +1,7 @@
 use crate::api::{self, App};
 use crate::config::Config;
 use crate::fs::{dirs, files};
-use crate::version::latest_version;
+use crate::version::VARIANT_SHORT_STRING;
 use anyhow::Result;
 use elonafoobar_gui::FullscreenType;
 use elonafoobar_lua::Lua;
@@ -37,7 +37,7 @@ impl Engine {
     }
 
     fn create_new_app(&self) -> Result<App> {
-        let title = format!("Elona foobar version{}", latest_version().short_string());
+        let title = format!("Elona foobar version{}", VARIANT_SHORT_STRING);
         let display_mode = self.cfg.display_mode.as_deref().unwrap_or("");
         let fullscreen = match self.cfg.fullscreen.as_deref() {
             Some("windowed") => FullscreenType::Off,

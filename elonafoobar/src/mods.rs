@@ -1,5 +1,6 @@
 use crate::fs::{dirs, files};
 use crate::profile::ProfileId;
+use crate::version::{MOD_CORE_MAJOR, MOD_CORE_MINOR, MOD_CORE_PATCH};
 use anyhow::Result;
 use elonafoobar_log::debug;
 pub use semver::{Version, VersionReq};
@@ -16,8 +17,14 @@ pub use resolve::{ModIndex, ModList, ModLock, ResolvedModList};
 pub fn resolve(profile_id: &ProfileId) -> Result<ResolvedModList> {
     let list = {
         let mut list = ModList::from_file(&files::mod_list(profile_id))?;
-        // TODO: extract the latest version from mod.json
-        list.add(ModId::core(), VersionReq::exact(&Version::new(0, 3, 0)));
+        list.add(
+            ModId::core(),
+            VersionReq::exact(&Version::new(
+                MOD_CORE_MAJOR.into(),
+                MOD_CORE_MINOR.into(),
+                MOD_CORE_PATCH.into(),
+            )),
+        );
         list
     };
     let lock = ModLock {};

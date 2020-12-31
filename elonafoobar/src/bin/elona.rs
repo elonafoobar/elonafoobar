@@ -1,5 +1,5 @@
 use anyhow::Result;
-use elonafoobar::{fs, run, version::latest_version};
+use elonafoobar::{fs, run, version::VARIANT_LONG_STRING};
 use elonafoobar_log::{info, Level};
 
 fn main() -> Result<()> {
@@ -17,7 +17,7 @@ fn main() -> Result<()> {
 
     std::fs::create_dir_all(fs::dirs::log())?;
     elonafoobar_log::init(fs::dirs::log(), log_filter)?;
-    info!("{}", latest_version().long_string());
+    info!("{}", VARIANT_LONG_STRING);
 
     let result = run::run();
     elonafoobar_log::flush();

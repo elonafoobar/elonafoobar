@@ -185,6 +185,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "const_format"
+version = "0.2.11"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d0998bb2339a89730a82650d94458509281454c72d2fb2521ece92626c005ee3"
+dependencies = [
+ "const_format_proc_macros",
+]
+
+[[package]]
+name = "const_format_proc_macros"
+version = "0.2.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8df496e1bbc93814d728a8036ff054cd95830afe9cf2275c9326688c02eff936"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "unicode-xid",
+]
+
+[[package]]
 name = "digest"
 version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -199,6 +219,7 @@ version = "0.8.0"
 dependencies = [
  "anyhow",
  "clap",
+ "const_format",
  "elonafoobar-gui",
  "elonafoobar-log",
  "elonafoobar-lua",

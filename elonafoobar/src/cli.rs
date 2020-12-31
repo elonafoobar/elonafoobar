@@ -1,4 +1,4 @@
-use crate::version::latest_version;
+use crate::version::{VARIANT_LONG_STRING, VARIANT_SHORT_STRING};
 use clap::{App, Arg};
 use elonafoobar_log::info;
 
@@ -25,10 +25,7 @@ pub fn print_args() {
 
 // Parse command line arguments.
 pub fn parse_args() -> ParseResult {
-    let version = latest_version().short_string();
-    let long_version = latest_version().long_string();
-
-    let matches = make_arg_parser(&version, &long_version).get_matches_safe();
+    let matches = make_arg_parser(VARIANT_SHORT_STRING, VARIANT_LONG_STRING).get_matches_safe();
     match matches {
         Ok(matches) => ParseResult::Ok(CliOptions {
             profile: matches.value_of("profile").map(ToOwned::to_owned),

@@ -10,6 +10,7 @@ fn main() -> Result<()> {
     output_cargo_flags()?;
     copy_runtime_dir()?;
     rename_mod_dir()?;
+    output_mod_core_version()?;
     Ok(())
 }
 
@@ -69,5 +70,33 @@ fn rename_mod_dir() -> Result<()> {
         };
         fs_extra::dir::move_dir(from, to, &copy_options)?;
     }
+    Ok(())
+}
+
+// Generate mod 'core' version for src/version.rs.
+fn output_mod_core_version() -> Result<()> {
+    // TODO: better way to get these paths?
+    let mod_root_dir = Path::new("../runtime/mod");
+    let core_manifest_path = mod_root_dir.join("core").join("mod.json");
+
+    println!(
+        "cargo:rerun-if-changed={}",
+        core_manifest_path.to_string_lossy()
+    );
+
+    let manifest = fs::read_to_string(core_manifest_path)?;
+    let version_digits = Regex::new(r#"version: "(\d+)\.(\d+)\.(\d+)""#)
+        .unwrap()
+        .captures(&manifest)
+        .expect("failed to parse version ID from core/mod.json");
+
+    let core_major = version_digits.get(1).unwrap().as_str();
+    let core_minor = version_digits.get(2).unwrap().as_str();
+    let core_patch = version_digits.get(3).unwrap().as_str();
+
+    println!("cargo:rustc-env=ELONAFOOBAR_MOD_CORE_MAJOR={}", core_major);
+    println!("cargo:rustc-env=ELONAFOOBAR_MOD_CORE_MINOR={}", core_minor);
+    println!("cargo:rustc-env=ELONAFOOBAR_MOD_CORE_PATCH={}", core_patch);
+
     Ok(())
 }
