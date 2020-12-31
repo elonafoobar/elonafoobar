@@ -24,7 +24,7 @@ jobs:
           timidity
 
     - name: Cache Vanilla Elona
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: deps/elona
         key: elona122
@@ -38,8 +38,18 @@ jobs:
           unzip -qq elona122.zip -d deps
         fi
 
+    - name: Cache Cargo
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
     - name: Test
       run: |
+        touch elonafoobar/src/bin/elona.rs
         cargo test --verbose
 
 
@@ -62,7 +72,7 @@ jobs:
           sdl2_ttf
 
     - name: Cache Vanilla Elona
-      uses: actions/cache@v1
+      uses: actions/cache@v2
       with:
         path: deps/elona
         key: elona122
@@ -76,8 +86,18 @@ jobs:
           unzip -qq elona122.zip -d deps
         fi
 
+    - name: Cache Cargo
+      uses: actions/cache@v2
+      with:
+        path: |
+          ~/.cargo/registry
+          ~/.cargo/git
+          target
+        key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
+
     - name: Test
       run: |
+        touch elonafoobar/src/bin/elona.rs
         cargo test --verbose
 
 
