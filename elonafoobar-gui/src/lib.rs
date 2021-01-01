@@ -1,4 +1,5 @@
 pub mod app;
+mod audio;
 mod error;
 mod font_cache;
 

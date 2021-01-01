@@ -1,3 +1,4 @@
+use crate::audio::Audio;
 use crate::error::SdlError;
 use crate::font_cache::FontCache;
 use anyhow::{format_err, Result};
@@ -23,6 +24,7 @@ pub struct App {
     font_cache: FontCache,
     text_alignment: TextAlignment,
     text_baseline: TextBaseline,
+    audio: Audio,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -45,6 +47,7 @@ impl App {
         let video = sdl.video().sdl_error()?;
         let event_pump = sdl.event_pump().sdl_error()?;
         let font_cache = FontCache::new()?;
+        let audio = Audio::new()?;
 
         let display_mode = find_display_mode_by_name(&video, display_mode, 800, 600)?;
         // This `as u32` casting is safe because SDL should return positive value.
@@ -67,6 +70,7 @@ impl App {
             font_cache,
             text_alignment: TextAlignment::Left,
             text_baseline: TextBaseline::Middle,
+            audio,
         })
     }
 
@@ -181,6 +185,30 @@ impl App {
 
     pub fn set_text_baseline(&mut self, baseline: TextBaseline) {
         self.text_baseline = baseline;
+    }
+
+    pub fn get_music_decoders(&self) -> Vec<String> {
+        self.audio.get_music_decoders()
+    }
+
+    pub fn load_music(&mut self, path: &Path) -> Result<()> {
+        self.audio.load_music(path)
+    }
+
+    pub fn play_music(&mut self, loops: i32) -> Result<()> {
+        self.audio.play_music(loops)
+    }
+
+    pub fn stop_music(&self) {
+        self.audio.stop_music();
+    }
+
+    pub fn get_music_volume(&self) -> u8 {
+        self.audio.get_music_volume()
+    }
+
+    pub fn set_music_volume(&self, volume: u8) {
+        self.audio.set_music_volume(volume);
     }
 
     fn draw_text_internal<F>(

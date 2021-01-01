@@ -64,7 +64,7 @@ data.add(
          file = "<_vanilla_>/sound/orc05.mid",
          integer_id = 64,
       },
-      mcOpening = {
+      opening = {
          file = "<_vanilla_>/sound/orc01.mid",
          integer_id = 65,
       },
