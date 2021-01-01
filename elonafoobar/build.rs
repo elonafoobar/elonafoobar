@@ -9,6 +9,7 @@ use vergen::{generate_cargo_keys, ConstantsFlags};
 fn main() -> Result<()> {
     output_cargo_flags()?;
     copy_runtime_dir()?;
+    make_symlink_to_vanilla_dir()?;
     rename_mod_dir()?;
     output_mod_core_version()?;
     Ok(())
@@ -33,6 +34,18 @@ fn copy_runtime_dir() -> Result<()> {
         ..CopyOptions::default()
     };
     fs_extra::dir::copy(runtime_dir, exe_dir, &copy_options)?;
+    Ok(())
+}
+
+// Make symbolic link to vanilla's `graphic` and `sound` directory.
+fn make_symlink_to_vanilla_dir() -> Result<()> {
+    // TODO: better way to get these paths?
+    let vanilla_dir = Path::new("../../deps/elona");
+    let exe_dir = Path::new("../target").join(env::var("PROFILE").unwrap());
+
+    mk_symlink(vanilla_dir.join("graphic"), exe_dir.join("graphic"))?;
+    mk_symlink(vanilla_dir.join("sound"), exe_dir.join("sound"))?;
+
     Ok(())
 }
 
@@ -99,4 +112,22 @@ fn output_mod_core_version() -> Result<()> {
     println!("cargo:rustc-env=ELONAFOOBAR_MOD_CORE_PATCH={}", core_patch);
 
     Ok(())
+}
+
+#[cfg(unix)]
+fn mk_symlink(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> std::io::Result<()> {
+    if !dst.as_ref().exists() {
+        std::os::unix::fs::symlink(src, dst)
+    } else {
+        Ok(())
+    }
+}
+
+#[cfg(windows)]
+fn mk_symlink(src: impl AsRef<Path>, dst: impl AsRef<Path>) -> std::io::Result<()> {
+    if !dst.as_ref().exists() {
+        std::os::windows::fs::symlink_dir(src, dst)
+    } else {
+        Ok(())
+    }
 }
