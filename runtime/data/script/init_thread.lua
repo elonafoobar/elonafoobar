@@ -9,7 +9,7 @@ return coroutine.create(function()
    local Mods = native.Mods
 
    local Api = require("api")
-   local Config = require("config")
+   local config = require("config")
    local get_logger = require("log")
 
    local resolved_mod_list
@@ -77,32 +77,65 @@ return coroutine.create(function()
    end
 
    coroutine.yield("Load config schema")
-   --[[
    for _, mod in ipairs(resolved_mod_list) do
       local mod_id, version = table.unpack(mod)
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
       local path = Fs.get_lua_full_path(mod_id, version, "config-schema.lua")
-      local file = io.open(path)
-      local schema_file_content = file:read("a")
-      Config.load_schema(schema_file_content, path, mod_id)
-      file:close()
-      file = nil
+      if Fs.exists(path) then
+         local file = io.open(path)
+         local schema_file_content = file:read("a")
+         config.load_schema(schema_file_content, path, mod_id)
+         file:close()
+      end
    end
-   --]]
+
+   do
+      -- Bind setters
+      config.bind_setter("core.font.quality", function(variant)
+         if variant == "low" then
+            -- TODO
+            -- __APP:disable_blended_text_rendering()
+         else
+            if variant ~= "high" then
+               -- Unknown font quality; fallback to the default value, "high".
+               log_warn("Config: unsupported font quality '"..variant.."'")
+            end
+            -- TODO
+            -- __APP:enable_blended_text_rendering()
+         end
+      end)
+
+      -- config.bind_setter("core.font.size_adjustment", TODO)
+      -- config.bind_setter("core.font.vertical_offset", TODO)
+      -- config.bind_setter("core.foobar.show_fps", TODO)
+      -- config.bind_setter("core.screen.fullscreen", TODO)
+
+      -- inject_display_modes() -- TODO
+      -- inject_languages() -- TODO
+      config.inject_enum(
+         "core.language.language",
+         {
+            "en",
+            "ja",
+         },
+         -- "__unknown__", -- TODO
+         "ja")
+      -- inject_save_files() -- TODO
+
+      -- query_language() -- TODO
+   end
 
    coroutine.yield("Load config")
-   --[[
    do
-      local path = Fs.get_config_file_path()
+      local path = Fs.get_config_file_path(__PROFILE_ID)
       local file = io.open(path)
       local config_file_content = file:read("a")
-      Config.load_options(config_file_content, path)
+      log_debug(config_file_content)
+      config.load_options(config_file_content, path)
       file:close()
-      file = nil
    end
-   --]]
 
    coroutine.yield("Run init.lua")
    for _, mod in ipairs(resolved_mod_list) do
@@ -165,7 +198,7 @@ return coroutine.create(function()
    end
 
    coroutine.yield("Run i18n.lua")
-   local lang = Config.get("core.language.language")
+   local lang = config.get("core.language.language")
    local i18n = require("i18n")
    i18n.__INTERNAL_API_inject_current_language(lang)
    i18n.__INTERNAL_API_inject_current_language = nil
@@ -200,7 +233,7 @@ return coroutine.create(function()
 
    -- initialize_elona();
 
-   -- Config.save(path)
+   config.save()
 
    -- // It is necessary to calculate PC's birth year correctly.
    -- init_game_clock();
