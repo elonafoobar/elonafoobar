@@ -10,7 +10,7 @@ data.add(
          y = 0,
          width = 1440,
          height = 800,
-         file = "<_builtin_>/graphic/interface.bmp",
+         file = "<_vanilla_>/graphic/interface.bmp",
          load_type = "buffer",
       },
       select_key = {
@@ -660,7 +660,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_cm.bmp",
+         file = "<_vanilla_>/graphic/deco_cm.bmp",
       },
 
       -- Map 0 atlas for clouds only
@@ -670,7 +670,7 @@ data.add(
          y = 0,
          width = 1584,
          height = 1200,
-         file = "<_builtin_>/graphic/map0.bmp",
+         file = "<_vanilla_>/graphic/map0.bmp",
          load_type = "buffer",
       },
       cloud1 = {
@@ -695,7 +695,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_blend.bmp",
+         file = "<_vanilla_>/graphic/deco_blend.bmp",
       },
       deco_blend_a = {
          source = "interface",
@@ -726,7 +726,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_inv.bmp",
+         file = "<_vanilla_>/graphic/deco_inv.bmp",
       },
       deco_inv_a = {
          source = "interface",
@@ -764,7 +764,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_help.bmp",
+         file = "<_vanilla_>/graphic/deco_help.bmp",
       },
       deco_help_a = {
          source = "interface",
@@ -788,7 +788,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_mirror.bmp",
+         file = "<_vanilla_>/graphic/deco_mirror.bmp",
       },
       deco_mirror_a = {
          source = "interface",
@@ -805,7 +805,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_politics.bmp",
+         file = "<_vanilla_>/graphic/deco_politics.bmp",
       },
       deco_politics_a = {
          source = "interface",
@@ -829,7 +829,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_board.bmp",
+         file = "<_vanilla_>/graphic/deco_board.bmp",
       },
       deco_board_a = {
          source = "interface",
@@ -853,7 +853,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_wear.bmp",
+         file = "<_vanilla_>/graphic/deco_wear.bmp",
       },
       deco_wear_a = {
          source = "interface",
@@ -877,7 +877,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_feat.bmp",
+         file = "<_vanilla_>/graphic/deco_feat.bmp",
       },
       deco_feat_a = {
          source = "interface",
@@ -915,7 +915,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_skill.bmp",
+         file = "<_vanilla_>/graphic/deco_skill.bmp",
       },
       deco_skill_a = {
          source = "interface",
@@ -939,7 +939,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_spell.bmp",
+         file = "<_vanilla_>/graphic/deco_spell.bmp",
       },
       deco_spell_a = {
          source = "interface",
@@ -962,7 +962,7 @@ data.add(
          y = 0,
          width = 1584,
          height = 1200,
-         file = "<_builtin_>/graphic/character.bmp",
+         file = "<_vanilla_>/graphic/character.bmp",
          load_type = "buffer",
       },
       buff_icon = {
@@ -981,7 +981,7 @@ data.add(
          y = 96,
          width = 240,
          height = 264,
-         file = "<_builtin_>/graphic/deco_card.bmp",
+         file = "<_vanilla_>/graphic/deco_card.bmp",
       },
       deco_card_a = {
          source = "interface",
@@ -1001,7 +1001,7 @@ local function atx_background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "<_builtin_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
    }
 end
 
@@ -1012,7 +1012,7 @@ local function background_card(name)
       y = 0,
       width = 180,
       height = 300,
-      file = "<_builtin_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
    }
 end
 
@@ -1091,7 +1091,7 @@ local function background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "<_builtin_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
       load_type = "buffer_deferred",
    }
 end
@@ -1134,7 +1134,7 @@ data.add(
          y = 0,
          width = 700,
          height = 400,
-         file = "<_builtin_>/graphic/ie_sheet.bmp",
+         file = "<_vanilla_>/graphic/ie_sheet.bmp",
          load_type = "buffer_deferred",
       },
       ie_chat = {
@@ -1143,7 +1143,7 @@ data.add(
          y = 0,
          width = 600,
          height = 380,
-         file = "<_builtin_>/graphic/ie_chat.bmp",
+         file = "<_vanilla_>/graphic/ie_chat.bmp",
          load_type = "buffer_deferred",
       },
       ie_scroll = {
@@ -1152,7 +1152,7 @@ data.add(
          y = 0,
          width = 600,
          height = 380,
-         file = "<_builtin_>/graphic/ie_scroll.bmp",
+         file = "<_vanilla_>/graphic/ie_scroll.bmp",
          load_type = "buffer_deferred",
       },
       interface2 = {
@@ -1161,7 +1161,7 @@ data.add(
          y = 0,
          width = 600,
          height = 380,
-         file = "<_builtin_>/graphic/interface2.bmp",
+         file = "<_vanilla_>/graphic/interface2.bmp",
          load_type = "buffer_deferred",
       }
    }
