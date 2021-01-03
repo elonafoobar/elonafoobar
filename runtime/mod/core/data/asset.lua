@@ -1,4 +1,5 @@
 local data = require("core.data")
+local Color = require("core.graphics").Color
 
 data.define_prototype("asset")
 data.add(
@@ -12,6 +13,7 @@ data.add(
          height = 800,
          file = "<_vanilla_>/graphic/interface.bmp",
          load_type = "buffer",
+         key_color = Color.rgb(0, 0, 0),
       },
       select_key = {
          source = "interface",
@@ -688,6 +690,16 @@ data.add(
          height = 224,
       },
 
+      -- Main title menu
+      deco_title = {
+         x = 0,
+         y = 0,
+         width = 85,
+         height = 95,
+         file = "<_vanilla_>/graphic/deco_title.bmp",
+         key_color = Color.rgb(0, 0, 0),
+      },
+
       -- Blending menu
       deco_blend = {
          source = "interface",
@@ -1001,18 +1013,18 @@ local function atx_background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/"..name..".bmp",
    }
 end
 
 local function background_card(name)
    return {
-      source = "atx_background",
       x = 0,
       y = 0,
       width = 180,
       height = 300,
-      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/"..name..".bmp",
+      key_color = Color.rgb(0, 0, 0),
    }
 end
 
@@ -1091,7 +1103,7 @@ local function background(name, width, height)
       y = 0,
       width = width,
       height = height,
-      file = "<_vanilla_>/graphic/" .. name .. ".bmp",
+      file = "<_vanilla_>/graphic/"..name..".bmp",
       load_type = "buffer_deferred",
    }
 end
@@ -1163,6 +1175,19 @@ data.add(
          height = 380,
          file = "<_vanilla_>/graphic/interface2.bmp",
          load_type = "buffer_deferred",
-      }
+      },
+   }
+)
+
+data.add(
+   "core.asset",
+   {
+      water_ripple = {
+         x = 0,
+         y = 0,
+         width = 768,
+         height = 256,
+         file = "<core>/graphic/water_ripple.png",
+      },
    }
 )

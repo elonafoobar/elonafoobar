@@ -1,4 +1,5 @@
 use crate::api::class_color::Color;
+use crate::api::class_image::Image;
 use anyhow::bail;
 use anyhow::Result;
 use elonafoobar_gui::{
@@ -32,6 +33,8 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
         lua.set_function("fill_rect", lua_fill_rect)?;
         lua.set_function("screen_width", lua_screen_width)?;
         lua.set_function("screen_height", lua_screen_height)?;
+        lua.set_function("load_image", lua_load_image)?;
+        lua.set_function("draw_image", lua_draw_image)?;
         lua.set_function("load_font", lua_load_font)?;
         lua.set_function("set_text_alignment", lua_set_text_alignment)?;
         lua.set_function("set_text_baseline", lua_set_text_baseline)?;
@@ -108,6 +111,51 @@ fn lua_screen_height(args: &App) -> Result<LuaInt> {
 
     let app = args;
     Ok(app.0.screen_height().into())
+}
+
+fn lua_load_image(args: (&mut App, &str, Option<&Color>)) -> Result<Image> {
+    trace!("native.App.App:load_image()");
+
+    let (app, path, key_color) = args;
+    Ok(Image(
+        app.0.load_image(&Path::new(path), key_color.map(|x| x.0))?,
+    ))
+}
+
+fn lua_draw_image(
+    args: (
+        &mut App,
+        &Image,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+        LuaInt,
+    ),
+) -> Result<()> {
+    trace!("native.App.App:draw_image()");
+
+    let (app, image, src_x, src_y, src_width, src_height, dst_x, dst_y, dst_width, dst_height) =
+        args;
+    app.0.draw_image(
+        &image.0,
+        Rect::new(
+            clamp(src_x),
+            clamp(src_y),
+            clamp(src_width),
+            clamp(src_height),
+        ),
+        Rect::new(
+            clamp(dst_x),
+            clamp(dst_y),
+            clamp(dst_width),
+            clamp(dst_height),
+        ),
+    )?;
+    Ok(())
 }
 
 fn lua_load_font(args: (&mut App, &str, LuaInt)) -> Result<()> {

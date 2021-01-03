@@ -60,6 +60,11 @@ fn lua_resolve_path_for_mod(args: &str) -> Result<String> {
 
     // TODO
     let path = path.replace("<_vanilla_>", utils::path::path_to_str(&dirs::root()));
+    // TODO
+    let path = path.replace(
+        "<core>",
+        utils::path::path_to_str(&dirs::root().join("mod").join("core@0.3.0")),
+    );
     Ok(path)
 }
 

@@ -5,6 +5,7 @@ use elonafoobar_lua::Lua;
 
 mod class_app;
 mod class_color;
+mod class_image;
 mod class_mods;
 mod module_fs;
 mod module_graphics;
@@ -20,6 +21,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
         // Classes
         class_app::bind(lua)?;
         class_color::bind(lua)?;
+        class_image::bind(lua)?;
         class_mods::bind(lua)?;
 
         // Modules

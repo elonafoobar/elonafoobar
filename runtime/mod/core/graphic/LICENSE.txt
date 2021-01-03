@@ -9,3 +9,7 @@ interface_ex8.png
 interface_ex9.png
     MIT License
     Copyright (c) 2018 KI
+
+water_ripple.png
+    MIT License
+    Copyright (c) 2019 KI
