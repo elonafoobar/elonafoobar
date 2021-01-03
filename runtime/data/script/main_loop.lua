@@ -18,6 +18,9 @@ local function main_loop(initial_state)
       end
    end)
 
+   if initial_state.on_shown then
+      initial_state:on_shown()
+   end
    ui_layers[#ui_layers + 1] = initial_state
    while app:update() do
       local ok, result = coroutine.resume(update_thread)

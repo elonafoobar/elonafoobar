@@ -40,6 +40,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
         lua.set_function("load_music", lua_load_music)?;
         lua.set_function("play_music", lua_play_music)?;
         lua.set_function("stop_music", lua_stop_music)?;
+        lua.set_function("get_music_volume", lua_get_music_volume)?;
         lua.set_function("set_music_volume", lua_set_music_volume)?;
         Ok(())
     })
@@ -175,22 +176,45 @@ fn lua_draw_text_with_shadow(args: (&mut App, &str, LuaInt, LuaInt, &Color, &Col
     Ok(())
 }
 
-fn lua_load_music(_args: &str) -> Result<()> {
+fn lua_load_music(args: (&mut App, &str)) -> Result<()> {
     trace!("native.App.App:load_music()");
+
+    let (self_, path) = args;
+    self_.0.load_music(&Path::new(path))?;
+
     Ok(())
 }
 
-fn lua_play_music(_args: ()) -> Result<()> {
+fn lua_play_music(args: (&mut App, LuaInt)) -> Result<()> {
     trace!("native.App.App:play_music()");
+
+    let (self_, loops) = args;
+    self_.0.play_music(clamp(loops))?;
+
     Ok(())
 }
 
-fn lua_stop_music(_args: ()) -> Result<()> {
+fn lua_stop_music(args: &App) -> Result<()> {
     trace!("native.App.App:stop_music()");
+
+    let self_ = args;
+    self_.0.stop_music();
+
     Ok(())
 }
 
-fn lua_set_music_volume(_args: LuaInt) -> Result<()> {
+fn lua_get_music_volume(args: &App) -> Result<LuaInt> {
+    trace!("native.App.App:get_music_volume()");
+
+    let self_ = args;
+    Ok(self_.0.get_music_volume().into())
+}
+
+fn lua_set_music_volume(args: (&App, LuaInt)) -> Result<()> {
     trace!("native.App.App:set_music_volume()");
+
+    let (self_, volume) = args;
+    self_.0.set_music_volume(clamp(volume));
+
     Ok(())
 }
