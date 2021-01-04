@@ -13,7 +13,7 @@ exports.LOOP_FOREVER = -1
 
 --- Plays music.
 --- @tparam string music_id The music ID
---- @tparam[opt] integer loop_times The loop times. If not given, the music will be played once.
+--- @tparam[opt] integer loop_times The loop times. If not given, the music will be played forever.
 function exports.play_music(music_id, loop_times)
    if not config.get("core.screen.music") then
       return
@@ -39,7 +39,7 @@ function exports.play_music(music_id, loop_times)
    __APP:load_music(path)
    log_info(("audio: load music file '%s'"):format(path))
    __APP:set_music_volume(volume * config.get("core.screen.music_volume") // 8)
-   __APP:play_music(loop_times or 1)
+   __APP:play_music(loop_times or exports.LOOP_FOREVER)
 
    PLAYING_MUSIC = music_id
 end

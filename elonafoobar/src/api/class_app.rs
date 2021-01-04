@@ -36,6 +36,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
         lua.set_function("load_image", lua_load_image)?;
         lua.set_function("draw_image", lua_draw_image)?;
         lua.set_function("load_font", lua_load_font)?;
+        lua.set_function("calculate_text_size", lua_calculate_text_size)?;
         lua.set_function("set_text_alignment", lua_set_text_alignment)?;
         lua.set_function("set_text_baseline", lua_set_text_baseline)?;
         lua.set_function("draw_text", lua_draw_text)?;
@@ -158,15 +159,26 @@ fn lua_draw_image(
     Ok(())
 }
 
-fn lua_load_font(args: (&mut App, &str, LuaInt)) -> Result<()> {
+fn lua_load_font(args: (&mut App, &str, LuaInt, LuaInt)) -> Result<()> {
     trace!("native.App.App:load_font()");
 
-    let (self_, path, point_size) = args;
+    let (self_, path, point_size, style) = args;
+    let style = FontStyle::from_bits_truncate(style as _);
     self_
         .0
-        .load_font(&Path::new(path), clamp(point_size), FontStyle::NORMAL)?;
+        .load_font(&Path::new(path), clamp(point_size), style)?;
 
     Ok(())
+}
+
+fn lua_calculate_text_size(args: (&App, &str)) -> Result<(LuaInt, LuaInt)> {
+    trace!("native.App.App:calculate_text_size()");
+
+    let (self_, text) = args;
+    self_
+        .0
+        .calculate_text_size(text)
+        .map(|size| (size.0.into(), size.1.into()))
 }
 
 fn lua_set_text_alignment(args: (&mut App, LuaInt)) -> Result<()> {

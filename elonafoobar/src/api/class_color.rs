@@ -16,6 +16,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind {} class", Color::NAME);
     lua.bind_class::<Color, _>(|lua| -> Result<()> {
         lua.set_function("rgb", lua_rgb)?;
+        lua.set_function("rgba", lua_rgba)?;
         Ok(())
     })
 }
@@ -25,4 +26,16 @@ fn lua_rgb(args: (LuaInt, LuaInt, LuaInt)) -> Result<Color> {
 
     let (r, g, b) = args;
     Ok(Color(GuiColor::RGB(clamp(r), clamp(g), clamp(b))))
+}
+
+fn lua_rgba(args: (LuaInt, LuaInt, LuaInt, LuaInt)) -> Result<Color> {
+    trace!("native.Graphics.Color.rgba()");
+
+    let (r, g, b, a) = args;
+    Ok(Color(GuiColor::RGBA(
+        clamp(r),
+        clamp(g),
+        clamp(b),
+        clamp(a),
+    )))
 }
