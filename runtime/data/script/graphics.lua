@@ -27,6 +27,14 @@ exports.AnchorY = enums.new_enum {
    BOTTOM = 3,
 }
 
+exports.FontStyle = enums.new_enum {
+   NORMAL = 0,
+   BOLD = 1,
+   ITALIC = 2,
+   UNDERLINE = 4,
+   STRIKETHROUGH = 8,
+}
+
 function exports.reset_context()
    CONTEXT.color = Color.rgb(255, 255, 255)
    CONTEXT.alpha_mod = 255
@@ -145,9 +153,9 @@ function exports.draw_image_clipped(id, src_x, src_y, src_width, src_height, dst
       dst_height)
 end
 
-function exports.set_draw_color(arg1, arg2, arg3)
+function exports.set_draw_color(arg1, arg2, arg3, arg4)
    if arg1 and arg2 and arg3 then
-      CONTEXT.color = Color.rgb(arg1, arg2, arg3)
+      CONTEXT.color = Color.rgba(arg1, arg2, arg3, arg4 or 255)
    else
       CONTEXT.color = arg1
    end
@@ -157,12 +165,20 @@ function exports.set_alpha_mod(a)
    CONTEXT.alpha_mod = a
 end
 
+function exports.clear_alpha_mod()
+   exports.set_alpha_mod(255)
+end
+
 function exports.set_color_mod(arg1, arg2, arg3)
    if arg1 and arg2 and arg3 then
       CONTEXT.color_mod = Color.rgb(arg1, arg2, arg3)
    else
       CONTEXT.color_mod = arg1
    end
+end
+
+function exports.clear_color_mod()
+   exports.set_color_mod(255, 255, 255)
 end
 
 function exports.clear()
@@ -193,8 +209,16 @@ function exports.screen_height()
    return __APP:screen_height()
 end
 
-function exports.set_font_size(point_size)
-   __APP:load_font(Fs.get_bundled_font_path(), point_size)
+function exports.set_font(point_size, style)
+   __APP:load_font(
+      Fs.get_bundled_font_path(),
+      point_size,
+      style or exports.FontStyle.NORMAL)
+end
+
+function exports.calculate_text_size(s)
+   local w, h = __APP:calculate_text_size(s)
+   return { width = w, height = h }
 end
 
 return exports

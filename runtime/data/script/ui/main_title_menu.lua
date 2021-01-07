@@ -15,6 +15,7 @@ local config = require("config")
 local env = require("env")
 local graphics = require("graphics")
 local i18n = require("i18n")
+local input = require("input")
 local ui = require("ui")
 local Cursor = ui.Cursor
 
@@ -28,6 +29,15 @@ function MainTitleMenu:__init()
    self._ripples = {}
    self._frame = 0
    self._RIPPLE_IMAGE_SIZE = HOGE
+   self._MENU_ITEMS = {
+      { text = i18n.get("core.main_menu.title_menu.continue"),  text_en = "Restore an Adventurer",   result = "continue"  },
+      { text = i18n.get("core.main_menu.title_menu.new"),       text_en = "Generate an Adventurer",  result = "new"       },
+      { text = i18n.get("core.main_menu.title_menu.incarnate"), text_en = "Incarnate an Adventurer", result = "incarnate" },
+      { text = i18n.get("core.main_menu.title_menu.about"),     text_en = "About",                   result = "about"     },
+      { text = i18n.get("core.main_menu.title_menu.options"),   text_en = "Options",                 result = "options"   },
+      { text = i18n.get("core.main_menu.title_menu.mods"),      text_en = "Mods",                    result = "mods"      },
+      { text = i18n.get("core.main_menu.title_menu.exit"),      text_en = "Exit",                    result = "exit"      },
+   }
 end
 
 function MainTitleMenu:on_shown()
@@ -45,7 +55,7 @@ function MainTitleMenu:update()
    graphics.draw_image("core.title", 0, 0, graphics.screen_width(), graphics.screen_height())
 
    graphics.set_draw_color(255, 255, 255)
-   graphics.set_font_size(13)
+   graphics.set_font(13)
    graphics.draw_text("Elona version 1.22  Developed by Noa", 20, 20)
    graphics.draw_text("  Variant foobar version "..env.VARIANT_VERSION, 20, 38)
    if i18n.language() == "ja" then
@@ -56,7 +66,13 @@ function MainTitleMenu:update()
       graphics.draw_text("Cutscenes translator: AnnaBannana", 20, 96)
    end
 
-   ui.window(i18n.get("core.main_menu.title_menu.title"), "TODO:strhint1", 80, (graphics.screen_height() - 308) // 2, 320, 355)
+   ui.window(
+      i18n.get("core.main_menu.title_menu.title"),
+      i18n.get("core.ui.hint.cursor"),
+      80,
+      (graphics.screen_height() - 308) // 2,
+      320,
+      355)
 
    graphics.set_alpha_mod(191)
    graphics.draw_image(
@@ -82,7 +98,7 @@ function MainTitleMenu:update()
          anchor_y = graphics.AnchorY.CENTER,
       }
    )
-   graphics.set_alpha_mod(255)
+   graphics.clear_alpha_mod()
 
    if config.get("core.anime.title_effect") then
       self:_draw_title_effect()
@@ -90,50 +106,36 @@ function MainTitleMenu:update()
 
    graphics.set_draw_color(0, 0, 0)
 
-   local function list_item(main, sub, x, y)
-      x = x + 80
+   local function list_item(is_selected, key, main, sub, x, y)
+      x = x + 40
       y = y + 50
+      ui.selection_key(key, x, y)
       if i18n.language() == "en" then
-         graphics.set_font_size(14)
-         return ui.list_item(main, x, y + 1)
+         graphics.set_font(14)
+         return ui.list_item(is_selected, main, x + 40, y + 1)
       else
          local x_offset = ui.compat.wx()
          local y_offset = ui.compat.wy()
-         graphics.set_font_size(11)
-         graphics.draw_text(sub, x + x_offset, y - 4 + y_offset)
-         graphics.set_font_size(13)
-         return ui.list_item(main, x, y + 8)
+         graphics.set_font(11)
+         graphics.set_draw_color(0, 0, 0)
+         graphics.draw_text(sub, x + 40 + x_offset, y - 4 + y_offset)
+         graphics.set_font(13)
+         return ui.list_item(is_selected, main, x + 40, y + 8)
       end
    end
 
    local result
-   if list_item(i18n.get("core.main_menu.title_menu.continue"), "Restore an Adventurer", 0, 0 * 35) then
-      audio.play_sound("core.ok1")
-      result = "continue"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.new"), "Generate an Adventurer", 0, 1 * 35) then
-      audio.play_sound("core.ok1")
-      result = "new"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.incarnate"), "Incarnate an Adventurer", 0, 2 * 35) then
-      audio.play_sound("core.ok1")
-      result = "incarnate"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.about"), "About", 0, 3 * 35) then
-      audio.play_sound("core.ok1")
-      result = "about"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.options"), "Options", 0, 4 * 35) then
-      audio.play_sound("core.ok1")
-      result = "options"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.mods"), "Mods", 0, 5 * 35) then
-      audio.play_sound("core.ok1")
-      result = "mods"
-   end
-   if list_item(i18n.get("core.main_menu.title_menu.exit"), "Exit", 0, 6 * 35) then
-      audio.play_sound("core.ok1")
-      result = "exit"
+   for index, item in ipairs(self._MENU_ITEMS) do
+      if list_item(
+            self._cursor.position == index,
+            input.get_nth_selection_key(index),
+            item.text,
+            item.text_en,
+            0,
+            (index - 1) * 35) then
+         audio.play_sound("core.ok1")
+         result = item.result
+      end
    end
 
    return result
@@ -181,6 +183,7 @@ function MainTitleMenu:_draw_title_effect()
          })
       ripple[1] = t + 1
    end
+   graphics.clear_alpha_mod()
 
    do
       local new_ripple_sources = {}

@@ -66,6 +66,14 @@ impl FontCache {
         Ok(())
     }
 
+    pub fn calculate_text_size(&self, text: &str) -> Result<(u32, u32)> {
+        let font = self
+            .current_font
+            .as_ref()
+            .context("Load a font before calculating text size")?;
+        Ok(font.size_of(text)?)
+    }
+
     pub fn draw_text<'a>(&self, text: &str, color: Color) -> Result<Surface<'a>> {
         let font = self
             .current_font

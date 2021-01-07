@@ -6,7 +6,7 @@ use anyhow::{format_err, Result};
 use sdl2::event::Event;
 use sdl2::pixels::Color;
 use sdl2::rect::{Point, Rect};
-use sdl2::render::{Texture, WindowCanvas};
+use sdl2::render::{BlendMode, Texture, WindowCanvas};
 use sdl2::ttf::FontStyle;
 use sdl2::video::{DisplayMode, FullscreenType};
 use sdl2::{EventPump, Sdl, VideoSubsystem};
@@ -61,7 +61,8 @@ impl App {
         window.set_display_mode(display_mode).sdl_error()?;
         window.set_fullscreen(fullscreen).sdl_error()?;
 
-        let canvas = window.into_canvas().accelerated().present_vsync().build()?;
+        let mut canvas = window.into_canvas().accelerated().present_vsync().build()?;
+        canvas.set_blend_mode(BlendMode::Blend);
 
         video.text_input().start();
         // video.text_input().set_rect(TODO);
@@ -182,6 +183,10 @@ impl App {
 
     pub fn load_font(&mut self, path: &Path, point_size: u16, style: FontStyle) -> Result<()> {
         self.font_cache.load_font(path, point_size, style)
+    }
+
+    pub fn calculate_text_size(&self, text: &str) -> Result<(u32, u32)> {
+        self.font_cache.calculate_text_size(text)
     }
 
     pub fn enable_blended_text_rendering(&mut self) {
