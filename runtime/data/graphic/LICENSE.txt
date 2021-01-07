@@ -1,5 +1,0 @@
-Copyright and License
-
-water_ripple.png
-    MIT License
-    Copyright (c) 2019 KI

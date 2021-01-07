@@ -73,11 +73,34 @@ where
     }
 }
 
+impl<T> FromLuaValue for Option<&T>
+where
+    T: LuaUserdata,
+{
+    fn pop(state: ffi::State) -> Result<Self> {
+        // TODO: deny non-T values except for `nil`
+        let value = ffi::luaL_testudata(state, -1, T::NAME).ok();
+        ffi::lua_pop_one(state);
+        Ok(value)
+    }
+}
+
+impl<T> FromLuaValue for Option<&mut T>
+where
+    T: LuaUserdata,
+{
+    fn pop(state: ffi::State) -> Result<Self> {
+        // TODO: deny non-T values except for `nil`
+        let value = ffi::luaL_testudata_mut(state, -1, T::NAME).ok();
+        ffi::lua_pop_one(state);
+        Ok(value)
+    }
+}
+
 pub trait FromLuaInt: Sized {
     fn from_lua_int(value: LuaInt) -> Result<Self>;
 }
 
-// TODO: support optional arguments
 pub trait FromLuaValues: Sized {
     fn pop_all(state: ffi::State) -> Result<Self>;
 }

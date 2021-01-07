@@ -1,6 +1,7 @@
 use crate::audio::Audio;
 use crate::error::SdlError;
 use crate::font_cache::FontCache;
+use crate::image::{Image, ImageContext};
 use anyhow::{format_err, Result};
 use sdl2::event::Event;
 use sdl2::pixels::Color;
@@ -24,6 +25,8 @@ pub struct App {
     font_cache: FontCache,
     text_alignment: TextAlignment,
     text_baseline: TextBaseline,
+    #[allow(dead_code)]
+    image_context: ImageContext,
     audio: Audio,
 }
 
@@ -47,6 +50,7 @@ impl App {
         let video = sdl.video().sdl_error()?;
         let event_pump = sdl.event_pump().sdl_error()?;
         let font_cache = FontCache::new()?;
+        let image_context = ImageContext::new()?;
         let audio = Audio::new()?;
 
         let display_mode = find_display_mode_by_name(&video, display_mode, 800, 600)?;
@@ -70,6 +74,7 @@ impl App {
             font_cache,
             text_alignment: TextAlignment::Left,
             text_baseline: TextBaseline::Middle,
+            image_context,
             audio,
         })
     }
@@ -113,6 +118,14 @@ impl App {
         self.canvas.set_draw_color(color);
         self.canvas.fill_rect(rect).sdl_error()?;
         Ok(())
+    }
+
+    pub fn load_image(&mut self, path: &Path, color: Option<Color>) -> Result<Image> {
+        Image::load_file(&self.canvas.texture_creator(), path, color)
+    }
+
+    pub fn draw_image(&mut self, image: &Image, src: Rect, dst: Rect) -> Result<()> {
+        self.canvas.copy(image.as_texture(), src, dst).sdl_error()
     }
 
     pub fn draw_text(&mut self, text: &str, pos: Point, color: Color) -> Result<Rect> {

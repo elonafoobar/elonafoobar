@@ -31,11 +31,13 @@ function exports.play_music(music_id, loop_times)
    local path = music_data["$file__resolved"]
    if not path then
       path = Fs.resolve_path_for_mod(music_data.file)
+      music_data["$file__resolved"] = path
    end
    local volume = music_data.volume or 128
 
    __APP:stop_music()
    __APP:load_music(path)
+   log_info(("audio: load music file '%s'"):format(path))
    __APP:set_music_volume(volume * config.get("core.screen.music_volume") // 8)
    __APP:play_music(loop_times or 1)
 

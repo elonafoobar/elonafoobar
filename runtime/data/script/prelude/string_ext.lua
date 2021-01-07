@@ -9,6 +9,10 @@ function string_ext.at(s, i)
    return s:sub(i, i)
 end
 
+function string_ext.isempty(s)
+   return s == nil or s == ""
+end
+
 
 string_ext.dump = nil
 
