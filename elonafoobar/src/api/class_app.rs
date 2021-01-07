@@ -114,13 +114,11 @@ fn lua_screen_height(args: &App) -> Result<LuaInt> {
     Ok(app.0.screen_height().into())
 }
 
-fn lua_load_image(args: (&mut App, &str, Option<&Color>)) -> Result<Image> {
+fn lua_load_image(args: (&mut App, &Path, Option<&Color>)) -> Result<Image> {
     trace!("native.App.App:load_image()");
 
     let (app, path, key_color) = args;
-    Ok(Image(
-        app.0.load_image(&Path::new(path), key_color.map(|x| x.0))?,
-    ))
+    Ok(Image(app.0.load_image(path, key_color.map(|x| x.0))?))
 }
 
 fn lua_draw_image(
@@ -159,14 +157,12 @@ fn lua_draw_image(
     Ok(())
 }
 
-fn lua_load_font(args: (&mut App, &str, LuaInt, LuaInt)) -> Result<()> {
+fn lua_load_font(args: (&mut App, &Path, LuaInt, LuaInt)) -> Result<()> {
     trace!("native.App.App:load_font()");
 
     let (self_, path, point_size, style) = args;
     let style = FontStyle::from_bits_truncate(style as _);
-    self_
-        .0
-        .load_font(&Path::new(path), clamp(point_size), style)?;
+    self_.0.load_font(path, clamp(point_size), style)?;
 
     Ok(())
 }
@@ -236,11 +232,11 @@ fn lua_draw_text_with_shadow(args: (&mut App, &str, LuaInt, LuaInt, &Color, &Col
     Ok(())
 }
 
-fn lua_load_music(args: (&mut App, &str)) -> Result<()> {
+fn lua_load_music(args: (&mut App, &Path)) -> Result<()> {
     trace!("native.App.App:load_music()");
 
     let (self_, path) = args;
-    self_.0.load_music(&Path::new(path))?;
+    self_.0.load_music(path)?;
 
     Ok(())
 }

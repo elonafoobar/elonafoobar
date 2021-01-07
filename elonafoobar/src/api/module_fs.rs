@@ -21,12 +21,11 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_exists(args: &str) -> Result<bool> {
+fn lua_exists(args: &Path) -> Result<bool> {
     trace!("native.Fs.exists()");
 
     let path = args;
-
-    Ok(Path::new(path).exists())
+    Ok(path.exists())
 }
 
 fn lua_get_bundled_font_path(_args: ()) -> Result<PathBuf> {
