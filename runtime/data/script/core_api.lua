@@ -6,6 +6,7 @@ core.enums = require("enums")
 core.env = require("env")
 core.graphics = require("graphics")
 core.i18n = require("i18n")
+core.random = require("random")
 core.ui = require("ui")
 
 local config = require("config")

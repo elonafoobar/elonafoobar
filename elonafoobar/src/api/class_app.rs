@@ -1,7 +1,6 @@
 use crate::api::class_color::Color;
 use crate::api::class_image::Image;
-use anyhow::bail;
-use anyhow::Result;
+use anyhow::{bail, Result};
 use elonafoobar_gui::{
     App as GuiApp, FontStyle, FullscreenType, Point, Rect, TextAlignment, TextBaseline,
 };

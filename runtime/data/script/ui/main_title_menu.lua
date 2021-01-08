@@ -1,12 +1,3 @@
-local native = _ENV.native
--- TODO
--- local rnd = native.Random.rnd
-local S = 42
-local function rnd(n)
-   S = S * 214013 + 2531011
-   return ((S >> 16) & 32767) % n
-end
-
 local prelude = _ENV.prelude
 local class = prelude.class
 
@@ -18,6 +9,7 @@ local i18n = require("i18n")
 local input = require("input")
 local ui = require("ui")
 local Cursor = ui.Cursor
+local rnd = require("random").rnd
 
 local MainTitleMenu = class("core.ui.MainTitleMenu")
 

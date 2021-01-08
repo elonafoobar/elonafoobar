@@ -76,6 +76,12 @@ return coroutine.create(function()
       mod[3] = env
    end
 
+   do
+      local random = require("random")
+      random.__INTERNAL_API_init_global_rng(os.time())
+      random.__INTERNAL_API_init_global_rng = nil
+   end
+
    coroutine.yield("Load config schema")
    for _, mod in ipairs(resolved_mod_list) do
       local mod_id, version = table.unpack(mod)
