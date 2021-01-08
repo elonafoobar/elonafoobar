@@ -36,7 +36,11 @@ impl Engine {
         };
         self.lua.set_load_path(&dirs::script())?;
         self.lua.load(&files::entry_point())?;
-        self.lua.call((app, self.cfg.profile.to_string()))?;
+        self.lua.call((
+            app,
+            self.cfg.profile.to_string(),
+            self.cfg.subcommand.to_string(),
+        ))?;
         Ok(())
     }
 
