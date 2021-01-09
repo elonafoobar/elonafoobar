@@ -8,6 +8,7 @@ mod class_color;
 mod class_image;
 mod class_mods;
 mod class_rngs;
+mod module_app;
 mod module_fs;
 mod module_graphics;
 mod module_i18n;
@@ -27,6 +28,7 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
         class_rngs::bind(lua)?;
 
         // Modules
+        module_app::bind(lua)?;
         module_fs::bind(lua)?;
         module_graphics::bind(lua)?;
         module_i18n::bind(lua)?;

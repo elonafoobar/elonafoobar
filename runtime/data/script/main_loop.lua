@@ -27,6 +27,11 @@ local function main_loop(initial_state)
       if not ok then
          error(result)
       end
+
+      -- TODO
+      if __APP:is_headless() then
+         return "exit"
+      end
    end
 end
 
