@@ -1,9 +1,29 @@
 use crate::version::{VARIANT_LONG_STRING, VARIANT_SHORT_STRING};
-use clap::{App, Arg};
+use clap::App;
 use elonafoobar_log::info;
+
+#[derive(Debug, PartialOrd, Ord, PartialEq, Eq)]
+pub enum SubCommand {
+    Run,  // run (default)
+    Repl, // repl
+}
+
+impl std::fmt::Display for SubCommand {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(
+            f,
+            "{}",
+            match self {
+                SubCommand::Run => "run",
+                SubCommand::Repl => "repl",
+            }
+        )
+    }
+}
 
 #[derive(Debug)]
 pub struct CliOptions {
+    pub subcommand: SubCommand,
     pub profile: Option<String>,
     pub headless: bool,
 }
@@ -27,10 +47,19 @@ pub fn print_args() {
 pub fn parse_args() -> ParseResult {
     let matches = make_arg_parser(VARIANT_SHORT_STRING, VARIANT_LONG_STRING).get_matches_safe();
     match matches {
-        Ok(matches) => ParseResult::Ok(CliOptions {
-            profile: matches.value_of("profile").map(ToOwned::to_owned),
-            headless: matches.is_present("headless"),
-        }),
+        Ok(matches) => {
+            let subcommand = match matches.subcommand_name() {
+                Some("repl") => SubCommand::Repl,
+                _ => SubCommand::Run,
+            };
+            let profile = matches.value_of("profile").map(ToOwned::to_owned);
+            let headless = subcommand == SubCommand::Repl || matches.is_present("headless");
+            ParseResult::Ok(CliOptions {
+                subcommand,
+                profile,
+                headless,
+            })
+        }
         Err(err) if err.kind == clap::ErrorKind::HelpDisplayed => {
             println!("{}", err.message); // Output help message, which is not output by clap.
             ParseResult::Help
@@ -44,6 +73,8 @@ pub fn parse_args() -> ParseResult {
 }
 
 fn make_arg_parser<'a, 'b>(version: &'b str, long_version: &'b str) -> App<'a, 'b> {
+    use clap::{Arg, SubCommand};
+
     App::new("Elona foobar")
         .version(version)
         .long_version(long_version)
@@ -54,12 +85,19 @@ fn make_arg_parser<'a, 'b>(version: &'b str, long_version: &'b str) -> App<'a, '
                 .short("p")
                 .long("profile")
                 .value_name("PROFILE")
-                .help("Sets a profile"),
+                .help("Sets a profile")
+                .global(true),
         )
         .arg(
             Arg::with_name("headless")
                 .short("H")
                 .long("headless")
-                .help("Enables headless mode (no GUI mode)"),
+                .help("Enables headless mode (no GUI mode)")
+                .global(true),
+        )
+        .subcommand(
+            SubCommand::with_name("repl")
+                .version_short("v")
+                .about("Starts REPL, Read-Eval-Print Loop"),
         )
 }

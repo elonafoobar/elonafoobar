@@ -2,7 +2,8 @@
   | The main entry point in Lua side |
 --]==================================]
 
-__APP, __PROFILE_ID = ...
+local subcommand
+__APP, __PROFILE_ID, subcommand = ...
 prelude = require("prelude.init")
 if not __APP then
    -- When this script is called with a nil app (no-GUI or headless mode),
@@ -36,8 +37,13 @@ do
    assert(coroutine.status(init_thread) == "dead")
 end
 
-do
+if subcommand == "run" then
    local main_loop = require("main_loop")
    local MainTitleMenu = require("ui.main_title_menu")
    main_loop(MainTitleMenu.new())
+elseif subcommand == "repl" then
+   local repl = require("repl")
+   repl()
+else
+   error("Unknown subcommand: "..tostring(subcommand))
 end

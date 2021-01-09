@@ -1,4 +1,4 @@
-use crate::cli::CliOptions;
+use crate::cli::{CliOptions, SubCommand};
 use crate::profile::ProfileId;
 use anyhow::Result;
 use serde::Deserialize;
@@ -101,6 +101,7 @@ impl std::str::FromStr for PreinitLocalConfig {
 
 #[derive(Debug)]
 pub struct Config {
+    pub subcommand: SubCommand,
     pub profile: ProfileId,
     pub headless: bool,
     pub fullscreen: Option<String>,
@@ -116,6 +117,7 @@ impl Config {
         profile: ProfileId,
     ) -> Config {
         Config {
+            subcommand: cli_options.subcommand,
             profile,
             headless: cli_options.headless,
             fullscreen: local_cfg.fullscreen,
