@@ -15,7 +15,7 @@ elonafoobar-rand = { path = "../elonafoobar-rand" }
 elonafoobar-utils = { path = "../elonafoobar-utils" }
 anyhow = "1.0.37"
 clap = "2.33.3"
-const_format = "0.2.11"
+const_format = "0.2.12"
 json5 = "0.3.0"
 lazy_static = "1.4.0"
 petgraph = "0.5.1"
