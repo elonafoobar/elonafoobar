@@ -4,6 +4,12 @@
 
 __APP, __PROFILE_ID = ...
 prelude = require("prelude.init")
+if not __APP then
+   -- When this script is called with a nil app (no-GUI or headless mode),
+   -- use `HeadlessApp` instance.
+   __APP = require("headless_app").new()
+   assert(__APP:is_headless())
+end
 
 do
    local _log = native.Log.log

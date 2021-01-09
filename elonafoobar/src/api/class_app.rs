@@ -25,6 +25,7 @@ impl LuaUserdata for App {
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind {} class", App::NAME);
     lua.bind_class::<App, _>(|lua| -> Result<()> {
+        lua.set_function("is_headless", lua_is_headless)?;
         lua.set_function("update", lua_update)?;
         lua.set_function("reset_graphic_context", lua_reset_graphic_context)?;
         lua.set_function("clear", lua_clear)?;
@@ -49,11 +50,17 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
+fn lua_is_headless(_args: &App) -> Result<bool> {
+    trace!("native.App.App:is_headless()");
+
+    Ok(false)
+}
+
 fn lua_update(args: &mut App) -> Result<bool> {
     trace!("native.App.App:update()");
 
-    let app = args;
-    Ok(app.0.update())
+    let self_ = args;
+    Ok(self_.0.update())
 }
 
 fn lua_reset_graphic_context(args: &mut App) -> Result<()> {
@@ -102,22 +109,22 @@ fn lua_fill_rect(args: (&mut App, LuaInt, LuaInt, LuaInt, LuaInt, &Color)) -> Re
 fn lua_screen_width(args: &App) -> Result<LuaInt> {
     trace!("native.App.App:screen_width()");
 
-    let app = args;
-    Ok(app.0.screen_width().into())
+    let self_ = args;
+    Ok(self_.0.screen_width().into())
 }
 
 fn lua_screen_height(args: &App) -> Result<LuaInt> {
     trace!("native.App.App:screen_height()");
 
-    let app = args;
-    Ok(app.0.screen_height().into())
+    let self_ = args;
+    Ok(self_.0.screen_height().into())
 }
 
 fn lua_load_image(args: (&mut App, &Path, Option<&Color>)) -> Result<Image> {
     trace!("native.App.App:load_image()");
 
-    let (app, path, key_color) = args;
-    Ok(Image(app.0.load_image(path, key_color.map(|x| x.0))?))
+    let (self_, path, key_color) = args;
+    Ok(Image(self_.0.load_image(path, key_color.map(|x| x.0))?))
 }
 
 fn lua_draw_image(
@@ -136,9 +143,9 @@ fn lua_draw_image(
 ) -> Result<()> {
     trace!("native.App.App:draw_image()");
 
-    let (app, image, src_x, src_y, src_width, src_height, dst_x, dst_y, dst_width, dst_height) =
+    let (self_, image, src_x, src_y, src_width, src_height, dst_x, dst_y, dst_width, dst_height) =
         args;
-    app.0.draw_image(
+    self_.0.draw_image(
         &image.0,
         Rect::new(
             clamp(src_x),

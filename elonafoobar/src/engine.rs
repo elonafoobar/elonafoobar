@@ -29,14 +29,18 @@ impl Engine {
     }
 
     pub fn run(mut self) -> Result<()> {
-        let app = self.create_new_app()?;
+        let app = if self.cfg.headless {
+            None
+        } else {
+            Some(self.make_app()?)
+        };
         self.lua.set_load_path(&dirs::script())?;
         self.lua.load(&files::entry_point())?;
         self.lua.call((app, self.cfg.profile.to_string()))?;
         Ok(())
     }
 
-    fn create_new_app(&self) -> Result<App> {
+    fn make_app(&self) -> Result<App> {
         let title = format!("Elona foobar version {}", VARIANT_SHORT_STRING);
         let display_mode = self.cfg.display_mode.as_deref().unwrap_or("");
         let fullscreen = match self.cfg.fullscreen.as_deref() {
