@@ -5,10 +5,8 @@ local native = _ENV.native
 local parse_fmt = function(f)
    return {f}
 end
--- Generate random number.
-local rnd = native.Random.rnd
 
-local Config = require("config")
+local rnd = require("random").rnd
 
 --- Functions for localization.
 --  See the I18n section for more information.

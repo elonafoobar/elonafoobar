@@ -1,0 +1,13 @@
+[package]
+name = "elonafoobar-rand"
+version = "0.8.0"
+authors = ["KI"]
+edition = "2018"
+publish = false
+
+[dependencies]
+rand_xoshiro = "0.6.0"
+
+[dependencies.rand]
+version = "0.8.0"
+default-features = false

@@ -11,6 +11,7 @@ elonafoobar-gui = { path = "../elonafoobar-gui" }
 elonafoobar-log = { path = "../elonafoobar-log" }
 elonafoobar-lua = { path = "../elonafoobar-lua" }
 elonafoobar-net = { path = "../elonafoobar-net" }
+elonafoobar-rand = { path = "../elonafoobar-rand" }
 elonafoobar-utils = { path = "../elonafoobar-utils" }
 anyhow = "1.0.37"
 clap = "2.33.3"
