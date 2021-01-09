@@ -65,6 +65,11 @@ jobs:
     - name: Install Dependencies
       run: |
         brew update
+        # HACK:
+        # Installing 'sdl2' and 'sdl2_*' triggers upgrading of 'php',
+        # which also causes upgrading of many others.
+        # To shorten 'brew install' process, remove 'php' first.
+        brew uninstall -f php
         brew install -f \
           sdl2 \
           sdl2_image \
