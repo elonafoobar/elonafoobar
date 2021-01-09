@@ -91,6 +91,13 @@ jobs:
           unzip -qq elona122.zip -d deps
         fi
 
+    # Install GNU tar because BSD one, macOS's default, causes strange errors on GitHub Actions on macOS.
+    # See: https://github.com/actions/cache/issues/403
+    - name: Install GNU tar
+      run: |
+        brew install gnu-tar
+        echo "/usr/local/opt/gnu-tar/libexec/gnubin" >> $GITHUB_PATH
+
     - name: Cache Cargo
       uses: actions/cache@v2
       with:
