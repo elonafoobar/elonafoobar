@@ -1,6 +1,7 @@
 use crate::ffi;
 use crate::types::{AsLuaInt, LuaFloat, LuaInt, LuaUserdata};
 use anyhow::Result;
+use std::path::Path;
 
 pub trait FromLuaValue: Sized {
     fn pop(state: ffi::State) -> Result<Self>;
@@ -38,6 +39,13 @@ impl FromLuaValue for &str {
         let value = ffi::lua_tostring(state, -1)?;
         ffi::lua_pop_one(state);
         Ok(value)
+    }
+}
+
+impl FromLuaValue for &Path {
+    fn pop(state: ffi::State) -> Result<Self> {
+        let raw_str = <&str>::pop(state)?;
+        Ok(Path::new(raw_str))
     }
 }
 
