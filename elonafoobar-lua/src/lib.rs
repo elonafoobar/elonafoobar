@@ -1,5 +1,7 @@
 #![feature(maybe_uninit_extra, ptr_as_uninit)]
 
+pub use elonafoobar_lua_proc_macros as macros;
+
 pub mod conv;
 mod ffi;
 pub mod state;

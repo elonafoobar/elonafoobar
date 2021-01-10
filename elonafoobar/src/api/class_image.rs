@@ -2,9 +2,12 @@ use crate::api::class_color::Color;
 use anyhow::Result;
 use elonafoobar_gui::Image as GuiImage;
 use elonafoobar_log::trace;
+use elonafoobar_lua::macros::lua_function;
 use elonafoobar_lua::types::{LuaInt, LuaUserdata};
 use elonafoobar_lua::Lua;
 use elonafoobar_utils::math::clamp;
+
+const MODULE_NAME: &str = "graphics.Image";
 
 pub struct Image(pub(super) GuiImage);
 
@@ -21,18 +24,12 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_set_alpha_mod(args: (&mut Image, LuaInt)) -> Result<()> {
-    trace!("native.Graphics.Image:set_alpha_mod()");
-
-    let (self_, alpha) = args;
+#[lua_function]
+fn lua_set_alpha_mod(self_: &mut Image, alpha: LuaInt) {
     self_.0.set_alpha_mod(clamp(alpha));
-    Ok(())
 }
 
-fn lua_set_color_mod(args: (&mut Image, &Color)) -> Result<()> {
-    trace!("native.Graphics.Image:set_color_mod()");
-
-    let (self_, color) = args;
+#[lua_function]
+fn lua_set_color_mod(self_: &mut Image, color: &Color) {
     self_.0.set_color_mod(color.0);
-    Ok(())
 }

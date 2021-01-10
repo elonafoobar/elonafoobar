@@ -6,6 +6,7 @@ edition = "2018"
 publish = false
 
 [dependencies]
+elonafoobar-lua-proc-macros = { path = "../elonafoobar-lua-proc-macros" }
 elonafoobar-lua-sys = { path = "../elonafoobar-lua-sys" }
 elonafoobar-utils = { path = "../elonafoobar-utils" }
 anyhow = "1.0.37"

@@ -3,10 +3,13 @@ use crate::mods::{ModId, Version};
 use anyhow::bail;
 use anyhow::Result;
 use elonafoobar_log::trace;
+use elonafoobar_lua::macros::lua_function;
 use elonafoobar_lua::Lua;
 use elonafoobar_utils as utils;
 use std::convert::{TryFrom, TryInto};
 use std::path::{Path, PathBuf};
+
+const MODULE_NAME: &str = "fs";
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Fs module");
@@ -21,42 +24,31 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_exists(args: &Path) -> Result<bool> {
-    trace!("native.Fs.exists()");
-
-    let path = args;
-    Ok(path.exists())
+#[lua_function]
+fn lua_exists(path: &Path) -> bool {
+    path.exists()
 }
 
-fn lua_get_bundled_font_path(_args: ()) -> Result<PathBuf> {
-    trace!("native.Fs.get_bundled_font_path()");
-
-    Ok(files::bundled_font())
+#[lua_function]
+fn lua_get_bundled_font_path() -> PathBuf {
+    files::bundled_font()
 }
 
-fn lua_get_config_file_path(args: &str) -> Result<PathBuf> {
-    trace!("native.Fs.get_config_file_path()");
-
-    let profile_id = args;
-
-    Ok(files::local_config(&profile_id.to_owned().try_into()?))
+#[lua_function]
+fn lua_get_config_file_path(profile_id: &str) -> Result<PathBuf> {
+    let profile_id = profile_id.to_owned().try_into()?;
+    Ok(files::local_config(&profile_id))
 }
 
-fn lua_get_lua_full_path(args: (&str, &str, &str)) -> Result<PathBuf> {
-    trace!("native.Fs.get_lua_full_path()");
-
-    let (mod_id, version, file_name) = args;
+#[lua_function]
+fn lua_get_lua_full_path(mod_id: &str, version: &str, file_name: &str) -> Result<PathBuf> {
     let mod_id = ModId::try_from(mod_id.to_owned())?;
     let version = Version::parse(version)?;
-
     Ok(dirs::mod_of(&mod_id, &version).join(file_name))
 }
 
-fn lua_resolve_path_for_mod(args: &str) -> Result<String> {
-    trace!("native.Fs.resolve_path_for_mod()");
-
-    let path = args;
-
+#[lua_function]
+fn lua_resolve_path_for_mod(path: &str) -> Result<String> {
     // TODO
     let path = path.replace("<_vanilla_>", utils::path::path_to_str(&dirs::root()));
     // TODO
@@ -67,10 +59,13 @@ fn lua_resolve_path_for_mod(args: &str) -> Result<String> {
     Ok(path)
 }
 
-fn lua_resolve_relative_path(lua: &mut Lua, args: (&str, &str, &str)) -> Result<PathBuf> {
-    trace!("native.Fs.resolve_relative_path()");
-
-    let (mod_id, version, file_path) = args;
+#[lua_function]
+fn lua_resolve_relative_path(
+    lua: &mut Lua,
+    mod_id: &str,
+    version: &str,
+    file_path: &str,
+) -> Result<PathBuf> {
     let mod_id = ModId::try_from(mod_id.to_owned())?;
     let version = Version::parse(version)?;
 
