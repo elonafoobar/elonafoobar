@@ -6,7 +6,7 @@
 return coroutine.create(function()
    local native = _ENV.native
    local Fs = native.Fs
-   local Mods = native.Mods
+   local Mods = native.Mods.Mods
 
    local Api = require("api")
    local config = require("config")

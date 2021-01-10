@@ -60,7 +60,7 @@ return function(init_thread)
 
       -- Text: Now Loading...
       app:load_font(Fs.get_bundled_font_path(), 36, 0)
-      app:set_text_alignment(Graphics.TEXT_ALIGNMENT_CENTER)
+      app:set_text_alignment(1)
       app:draw_text(
          "Now Loading...",
          app:screen_width() // 2,
@@ -85,7 +85,7 @@ return function(init_thread)
 
       -- Message
       app:load_font(Fs.get_bundled_font_path(), 20, 0)
-      app:set_text_baseline(Graphics.TEXT_BASELINE_BOTTOM)
+      app:set_text_baseline(2)
       app:draw_text(
          message,
          app:screen_width() // 2,
@@ -94,7 +94,7 @@ return function(init_thread)
 
       -- Progress
       app:load_font(Fs.get_bundled_font_path(), 16, 0)
-      app:set_text_baseline(Graphics.TEXT_BASELINE_TOP)
+      app:set_text_baseline(0)
       app:draw_text(
          tostring(progress).."%",
          app:screen_width() // 2,
@@ -102,6 +102,6 @@ return function(init_thread)
          FG_COLOR)
    end
 
-   app:set_text_alignment(Graphics.TEXT_ALIGNMENT_LEFT)
-   app:set_text_baseline(Graphics.TEXT_BASELINE_TOP)
+   app:set_text_alignment(0)
+   app:set_text_baseline(0)
 end
