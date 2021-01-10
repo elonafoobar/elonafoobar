@@ -6,11 +6,11 @@ fn main() -> Result<()> {
     let log_filter = std::env::var("ELONAFOOBAR_LOG")
         .ok()
         .and_then(|level| match level.as_str() {
-            "ERROR" => Some(Level::Error),
-            "WARN" => Some(Level::Warn),
-            "INFO" => Some(Level::Info),
-            "DEBUG" => Some(Level::Debug),
-            "TRACE" => Some(Level::Trace),
+            "ERROR" | "error" => Some(Level::Error),
+            "WARN" | "warn" => Some(Level::Warn),
+            "INFO" | "info" => Some(Level::Info),
+            "DEBUG" | "debug" => Some(Level::Debug),
+            "TRACE" | "trace" => Some(Level::Trace),
             _ => None,
         })
         .unwrap_or(Level::Info);
