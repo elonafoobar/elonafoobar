@@ -1,13 +1,16 @@
 use anyhow::Result;
 use elonafoobar_log::trace;
+use elonafoobar_lua::macros::lua_function;
 use elonafoobar_lua::types::{LuaFloat, LuaInt, LuaUserdata};
 use elonafoobar_lua::Lua;
 use elonafoobar_rand::rngs::DefaultGenerator as RandDefaultGenerator;
 
+const MODULE_NAME: &str = "random.DefaultGenerator";
+
 pub struct DefaultGenerator(RandDefaultGenerator);
 
 impl LuaUserdata for DefaultGenerator {
-    const NAME: &'static str = "_native_.random.rngs.DefaultGenerator";
+    const NAME: &'static str = "__native.random.DefaultGenerator";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
@@ -35,122 +38,92 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_new(args: LuaInt) -> Result<DefaultGenerator> {
-    trace!("_native_.random.rngs.DefaultGenerator.new()");
-
-    let seed = args;
-    Ok(DefaultGenerator(RandDefaultGenerator::with_seed(seed)))
+#[lua_function]
+fn lua_new(seed: LuaInt) -> DefaultGenerator {
+    DefaultGenerator(RandDefaultGenerator::with_seed(seed))
 }
 
-fn lua_rnd(args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:rnd()");
-
-    let (self_, n) = args;
-    Ok(self_.0.rnd(n))
+#[lua_function]
+fn lua_rnd(self_: &mut DefaultGenerator, n: LuaInt) -> LuaInt {
+    self_.0.rnd(n)
 }
 
-fn lua_rnd_range(args: (&mut DefaultGenerator, LuaInt, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:rnd_range()");
-
-    let (self_, min, max) = args;
-    Ok(self_.0.rnd_range(min, max))
+#[lua_function]
+fn lua_rnd_range(self_: &mut DefaultGenerator, min: LuaInt, max: LuaInt) -> LuaInt {
+    self_.0.rnd_range(min, max)
 }
 
-fn lua_rnd_small(args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:rnd_small()");
-
-    let (self_, n) = args;
-    Ok(self_.0.rnd_small(n))
+#[lua_function]
+fn lua_rnd_small(self_: &mut DefaultGenerator, n: LuaInt) -> LuaInt {
+    self_.0.rnd_small(n)
 }
 
-fn lua_rnd_range_small(args: (&mut DefaultGenerator, LuaInt, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:rnd_range_small()");
-
-    let (self_, min, max) = args;
-    Ok(self_.0.rnd_range_small(min, max))
+#[lua_function]
+fn lua_rnd_range_small(self_: &mut DefaultGenerator, min: LuaInt, max: LuaInt) -> LuaInt {
+    self_.0.rnd_range_small(min, max)
 }
 
-fn lua_frnd(args: (&mut DefaultGenerator, LuaFloat)) -> Result<LuaFloat> {
-    trace!("_native_.random.rngs.DefaultGenerator:frnd()");
-
-    let (self_, p) = args;
-    Ok(self_.0.frnd(p))
+#[lua_function]
+fn lua_frnd(self_: &mut DefaultGenerator, p: LuaFloat) -> LuaFloat {
+    self_.0.frnd(p)
 }
 
-fn lua_frnd_01(args: &mut DefaultGenerator) -> Result<LuaFloat> {
-    trace!("_native_.random.rngs.DefaultGenerator:frnd_01()");
-
-    let self_ = args;
-    Ok(self_.0.frnd_01())
+#[lua_function]
+fn lua_frnd_01(self_: &mut DefaultGenerator) -> LuaFloat {
+    self_.0.frnd_01()
 }
 
-fn lua_frnd_range(args: (&mut DefaultGenerator, LuaFloat, LuaFloat)) -> Result<LuaFloat> {
-    trace!("_native_.random.rngs.DefaultGenerator:frnd_range()");
-
-    let (self_, min, max) = args;
-    Ok(self_.0.frnd_range(min, max))
+#[lua_function]
+fn lua_frnd_range(self_: &mut DefaultGenerator, min: LuaFloat, max: LuaFloat) -> LuaFloat {
+    self_.0.frnd_range(min, max)
 }
 
-fn lua_one_in(args: (&mut DefaultGenerator, LuaInt)) -> Result<bool> {
-    trace!("_native_.random.rngs.DefaultGenerator:one_in()");
-
-    let (self_, m) = args;
-    Ok(self_.0.one_in(m))
+#[lua_function]
+fn lua_one_in(self_: &mut DefaultGenerator, m: LuaInt) -> bool {
+    self_.0.one_in(m)
 }
 
-fn lua_n_in(args: (&mut DefaultGenerator, LuaInt, LuaInt)) -> Result<bool> {
-    trace!("_native_.random.rngs.DefaultGenerator:n_in()");
-
-    let (self_, n, m) = args;
-    Ok(self_.0.n_in(n, m))
+#[lua_function]
+fn lua_n_in(self_: &mut DefaultGenerator, n: LuaInt, m: LuaInt) -> bool {
+    self_.0.n_in(n, m)
 }
 
-fn lua_percent(args: (&mut DefaultGenerator, LuaInt)) -> Result<bool> {
-    trace!("_native_.random.rngs.DefaultGenerator:percent()");
-
-    let (self_, p) = args;
-    Ok(self_.0.percent(p))
+#[lua_function]
+fn lua_percent(self_: &mut DefaultGenerator, p: LuaInt) -> bool {
+    self_.0.percent(p)
 }
 
-fn lua_roll(args: (&mut DefaultGenerator, LuaInt, LuaInt, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:roll()");
-
-    let (self_, rolls, faces, bonus) = args;
-    Ok(self_.0.roll(rolls, faces, bonus))
+#[lua_function]
+fn lua_roll(self_: &mut DefaultGenerator, rolls: LuaInt, faces: LuaInt, bonus: LuaInt) -> LuaInt {
+    self_.0.roll(rolls, faces, bonus)
 }
 
-fn lua_choice(_args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:choice()");
+#[lua_function]
+fn lua_choice() -> LuaInt {
     todo!()
 }
 
-fn lua_sample(_args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:sample()");
+#[lua_function]
+fn lua_sample() -> LuaInt {
     todo!()
 }
 
-fn lua_shuffle(_args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:shuffle()");
+#[lua_function]
+fn lua_shuffle() -> LuaInt {
     todo!()
 }
 
-fn lua_set_seed(args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:set_seed()");
-
-    let (self_, new_seed) = args;
-    Ok(self_.0.set_seed(new_seed))
+#[lua_function]
+fn lua_set_seed(self_: &mut DefaultGenerator, new_seed: LuaInt) -> LuaInt {
+    self_.0.set_seed(new_seed)
 }
 
-fn lua_seed(args: &DefaultGenerator) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:seed()");
-
-    let self_ = args;
-    Ok(self_.0.seed())
+#[lua_function]
+fn lua_seed(self_: &DefaultGenerator) -> LuaInt {
+    self_.0.seed()
 }
 
-fn lua_incdec(args: (&mut DefaultGenerator, LuaInt)) -> Result<LuaInt> {
-    trace!("_native_.random.rngs.DefaultGenerator:incdec()");
-
-    let (self_, n) = args;
-    Ok(self_.0.incdec(n))
+#[lua_function]
+fn lua_incdec(self_: &mut DefaultGenerator, n: LuaInt) -> LuaInt {
+    self_.0.incdec(n)
 }

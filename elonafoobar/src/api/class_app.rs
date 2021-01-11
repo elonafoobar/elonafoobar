@@ -1,14 +1,17 @@
 use crate::api::class_color::Color;
 use crate::api::class_image::Image;
-use anyhow::{bail, Result};
+use anyhow::Result;
 use elonafoobar_gui::{
     App as GuiApp, FontStyle, FullscreenType, Point, Rect, TextAlignment, TextBaseline,
 };
 use elonafoobar_log::trace;
-use elonafoobar_lua::types::{LuaInt, LuaUserdata};
+use elonafoobar_lua::macros::lua_function;
+use elonafoobar_lua::types::{LuaInt, LuaUserdata, Warn};
 use elonafoobar_lua::Lua;
 use elonafoobar_utils::math::clamp;
 use std::path::Path;
+
+const MODULE_NAME: &str = "app.App";
 
 pub struct App(GuiApp);
 
@@ -19,7 +22,7 @@ impl App {
 }
 
 impl LuaUserdata for App {
-    const NAME: &'static str = "_native_.App.App";
+    const NAME: &'static str = "__native.app.App";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
@@ -50,233 +53,204 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_is_headless(_args: &App) -> Result<bool> {
-    trace!("native.App.App:is_headless()");
-
-    Ok(false)
+#[lua_function]
+fn lua_is_headless(_self_: &App) -> bool {
+    false
 }
 
-fn lua_update(args: &mut App) -> Result<bool> {
-    trace!("native.App.App:update()");
-
-    let self_ = args;
-    Ok(self_.0.update())
+#[lua_function]
+fn lua_update(self_: &mut App) -> bool {
+    self_.0.update()
 }
 
-fn lua_reset_graphic_context(args: &mut App) -> Result<()> {
-    trace!("native.App.App:reset_graphic_context()");
-
-    let self_ = args;
-    let _ = self_;
+#[lua_function]
+fn lua_reset_graphic_context(_self_: &mut App) {
     // TODO
-
-    Ok(())
 }
 
-fn lua_clear(args: (&mut App, &Color)) -> Result<()> {
-    trace!("native.App.App:clear()");
-
-    let (self_, color) = args;
+#[lua_function]
+fn lua_clear(self_: &mut App, color: &Color) {
     self_.0.clear(color.0);
-
-    Ok(())
 }
 
-fn lua_draw_line(args: (&mut App, LuaInt, LuaInt, LuaInt, LuaInt, &Color)) -> Result<()> {
-    trace!("native.App.App:draw_line()");
-
-    let (self_, x1, y1, x2, y2, color) = args;
-    self_.0.draw_line(
-        Point::new(clamp(x1), clamp(y1)),
-        Point::new(clamp(x2), clamp(y2)),
-        color.0,
-    )?;
-
-    Ok(())
-}
-
-fn lua_fill_rect(args: (&mut App, LuaInt, LuaInt, LuaInt, LuaInt, &Color)) -> Result<()> {
-    trace!("native.App.App:fill_rect()");
-
-    let (self_, x, y, w, h, color) = args;
+#[lua_function]
+fn lua_draw_line(
+    self_: &mut App,
+    x1: LuaInt,
+    y1: LuaInt,
+    x2: LuaInt,
+    y2: LuaInt,
+    color: &Color,
+) -> Warn<()> {
     self_
         .0
-        .fill_rect(Rect::new(clamp(x), clamp(y), clamp(w), clamp(h)), color.0)?;
-
-    Ok(())
+        .draw_line(
+            Point::new(clamp(x1), clamp(y1)),
+            Point::new(clamp(x2), clamp(y2)),
+            color.0,
+        )
+        .into()
 }
 
-fn lua_screen_width(args: &App) -> Result<LuaInt> {
-    trace!("native.App.App:screen_width()");
-
-    let self_ = args;
-    Ok(self_.0.screen_width().into())
+#[lua_function]
+fn lua_fill_rect(
+    self_: &mut App,
+    x: LuaInt,
+    y: LuaInt,
+    w: LuaInt,
+    h: LuaInt,
+    color: &Color,
+) -> Warn<()> {
+    self_
+        .0
+        .fill_rect(Rect::new(clamp(x), clamp(y), clamp(w), clamp(h)), color.0)
+        .into()
 }
 
-fn lua_screen_height(args: &App) -> Result<LuaInt> {
-    trace!("native.App.App:screen_height()");
-
-    let self_ = args;
-    Ok(self_.0.screen_height().into())
+#[lua_function]
+fn lua_screen_width(self_: &App) -> LuaInt {
+    self_.0.screen_width().into()
 }
 
-fn lua_load_image(args: (&mut App, &Path, Option<&Color>)) -> Result<Image> {
-    trace!("native.App.App:load_image()");
-
-    let (self_, path, key_color) = args;
-    Ok(Image(self_.0.load_image(path, key_color.map(|x| x.0))?))
+#[lua_function]
+fn lua_screen_height(self_: &App) -> LuaInt {
+    self_.0.screen_height().into()
 }
 
+#[lua_function]
+fn lua_load_image(self_: &mut App, path: &Path, key_color: Option<&Color>) -> Result<Image> {
+    self_.0.load_image(path, key_color.map(|x| x.0)).map(Image)
+}
+
+#[lua_function]
+#[allow(clippy::too_many_arguments)]
 fn lua_draw_image(
-    args: (
-        &mut App,
-        &Image,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-        LuaInt,
-    ),
-) -> Result<()> {
-    trace!("native.App.App:draw_image()");
-
-    let (self_, image, src_x, src_y, src_width, src_height, dst_x, dst_y, dst_width, dst_height) =
-        args;
-    self_.0.draw_image(
-        &image.0,
-        Rect::new(
-            clamp(src_x),
-            clamp(src_y),
-            clamp(src_width),
-            clamp(src_height),
-        ),
-        Rect::new(
-            clamp(dst_x),
-            clamp(dst_y),
-            clamp(dst_width),
-            clamp(dst_height),
-        ),
-    )?;
-    Ok(())
-}
-
-fn lua_load_font(args: (&mut App, &Path, LuaInt, LuaInt)) -> Result<()> {
-    trace!("native.App.App:load_font()");
-
-    let (self_, path, point_size, style) = args;
-    let style = FontStyle::from_bits_truncate(style as _);
-    self_.0.load_font(path, clamp(point_size), style)?;
-
-    Ok(())
-}
-
-fn lua_calculate_text_size(args: (&App, &str)) -> Result<(LuaInt, LuaInt)> {
-    trace!("native.App.App:calculate_text_size()");
-
-    let (self_, text) = args;
+    self_: &mut App,
+    image: &Image,
+    src_x: LuaInt,
+    src_y: LuaInt,
+    src_width: LuaInt,
+    src_height: LuaInt,
+    dst_x: LuaInt,
+    dst_y: LuaInt,
+    dst_width: LuaInt,
+    dst_height: LuaInt,
+) -> Warn<()> {
     self_
         .0
-        .calculate_text_size(text)
-        .map(|size| (size.0.into(), size.1.into()))
+        .draw_image(
+            &image.0,
+            Rect::new(
+                clamp(src_x),
+                clamp(src_y),
+                clamp(src_width),
+                clamp(src_height),
+            ),
+            Rect::new(
+                clamp(dst_x),
+                clamp(dst_y),
+                clamp(dst_width),
+                clamp(dst_height),
+            ),
+        )
+        .into()
 }
 
-fn lua_set_text_alignment(args: (&mut App, LuaInt)) -> Result<()> {
-    trace!("native.App.App:set_text_alignment()");
+#[lua_function]
+fn lua_load_font(self_: &mut App, path: &Path, point_size: LuaInt, style: LuaInt) -> Result<()> {
+    let style = FontStyle::from_bits_truncate(style as _);
+    self_.0.load_font(path, clamp(point_size), style)
+}
 
-    let (self_, alignment) = args;
+#[lua_function]
+fn lua_calculate_text_size(self_: &App, text: &str) -> Warn<(LuaInt, LuaInt)> {
+    let result = self_.0.calculate_text_size(text);
+    match result {
+        Ok(size) => Warn::success((size.0.into(), size.1.into())),
+        Err(err) => Warn::with_warning(
+            (10 * (text.len() as LuaInt), 10), // estimate size (best effort)
+            err,
+        ),
+    }
+}
+
+#[lua_function]
+fn lua_set_text_alignment(self_: &mut App, alignment: LuaInt) -> Warn<()> {
     let alignment = match alignment {
         0 => TextAlignment::Left,
         1 => TextAlignment::Center,
         2 => TextAlignment::Right,
-        _ => bail!("unknown text alignment: {}", alignment),
+        _ => return Warn::with_warning((), format!("unknown text alignment: {}", alignment)),
     };
     self_.0.set_text_alignment(alignment);
-
-    Ok(())
+    Warn::success(())
 }
 
-fn lua_set_text_baseline(args: (&mut App, LuaInt)) -> Result<()> {
-    trace!("native.App.App:set_text_baseline()");
-
-    let (self_, baseline) = args;
+#[lua_function]
+fn lua_set_text_baseline(self_: &mut App, baseline: LuaInt) -> Warn<()> {
     let baseline = match baseline {
         0 => TextBaseline::Top,
         1 => TextBaseline::Middle,
         2 => TextBaseline::Bottom,
-        _ => bail!("unknown text alignment: {}", baseline),
+        _ => return Warn::with_warning((), format!("unknown text baseline: {}", baseline)),
     };
     self_.0.set_text_baseline(baseline);
-
-    Ok(())
+    Warn::success(())
 }
 
-fn lua_draw_text(args: (&mut App, &str, LuaInt, LuaInt, &Color)) -> Result<()> {
-    trace!("native.App.App:draw_text()");
-
-    let (self_, text, x, y, color) = args;
-    self_
+#[lua_function]
+fn lua_draw_text(self_: &mut App, text: &str, x: LuaInt, y: LuaInt, color: &Color) -> Warn<()> {
+    let result = self_
         .0
-        .draw_text(text, Point::new(clamp(x), clamp(y)), color.0)?;
-
-    Ok(())
+        .draw_text(text, Point::new(clamp(x), clamp(y)), color.0);
+    match result {
+        Ok(_region) => Warn::success(()), // TODO: returns `region`
+        Err(err) => Warn::with_warning((), err),
+    }
 }
 
-fn lua_draw_text_with_shadow(args: (&mut App, &str, LuaInt, LuaInt, &Color, &Color)) -> Result<()> {
-    trace!("native.App.App:draw_text_with_shadow()");
-
-    let (self_, text, x, y, text_color, shadow_color) = args;
-    self_.0.draw_text_with_shadow(
+#[lua_function]
+fn lua_draw_text_with_shadow(
+    self_: &mut App,
+    text: &str,
+    x: LuaInt,
+    y: LuaInt,
+    text_color: &Color,
+    shadow_color: &Color,
+) -> Warn<()> {
+    let result = self_.0.draw_text_with_shadow(
         text,
         Point::new(clamp(x), clamp(y)),
         text_color.0,
         shadow_color.0,
-    )?;
-
-    Ok(())
+    );
+    match result {
+        Ok(_region) => Warn::success(()), // TODO: returns `region`
+        Err(err) => Warn::with_warning((), err),
+    }
 }
 
-fn lua_load_music(args: (&mut App, &Path)) -> Result<()> {
-    trace!("native.App.App:load_music()");
-
-    let (self_, path) = args;
-    self_.0.load_music(path)?;
-
-    Ok(())
+#[lua_function]
+fn lua_load_music(self_: &mut App, path: &Path) -> Result<()> {
+    self_.0.load_music(path)
 }
 
-fn lua_play_music(args: (&mut App, LuaInt)) -> Result<()> {
-    trace!("native.App.App:play_music()");
-
-    let (self_, loops) = args;
-    self_.0.play_music(clamp(loops))?;
-
-    Ok(())
+#[lua_function]
+fn lua_play_music(self_: &mut App, loops: LuaInt) -> Warn<()> {
+    self_.0.play_music(clamp(loops)).into()
 }
 
-fn lua_stop_music(args: &App) -> Result<()> {
-    trace!("native.App.App:stop_music()");
-
-    let self_ = args;
+#[lua_function]
+fn lua_stop_music(self_: &App) {
     self_.0.stop_music();
-
-    Ok(())
 }
 
-fn lua_get_music_volume(args: &App) -> Result<LuaInt> {
-    trace!("native.App.App:get_music_volume()");
-
-    let self_ = args;
-    Ok(self_.0.get_music_volume().into())
+#[lua_function]
+fn lua_get_music_volume(self_: &App) -> LuaInt {
+    self_.0.get_music_volume().into()
 }
 
-fn lua_set_music_volume(args: (&App, LuaInt)) -> Result<()> {
-    trace!("native.App.App:set_music_volume()");
-
-    let (self_, volume) = args;
+#[lua_function]
+fn lua_set_music_volume(self_: &App, volume: LuaInt) {
     self_.0.set_music_volume(clamp(volume));
-
-    Ok(())
 }

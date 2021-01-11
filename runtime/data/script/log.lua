@@ -4,8 +4,8 @@ local function make_logger(mod_id)
    local Log = {}
 
    local enums = require("enums")
-   local I18n = require("i18n")
-   local internal = _ENV.native.Log
+   local i18n = require("i18n")
+   local internal = _ENV.native.log
 
    Log.Level = enums.new_enum {
       ERROR = 5,
@@ -19,7 +19,7 @@ local function make_logger(mod_id)
    --- @tparam Level level Severity
    --- @tparam string fmt Format string
    function Log.log(level, fmt, ...)
-      internal.log(level, mod_name, I18n.format(fmt, {...}))
+      internal.log(level, mod_name, i18n.format(fmt, ...))
    end
 
    --- Output log message (severity: `Level.error`)

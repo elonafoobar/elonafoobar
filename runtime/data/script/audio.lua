@@ -1,4 +1,4 @@
-local Fs = native.Fs
+local fs = native.fs
 
 local config = require("config")
 local data = require("data")
@@ -30,7 +30,7 @@ function exports.play_music(music_id, loop_times)
 
    local path = music_data["$file__resolved"]
    if not path then
-      path = Fs.resolve_path_for_mod(music_data.file)
+      path = fs.resolve_path_for_mod(music_data.file)
       music_data["$file__resolved"] = path
    end
    local volume = music_data.volume or 128

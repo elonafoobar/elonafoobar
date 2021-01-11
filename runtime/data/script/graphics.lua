@@ -1,6 +1,5 @@
-local native = _ENV.native
-local Fs = native.Fs
-local Color = native.Graphics.Color
+local fs = native.fs
+local Color = native.graphics.Color
 
 local prelude = _ENV.prelude
 local p = prelude.p
@@ -57,7 +56,7 @@ function exports.load_image(id)
    if asset_data.file then
       local path = asset_data["$file__resolved"]
       if not path then
-         path = Fs.resolve_path_for_mod(asset_data.file)
+         path = fs.resolve_path_for_mod(asset_data.file)
          asset_data["$file__resolved"] = path
       end
       local image = __APP:load_image(path, asset_data.key_color)
@@ -211,7 +210,7 @@ end
 
 function exports.set_font(point_size, style)
    __APP:load_font(
-      Fs.get_bundled_font_path(),
+      fs.get_bundled_font_path(),
       point_size,
       style or exports.FontStyle.NORMAL)
 end

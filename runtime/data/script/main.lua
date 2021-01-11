@@ -13,7 +13,7 @@ if not __APP then
 end
 
 do
-   local _log = native.Log.log
+   local _log = native.log.log
    function log_error(msg) _log(5, "core", msg) end
    function log_warn(msg)  _log(4, "core", msg) end
    function log_info(msg)  _log(3, "core", msg) end

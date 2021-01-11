@@ -1,15 +1,18 @@
 use anyhow::Result;
 use elonafoobar_gui::Color as GuiColor;
 use elonafoobar_log::trace;
+use elonafoobar_lua::macros::lua_function;
 use elonafoobar_lua::types::{LuaInt, LuaUserdata};
 use elonafoobar_lua::Lua;
 use elonafoobar_utils::math::clamp;
+
+const MODULE_NAME: &str = "graphics.Color";
 
 #[derive(Debug, Clone)]
 pub struct Color(pub(super) GuiColor);
 
 impl LuaUserdata for Color {
-    const NAME: &'static str = "_native_.Graphics.Color";
+    const NAME: &'static str = "__native.graphics.Color";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
@@ -21,21 +24,12 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_rgb(args: (LuaInt, LuaInt, LuaInt)) -> Result<Color> {
-    trace!("native.Graphics.Color.rgb()");
-
-    let (r, g, b) = args;
-    Ok(Color(GuiColor::RGB(clamp(r), clamp(g), clamp(b))))
+#[lua_function]
+fn lua_rgb(r: LuaInt, g: LuaInt, b: LuaInt) -> Color {
+    Color(GuiColor::RGB(clamp(r), clamp(g), clamp(b)))
 }
 
-fn lua_rgba(args: (LuaInt, LuaInt, LuaInt, LuaInt)) -> Result<Color> {
-    trace!("native.Graphics.Color.rgba()");
-
-    let (r, g, b, a) = args;
-    Ok(Color(GuiColor::RGBA(
-        clamp(r),
-        clamp(g),
-        clamp(b),
-        clamp(a),
-    )))
+#[lua_function]
+fn lua_rgba(r: LuaInt, g: LuaInt, b: LuaInt, a: LuaInt) -> Color {
+    Color(GuiColor::RGBA(clamp(r), clamp(g), clamp(b), clamp(a)))
 }

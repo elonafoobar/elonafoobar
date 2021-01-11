@@ -1,5 +1,5 @@
-local Graphics = require("graphics")
-local UI = require("ui")
+local graphics = require("graphics")
+local ui = require("ui")
 
 local function main_loop(initial_state)
    local app = __APP
@@ -9,10 +9,10 @@ local function main_loop(initial_state)
    local update_thread = coroutine.create(function()
       while true do
          for _, layer in ipairs(ui_layers) do
-            Graphics.reset_context()
-            UI.clear()
+            graphics.reset_context()
+            ui.clear()
             layer:update()
-            UI.render()
+            ui.render()
          end
          coroutine.yield()
       end

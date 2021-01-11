@@ -397,6 +397,17 @@ pub fn luaL_error(state: State, error_message: &str) {
     }
 }
 
+pub fn lua_warning(state: State, warning_message: &str, to_continue: bool) {
+    let warning_message = CString::new(warning_message).expect("TODO");
+    unsafe {
+        sys::lua_warning(
+            state.as_ptr(),
+            warning_message.as_ptr(),
+            if to_continue { 1 } else { 0 },
+        );
+    }
+}
+
 pub fn lua_typename(ty: c_int) -> &'static str {
     const TYPES: &[&str] = &[
         "nil", "boolean", "userdata", "number", "string", "table", "function", "userdata", "thread",

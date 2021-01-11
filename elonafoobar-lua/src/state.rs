@@ -57,7 +57,7 @@ impl Lua {
         Ok(())
     }
 
-    pub fn set_function<A, R>(&mut self, func_name: &str, func: fn(A) -> Result<R>) -> Result<()>
+    pub fn set_function<A, R>(&mut self, func_name: &str, func: fn(A) -> R) -> Result<()>
     where
         A: FromLuaValues,
         R: ToLuaValues,
@@ -72,12 +72,12 @@ impl Lua {
 
                 let actual_function_pointer =
                     ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 1);
-                let actual_function_pointer: fn(A) -> Result<R> =
+                let actual_function_pointer: fn(A) -> R =
                     std::mem::transmute(actual_function_pointer);
 
                 match (|| -> Result<ffi::Nresults> {
                     let args = A::pop_all(lua_state)?;
-                    let results = actual_function_pointer(args)?;
+                    let results = actual_function_pointer(args);
                     results.push_all(lua_state)
                 })() {
                     Ok(nresults) => nresults,
@@ -100,7 +100,7 @@ impl Lua {
     pub fn set_function_with_state<A, R>(
         &mut self,
         func_name: &str,
-        func: fn(&mut Self, A) -> Result<R>,
+        func: fn(&mut Self, A) -> R,
     ) -> Result<()>
     where
         A: FromLuaValues,
@@ -116,12 +116,12 @@ impl Lua {
 
                 let actual_function_pointer =
                     ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 1);
-                let actual_function_pointer: fn(&mut Lua, A) -> Result<R> =
+                let actual_function_pointer: fn(&mut Lua, A) -> R =
                     std::mem::transmute(actual_function_pointer);
 
                 match (|| -> Result<ffi::Nresults> {
                     let args = A::pop_all(lua_state)?;
-                    let results = actual_function_pointer(&mut Lua::wrap(lua_state), args)?;
+                    let results = actual_function_pointer(&mut Lua::wrap(lua_state), args);
                     results.push_all(lua_state)
                 })() {
                     Ok(nresults) => nresults,

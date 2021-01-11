@@ -1,5 +1,5 @@
 local Net = {}
 
-Net.open_browser = _ENV.native.Net.open_browser
+Net.open_browser = _ENV.native.net.open_browser
 
 return Net

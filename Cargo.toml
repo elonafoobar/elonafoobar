@@ -4,6 +4,7 @@ members = [
   "elonafoobar-gui",
   "elonafoobar-log",
   "elonafoobar-lua",
+  "elonafoobar-lua-proc-macros",
   "elonafoobar-lua-sys",
   "elonafoobar-net",
   "elonafoobar-rand",

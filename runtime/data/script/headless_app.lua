@@ -1,6 +1,6 @@
-local HeadlessApp = prelude.class("core.HeadlessApp")
+local HeadlessApp = prelude.class("__native.app.HeadlessApp")
 
-local GuiApp = native.App.App
+local GuiApp = native.app.App
 for fn_name in pairs(GuiApp) do
    HeadlessApp[fn_name] = function()
       log_trace("core.HeadlessApp:"..fn_name.."()")

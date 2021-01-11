@@ -1,5 +1,5 @@
 use crate::ffi::{self, c_int};
-use crate::types::{AsLuaInt, LuaFloat, LuaInt, LuaUserdata};
+use crate::types::{AsLuaInt, LuaFloat, LuaInt, LuaUserdata, Warn};
 use anyhow::Result;
 use elonafoobar_utils as utils;
 use std::path::PathBuf;
@@ -111,6 +111,47 @@ where
     fn push_all(self, state: ffi::State) -> Result<ffi::Nresults> {
         self.push(state)?;
         Ok(1)
+    }
+}
+
+impl<T> ToLuaValues for Warn<T>
+where
+    T: ToLuaValues,
+{
+    fn push_all(self, state: ffi::State) -> Result<ffi::Nresults> {
+        if let Some(message) = self.warning {
+            ffi::lua_warning(state, &message, false);
+        }
+        self.value.push_all(state)
+    }
+}
+
+impl ToLuaValues for Result<()> {
+    fn push_all(self, state: ffi::State) -> Result<ffi::Nresults> {
+        match self {
+            Ok(_) => true.push(state)?,
+            Err(err) => err.to_string().push(state)?,
+        }
+        Ok(1)
+    }
+}
+
+impl<T> ToLuaValues for Result<T>
+where
+    T: ToLuaValue,
+{
+    fn push_all(self, state: ffi::State) -> Result<ffi::Nresults> {
+        match self {
+            Ok(value) => {
+                value.push(state)?;
+                Ok(1)
+            }
+            Err(err) => {
+                ffi::lua_pushnil(state);
+                err.to_string().push(state)?;
+                Ok(2)
+            }
+        }
     }
 }
 

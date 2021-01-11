@@ -1,8 +1,11 @@
 use anyhow::format_err;
 use anyhow::Result;
 use elonafoobar_log::{log, trace, Level as LogLevel};
+use elonafoobar_lua::macros::lua_function;
 use elonafoobar_lua::types::LuaInt;
 use elonafoobar_lua::{AsLuaInt, FromLuaInt, IntoLuaInt, Lua};
+
+const MODULE_NAME: &str = "log";
 
 struct Level(LogLevel);
 
@@ -33,7 +36,7 @@ impl IntoLuaInt for Level {
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Log module");
-    lua.bind_module("Log", |lua| -> Result<()> {
+    lua.bind_module("log", |lua| -> Result<()> {
         lua.set_function("log", lua_log)?;
         lua.set_function("level", lua_level)?;
         lua.set_function("set_level", lua_set_level)?;
@@ -41,24 +44,17 @@ pub fn bind(lua: &mut Lua) -> Result<()> {
     })
 }
 
-fn lua_log(args: (AsLuaInt<Level>, &str, &str)) -> Result<()> {
-    trace!("native.Log.log()");
-
-    let (level, mod_name, message) = args;
+#[lua_function(log = false)]
+fn lua_log(level: AsLuaInt<Level>, mod_name: &str, message: &str) {
     log(mod_name, (level.0).0, message);
-    Ok(())
 }
 
-fn lua_level(_args: ()) -> Result<AsLuaInt<Level>> {
-    trace!("native.Log.level()");
-
-    Ok(AsLuaInt(Level(elonafoobar_log::level())))
+#[lua_function]
+fn lua_level() -> AsLuaInt<Level> {
+    AsLuaInt(Level(elonafoobar_log::level()))
 }
 
-fn lua_set_level(args: AsLuaInt<Level>) -> Result<()> {
-    trace!("native.Log.set_level()");
-
-    let level = args;
+#[lua_function]
+fn lua_set_level(level: AsLuaInt<Level>) {
     elonafoobar_log::set_level((level.0).0);
-    Ok(())
 }

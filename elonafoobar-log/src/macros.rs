@@ -6,34 +6,34 @@ pub mod __impl {
 #[macro_export]
 macro_rules! error {
     ($( $arg:tt )+) => (
-        $crate::macros::__impl::error!(target: "_native_", $( $arg )+);
+        $crate::macros::__impl::error!(target: "__native", $( $arg )+);
     )
 }
 
 #[macro_export]
 macro_rules! warn {
     ($( $arg:tt )+) => (
-        $crate::macros::__impl::warn!(target: "_native_", $( $arg )+);
+        $crate::macros::__impl::warn!(target: "__native", $( $arg )+);
     )
 }
 
 #[macro_export]
 macro_rules! info {
     ($( $arg:tt )+) => (
-        $crate::macros::__impl::info!(target: "_native_", $( $arg )+);
+        $crate::macros::__impl::info!(target: "__native", $( $arg )+);
     )
 }
 
 #[macro_export]
 macro_rules! debug {
     ($( $arg:tt )+) => (
-        $crate::macros::__impl::debug!(target: "_native_", $( $arg )+);
+        $crate::macros::__impl::debug!(target: "__native", $( $arg )+);
     )
 }
 
 #[macro_export]
 macro_rules! trace {
     ($( $arg:tt )+) => (
-        $crate::macros::__impl::trace!(target: "_native_", $( $arg )+);
+        $crate::macros::__impl::trace!(target: "__native", $( $arg )+);
     )
 }

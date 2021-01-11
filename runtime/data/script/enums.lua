@@ -1,6 +1,5 @@
-local native = _ENV.native
 local class, xtype = prelude.class, prelude.xtype
-local Color = native.Graphics.Color
+local Color = native.graphics.Color
 
 local enums = {}
 
