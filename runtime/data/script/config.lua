@@ -1,7 +1,7 @@
 local config = {}
 
 local xtype, inspect = _ENV.prelude.xtype, _ENV.prelude.inspect
-local Fs = _ENV.native.Fs
+local fs = _ENV.native.fs
 
 local eval_in_dsl_env = require("config_dsl")
 local json5 = require("json5")
@@ -234,7 +234,7 @@ function config.serialize()
 end
 
 function config.save()
-   local path = Fs.get_config_file_path(__PROFILE_ID)
+   local path = fs.get_config_file_path(__PROFILE_ID)
    local file = io.open(path, "w")
    local output = config.serialize()
    assert(file:write(output))

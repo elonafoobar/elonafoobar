@@ -22,7 +22,7 @@ impl App {
 }
 
 impl LuaUserdata for App {
-    const NAME: &'static str = "_native_.App.App";
+    const NAME: &'static str = "__native.app.App";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {

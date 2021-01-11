@@ -36,7 +36,7 @@ impl IntoLuaInt for Level {
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Log module");
-    lua.bind_module("Log", |lua| -> Result<()> {
+    lua.bind_module("log", |lua| -> Result<()> {
         lua.set_function("log", lua_log)?;
         lua.set_function("level", lua_level)?;
         lua.set_function("set_level", lua_set_level)?;

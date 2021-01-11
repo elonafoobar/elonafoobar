@@ -8,7 +8,7 @@ const MODULE_NAME: &str = "i18n";
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.I18n module");
-    lua.bind_module("I18n", |lua| -> Result<()> {
+    lua.bind_module("i18n", |lua| -> Result<()> {
         lua.set_function("parse_fmt", lua_parse_fmt)?;
         Ok(())
     })

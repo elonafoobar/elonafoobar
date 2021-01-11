@@ -6,7 +6,7 @@ use elonafoobar_lua::Lua;
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Graphics module");
-    lua.bind_module("Graphics", |lua| -> Result<()> {
+    lua.bind_module("graphics", |lua| -> Result<()> {
         lua.set_userdata_metatable("Color", Color::NAME)?;
         Ok(())
     })

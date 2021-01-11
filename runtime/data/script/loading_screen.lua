@@ -1,7 +1,5 @@
-local native = _ENV.native
-local Fs = native.Fs
-local Graphics = native.Graphics
-local Color = Graphics.Color
+local fs = native.fs
+local Color = native.graphics.Color
 
 local BG_COLOR = Color.rgb(160, 145, 128)
 local FG_COLOR = Color.rgb(71, 64, 55)
@@ -59,7 +57,7 @@ return function(init_thread)
          FG_COLOR)
 
       -- Text: Now Loading...
-      app:load_font(Fs.get_bundled_font_path(), 36, 0)
+      app:load_font(fs.get_bundled_font_path(), 36, 0)
       app:set_text_alignment(1)
       app:draw_text(
          "Now Loading...",
@@ -84,7 +82,7 @@ return function(init_thread)
          FG_COLOR)
 
       -- Message
-      app:load_font(Fs.get_bundled_font_path(), 20, 0)
+      app:load_font(fs.get_bundled_font_path(), 20, 0)
       app:set_text_baseline(2)
       app:draw_text(
          message,
@@ -93,7 +91,7 @@ return function(init_thread)
          FG_COLOR)
 
       -- Progress
-      app:load_font(Fs.get_bundled_font_path(), 16, 0)
+      app:load_font(fs.get_bundled_font_path(), 16, 0)
       app:set_text_baseline(0)
       app:draw_text(
          tostring(progress).."%",

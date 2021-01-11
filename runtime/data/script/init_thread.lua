@@ -4,11 +4,10 @@
 --]=================================]
 
 return coroutine.create(function()
-   local native = _ENV.native
-   local Fs = native.Fs
-   local Mods = native.Mods.Mods
+   local fs = native.fs
+   local Mods = native.mods.Mods
 
-   local Api = require("api")
+   local api = require("api")
    local config = require("config")
    local get_logger = require("log")
 
@@ -29,13 +28,11 @@ return coroutine.create(function()
    end
 
    do
-      log_info("Load core")
+      log_info("Load 'core' APIs")
 
       local core = require("core_api")
-
-      local Api = require("api")
       for k, v in pairs(core) do
-         Api.register("core."..k, v)
+         api.register("core."..k, v)
       end
    end
 
@@ -49,12 +46,12 @@ return coroutine.create(function()
          if module_path == "core.log" then
             return get_logger(mod_id)
          else
-            return Api.require(module_path)
+            return api.require(module_path)
          end
       end
       env.require_relative = function(file_path)
          log_trace(mod_id..": require_relative('"..file_path.."')")
-         local path = Fs.resolve_relative_path(mod_id, version, file_path)
+         local path = fs.resolve_relative_path(mod_id, version, file_path)
          local cache = chunk_cache[path]
          if cache ~= nil then
             return cache
@@ -88,8 +85,8 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "config-schema.lua")
-      if Fs.exists(path) then
+      local path = fs.get_lua_full_path(mod_id, version, "config-schema.lua")
+      if fs.exists(path) then
          local file = io.open(path)
          local schema_file_content = file:read("a")
          config.load_schema(schema_file_content, path, mod_id)
@@ -135,7 +132,7 @@ return coroutine.create(function()
 
    coroutine.yield("Load config")
    do
-      local path = Fs.get_config_file_path(__PROFILE_ID)
+      local path = fs.get_config_file_path(__PROFILE_ID)
       local file = io.open(path)
       local config_file_content = file:read("a")
       log_debug(config_file_content)
@@ -149,18 +146,18 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "init.lua")
-      if Fs.exists(path) then
+      local path = fs.get_lua_full_path(mod_id, version, "init.lua")
+      if fs.exists(path) then
          log_info(("Run %s@%s/init.lua"):format(mod_id, version))
          local init_result = assert(loadfile(path, "t", env))()
          if type(init_result) == "table" then
             if mod_id == "core" then
                for k, v in pairs(init_result) do
-                  Api.merge_core_module(mod_id.."."..k, v)
+                  api.merge_core_module(mod_id.."."..k, v)
                end
             else
                for k, v in pairs(init_result) do
-                  Api.register(mod_id.."."..k, v)
+                  api.register(mod_id.."."..k, v)
                end
             end
          end
@@ -176,8 +173,8 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "data.lua")
-      if Fs.exists(path) then
+      local path = fs.get_lua_full_path(mod_id, version, "data.lua")
+      if fs.exists(path) then
          log_info(("Run %s@%s/data.lua"):format(mod_id, version))
          assert(loadfile(path, "t", env))()
       end
@@ -194,8 +191,8 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "data-update.lua")
-      if Fs.exists(path) then
+      local path = fs.get_lua_full_path(mod_id, version, "data-update.lua")
+      if fs.exists(path) then
          log_info(("Run %s@%s/data-update.lua"):format(mod_id, version))
          assert(loadfile(path, "t", env))()
       end
@@ -216,8 +213,8 @@ return coroutine.create(function()
       -- TODO
       -- * Move it to native side
       -- * Windows file path is UTF-16, not UTF-8.
-      local path = Fs.get_lua_full_path(mod_id, version, "locale/"..lang..".lua") -- TODO
-      if Fs.exists(path) then
+      local path = fs.get_lua_full_path(mod_id, version, "locale/"..lang..".lua") -- TODO
+      if fs.exists(path) then
          log_info(("Run %s@%s/locale/%s.lua"):format(mod_id, version, lang)) -- TODO
          assert(loadfile(path, "t", env))()
       end

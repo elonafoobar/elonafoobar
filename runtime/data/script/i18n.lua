@@ -1,6 +1,6 @@
 local native = _ENV.native
 -- Parse format and returns fomattable object or error.
--- local parse_fmt = native.I18n.parse_fmt
+-- local parse_fmt = native.i18n.parse_fmt
 -- TODO
 local parse_fmt = function(f)
    return {f}
@@ -9,10 +9,10 @@ end
 local rnd = require("random").rnd
 
 --- Functions for localization.
---  See the I18n section for more information.
---  @usage local I18n = require("core.I18n")
---  @module "I18n"
-local I18n = {}
+--  See the i18n section for more information.
+--  @usage local i18n = require("core.i18n")
+--  @module "i18n"
+local i18n = {}
 
 --[[
 type I18NKey = string
@@ -159,10 +159,10 @@ end
 --
 --  @tparam string key the ID of the localization string
 --  @treturn string the formatted string
---  @usage I18n.get("core.map.you_see", "Vernis")
+--  @usage i18n.get("core.map.you_see", "Vernis")
 --  @function get
-function I18n.get(key, ...)
-   return I18n.get_optional(key, ...) or ("<Unknown ID: %s>"):format(key)
+function i18n.get(key, ...)
+   return i18n.get_optional(key, ...) or ("<Unknown ID: %s>"):format(key)
 end
 
 --- Gets a localized string and optionally formats it with arguments.
@@ -172,7 +172,7 @@ end
 --  @treturn[1] string the formatted string
 --  @treturn[2] nil
 --  @function get_optional
-function I18n.get_optional(key, ...)
+function i18n.get_optional(key, ...)
    local fmt = STORAGE[key]
    if fmt == nil then return nil end -- not found
 
@@ -192,8 +192,8 @@ end
 --  @tparam num index the index into the enum
 --  @treturn string the formatted string
 --  @function get_enum
-function I18n.get_enum(key, index, ...)
-   return I18n.get(("%s._%d"):format(key, index), ...)
+function i18n.get_enum(key, index, ...)
+   return i18n.get(("%s._%d"):format(key, index), ...)
 end
 
 --- Gets a localized string from an enum-style localization object and optionally
@@ -205,8 +205,8 @@ end
 --  @treturn[1] string the formatted string
 --  @treturn[2] nil
 --  @function get_enum_optional
-function I18n.get_enum_optional(key, index, ...)
-   return I18n.get_optional(("%s._%d"):format(key, index), ...)
+function i18n.get_enum_optional(key, index, ...)
+   return i18n.get_optional(("%s._%d"):format(key, index), ...)
 end
 
 --- Gets a localized string from an enum-style localization object
@@ -218,8 +218,8 @@ end
 --  @tparam num index the index into the enum
 --  @treturn string the formatted string
 --  @function get_enum_property
-function I18n.get_enum_property(key_base, key_property, index, ...)
-   return I18n.get(("%s._%d.%s"):format(key_base, index, key_property), ...)
+function i18n.get_enum_property(key_base, key_property, index, ...)
+   return i18n.get(("%s._%d.%s"):format(key_base, index, key_property), ...)
 end
 
 --- Gets a localized string from an enum-style localization object
@@ -232,8 +232,8 @@ end
 --  @treturn[1] string the formatted string
 --  @treturn[2] nil
 --  @function get_enum_property_optional
-function I18n.get_enum_property_optional(key_base, key_property, index, ...)
-   return I18n.get_optional(("%s._%d.%s"):format(key_base, index, key_property), ...)
+function i18n.get_enum_property_optional(key_base, key_property, index, ...)
+   return i18n.get_optional(("%s._%d.%s"):format(key_base, index, key_property), ...)
 end
 
 --- Get a localized text associated with the given data ID.
@@ -242,14 +242,14 @@ end
 --
 --  @tparam string prototype_id Data prototype ID.
 --  @tparam string instance_id Data instance ID.
---  @tparam string property_name I18n key of the property to get.
+--  @tparam string property_name i18n key of the property to get.
 --  @treturn string The formatted string
 --  @function get_data_text
-function I18n.get_data_text(prototype_id, instance_id, property_name, ...)
-   return I18n.get_data_text_optional(prototype_id, instance_id, property_name, ...) or ("<Unknown ID: %s>"):format(("%s#%s.%s"):format(prototype_id, instance_id, property_name))
+function i18n.get_data_text(prototype_id, instance_id, property_name, ...)
+   return i18n.get_data_text_optional(prototype_id, instance_id, property_name, ...) or ("<Unknown ID: %s>"):format(("%s#%s.%s"):format(prototype_id, instance_id, property_name))
 end
 
-function I18n.get_data_text_optional(prototype_id, instance_id, property_name, ...)
+function i18n.get_data_text_optional(prototype_id, instance_id, property_name, ...)
    local key = ("%s#%s.%s"):format(prototype_id, instance_id, property_name)
    local fmt = DATA_TEXT_STORAGE[key]
    if fmt == nil then return nil end -- not found
@@ -262,7 +262,7 @@ function I18n.get_data_text_optional(prototype_id, instance_id, property_name, .
    return format(fmt, {...})
 end
 
-function I18n.get_list(key)
+function i18n.get_list(key)
    local ret = STORAGE[key]
    if ret == nil then return {} end
    if type(ret) == "table" then
@@ -280,11 +280,11 @@ function I18n.get_list(key)
    end
 end
 
-function I18n.format(fmt, ...)
+function i18n.format(fmt, ...)
    return format(make_fomattable_object(fmt), {...})
 end
 
-function I18n.call_function(func_name, ...)
+function i18n.call_function(func_name, ...)
    local func = L10N_FUNCTIONS[func_name]
    if func then
       return func(...)
@@ -293,11 +293,11 @@ function I18n.call_function(func_name, ...)
    end
 end
 
-function I18n.add(data)
+function i18n.add(data)
    collect_i18n_resources(data, _MOD_ID, STORAGE)
 end
 
-function I18n.add_data_text(prototype_id, data)
+function i18n.add_data_text(prototype_id, data)
    for k, v in pairs(data) do
       local key = prototype_id.."#".._MOD_ID.."."..k
       collect_i18n_resources(v, key, DATA_TEXT_STORAGE)
@@ -305,7 +305,7 @@ function I18n.add_data_text(prototype_id, data)
 end
 
 -- functions :: { string => (...) -> string }
-function I18n.add_function(functions)
+function i18n.add_function(functions)
    for func_name, func in pairs(functions) do
       L10N_FUNCTIONS[_MOD_ID.."."..func_name] = func
    end
@@ -313,20 +313,20 @@ end
 
 --- Gets the current active language.
 --- @treturn string Language ID
-function I18n.language()
+function i18n.language()
    if CURRENT_LANGUAGE then
       return CURRENT_LANGUAGE
    else
-      error("I18n.language: config option has not been loaded yet")
+      error("i18n.language: config option has not been loaded yet")
    end
 end
 
-function I18n.word_separator()
-   return I18n.get_optional("core.meta.word_separator") or ""
+function i18n.word_separator()
+   return i18n.get_optional("core.meta.word_separator") or ""
 end
 
-function I18n.__INTERNAL_API_inject_current_language(lang)
+function i18n.__INTERNAL_API_inject_current_language(lang)
    CURRENT_LANGUAGE = lang
 end
 
-return I18n
+return i18n

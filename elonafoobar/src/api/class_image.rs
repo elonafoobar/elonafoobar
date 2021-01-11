@@ -12,7 +12,7 @@ const MODULE_NAME: &str = "graphics.Image";
 pub struct Image(pub(super) GuiImage);
 
 impl LuaUserdata for Image {
-    const NAME: &'static str = "_native_.Graphics.Image";
+    const NAME: &'static str = "__native.graphics.Image";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {

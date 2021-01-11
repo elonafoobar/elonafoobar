@@ -13,7 +13,7 @@ const MODULE_NAME: &str = "fs";
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Fs module");
-    lua.bind_module("Fs", |lua| -> Result<()> {
+    lua.bind_module("fs", |lua| -> Result<()> {
         lua.set_function("exists", lua_exists)?;
         lua.set_function("get_bundled_font_path", lua_get_bundled_font_path)?;
         lua.set_function("get_config_file_path", lua_get_config_file_path)?;

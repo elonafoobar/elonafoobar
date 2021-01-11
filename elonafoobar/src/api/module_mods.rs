@@ -6,7 +6,7 @@ use elonafoobar_lua::Lua;
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
     trace!("Bind native.Mods module");
-    lua.bind_module("Mods", |lua| -> Result<()> {
+    lua.bind_module("mods", |lua| -> Result<()> {
         lua.set_userdata_metatable("Mods", Mods::NAME)?;
         Ok(())
     })

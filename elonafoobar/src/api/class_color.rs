@@ -12,7 +12,7 @@ const MODULE_NAME: &str = "graphics.Color";
 pub struct Color(pub(super) GuiColor);
 
 impl LuaUserdata for Color {
-    const NAME: &'static str = "_native_.Graphics.Color";
+    const NAME: &'static str = "__native.graphics.Color";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {

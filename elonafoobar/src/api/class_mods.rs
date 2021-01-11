@@ -17,7 +17,7 @@ pub struct Mods {
 }
 
 impl LuaUserdata for Mods {
-    const NAME: &'static str = "_native_.Mods.Mods";
+    const NAME: &'static str = "__native.mods.Mods";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {

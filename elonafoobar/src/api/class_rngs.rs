@@ -5,12 +5,12 @@ use elonafoobar_lua::types::{LuaFloat, LuaInt, LuaUserdata};
 use elonafoobar_lua::Lua;
 use elonafoobar_rand::rngs::DefaultGenerator as RandDefaultGenerator;
 
-const MODULE_NAME: &str = "random.rngs.DefaultGenerator";
+const MODULE_NAME: &str = "random.DefaultGenerator";
 
 pub struct DefaultGenerator(RandDefaultGenerator);
 
 impl LuaUserdata for DefaultGenerator {
-    const NAME: &'static str = "_native_.random.rngs.DefaultGenerator";
+    const NAME: &'static str = "__native.random.DefaultGenerator";
 }
 
 pub fn bind(lua: &mut Lua) -> Result<()> {
