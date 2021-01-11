@@ -50,7 +50,7 @@ fn lua_get_lua_full_path(mod_id: &str, version: &str, file_name: &str) -> Result
 #[lua_function]
 fn lua_resolve_path_for_mod(path: &str) -> Result<String> {
     // TODO
-    let path = path.replace("<_vanilla_>", utils::path::path_to_str(&dirs::root()));
+    let path = path.replace("<__vanilla>", utils::path::path_to_str(&dirs::root()));
     // TODO
     let path = path.replace(
         "<core>",
