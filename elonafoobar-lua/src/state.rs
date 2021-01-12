@@ -71,7 +71,7 @@ impl Lua {
                 let lua_state = NonNull::new(lua_state).expect("Lua state is null");
 
                 let actual_function_pointer =
-                    ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 1);
+                    ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 2);
                 let actual_function_pointer: fn(A) -> R =
                     std::mem::transmute(actual_function_pointer);
 
@@ -82,7 +82,15 @@ impl Lua {
                 })() {
                     Ok(nresults) => nresults,
                     Err(err) => {
-                        ffi::luaL_error(lua_state, &err.to_string());
+                        let func_name = ffi::lua_tostring(lua_state, ffi::LUA_REGISTRYINDEX - 1);
+                        ffi::luaL_error(
+                            lua_state,
+                            &format!(
+                                "{} in `{}`",
+                                err.to_string(),
+                                func_name.unwrap_or("<unkonwn function>")
+                            ),
+                        );
                         // ^ never returns
                         0
                     }
@@ -91,8 +99,9 @@ impl Lua {
         }
 
         ffi::lua_pushstring(self.inner, func_name)?;
+        ffi::lua_dup(self.inner);
         ffi::lua_pushlightuserdata(self.inner, func as *mut c_void);
-        ffi::lua_pushcclosure(self.inner, lua_fn::<A, R>, 1);
+        ffi::lua_pushcclosure(self.inner, lua_fn::<A, R>, 2);
         ffi::lua_rawset(self.inner, -3);
         Ok(())
     }
@@ -115,7 +124,7 @@ impl Lua {
                 let lua_state = NonNull::new(lua_state).expect("Lua state is null");
 
                 let actual_function_pointer =
-                    ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 1);
+                    ffi::lua_touserdata(lua_state, ffi::LUA_REGISTRYINDEX - 2);
                 let actual_function_pointer: fn(&mut Lua, A) -> R =
                     std::mem::transmute(actual_function_pointer);
 
@@ -126,7 +135,15 @@ impl Lua {
                 })() {
                     Ok(nresults) => nresults,
                     Err(err) => {
-                        ffi::luaL_error(lua_state, &err.to_string());
+                        let func_name = ffi::lua_tostring(lua_state, ffi::LUA_REGISTRYINDEX - 1);
+                        ffi::luaL_error(
+                            lua_state,
+                            &format!(
+                                "{} in `{}`",
+                                err.to_string(),
+                                func_name.unwrap_or("<unkonwn function>")
+                            ),
+                        );
                         // ^ never returns
                         0
                     }
@@ -135,8 +152,9 @@ impl Lua {
         }
 
         ffi::lua_pushstring(self.inner, func_name)?;
+        ffi::lua_dup(self.inner);
         ffi::lua_pushlightuserdata(self.inner, func as *mut c_void);
-        ffi::lua_pushcclosure(self.inner, lua_fn::<A, R>, 1);
+        ffi::lua_pushcclosure(self.inner, lua_fn::<A, R>, 2);
         ffi::lua_rawset(self.inner, -3);
         Ok(())
     }

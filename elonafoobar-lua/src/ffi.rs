@@ -127,6 +127,12 @@ pub fn lua_rawget(state: State, idx: c_int) {
     }
 }
 
+pub fn lua_dup(state: State) {
+    unsafe {
+        sys::lua_pushvalue(state.as_ptr(), -1);
+    }
+}
+
 pub fn lua_swap(state: State) {
     unsafe {
         sys::lua_rotate(state.as_ptr(), -2, 1);
