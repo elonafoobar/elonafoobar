@@ -1,3 +1,7 @@
+***This project has been archived in favor of [OpenNefia](https://github.com/Ruin0x11/OpenNefia). Please contribute it instead of foobar.***
+
+
+
 [![Elona foobar](resources/logo.png)](https://elonafoobar.com)
 
 
@@ -8,6 +12,7 @@
 [![GitHub Actions Status](https://github.com/elonafoobar/elonafoobar/workflows/Build/badge.svg)](https://github.com/elonafoobar/elonafoobar/actions)
 [![Twitter](https://img.shields.io/twitter/follow/ElonaFoobar?style=social)](https://twitter.com/ElonaFoobar)
 [![Discord](https://img.shields.io/discord/520137317206458383)](https://discord.gg/4htdyc2)
+
 
 
 
